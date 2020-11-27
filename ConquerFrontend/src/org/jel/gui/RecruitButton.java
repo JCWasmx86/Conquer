@@ -1,0 +1,57 @@
+package org.jel.gui;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+
+import org.jel.game.data.City;
+
+final class RecruitButton extends JPanel {
+	private static final long serialVersionUID = 4846741301367606008L;
+	private JSlider js;
+	private JButton jbutton;
+	private City city;
+	private boolean sharp = false;
+
+	RecruitButton(City city, CityInfoPanel cip) {
+		this.city = city;
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		final var max = city.getGame().maximumNumberOfSoldiersToRecruit((byte) city.getClan(),
+				city.getNumberOfPeople());
+		this.js = new JSlider(0, (int) max);
+		this.js.setValue((int) (max / 2));
+		this.jbutton = new JButton("Recruit " + (max / 2) + " soldiers!");
+		this.jbutton.addActionListener(e -> {
+			if (RecruitButton.this.sharp) {
+				return;
+			}
+			final var cnt = RecruitButton.this.js.getValue();
+			city.getGame().recruitSoldiers(0, (byte) 0, city, true, cnt);
+			cip.doUpdate();
+		});
+		this.js.addChangeListener(
+				e -> RecruitButton.this.jbutton.setText("Recruit " + RecruitButton.this.js.getValue() + " soldiers!"));
+		this.add(this.js);
+		this.add(this.jbutton);
+	}
+
+	void doUpdate() {
+		if (this.city.getClan() != 0) {
+			this.jbutton.setEnabled(false);
+			this.js.setEnabled(false);
+			this.sharp = true;
+			this.js.setMinimum(0);
+			this.js.setMaximum(0);
+			this.sharp = false;
+		} else {
+			this.jbutton.setEnabled(true);
+			this.js.setEnabled(true);
+			this.sharp = true;
+			this.js.setMaximum((int) this.city.getGame().maximumNumberOfSoldiersToRecruit((byte) this.city.getClan(),
+					this.city.getNumberOfPeople()));
+			this.sharp = false;
+		}
+	}
+
+}

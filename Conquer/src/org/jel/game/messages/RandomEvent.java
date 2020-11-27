@@ -1,0 +1,6 @@
+package org.jel.game.messages;
+
+public enum RandomEvent {
+	PESTILENCE, FIRE, GROWTH, CROP_FAILURE, REBELLION, CIVIL_WAR, MIGRATION, ECONOMIC_GROWTH, PANDEMIC, ACCIDENT,
+	SABOTAGE;
+}

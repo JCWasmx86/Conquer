@@ -1,0 +1,13 @@
+#! /usr/bin/bash
+./buildConquer
+cd ScenarioGenerator
+echo $'<?xml version="1.0" encoding="UTF-8"?>\r\n<projectDescription>\r\n\t<name>ScenarioGenerator</name>\r\n\t<comment></comment>\r\n\t<projects>\r\n\t</projects>\r\n\t<buildSpec>\r\n\t\t<buildCommand>\r\n\t\t\t<name>org.eclipse.jdt.core.javabuilder</name>\r\n\t\t\t<arguments>\r\n\t\t\t</arguments>\r\n\t\t</buildCommand>\r\n\t</buildSpec>\r\n\t<natures>\r\n\t\t<nature>org.eclipse.jdt.core.javanature</nature>\r\n\t</natures>\r\n</projectDescription>\r' >.project
+echo $'<?xml version="1.0" encoding="UTF-8"?>\n<classpath>\n\t<classpathentry kind="src" path="src"/>\n\t<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>\n\t<classpathentry kind="output" path="bin"/>\n</classpath>' >.classpath
+cd ../Conquer
+echo $'<?xml version="1.0" encoding="UTF-8"?>\r\n<projectDescription>\r\n\t<name>Conquer</name>\r\n\t<comment></comment>\r\n\t<projects>\r\n\t</projects>\r\n\t<buildSpec>\r\n\t\t<buildCommand>\r\n\t\t\t<name>org.eclipse.jdt.core.javabuilder</name>\r\n\t\t\t<arguments>\r\n\t\t\t</arguments>\r\n\t\t</buildCommand>\r\n\t</buildSpec>\r\n\t<natures>\r\n\t\t<nature>org.eclipse.jdt.core.javanature</nature>\r\n\t</natures>\r\n</projectDescription>\r' >.project
+echo $'<?xml version="1.0" encoding="UTF-8"?>\n<classpath>\n\t<classpathentry kind="src" path="src"/>\n\t<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">\n\t\t<attributes>\n\t\t\t<attribute name="module" value="true"/>\n\t\t</attributes>\n\t</classpathentry>\n\t<classpathentry kind="output" path="bin"/>\n</classpath>' >.classpath
+cd ../ConquerFrontend
+echo $'<?xml version="1.0" encoding="UTF-8"?>\n<projectDescription>\n\t<name>ConquerFrontend</name>\n\t<comment></comment>\n\t<projects>\n\t</projects>\n\t<buildSpec>\n\t\t<buildCommand>\n\t\t\t<name>org.eclipse.jdt.core.javabuilder</name>\n\t\t\t<arguments>\n\t\t\t</arguments>\n\t\t</buildCommand>\n\t</buildSpec>\n\t<natures>\n\t\t<nature>org.eclipse.jdt.core.javanature</nature>\n\t</natures>\n</projectDescription>' >.project
+echo $'<?xml version="1.0" encoding="UTF-8"?>\n<classpath>\n\t<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-15">\n\t\t<attributes>\n\t\t\t<attribute name="module" value="true"/>\n\t\t</attributes>\n\t</classpathentry>\n\t<classpathentry kind="src" path="src"/>\n\t<classpathentry combineaccessrules="false" kind="src" path="/Conquer">\n\t\t<attributes>\n\t\t\t<attribute name="module" value="true"/>\n\t\t</attributes>\n\t</classpathentry>\n\t<classpathentry kind="output" path="bin"/>\n</classpath>' >.classpath
+mkdir music
+cp -R ../conquer-dist/frontend/music .

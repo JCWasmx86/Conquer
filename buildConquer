@@ -1,0 +1,146 @@
+#! /usr/bin/bash
+export TARGET="all"
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    MINGW*)
+		:
+	;&
+    MSYS*)
+		if [[ -z "${JAVA_HOME}" ]]; then
+			echo JAVA_HOME is not set\!
+			exit 1
+		else
+			export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin:`cygpath "C:\\Program Files\\Musescore 3\\bin"`
+		fi
+		export TARGET="all-win"
+		export IS_WIN="IS_WIN"
+	;;
+esac
+mkdir conquer-dist
+cd conquer-dist
+mkdir backend
+mkdir frontend
+mkdir music
+cd ../Conquer
+shopt -s dotglob
+javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15
+cd ../ConquerFrontend
+javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend
+cp -rv images ../conquer-dist/frontend
+cd ../ScenarioGenerator
+javac `find src -name "*.java"` -d bin
+cp -r images bin
+cd bin
+java --class-path=.:../images:.. org.jel.tool.Belenos
+java --class-path=.:../images:.. org.jel.tool.Etiona
+java --class-path=.:../images:.. org.jel.tool.Slaine
+java --class-path=.:../images:.. org.jel.tool.Freedo
+cd ../../conquer-dist
+mkdir tmp
+cd backend
+jar -cvf ../tmp/ChangeCitiesMinds.jar org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class
+rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class
+jar -cvf ../tmp/DefaultMusic.jar org/jel/game/plugins/builtins/DefaultMusic.class
+rm org/jel/game/plugins/builtins/DefaultMusic.class
+jar -cvf ../tmp/IncreaseGrowth.jar org/jel/game/plugins/builtins/IncreaseGrowth.class
+rm org/jel/game/plugins/builtins/IncreaseGrowth.class
+jar -cvf ../tmp/MoneyAnalyzer.jar org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class
+rm org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class
+jar -cvf ../tmp/PeriodicGrowthChange.jar org/jel/game/plugins/builtins/PeriodicGrowthChange.class
+rm org/jel/game/plugins/builtins/PeriodicGrowthChange.class
+jar -cvf ../tmp/ResourceAnalyzer.jar org/jel/game/plugins/builtins/*.class
+rm -rf org/jel/game/plugins/builtins/
+jar -cvf ../tmp/SortedStrategy.jar org/jel/game/strategies/*.class
+rm -rf org/jel/game/strategies/
+jar -cvf ../Conquer.jar *
+cd ../tmp
+cp -v ../../ScenarioGenerator/bin/*.data .
+cp -v ../../ScenarioGenerator/*.png .
+echo "<info>" >info.xml
+echo "	<scenarios>">>info.xml
+echo "		<scenario name=\"Belenos\" file=\"Belenos.data\" thumbnail=\"Belenos.png\" />">>info.xml
+echo "		<scenario name=\"Etiona\" file=\"Etiona.data\" thumbnail=\"Etiona.png\" />">>info.xml
+echo "		<scenario name=\"Slaine\" file=\"Slaine.data\" thumbnail=\"Slaine.png\" />">>info.xml
+echo "		<scenario name=\"Freedo\" file=\"Freedo.data\" thumbnail=\"Freedo.png\" />">>info.xml
+echo "	</scenarios>">>info.xml
+echo "	<plugins>">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.ChangeCitiesMinds\" />">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.IncreaseGrowth\" />">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.MoneyAnalyzer\" />">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.ResourceAnalyzer\" />">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />">>info.xml
+echo "		<plugin className=\"org.jel.game.plugins.builtins.PeriodicGrowthChange\" />">>info.xml
+echo "	</plugins>">>info.xml
+echo "	<strategies>">>info.xml
+echo "		<strategy className=\"org.jel.game.strategies.SortedStrategyProvider\" />">>info.xml
+echo "	</strategies>">>info.xml
+echo "</info>">>info.xml
+mkdir .conquer
+mkdir .conquer/libs
+mv -v *.jar .conquer/libs
+mv -v *.data .conquer
+mv -v *.xml .conquer
+mv -v *.png .conquer
+cd .conquer
+zip ../../conquer.zip -r *
+cd ../../../music
+for f in *.mscz; do
+	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
+		musescore3 -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"
+	else
+		echo Skipping conversion of "$f"
+	fi
+done
+cd ../conquer-dist
+mkdir -p frontend/music
+cd music
+cp  Credits.wav Defeated.wav Intro.wav MainScreen.wav Victory.wav ../frontend/music
+rm Credits.wav Defeated.wav Intro.wav MainScreen.wav Victory.wav
+cd ..
+cp conquer.zip frontend/music
+cd frontend
+jar -cvf ../Conquer_frontend.jar *
+cd ../../Launcher
+make clean
+make $TARGET
+if [[ -z "${IS_WIN}" ]]; then
+	cp launcher ../conquer-dist
+else
+	cp launcher.exe ../conquer-dist
+fi
+cd ../conquer-dist
+cd music
+mkdir -p libs/sounds
+cp *.wav libs/sounds
+zip -9 ../Music1.zip libs/sounds/Battle0.wav libs/sounds/Battle1.wav libs/sounds/Battle2.wav libs/sounds/Battle3.wav libs/sounds/Battle4.wav libs/sounds/Battle5.wav libs/sounds/Battle6.wav libs/sounds/Battle7.wav libs/sounds/Battle8.wav libs/sounds/Battle9.wav libs/sounds/Battle10.wav
+zip -9 ../Music2.zip libs/sounds/Battle11.wav libs/sounds/Battle12.wav libs/sounds/Battle13.wav libs/sounds/Battle14.wav libs/sounds/Battle15.wav libs/sounds/Battle16.wav libs/sounds/Battle17.wav
+zip -9 ../Music3.zip libs/sounds/Battle18.wav libs/sounds/Battle19.wav libs/sounds/Battle20.wav libs/sounds/Battle21.wav libs/sounds/Battle22.wav libs/sounds/Battle23.wav
+zip -9 ../Music4.zip libs/sounds/Battle24.wav libs/sounds/Battle25.wav libs/sounds/Battle26.wav libs/sounds/Battle27.wav libs/sounds/Battle28.wav libs/sounds/Battle29.wav
+cd ..
+if [[ -z "${IS_WIN}" ]]; then
+	mkdir -p conquer/usr/bin
+	mkdir -p conquer/usr/share/java
+	mkdir -p conquer/DEBIAN
+	chmod 0755 conquer/DEBIAN/
+	cd conquer/DEBIAN
+	echo Package: conquer>control
+	echo Version: 0.0.1>>control
+	echo Section: games>>control
+	echo Architecture: `dpkg --print-architecture`>>control
+	echo Depends: libcurl4>>control
+	echo Maintainer: JCWasmx86 >>control
+	echo Description: The strategy game conquer >>control
+	cd ../..
+	mv Conquer.jar Conquer_frontend.jar conquer/usr/share/java
+	mv launcher conquer/usr/bin
+	dpkg-deb --build conquer
+else
+	cp launcher.exe ../Installer
+	cp Conquer.jar ../Installer
+	cp Conquer_frontend.jar ../Installer
+	cd ../Installer
+	make clean
+	make
+	cd ..
+	cp Installer/Installer.exe conquer-dist
+fi
