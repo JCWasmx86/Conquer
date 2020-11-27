@@ -1,0 +1,4 @@
+conquer_dist
+ScenarioGenerator/bin
+Launcher/cJSON
+Launcher/libcjson.a
