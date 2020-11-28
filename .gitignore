@@ -15,3 +15,9 @@ ScenarioGenerator/.project
 ScenarioGenerator/bin/
 ScenarioGenerator/.settings/
 conquer-dist/
+Launcher/.cproject
+Launcher/.project
+Launcher/.settings/
+Conquer/.*
+ConquerFrontend/.*
+ScenarioGenerator/.*
