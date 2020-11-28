@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -29,8 +30,12 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			e.printStackTrace();
 		}
 		new Thread(() -> {
-			new Installer().run();
+			var v=new InstallerWindow();
+			new Installer(a -> JOptionPane.showOptionDialog(null, "Please select the type of installation",
+					"Installation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, a, a[1]), v)
+							.run();
 			Initializer.INSTANCE().initialize();
+			v.dispose();
 		}).start();
 		final var main = new Intro();
 		main.setLocationByPlatform(true);
