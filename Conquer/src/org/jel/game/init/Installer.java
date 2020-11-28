@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -45,6 +46,7 @@ public class Installer implements Runnable {
 	private static final File BASE_FILE = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
 	private final OptionChooser chooser;
 	private final ExtendedOutputStream stream;
+	private final Consumer<Exception> onError;
 
 	/**
 	 * Checks whether the game is installed. If no, it is installed/repaired.
@@ -52,12 +54,13 @@ public class Installer implements Runnable {
 	 * @implNote If the installation fails because of any reason, the JVM is killed
 	 *           with the exit code -127!
 	 */
-	public Installer(OptionChooser chooser, ExtendedOutputStream writeTo) {
+	public Installer(OptionChooser chooser, ExtendedOutputStream writeTo, Consumer<Exception> onError) {
 		if (chooser == null) {
 			throw new IllegalArgumentException("chooser==null");
 		}
 		this.chooser = chooser;
 		this.stream = writeTo;
+		this.onError = onError;
 	}
 
 	// Checks, whether the game is already installed.
@@ -145,7 +148,10 @@ public class Installer implements Runnable {
 					e.printStackTrace(new PrintStream(this.stream));
 				}
 				Shared.LOGGER.exception(e);
-				System.exit(-127);// Exit, can't be resolved
+				if (this.onError != null) {
+					this.onError.accept(e);
+				}
+				return;
 			}
 			this.write("Conquer was installed successfully!");
 			this.write("Please restart Conquer!");

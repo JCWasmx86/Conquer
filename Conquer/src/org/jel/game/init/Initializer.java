@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import javax.swing.JOptionPane;
+import java.util.function.Consumer;
 
 import org.jel.game.data.Shared;
 
@@ -31,7 +30,7 @@ public final class Initializer {
 	/**
 	 * Initialize the required things like properties.
 	 */
-	public void initialize() {
+	public void initialize(Consumer<Exception> onError) {
 		if (Initializer.initialized) {
 			throw new IllegalStateException("Can't initialize more than once!");
 		}
@@ -47,8 +46,9 @@ public final class Initializer {
 		} catch (final IOException | RuntimeException | InterruptedException e) {
 			Shared.LOGGER.error("Initialization failed!");
 			Shared.LOGGER.exception(e);
-			JOptionPane.showMessageDialog(null, "Initialization failed!", "Error", JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+			if (onError != null) {
+				onError.accept(e);
+			}
 		}
 	}
 }
