@@ -30,7 +30,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			e.printStackTrace();
 		}
 		new Thread(() -> {
-			var v=new InstallerWindow();
+			final var v = new InstallerWindow();
 			new Installer(a -> JOptionPane.showOptionDialog(null, "Please select the type of installation",
 					"Installation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, a, a[1]), v)
 							.run();
