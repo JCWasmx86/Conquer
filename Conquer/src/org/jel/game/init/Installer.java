@@ -3,6 +3,8 @@ package org.jel.game.init;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -10,9 +12,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 import org.jel.game.data.Shared;
 
@@ -43,6 +42,9 @@ public class Installer implements Runnable {
 			+ "# If set to true, no sound will be played, while playing." + System.lineSeparator()
 			+ "conquer.nosound = false" + System.lineSeparator() + "# Add your own properties below"
 			+ System.lineSeparator();
+	private static final File BASE_FILE = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
+	private OptionChooser chooser;
+	private ExtendedOutputStream stream;
 
 	// Checks, whether the game is already installed.
 	private boolean alreadyInstalled() {
@@ -56,120 +58,172 @@ public class Installer implements Runnable {
 	 * @implNote If the installation fails because of any reason, the JVM is killed
 	 *           with the exit code -127!
 	 */
+	public Installer(OptionChooser chooser, ExtendedOutputStream writeTo) {
+		if (chooser == null) {
+			throw new IllegalArgumentException("chooser==null");
+		}
+		this.chooser = chooser;
+		this.stream = writeTo;
+	}
+
 	@Override
 	public void run() {
 		if (!this.alreadyInstalled()) {
-			Shared.LOGGER.message("Installing conquer!");
+			write("Installing conquer!");
 			try {
 				Initializer.installing = true;
 				this.startInstalling();
 				Initializer.installing = false;
 			} catch (final IOException e) {
-				Shared.LOGGER.error("Installation failed");
+				writeError("Installation failed");
+				if (this.stream != null)
+					e.printStackTrace(new PrintStream(this.stream));
 				Shared.LOGGER.exception(e);
-				final var f = new JFrame();
-				f.setAlwaysOnTop(true);
-				JOptionPane.showMessageDialog(f, "Installation failed: " + e.getMessage(), "Installation failed",
-						JOptionPane.INFORMATION_MESSAGE);
-				f.dispose();
 				System.exit(-127);// Exit, can't be resolved
 			}
-			final var f = new JFrame();
-			f.setAlwaysOnTop(true);
-			JOptionPane.showMessageDialog(f, "Conquer was installed successfully!", "Installation successful",
-					JOptionPane.INFORMATION_MESSAGE);
-			f.dispose();
+			write("Conquer was installed successfully!");
+			write("Please restart Conquer!");
 		}
+	}
+
+	private int askQuestion() {
+		final String[] options = { "Minimal installation", "Standard installation (Scenarios and some plugins)",
+				"Extended installation (Scenarios, plugins and music)" };
+		return chooser.choose(options);
 	}
 
 	// Installs everything
 	private void startInstalling() throws IOException {
-		final String[] options = { "Minimal installation", "Standard installation (Scenarios and some plugins)",
-				"Extended installation (Scenarios, plugins and music)" };
-		final var n = JOptionPane.showOptionDialog(null, // parent container of JOptionPane
-				"Please select the type of installation", "Installation", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		final var n = askQuestion();
 		switch (n) {
 		default:
-		case 0: {
-			final var baseFile = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
-			baseFile.mkdirs();
-			final var xml = new File(baseFile, "info.xml");
-			if (!xml.exists()) {
-				Files.write(Paths.get(xml.toURI()), Installer.DEFAULT_XML.getBytes(), StandardOpenOption.CREATE);
-			}
-			final var props = new File(baseFile, "game.properties");
-			if (!props.exists()) {
-				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
-						StandardOpenOption.CREATE);
-			}
-		}
+		case 0:
+			baseInstallation();
 			break;
 		case 1:
-		case 2: {
-			final var stream = ClassLoader.getSystemResource("music/conquer.zip").openStream();
-			final var baseFile = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
-			baseFile.mkdirs();
-			ZipEntry ze = null;
-
-			try (var zin = new ZipInputStream(stream)) {
-				while ((ze = zin.getNextEntry()) != null) {
-					Shared.LOGGER.message("Unzipping: " + ze.getName());
-					if (ze.isDirectory()) {
-						new File(baseFile, ze.getName()).mkdirs();
-					} else {
-						try (var fos = new FileOutputStream(new File(baseFile, ze.getName()))) {
-							int read;
-							final var bytes = new byte[1024];
-							while ((read = zin.read(bytes)) != -1) {
-								fos.write(bytes, 0, read);
-							}
-
-						}
-					}
-				}
-			}
+		case 2:
+			extendedBaseInstallation();
 			if (n == 2) {
-				JOptionPane.showMessageDialog(null, "Please wait (~2 minutes)");
-				for (var i = 1; i < 6; i++) {
-					final var url = new URL(
-							"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/zips/Music" + i
-									+ ".zip");
-					try (var zipInputStream = new ZipInputStream(url.openStream())) {
-						ze = null;
-						while ((ze = zipInputStream.getNextEntry()) != null) {
-							Shared.LOGGER.message("Unzipping: " + ze.getName());
-							if (ze.isDirectory()) {
-								new File(baseFile, ze.getName()).mkdirs();
-							} else {
-								try (var fos = new FileOutputStream(new File(baseFile, ze.getName()))) {
-									int read;
-									final var bytes = new byte[1024];
-									while ((read = zipInputStream.read(bytes)) != -1) {
-										fos.write(bytes, 0, read);
-									}
-
-								}
-							}
-						}
-					}
-				}
-				final var info = new File(baseFile, "info.xml").getAbsoluteFile();
-				String newContents = null;
-				try (var stream2 = Files.newInputStream(Paths.get(new File(baseFile, "info.xml").toString()))) {
-					final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
-					newContents = contents.replace("<!--<plugin className=\"org.jel.game.plugins.DefaultMusic\" />-->",
-							"<plugin className=\"org.jel.game.plugins.DefaultMusic\" />");
-				}
-				Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
+				installMusic();
 			}
-			final var props = new File(baseFile, "game.properties");
+			final var props = new File(BASE_FILE, "game.properties");
 			if (!props.exists()) {
 				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
 						StandardOpenOption.CREATE);
 			}
-		}
 			break;
+		}
+	}
+
+	private void installMusic() throws IOException {
+		if (!connected()) {
+			writeError("No internet connection!");
+			return;
+		}
+		write("Please wait (~2 minutes)");
+		for (var i = 1; i < 6; i++) {
+			final var url = new URL(
+					"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/zips/Music" + i + ".zip");
+			write("Downloading: " + url);
+			try (var urlStream = url.openStream()) {
+				unzipFile(urlStream);
+			} catch (IOException ioe) {
+				writeError("Download failed: " + url);
+			}
+		}
+		final var info = new File(BASE_FILE, "info.xml").getAbsoluteFile();
+		String newContents = null;
+		try (var stream2 = Files.newInputStream(Paths.get(new File(BASE_FILE, "info.xml").toString()))) {
+			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
+			newContents = contents.replace("<!--<plugin className=\"org.jel.game.plugins.DefaultMusic\" />-->",
+					"<plugin className=\"org.jel.game.plugins.DefaultMusic\" />");
+		}
+		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
+	}
+
+	private boolean connected() {
+		try (var testStream = new URL("https://www.example.com").openStream()) {
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+
+	private void write(String s) {
+		Shared.LOGGER.message(s);
+		if (stream != null) {
+			try {
+				stream.write(s);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	private void writeError(String s) {
+		Shared.LOGGER.error(s);
+		if (stream != null) {
+			try {
+				stream.write(s);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	private void unzipFile(InputStream zipStream) {
+		try (var zin = new ZipInputStream(zipStream)) {
+			ZipEntry ze = null;
+			while ((ze = zin.getNextEntry()) != null) {
+				write("Unzipping: " + ze.getName());
+				if (ze.isDirectory()) {
+					new File(BASE_FILE, ze.getName()).mkdirs();
+				} else {
+					writeEntry(zin, ze);
+				}
+			}
+		} catch (IOException e) {
+			if (this.stream != null)
+				e.printStackTrace(new PrintStream(this.stream));
+			Shared.LOGGER.exception(e);
+		}
+	}
+
+	private void writeEntry(ZipInputStream zin, ZipEntry ze) {
+		try (var fos = new FileOutputStream(new File(BASE_FILE, ze.getName()))) {
+			int read;
+			final var bytes = new byte[1024];
+			while ((read = zin.read(bytes)) != -1) {
+				fos.write(bytes, 0, read);
+			}
+		} catch (IOException e) {
+			if (this.stream != null)
+				e.printStackTrace(new PrintStream(this.stream));
+			Shared.LOGGER.exception(e);
+		}
+	}
+
+	private void extendedBaseInstallation() throws IOException {
+		try (final var zipStream = ClassLoader.getSystemResource("music/conquer.zip").openStream()) {
+			BASE_FILE.mkdirs();
+			unzipFile(zipStream);
+		} catch (IOException e) {
+			writeError("Wasn't able to find music/conquer.zip");
+			if (this.stream != null)
+				e.printStackTrace(new PrintStream(this.stream));
+			Shared.LOGGER.exception(e);
+		}
+	}
+
+	private void baseInstallation() throws IOException {
+		BASE_FILE.mkdirs();
+		final var xml = new File(BASE_FILE, "info.xml");
+		if (!xml.exists()) {
+			Files.write(Paths.get(xml.toURI()), Installer.DEFAULT_XML.getBytes(), StandardOpenOption.CREATE);
+		}
+		final var props = new File(BASE_FILE, "game.properties");
+		if (!props.exists()) {
+			Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(), StandardOpenOption.CREATE);
 		}
 	}
 
