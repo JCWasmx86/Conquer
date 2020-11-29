@@ -18,8 +18,8 @@ int main(int argc, char **argv) {
 		}
 	}
 #ifndef _WIN32
-	if(!geteuid()){
-		fputs("Don't run conquer as root!\n",stderr);
+	if (!geteuid()) {
+		fputs("Don't run conquer as root!\n", stderr);
 		return EXIT_SUCCESS;
 	}
 #endif

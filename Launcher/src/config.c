@@ -63,7 +63,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	cJSON *classpath = cJSON_GetObjectItem(cjson, "classpath");
 	if (cJSON_IsArray(classpath)) {
 		ret->numClasspaths = cJSON_GetArraySize(classpath);
-		ret->classpaths = calloc(ret->numClasspaths, sizeof(char*));
+		ret->classpaths = calloc(ret->numClasspaths, sizeof(char *));
 		for (size_t i = 0; i < ret->numClasspaths; i++) {
 			cJSON *str = cJSON_GetArrayItem(classpath, i);
 			assert(cJSON_IsString(str));
@@ -73,7 +73,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	cJSON *jvmOptions = cJSON_GetObjectItem(cjson, "options");
 	if (cJSON_IsArray(jvmOptions)) {
 		ret->numOptions = cJSON_GetArraySize(jvmOptions);
-		ret->options = calloc(ret->numOptions, sizeof(char*));
+		ret->options = calloc(ret->numOptions, sizeof(char *));
 		for (size_t i = 0; i < ret->numOptions; i++) {
 			cJSON *str = cJSON_GetArrayItem(jvmOptions, i);
 			assert(cJSON_IsString(str));
