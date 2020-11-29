@@ -7,7 +7,7 @@
 #include <windows.h>
 #endif
 #include "launcher.h"
-void* loadJavaLibrary(Configuration conf) {
+void *loadJavaLibrary(Configuration conf) {
 	char *directory;
 	if (conf->usedJVM == NULL) {
 #ifdef _WIN32
@@ -72,7 +72,7 @@ void* loadJavaLibrary(Configuration conf) {
 }
 createJVM getHandleToFunction(void *file) {
 #ifndef _WIN32
-	return (createJVM) dlsym(file, "JNI_CreateJavaVM");
+	return (createJVM)dlsym(file, "JNI_CreateJavaVM");
 #else
 	return (createJVM)GetProcAddress(file, "JNI_CreateJavaVM");
 #endif

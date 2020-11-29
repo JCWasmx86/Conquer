@@ -52,7 +52,7 @@ void extract(const char *filename) {
 			break;
 		}
 		char *cc = calloc(
-				strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
+			strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
 		sprintf(cc, "%s%s%s", java15, c, &archive_entry_pathname(entry)[6]);
 		archive_entry_set_pathname(entry, cc);
