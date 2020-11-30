@@ -20,6 +20,8 @@ import org.jel.game.utils.Graph;
 import org.jel.game.utils.Pair;
 
 public final class SortedStrategyImpl implements Strategy {
+	private static final double MAXIMUM_VARIANCE = 0.3;
+	private static final double FIFTY_FIFTY_PROBABILITY = 0.5;
 	private List<City> cities;
 	private final Map<City, Pair<Double, Double>> values = new HashMap<>();
 	private final List<Clan> gifts;
@@ -104,10 +106,12 @@ public final class SortedStrategyImpl implements Strategy {
 		this.values.clear();
 		StreamUtils.getCitiesAsStreamNot(cities2, clanId).forEach(a -> {
 			// Make the strategy a bit wrong to make it possible for the player to win.
-			final var soldiersA = a.getNumberOfSoldiers()
-					* (Math.random() > 0.5 ? (1 + (Math.random() % 0.3)) : (1 - (Math.random() % 0.3)));
-			final var peopleA = a.getNumberOfPeople()
-					* (Math.random() > 0.5 ? (1 + (Math.random() % 0.3)) : (1 - (Math.random() % 0.3)));
+			final var soldiersA = a.getNumberOfSoldiers() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
+					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
+			final var peopleA = a.getNumberOfPeople() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
+					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
 			this.values.put(a, new Pair<>(peopleA, soldiersA));
 		});
 		this.cities = StreamUtils

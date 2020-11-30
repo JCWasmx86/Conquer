@@ -49,7 +49,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	private final EventList events = new EventList();
 	private final StrategyProvider[] strategies;
 	private boolean isPlayersTurn = true;
-	private byte numPlayers;
+	private byte numPlayers = -1;
 	private Graph<Integer> relations;
 	private int currentRound = 1;
 	private final GamePluginData data = new GamePluginData();
@@ -193,15 +193,17 @@ public final class Game implements PluginInterface, StrategyObject {
 		final var diff = this.setup(clan, powerOfAttacker, src, destination);
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - powerOfAttacker);
 		this.data.getAttackHooks().forEach(a -> a.before(src, destination, powerOfAttacker));
-		var value = this.getRelations().getWeight(src.getClan(), destination.getClan());
+		var relationshipValue = this.getRelationship(src.getClan(), destination.getClan());
 		double numberOfSurvivingPeople;
 		final var destinationClan = destination.getClan();
 		long survivingSoldiers;
 		AttackResult result;
 		if (diff > 0) {// Attack was defeated
 			final var destinationClanObj = this.clans.get(destination.getClan());
-			final var remainingSoldiersDefender = (((diff - destination.getDefense()) / destination.getBonus())
-					/ destinationClanObj.getSoldiersDefenseStrength()) / destinationClanObj.getSoldiersStrength();
+			var remainingSoldiersDefender = (diff - destination.getDefense());
+			remainingSoldiersDefender /= destination.getBonus();
+			remainingSoldiersDefender /= destinationClanObj.getSoldiersDefenseStrength();
+			remainingSoldiersDefender /= destinationClanObj.getSoldiersStrength();
 			var surviving = (long) Math.abs(remainingSoldiersDefender);
 			final var numSoldiers = destination.getNumberOfSoldiers();
 			if (numSoldiers == 0) {
@@ -211,14 +213,14 @@ public final class Game implements PluginInterface, StrategyObject {
 			}
 			destination.setNumberOfSoldiers(surviving);
 			this.events.add(new AttackLostMessage(src, destination, powerOfAttacker));
-			value -= 5;
+			relationshipValue -= 5;
 			numberOfSurvivingPeople = Shared.randomPercentage(80, 90);
 			survivingSoldiers = surviving;
 			result = AttackResult.ATTACK_DEFEATED;
 		} else if (diff == 0) {// All soldiers are dead
 			destination.setNumberOfSoldiers(0);
 			this.events.add(new AnnihilationMessage(src, destination, powerOfAttacker));
-			value -= 7.5;
+			relationshipValue -= 7.5;
 			numberOfSurvivingPeople = Shared.randomPercentage(68, 80);
 			survivingSoldiers = 0;
 			result = AttackResult.ALL_SOLDIERS_DEAD;
@@ -228,18 +230,18 @@ public final class Game implements PluginInterface, StrategyObject {
 			cleanedDiff /= srcClan.getSoldiersOffenseStrength();
 			cleanedDiff /= srcClan.getSoldiersStrength();
 			destination.setNumberOfSoldiers((long) -cleanedDiff);
-			value -= 10;
+			relationshipValue -= 10;
 			numberOfSurvivingPeople = Shared.randomPercentage(20, 60);
 			survivingSoldiers = (long) -cleanedDiff;
 			result = AttackResult.CITY_CONQUERED;
 			this.events.add(new ConquerMessage(src, destination, powerOfAttacker));
 			destination.setClan(clan);
 		}
-		if (value < 0) {
-			value = 0;
+		if (relationshipValue < 0) {
+			relationshipValue = 0;
 		}
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
-		this.getRelations().addDirectedEdge(src.getClan(), destinationClan, value, value);
+		this.getRelations().addDirectedEdge(src.getClan(), destinationClan, relationshipValue, relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 	}
 
@@ -282,9 +284,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		// Index 0 is the clan of the player
 		final var order = IntStream.range(1, this.getNumPlayers()).boxed().collect(Collectors.toList());
 		Collections.shuffle(order);
-		for (final Integer j : order) {
-			this.executeCPUPlay(j);
-		}
+		order.forEach(this::executeCPUPlay);
 		this.isPlayersTurn = true;
 	}
 
@@ -296,8 +296,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	public double defenseStrengthOfCity(final City c) {
 		this.throwIfNull(c, "c==null");
 		final var clan = this.clans.get(c.getClan());
-		return c.getDefense() + (c.getNumberOfSoldiers() * c.getBonus() * clan.getSoldiersStrength()
-				* clan.getSoldiersDefenseStrength());
+		return c.getDefenseStrength(clan);
 	}
 
 	private void eval(int selector, int clanOne, int clanTwo, Random r) {
@@ -308,8 +307,9 @@ public final class Game implements PluginInterface, StrategyObject {
 		} else if (selector >= 4500) {
 			final var newValue = this.relations.getWeight(clanOne, clanTwo)
 					+ (Math.random() > 0.5 ? Math.random() : -Math.random());
-			this.relations.addDirectedEdge(clanOne, clanTwo, newValue < 0 ? 0 : newValue > 100 ? 100 : newValue,
-					newValue < 0 ? 0 : newValue > 100 ? 100 : newValue);
+			final var clampedToZero = newValue < 0 ? 0 : newValue;
+			final var clampedToHundred = clampedToZero > 100 ? 100 : clampedToZero;
+			this.relations.addDirectedEdge(clanOne, clanTwo, clampedToHundred, clampedToHundred);
 		}
 
 	}
@@ -440,7 +440,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		if (this.resumed) {
 			try {
 				Shared.deleteDirectory(this.directory);
-			} catch (final IOException e) {// We are done, we can simply ignore it.
+			} catch (final IOException e) {// We are done, we can simply ignore it, but still log it!
 				Shared.LOGGER.exception(e);
 			}
 		}
@@ -747,7 +747,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.checkClan(clan);
 		this.throwIfNull(c, "c==null");
 		if (maxToPay < 0) {
-			throw new IllegalArgumentException("maxToPay<0 :" + maxToPay);
+			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
 		}
 		var numberToRecruit = 0L;
 		if (!managed) {
@@ -823,13 +823,13 @@ public final class Game implements PluginInterface, StrategyObject {
 		if (destination.getId() != 0) {
 			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift,
 					this.getRelations().getWeight(source.getId(), destination.getId()), a -> {
-						double d = a < 0 ? 0 : (a > 100 ? 100 : a);
+						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);
 		} else {
 			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift,
 					this.getRelations().getWeight(source.getId(), destination.getId()), a -> {
-						double d = a < 0 ? 0 : (a > 100 ? 100 : a);
+						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);
 		}
@@ -839,9 +839,10 @@ public final class Game implements PluginInterface, StrategyObject {
 			final var a = source.getResources();
 			final var b = destination.getResources();
 			gift.getMap().entrySet().forEach(d -> {
-				int index = d.getKey().getIndex();
-				a.set(index, a.get(index) - d.getValue());
-				b.set(index, b.get(index) + d.getValue());
+				final var index = d.getKey().getIndex();
+				final var value = d.getValue();
+				a.set(index, a.get(index) - value);
+				b.set(index, b.get(index) + value);
 			});
 		}
 		return acceptedGift;
@@ -849,12 +850,16 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	void setBackground(final Image gi) {
 		this.throwIfNull(gi, "gi==null");
+		if (this.background != null) {
+			throw new UnsupportedOperationException("Can't change image!");
+		}
 		this.background = gi;
 	}
 
 	void setClans(final List<Clan> clans) {
-		if (clans == null) {
-			throw new IllegalArgumentException("clans==null");
+		this.throwIfNull(clans, "clans==null");
+		if (this.clans != null) {
+			throw new UnsupportedOperationException("Can't change clans!");
 		}
 		this.clans = clans;
 	}
@@ -866,6 +871,9 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	public void setGraph(final Graph<City> g) {
 		this.throwIfNull(g, "g==null");
+		if (this.cities != null) {
+			throw new UnsupportedOperationException("Can't change graph!");
+		}
 		this.cities = g;
 	}
 
@@ -877,6 +885,8 @@ public final class Game implements PluginInterface, StrategyObject {
 	void setPlayers(final byte numPlayers) {
 		if (numPlayers <= 0) {
 			throw new IllegalArgumentException("numPlayers<=0");
+		} else if (this.numPlayers != -1) {
+			throw new UnsupportedOperationException("Can't change number of players");
 		}
 		this.numPlayers = numPlayers;
 	}
@@ -891,6 +901,9 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	void setRelations(final Graph<Integer> relations) {
 		this.throwIfNull(relations, "relations==null");
+		if (this.relations != null) {
+			throw new UnsupportedOperationException("Can't change relations");
+		}
 		this.relations = relations;
 	}
 

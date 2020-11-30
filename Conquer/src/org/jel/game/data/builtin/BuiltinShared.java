@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
+import org.jel.game.data.Gift;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
@@ -180,7 +181,15 @@ public final class BuiltinShared {
 		});
 	}
 
+	static double sum(Clan clan) {
+		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
+	}
+
 	private BuiltinShared() {
 
+	}
+
+	static double sum(Gift gift) {
+		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 }
