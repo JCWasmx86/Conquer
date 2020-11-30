@@ -27,8 +27,8 @@ public final class OffensiveStrategyImpl implements Strategy {
 			return false;
 		} else {
 			final var cities = strategyObject.getCities();
-			final var numOwn = StreamUtils.getCitiesAsStream(cities, destinationClan.getId()).count();
-			final var numOther = StreamUtils.getCitiesAsStream(cities, sourceClan.getId()).count();
+			final var numOwn = StreamUtils.getCitiesAsStream(cities, destinationClan).count();
+			final var numOther = StreamUtils.getCitiesAsStream(cities, sourceClan).count();
 			if (numOwn < numOther) {// "Alliance" with stronger clans
 				newValue.accept(oldValue + (Math.random() * 120 * (numOther / (double) numOwn)));
 				return true;

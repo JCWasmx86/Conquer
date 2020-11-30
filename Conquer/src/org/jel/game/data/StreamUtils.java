@@ -50,6 +50,10 @@ public final class StreamUtils {
 		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == clan);
 	}
 
+	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final Clan clan) {
+		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == clan.getId());
+	}
+
 	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final int clan,
 			final Comparator<City> comp) {
 		return StreamUtils.getCitiesAsStream(cities, clan).sorted(comp);

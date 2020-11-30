@@ -17,7 +17,7 @@ public final class IncreaseGrowth implements Plugin {
 
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
-		StreamUtils.getCitiesAsStream(cities).forEach(a -> {
+		StreamUtils.forEach(cities, a -> {
 			if (a.getGrowth() < 1) {
 				a.setGrowth(a.getGrowth() * (1 + (Math.random() % IncreaseGrowth.MAXIMUM_INCREASE)));
 			}

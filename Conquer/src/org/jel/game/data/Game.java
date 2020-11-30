@@ -217,7 +217,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		long survivingSoldiers;
 		AttackResult result;
 		if (diff > 0) {// Attack was defeated
-			final var destinationClanObj = this.clans.get(destination.getClan());
+			final var destinationClanObj = this.getClan(destination);
 			var remainingSoldiersDefender = (diff - destination.getDefense());
 			remainingSoldiersDefender /= destination.getBonus();
 			remainingSoldiersDefender /= destinationClanObj.getSoldiersDefenseStrength();
@@ -246,7 +246,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			result = AttackResult.ALL_SOLDIERS_DEAD;
 		} else {// Conquered
 			var cleanedDiff = diff;
-			final var srcClan = this.getClan(src.getClan());
+			final var srcClan = this.getClan(src);
 			cleanedDiff /= srcClan.getSoldiersOffenseStrength();
 			cleanedDiff /= srcClan.getSoldiersStrength();
 			destination.setNumberOfSoldiers((long) -cleanedDiff);
@@ -264,6 +264,10 @@ public final class Game implements PluginInterface, StrategyObject {
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
 		this.getRelations().addDirectedEdge(src.getClan(), destinationClan, relationshipValue, relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
+	}
+
+	private Clan getClan(City city) {
+		return getClan(city.getClan());
 	}
 
 	private long calculatePowerOfAttacker(final City src, final byte clan, final City destination,
@@ -480,9 +484,9 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.data.getCityKeyHandlers();
 	}
 
-	public Clan getClan(final int i) {
-		this.checkClan(i);
-		return this.clans.get(i);
+	public Clan getClan(final int clanId) {
+		this.checkClan(clanId);
+		return this.clans.get(clanId);
 	}
 
 	public List<String> getClanNames() {
@@ -732,24 +736,24 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void payMoney() {
-		for (final var c : this.getCities().getValues(new City[0])) {
-			final var clan = this.clans.get(c.getClan());
-			final var toGet = (c.getNumberOfPeople() * Shared.COINS_PER_PERSON_PER_ROUND)
-					- (c.getNumberOfSoldiers() * Shared.COINS_PER_SOLDIER_PER_ROUND);
+		for (final var city : this.getCities().getValues(new City[0])) {
+			final var clan = this.getClan(city);
+			final var toGet = (city.getNumberOfPeople() * Shared.COINS_PER_PERSON_PER_ROUND)
+					- (city.getNumberOfSoldiers() * Shared.COINS_PER_SOLDIER_PER_ROUND);
 			clan.setCoins(clan.getCoins() + toGet);
 		}
-		for (final Clan c : this.clans) {
+		for (final Clan clan : this.clans) {
 			this.data.getMoneyHooks().forEach(a -> a
-					.moneyPayed(StreamUtils.getCitiesAsStream(this.cities, c.getId()).collect(Collectors.toList()), c));
+					.moneyPayed(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan));
 		}
 	}
 
 	private void produceResources() {
-		StreamUtils.getCitiesAsStream(this.getCities()).forEach(c -> {
-			final var clan = this.clans.get(c.getClan());
+		StreamUtils.forEach(this.getCities(), city -> {
+			final var clan = this.clans.get(city.getClan());
 			final var resourcesOfClan = clan.getResources();
 			for (var i = 0; i < resourcesOfClan.size(); i++) {
-				var productions = (c.getNumberOfPeople() * c.getProductions().get(i));
+				var productions = (city.getNumberOfPeople() * city.getProductions().get(i));
 				resourcesOfClan.set(i, resourcesOfClan.get(i) + productions);
 				clan.getResourceStats().set(i, clan.getResourceStats().get(i) + productions);
 			}
@@ -822,7 +826,8 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void sanityCheckForGrowth() {
-		StreamUtils.forEach(this.cities, a -> a.getGrowth() > Game.GROWTH_LIMIT, a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
+		StreamUtils.forEach(this.cities, a -> a.getGrowth() > Game.GROWTH_LIMIT,
+				a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
 		StreamUtils.forEach(this.cities, a -> {
 			while (a.getGrowth() > Game.ALTERNATIVE_GROWTH_LIMIT) {
 				a.setGrowth(a.getGrowth() * Game.WEAK_GROWTH_REDUCE_FACTOR);
