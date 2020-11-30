@@ -42,6 +42,24 @@ import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
 
 public final class Game implements PluginInterface, StrategyObject {
+	private static final int MAX_LEVEL = 1000;
+	private static final double GROWTH_REDUCE_FACTOR = 0.95;
+	private static final double GROWTH_LIMIT = 1.10;
+	private static final double WEAK_GROWTH_REDUCE_FACTOR = 0.9;
+	private static final double ALTERNATIVE_GROWTH_LIMIT = 1.075;
+	private static final int SOFT_POPULATION_LIMIT = 1_000_000;
+	private static final int MAX_SELECTOR_VALUE = 5000;
+	private static final int RETAINED_PEOPLE = 5;
+	private static final int FALLBACK_POPULATION = 15;
+	private static final int MAXIMUM_SURVIVING_PEOPLE_CONQUERED = 60;
+	private static final int MINIMUM_SURVIVING_PEOPLE_CITY_CONQUERED = 20;
+	private static final int MAXIMUM_SURVIVING_PEOPLE_ALL_DEAD = 80;
+	private static final int MINIMUM_SURVIVING_PEOPLE_ALL_DEAD = 68;
+	private static final int MAXIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED = 90;
+	private static final int MINIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED = 80;
+	private static final int RELATIONSHIP_CHANGE_CITY_CONQUERED = 10;
+	private static final double RELATIONSHIP_CHANGE_ALL_DEAD = 7.5;
+	private static final int RELATIONSHIP_CHANGE_ATTACK_DEFEATED = 5;
 	private final Random random = new SecureRandom();
 	private List<Clan> clans;
 	private Image background;
@@ -213,15 +231,17 @@ public final class Game implements PluginInterface, StrategyObject {
 			}
 			destination.setNumberOfSoldiers(surviving);
 			this.events.add(new AttackLostMessage(src, destination, powerOfAttacker));
-			relationshipValue -= 5;
-			numberOfSurvivingPeople = Shared.randomPercentage(80, 90);
+			relationshipValue -= Game.RELATIONSHIP_CHANGE_ATTACK_DEFEATED;
+			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED,
+					Game.MAXIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED);
 			survivingSoldiers = surviving;
 			result = AttackResult.ATTACK_DEFEATED;
 		} else if (diff == 0) {// All soldiers are dead
 			destination.setNumberOfSoldiers(0);
 			this.events.add(new AnnihilationMessage(src, destination, powerOfAttacker));
-			relationshipValue -= 7.5;
-			numberOfSurvivingPeople = Shared.randomPercentage(68, 80);
+			relationshipValue -= Game.RELATIONSHIP_CHANGE_ALL_DEAD;
+			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_ALL_DEAD,
+					Game.MAXIMUM_SURVIVING_PEOPLE_ALL_DEAD);
 			survivingSoldiers = 0;
 			result = AttackResult.ALL_SOLDIERS_DEAD;
 		} else {// Conquered
@@ -230,8 +250,9 @@ public final class Game implements PluginInterface, StrategyObject {
 			cleanedDiff /= srcClan.getSoldiersOffenseStrength();
 			cleanedDiff /= srcClan.getSoldiersStrength();
 			destination.setNumberOfSoldiers((long) -cleanedDiff);
-			relationshipValue -= 10;
-			numberOfSurvivingPeople = Shared.randomPercentage(20, 60);
+			relationshipValue -= Game.RELATIONSHIP_CHANGE_CITY_CONQUERED;
+			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_CITY_CONQUERED,
+					Game.MAXIMUM_SURVIVING_PEOPLE_CONQUERED);
 			survivingSoldiers = (long) -cleanedDiff;
 			result = AttackResult.CITY_CONQUERED;
 			this.events.add(new ConquerMessage(src, destination, powerOfAttacker));
@@ -418,8 +439,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.currentRound++;
 		final var end = System.nanoTime();
 		var diff = ((double) end - start);
-		diff /= 1000;// 10^-6
-		diff /= 1000;// 10^-3
+		diff /= 1000;// 10^-6 s
+		diff /= 1000;// 10^-3 s
 		Shared.LOGGER.message("CPUPLAY: " + diff + "ms");
 		this.isPlayersTurn = true;
 	}
@@ -571,7 +592,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			if ((lNew - l) == 0) {
 				lNew++;
 			}
-			a.setNumberOfPeople(lNew < 0 ? 15 : lNew);
+			a.setNumberOfPeople(lNew < 0 ? Game.FALLBACK_POPULATION : lNew);
 		});
 	}
 
@@ -728,9 +749,9 @@ public final class Game implements PluginInterface, StrategyObject {
 			final var clan = this.clans.get(c.getClan());
 			final var resourcesOfClan = clan.getResources();
 			for (var i = 0; i < resourcesOfClan.size(); i++) {
-				resourcesOfClan.set(i, resourcesOfClan.get(i) + (c.getNumberOfPeople() * c.getProductions().get(i)));
-				clan.getResourceStats().set(i,
-						clan.getResourceStats().get(i) + (c.getNumberOfPeople() * c.getProductions().get(i)));
+				var productions = (c.getNumberOfPeople() * c.getProductions().get(i));
+				resourcesOfClan.set(i, resourcesOfClan.get(i) + productions);
+				clan.getResourceStats().set(i, clan.getResourceStats().get(i) + productions);
 			}
 		});
 	}
@@ -751,11 +772,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		}
 		var numberToRecruit = 0L;
 		if (!managed) {
-			if ((maxToPay < 0) || (c.getNumberOfPeople() < 5)) {
+			if ((maxToPay < 0) || (c.getNumberOfPeople() < Game.RETAINED_PEOPLE)) {
 				return;
 			}
 			numberToRecruit = (int) (maxToPay / Shared.COINS_PER_SOLDIER_INITIAL);
-			numberToRecruit = Math.min(c.getNumberOfPeople() - 5, numberToRecruit);
+			numberToRecruit = Math.min(c.getNumberOfPeople() - Game.RETAINED_PEOPLE, numberToRecruit);
 			numberToRecruit = this.maximumNumberOfSoldiersToRecruit(clan, numberToRecruit);
 			if (numberToRecruit == 0) {
 				return;
@@ -782,13 +803,14 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	private void relationshipEvents() {
 		final var r = new Random(System.nanoTime());
-		final var numTries = r.nextInt((this.clans.size() / 2) + 1);
+		var size = this.clans.size();
+		final var numTries = r.nextInt((size / 2) + 1);
 		for (var i = 0; i < numTries; i++) {
-			final var selector = r.nextInt(5000);
-			final var clanOne = r.nextInt(this.clans.size());
-			var clanTwo = r.nextInt(this.clans.size());
+			final var selector = r.nextInt(Game.MAX_SELECTOR_VALUE);
+			final var clanOne = r.nextInt(size);
+			var clanTwo = r.nextInt(size);
 			while (clanTwo == clanOne) {
-				clanTwo = r.nextInt(this.clans.size());
+				clanTwo = r.nextInt(size);
 			}
 			this.eval(selector, clanOne, clanTwo, r);
 		}
@@ -800,12 +822,12 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void sanityCheckForGrowth() {
-		StreamUtils.forEach(this.cities, a -> a.getGrowth() > 1.10, a -> a.setGrowth(a.getGrowth() * 0.95));
+		StreamUtils.forEach(this.cities, a -> a.getGrowth() > Game.GROWTH_LIMIT, a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
 		StreamUtils.forEach(this.cities, a -> {
-			while (a.getGrowth() > 1.075) {
-				a.setGrowth(a.getGrowth() * 0.9);
+			while (a.getGrowth() > Game.ALTERNATIVE_GROWTH_LIMIT) {
+				a.setGrowth(a.getGrowth() * Game.WEAK_GROWTH_REDUCE_FACTOR);
 			}
-			if ((a.getNumberOfPeople() > 1_000_000) && (a.getGrowth() > 1)) {
+			if ((a.getNumberOfPeople() > Game.SOFT_POPULATION_LIMIT) && (a.getGrowth() > 1)) {
 				a.setGrowth(1.001);
 			}
 		});
@@ -937,7 +959,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.checkClan(clan);
 		final var c = this.clans.get(clan);
 		final var currLevel = c.getSoldiersDefenseLevel();
-		if (currLevel == 1000) {
+		if (currLevel == Game.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
@@ -956,7 +978,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(city, "city==null");
 		final var coins = this.getCoins();
 		final var costs = Shared.costs(city.getLevels().get(Resource.values().length) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == 1000)) {
+		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == Game.MAX_LEVEL)) {
 			return false;
 		}
 		this.setCoins(clan, coins.get(clan) - costs);
@@ -981,7 +1003,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.checkClan(i);
 		final var c = this.clans.get(i);
 		final var currLevel = c.getSoldiersOffenseLevel();
-		if (currLevel == 1000) {
+		if (currLevel == Game.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
@@ -1002,7 +1024,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		final var coins = this.getCoins();
 		final var index = resc.getIndex();
 		final var costs = Shared.costs(city.getLevels().get(index) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(index) == 1000)) {
+		if ((costs > coins.get(clan)) || (city.getLevels().get(index) == Game.MAX_LEVEL)) {
 			return false;
 		}
 		this.setCoins(clan, coins.get(clan) - costs);
@@ -1027,7 +1049,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.checkClan(i);
 		final var c = this.clans.get(i);
 		final var currLevel = c.getSoldiersLevel();
-		if (currLevel == 1000) {
+		if (currLevel == Game.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForSoldiers(currLevel + 1);
