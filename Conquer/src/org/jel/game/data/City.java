@@ -8,6 +8,9 @@ import java.util.List;
  * This class represents a city.
  */
 public final class City implements Comparable<City> {
+	private static final int MAX_VARIANCE = 101;
+	private static final long BASE_POPULATION = 100L;
+	private static final int PEOPLE_THRESHOLD = 50;
 	private double bonus;
 	private byte clan;
 	private double defense;
@@ -59,11 +62,11 @@ public final class City implements Comparable<City> {
 	}
 
 	void endOfRound() {
-		if (this.numberOfPeople <= 50) {
+		if (this.numberOfPeople <= City.PEOPLE_THRESHOLD) {
 			this.numberOfRoundsWithZeroPeople++;
 			if (this.numberOfRoundsWithZeroPeople == 3) {
 				this.numberOfRoundsWithZeroPeople = 0;
-				this.setNumberOfPeople(100L + Shared.getRandomNumber(101));
+				this.setNumberOfPeople(City.BASE_POPULATION + Shared.getRandomNumber(City.MAX_VARIANCE));
 			}
 		} else {
 			this.numberOfRoundsWithZeroPeople = 0;

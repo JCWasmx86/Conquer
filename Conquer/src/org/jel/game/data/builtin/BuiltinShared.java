@@ -20,11 +20,16 @@ import org.jel.game.utils.Graph;
 
 public final class BuiltinShared {
 
+	private static final int GOOD_RELATION = 75;
+	private static final int MAX_ITERATIONS = 100;
+	private static final int COINS_TO_RETAIN = 20;
+
 	static void moderateAttack(final byte clan, final City source, final Graph<City> graph,
 			final StrategyObject object) {
 		// Find all cities around the source of clans with a relationship<75
 		final var citiesOfEnemies = StreamUtils
-				.getCitiesAroundCityNot(graph, source, a -> object.getRelationship(clan, a.getClan()) < 75)
+				.getCitiesAroundCityNot(graph, source,
+						a -> object.getRelationship(clan, a.getClan()) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
 		if (!citiesOfEnemies.isEmpty()) {
 			// Get weakest city
@@ -45,10 +50,10 @@ public final class BuiltinShared {
 			// some.
 			final var diff = (Shared.COINS_PER_PERSON_PER_ROUND * c.getNumberOfPeople())
 					- (Shared.COINS_PER_SOLDIER_PER_ROUND * c.getNumberOfSoldiers());
-			if ((diff < -20) && (citiesOfClan.size() > 1)) {
+			if ((diff < -BuiltinShared.COINS_TO_RETAIN) && (citiesOfClan.size() > 1)) {
 				object.moveSoldiers(c, object.reachableCities(c), clanId, false, null, 0);
-			} else if (diff > 20) {
-				object.recruitSoldiers(diff - 20, clanId, c, false, 0);
+			} else if (diff > BuiltinShared.COINS_TO_RETAIN) {
+				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, clanId, c, false, 0);
 			}
 			// Do some expansion
 			BuiltinShared.moderateAttack(clanId, c, graph, object);
@@ -152,7 +157,7 @@ public final class BuiltinShared {
 			while (true) {
 				final var b = object.upgradeDefense(clan, a);
 				cnter++;
-				if ((!b) || (cnter >= 100)) {
+				if ((!b) || (cnter >= BuiltinShared.MAX_ITERATIONS)) {
 					break;
 				}
 			}
