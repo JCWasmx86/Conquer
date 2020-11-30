@@ -3,6 +3,7 @@ package org.jel.game.data;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,10 @@ public final class XMLReader {
 		} catch (final ClassNotFoundException cnfe) {
 			return Class.forName(s);
 		}
+	}
+
+	private <T> List<T> distinct(Collection<T> collection) {
+		return collection.stream().distinct().collect(Collectors.toList());
 	}
 
 	private List<Plugin> loadPlugins(final List<String> pluginNames) {
@@ -116,11 +121,8 @@ public final class XMLReader {
 		}
 		final List<Plugin> plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
 		final List<StrategyProvider> strategies = instantiate ? this.loadStrategies(strategyNames) : new ArrayList<>();
-		return new GlobalContext(installedMaps.stream().distinct().collect(Collectors.toList()),
-				plugins.stream().distinct().collect(Collectors.toList()),
-				strategies.stream().distinct().collect(Collectors.toList()),
-				pluginNames.stream().distinct().collect(Collectors.toList()),
-				strategyNames.stream().distinct().collect(Collectors.toList()));
+		return new GlobalContext(this.distinct(installedMaps), this.distinct(plugins), this.distinct(strategies),
+				this.distinct(pluginNames), this.distinct(strategyNames));
 	}
 
 	private void readPlugins(final Node node, final List<String> pluginNames) {

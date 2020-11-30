@@ -13,16 +13,15 @@ import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.utils.Graph;
 
 public final class DefensiveStrategyImpl implements Strategy {
+	private static final int MAX_ITERATIONS = 100;
 	private Graph<City> graph;
 	private StrategyObject object;
 
 	@Override
 	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
 			DoubleConsumer newValue, StrategyObject strategyObject) {
-		final var own = destinationClan.getCoins()
-				+ destinationClan.getResources().stream().mapToDouble(Double::doubleValue).sum();
-		final var giftValue = gift.getNumberOfCoins()
-				+ gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
+		final var own =BuiltinShared.sum(destinationClan);
+		final var giftValue =BuiltinShared.sum(gift);
 		final var prop = own == 0 ? Math.random() * 2 : (giftValue / own);
 		newValue.accept(oldValue + (prop * 0.05 * strategyObject.getRelationship(sourceClan, destinationClan)));
 		return true;
@@ -72,7 +71,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		}).forEach(a -> {
 			var b = true;
 			var cnter = 0;
-			while (b && (cnter < 100)) {
+			while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
 				b = this.object.upgradeDefense(i, a);
 				cnter++;
 			}
@@ -82,19 +81,19 @@ public final class DefensiveStrategyImpl implements Strategy {
 	private void defensiveUpgrades(final byte i) {
 		var b = true;
 		var cnter = 0;
-		while (b && (cnter < 100)) {
+		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
 			b = this.object.upgradeDefense(i);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
-		while (b && (cnter < 100)) {
+		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
 			b = this.object.upgradeSoldiers(i);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
-		while (b && (cnter < 100)) {
+		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
 			b = this.object.upgradeOffense(i);
 			cnter++;
 		}

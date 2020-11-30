@@ -11,20 +11,21 @@ import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.utils.Graph;
 
 public final class ModerateStrategyImpl implements Strategy {
+	private static final double BIG_RELATIONSHIP_INCREASE_FACTOR = 7.3;
+	private static final int SMALL_RELATIONSHIP_INCREASE_FACTOR = 5;
+
 	@Override
 	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
 			DoubleConsumer newValue, StrategyObject strategyObject) {
 		if (Math.random() < (1 - (strategyObject.getRelationship(sourceClan, destinationClan) * 0.1))) {
 			return false;
 		}
-		final var pref = gift.getNumberOfCoins()
-				+ gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
-		final var own = destinationClan.getCoins()
-				+ destinationClan.getResources().stream().mapToDouble(Double::doubleValue).sum();
+		final var pref = BuiltinShared.sum(gift);
+		final var own = BuiltinShared.sum(destinationClan);
 		if (pref > own) {
-			newValue.accept(oldValue + ((pref / own) * 5));
+			newValue.accept(oldValue + ((pref / own) * ModerateStrategyImpl.SMALL_RELATIONSHIP_INCREASE_FACTOR));
 		} else {
-			newValue.accept(oldValue + ((pref / own) * 7.3));
+			newValue.accept(oldValue + ((pref / own) * ModerateStrategyImpl.BIG_RELATIONSHIP_INCREASE_FACTOR));
 		}
 		return true;
 	}

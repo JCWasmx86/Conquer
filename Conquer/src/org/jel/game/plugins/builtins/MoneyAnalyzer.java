@@ -14,6 +14,7 @@ import org.jel.game.plugins.PluginInterface;
 import org.jel.game.utils.Graph;
 
 public final class MoneyAnalyzer implements Plugin, MoneyHook {
+	private static final int MAX_ITERATIONS = 12000;
 	private final Random random = new Random();
 	private EventList events;
 	private int currentRound = 0;
@@ -45,7 +46,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 		final var soldiers = Math.abs(clan.getCoins()) / Shared.COINS_PER_SOLDIER_PER_ROUND;
 		var num = 0L;
 		var cnter = 0;
-		while ((num < soldiers) && (cnter < 12000)) {
+		while ((num < soldiers) && (cnter < MoneyAnalyzer.MAX_ITERATIONS)) {
 			final var idx = this.random.nextInt(cities.size());
 			final var c = cities.get(idx);
 			final var percentage = this.random.nextDouble();

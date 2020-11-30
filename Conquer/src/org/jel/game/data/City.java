@@ -121,6 +121,17 @@ public final class City implements Comparable<City> {
 		return this.defense;
 	}
 
+	public double getDefenseStrength(Clan clan) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan == null");
+		}
+		if (clan.getId() != this.clan) {
+			throw new IllegalArgumentException("Wrong clan passed!");
+		}
+		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()
+				* clan.getSoldiersDefenseStrength());
+	}
+
 	/**
 	 * Returns a handle to the game object
 	 *

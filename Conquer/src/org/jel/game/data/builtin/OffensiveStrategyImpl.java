@@ -14,13 +14,16 @@ import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.utils.Graph;
 
 public final class OffensiveStrategyImpl implements Strategy {
+	private static final double OFFENSIVE_UPGRADE_PROBABILITY = 0.15;
+	private static final double DECLINE_GIFT_PROBABILITY = 0.875;
+	private static final int MAX_ITERATIONS_PER_ROUND = 100;
 	private StrategyObject object;
 	private Graph<City> graph;
 
 	@Override
 	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
 			DoubleConsumer newValue, StrategyObject strategyObject) {
-		if (Math.random() > 0.875) {
+		if (Math.random() > OffensiveStrategyImpl.DECLINE_GIFT_PROBABILITY) {
 			return false;
 		} else {
 			final var cities = strategyObject.getCities();
@@ -45,7 +48,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 			if (action == OffensiveStrategy.EXPAND) {
 				BuiltinShared.offensiveAttack(clanId, clan, cities, obj);
 			} else {
-				if (Math.random() < 0.15) {
+				if (Math.random() < OffensiveStrategyImpl.OFFENSIVE_UPGRADE_PROBABILITY) {
 					this.offensiveResourcesUpgrade(clanId, clan);
 				} else {
 					BuiltinShared.moderateResourcesUpgrade(cities, obj, clanId, clan);
@@ -107,13 +110,13 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private void offensiveSoldierUpgrading(final byte i) {
 		var b = true;
 		var cnter = 0;
-		while (b && (cnter < 100)) {
+		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
 			b = this.object.upgradeOffense(i);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
-		while (b && (cnter < 100)) {
+		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
 			b = this.object.upgradeSoldiers(i);
 			cnter++;
 		}

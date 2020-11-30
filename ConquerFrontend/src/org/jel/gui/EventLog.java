@@ -71,11 +71,8 @@ final class EventLog extends JFrame implements MessageListener {
 	private final JScrollPane contentPane;
 	private final Timer timer;
 	private final JCheckBoxMenuItem showGood;
-
 	private final JCheckBoxMenuItem showBad;
-
 	private Color defaultColor;
-
 	private final AbstractButton showNeutral;
 
 	private EventLog() {

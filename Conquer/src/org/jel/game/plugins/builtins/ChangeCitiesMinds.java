@@ -10,6 +10,8 @@ import org.jel.game.plugins.Plugin;
 import org.jel.game.utils.Graph;
 
 public final class ChangeCitiesMinds implements Plugin {
+	private static final double INSTANT_CLAN_CHANGE = 0.05;
+	private static final int PROBABILITY_NO_CHANGE_OF_CLAN = 75;
 	private final Random random = new Random();
 
 	private boolean evalClanChange(final double soldiersToCivilians, final City c, final byte otherClan) {
@@ -42,7 +44,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
 		StreamUtils.getCitiesAsStream(cities).forEach(c -> {
-			if (StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == c.getClan()).count() == 1) {
+			if (StreamUtils.getCitiesAsStream(cities,c.getClan()).count() == 1) {
 				return;
 			}
 			final var oldClan = c.getClan();
@@ -58,7 +60,7 @@ public final class ChangeCitiesMinds implements Plugin {
 					break;
 				}
 			}
-			if ((!canChangeClan || (otherClan == c.getClan())) || (this.random.nextInt(100) < 75)) {
+			if ((!canChangeClan || (otherClan == c.getClan())) || (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
 			}
 			var changedClan = false;
@@ -69,7 +71,7 @@ public final class ChangeCitiesMinds implements Plugin {
 				soldiersToCivilians = 1;
 				Shared.LOGGER.exception(ae);
 			}
-			if (soldiersToCivilians < 0.05) {
+			if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {
 				c.setClan(otherClan);
 				changedClan = true;
 			} else {
