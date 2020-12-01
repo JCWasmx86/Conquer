@@ -266,10 +266,6 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 	}
 
-	private Clan getClan(City city) {
-		return getClan(city.getClan());
-	}
-
 	private long calculatePowerOfAttacker(final City src, final byte clan, final City destination,
 			final boolean managed, final boolean reallyPlayer, final long numberOfSoldiers) {
 		if (!managed) {
@@ -484,6 +480,10 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.data.getCityKeyHandlers();
 	}
 
+	private Clan getClan(City city) {
+		return this.getClan(city.getClan());
+	}
+
 	public Clan getClan(final int clanId) {
 		this.checkClan(clanId);
 		return this.clans.get(clanId);
@@ -629,6 +629,14 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.cities.initCache();
 	}
 
+	public boolean isDead(Clan clan) {
+		return this.isDead(clan.getId());
+	}
+
+	public boolean isDead(int clan) {
+		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
+	}
+
 	private boolean isInFriendlyCountry(final City c) {
 		return this.cities.getConnected(c).stream().filter(a -> a.getClan() != c.getClan()).count() == 0;
 	}
@@ -753,7 +761,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			final var clan = this.clans.get(city.getClan());
 			final var resourcesOfClan = clan.getResources();
 			for (var i = 0; i < resourcesOfClan.size(); i++) {
-				var productions = (city.getNumberOfPeople() * city.getProductions().get(i));
+				final var productions = (city.getNumberOfPeople() * city.getProductions().get(i));
 				resourcesOfClan.set(i, resourcesOfClan.get(i) + productions);
 				clan.getResourceStats().set(i, clan.getResourceStats().get(i) + productions);
 			}
@@ -801,19 +809,22 @@ public final class Game implements PluginInterface, StrategyObject {
 		resourcesOfClan.set(Resource.WOOD.getIndex(), woodNew);
 		resourcesOfClan.set(Resource.STONE.getIndex(), stoneNew);
 		this.setCoins(clan, this.getCoins().get(clan) - (numberToRecruit * Shared.COINS_PER_SOLDIER_INITIAL));
-		final var finalnumberToRecruit = numberToRecruit;
-		this.data.getRecruitHooks().forEach(a -> a.recruited(c, finalnumberToRecruit));
+		final var finalNumberToRecruit = numberToRecruit;
+		this.data.getRecruitHooks().forEach(a -> a.recruited(c, finalNumberToRecruit));
 	}
 
 	private void relationshipEvents() {
 		final var r = new Random(System.nanoTime());
-		var size = this.clans.size();
+		final var size = this.clans.size();
 		final var numTries = r.nextInt((size / 2) + 1);
 		for (var i = 0; i < numTries; i++) {
 			final var selector = r.nextInt(Game.MAX_SELECTOR_VALUE);
 			final var clanOne = r.nextInt(size);
+			if (this.isDead(clanOne)) {
+				continue;
+			}
 			var clanTwo = r.nextInt(size);
-			while (clanTwo == clanOne) {
+			while ((clanTwo == clanOne) && !this.isDead(clanTwo)) {
 				clanTwo = r.nextInt(size);
 			}
 			this.eval(selector, clanOne, clanTwo, r);
@@ -845,6 +856,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(gift, "gift==null");
 		if (source.getId() == destination.getId()) {
 			throw new IllegalArgumentException("source==destination");
+		} else if (this.isDead(destination)) {
+			throw new IllegalArgumentException("Destination clan is extinct!");
 		}
 		boolean acceptedGift;
 		if (destination.getId() != 0) {

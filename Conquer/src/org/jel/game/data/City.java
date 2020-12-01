@@ -11,24 +11,22 @@ public final class City implements Comparable<City> {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
-	private double bonus;
-	private byte clan;
-	private double defense;
+	private double bonus = -1;
+	private byte clan = -1;
+	private double defense = -1;
 	private final Game game;
 	private double growth;
 	private Image image;
 	private List<Integer> levels = new ArrayList<>();
 	private String name;
-	private long numAttacksOfPlayer = 0;
+	private long numAttacksOfPlayer = -1;
 	private long numberOfPeople;
 	private long numberOfSoldiers;
 	private List<Double> productions;
 	private int numberOfRoundsWithZeroPeople = 0;
-	private int x;
-
-	private int y;
-
-	private double oldOne = 1d;
+	private int x = -1;
+	private int y = -1;
+	private double oldOne = 1;
 
 	/**
 	 * Create a new City.
@@ -49,6 +47,9 @@ public final class City implements Comparable<City> {
 	 * Increases the number of attacks of the player.
 	 */
 	void attackByPlayer() {
+		if (this.numAttacksOfPlayer == -1) {
+			this.numAttacksOfPlayer++;
+		}
 		this.numAttacksOfPlayer++;
 	}
 
@@ -252,10 +253,19 @@ public final class City implements Comparable<City> {
 	}
 
 	void setAttacksOfPlayer(long num) {
+		if (this.numAttacksOfPlayer == -1) {
+			throw new UnsupportedOperationException(
+					"Can't change the number of attacks of the player after it was set!");
+		}
 		this.numAttacksOfPlayer = num;
 	}
 
 	public void setClan(final int id) {
+		if (id < 0) {
+			throw new IllegalArgumentException("id < 0");
+		} else if (id > Byte.MAX_VALUE) {
+			throw new IllegalArgumentException("id > Byte.MAX_VALUE");
+		}
 		this.clan = (byte) id;
 	}
 
@@ -271,6 +281,9 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setDefenseBonus(final double bonus) {
+		if (this.bonus != -1) {
+			throw new UnsupportedOperationException("Can't change the defense bonus of a city!");
+		}
 		this.bonus = bonus;
 	}
 
@@ -279,6 +292,9 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setImage(final Image image) {
+		if (this.image != null) {
+			throw new UnsupportedOperationException("Can't change image of city!");
+		}
 		this.image = image;
 	}
 
@@ -287,6 +303,9 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setName(final String name) {
+		if (this.name != null) {
+			throw new UnsupportedOperationException("Can't change name of city!");
+		}
 		this.name = name;
 	}
 
@@ -313,14 +332,29 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setProductionRates(final List<Double> productions) {
+		if (this.productions != null) {
+			throw new UnsupportedOperationException("Can't change the productions!");
+		} else if (productions == null) {
+			throw new IllegalArgumentException("productions == null");
+		}
 		this.productions = productions;
 	}
 
 	public void setX(final int x) {
+		if (x != -1) {
+			throw new UnsupportedOperationException("Can't change the X-Position!");
+		} else if (x < 0) {
+			throw new IllegalArgumentException("x < 0");
+		}
 		this.x = x;
 	}
 
 	public void setY(final int y) {
+		if (y != -1) {
+			throw new UnsupportedOperationException("Can't change the Y-Position!");
+		} else if (y < 0) {
+			throw new IllegalArgumentException("y < 0");
+		}
 		this.y = y;
 	}
 

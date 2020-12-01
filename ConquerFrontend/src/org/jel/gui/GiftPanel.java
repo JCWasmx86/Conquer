@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import org.jel.game.data.Game;
 import org.jel.game.data.Gift;
@@ -38,11 +40,8 @@ final class GiftPanel extends JPanel {
 		final var ms = new MoneySlider(this.game);
 		ms.init();
 		this.add(ms);
-		final var strings = new String[this.game.getClans().size() - 1];
-		for (var i = 1; i < this.game.getClans().size(); i++) {
-			strings[i - 1] = this.game.getClanNames().get(i);
-		}
-		this.box = new JComboBox<>(strings);
+		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> (a.getId() != 0) && !this.game.isDead(a))
+				.collect(Collectors.toList()).toArray(new String[0]));
 		this.button = new JButton("Give gift");
 		this.button.addActionListener(a -> {
 			final var gift = new Gift(this.sliders.stream().map(ResourceSlider::getValue).collect(Collectors.toList()),
@@ -61,6 +60,13 @@ final class GiftPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 		p.add(this.box);
 		p.add(this.button);
+		new Timer(17, e -> {
+			final var model = new DefaultComboBoxModel<>(GiftPanel.this.game.getClans().stream()
+					.filter(a -> (a.getId() != 0) && !GiftPanel.this.game.isDead(a)).collect(Collectors.toList())
+					.toArray(new String[0]));
+			GiftPanel.this.box.setModel(model);
+
+		}).start();
 		this.add(p);
 	}
 

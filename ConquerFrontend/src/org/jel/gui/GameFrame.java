@@ -204,7 +204,7 @@ final class GameFrame extends JFrame implements WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		if (!game.onlyOneClanAlive()) {
+		if (!this.game.onlyOneClanAlive()) {
 			this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 			final var status = JOptionPane.showConfirmDialog(null, "Do you really want to quit?", "Exit",
 					JOptionPane.YES_NO_OPTION);
