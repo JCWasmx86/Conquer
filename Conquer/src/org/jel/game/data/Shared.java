@@ -14,6 +14,7 @@ public final class Shared {
 	public static final String BASE_DIRECTORY = System.getProperty("os.name").toLowerCase().contains("windows")
 			? System.getProperty("user.home") + "\\Appdata\\Roaming\\.conquer\\"
 			: System.getProperty("user.home") + "/.config/.conquer/";
+	public static final int PLAYER_CLAN = 0;
 	public static final Logger LOGGER;
 	private static final Logger LOGGER_LEVEL1;
 	private static final Logger LOGGER_LEVEL2;

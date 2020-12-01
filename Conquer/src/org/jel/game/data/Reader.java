@@ -239,7 +239,6 @@ public final class Reader {
 						Shared.LOGGER.error("distanceToCity < 0: " + distanceToCity);
 						return null;
 					}
-
 					g.addDirectedEdge(otherCityIndex, i, distanceToCity, distanceToCity);
 				}
 				final List<Double> productions = new ArrayList<>();
