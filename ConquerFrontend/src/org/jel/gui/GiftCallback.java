@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
@@ -31,6 +32,7 @@ public class GiftCallback implements PlayerGiftCallback {
 		final var jframe = new JFrame();
 		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));
 		jframe.setTitle(source.getName() + " offers you a gift");
+		jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() != 0) {
 			final var jlabel = new JLabel(gift.getNumberOfCoins() + " coins");
 			jframe.add(jlabel);
@@ -45,7 +47,6 @@ public class GiftCallback implements PlayerGiftCallback {
 					SwingConstants.LEFT);
 			jframe.add(jlabel);
 		}
-		// TODO:Add buttons
 		final var buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		// Accept, decline
