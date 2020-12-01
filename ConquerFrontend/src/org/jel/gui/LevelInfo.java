@@ -64,7 +64,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		backButton.setLocation(0, 0);
 		backButton.addActionListener(a -> {
 			final var lsf = new LevelSelectFrame();
-			lsf.init(this.getWidth(), this.getHeight(), this.getLocation());
+			lsf.init(this.getLocation());
 			this.shouldExit = true;
 			this.dispose();
 		});
@@ -85,6 +85,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.add(p);
 		this.add(scrollPane);
 		this.pack();
+		this.setLocation(location);
 	}
 
 	private int getComplementaryColor(int color) {

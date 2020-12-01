@@ -32,7 +32,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	private boolean shouldExit = true;
 	private transient GlobalContext context;
 
-	void init(int width, int height, Point position) {
+	void init(Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo();
 		final var list = new DefaultListModel<InstalledScenario>();
@@ -43,7 +43,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		jb.addActionListener(a -> {
 			this.shouldExit = false;
 			this.dispose();
-			MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), false);
+			MainScreen.forward(this.getLocation(), false);
 		});
 		final var jlist = new JList<>(list);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
@@ -78,6 +78,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		this.add(scrollPane);
 		this.pack();
 		this.setVisible(true);
+		this.setLocation(location);
 		this.addWindowListener(this);
 	}
 

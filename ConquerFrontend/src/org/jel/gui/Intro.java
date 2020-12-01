@@ -84,7 +84,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 				this.sound.stop();
 			}
 			this.setVisible(false);
-			MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), true);
+			MainScreen.forward(this.getLocation(), true);
 		} else if (e.getKeyChar() == 27) {// 27==ESC
 			System.exit(0);
 		}
@@ -117,7 +117,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		if (this.needed) {
 			System.exit(0);
 		} else {
-			MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), true);
+			MainScreen.forward(this.getLocation(), true);
 		}
 	}
 
@@ -161,7 +161,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			this.setVisible(false);
 			this.needed = false;
 			this.setVisible(false);
-			MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), true);
+			MainScreen.forward(this.getLocation(), true);
 		}).start();
 	}
 }

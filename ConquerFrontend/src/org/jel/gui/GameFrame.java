@@ -82,7 +82,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			return;
 		}
 		this.labels.values().forEach(b -> {
-			var city = b.getCity();
+			final var city = b.getCity();
 			final var image = city.getImage();
 			b.setBounds(city.getX() + ((diff + diff2) / 2), city.getY(), image.getWidth(null),
 					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
@@ -283,7 +283,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			if (status == JOptionPane.YES_OPTION) {
 				EventLog.clear();
 				this.loopPlayer.abort();
-				MainScreen.forward(this.getLocation(), 800, 600, false);
+				MainScreen.forward(this.getLocation(), false);
 				this.dispose();
 			} else {
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -291,7 +291,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		} else {
 			EventLog.clear();
 			this.loopPlayer.abort();
-			MainScreen.forward(this.getLocation(), 800, 600, false);
+			MainScreen.forward(this.getLocation(), false);
 			this.dispose();
 		}
 	}
