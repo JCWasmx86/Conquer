@@ -17,7 +17,7 @@ import javax.swing.Timer;
 import org.jel.game.data.City;
 
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
-	static final int CLAN_COLOR_HEIGHT = 12;
+	static final int CLAN_COLOR_HEIGHT = 12;// Height of the rectangle with the clan's color.
 	private static final long serialVersionUID = -5091974547825438103L;
 	private final transient City city;
 	private final transient Timer timer;
