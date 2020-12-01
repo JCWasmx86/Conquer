@@ -34,7 +34,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	public void actionPerformed(ActionEvent e) {
 		this.player.abort();
 		this.switchToMainScreen = true;
-		MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), false);
+		MainScreen.forward(this.getLocation(), false);
 		this.dispose();
 	}
 
@@ -235,7 +235,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (this.switchToMainScreen) {
-			MainScreen.forward(this.getLocation(), this.getWidth(), this.getHeight(), false);
+			MainScreen.forward(this.getLocation(), false);
 		} else {
 			System.exit(0);
 		}

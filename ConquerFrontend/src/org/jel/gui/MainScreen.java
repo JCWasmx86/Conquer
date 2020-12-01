@@ -24,7 +24,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	private static boolean forwarded = false;
 	private static boolean alreadyForwardedOnceFromIntro;
 
-	static void forward(Point location, int width, int height, boolean fromIntro) {
+	static void forward(Point location, boolean fromIntro) {
 		if (MainScreen.forwarded || (MainScreen.alreadyForwardedOnceFromIntro && fromIntro)) {
 			return;
 		}
@@ -70,7 +70,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		this.play.addActionListener(a -> {
 			MainScreen.forwarded = false;
 			final var lsf = new LevelSelectFrame();
-			lsf.init(800, 600, this.getLocation());
+			lsf.init(this.getLocation());
 			this.dispose();
 			this.player.abort();
 		});
