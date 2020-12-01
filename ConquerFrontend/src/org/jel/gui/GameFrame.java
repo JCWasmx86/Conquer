@@ -65,7 +65,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		}
 		this.labels.values().forEach(b -> {
 			final var image = b.getCity().getImage();
-			b.setBounds(b.getLocation().x, b.getCity().getY() + diff, image.getWidth(null), image.getHeight(null) + 12);
+			b.setBounds(b.getLocation().x, b.getCity().getY() + diff, image.getWidth(null),
+					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 			b.repaint();
 		});
 	}
@@ -81,9 +82,10 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			return;
 		}
 		this.labels.values().forEach(b -> {
-			final var image = b.getCity().getImage();
-			b.setBounds(b.getCity().getX() + ((diff + diff2) / 2), b.getCity().getY(), image.getWidth(null),
-					image.getHeight(null) + 12);
+			var city = b.getCity();
+			final var image = city.getImage();
+			b.setBounds(city.getX() + ((diff + diff2) / 2), city.getY(), image.getWidth(null),
+					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 			b.repaint();
 		});
 	}
@@ -110,26 +112,11 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	void init() {
-		final var cities = this.game.getCities();
 		EventLog.init(this.game);
 		this.initButtonPanel();
 		this.makeLeftPanel();
 		this.initGameStage();
-		final var cityInfoPanel = new JPanel();
-		final var cardLayout = new CardLayout();
-		cityInfoPanel.setLayout(cardLayout);
-		StreamUtils.getCitiesAsStream(cities).forEach(city -> {
-			final var cityLabel = new CityLabel(city, this.labels, b -> cardLayout.show(cityInfoPanel, b.getName()));
-			final var infoPanel = new CityInfoPanel(city);
-			infoPanel.init();
-			cityInfoPanel.add(infoPanel, city.getName());
-			cardLayout.addLayoutComponent(infoPanel, city.getName());
-			this.gameStage.add(cityLabel);
-			this.labels.put(city, cityLabel);
-		});
-		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == 0).findFirst()
-				.orElseThrow().getName());
-		this.initSideBar(cityInfoPanel);
+		this.initSideBar();
 		this.setVisible(true);
 		this.setTitle("Conquer: Round " + this.game.currentRound());
 		this.pack();
@@ -218,9 +205,24 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.gameStage.setLayout(null);
 	}
 
-	private void initSideBar(JPanel panel) {
+	private void initSideBar() {
+		final var cities = this.game.getCities();
+		final var cityInfoPanel = new JPanel();
+		final var cardLayout = new CardLayout();
+		cityInfoPanel.setLayout(cardLayout);
+		StreamUtils.getCitiesAsStream(cities).forEach(city -> {
+			final var cityLabel = new CityLabel(city, this.labels, b -> cardLayout.show(cityInfoPanel, b.getName()));
+			final var infoPanel = new CityInfoPanel(city);
+			infoPanel.init();
+			cityInfoPanel.add(infoPanel, city.getName());
+			cardLayout.addLayoutComponent(infoPanel, city.getName());
+			this.gameStage.add(cityLabel);
+			this.labels.put(city, cityLabel);
+		});
+		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == 0).findFirst()
+				.orElseThrow().getName());
 		this.sideBarPane = new JTabbedPane();
-		this.sideBarPane.addTab("City info", panel);
+		this.sideBarPane.addTab("City info", cityInfoPanel);
 		final var clanInfo = new ClanInfoPanel(this.game.getClan(0), this.game);
 		clanInfo.init();
 		this.sideBarPane.addTab("Clan info", clanInfo);
