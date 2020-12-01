@@ -1,12 +1,20 @@
 package org.jel.gui;
 
+import java.awt.BasicStroke;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -19,7 +27,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
 import org.jel.game.data.City;
@@ -29,36 +36,130 @@ import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;
 import org.jel.gui.utils.LoopPlayer;
 
-final class GameFrame extends JFrame implements WindowListener {
+final class GameFrame extends JFrame implements WindowListener, ComponentListener {
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient Game game;
 	private final Map<City, CityLabel> labels = new HashMap<>();
 	private final LoopPlayer loopPlayer = new LoopPlayer();
+	private JLabel gameStage;
+	private JScrollPane gameStageScrollPane;
+	private JTabbedPane sideBarPane;
+	private JPanel buttonPanel;
+	private transient List<DashedLine> lines = new ArrayList<>();
 
 	GameFrame(Game game) {
 		this.game = game;
+		this.addComponentListener(this);
+	}
+
+	private void adjustX() {
+		if (!this.buttonPanel.isShowing() || !this.gameStageScrollPane.isShowing()) {
+			return;
+		}
+		final var diff = (this.buttonPanel.getLocationOnScreen().y
+				- (this.gameStageScrollPane.getLocationOnScreen().y + this.game.getBackground().getHeight(null))) / 2;
+		if (diff <= 0) {
+			return;
+		}
+		this.labels.values().forEach(b -> {
+			final var image = b.getCity().getImage();
+			b.setBounds(b.getLocation().x, b.getCity().getY() + diff, image.getWidth(null), image.getHeight(null) + 12);
+			b.repaint();
+		});
+	}
+
+	private void adjustY() {
+		if (!this.sideBarPane.isShowing() || !this.gameStageScrollPane.isShowing() || !this.gameStage.isShowing()) {
+			return;
+		}
+		final var diff = (this.sideBarPane.getLocationOnScreen().x
+				- (this.gameStageScrollPane.getLocationOnScreen().x + this.game.getBackground().getWidth(null)));
+		final var diff2 = this.gameStage.getLocationOnScreen().x - this.gameStageScrollPane.getLocationOnScreen().x;
+		if ((diff <= 0) || (diff2 <= 0)) {
+			return;
+		}
+		this.labels.values().forEach(b -> {
+			final var image = b.getCity().getImage();
+			b.setBounds(b.getCity().getX() + ((diff + diff2) / 2), b.getCity().getY(), image.getWidth(null),
+					image.getHeight(null) + 12);
+			b.repaint();
+		});
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		this.adjustY();
+		this.adjustX();
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+
 	}
 
 	void init() {
-		final var gameStage = new JLabel(new ImageIcon(this.game.getBackground()));
+		this.addWindowListener(this);
+		final var cities = this.game.getCities();
+		this.buttonPanel = new JPanel();
+		this.buttonPanel.setLayout(new FlowLayout());
+		this.initPanel();
+		final var buttonPanelScrollPane = new JScrollPane(this.buttonPanel);
+		buttonPanelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		buttonPanelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		this.gameStageScrollPane = new JScrollPane();
+		this.gameStageScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		this.gameStageScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		final var panel1 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+		panel1.add(this.gameStageScrollPane);
+		panel1.add(buttonPanelScrollPane);
+		this.add(panel1);
+		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
+		this.sideBarPane = new JTabbedPane();
+		this.gameStage = new JLabel(new ImageIcon(this.game.getBackground())) {
+			private static final long serialVersionUID = -2190001953669516117L;
+
+			@Override
+			public void paint(Graphics g) {
+				super.paint(g);
+				final var g2d = (Graphics2D) g.create();
+				final var dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+						new float[] { 9 }, 0);
+				g2d.setColor(Color.WHITE);
+				g2d.setStroke(dashed);
+				GameFrame.this.lines.forEach(a -> a.draw(g2d));
+				g2d.dispose();
+			}
+		};
+		this.gameStageScrollPane.setViewportView(this.gameStage);
 		final var cityInfoPanel = new JPanel();
-		final var ll = new CardLayout();
-		cityInfoPanel.setLayout(ll);
-		gameStage.setLayout(null);
+		final var cardLayout = new CardLayout();
+		cityInfoPanel.setLayout(cardLayout);
+		this.gameStage.setLayout(null);
 		EventLog.init(this.game);
-		StreamUtils.getCitiesAsStream(this.game.getCities()).forEach(a -> {
-			final var cl = new CityLabel(a, this.labels, b -> ll.show(cityInfoPanel, b.getName()));
-			final var cip = new CityInfoPanel(a);
-			cip.init();
-			cityInfoPanel.add(cip, a.getName());
-			ll.addLayoutComponent(cip, a.getName());
-			gameStage.add(cl);
-			this.labels.put(a, cl);
+		StreamUtils.getCitiesAsStream(cities).forEach(city -> {
+			final var cityLabel = new CityLabel(city, this.labels, b -> cardLayout.show(cityInfoPanel, b.getName()));
+			final var infoPanel = new CityInfoPanel(city);
+			infoPanel.init();
+			cityInfoPanel.add(infoPanel, city.getName());
+			cardLayout.addLayoutComponent(infoPanel, city.getName());
+			this.gameStage.add(cityLabel);
+			this.labels.put(city, cityLabel);
 		});
 		this.game.setPlayerGiftCallback(new GiftCallback());
-		ll.show(cityInfoPanel, StreamUtils.getCitiesAsStream(this.game.getCities()).filter(a -> a.getClan() == 0)
-				.findFirst().orElseThrow().getName());
-		gameStage.addKeyListener(new KeyAdapter() {
+		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == 0).findFirst()
+				.orElseThrow().getName());
+		this.gameStage.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -66,82 +167,37 @@ final class GameFrame extends JFrame implements WindowListener {
 				}
 			}
 		});
-		gameStage.setFocusable(true);
-		this.addWindowListener(this);
-		final var jsp = new JScrollPane();
-		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jsp.setViewportView(gameStage);
-		final var buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout());
-		this.initPanel(buttonPanel);
-		final var scrollPane = new JScrollPane(buttonPanel);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		final var panel1 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-		panel1.add(jsp);
-		panel1.add(scrollPane);
-		this.add(panel1);
-		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
-		final var jtabbedPane = new JTabbedPane();
-		jtabbedPane.addTab("City info", cityInfoPanel);
+		this.gameStage.setFocusable(true);
+		this.sideBarPane.addTab("City info", cityInfoPanel);
 		final var clanInfo = new ClanInfoPanel(this.game.getClan(0), this.game);
 		clanInfo.init();
-		jtabbedPane.addTab("Clan info", clanInfo);
+		this.sideBarPane.addTab("Clan info", clanInfo);
 		final var relationships = new RelationshipPanel(this.game);
 		relationships.init();
 		final var jspR = new JScrollPane(relationships);
 		jspR.getVerticalScrollBar().setUnitIncrement(16);
-		jtabbedPane.add("Relationships", jspR);
-		this.add(jtabbedPane);
+		this.sideBarPane.add("Relationships", jspR);
+		this.add(this.sideBarPane);
 		this.setVisible(true);
 		this.setTitle("Conquer: Round " + this.game.currentRound());
 		this.pack();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
 		this.loopPlayer.start();
-		final var timer = new Timer(17, a -> {
-			// Adjust in x-direction
-			if (!buttonPanel.isShowing() || !jsp.isShowing()) {
+		final var connections = cities.getConnections();
+		final Map<Integer, List<Integer>> drawnLines = new HashMap<>();
+		connections.forEach(triple -> {
+			final var first = triple.first();
+			final var second = triple.second();
+			if ((drawnLines.containsKey(first) && (drawnLines.get(first).indexOf(second) != -1))
+					|| (drawnLines.containsKey(second) && (drawnLines.get(second).indexOf(first) != -1))) {
 				return;
 			}
-			final var diff = (buttonPanel.getLocationOnScreen().y
-					- (jsp.getLocationOnScreen().y + this.game.getBackground().getHeight(null))) / 2;
-			if (diff <= 0) {
-				return;
-			}
-			this.labels.values().forEach(b -> {
-				final var image = b.getCity().getImage();
-				b.setBounds(b.getLocation().x, b.getCity().getY() + diff, image.getWidth(null),
-						image.getHeight(null) + 12);
-				b.repaint();
-			});
-			gameStage.repaint();
+			this.lines.add(
+					new DashedLine(this.labels.get(cities.getValue(first)), this.labels.get(cities.getValue(second))));
 		});
-		timer.addActionListener(a -> {
-			// Adjust in y-direction
-			if (!jtabbedPane.isShowing() || !jsp.isShowing() || !gameStage.isShowing()) {
-				return;
-			}
-			final var diff = (jtabbedPane.getLocationOnScreen().x
-					- (jsp.getLocationOnScreen().x + this.game.getBackground().getWidth(null)));
-			final var diff2 = gameStage.getLocationOnScreen().x - jsp.getLocationOnScreen().x;
-			if ((diff <= 0) || (diff2 <= 0)) {
-				return;
-			}
-			this.labels.values().forEach(b -> {
-				final var image = b.getCity().getImage();
-				b.setBounds(b.getCity().getX() + ((diff + diff2) / 2), b.getCity().getY(), image.getWidth(null),
-						image.getHeight(null) + 12);
-				b.repaint();
-			});
-			gameStage.repaint();
-		});
-		gameStage.setFocusable(true);
-		timer.start();
 	}
 
-	private void initPanel(JPanel buttonPanel) {
+	private void initPanel() {
 		final var plugins = this.game.getPlugins();
 		final var nextRound = new JButton(new ImageResource("hourglass.png"));
 		nextRound.setToolTipText("Next round");
@@ -170,14 +226,14 @@ final class GameFrame extends JFrame implements WindowListener {
 				}
 			}
 		});
-		buttonPanel.add(coinsLabel);
-		buttonPanel.add(nextRound);
-		buttonPanel.add(openMessages);
-		buttonPanel.add(run);
+		this.buttonPanel.add(coinsLabel);
+		this.buttonPanel.add(nextRound);
+		this.buttonPanel.add(openMessages);
+		this.buttonPanel.add(run);
 		plugins.forEach(a -> {
 			final var listOfButtons = a.getButtons();
 			if (listOfButtons != null) {
-				listOfButtons.forEach(buttonPanel::add);
+				listOfButtons.forEach(this.buttonPanel::add);
 			}
 		});
 		new Thread(() -> {
@@ -243,5 +299,4 @@ final class GameFrame extends JFrame implements WindowListener {
 	public void windowOpened(WindowEvent e) {
 
 	}
-
 }
