@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import org.jel.game.data.City;
 
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
+	private static final int CLAN_COLOR_HEIGHT = 12;
 	private static final long serialVersionUID = -5091974547825438103L;
 	private final transient City city;
 	private final transient Timer timer;
@@ -29,7 +30,8 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	CityLabel(City city, Map<City, CityLabel> labels, Consumer<City> consumer) {
 		this.city = city;
 		final var image = city.getImage();
-		this.setBounds(city.getX(), city.getY(), image.getWidth(null), image.getHeight(null) + 12);
+		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
+				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 		this.timer = new Timer(17, this);
 		this.timer.start();
 		this.labels = labels;
@@ -54,6 +56,14 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 
 	City getCity() {
 		return this.city;
+	}
+
+	int getPreferredX() {
+		return this.getX() + (this.city.getImage().getWidth(null) / 2);
+	}
+
+	int getPreferredY() {
+		return this.getY() + (this.city.getImage().getHeight(null) / 2) + (CityLabel.CLAN_COLOR_HEIGHT / 2);
 	}
 
 	private void mark(City origin) {
@@ -111,7 +121,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var image = this.city.getImage();
 		final var baseYValue = image.getHeight(null);
 		g.setColor(this.city.getGame().getClan(this.city.getClan()).getColor());
-		g.fillRect(0, baseYValue, image.getWidth(null), 12);
+		g.fillRect(0, baseYValue, image.getWidth(null), CityLabel.CLAN_COLOR_HEIGHT);
 		if (this.marked) {
 			if (this.counter <= 45) {
 				g.setColor(Color.RED);
@@ -128,7 +138,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		g.fillRect(0, baseYValue, image.getWidth(null), 2);
 		g.fillRect(0, baseYValue + 10, image.getWidth(null), 2);
 		g.fillRect(0, baseYValue, 2, 20);
-		g.fillRect(image.getWidth(null) - 2, baseYValue, 2, 12);
+		g.fillRect(image.getWidth(null) - 2, baseYValue, 2, CityLabel.CLAN_COLOR_HEIGHT);
 	}
 
 	private void proceed() {
