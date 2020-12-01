@@ -294,6 +294,8 @@ public final class City implements Comparable<City> {
 	public void setImage(final Image image) {
 		if (this.image != null) {
 			throw new UnsupportedOperationException("Can't change image of city!");
+		} else if (image == null) {
+			throw new IllegalArgumentException("image == null");
 		}
 		this.image = image;
 	}
