@@ -46,12 +46,12 @@ public final class StreamUtils {
 		return Stream.of(cities.getValues(new City[0]));
 	}
 
-	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final int clan) {
-		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == clan);
-	}
-
 	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final Clan clan) {
 		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == clan.getId());
+	}
+
+	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final int clan) {
+		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == clan);
 	}
 
 	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final int clan,

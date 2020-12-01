@@ -130,6 +130,14 @@ public final class BuiltinShared {
 				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clanId, a, false, 0));
 	}
 
+	static double sum(Clan clan) {
+		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
+	}
+
+	static double sum(Gift gift) {
+		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
+	}
+
 	private static void tryUpdatingDefense(final Graph<City> graph, final StrategyObject object, final byte clan) {
 		// Sort all cities using the basedefense as key
 		final var sortedListOfCities = StreamUtils
@@ -186,15 +194,7 @@ public final class BuiltinShared {
 		});
 	}
 
-	static double sum(Clan clan) {
-		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
-	}
-
 	private BuiltinShared() {
 
-	}
-
-	static double sum(Gift gift) {
-		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 }

@@ -37,6 +37,7 @@ public interface StrategyObject {
 	default Iterable<City> getWeakestCityInRatioToSurroundingEnemyCities(Stream<City> cities) {
 		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
 	}
+
 	long maximumNumberToMove(byte clanId, double weight, long numberOfSoldiers);
 
 	void moveSoldiers(City source, Stream<City> reachableCities, byte clanId, boolean managedByPlayer, City target,

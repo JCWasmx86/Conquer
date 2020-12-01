@@ -20,8 +20,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 	@Override
 	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
 			DoubleConsumer newValue, StrategyObject strategyObject) {
-		final var own =BuiltinShared.sum(destinationClan);
-		final var giftValue =BuiltinShared.sum(gift);
+		final var own = BuiltinShared.sum(destinationClan);
+		final var giftValue = BuiltinShared.sum(gift);
 		final var prop = own == 0 ? Math.random() * 2 : (giftValue / own);
 		newValue.accept(oldValue + (prop * 0.05 * strategyObject.getRelationship(sourceClan, destinationClan)));
 		return true;

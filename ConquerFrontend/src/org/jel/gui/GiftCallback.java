@@ -76,7 +76,7 @@ public class GiftCallback implements PlayerGiftCallback {
 		jframe.setVisible(true);
 
 		while (jframe.isVisible()) {
-			;
+
 		}
 		final var tmp = this.accepted;
 		this.accepted = false;

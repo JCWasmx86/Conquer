@@ -44,7 +44,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
 		StreamUtils.getCitiesAsStream(cities).forEach(c -> {
-			if (StreamUtils.getCitiesAsStream(cities,c.getClan()).count() == 1) {
+			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
 				return;
 			}
 			final var oldClan = c.getClan();
@@ -60,7 +60,8 @@ public final class ChangeCitiesMinds implements Plugin {
 					break;
 				}
 			}
-			if ((!canChangeClan || (otherClan == c.getClan())) || (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
+			if ((!canChangeClan || (otherClan == c.getClan()))
+					|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
 			}
 			var changedClan = false;
