@@ -114,11 +114,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.buttonPanel.setLayout(new FlowLayout());
 		this.initPanel();
 		final var buttonPanelScrollPane = new JScrollPane(this.buttonPanel);
-		buttonPanelScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		buttonPanelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		this.gameStageScrollPane = new JScrollPane();
-		this.gameStageScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		this.gameStageScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		final var panel1 = new JPanel();
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 		panel1.add(this.gameStageScrollPane);
