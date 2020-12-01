@@ -50,6 +50,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	GameFrame(Game game) {
 		this.game = game;
 		this.addComponentListener(this);
+		this.addWindowListener(this);
+		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
 	}
 
 	private void adjustX() {
@@ -108,42 +110,14 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	void init() {
-		this.addWindowListener(this);
 		final var cities = this.game.getCities();
-		this.buttonPanel = new JPanel();
-		this.buttonPanel.setLayout(new FlowLayout());
-		this.initPanel();
-		final var buttonPanelScrollPane = new JScrollPane(this.buttonPanel);
-		buttonPanelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		this.gameStageScrollPane = new JScrollPane();
-		final var panel1 = new JPanel();
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-		panel1.add(this.gameStageScrollPane);
-		panel1.add(buttonPanelScrollPane);
-		this.add(panel1);
-		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
-		this.sideBarPane = new JTabbedPane();
-		this.gameStage = new JLabel(new ImageIcon(this.game.getBackground())) {
-			private static final long serialVersionUID = -2190001953669516117L;
-
-			@Override
-			public void paint(Graphics g) {
-				super.paint(g);
-				final var g2d = (Graphics2D) g.create();
-				final var dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
-						new float[] { 9 }, 0);
-				g2d.setColor(Color.WHITE);
-				g2d.setStroke(dashed);
-				GameFrame.this.lines.forEach(a -> a.draw(g2d));
-				g2d.dispose();
-			}
-		};
-		this.gameStageScrollPane.setViewportView(this.gameStage);
+		EventLog.init(this.game);
+		this.initButtonPanel();
+		this.makeLeftPanel();
+		this.initGameStage();
 		final var cityInfoPanel = new JPanel();
 		final var cardLayout = new CardLayout();
 		cityInfoPanel.setLayout(cardLayout);
-		this.gameStage.setLayout(null);
-		EventLog.init(this.game);
 		StreamUtils.getCitiesAsStream(cities).forEach(city -> {
 			final var cityLabel = new CityLabel(city, this.labels, b -> cardLayout.show(cityInfoPanel, b.getName()));
 			final var infoPanel = new CityInfoPanel(city);
@@ -153,48 +127,18 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.gameStage.add(cityLabel);
 			this.labels.put(city, cityLabel);
 		});
-		this.game.setPlayerGiftCallback(new GiftCallback());
 		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClan() == 0).findFirst()
 				.orElseThrow().getName());
-		this.gameStage.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					GameFrame.this.labels.values().forEach(CityLabel::unmark);
-				}
-			}
-		});
-		this.gameStage.setFocusable(true);
-		this.sideBarPane.addTab("City info", cityInfoPanel);
-		final var clanInfo = new ClanInfoPanel(this.game.getClan(0), this.game);
-		clanInfo.init();
-		this.sideBarPane.addTab("Clan info", clanInfo);
-		final var relationships = new RelationshipPanel(this.game);
-		relationships.init();
-		final var jspR = new JScrollPane(relationships);
-		jspR.getVerticalScrollBar().setUnitIncrement(16);
-		this.sideBarPane.add("Relationships", jspR);
-		this.add(this.sideBarPane);
+		this.initSideBar(cityInfoPanel);
 		this.setVisible(true);
 		this.setTitle("Conquer: Round " + this.game.currentRound());
 		this.pack();
-		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
-		this.loopPlayer.start();
-		final var connections = cities.getConnections();
-		final Map<Integer, List<Integer>> drawnLines = new HashMap<>();
-		connections.forEach(triple -> {
-			final var first = triple.first();
-			final var second = triple.second();
-			if ((drawnLines.containsKey(first) && (drawnLines.get(first).indexOf(second) != -1))
-					|| (drawnLines.containsKey(second) && (drawnLines.get(second).indexOf(first) != -1))) {
-				return;
-			}
-			this.lines.add(
-					new DashedLine(this.labels.get(cities.getValue(first)), this.labels.get(cities.getValue(second))));
-		});
+		this.nonGUIInit();
 	}
 
-	private void initPanel() {
+	private void initButtonPanel() {
+		this.buttonPanel = new JPanel();
+		this.buttonPanel.setLayout(new FlowLayout());
 		final var plugins = this.game.getPlugins();
 		final var nextRound = new JButton(new ImageResource("hourglass.png"));
 		nextRound.setToolTipText("Next round");
@@ -243,6 +187,79 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				}
 			}
 		}).start();
+	}
+
+	private void initGameStage() {
+		this.gameStage = new JLabel(new ImageIcon(this.game.getBackground())) {
+			private static final long serialVersionUID = -2190001953669516117L;
+
+			@Override
+			public void paint(Graphics g) {
+				super.paint(g);
+				final var g2d = (Graphics2D) g.create();
+				final var dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
+						new float[] { 9 }, 0);
+				g2d.setColor(Color.WHITE);
+				g2d.setStroke(dashed);
+				GameFrame.this.lines.forEach(a -> a.draw(g2d));
+				g2d.dispose();
+			}
+		};
+		this.gameStageScrollPane.setViewportView(this.gameStage);
+		this.gameStage.setFocusable(true);
+		this.gameStage.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					GameFrame.this.labels.values().forEach(CityLabel::unmark);
+				}
+			}
+		});
+		this.gameStage.setLayout(null);
+	}
+
+	private void initSideBar(JPanel panel) {
+		this.sideBarPane = new JTabbedPane();
+		this.sideBarPane.addTab("City info", panel);
+		final var clanInfo = new ClanInfoPanel(this.game.getClan(0), this.game);
+		clanInfo.init();
+		this.sideBarPane.addTab("Clan info", clanInfo);
+		final var relationships = new RelationshipPanel(this.game);
+		relationships.init();
+		final var relationShipScrollPane = new JScrollPane(relationships);
+		relationShipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		this.sideBarPane.add("Relationships", relationShipScrollPane);
+		this.add(this.sideBarPane);
+	}
+
+	private void makeLeftPanel() {
+		this.gameStageScrollPane = new JScrollPane();
+		final var buttonPanelScrollPane = new JScrollPane(this.buttonPanel);
+		buttonPanelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		final var panel1 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+		panel1.add(this.gameStageScrollPane);
+		panel1.add(buttonPanelScrollPane);
+		this.add(panel1);
+	}
+
+	private void nonGUIInit() {
+		this.game.setPlayerGiftCallback(new GiftCallback());
+		final var cities = this.game.getCities();
+		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
+		this.loopPlayer.start();
+		final var connections = cities.getConnections();
+		final Map<Integer, List<Integer>> drawnLines = new HashMap<>();
+		connections.forEach(triple -> {
+			final var first = triple.first();
+			final var second = triple.second();
+			if ((drawnLines.containsKey(first) && (drawnLines.get(first).indexOf(second) != -1))
+					|| (drawnLines.containsKey(second) && (drawnLines.get(second).indexOf(first) != -1))) {
+				return;
+			}
+			this.lines.add(
+					new DashedLine(this.labels.get(cities.getValue(first)), this.labels.get(cities.getValue(second))));
+		});
 	}
 
 	@Override
