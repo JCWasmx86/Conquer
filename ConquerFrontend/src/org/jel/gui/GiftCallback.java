@@ -18,7 +18,7 @@ import org.jel.game.data.PlayerGiftCallback;
 import org.jel.game.data.strategy.StrategyObject;
 import org.jel.gui.utils.ImageResource;
 
-public class GiftCallback implements PlayerGiftCallback {
+final class GiftCallback implements PlayerGiftCallback {
 
 	private boolean accepted;
 
