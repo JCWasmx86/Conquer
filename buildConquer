@@ -1,4 +1,12 @@
 #! /usr/bin/bash
+. $JAVA_HOME/release
+major=$(echo $JAVA_VERSION | cut -d. -f1)
+if [ "$major" == "15" ]; then
+	echo Found suitable java installation
+else
+	echo Didn\'t find java, version 15
+	exit 1
+fi
 export TARGET="all"
 unameOut="$(uname -s)"
 case "${unameOut}" in
