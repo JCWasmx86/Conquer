@@ -91,8 +91,8 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		final var scrollPane = new JScrollPane(scrollingPanel);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setIgnoreRepaint(true);
-		this.add(scrollPane);
 		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+		this.add(scrollPane);
 		this.setVisible(true);
 	}
 }

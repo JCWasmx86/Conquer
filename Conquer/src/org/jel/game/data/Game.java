@@ -197,7 +197,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
 		this.checkClan(clan);
-		if (reallyPlayer && (src.getClan() != 0)) {
+		if (reallyPlayer && (src.getClan() != Shared.PLAYER_CLAN)) {
 			throw new IllegalArgumentException(
 					"reallyPlayer is true, but the source city is not clan 0: " + src.getClan());
 		}
@@ -285,7 +285,8 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	public Result calculateResult() {
-		return StreamUtils.getCitiesAsStream(this.getCities(), 0).count() == 0 ? Result.CPU_WON : Result.PLAYER_WON;
+		return StreamUtils.getCitiesAsStream(this.getCities(), Shared.PLAYER_CLAN).count() == 0 ? Result.CPU_WON
+				: Result.PLAYER_WON;
 	}
 
 	private boolean cantAttack(final City src, final City destination) {
@@ -302,8 +303,9 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void cpuPlay() {
-		// Index 0 is the clan of the player
-		final var order = IntStream.range(1, this.getNumPlayers()).boxed().collect(Collectors.toList());
+		// Skip clan of the player
+		final var order = IntStream.range(Shared.PLAYER_CLAN + 1, this.getNumPlayers()).boxed()
+				.collect(Collectors.toList());
 		Collections.shuffle(order);
 		order.forEach(this::executeCPUPlay);
 		this.isPlayersTurn = true;
@@ -572,7 +574,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	@Override
 	public List<City> getWeakestCityInRatioToSurroundingEnemyCities(final List<City> reachableCities) {
 		this.throwIfNull(reachableCities, "reachableCities==null");
-		return Stream.of(reachableCities.toArray(new City[reachableCities.size()])).sorted((a, b) -> {
+		return Stream.of(reachableCities.toArray(new City[0])).sorted((a, b) -> {
 			final var defense = this.defenseStrengthOfCity(a);
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
 					.collect(Collectors.toList());
@@ -860,15 +862,15 @@ public final class Game implements PluginInterface, StrategyObject {
 			throw new IllegalArgumentException("Destination clan is extinct!");
 		}
 		boolean acceptedGift;
-		if (destination.getId() != 0) {
+		if (destination.getId() != Shared.PLAYER_CLAN) {
 			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift,
-					this.getRelations().getWeight(source.getId(), destination.getId()), a -> {
+					this.getRelationship(source.getId(), destination.getId()), a -> {
 						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);
 		} else {
 			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift,
-					this.getRelations().getWeight(source.getId(), destination.getId()), a -> {
+					this.getRelationship(source.getId(), destination.getId()), a -> {
 						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);

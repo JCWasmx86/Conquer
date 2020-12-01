@@ -135,10 +135,11 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		} else {
 			g.setColor(Color.WHITE);
 		}
-		g.fillRect(0, baseYValue, image.getWidth(null), 2);
-		g.fillRect(0, baseYValue + 10, image.getWidth(null), 2);
+		final var width = image.getWidth(null);
+		g.fillRect(0, baseYValue, width, 2);
+		g.fillRect(0, baseYValue + 10, width, 2);
 		g.fillRect(0, baseYValue, 2, 20);
-		g.fillRect(image.getWidth(null) - 2, baseYValue, 2, CityLabel.CLAN_COLOR_HEIGHT);
+		g.fillRect(width - 2, baseYValue, 2, CityLabel.CLAN_COLOR_HEIGHT);
 	}
 
 	private void proceed() {
