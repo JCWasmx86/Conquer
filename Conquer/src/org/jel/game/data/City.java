@@ -341,7 +341,7 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setX(final int x) {
-		if (x != -1) {
+		if (this.x != -1) {
 			throw new UnsupportedOperationException("Can't change the X-Position!");
 		} else if (x < 0) {
 			throw new IllegalArgumentException("x < 0");
@@ -350,7 +350,7 @@ public final class City implements Comparable<City> {
 	}
 
 	public void setY(final int y) {
-		if (y != -1) {
+		if (this.y != -1) {
 			throw new UnsupportedOperationException("Can't change the Y-Position!");
 		} else if (y < 0) {
 			throw new IllegalArgumentException("y < 0");

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import org.jel.game.data.Clan;
 import org.jel.game.data.Game;
 import org.jel.game.data.Gift;
 import org.jel.game.data.Resource;
@@ -41,7 +42,7 @@ final class GiftPanel extends JPanel {
 		ms.init();
 		this.add(ms);
 		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> (a.getId() != 0) && !this.game.isDead(a))
-				.collect(Collectors.toList()).toArray(new String[0]));
+				.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
 		this.button = new JButton("Give gift");
 		this.button.addActionListener(a -> {
 			final var gift = new Gift(this.sliders.stream().map(ResourceSlider::getValue).collect(Collectors.toList()),
@@ -60,11 +61,23 @@ final class GiftPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 		p.add(this.box);
 		p.add(this.button);
+		this.box.setIgnoreRepaint(true);
 		new Timer(17, e -> {
-			final var model = new DefaultComboBoxModel<>(GiftPanel.this.game.getClans().stream()
-					.filter(a -> (a.getId() != 0) && !GiftPanel.this.game.isDead(a)).collect(Collectors.toList())
-					.toArray(new String[0]));
-			GiftPanel.this.box.setModel(model);
+			if (!this.box.isPopupVisible()) {// Else the popup will close all the time
+				final var selectedIndex = this.box.getSelectedIndex();
+				final var selectedObject = this.box.getSelectedItem();
+				final var list = GiftPanel.this.game.getClans().stream()
+						.filter(a -> (a.getId() != 0) && !GiftPanel.this.game.isDead(a)).map(Clan::getName)
+						.collect(Collectors.toList());
+				final var model = new DefaultComboBoxModel<>(list.toArray(new String[0]));
+				GiftPanel.this.box.setModel(model);
+				if (list.get(selectedIndex).equals(selectedObject)) {
+					this.box.setSelectedIndex(selectedIndex);
+				} else {
+					final var index = list.indexOf(selectedObject);
+					this.box.setSelectedIndex(index == -1 ? 0 : index);
+				}
+			}
 
 		}).start();
 		this.add(p);
