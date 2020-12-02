@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 import org.jel.game.data.City;
+import org.jel.game.data.Shared;
 
 final class RecruitButton extends JPanel {
 	private static final long serialVersionUID = 4846741301367606008L;
@@ -27,7 +28,7 @@ final class RecruitButton extends JPanel {
 				return;
 			}
 			final var cnt = RecruitButton.this.js.getValue();
-			city.getGame().recruitSoldiers(0, (byte) 0, city, true, cnt);
+			city.getGame().recruitSoldiers(Shared.PLAYER_CLAN, (byte) 0, city, true, cnt);
 			cip.doUpdate();
 		});
 		this.js.addChangeListener(
