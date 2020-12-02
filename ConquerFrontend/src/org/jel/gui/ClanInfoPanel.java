@@ -8,7 +8,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
 
 import org.jel.game.data.City;
@@ -20,10 +19,9 @@ import org.jel.game.data.StreamUtils;
 
 final class ClanInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 3553281021198844773L;
-	private final Clan clan;
-	private final Game game;
+	private final transient Clan clan;
+	private final transient Game game;
 	private JEditorPane jep;
-	private Timer timer;
 
 	ClanInfoPanel(Clan clan, Game game) {
 		this.clan = clan;
@@ -75,8 +73,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var jsp = new JScrollPane(jps);
 		jsp.setIgnoreRepaint(true);
 		this.add(jsp);
-		this.timer = new Timer(17, this);
-		this.timer.start();
+		final var timer = new ExtendedTimer(17, this);
+		timer.start();
 	}
 
 	private String resource(Resource r) {

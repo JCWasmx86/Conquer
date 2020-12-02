@@ -101,6 +101,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		if (!b) {
 			this.sound.stop();
 			this.needed = false;
+			this.timer.stop();
 		}
 	}
 

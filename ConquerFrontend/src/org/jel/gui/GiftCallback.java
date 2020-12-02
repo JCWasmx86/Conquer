@@ -1,7 +1,7 @@
 package org.jel.gui;
 
 import java.awt.event.ActionEvent;
-import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -27,7 +27,7 @@ final class GiftCallback implements PlayerGiftCallback {
 	}
 
 	@Override
-	public boolean acceptGift(Clan source, Clan destination, Gift gift, double oldValue, Consumer<Double> newValue,
+	public boolean acceptGift(Clan source, Clan destination, Gift gift, double oldValue, DoubleConsumer newValue,
 			StrategyObject strategyObject) {
 		final var jframe = new JFrame();
 		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));

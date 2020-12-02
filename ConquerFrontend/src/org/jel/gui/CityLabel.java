@@ -33,7 +33,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
 				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
-		this.timer = new Timer(17, this);
+		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
 		this.labels = labels;
 		this.addMouseListener(this);

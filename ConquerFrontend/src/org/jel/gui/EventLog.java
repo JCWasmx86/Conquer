@@ -23,6 +23,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
 import org.jel.game.data.Game;
+import org.jel.game.data.Shared;
 import org.jel.game.messages.Message;
 import org.jel.game.plugins.MessageListener;
 import org.jel.gui.utils.ImageResource;
@@ -44,8 +45,8 @@ final class EventLog extends JFrame implements MessageListener {
 	static void init(Game game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
-			final var jlabel = new JLabel(
-					"Clan: " + clan.getName() + (clan.getName().equals(a.get(0).getName()) ? " (Player)" : ""));
+			final var jlabel = new JLabel("Clan: " + clan.getName()
+					+ (clan.getName().equals(a.get(Shared.PLAYER_CLAN).getName()) ? " (Player)" : ""));
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			jlabel.setOpaque(true);
 			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(clan.getColor().getRGB())));

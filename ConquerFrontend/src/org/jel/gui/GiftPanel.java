@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import org.jel.game.data.Clan;
 import org.jel.game.data.Game;
@@ -42,8 +41,9 @@ final class GiftPanel extends JPanel {
 		final var ms = new MoneySlider(this.game);
 		ms.init();
 		this.add(ms);
-		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> (a.getId() != Shared.PLAYER_CLAN) && !this.game.isDead(a))
-				.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
+		this.box = new JComboBox<>(
+				this.game.getClans().stream().filter(a -> (a.getId() != Shared.PLAYER_CLAN) && !this.game.isDead(a))
+						.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
 		this.button = new JButton("Give gift");
 		this.button.addActionListener(a -> {
 			final var gift = new Gift(this.sliders.stream().map(ResourceSlider::getValue).collect(Collectors.toList()),
@@ -63,7 +63,7 @@ final class GiftPanel extends JPanel {
 		p.add(this.box);
 		p.add(this.button);
 		this.box.setIgnoreRepaint(true);
-		new Timer(17, e -> {
+		new ExtendedTimer(17, e -> {
 			if (!this.box.isPopupVisible()) {// Else the popup will close all the time
 				final var selectedIndex = this.box.getSelectedIndex();
 				final var selectedObject = this.box.getSelectedItem();

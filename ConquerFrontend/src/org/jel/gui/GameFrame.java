@@ -297,6 +297,11 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	@Override
+	public void dispose() {
+		super.dispose();
+		ExtendedTimer.stopAll();
+	}
+	@Override
 	public void windowDeactivated(WindowEvent e) {
 
 	}
