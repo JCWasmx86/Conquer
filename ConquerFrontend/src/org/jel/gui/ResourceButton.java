@@ -97,7 +97,7 @@ final class ResourceButton extends JPanel {
 	void doUpdate() {
 		final var level = this.city.getLevels()
 				.get(this.resource == null ? Resource.values().length : this.resource.getIndex());
-		if (this.city.getClan() == 0) {
+		if (this.city.getClan() == Shared.PLAYER_CLAN) {
 			if (level < 1000) {
 				this.infoLabel
 						.setText((this.resource == null ? "Defense" : this.resource.getName()) + " Level " + level);
@@ -131,7 +131,7 @@ final class ResourceButton extends JPanel {
 			}
 			currentLevel++;
 		}
-		if ((currentLevel != level) && (this.city.getClan() == 0)) {
+		if ((currentLevel != level) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
 			this.maximumUpgrade.setEnabled(true);
 			this.maximumUpgrade.setText("Maximum upgrade to level " + currentLevel + " for "
 					+ String.format("%.2f", this.city.getGame().getCoins().get(0) - currentCoins) + "coins");

@@ -16,6 +16,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 
 class CityInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2409517597504961241L;
@@ -44,7 +45,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String generateText() {
-		if (this.city.getClan() != 0) {
+		if (this.city.getClan() != Shared.PLAYER_CLAN) {
 			return "<html><body>No information available!</body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>Name: ").append(this.city.getName()).append("<br>Clan: ")

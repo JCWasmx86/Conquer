@@ -16,6 +16,7 @@ import org.jel.game.data.Clan;
 import org.jel.game.data.Game;
 import org.jel.game.data.Gift;
 import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 
 final class GiftPanel extends JPanel {
 
@@ -41,7 +42,7 @@ final class GiftPanel extends JPanel {
 		final var ms = new MoneySlider(this.game);
 		ms.init();
 		this.add(ms);
-		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> (a.getId() != 0) && !this.game.isDead(a))
+		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> (a.getId() != Shared.PLAYER_CLAN) && !this.game.isDead(a))
 				.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
 		this.button = new JButton("Give gift");
 		this.button.addActionListener(a -> {
