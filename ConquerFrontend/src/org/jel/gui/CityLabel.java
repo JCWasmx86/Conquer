@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.jel.game.data.City;
+import org.jel.game.data.Shared;
 
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	static final int CLAN_COLOR_HEIGHT = 12;// Height of the rectangle with the clan's color.
@@ -45,7 +46,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		var s = "<html>";
 		s += this.city.getName();
 		s += "<br>Clan: " + this.city.getGame().getClanNames().get(this.city.getClan()) + "<br>";
-		if (this.city.getClan() == 0) {
+		if (this.city.getClan() == Shared.PLAYER_CLAN) {
 			s += String.format("People: %d<br>Soldiers: %d</html>", this.city.getNumberOfPeople(),
 					this.city.getNumberOfSoldiers());
 		} else {
@@ -75,7 +76,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 1) {
 			this.consumer.accept(this.city);
-			if (!this.marked && (this.city.getClan() == 0)) {
+			if (!this.marked && (this.city.getClan() == Shared.PLAYER_CLAN)) {
 				this.labels.values().forEach(CityLabel::unmark);
 				this.city.getGame().getCities().getConnected(this.city)
 						.forEach(a -> this.labels.get(a).mark(this.city));
@@ -114,7 +115,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			this.timer.stop();
 			return;
 		}
-		if (this.marked && (this.origin != null) && (this.origin.getClan() != 0)) {
+		if (this.marked && (this.origin != null) && (this.origin.getClan() != Shared.PLAYER_CLAN)) {
 			this.unmark();
 		}
 		g.drawImage(this.city.getImage(), 0, 0, null);
@@ -144,7 +145,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 
 	private void proceed() {
 		final var game = this.city.getGame();
-		if (this.city.getClan() == 0) {
+		if (this.city.getClan() == Shared.PLAYER_CLAN) {
 			final var count = this.city.getGame().maximumNumberToMove((byte) 0,
 					game.getCities().getWeight(this.city, this.origin), this.origin.getNumberOfSoldiers());
 			long l = -1;

@@ -40,7 +40,7 @@ public final class Initializer {
 		try {
 			Thread.sleep(500);
 			while (Initializer.installing) {
-
+				// Do nothing, as we are waiting for the end of the installation process
 			}
 			System.getProperties().load(Files.newInputStream(Paths.get(propertiesFile.toURI())));
 		} catch (final IOException | RuntimeException | InterruptedException e) {

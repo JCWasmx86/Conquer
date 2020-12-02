@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.jel.game.data.Game;
+import org.jel.game.data.Shared;
 
 final class RelationshipPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -7720369284705527955L;
@@ -38,8 +39,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
-		// i=1 because i=0 is the clan of the player
-		for (var i = 1; i < clans.size(); i++) {
+		for (var i = Shared.PLAYER_CLAN + 1; i < clans.size(); i++) {
 			final var clan = clans.get(i);
 			final var text = clan.getName();
 			final var clanLabel = new JLabel(text);

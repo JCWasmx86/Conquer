@@ -12,7 +12,7 @@ final class SelectPanel extends JPanel {
 	private static final long serialVersionUID = 5883369029393808982L;
 
 	SelectPanel(String buttonValue, String jtextfield, Consumer<String> consumer) {
-		final var hi = new HintTextField(jtextfield);
+		final var hintTextField = new HintTextField(jtextfield);
 		final var jbutton = new JButton();
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		jbutton.setAction(new AbstractAction() {
@@ -20,15 +20,15 @@ final class SelectPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!hi.getText().equals("")) {
-					consumer.accept(hi.getText());
-					hi.setText("");
-					hi.focusLost(null);
+				if (!hintTextField.getText().equals("")) {
+					consumer.accept(hintTextField.getText());
+					hintTextField.setText("");
+					hintTextField.focusLost(null);
 				}
 			}
 		});
 		jbutton.setText(buttonValue);
-		this.add(hi);
+		this.add(hintTextField);
 		this.add(jbutton);
 	}
 

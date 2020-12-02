@@ -22,6 +22,7 @@ import javax.swing.ListCellRenderer;
 import org.jel.game.data.Game;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
+import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
 
 final class LevelInfo extends JFrame implements WindowListener {
@@ -44,7 +45,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 					ClanColorAssociation value, int index, boolean isSelected, boolean cellHasFocus) {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
-					jl = new JLabel(value.clanName() + (index == 0 ? " (Player)" : ""));
+					jl = new JLabel(value.clanName() + (index == Shared.PLAYER_CLAN ? " (Player)" : ""));
 					jl.setForeground(value.color());
 					jl.setFont(jl.getFont().deriveFont(35F));
 					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));

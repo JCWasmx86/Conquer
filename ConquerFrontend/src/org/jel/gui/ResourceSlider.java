@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import org.jel.game.data.Game;
 import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 
 final class ResourceSlider extends JPanel {
 	private static final long serialVersionUID = 595825972773535456L;
@@ -23,11 +24,11 @@ final class ResourceSlider extends JPanel {
 
 	private String getText() {
 		return this.resource.getName() + ": " + String.format("%.2f",
-				(0.01 * this.slider.getValue()) * this.game.getClan(0).getResources().get(this.resource.getIndex()));
+				(0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex()));
 	}
 
 	double getValue() {
-		return (0.01 * this.slider.getValue()) * this.game.getClan(0).getResources().get(this.resource.getIndex());
+		return (0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex());
 	}
 
 	void init() {

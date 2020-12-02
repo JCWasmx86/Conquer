@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import org.jel.game.data.Game;
+import org.jel.game.data.Shared;
 
 public class MoneySlider extends JPanel {
 	private static final long serialVersionUID = 794966448509855336L;
@@ -19,7 +20,7 @@ public class MoneySlider extends JPanel {
 	}
 
 	double getMoney() {
-		return (0.01 * this.slider.getValue()) * this.game.getClan(0).getCoins();
+		return (0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getCoins();
 	}
 
 	private String getText() {
