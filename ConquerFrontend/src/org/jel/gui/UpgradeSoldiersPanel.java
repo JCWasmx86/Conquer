@@ -37,7 +37,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		this.upgradeMax = new JButton(new ImageResource("max.png"));
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
-		this.timer = new Timer(17, this);
+		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
 	}
 

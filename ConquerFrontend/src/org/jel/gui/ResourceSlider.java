@@ -4,7 +4,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 import org.jel.game.data.Game;
 import org.jel.game.data.Resource;
@@ -23,12 +22,13 @@ final class ResourceSlider extends JPanel {
 	}
 
 	private String getText() {
-		return this.resource.getName() + ": " + String.format("%.2f",
-				(0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex()));
+		return this.resource.getName() + ": " + String.format("%.2f", (0.01 * this.slider.getValue())
+				* this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex()));
 	}
 
 	double getValue() {
-		return (0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex());
+		return (0.01 * this.slider.getValue())
+				* this.game.getClan(Shared.PLAYER_CLAN).getResources().get(this.resource.getIndex());
 	}
 
 	void init() {
@@ -39,6 +39,6 @@ final class ResourceSlider extends JPanel {
 		this.slider.addChangeListener(a -> this.textfield.setText(this.getText()));
 		this.add(this.slider);
 		this.add(this.textfield);
-		new Timer(17, a -> this.textfield.setText(this.getText())).start();
+		new ExtendedTimer(17, a -> this.textfield.setText(this.getText())).start();
 	}
 }

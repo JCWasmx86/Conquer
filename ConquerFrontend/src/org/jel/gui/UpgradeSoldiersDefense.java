@@ -38,7 +38,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
 		this.repaint();
-		this.timer = new Timer(17, this);
+		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
 	}
 

@@ -28,7 +28,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 	CityInfoPanel(City city) {
 		this.city = city;
-		this.timer = new Timer(17, this);
+		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
 		this.resourceButtons = new ArrayList<>();
 	}
@@ -60,6 +60,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
 			final var value = this.city.productionPerRound(i);
+			// Not enough is produced.
 			if ((value / this.city.getNumberOfPeople()) < 1) {
 				sb.append("<font color='red'>");
 			} else {
