@@ -9,7 +9,7 @@ import javax.swing.Timer;
 import org.jel.game.data.Game;
 import org.jel.game.data.Shared;
 
-public class MoneySlider extends JPanel {
+final class MoneySlider extends JPanel {
 	private static final long serialVersionUID = 794966448509855336L;
 	private final Game game;
 	private JSlider slider;
