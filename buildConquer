@@ -8,12 +8,16 @@ else
 	exit 1
 fi
 if ! command -v musescore3 &> /dev/null; then
-	echo "The command musescore3 could not be found"
+	echo Didn\'t find musescore3
 	exit 1
+else
+	echo Found musescore
 fi
 if [ `gcc -dumpversion` != "10" ]; then
 	echo Didn\'t find gcc-10
 	exit 1
+else
+	echo Found gcc-10
 fi
 export TARGET="all"
 unameOut="$(uname -s)"
