@@ -76,7 +76,7 @@ public final class BuiltinShared {
 			// Update defense, because there are too much resources produced.
 			BuiltinShared.tryUpdatingDefense(graph, object, clanId);
 		} else {
-			// Else update the resourcces
+			// Else update the resources
 			BuiltinShared.tryUpdatingResources(graph, object, clanId, map);
 		}
 	}
