@@ -748,8 +748,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	private void payMoney() {
 		for (final var city : this.getCities().getValues(new City[0])) {
 			final var clan = this.getClan(city);
-			final var toGet = (city.getNumberOfPeople() * Shared.COINS_PER_PERSON_PER_ROUND)
-					- (city.getNumberOfSoldiers() * Shared.COINS_PER_SOLDIER_PER_ROUND);
+			final var toGet = city.getCoinDiff();
 			clan.setCoins(clan.getCoins() + toGet);
 		}
 		for (final Clan clan : this.clans) {
@@ -785,6 +784,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
 		}
 		var numberToRecruit = 0L;
+		// Default algorithm used, if the strategy didn't provide one itself.
 		if (!managed) {
 			if ((maxToPay < 0) || (c.getNumberOfPeople() < Game.RETAINED_PEOPLE)) {
 				return;
