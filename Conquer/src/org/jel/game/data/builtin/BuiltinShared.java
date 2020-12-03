@@ -76,7 +76,7 @@ public final class BuiltinShared {
 			// Update defense, because there are too much resources produced.
 			BuiltinShared.tryUpdatingDefense(graph, object, clanId);
 		} else {
-			//Else update the resourcces
+			// Else update the resourcces
 			BuiltinShared.tryUpdatingResources(graph, object, clanId, map);
 		}
 	}
@@ -183,7 +183,7 @@ public final class BuiltinShared {
 				final var productions1 = o1.getProductions();
 				final var productions2 = o2.getProductions();
 				final var i = Double.compare(productions1.get(aKey), productions2.get(aKey));
-				return i == 0 ? i : Double.compare(o1.getLevels().get(aKey), o2.getLevels().get(aKey));
+				return i == 0 ? Double.compare(o1.getLevels().get(aKey), o2.getLevels().get(aKey)) : i;
 			}).collect(Collectors.toList());
 			var cnter = 0;
 			// Upgrade resource
