@@ -12,103 +12,100 @@ import java.util.List;
 
 public class DataFile {
 	private String background;
-	private List<Double> coins = new ArrayList<>();
-	private List<String> clanNames = new ArrayList<>();
-	private List<Color> colors = new ArrayList<>();
-	private List<City> cities = new ArrayList<>();
+	private final List<Double> coins = new ArrayList<>();
+	private final List<String> clanNames = new ArrayList<>();
+	private final List<Color> colors = new ArrayList<>();
+	private final List<City> cities = new ArrayList<>();
 	private double[][] matrix;
-	private HashMap<Integer, HashMap<Integer, Integer>> relations = new HashMap<>();
-	private List<Integer> flags = new ArrayList<>();
-
-	public DataFile addRelation(int i, int j, int v) {
-		var c = relations.get(i);
-		if (c == null)
-			c = new HashMap<>();
-		c.put(j, v);
-		relations.put(i, c);
-		return this;
-	}
-
-	public DataFile setBackground(String file) {
-		this.background = file;
-		return this;
-	}
-
-	public DataFile addPlayer(double coins, String name, Color c, int i) {
-		this.coins.add(coins);
-		this.clanNames.add(name);
-		this.colors.add(c);
-		this.flags.add(i);
-		return this;
-	}
+	private final HashMap<Integer, HashMap<Integer, Integer>> relations = new HashMap<>();
+	private final List<Integer> flags = new ArrayList<>();
 
 	public DataFile addCity(City c) {
 		this.cities.add(c);
 		return this;
 	}
 
-	public DataFile addCityConnection(int a, int b, double weight) {
-		if (matrix == null)
-			matrix = new double[cities.size()][cities.size()];
-		matrix[a][b] = weight;
-		matrix[b][a] = weight;
+	public DataFile addCityConnection(int cityA, int cityB, double distance) {
+		if (this.matrix == null) {
+			this.matrix = new double[this.cities.size()][this.cities.size()];
+		}
+		this.matrix[cityA][cityB] = distance;
+		this.matrix[cityB][cityA] = distance;
+		return this;
+	}
+
+	public DataFile addPlayer(double coins, String name, Color clanColor, int flags) {
+		this.coins.add(coins);
+		this.clanNames.add(name);
+		this.colors.add(clanColor);
+		this.flags.add(flags);
+		return this;
+	}
+
+	public DataFile addRelation(int clanA, int clanB, int relationship) {
+		var c = this.relations.get(clanA);
+		if (c == null) {
+			c = new HashMap<>();
+		}
+		c.put(clanB, relationship);
+		this.relations.put(clanA, c);
 		return this;
 	}
 
 	public void dump(String out) {
-		try (DataOutputStream dos = new DataOutputStream((new FileOutputStream(out)))) {
+		try (var dos = new DataOutputStream((new FileOutputStream(out)))) {
 			dos.write(0xAA);
 			dos.write(0x55);
-			byte[] back = readBackground();
+			final var back = this.readBackground();
 			dos.writeInt(back.length);
 			dos.write(back);
 			dos.writeByte(this.coins.size());
-			coins.forEach(t -> {
+			this.coins.forEach(t -> {
 				try {
 					dos.writeDouble(t);
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			});
-			clanNames.forEach(t -> {
+			this.clanNames.forEach(t -> {
 				try {
 					dos.writeUTF(t);
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			});
-			flags.forEach(a -> {
+			this.flags.forEach(a -> {
 				try {
 					dos.writeByte(a);
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			});
-			colors.forEach(t -> {
+			this.colors.forEach(t -> {
 				try {
 					dos.writeInt(t.getRed());
 					dos.writeInt(t.getGreen());
 					dos.writeInt(t.getBlue());
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			});
-			int size = 0;
-			for (var a : relations.entrySet()) {
+			var size = 0;
+			for (final var a : this.relations.entrySet()) {
 				size += a.getValue().size();
 			}
 			dos.writeInt(size);
-			for (var a : relations.entrySet()) {
-				for (var b : a.getValue().entrySet()) {
+			for (final var a : this.relations.entrySet()) {
+				for (final var b : a.getValue().entrySet()) {
 					dos.writeByte(a.getKey());
 					dos.writeByte(b.getKey());
 					dos.writeInt(b.getValue());
 				}
 			}
-			dos.writeShort(cities.size());
-			int a = 0;
-			for (City c : this.cities) {
-				byte[] b = this.readFile(c.getBackground());
+			dos.writeShort(this.cities.size());
+			var a = 0;
+			for (final City c : this.cities) {
+				final var b = this.readFile(c.getBackground());
 				dos.writeInt(b.length);
 				dos.write(b);
 				dos.writeInt(c.getClan());
@@ -120,26 +117,27 @@ public class DataFile {
 				dos.writeDouble(c.getDefenseBonus());
 				dos.writeDouble(c.getGrowth());
 				dos.writeUTF(c.getName());
-				int num = 0;
-				for (int i = 0; i < this.cities.size(); i++)
+				var num = 0;
+				for (var i = 0; i < this.cities.size(); i++) {
 					num += this.matrix[a][i] != 0 ? 1 : 0;
+				}
 				dos.writeShort(num);
-				for (int i = 0; i < this.cities.size(); i++) {
+				for (var i = 0; i < this.cities.size(); i++) {
 					if (this.matrix[a][i] != 0) {
 						dos.writeShort(i);
-						dos.writeDouble(matrix[a][i]);
+						dos.writeDouble(this.matrix[a][i]);
 					}
 				}
 				c.getProductions().forEach(t -> {
 					try {
 						dos.writeDouble(t);
-					} catch (IOException e) {
+					} catch (final IOException e) {
 						e.printStackTrace();
 					}
 				});
 				a++;
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -150,5 +148,10 @@ public class DataFile {
 
 	private byte[] readFile(String s) throws IOException {
 		return Files.readAllBytes(Paths.get("images", s));
+	}
+
+	public DataFile setBackground(String file) {
+		this.background = file;
+		return this;
 	}
 }
