@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DataFile {
+public final class DataFile {
 	private String background;
 	private final List<Double> coins = new ArrayList<>();
 	private final List<String> clanNames = new ArrayList<>();

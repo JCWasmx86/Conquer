@@ -3,7 +3,7 @@ package org.jel.tool;
 import java.util.ArrayList;
 import java.util.List;
 
-public class City {
+public final class City {
 	private double growth;
 
 	private String background, name;
@@ -116,4 +116,5 @@ public class City {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
 }
