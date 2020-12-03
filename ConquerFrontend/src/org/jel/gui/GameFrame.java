@@ -46,6 +46,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private JTabbedPane sideBarPane;
 	private JPanel buttonPanel;
 	private transient List<DashedLine> lines = new ArrayList<>();
+	private Thread coinsLabelUpdateThread;
 
 	GameFrame(Game game) {
 		this.game = game;
@@ -164,7 +165,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				listOfButtons.forEach(this.buttonPanel::add);
 			}
 		});
-		new Thread(() -> {
+		this.coinsLabelUpdateThread = new Thread(() -> {
 			while (true) {
 				coinsLabel.setText("Coins: " + String.format("%.2f%n", this.game.getCoins().get(0)));
 				try {
@@ -173,7 +174,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					Shared.LOGGER.exception(e);// Oops
 				}
 			}
-		}).start();
+		});
+		this.coinsLabelUpdateThread.start();
 	}
 
 	private void initGameStage() {
@@ -284,6 +286,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				EventLog.clear();
 				this.loopPlayer.abort();
 				MainScreen.forward(this.getLocation(), false);
+				coinsLabelUpdateThread.stop();
 				this.dispose();
 			} else {
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -292,6 +295,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			EventLog.clear();
 			this.loopPlayer.abort();
 			MainScreen.forward(this.getLocation(), false);
+			coinsLabelUpdateThread.stop();
 			this.dispose();
 		}
 	}
@@ -301,6 +305,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		super.dispose();
 		ExtendedTimer.stopAll();
 	}
+
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 

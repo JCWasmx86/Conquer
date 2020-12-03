@@ -1,11 +1,12 @@
 package org.jel.game.messages;
 
 import org.jel.game.data.Clan;
+import org.jel.game.data.Shared;
 
 public record BetterRelationshipMessage(Clan first, Clan second, double oldValue, double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
-		return (this.first.getId() == 0) || (this.second.getId() == 0);
+		return (this.first.getId() == Shared.PLAYER_CLAN) || (this.second.getId() == Shared.PLAYER_CLAN);
 	}
 
 	@Override

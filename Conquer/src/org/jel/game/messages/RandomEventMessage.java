@@ -1,6 +1,7 @@
 package org.jel.game.messages;
 
 import org.jel.game.data.City;
+import org.jel.game.data.Shared;
 
 public record RandomEventMessage(RandomEvent randomEvent, double factorOfPeople, double factorOfSoldiers,
 		double growthFactor, City city) implements Message {
@@ -28,7 +29,7 @@ public record RandomEventMessage(RandomEvent randomEvent, double factorOfPeople,
 
 	@Override
 	public boolean isPlayerInvolved() {
-		return this.city.getClan() == 0;
+		return this.city.getClan() == Shared.PLAYER_CLAN;
 	}
 
 	@Override
