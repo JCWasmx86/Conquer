@@ -23,7 +23,6 @@ conquerFrontend:
 .align 8
 conquerFrontendSize:
 .int conquerFrontendSize - conquerFrontend
-
 .global uninstall
 .align 8
 uninstall:
