@@ -36,6 +36,15 @@ import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;
 import org.jel.gui.utils.LoopPlayer;
 
+/**
+ * This class is the class that shows the entire map with all other components.
+ * It has 3 big components:
+ * <ol>
+ * <li>A JLabel that shows the entire map (Upper left)</li>
+ * <li>A JPanel with buttons and labels from plugins(Lower left)</li>
+ * <li>A JTabbedPane with the CityInfo, ClanInfo and Relationships tabs</li>
+ * </ol>
+ */
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient Game game;
@@ -46,8 +55,13 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private JTabbedPane sideBarPane;
 	private JPanel buttonPanel;
 	private transient List<DashedLine> lines = new ArrayList<>();
-	private Thread coinsLabelUpdateThread;
+	private transient Thread coinsLabelUpdateThread;
 
+	/**
+	 * Create a new GameFrame with a specified game as base
+	 *
+	 * @param game The game to show
+	 */
 	GameFrame(Game game) {
 		this.game = game;
 		this.addComponentListener(this);
@@ -91,27 +105,48 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void componentHidden(ComponentEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void componentMoved(ComponentEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void componentResized(ComponentEvent e) {
 		this.adjustY();
 		this.adjustX();
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void componentShown(ComponentEvent e) {
 
 	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+		ExtendedTimer.stopAll();
+	}
+
+	/**
+	 * Initialises this frame.
+	 */
 	void init() {
 		EventLog.init(this.game);
 		this.initButtonPanel();
@@ -266,16 +301,25 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (!this.game.onlyOneClanAlive()) {
@@ -286,7 +330,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				EventLog.clear();
 				this.loopPlayer.abort();
 				MainScreen.forward(this.getLocation(), false);
-				coinsLabelUpdateThread.stop();
+				this.coinsLabelUpdateThread.stop();
 				this.dispose();
 			} else {
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -295,32 +339,38 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			EventLog.clear();
 			this.loopPlayer.abort();
 			MainScreen.forward(this.getLocation(), false);
-			coinsLabelUpdateThread.stop();
+			this.coinsLabelUpdateThread.stop();
 			this.dispose();
 		}
 	}
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		ExtendedTimer.stopAll();
-	}
-
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowIconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowOpened(WindowEvent e) {
 

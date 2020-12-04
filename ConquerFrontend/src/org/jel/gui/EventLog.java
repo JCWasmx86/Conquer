@@ -28,6 +28,9 @@ import org.jel.game.messages.Message;
 import org.jel.game.plugins.MessageListener;
 import org.jel.gui.utils.ImageResource;
 
+/**
+ * Shows all events of the game. Only one instance is available.
+ */
 final class EventLog extends JFrame implements MessageListener {
 	private static EventLog log;
 	static {
@@ -36,12 +39,20 @@ final class EventLog extends JFrame implements MessageListener {
 	private static final float FONT_SIZE = 17.5f;
 	private static final long serialVersionUID = 5521609891725906272L;
 
+	/**
+	 * Clear the instance.
+	 */
 	public static void clear() {
 		EventLog.log.dispose();
 		EventLog.log.timer.stop();
 		EventLog.log = new EventLog();
 	}
 
+	/**
+	 * Setup the instance with a specified game
+	 *
+	 * @param game The game as the source of events.
+	 */
 	static void init(Game game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
@@ -63,6 +74,9 @@ final class EventLog extends JFrame implements MessageListener {
 		EventLog.log.pack();
 	}
 
+	/**
+	 * Makes the instance visible
+	 */
 	static void showWindow() {
 		EventLog.log.setVisible(true);
 	}
@@ -206,6 +220,9 @@ final class EventLog extends JFrame implements MessageListener {
 		this.setTitle("Event log");
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void added(Message s) {
 		if (s.getMessageText() == null) {
@@ -262,6 +279,9 @@ final class EventLog extends JFrame implements MessageListener {
 		return r + (g << 8) + (b << 16) + (a << 24);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void removed(Message s) {
 		// Do nothing

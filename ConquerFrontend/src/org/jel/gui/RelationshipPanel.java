@@ -8,22 +8,32 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import org.jel.game.data.Game;
 import org.jel.game.data.Shared;
 
+/**
+ * One of the panels in the JTabbedPane of {@link GameFrame}. It allows to see
+ * the relationship to other clans and to improve it by sending gifts.
+ */
 final class RelationshipPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -7720369284705527955L;
-	private final Game game;
+	private final transient Game game;
 	private final List<JLabel> labels;
-	private Timer timer;
 
+	/**
+	 * Construct a new RelationshipPanel
+	 *
+	 * @param game The source of the data.
+	 */
 	RelationshipPanel(Game game) {
 		this.game = game;
 		this.labels = new ArrayList<>();
 	}
 
+	/**
+	 * Updates the information about the relationship to other clans.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final var clans = this.game.getClans();
@@ -36,6 +46,9 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Initialises this component.
+	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
@@ -52,7 +65,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 		final var giftPanel = new GiftPanel(this.game);
 		giftPanel.init();
 		this.add(giftPanel);
-		this.timer = new ExtendedTimer(17, this);
-		this.timer.start();
+		final var timer = new ExtendedTimer(17, this);
+		timer.start();
 	}
 }

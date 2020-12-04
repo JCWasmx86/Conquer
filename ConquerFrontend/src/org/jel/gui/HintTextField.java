@@ -5,6 +5,10 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JTextField;
 
+/**
+ * A HintTextField based on <a href=
+ * "https://stackoverflow.com/a/24571681">https://stackoverflow.com/a/24571681</a>.
+ */
 final class HintTextField extends JTextField implements FocusListener {
 	private static final long serialVersionUID = 7292642801367703358L;
 	private final String hint;

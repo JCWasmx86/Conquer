@@ -17,8 +17,17 @@ import javax.swing.Timer;
 import org.jel.game.data.City;
 import org.jel.game.data.Shared;
 
+/**
+ * Represents a city on the map. It is divided into two parts. The first (upper)
+ * part is the image of the city itself. The second part is a rectangle showing
+ * the color of the corresponding clan.
+ */
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
-	static final int CLAN_COLOR_HEIGHT = 12;// Height of the rectangle with the clan's color.
+	/**
+	 * Specifies the height of the colored rectangle that shows the association with
+	 * a clan
+	 */
+	static final int CLAN_COLOR_HEIGHT = 12;
 	private static final long serialVersionUID = -5091974547825438103L;
 	private final transient City city;
 	private final transient Timer timer;
@@ -28,6 +37,14 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private transient City origin;
 	private final transient Consumer<City> consumer;
 
+	/**
+	 * Constructs a new CityLabel
+	 *
+	 * @param city     Which city to represent
+	 * @param labels   A map of labels and the corresponding CityLabels.
+	 * @param consumer A consumer, that is executed as soon as the mouse was clicked
+	 *                 on it.
+	 */
 	CityLabel(City city, Map<City, CityLabel> labels, Consumer<City> consumer) {
 		this.city = city;
 		final var image = city.getImage();
@@ -40,6 +57,9 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.consumer = consumer;
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.paint(this.getGraphics());
@@ -55,14 +75,27 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.setToolTipText(s);
 	}
 
+	/**
+	 * Returns the city this label is representing
+	 */
 	City getCity() {
 		return this.city;
 	}
 
+	/**
+	 * Calculates the middle of the icon on the map. (The x-Value)
+	 *
+	 * @return The x-Value
+	 */
 	int getPreferredX() {
 		return this.getX() + (this.city.getImage().getWidth(null) / 2);
 	}
 
+	/**
+	 * Calculates the middle of the icon on the map. (The y-Value)
+	 *
+	 * @return The y-Value
+	 */
 	int getPreferredY() {
 		return this.getY() + (this.city.getImage().getHeight(null) / 2) + (CityLabel.CLAN_COLOR_HEIGHT / 2);
 	}
@@ -72,6 +105,9 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.origin = origin;
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 1) {
@@ -87,26 +123,41 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		}
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
 	}
 
+	/**
+	 * Repaints the whole CityLabel.
+	 */
 	@Override
 	public void paint(Graphics g) {
 		try {
@@ -192,6 +243,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		}
 	}
 
+	/**
+	 * Resets the CityLabel. (No blinking anymore, resets the source city for
+	 * attacks/troop movements)
+	 */
 	void unmark() {
 		this.marked = false;
 		this.counter = 0;

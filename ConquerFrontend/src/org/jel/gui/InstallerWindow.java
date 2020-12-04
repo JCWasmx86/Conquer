@@ -11,11 +11,17 @@ import javax.swing.WindowConstants;
 
 import org.jel.game.init.ExtendedOutputStream;
 
+/**
+ * A windows for the installer. It just consists of a list of JLabels.
+ */
 final class InstallerWindow extends ExtendedOutputStream {
 	private String tmp;
 	private final JFrame jframe;
 	private final JPanel jpanel;
 
+	/**
+	 * Creates a new InstallerWindow.
+	 */
 	InstallerWindow() {
 		this.jframe = new JFrame();
 		this.jpanel = new JPanel();
@@ -25,6 +31,9 @@ final class InstallerWindow extends ExtendedOutputStream {
 		this.jframe.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 	}
 
+	/**
+	 * Signals that the windows is not needed anymore.
+	 */
 	void dispose() {
 		this.jframe.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
@@ -32,7 +41,7 @@ final class InstallerWindow extends ExtendedOutputStream {
 	@Override
 	public void write(int b) throws IOException {
 		this.tmp += (char) b;
-		if (b == '\n') {
+		if (b == '\n') {// If the string had a newline, add a new JLabel.
 			this.jpanel.add(new JLabel(this.tmp));
 			this.tmp = null;
 			this.jframe.pack();

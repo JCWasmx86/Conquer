@@ -19,14 +19,23 @@ import org.jel.game.init.Initializer;
 import org.jel.game.init.Installer;
 import org.jel.gui.utils.Sound;
 
+/**
+ * This class provides the introduction for the game. It is currently just a
+ * black screen, anything else will be done soon.
+ */
 public final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
 	private static final long serialVersionUID = 4354833119880282433L;
 
+	/**
+	 * The entry point, the arguments are ignored
+	 *
+	 * @param args Ignored commandline arguments
+	 */
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
+				| UnsupportedLookAndFeelException e) {// Just use the Default LaF
 			e.printStackTrace();
 		}
 		new Thread(() -> {

@@ -13,6 +13,9 @@ import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
 
+/**
+ * Allows the player to see some information about a resource and upgrade it.
+ */
 final class ResourceButton extends JPanel {
 	private static final long serialVersionUID = 8574350366288971896L;
 	private final JButton upgradeThisResource;
@@ -21,6 +24,14 @@ final class ResourceButton extends JPanel {
 	private final transient City city;
 	private final Resource resource;
 
+	/**
+	 * Create a new button for a specified city
+	 *
+	 * @param resource The resource to show information for. If {@code null}, the
+	 *                 defense may be upgraded
+	 * @param city     A reference to the city.
+	 * @param cip      A reference to the parent CityInfoPanel.
+	 */
 	ResourceButton(Resource resource, City city, CityInfoPanel cip) {
 		this.city = city;
 		this.resource = resource;
@@ -94,6 +105,9 @@ final class ResourceButton extends JPanel {
 		this.setVisible(true);
 	}
 
+	/**
+	 * Updates all components of this component.
+	 */
 	void doUpdate() {
 		final var level = this.city.getLevels()
 				.get(this.resource == null ? Resource.values().length : this.resource.getIndex());

@@ -26,6 +26,10 @@ import org.jel.game.data.GlobalContext;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
 
+/**
+ * This is a singleton-dialog, that allows the player to add/remove plugins and
+ * strategies.
+ */
 final class StrategiesAndPluginsDialog extends JFrame {
 	private static final long serialVersionUID = 1100425969083669130L;
 	private static final StrategiesAndPluginsDialog INSTANCE = new StrategiesAndPluginsDialog();
@@ -33,6 +37,9 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		StrategiesAndPluginsDialog.INSTANCE.init();
 	}
 
+	/**
+	 * Show the instance.
+	 */
 	public static void showWindow() {
 		StrategiesAndPluginsDialog.INSTANCE.pack();
 		StrategiesAndPluginsDialog.INSTANCE.setVisible(true);

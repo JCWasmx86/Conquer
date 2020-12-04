@@ -25,10 +25,22 @@ import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
 
+/**
+ * This class shows all clans in a scenario in a JList. Furthermore there is a
+ * back- and forward-button.
+ */
 final class LevelInfo extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 5849067897050863981L;
 	private boolean shouldExit = false;
 
+	/**
+	 * Construct a new LevelInfo
+	 *
+	 * @param game     The source of some data
+	 * @param is       The scenario to show
+	 * @param location On which location the frame should appear
+	 * @param context  The whole context
+	 */
 	LevelInfo(Game game, InstalledScenario is, Point location, GlobalContext context) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addWindowListener(this);
@@ -100,15 +112,24 @@ final class LevelInfo extends JFrame implements WindowListener {
 		return r + (g << 8) + (b << 16) + (a << 24);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (!this.shouldExit) {
@@ -116,21 +137,33 @@ final class LevelInfo extends JFrame implements WindowListener {
 		}
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowIconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowOpened(WindowEvent e) {
 
@@ -138,5 +171,8 @@ final class LevelInfo extends JFrame implements WindowListener {
 
 }
 
+/**
+ * This record just associates a clan with its corresponding color.
+ */
 final record ClanColorAssociation(String clanName, Color color) {
 }
