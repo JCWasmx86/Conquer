@@ -18,6 +18,9 @@ import org.jel.game.data.PlayerGiftCallback;
 import org.jel.game.data.strategy.StrategyObject;
 import org.jel.gui.utils.ImageResource;
 
+/**
+ * A hook to allow the player to receive gifts.
+ */
 final class GiftCallback implements PlayerGiftCallback {
 
 	private boolean accepted;
@@ -26,6 +29,9 @@ final class GiftCallback implements PlayerGiftCallback {
 		this.accepted = true;
 	}
 
+	/**
+	 * This method blocks until the player accepted or rejected.
+	 */
 	@Override
 	public boolean acceptGift(Clan source, Clan destination, Gift gift, double oldValue, DoubleConsumer newValue,
 			StrategyObject strategyObject) {
@@ -77,7 +83,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		jframe.setVisible(true);
 
 		while (jframe.isVisible()) {
-			//Wait for input
+			// Wait for input
 		}
 		final var tmp = this.accepted;
 		this.accepted = false;

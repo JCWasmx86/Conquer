@@ -8,13 +8,22 @@ import javax.swing.JSlider;
 import org.jel.game.data.City;
 import org.jel.game.data.Shared;
 
+/**
+ * Allows the player to recruit soldiers
+ */
 final class RecruitButton extends JPanel {
 	private static final long serialVersionUID = 4846741301367606008L;
 	private JSlider js;
 	private JButton jbutton;
-	private City city;
+	private final transient City city;
 	private boolean sharp = false;
 
+	/**
+	 * Constructs a new button
+	 *
+	 * @param city Target city
+	 * @param cip  A reference to the CityInfoPanel.
+	 */
 	RecruitButton(City city, CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -37,6 +46,9 @@ final class RecruitButton extends JPanel {
 		this.add(this.jbutton);
 	}
 
+	/**
+	 * Updates all components on this panel.
+	 */
 	void doUpdate() {
 		if (this.city.getClan() != 0) {
 			this.jbutton.setEnabled(false);

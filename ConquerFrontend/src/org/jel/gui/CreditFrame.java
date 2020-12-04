@@ -21,11 +21,15 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import org.jel.gui.utils.ImageResource;
 import org.jel.gui.utils.LoopPlayer;
 
+/**
+ * Shows credits and licensing information.
+ */
 final class CreditFrame extends JFrame implements WindowListener, ActionListener {
 	private static final long serialVersionUID = -4549305902050012246L;
 	private final LoopPlayer player;
 	private volatile boolean switchToMainScreen = false;
 
+	// Construct a new CreditFrame
 	CreditFrame() {
 		this.player = new LoopPlayer().addSong("Credits.wav");
 	}
@@ -197,6 +201,11 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		return sb.append("</center></html>").toString();
 	}
 
+	/**
+	 * Init and show this frame at the specified location
+	 *
+	 * @param location The location, where the frame will appear
+	 */
 	void init(Point location) {
 		this.setLocation(location);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
@@ -222,16 +231,25 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		this.setVisible(true);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (this.switchToMainScreen) {
@@ -241,20 +259,32 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		}
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowIconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowOpened(WindowEvent e) {
 

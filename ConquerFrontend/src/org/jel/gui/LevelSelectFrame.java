@@ -27,11 +27,19 @@ import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
 import org.jel.gui.utils.ImageResource;
 
+/**
+ * This frame shows all installed scenarios in a JList.
+ */
 final class LevelSelectFrame extends JFrame implements MouseListener, WindowListener {
 	private static final long serialVersionUID = -6919213661998844224L;
 	private boolean shouldExit = true;
 	private transient GlobalContext context;
 
+	/**
+	 * Initialise the frame at the specified location
+	 *
+	 * @param location The location of the created frame.
+	 */
 	void init(Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo();
@@ -82,21 +90,33 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		this.addWindowListener(this);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void mouseExited(MouseEvent e) {
 
 	}
 
+	/**
+	 * Exits the frame and opens a new LevelInfo
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		@SuppressWarnings("unchecked")
@@ -112,21 +132,33 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		li.setVisible(true);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used. Closes the window and kills the JVM.
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		if (this.shouldExit) {
@@ -134,21 +166,33 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		}
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowIconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowOpened(WindowEvent e) {
 

@@ -18,6 +18,14 @@ import org.jel.game.data.City;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 
+/**
+ * This panel shows information about a selected city. At the top it is showing
+ * the statistics about this city (Number of people, number of soldiers,
+ * growth,...). After that, there are {@code Resource.values().length +1}
+ * ResourceButtons. Each of these buttons upgrades one resource. The last button
+ * is for upgrading the defense. The last component is a RecruitButton which is
+ * responsible for recruiting soldiers in this city.
+ */
 class CityInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2409517597504961241L;
 	private final transient City city;
@@ -26,6 +34,11 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	private final List<ResourceButton> resourceButtons;
 	private RecruitButton recruitButton;
 
+	/**
+	 * Create a CityInfoPanel with a specified city as base.
+	 *
+	 * @param city The city to show.
+	 */
 	CityInfoPanel(City city) {
 		this.city = city;
 		this.timer = new ExtendedTimer(17, this);
@@ -33,11 +46,17 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		this.resourceButtons = new ArrayList<>();
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.doUpdate();
 	}
 
+	/**
+	 * Update all components on this panel.
+	 */
 	void doUpdate() {
 		this.statsViewer.setText(this.generateText());
 		this.resourceButtons.forEach(ResourceButton::doUpdate);
@@ -71,6 +90,9 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		return sb.append("</body></html>").toString();
 	}
 
+	/**
+	 * This method has to be called in order to initialize the component.
+	 */
 	void init() {
 		this.setLayout(new FlowLayout());
 		this.statsViewer = new JEditorPane("text/html", this.generateText());

@@ -19,11 +19,23 @@ import javax.swing.JPanel;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.LoopPlayer;
 
+/**
+ * The mainscreen that allows you to play, see the credits and the tutorial.
+ * Furthermore it has a JMenu with the option to show a dialogue, that allows a
+ * trivial installation/removal of plugins and strategies
+ */
 final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	private static final long serialVersionUID = 5279928865220785850L;
 	private static boolean forwarded = false;
 	private static boolean alreadyForwardedOnceFromIntro;
 
+	/**
+	 * A static method to show the MainScreen. It won't show a window if another one
+	 * is already open.
+	 *
+	 * @param location  Where the frame will appear
+	 * @param fromIntro Whether the call is coming from the Intro or somewhere else.
+	 */
 	static void forward(Point location, boolean fromIntro) {
 		if (MainScreen.forwarded || (MainScreen.alreadyForwardedOnceFromIntro && fromIntro)) {
 			return;
@@ -40,11 +52,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	}
 
 	private final LoopPlayer player;
-	private JButton play, credits, tutorial;
 
-	private JMenuBar menu;
-
-	MainScreen() {
+	private MainScreen() {
 		this.player = new LoopPlayer().addSong("MainScreen.wav");
 		this.addKeyListener(this);
 		this.addWindowListener(this);
@@ -52,9 +61,9 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 
 	private void init() {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		this.menu = new JMenuBar();
-		this.menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		this.menu.setMaximumSize(new Dimension(100, 25));
+		final var menu = new JMenuBar();
+		menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		menu.setMaximumSize(new Dimension(100, 25));
 		final var settings = new JMenu("Settings");
 		final var strategiesAndPlugins = new JMenuItem("Strategies and Plugins");
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
@@ -62,54 +71,68 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var exit = new JMenuItem("Exit");
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
-		this.menu.add(settings);
-		this.add(this.menu);
+		menu.add(settings);
+		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		this.play = new JButton("Play");
-		this.play.addActionListener(a -> {
+		final var play = new JButton("Play");
+		play.addActionListener(a -> {
 			MainScreen.forwarded = false;
 			final var lsf = new LevelSelectFrame();
 			lsf.init(this.getLocation());
 			this.dispose();
 			this.player.abort();
 		});
-		this.play.setAlignmentX(Component.CENTER_ALIGNMENT);
-		this.play.setFont(this.play.getFont().deriveFont(50.0f));
-		panel.add(this.play);
-		this.credits = new JButton("Credits");
-		this.credits.addActionListener(a -> {
+		play.setAlignmentX(Component.CENTER_ALIGNMENT);
+		play.setFont(play.getFont().deriveFont(50.0f));
+		panel.add(play);
+		final var credits = new JButton("Credits");
+		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;
 			final var cf = new CreditFrame();
 			cf.init(this.getLocation());
 			this.dispose();
 			this.player.abort();
 		});
-		this.credits.setFont(this.play.getFont().deriveFont(50.0f));
-		this.credits.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(this.credits);
-		this.tutorial = new JButton("Tutorial");
-		this.tutorial.addActionListener(a -> System.out.println("Tutorial"));
-		this.tutorial.setFont(this.play.getFont().deriveFont(50.0f));
-		this.tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panel.add(this.tutorial);
+		credits.setFont(play.getFont());
+		credits.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(credits);
+		final var tutorial = new JButton("Tutorial");
+		tutorial.addActionListener(a -> System.out.println("Tutorial"));
+		tutorial.setFont(play.getFont());
+		tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel.add(tutorial);
 		this.add(panel);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 
 	}
+
+	/**
+	 * Shouldn't be used
+	 */
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
 
+	/**
+	 * If the window is set visible, the music will start to play, else the music
+	 * will stop.
+	 */
 	@Override
 	public void setVisible(boolean b) {
 		super.setVisible(b);
@@ -124,35 +147,57 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		}
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowActivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowClosed(WindowEvent e) {
 	}
 
+	/**
+	 * Kills the JVM.
+	 */
 	@Override
 	public void windowClosing(WindowEvent e) {
 		System.exit(0);
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowDeiconified(WindowEvent e) {
 
 	}
+
+	/**
+	 * Shouldn't be used
+	 */
 
 	@Override
 	public void windowIconified(WindowEvent e) {
 
 	}
 
+	/**
+	 * Shouldn't be used
+	 */
 	@Override
 	public void windowOpened(WindowEvent e) {
 

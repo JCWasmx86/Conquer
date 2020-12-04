@@ -8,11 +8,23 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+/**
+ * A panel with a textfield and a button. A button press clears the textfield
+ * and sends its contents to the supplied consumer.
+ */
 final class SelectPanel extends JPanel {
 	private static final long serialVersionUID = 5883369029393808982L;
 
-	SelectPanel(String buttonValue, String jtextfield, Consumer<String> consumer) {
-		final var hintTextField = new HintTextField(jtextfield);
+	/**
+	 * Construct a new SelectPanel.
+	 *
+	 * @param buttonText     The string of the button
+	 * @param jtextfieldHint The hint
+	 * @param consumer       The consumer which will be called, if the button was
+	 *                       pressed.
+	 */
+	SelectPanel(String buttonText, String jtextfieldHint, Consumer<String> consumer) {
+		final var hintTextField = new HintTextField(jtextfieldHint);
 		final var jbutton = new JButton();
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		jbutton.setAction(new AbstractAction() {
@@ -27,7 +39,7 @@ final class SelectPanel extends JPanel {
 				}
 			}
 		});
-		jbutton.setText(buttonValue);
+		jbutton.setText(buttonText);
 		this.add(hintTextField);
 		this.add(jbutton);
 	}

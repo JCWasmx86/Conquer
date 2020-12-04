@@ -9,35 +9,27 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
+/**
+ * This code is from <a href=
+ * "https://stackoverflow.com/a/6748509/13912132">https://stackoverflow.com/a/6748509/13912132</a>
+ * with minor changes.
+ */
 final class RoundButton extends JButton {
 	private static final long serialVersionUID = 3881854141204649327L;
 
-	private Shape shape, base;
-
-	public RoundButton() {
-		this(null, null);
-	}
-
-	public RoundButton(Action a) {
-		this();
-		this.setAction(a);
-	}
+	private transient Shape shape;
+	private transient Shape base;
 
 	public RoundButton(Icon icon) {
 		this(null, icon);
 	}
 
-	public RoundButton(String text) {
-		this(text, null);
-	}
-
-	public RoundButton(String text, Icon icon) {
+	private RoundButton(String text, Icon icon) {
 		this.setModel(new DefaultButtonModel());
 		this.init(text, icon);
 		if (icon == null) {
@@ -65,7 +57,7 @@ final class RoundButton extends JButton {
 		return new Dimension(iw + i.right + i.left, iw + i.top + i.bottom);
 	}
 
-	protected void initShape() {
+	private void initShape() {
 		if (!this.getBounds().equals(this.base)) {
 			final var s = this.getPreferredSize();
 			this.base = this.getBounds();

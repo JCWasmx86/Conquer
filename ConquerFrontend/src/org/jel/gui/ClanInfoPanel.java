@@ -17,17 +17,32 @@ import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 
+/**
+ * Shows information about the clan itself. This panel is divided into 4
+ * components. The first one shows information about the clan (name, number of
+ * resources, number of soldiers,...). The three other components are:
+ * {@code UpgradeSoldiersPanel, UpgradeSoldiersDefense and UpgradeSoldiersOffense}.
+ */
 final class ClanInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 3553281021198844773L;
 	private final transient Clan clan;
 	private final transient Game game;
 	private JEditorPane jep;
 
+	/**
+	 * Constructs a new ClanInfoPanel for the specified clan.
+	 *
+	 * @param clan The clan.
+	 * @param game A reference to the game object.
+	 */
 	ClanInfoPanel(Clan clan, Game game) {
 		this.clan = clan;
 		this.game = game;
 	}
 
+	/**
+	 * Shouldn't be used.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.jep.setText(this.generateText());
@@ -58,6 +73,9 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToLong(cc).sum();
 	}
 
+	/**
+	 * Initialises this component.
+	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.jep = new JEditorPane("text/html", this.generateText());

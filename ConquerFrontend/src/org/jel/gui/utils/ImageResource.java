@@ -7,9 +7,17 @@ import java.io.FileNotFoundException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+/**
+ * Reprents any image.
+ */
 public final class ImageResource implements Icon {
 	private final Icon icon;
 
+	/**
+	 * Constructs a new ImageResource with the specified icon and loads it.
+	 *
+	 * @param string The icon.
+	 */
 	public ImageResource(String string) {
 		var url = ClassLoader.getSystemResource(string);
 		if (url == null) {

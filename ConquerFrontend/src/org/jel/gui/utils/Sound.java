@@ -10,20 +10,36 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
 
+/**
+ * A class wrapping the Sound API.
+ */
 public class Sound implements LineListener, Serializable {
 	private static final long serialVersionUID = -2159162046590240266L;
 	private final String filename;
 	private boolean isPlaying;
 	private transient Clip audioClip;
 
+	/**
+	 * Create new sound
+	 *
+	 * @param name Filename
+	 */
 	public Sound(String name) {
 		this.filename = name;
 	}
 
+	/**
+	 * Returns whether the sound is playing
+	 *
+	 * @return True if the sound is playing.
+	 */
 	public boolean isPlaying() {
 		return this.isPlaying;
 	}
 
+	/**
+	 * Play the sound
+	 */
 	public void play() {
 		try {
 			var url = ClassLoader.getSystemResource(this.filename);
@@ -49,6 +65,9 @@ public class Sound implements LineListener, Serializable {
 		}
 	}
 
+	/**
+	 * Stop the sound
+	 */
 	public void stop() {
 		if (this.audioClip != null) {
 			this.audioClip.stop();
