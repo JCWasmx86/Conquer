@@ -43,18 +43,18 @@ mkdir frontend
 mkdir music
 cd ../Conquer
 shopt -s dotglob
-javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15
+javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
 cd ../ConquerFrontend
-javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend
+javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator
-javac `find src -name "*.java"` -d bin
+javac `find src -name "*.java"` -d bin|| exit 1
 cp -r images bin
 cd bin
-java --class-path=.:../images:.. org.jel.tool.Belenos
-java --class-path=.:../images:.. org.jel.tool.Etiona
-java --class-path=.:../images:.. org.jel.tool.Slaine
-java --class-path=.:../images:.. org.jel.tool.Freedo
+java --class-path=.:../images:.. org.jel.tool.Belenos|| exit 1
+java --class-path=.:../images:.. org.jel.tool.Etiona|| exit 1
+java --class-path=.:../images:.. org.jel.tool.Slaine|| exit 1
+java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist
 mkdir tmp
 cd backend
@@ -106,7 +106,7 @@ zip ../../conquer.zip -r *
 cd ../../../music
 for f in *.mscz; do
 	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
-		musescore3 -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"
+		musescore3 -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"|| exit 1
 	else
 		echo Skipping conversion of "$f"
 	fi
@@ -122,7 +122,7 @@ cd frontend
 jar -cvf ../Conquer_frontend.jar *
 cd ../../Launcher
 make clean
-make $TARGET
+make $TARGET|| exit 1
 if [[ -z "${IS_WIN}" ]]; then
 	cp launcher ../conquer-dist
 else
