@@ -54,7 +54,6 @@ final class ResourceButton extends JPanel {
 			cip.doUpdate();
 		});
 		this.add(this.upgradeThisResource);
-
 		this.maximumUpgrade = new JButton();
 		this.maximumUpgrade.setIcon(new ImageResource("max.png"));
 		this.maximumUpgrade.setText(getMaxUpgradeText());
@@ -128,27 +127,13 @@ final class ResourceButton extends JPanel {
 	 */
 	void doUpdate() {
 		final var level = this.city.getLevels().get(getIndex());
-		if (this.city.getClan() == Shared.PLAYER_CLAN) {
-			if (level < 1000) {
-				this.infoLabel.setText(getInfoLabelText());
-			} else {
-				this.infoLabel.setText("Maximum value reached!");
-			}
-		} else {
-			this.infoLabel.setText((this.resource == null ? "Defense" : this.resource.getName()) + " Level ???");
-		}
-		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(getIndex()) + 1);
-		double currentCoins = this.city.getGame().getCoins().get(0);
-		if ((costsForUpgrade < currentCoins) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
-			this.upgradeThisResource.setEnabled(true);
-			this.upgradeThisResource.setText(getUpgradeThisResourceText());
-		} else if ((this.city.getClan() == 0) && (level == 1000)) {
-			this.upgradeThisResource.setEnabled(false);
-			this.upgradeThisResource.setText("Maximum value reached!");
-		} else {
-			this.upgradeThisResource.setEnabled(false);
-			this.upgradeThisResource.setText("No upgrade available!");
-		}
+		updateLabel(level);
+		updateUpgradeThisResource(level);
+		updateMaximumUpgrade(level);
+	}
+
+	private void updateMaximumUpgrade(int level) {
+		double currentCoins = this.city.getGame().getCoins().get(Shared.PLAYER_CLAN);
 		int currentLevel = level;
 		while (true) {
 			var costs = Shared.costs(currentLevel + 1);
@@ -161,12 +146,39 @@ final class ResourceButton extends JPanel {
 		if ((currentLevel != level) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
 			this.maximumUpgrade.setEnabled(true);
 			this.maximumUpgrade.setText(getMaxUpgradeText());
-		} else if ((this.city.getClan() == 0) && (level == 1000)) {
+		} else if ((this.city.getClan() == Shared.PLAYER_CLAN) && (level == 1000)) {
 			this.maximumUpgrade.setEnabled(false);
 			this.maximumUpgrade.setText("Maximum value reached!");
 		} else {
 			this.maximumUpgrade.setEnabled(false);
 			this.maximumUpgrade.setText("No upgrade available!");
+		}
+	}
+
+	private void updateUpgradeThisResource(int level) {
+		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(getIndex()) + 1);
+		double currentCoins = this.city.getGame().getCoins().get(Shared.PLAYER_CLAN);
+		if ((costsForUpgrade < currentCoins) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
+			this.upgradeThisResource.setEnabled(true);
+			this.upgradeThisResource.setText(getUpgradeThisResourceText());
+		} else if ((this.city.getClan() == Shared.PLAYER_CLAN) && (level == 1000)) {
+			this.upgradeThisResource.setEnabled(false);
+			this.upgradeThisResource.setText("Maximum value reached!");
+		} else {
+			this.upgradeThisResource.setEnabled(false);
+			this.upgradeThisResource.setText("No upgrade available!");
+		}
+	}
+
+	private void updateLabel(int level) {
+		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+			if (level < 1000) {
+				this.infoLabel.setText(getInfoLabelText());
+			} else {
+				this.infoLabel.setText("Maximum value reached!");
+			}
+		} else {
+			this.infoLabel.setText((this.resource == null ? "Defense" : this.resource.getName()) + " Level ???");
 		}
 	}
 }
