@@ -76,4 +76,12 @@ public interface PluginInterface {
 	 * @return Current eventlist.
 	 */
 	EventList getEventList();
+
+	/**
+	 * Add a MessageListener that is called when a message had been added to the
+	 * EventList.
+	 * 
+	 * @param messageListener
+	 */
+	void addMessageListener(MessageListener messageListener);
 }
