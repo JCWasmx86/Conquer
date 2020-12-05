@@ -23,6 +23,7 @@ public final class GlobalContext {
 		this.pluginNames = pluginNames;
 		this.strategyNames = strategyNames;
 	}
+
 	public List<InstalledScenario> getInstalledMaps() {
 		return this.installedMaps;
 	}

@@ -10,7 +10,7 @@ import org.jel.game.data.strategy.StrategyObject;
 public interface PlayerGiftCallback {
 	/**
 	 * Called as soon as the player gets a gift.
-	 * 
+	 *
 	 * @param source         The source clan.
 	 * @param destination    The destination clan - Always the clan with the id
 	 *                       {@link Shared#PLAYER_CLAN}

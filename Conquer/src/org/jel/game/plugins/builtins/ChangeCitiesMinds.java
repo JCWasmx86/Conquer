@@ -18,17 +18,17 @@ public final class ChangeCitiesMinds implements Plugin {
 	private boolean evalClanChange(final double soldiersToCivilians, final City c, final byte otherClan) {
 		if (this.random.nextInt(100) > 90) {
 			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
-				c.setClan(context.getClan(otherClan));
+				c.setClan(this.context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(90, 98)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(45, 90)));
 				return true;
 			} else if ((soldiersToCivilians < 0.25) && (Math.random() > 0.9)) {
-				c.setClan(context.getClan(otherClan));
+				c.setClan(this.context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(60, 88)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(55, 90)));
 				return true;
 			} else if ((soldiersToCivilians < 0.35) && (Math.random() > 0.98)) {
-				c.setClan(context.getClan(otherClan));
+				c.setClan(this.context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(20, 60)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(80, 98)));
 				return true;

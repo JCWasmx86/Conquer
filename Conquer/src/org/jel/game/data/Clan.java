@@ -35,7 +35,7 @@ public final class Clan {
 
 	/**
 	 * Get the number of coins this clan has
-	 * 
+	 *
 	 * @return Number of coins.
 	 */
 	public double getCoins() {
@@ -44,7 +44,7 @@ public final class Clan {
 
 	/**
 	 * Returns the color associated with this clan
-	 * 
+	 *
 	 * @return Clan color
 	 */
 	public Color getColor() {
@@ -53,7 +53,7 @@ public final class Clan {
 
 	/**
 	 * Returns optional data for the strategy.
-	 * 
+	 *
 	 * @return Optional Data. May be null
 	 */
 	public StrategyData getData() {
@@ -62,7 +62,7 @@ public final class Clan {
 
 	/**
 	 * Returns some unspecified, implementation defined integer
-	 * 
+	 *
 	 * @return Some integer
 	 */
 	public int getFlags() {
@@ -71,7 +71,7 @@ public final class Clan {
 
 	/**
 	 * Return the id of the clan.
-	 * 
+	 *
 	 * @return Clan id.
 	 */
 	public int getId() {
@@ -80,7 +80,7 @@ public final class Clan {
 
 	/**
 	 * Returns the name of the clan
-	 * 
+	 *
 	 * @return Name of the clan
 	 */
 	public String getName() {
@@ -90,7 +90,7 @@ public final class Clan {
 	/**
 	 * Returns a mutable list of the amount of all resources. The index for a
 	 * resource is obtained by {@link Resource#getIndex()}
-	 * 
+	 *
 	 * @return List of resources.
 	 */
 	public List<Double> getResources() {
@@ -100,7 +100,7 @@ public final class Clan {
 	/**
 	 * Returns a mutable list of the production of all resources. The index for a
 	 * resource is obtained by {@link Resource#getIndex()}
-	 * 
+	 *
 	 * @return Production of resources.
 	 */
 	public List<Double> getResourceStats() {
@@ -109,7 +109,7 @@ public final class Clan {
 
 	/**
 	 * Returns the defenselevel of the soldiers of the clan
-	 * 
+	 *
 	 * @return Defenselevel
 	 */
 	public int getSoldiersDefenseLevel() {
@@ -118,7 +118,7 @@ public final class Clan {
 
 	/**
 	 * Returns the defense strength of the soldiers of the clan
-	 * 
+	 *
 	 * @return Defensestrength
 	 */
 	public double getSoldiersDefenseStrength() {
@@ -127,7 +127,7 @@ public final class Clan {
 
 	/**
 	 * Returns the level of the soldiers of the clan
-	 * 
+	 *
 	 * @return Level
 	 */
 	public int getSoldiersLevel() {
@@ -136,7 +136,7 @@ public final class Clan {
 
 	/**
 	 * Returns the offensivelevel of the soldiers of the clan
-	 * 
+	 *
 	 * @return Offensivelevel
 	 */
 	public int getSoldiersOffenseLevel() {
@@ -145,7 +145,7 @@ public final class Clan {
 
 	/**
 	 * Returns the offense strength of the soldiers of the clan
-	 * 
+	 *
 	 * @return Offensestrength
 	 */
 	public double getSoldiersOffenseStrength() {
@@ -154,7 +154,7 @@ public final class Clan {
 
 	/**
 	 * Returns the strength of the soldiers of the clan.
-	 * 
+	 *
 	 * @return Strength
 	 */
 	public double getSoldiersStrength() {
@@ -163,7 +163,7 @@ public final class Clan {
 
 	/**
 	 * Returns the Strategy this clan uses
-	 * 
+	 *
 	 * @return The strategy of the clan.
 	 */
 	public Strategy getStrategy() {
@@ -172,7 +172,7 @@ public final class Clan {
 
 	/**
 	 * Initialises the clan.
-	 * 
+	 *
 	 * @param strategies An array of all strategies available.
 	 */
 	void init(final StrategyProvider[] strategies) {
@@ -204,7 +204,7 @@ public final class Clan {
 
 	/**
 	 * Set the coins.
-	 * 
+	 *
 	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
 	 *              0.
 	 */
@@ -214,7 +214,7 @@ public final class Clan {
 
 	/**
 	 * Set the color of the clan. This method may only be called once.
-	 * 
+	 *
 	 * @param color May not be null
 	 */
 	void setColor(final Color color) {
@@ -228,7 +228,7 @@ public final class Clan {
 
 	/**
 	 * Set the flags of a clan.
-	 * 
+	 *
 	 * @param flags Some unspecified value.
 	 */
 	void setFlags(final int flags) {
@@ -237,13 +237,13 @@ public final class Clan {
 
 	/**
 	 * Change the id of the clan. May only be called once.
-	 * 
+	 *
 	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
 	 */
 	void setId(final int id) {
 		if (this.id != -1) {
 			throw new UnsupportedOperationException("Can't change id of clan!");
-		} else if (id < 0 || id > Byte.MAX_VALUE) {
+		} else if ((id < 0) || (id > Byte.MAX_VALUE)) {
 			throw new IllegalArgumentException("Out of bounds!");
 		}
 		this.id = id;
@@ -251,7 +251,7 @@ public final class Clan {
 
 	/**
 	 * Set the name. May only be called once.
-	 * 
+	 *
 	 * @param name May not be null
 	 */
 	void setName(final String name) {
