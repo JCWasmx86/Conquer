@@ -256,7 +256,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			survivingSoldiers = (long) -cleanedDiff;
 			result = AttackResult.CITY_CONQUERED;
 			this.events.add(new ConquerMessage(src, destination, powerOfAttacker));
-			destination.setClan(clan);
+			destination.setClan(this.getClan(src));
 		}
 		if (relationshipValue < 0) {
 			relationshipValue = 0;

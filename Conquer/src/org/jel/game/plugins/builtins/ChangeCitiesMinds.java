@@ -13,21 +13,22 @@ public final class ChangeCitiesMinds implements Plugin {
 	private static final double INSTANT_CLAN_CHANGE = 0.05;
 	private static final int PROBABILITY_NO_CHANGE_OF_CLAN = 75;
 	private final Random random = new Random();
+	private Context context;
 
 	private boolean evalClanChange(final double soldiersToCivilians, final City c, final byte otherClan) {
 		if (this.random.nextInt(100) > 90) {
 			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
-				c.setClan(otherClan);
+				c.setClan(context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(90, 98)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(45, 90)));
 				return true;
 			} else if ((soldiersToCivilians < 0.25) && (Math.random() > 0.9)) {
-				c.setClan(otherClan);
+				c.setClan(context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(60, 88)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(55, 90)));
 				return true;
 			} else if ((soldiersToCivilians < 0.35) && (Math.random() > 0.98)) {
-				c.setClan(otherClan);
+				c.setClan(context.getClan(otherClan));
 				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(20, 60)));
 				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(80, 98)));
 				return true;
@@ -43,6 +44,7 @@ public final class ChangeCitiesMinds implements Plugin {
 
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
+		this.context = ctx;
 		StreamUtils.getCitiesAsStream(cities).forEach(c -> {
 			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
 				return;
@@ -73,7 +75,7 @@ public final class ChangeCitiesMinds implements Plugin {
 				Shared.LOGGER.exception(ae);
 			}
 			if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {
-				c.setClan(otherClan);
+				c.setClan(ctx.getClan(otherClan));
 				changedClan = true;
 			} else {
 				changedClan = this.evalClanChange(soldiersToCivilians, c, (byte) otherClan);
