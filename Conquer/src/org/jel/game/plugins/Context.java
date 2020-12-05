@@ -25,7 +25,7 @@ public final class Context {
 
 	/**
 	 * Add an event to the eventlist notifying all handlers
-	 * 
+	 *
 	 * @param message The message to add
 	 */
 	public void appendToEventList(Message message) {
@@ -34,7 +34,7 @@ public final class Context {
 
 	/**
 	 * Get a reference to a clan
-	 * 
+	 *
 	 * @param index The index
 	 * @return The clan at the specified index.
 	 */

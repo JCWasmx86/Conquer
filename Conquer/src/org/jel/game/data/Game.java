@@ -112,7 +112,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Add a context in order to initialise strategies and other things.
-	 * 
+	 *
 	 * @param context The context obtained by {@link XMLReader#readInfo()}
 	 */
 	public void addContext(final GlobalContext context) {
@@ -295,7 +295,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Calculate whether the player won or lost.
-	 * 
+	 *
 	 * @return
 	 */
 	public Result calculateResult() {
@@ -327,7 +327,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Returns the current round.
-	 * 
+	 *
 	 * @return Current round.
 	 */
 	public int currentRound() {
@@ -481,7 +481,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Should be called when only one clan is left.
-	 * 
+	 *
 	 * @param result
 	 */
 	public void exit(final Result result) {
@@ -498,7 +498,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Get the background picture of the scenario
-	 * 
+	 *
 	 * @return Background picture
 	 */
 	public Image getBackground() {
@@ -512,7 +512,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Get all registered CityKeyHandlers
-	 * 
+	 *
 	 * @return Registered {@link CityKeyHandler}s
 	 */
 	public Map<String, CityKeyHandler> getCityKeyHandlers() {
@@ -525,7 +525,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Get reference to clan based on id
-	 * 
+	 *
 	 * @param clanId The clan id
 	 * @return A reference to the clan with the id {@code clanID}
 	 */
@@ -583,7 +583,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Returns the number of players
-	 * 
+	 *
 	 * @return Number of players.
 	 */
 	public byte getNumPlayers() {
@@ -704,7 +704,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Returns whether a clan is dead.
-	 * 
+	 *
 	 * @param clan
 	 */
 	public boolean isDead(Clan clan) {
@@ -713,7 +713,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	/**
 	 * Returns whether a clan is dead.
-	 * 
+	 *
 	 * @param clan
 	 */
 	public boolean isDead(int clan) {
@@ -731,12 +731,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.isPlayersTurn;
 	}
 
-	
-	public long maximumNumberOfSoldiersToRecruit(final byte clan, final long l) {
+	public long maximumNumberOfSoldiersToRecruit(final byte clan, final long limit) {
 		this.checkClan(clan);
 		final var resourcesOfClan = this.clans.get(clan).getResources();
 		final List<Long> numbers = new ArrayList<>();
-		numbers.add(l);
+		numbers.add(limit);
 		numbers.add((long) (this.clans.get(clan).getCoins() / Shared.COINS_PER_SOLDIER_INITIAL));
 		numbers.add((long) (resourcesOfClan.get(Resource.IRON.getIndex()) / Shared.IRON_PER_SOLDIER_INITIAL));
 		numbers.add((long) (resourcesOfClan.get(Resource.WOOD.getIndex()) / Shared.WOOD_PER_SOLDIER_INITIAL));
@@ -814,11 +813,16 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getMoveHooks().forEach(a -> a.handleMove(src, destination, finalMoveAmout));
 	}
 
+	/**
+	 * Returns whether only one clan is alive.
+	 *
+	 * @return
+	 */
 	public boolean onlyOneClanAlive() {
 		return StreamUtils.getCitiesAsStream(this.cities).map(City::getClan).distinct().count() == 1;
 	}
 
-	public void pay(final byte clan, final double subtract) {
+	private void pay(final byte clan, final double subtract) {
 		if ((clan < 0) || (clan >= this.clans.size())) {
 			throw new IllegalArgumentException("clan outside of range");
 		}
@@ -836,7 +840,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			final var toGet = city.getCoinDiff();
 			clan.setCoins(clan.getCoins() + toGet);
 		});
-		clans.forEach(clan -> this.data.getMoneyHooks().forEach(
+		this.clans.forEach(clan -> this.data.getMoneyHooks().forEach(
 				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan)));
 
 	}

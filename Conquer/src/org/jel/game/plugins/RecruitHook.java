@@ -9,7 +9,7 @@ import org.jel.game.data.City;
 public interface RecruitHook {
 	/**
 	 * Called when soldiers are recruited.
-	 * 
+	 *
 	 * @param city             The specified city
 	 * @param numberOfSoldiers The number of soldiers that were recruited.
 	 */

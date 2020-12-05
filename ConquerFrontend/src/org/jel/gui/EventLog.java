@@ -85,10 +85,10 @@ final class EventLog extends JFrame implements MessageListener {
 	private final JPanel base;
 	private final JScrollPane contentPane;
 	private final Timer timer;
-	private final JCheckBoxMenuItem showGood;
-	private final JCheckBoxMenuItem showBad;
+	private JCheckBoxMenuItem showGood;
+	private JCheckBoxMenuItem showBad;
 	private Color defaultColor;
-	private final AbstractButton showNeutral;
+	private AbstractButton showNeutral;
 
 	private EventLog() {
 		this.base = new JPanel();
@@ -103,29 +103,95 @@ final class EventLog extends JFrame implements MessageListener {
 		final var menubar = new JMenuBar();
 		final var menu = new JMenu("Settings");
 		final var increaseFontSize = new JMenuItem();
-		increaseFontSize.setAction(new AbstractAction() {
-			private static final long serialVersionUID = 8790065267838524992L;
+		initIncreaseFontSize(increaseFontSize);
+		menu.add(increaseFontSize);
+		final var decreaseFontSize = new JMenuItem();
+		initDecreaseFontSize(decreaseFontSize);
+		menu.add(decreaseFontSize);
+		initShowGood();
+		menu.add(this.showGood);
+		initShowNeutral();
+		menu.add(this.showNeutral);
+		initShowNegative();
+		menu.add(this.showBad);
+		final var exitButton = new JMenuItem();
+		exitButton.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 5612700000874979582L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				final var components = EventLog.this.base.getComponents();
-				for (final var c : components) {
-					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
-						final var font = jl.getFont();
-						jl.setFont(font.deriveFont(font.getSize2D() + 1));
-						jl.repaint();
-					}
-				}
-				EventLog.this.currFontSize++;
-				EventLog.this.repaint();
-				EventLog.this.pack();
+				EventLog.this.setVisible(false);
 			}
 		});
-		increaseFontSize.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		increaseFontSize.setText("Increase fontsize");
-		menu.add(increaseFontSize);
-		final var decreaseFontSize = new JMenuItem();
+		exitButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
+		exitButton.setText("Exit");
+		menu.add(exitButton);
+		menubar.add(menu);
+		this.setJMenuBar(menubar);
+		this.setTitle("Event log");
+	}
+
+	private void initShowNegative() {
+		this.showBad = new JCheckBoxMenuItem("Show negative events");
+		this.showBad.setSelected(true);
+		this.showBad.addItemListener(e -> {
+			final var components = EventLog.this.base.getComponents();
+			var flag = false;
+			for (final var c : components) {
+				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
+					flag = true;
+					continue;
+				}
+				if ((c instanceof JLabel jl) && (jl.getForeground() == Color.RED)) {
+					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+				}
+				EventLog.this.revalidate();
+				EventLog.this.repaint();
+			}
+		});
+	}
+
+	private void initShowNeutral() {
+		this.showNeutral = new JCheckBoxMenuItem("Show neutral events");
+		this.showNeutral.setSelected(true);
+		this.showNeutral.addItemListener(e -> {
+			final var components = EventLog.this.base.getComponents();
+			var flag = false;
+			for (final var c : components) {
+				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
+					flag = true;
+					continue;
+				}
+				if ((c instanceof JLabel jl) && jl.getForeground().equals(EventLog.this.defaultColor)) {
+					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+				}
+				EventLog.this.revalidate();
+				EventLog.this.repaint();
+			}
+		});
+	}
+
+	private void initShowGood() {
+		this.showGood = new JCheckBoxMenuItem("Show positive events");
+		this.showGood.setSelected(true);
+		this.showGood.addItemListener(e -> {
+			final var components = EventLog.this.base.getComponents();
+			var flag = false;
+			for (final var c : components) {
+				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
+					flag = true;
+					continue;
+				}
+				if ((c instanceof JLabel jl) && (jl.getForeground() == Color.GREEN)) {
+					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+				}
+				EventLog.this.revalidate();
+				EventLog.this.repaint();
+			}
+		});
+	}
+
+	private void initDecreaseFontSize(JMenuItem decreaseFontSize) {
 		decreaseFontSize.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 4199619851951311213L;
 
@@ -148,76 +214,30 @@ final class EventLog extends JFrame implements MessageListener {
 		decreaseFontSize.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		decreaseFontSize.setText("Decrease fontsize");
-		menu.add(decreaseFontSize);
-		this.showGood = new JCheckBoxMenuItem("Show positive events");
-		this.showGood.setSelected(true);
-		this.showGood.addItemListener(e -> {
-			final var components = EventLog.this.base.getComponents();
-			var flag = false;
-			for (final var c : components) {
-				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
-					flag = true;
-					continue;
-				}
-				if ((c instanceof JLabel jl) && (jl.getForeground() == Color.GREEN)) {
-					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-				}
-				EventLog.this.revalidate();
-				EventLog.this.repaint();
-			}
-		});
-		menu.add(this.showGood);
-		this.showNeutral = new JCheckBoxMenuItem("Show neutral events");
-		this.showNeutral.setSelected(true);
-		this.showNeutral.addItemListener(e -> {
-			final var components = EventLog.this.base.getComponents();
-			var flag = false;
-			for (final var c : components) {
-				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
-					flag = true;
-					continue;
-				}
-				if ((c instanceof JLabel jl) && jl.getForeground().equals(EventLog.this.defaultColor)) {
-					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-				}
-				EventLog.this.revalidate();
-				EventLog.this.repaint();
-			}
-		});
-		menu.add(this.showNeutral);
-		this.showBad = new JCheckBoxMenuItem("Show negative events");
-		this.showBad.setSelected(true);
-		this.showBad.addItemListener(e -> {
-			final var components = EventLog.this.base.getComponents();
-			var flag = false;
-			for (final var c : components) {
-				if ((!flag) && c.getForeground().equals(new Color(21, 21, 21))) {
-					flag = true;
-					continue;
-				}
-				if ((c instanceof JLabel jl) && (jl.getForeground() == Color.RED)) {
-					jl.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-				}
-				EventLog.this.revalidate();
-				EventLog.this.repaint();
-			}
-		});
-		menu.add(this.showBad);
-		final var exit = new JMenuItem();
-		exit.setAction(new AbstractAction() {
-			private static final long serialVersionUID = 5612700000874979582L;
+	}
+
+	private void initIncreaseFontSize(final JMenuItem increaseFontSize) {
+		increaseFontSize.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 8790065267838524992L;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				EventLog.this.setVisible(false);
+				final var components = EventLog.this.base.getComponents();
+				for (final var c : components) {
+					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
+						final var font = jl.getFont();
+						jl.setFont(font.deriveFont(font.getSize2D() + 1));
+						jl.repaint();
+					}
+				}
+				EventLog.this.currFontSize++;
+				EventLog.this.repaint();
+				EventLog.this.pack();
 			}
 		});
-		exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
-		exit.setText("Exit");
-		menu.add(exit);
-		menubar.add(menu);
-		this.setJMenuBar(menubar);
-		this.setTitle("Event log");
+		increaseFontSize.setAccelerator(
+				KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		increaseFontSize.setText("Increase fontsize");
 	}
 
 	/**

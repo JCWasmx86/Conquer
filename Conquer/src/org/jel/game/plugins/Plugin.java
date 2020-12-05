@@ -16,7 +16,7 @@ import org.jel.game.utils.Graph;
 public interface Plugin {
 	/**
 	 * Called when the game ended
-	 * 
+	 *
 	 * @param result The result
 	 */
 	default void exit(final Result result) {
@@ -25,7 +25,7 @@ public interface Plugin {
 
 	/**
 	 * An optional list of buttons/labels/... that can be registered
-	 * 
+	 *
 	 * @return A list of components.
 	 */
 	default List<Component> getButtons() {
@@ -34,14 +34,14 @@ public interface Plugin {
 
 	/**
 	 * Returns the name of the plugin. Has to be unique.
-	 * 
+	 *
 	 * @return Name of the plugin.
 	 */
 	String getName();
 
 	/**
 	 * Called at the end of every round.
-	 * 
+	 *
 	 * @param cities All cities
 	 * @param ctx    The context with some data.
 	 */
@@ -49,7 +49,7 @@ public interface Plugin {
 
 	/**
 	 * Called at the start of the game. Can be used for adding handlers.
-	 * 
+	 *
 	 * @param pluginInterface
 	 */
 	default void init(final PluginInterface pluginInterface) {
@@ -58,7 +58,7 @@ public interface Plugin {
 
 	/**
 	 * Called when a saved game is restored
-	 * 
+	 *
 	 * @param game
 	 * @param bytes The written bytes
 	 */
@@ -68,7 +68,7 @@ public interface Plugin {
 
 	/**
 	 * In case the game is stored, any data may be written to the outputstream.
-	 * 
+	 *
 	 * @param outputStream Target stream.
 	 * @throws IOException
 	 */

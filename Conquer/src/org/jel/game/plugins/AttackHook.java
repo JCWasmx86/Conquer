@@ -9,7 +9,7 @@ import org.jel.game.data.City;
 public interface AttackHook {
 	/**
 	 * Called after the attack
-	 * 
+	 *
 	 * @param src               Origin of the attack
 	 * @param destination       Attacked city
 	 * @param survivingSoldiers Number of soldiers that survived in the attacked
@@ -20,7 +20,7 @@ public interface AttackHook {
 
 	/**
 	 * Called before the attack
-	 * 
+	 *
 	 * @param src                   Origin of the attack
 	 * @param destination           Attacked city
 	 * @param numberOfSoldiersMoved Number of soldiers that attack the destination
