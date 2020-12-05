@@ -9,7 +9,7 @@ import org.jel.game.data.City;
 public interface MoveHook {
 	/**
 	 * Called when troops are moved
-	 * 
+	 *
 	 * @param src              Source city
 	 * @param dest             Destination city
 	 * @param numberOfSoldiers Number of soldiers
