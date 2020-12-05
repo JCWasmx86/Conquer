@@ -7,6 +7,10 @@ import java.util.stream.Stream;
 
 import org.jel.game.utils.Graph;
 
+/**
+ * An utilities class to convert an graph of cities to a stream and apply
+ * several operations.
+ */
 public final class StreamUtils {
 	public static void forEach(final Graph<City> cities, Consumer<City> consumer) {
 		StreamUtils.getCitiesAsStream(cities).forEach(consumer);
