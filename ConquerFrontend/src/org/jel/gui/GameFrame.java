@@ -162,7 +162,6 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private void initButtonPanel() {
 		this.buttonPanel = new JPanel();
 		this.buttonPanel.setLayout(new FlowLayout());
-		final var plugins = this.game.getPlugins();
 		final var nextRound = new JButton(new ImageResource("hourglass.png"));
 		nextRound.setToolTipText("Next round");
 		nextRound.addActionListener(a -> {
@@ -175,9 +174,10 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var openMessages = new JButton(new ImageResource("messagebox.png"));
 		openMessages.setToolTipText("Open messagebox");
 		openMessages.addActionListener(a -> EventLog.showWindow());
-		final var coinsLabel = new JLabel("Coins: " + this.game.getCoins().get(0));
+		final var coinsLabel = new JLabel("Coins: " + this.game.getCoins().get(Shared.PLAYER_CLAN));
 		final var run = new JButton("Run forever");
 		run.addActionListener(a -> {
+			// TODO: Run in separate thread.
 			while (!this.game.onlyOneClanAlive()) {
 				this.game.executeActions();
 				this.repaint();
@@ -194,6 +194,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.buttonPanel.add(nextRound);
 		this.buttonPanel.add(openMessages);
 		this.buttonPanel.add(run);
+		final var plugins = this.game.getPlugins();
 		plugins.forEach(a -> {
 			final var listOfButtons = a.getButtons();
 			if (listOfButtons != null) {
@@ -202,7 +203,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 		this.coinsLabelUpdateThread = new Thread(() -> {
 			while (true) {
-				coinsLabel.setText("Coins: " + String.format("%.2f%n", this.game.getCoins().get(0)));
+				coinsLabel.setText("Coins: " + String.format("%.2f%n", this.game.getCoins().get(Shared.PLAYER_CLAN)));
 				try {
 					Thread.sleep(20);
 				} catch (final InterruptedException e) {
