@@ -327,21 +327,16 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			final var status = JOptionPane.showConfirmDialog(null, "Do you really want to quit?", "Exit",
 					JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION) {
-				EventLog.clear();
-				this.loopPlayer.abort();
-				MainScreen.forward(this.getLocation(), false);
-				this.coinsLabelUpdateThread.stop();
-				this.dispose();
 			} else {
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				return;
 			}
-		} else {
-			EventLog.clear();
-			this.loopPlayer.abort();
-			MainScreen.forward(this.getLocation(), false);
-			this.coinsLabelUpdateThread.stop();
-			this.dispose();
 		}
+		EventLog.clear();
+		this.loopPlayer.abort();
+		MainScreen.forward(this.getLocation(), false);
+		this.coinsLabelUpdateThread.stop();
+		this.dispose();
 	}
 
 	/**
