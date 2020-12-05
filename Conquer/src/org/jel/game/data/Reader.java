@@ -15,11 +15,12 @@ import javax.imageio.ImageIO;
 
 import org.jel.game.utils.Graph;
 
+
 public final class Reader {
 	private final File file;
 
-	public Reader(final String f) {
-		this.file = new File(f);
+	public Reader(final String fileName) {
+		this.file = new File(fileName);
 	}
 
 	// TODO: Refactor, maybe use JSON/XML???
