@@ -753,7 +753,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		}
 		for (final Clan clan : this.clans) {
 			this.data.getMoneyHooks().forEach(a -> a
-					.moneyPayed(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan));
+					.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan));
 		}
 	}
 
