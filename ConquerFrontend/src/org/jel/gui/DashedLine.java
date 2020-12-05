@@ -12,8 +12,8 @@ final class DashedLine {
 	/**
 	 * Construct a new DashedLine between two cities.
 	 *
-	 * @param a
-	 * @param b
+	 * @param a First city
+	 * @param b Second city
 	 */
 	DashedLine(CityLabel a, CityLabel b) {
 		this.cityA = a;
