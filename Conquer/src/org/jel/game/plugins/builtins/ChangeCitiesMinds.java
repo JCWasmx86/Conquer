@@ -45,7 +45,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
 		this.context = ctx;
-		StreamUtils.getCitiesAsStream(cities).forEach(c -> {
+		StreamUtils.forEach(cities, c -> {
 			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
 				return;
 			}

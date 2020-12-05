@@ -16,10 +16,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+/**
+ * A class that reads the configuration file and returns a {@link GlobalContext}
+ */
 public final class XMLReader {
 	private static final XMLReader INSTANCE = new XMLReader();
 	private static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
 
+	/**
+	 * Get the singleton instance.
+	 * 
+	 * @return The instance
+	 */
 	public static XMLReader getInstance() {
 		return XMLReader.INSTANCE;
 	}
@@ -79,10 +87,22 @@ public final class XMLReader {
 		return ret;
 	}
 
+	/**
+	 * Read the info and instantiate all plugins and strategyproviders.
+	 * 
+	 * @return The read context. On error, an empty context is returned.
+	 */
 	public GlobalContext readInfo() {
 		return this.readInfo(true);
 	}
 
+	/**
+	 * Read the context and instantiate the {@link Plugin}s and
+	 * {@link StrategyProvider}s if {@code instantiate} is true.
+	 * 
+	 * @param instantiate Whether the classes are instantiated.
+	 * @return The context that was read. On error, an empty context is returned.
+	 */
 	public GlobalContext readInfo(boolean instantiate) {
 		final List<InstalledScenario> installedMaps = new ArrayList<>();
 		final List<String> pluginNames = new ArrayList<>();
