@@ -113,7 +113,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(context.getStrategies(), "context.getStrategies()==null");
 		this.throwIfNull(context.getInstalledMaps(), "context.getInstalledMaps()==null");
 		this.data.setPlugins(context.getPlugins());
-		for (final StrategyProvider st : context.getStrategies()) {
+		context.getStrategies().forEach(st -> {
 			final int idx = st.getId();
 			if (idx >= 127) {
 				Shared.LOGGER.error("idx >= 127");
@@ -125,7 +125,7 @@ public final class Game implements PluginInterface, StrategyObject {
 				this.strategies[idx] = st;
 				Shared.logLevel1(st.getName() + " has index " + idx);
 			}
-		}
+		});
 	}
 
 	@Override
@@ -746,15 +746,14 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void payMoney() {
-		for (final var city : this.getCities().getValues(new City[0])) {
+		StreamUtils.forEach(this.cities, city -> {
 			final var clan = this.getClan(city);
 			final var toGet = city.getCoinDiff();
 			clan.setCoins(clan.getCoins() + toGet);
-		}
-		for (final Clan clan : this.clans) {
-			this.data.getMoneyHooks().forEach(a -> a
-					.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan));
-		}
+		});
+		clans.forEach(clan -> this.data.getMoneyHooks().forEach(
+				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan)));
+
 	}
 
 	private void produceResources() {
@@ -1104,7 +1103,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void useResources() {
-		for (final City city : this.getCities().getValues(new City[0])) {
+		StreamUtils.forEach(this.cities, city -> {
 			final var resources2 = this.clans.get(city.getClan()).getResources();
 			final var stats = this.clans.get(city.getClan()).getResourceStats();
 			for (var i = 0; i < Shared.getDataValues().length; i++) {
@@ -1119,7 +1118,7 @@ public final class Game implements PluginInterface, StrategyObject {
 				}
 			}
 			this.data.getResourceHooks().forEach(a -> a.analyzeStats(city, stats, this.clans.get(city.getClan())));
-		}
+		});
 	}
 
 	private void worseRelationship(final Random r, final int clanOne, final int clanTwo) {
