@@ -53,6 +53,11 @@ public final class City implements Comparable<City> {
 		this.numAttacksOfPlayer++;
 	}
 
+	/**
+	 * Compares one city with another. The comparison is quite simple. The strength
+	 * of each city is calculated by adding the defense to the product of the
+	 * defense bonus and the number of soldiers in the city.
+	 */
 	@Override
 	public int compareTo(final City other) {
 		if (other == null) {
@@ -62,6 +67,9 @@ public final class City implements Comparable<City> {
 				(other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
 	}
 
+	/**
+	 * Called at the end of the round.
+	 */
 	void endOfRound() {
 		if (this.numberOfPeople <= City.PEOPLE_THRESHOLD) {
 			this.numberOfRoundsWithZeroPeople++;
@@ -74,6 +82,10 @@ public final class City implements Comparable<City> {
 		}
 	}
 
+	/**
+	 * Returns whether one city is equals to the other one. Not all properties are
+	 * checked, only the name, the X- and Y-position.
+	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -82,7 +94,8 @@ public final class City implements Comparable<City> {
 		if (!(obj instanceof City)) {
 			return false;
 		}
-		return ((City) obj).name.equals(this.name);
+		City other = (City) obj;
+		return other.name.equals(this.name) && other.x == this.x && other.y == this.y;
 	}
 
 	/**
@@ -117,7 +130,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Gives the base defense: The base defense means, that even if a city has no
-	 * soldiers, it has a bit of defense. (Like towers and walls)
+	 * soldiers, it has a bit of defense. (Think of towers and walls)
 	 *
 	 * @return The base defense
 	 */
@@ -125,6 +138,13 @@ public final class City implements Comparable<City> {
 		return this.defense;
 	}
 
+	/**
+	 * Returns the strength of a city based on its own values and the clan.
+	 * 
+	 * @param clan The clan of the city. If it doesn't match or is null, an
+	 *             {@link IllegalArgumentException} will be thrown.
+	 * @return The defense strength of the city.
+	 */
 	public double getDefenseStrength(Clan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
@@ -148,7 +168,8 @@ public final class City implements Comparable<City> {
 	/**
 	 * Returns the growth of a city. The growth of a city is the factor, for which
 	 * the number of persons increases every round. For example: 1000 Persons and a
-	 * growth of 1.01: Next round: 1010 persons Next round: 1020 persons
+	 * growth of 1.01: Next round: 1010 persons<br>
+	 * Next round: 1020 persons<br>
 	 *
 	 * @return The growth of the city.
 	 */
@@ -157,7 +178,8 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 *
+	 * Returns the icon of this city.
+	 * 
 	 * @return The icon of the city.
 	 */
 	public Image getImage() {
@@ -174,6 +196,8 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
+	 * Get the name of the city
+	 * 
 	 * @return The name of the city.
 	 */
 	public String getName() {
@@ -181,7 +205,9 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Returns the number of attacks from the player
+	 * Returns how often the city was attacked by the player
+	 * 
+	 * @return Number of attacks of the player.
 	 */
 	public long getNumberAttacksOfPlayer() {
 		return this.numAttacksOfPlayer;
@@ -189,17 +215,27 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the number of persons in the city
+	 * 
+	 * @return Number of persons in the city.
 	 */
 	public long getNumberOfPeople() {
 		return this.numberOfPeople;
 	}
 
+	/**
+	 * Returns the amount of rounds with a population less than a certain amount of
+	 * people.
+	 * 
+	 * @return Number of rounds with a small population.
+	 */
 	int getNumberOfRoundsWithZeroPeople() {
 		return this.numberOfRoundsWithZeroPeople;
 	}
 
 	/**
 	 * Returns the number of soldiers in the city.
+	 * 
+	 * @return Number of soldiers in this city
 	 */
 	public long getNumberOfSoldiers() {
 		return this.numberOfSoldiers;
@@ -214,6 +250,8 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the x-Position
+	 * 
+	 * @return x-Position
 	 */
 	public int getX() {
 		return this.x;
@@ -221,11 +259,20 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the y-Position.
+	 * 
+	 * @return y-Position
 	 */
 	public int getY() {
 		return this.y;
 	}
 
+	/**
+	 * Returns the hashcode. Only the x-Position and y-Position are used because of
+	 * performance reasons and the requirement, that no city has the same position
+	 * as another city.
+	 * 
+	 * @return The hashcode.
+	 */
 	@Override
 	public int hashCode() {
 		final var prime = 31;
@@ -235,6 +282,12 @@ public final class City implements Comparable<City> {
 		return result;
 	}
 
+	/**
+	 * Returns some internal value. <mark><b>Shouldn't be called from
+	 * outside</b></mark>
+	 * 
+	 * @return Internal value.
+	 */
 	double oldOne() {
 		return this.oldOne;
 	}
@@ -242,7 +295,8 @@ public final class City implements Comparable<City> {
 	/**
 	 * Returns the production rate per round for a specified resource
 	 *
-	 * @param idx The index of the resource.
+	 * @param idx The index of the resource. If outside of the bounds, an
+	 *            {@link IllegalArgumentException} will be thrown.
 	 * @return The production rate of the resource at {@code idx}
 	 */
 	public double productionPerRound(final int idx) {
@@ -252,6 +306,11 @@ public final class City implements Comparable<City> {
 		return this.productions.get(idx) * this.numberOfPeople;
 	}
 
+	/**
+	 * Sets the number of attacks of the player. Can only be called once.
+	 * 
+	 * @param num New number of attacks of the player.
+	 */
 	void setAttacksOfPlayer(long num) {
 		if (this.numAttacksOfPlayer == -1) {
 			throw new UnsupportedOperationException(
@@ -260,6 +319,12 @@ public final class City implements Comparable<City> {
 		this.numAttacksOfPlayer = num;
 	}
 
+	/**
+	 * Changes the clan association of this city.
+	 * 
+	 * @param id The new id of the clan. Throws an {@link IllegalArgumentException}
+	 *           if it is out of bounds.
+	 */
 	public void setClan(final int id) {
 		if (id < 0) {
 			throw new IllegalArgumentException("id < 0");
@@ -269,7 +334,12 @@ public final class City implements Comparable<City> {
 		this.clan = (byte) id;
 	}
 
-	public void setDefense(final double base) {
+	/**
+	 * Updates the value of the defense
+	 * 
+	 * @param base New value.
+	 */
+	void setDefense(final double base) {
 		if (this.defense != 0) {
 			this.defense /= this.oldOne;
 			this.defense *= (base < 1 ? 1 / base : base);
@@ -280,18 +350,38 @@ public final class City implements Comparable<City> {
 		this.defense = base;
 	}
 
-	public void setDefenseBonus(final double bonus) {
+	/**
+	 * Changes the defensebonus. Can only be called once. Otherwise it will throw an
+	 * {@link UnsupportedOperationException}
+	 * 
+	 * @param bonus The value.
+	 */
+	void setDefenseBonus(final double bonus) {
 		if (this.bonus != -1) {
 			throw new UnsupportedOperationException("Can't change the defense bonus of a city!");
 		}
 		this.bonus = bonus;
 	}
 
+	/**
+	 * Sets the growth of this city.
+	 * 
+	 * @param growth The new value. May not be smaller than zero.
+	 */
 	public void setGrowth(final double growth) {
+		if (growth < 0) {
+			throw new IllegalArgumentException("growth < 0");
+		}
 		this.growth = growth;
 	}
 
-	public void setImage(final Image image) {
+	/**
+	 * Changes the image. Can only be called once, else an
+	 * {@link UnsupportedOperationException} will be thrown.
+	 * 
+	 * @param image The image. May not be null.
+	 */
+	void setImage(final Image image) {
 		if (this.image != null) {
 			throw new UnsupportedOperationException("Can't change image of city!");
 		} else if (image == null) {
@@ -300,17 +390,32 @@ public final class City implements Comparable<City> {
 		this.image = image;
 	}
 
-	public void setLevels(final List<Integer> levels) {
+	/**
+	 * Sets the levels of each resource.
+	 * 
+	 * @param levels
+	 */
+	void setLevels(final List<Integer> levels) {
 		this.levels = levels;
 	}
 
-	public void setName(final String name) {
+	/**
+	 * Sets the name of the city. Can only be called once.
+	 * 
+	 * @param name Name of the city.
+	 */
+	void setName(final String name) {
 		if (this.name != null) {
 			throw new UnsupportedOperationException("Can't change name of city!");
 		}
 		this.name = name;
 	}
 
+	/**
+	 * Set the number of people in the city.
+	 * 
+	 * @param num May not be negative
+	 */
 	public void setNumberOfPeople(final long num) {
 		if (num < 0) {
 			throw new IllegalArgumentException("num < 0 : " + num);
@@ -318,10 +423,20 @@ public final class City implements Comparable<City> {
 		this.numberOfPeople = num;
 	}
 
+	/**
+	 * Internal use only!
+	 * 
+	 * @param num
+	 */
 	void setNumberOfRoundsWithZeroPeople(int num) {
 		this.numberOfRoundsWithZeroPeople = num;
 	}
 
+	/**
+	 * Set the number of soldiers in the city.
+	 * 
+	 * @param num May not be negative
+	 */
 	public void setNumberOfSoldiers(final long num) {
 		if (num < 0) {
 			throw new IllegalArgumentException("num < 0 : " + num);
@@ -329,11 +444,21 @@ public final class City implements Comparable<City> {
 		this.numberOfSoldiers = num;
 	}
 
+	/**
+	 * Internal use only!
+	 * 
+	 * @param value
+	 */
 	void setOldValue(double value) {
 		this.oldOne = value;
 	}
 
-	public void setProductionRates(final List<Double> productions) {
+	/**
+	 * Sets the productionrates. s
+	 * 
+	 * @param productions
+	 */
+	void setProductionRates(final List<Double> productions) {
 		if (this.productions != null) {
 			throw new UnsupportedOperationException("Can't change the productions!");
 		} else if (productions == null) {
@@ -342,7 +467,12 @@ public final class City implements Comparable<City> {
 		this.productions = productions;
 	}
 
-	public void setX(final int x) {
+	/**
+	 * Sets the x-Position. May only be called once.
+	 * 
+	 * @param x
+	 */
+	void setX(final int x) {
 		if (this.x != -1) {
 			throw new UnsupportedOperationException("Can't change the X-Position!");
 		} else if (x < 0) {
@@ -351,7 +481,12 @@ public final class City implements Comparable<City> {
 		this.x = x;
 	}
 
-	public void setY(final int y) {
+	/**
+	 * Sets the x-Position. May only be called once.
+	 * 
+	 * @param y
+	 */
+	void setY(final int y) {
 		if (this.y != -1) {
 			throw new UnsupportedOperationException("Can't change the Y-Position!");
 		} else if (y < 0) {
