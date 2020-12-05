@@ -12,7 +12,7 @@ import org.jel.game.data.strategy.StrategyProvider;
  * A clan represents a group of cities.
  */
 public final class Clan {
-	private int id;
+	private int id = -1;
 	private double coins;
 	private String name;
 	private Color color;
@@ -29,85 +29,152 @@ public final class Clan {
 	private int soldiersOffenseLevel = 0;
 
 	private int flags;
-	
+
 	Clan() {
 	}
-	Clan(final int id, final double coins, final String name, final Color color, final List<Double> resources,
-			final List<Double> resourceStats, final Strategy pt) {
-		if ((id < 0) || (coins < 0) || (name == null) || (color == null) || (resources == null)
-				|| (resources.size() != Resource.values().length) || (resourceStats == null)
-				|| (resourceStats.size() != (Resource.values().length + 1)) || (pt == null)) {
-			throw new IllegalArgumentException("Invalid argument!");
-		}
-		this.id = id;
-		this.coins = coins;
-		this.name = name;
-		this.color = color;
-		this.resources = resources;
-		this.resourceStats = resourceStats;
-		this.strategy = pt;
-	}
 
+	/**
+	 * Get the number of coins this clan has
+	 * 
+	 * @return Number of coins.
+	 */
 	public double getCoins() {
 		return this.coins;
 	}
 
+	/**
+	 * Returns the color associated with this clan
+	 * 
+	 * @return Clan color
+	 */
 	public Color getColor() {
 		return this.color;
 	}
 
+	/**
+	 * Returns optional data for the strategy.
+	 * 
+	 * @return Optional Data. May be null
+	 */
 	public StrategyData getData() {
 		return this.strategyData;
 	}
 
+	/**
+	 * Returns some unspecified, implementation defined integer
+	 * 
+	 * @return Some integer
+	 */
 	public int getFlags() {
 		return this.flags;
 	}
 
+	/**
+	 * Return the id of the clan.
+	 * 
+	 * @return Clan id.
+	 */
 	public int getId() {
 		return this.id;
 	}
 
+	/**
+	 * Returns the name of the clan
+	 * 
+	 * @return Name of the clan
+	 */
 	public String getName() {
 		return this.name;
 	}
 
+	/**
+	 * Returns a mutable list of the amount of all resources. The index for a
+	 * resource is obtained by {@link Resource#getIndex()}
+	 * 
+	 * @return List of resources.
+	 */
 	public List<Double> getResources() {
 		return this.resources;
 	}
 
+	/**
+	 * Returns a mutable list of the production of all resources. The index for a
+	 * resource is obtained by {@link Resource#getIndex()}
+	 * 
+	 * @return Production of resources.
+	 */
 	public List<Double> getResourceStats() {
 		return this.resourceStats;
 	}
 
+	/**
+	 * Returns the defenselevel of the soldiers of the clan
+	 * 
+	 * @return Defenselevel
+	 */
 	public int getSoldiersDefenseLevel() {
 		return this.soldiersDefenseLevel;
 	}
 
+	/**
+	 * Returns the defense strength of the soldiers of the clan
+	 * 
+	 * @return Defensestrength
+	 */
 	public double getSoldiersDefenseStrength() {
 		return this.soldiersDefenseStrength;
 	}
 
+	/**
+	 * Returns the level of the soldiers of the clan
+	 * 
+	 * @return Level
+	 */
 	public int getSoldiersLevel() {
 		return this.soldiersLevel;
 	}
 
+	/**
+	 * Returns the offensivelevel of the soldiers of the clan
+	 * 
+	 * @return Offensivelevel
+	 */
 	public int getSoldiersOffenseLevel() {
 		return this.soldiersOffenseLevel;
 	}
 
+	/**
+	 * Returns the offense strength of the soldiers of the clan
+	 * 
+	 * @return Offensestrength
+	 */
 	public double getSoldiersOffenseStrength() {
 		return this.soldiersOffenseStrength;
 	}
 
+	/**
+	 * Returns the strength of the soldiers of the clan.
+	 * 
+	 * @return Strength
+	 */
 	public double getSoldiersStrength() {
 		return this.soldiersStrength;
 	}
 
+	/**
+	 * Returns the Strategy this clan uses
+	 * 
+	 * @return The strategy of the clan.
+	 */
 	public Strategy getStrategy() {
 		return this.strategy;
 	}
 
+	/**
+	 * Initialises the clan.
+	 * 
+	 * @param strategies An array of all strategies available.
+	 */
 	void init(final StrategyProvider[] strategies) {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
@@ -135,55 +202,96 @@ public final class Clan {
 		}
 	}
 
+	/**
+	 * Set the coins.
+	 * 
+	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
+	 *              0.
+	 */
 	public void setCoins(final double coins) {
 		this.coins = coins < 0 ? 0 : coins;
 	}
 
-	public void setColor(final Color color2) {
-		this.color = color2;
+	/**
+	 * Set the color of the clan. This method may only be called once.
+	 * 
+	 * @param color May not be null
+	 */
+	void setColor(final Color color) {
+		if (color == null) {
+			throw new IllegalArgumentException("color == null");
+		} else if (this.color != null) {
+			throw new UnsupportedOperationException("Can't change color of clan!");
+		}
+		this.color = color;
 	}
 
-	public void setFlags(final int flags) {
+	/**
+	 * Set the flags of a clan.
+	 * 
+	 * @param flags Some unspecified value.
+	 */
+	void setFlags(final int flags) {
 		this.flags = flags;
 	}
 
-	public void setId(final int id) {
+	/**
+	 * Change the id of the clan. May only be called once.
+	 * 
+	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
+	 */
+	void setId(final int id) {
+		if (this.id != -1) {
+			throw new UnsupportedOperationException("Can't change id of clan!");
+		} else if (id < 0 || id > Byte.MAX_VALUE) {
+			throw new IllegalArgumentException("Out of bounds!");
+		}
 		this.id = id;
 	}
 
-	public void setName(final String name) {
+	/**
+	 * Set the name. May only be called once.
+	 * 
+	 * @param name May not be null
+	 */
+	void setName(final String name) {
+		if (this.name != null) {
+			throw new UnsupportedOperationException("Can't change name of clan!");
+		} else if (name == null) {
+			throw new IllegalArgumentException("name == null");
+		}
 		this.name = name;
 	}
 
-	public void setResources(final List<Double> resources) {
+	void setResources(final List<Double> resources) {
 		this.resources = resources;
 	}
 
-	public void setResourceStats(final List<Double> resourceStats) {
+	void setResourceStats(final List<Double> resourceStats) {
 		this.resourceStats = resourceStats;
 	}
 
-	public void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
+	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
 		this.soldiersDefenseLevel = soldiersDefenseLevel;
 	}
 
-	public void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
+	void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
 		this.soldiersDefenseStrength = soldiersDefenseStrength;
 	}
 
-	public void setSoldiersLevel(final int soldiersLevel) {
+	void setSoldiersLevel(final int soldiersLevel) {
 		this.soldiersLevel = soldiersLevel;
 	}
 
-	public void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
+	void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
 		this.soldiersOffenseLevel = soldiersOffenseLevel;
 	}
 
-	public void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
+	void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
 		this.soldiersOffenseStrength = soldiersOffenseStrength;
 	}
 
-	public void setSoldiersStrength(final double soldiersStrength) {
+	void setSoldiersStrength(final double soldiersStrength) {
 		this.soldiersStrength = soldiersStrength;
 	}
 
