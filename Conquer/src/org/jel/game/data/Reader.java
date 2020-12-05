@@ -169,7 +169,7 @@ public final class Reader {
 					Shared.LOGGER.error("clan >= numPlayers : " + clanN);
 					return null;
 				}
-				c.setClan(clanN);
+				c.setClan(tmp.get(clanN));
 				final var numPeople = dis.readInt();
 				if (numPeople < 0) {
 					Shared.LOGGER.error("numPeople < 0: " + numPeople);

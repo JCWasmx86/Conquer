@@ -293,17 +293,16 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Returns the production rate per round for a specified resource
-	 *
-	 * @param idx The index of the resource. If outside of the bounds, an
-	 *            {@link IllegalArgumentException} will be thrown.
-	 * @return The production rate of the resource at {@code idx}
+	 * Get the production of a resource per round
+	 * 
+	 * @param resource Resource - May not be null
+	 * @return The production of a resource per round.
 	 */
-	public double productionPerRound(final int idx) {
-		if ((idx < 0) || (idx >= this.productions.size())) {
-			throw new IllegalArgumentException("Invalid argument!");
+	public double productionPerRound(final Resource resource) {
+		if (resource == null) {
+			throw new IllegalArgumentException("resource == null");
 		}
-		return this.productions.get(idx) * this.numberOfPeople;
+		return this.productions.get(resource.getIndex()) * this.numberOfPeople;
 	}
 
 	/**
@@ -320,18 +319,15 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Changes the clan association of this city.
+	 * Set the clan of the city.
 	 * 
-	 * @param id The new id of the clan. Throws an {@link IllegalArgumentException}
-	 *           if it is out of bounds.
+	 * @param clan May not be null.
 	 */
-	public void setClan(final int id) {
-		if (id < 0) {
-			throw new IllegalArgumentException("id < 0");
-		} else if (id > Byte.MAX_VALUE) {
-			throw new IllegalArgumentException("id > Byte.MAX_VALUE");
+	public void setClan(final Clan clan) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan == null");
 		}
-		this.clan = (byte) id;
+		this.clan = (byte) clan.getId();
 	}
 
 	/**
@@ -500,5 +496,14 @@ public final class City implements Comparable<City> {
 		return "City [image=" + this.image + ", clan=" + this.clan + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
+	}
+
+	/**
+	 * Internal method
+	 * 
+	 * @param read
+	 */
+	void setClan(int read) {
+		this.clan = (byte) read;
 	}
 }

@@ -29,12 +29,10 @@ public final class Clan {
 	private int soldiersOffenseLevel = 0;
 
 	private int flags;
-
-	public Clan() {
-
+	
+	Clan() {
 	}
-
-	public Clan(final int id, final double coins, final String name, final Color color, final List<Double> resources,
+	Clan(final int id, final double coins, final String name, final Color color, final List<Double> resources,
 			final List<Double> resourceStats, final Strategy pt) {
 		if ((id < 0) || (coins < 0) || (name == null) || (color == null) || (resources == null)
 				|| (resources.size() != Resource.values().length) || (resourceStats == null)

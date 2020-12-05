@@ -78,7 +78,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
-			final var value = this.city.productionPerRound(i);
+			final var value = this.city.productionPerRound(Resource.values()[i]);
 			// Not enough is produced.
 			if ((value / this.city.getNumberOfPeople()) < 1) {
 				sb.append("<font color='red'>");
