@@ -41,6 +41,9 @@ import org.jel.game.plugins.RecruitHook;
 import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
 
+/**
+ * One of the most important classes as it combines all together.
+ */
 public final class Game implements PluginInterface, StrategyObject {
 	private static final int MAX_LEVEL = 1000;
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
@@ -107,6 +110,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getCityKeyHandlers().put(key, ckh);
 	}
 
+	/**
+	 * Add a context in order to initialise strategies and other things.
+	 * 
+	 * @param context The context obtained by {@link XMLReader#readInfo()}
+	 */
 	public void addContext(final GlobalContext context) {
 		this.throwIfNull(context, "context==null");
 		this.throwIfNull(context.getPlugins(), "context.getPlugins()==null");
@@ -138,6 +146,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getKeybindings().put(key, handler);
 	}
 
+	@Override
 	public void addMessageListener(MessageListener ml) {
 		this.throwIfNull(ml);
 		this.events.addListener(ml);
@@ -284,6 +293,11 @@ public final class Game implements PluginInterface, StrategyObject {
 				* clan.getSoldiersStrength());
 	}
 
+	/**
+	 * Calculate whether the player won or lost.
+	 * 
+	 * @return
+	 */
 	public Result calculateResult() {
 		return StreamUtils.getCitiesAsStream(this.getCities(), Shared.PLAYER_CLAN).count() == 0 ? Result.CPU_WON
 				: Result.PLAYER_WON;
@@ -311,6 +325,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.isPlayersTurn = true;
 	}
 
+	/**
+	 * Returns the current round.
+	 * 
+	 * @return Current round.
+	 */
 	public int currentRound() {
 		return this.currentRound;
 	}
@@ -421,6 +440,9 @@ public final class Game implements PluginInterface, StrategyObject {
 		});
 	}
 
+	/**
+	 * Plays one round. Should be called after the player played.
+	 */
 	public void executeActions() {
 		final var start = System.nanoTime();
 		this.relationshipEvents();
@@ -457,9 +479,14 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.clans.get(clan).update(this.currentRound);
 	}
 
-	public void exit(final Result r) {
-		this.throwIfNull(r, "result==null");
-		this.data.getPlugins().forEach(a -> a.exit(r));
+	/**
+	 * Should be called when only one clan is left.
+	 * 
+	 * @param result
+	 */
+	public void exit(final Result result) {
+		this.throwIfNull(result, "result==null");
+		this.data.getPlugins().forEach(a -> a.exit(result));
 		if (this.resumed) {
 			try {
 				Shared.deleteDirectory(this.directory);
@@ -469,6 +496,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		}
 	}
 
+	/**
+	 * Get the background picture of the scenario
+	 * 
+	 * @return Background picture
+	 */
 	public Image getBackground() {
 		return this.background;
 	}
@@ -478,6 +510,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.cities;
 	}
 
+	/**
+	 * Get all registered CityKeyHandlers
+	 * 
+	 * @return Registered {@link CityKeyHandler}s
+	 */
 	public Map<String, CityKeyHandler> getCityKeyHandlers() {
 		return this.data.getCityKeyHandlers();
 	}
@@ -486,23 +523,41 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.getClan(city.getClan());
 	}
 
+	/**
+	 * Get reference to clan based on id
+	 * 
+	 * @param clanId The clan id
+	 * @return A reference to the clan with the id {@code clanID}
+	 */
 	public Clan getClan(final int clanId) {
 		this.checkClan(clanId);
 		return this.clans.get(clanId);
 	}
 
+	/**
+	 * @return All clannames.
+	 */
 	public List<String> getClanNames() {
 		return this.clans.stream().map(Clan::getName).collect(Collectors.toList());
 	}
 
+	/**
+	 * @return All clans
+	 */
 	public List<Clan> getClans() {
 		return this.clans;
 	}
 
+	/**
+	 * @return The coins of every clan.
+	 */
 	public List<Double> getCoins() {
 		return this.clans.stream().map(Clan::getCoins).collect(Collectors.toList());
 	}
 
+	/**
+	 * @return The colors of every clan.
+	 */
 	public List<Color> getColors() {
 		return this.clans.stream().map(Clan::getColor).collect(Collectors.toList());
 	}
@@ -512,22 +567,32 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.events;
 	}
 
-	public EventList getEvents() {
-		return this.events;
-	}
-
+	/**
+	 * @return Every registered music.
+	 */
 	public List<String> getExtraMusic() {
 		return this.data.getExtraMusic();
 	}
 
+	/**
+	 * @return All registered Keybindings.
+	 */
 	public Map<String, KeyHandler> getKeybindings() {
 		return this.data.getKeybindings();
 	}
 
+	/**
+	 * Returns the number of players
+	 * 
+	 * @return Number of players.
+	 */
 	public byte getNumPlayers() {
 		return this.numPlayers;
 	}
 
+	/**
+	 * @return All plugins
+	 */
 	public List<Plugin> getPlugins() {
 		return this.data.getPlugins();
 	}
@@ -602,6 +667,9 @@ public final class Game implements PluginInterface, StrategyObject {
 		});
 	}
 
+	/**
+	 * @return Returns {@code true} if only the player is left.
+	 */
 	public boolean hasResult() {
 		final var others = StreamUtils.getCitiesAsStreamNot(this.getCities(), 0).count();
 		final var player = StreamUtils.getCitiesAsStream(this.getCities(), 0).count();
@@ -623,6 +691,9 @@ public final class Game implements PluginInterface, StrategyObject {
 				new BetterRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
 	}
 
+	/**
+	 * Initialises everything. Has to be called.
+	 */
 	public void init() {
 		this.clans.forEach(a -> a.init(this.strategies));
 		if (this.data.getPlugins() != null) {
@@ -631,10 +702,20 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.cities.initCache();
 	}
 
+	/**
+	 * Returns whether a clan is dead.
+	 * 
+	 * @param clan
+	 */
 	public boolean isDead(Clan clan) {
 		return this.isDead(clan.getId());
 	}
 
+	/**
+	 * Returns whether a clan is dead.
+	 * 
+	 * @param clan
+	 */
 	public boolean isDead(int clan) {
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
@@ -643,10 +724,14 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.cities.getConnected(c).stream().filter(a -> a.getClan() != c.getClan()).count() == 0;
 	}
 
+	/**
+	 * Returns whether it is the players' turn.
+	 */
 	public boolean isPlayersTurn() {
 		return this.isPlayersTurn;
 	}
 
+	
 	public long maximumNumberOfSoldiersToRecruit(final byte clan, final long l) {
 		this.checkClan(clan);
 		final var resourcesOfClan = this.clans.get(clan).getResources();
