@@ -14,7 +14,6 @@ import org.jel.game.plugins.ResourceHook;
 
 /**
  * A container for the callbacks registered by the plugins.
- *
  */
 final class GamePluginData {
 	private List<Plugin> plugins;

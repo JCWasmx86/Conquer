@@ -4,10 +4,16 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-public class Gift {
+/**
+ * A gift that is sent from one clan to another.
+ */
+public final class Gift {
 	private final Map<Resource, Double> map = new EnumMap<>(Resource.class);
 	private final double numberOfCoins;
 
+	/**
+	 * Creates an empty gift.
+	 */
 	public Gift() {
 		this.numberOfCoins = 0;
 		for (final var r : Resource.values()) {
@@ -17,7 +23,11 @@ public class Gift {
 
 	public Gift(List<Double> resources, double numberOfCoins) {
 		if (numberOfCoins < 0) {
-			throw new IllegalArgumentException("numberOfCoins<0");
+			throw new IllegalArgumentException("numberOfCoins < 0");
+		} else if (resources == null) {
+			throw new IllegalArgumentException("resources == null");
+		} else if (resources.size() != Resource.values().length) {
+			throw new IllegalArgumentException("resources.size() != Resource.values().length");
 		}
 		this.numberOfCoins = numberOfCoins;
 		for (var i = 0; i < resources.size(); i++) {

@@ -5,15 +5,17 @@ import java.util.List;
 import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
 
+/**
+ * Describes the whole info.xml file.
+ */
 public final class GlobalContext {
 	private final List<InstalledScenario> installedMaps;
 	private final List<Plugin> plugins;
 	private final List<StrategyProvider> strategies;
 	private final List<String> pluginNames;
-
 	private final List<String> strategyNames;
 
-	public GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,
+	GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,
 			final List<StrategyProvider> strategies2, List<String> pluginNames, List<String> strategyNames) {
 		this.installedMaps = installedMaps;
 		this.plugins = plugins;
@@ -21,7 +23,6 @@ public final class GlobalContext {
 		this.pluginNames = pluginNames;
 		this.strategyNames = strategyNames;
 	}
-
 	public List<InstalledScenario> getInstalledMaps() {
 		return this.installedMaps;
 	}
