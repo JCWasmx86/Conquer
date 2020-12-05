@@ -94,8 +94,8 @@ public final class City implements Comparable<City> {
 		if (!(obj instanceof City)) {
 			return false;
 		}
-		City other = (City) obj;
-		return other.name.equals(this.name) && other.x == this.x && other.y == this.y;
+		final var other = (City) obj;
+		return other.name.equals(this.name) && (other.x == this.x) && (other.y == this.y);
 	}
 
 	/**
@@ -140,7 +140,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the strength of a city based on its own values and the clan.
-	 * 
+	 *
 	 * @param clan The clan of the city. If it doesn't match or is null, an
 	 *             {@link IllegalArgumentException} will be thrown.
 	 * @return The defense strength of the city.
@@ -179,7 +179,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the icon of this city.
-	 * 
+	 *
 	 * @return The icon of the city.
 	 */
 	public Image getImage() {
@@ -197,7 +197,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Get the name of the city
-	 * 
+	 *
 	 * @return The name of the city.
 	 */
 	public String getName() {
@@ -206,7 +206,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns how often the city was attacked by the player
-	 * 
+	 *
 	 * @return Number of attacks of the player.
 	 */
 	public long getNumberAttacksOfPlayer() {
@@ -215,7 +215,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the number of persons in the city
-	 * 
+	 *
 	 * @return Number of persons in the city.
 	 */
 	public long getNumberOfPeople() {
@@ -225,7 +225,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Returns the amount of rounds with a population less than a certain amount of
 	 * people.
-	 * 
+	 *
 	 * @return Number of rounds with a small population.
 	 */
 	int getNumberOfRoundsWithZeroPeople() {
@@ -234,7 +234,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the number of soldiers in the city.
-	 * 
+	 *
 	 * @return Number of soldiers in this city
 	 */
 	public long getNumberOfSoldiers() {
@@ -250,7 +250,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the x-Position
-	 * 
+	 *
 	 * @return x-Position
 	 */
 	public int getX() {
@@ -259,7 +259,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Returns the y-Position.
-	 * 
+	 *
 	 * @return y-Position
 	 */
 	public int getY() {
@@ -270,7 +270,7 @@ public final class City implements Comparable<City> {
 	 * Returns the hashcode. Only the x-Position and y-Position are used because of
 	 * performance reasons and the requirement, that no city has the same position
 	 * as another city.
-	 * 
+	 *
 	 * @return The hashcode.
 	 */
 	@Override
@@ -285,7 +285,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Returns some internal value. <mark><b>Shouldn't be called from
 	 * outside</b></mark>
-	 * 
+	 *
 	 * @return Internal value.
 	 */
 	double oldOne() {
@@ -294,7 +294,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Get the production of a resource per round
-	 * 
+	 *
 	 * @param resource Resource - May not be null
 	 * @return The production of a resource per round.
 	 */
@@ -307,7 +307,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the number of attacks of the player. Can only be called once.
-	 * 
+	 *
 	 * @param num New number of attacks of the player.
 	 */
 	void setAttacksOfPlayer(long num) {
@@ -320,7 +320,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Set the clan of the city.
-	 * 
+	 *
 	 * @param clan May not be null.
 	 */
 	public void setClan(final Clan clan) {
@@ -331,8 +331,17 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
+	 * Internal method
+	 *
+	 * @param read
+	 */
+	void setClan(int read) {
+		this.clan = (byte) read;
+	}
+
+	/**
 	 * Updates the value of the defense
-	 * 
+	 *
 	 * @param base New value.
 	 */
 	void setDefense(final double base) {
@@ -349,7 +358,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Changes the defensebonus. Can only be called once. Otherwise it will throw an
 	 * {@link UnsupportedOperationException}
-	 * 
+	 *
 	 * @param bonus The value.
 	 */
 	void setDefenseBonus(final double bonus) {
@@ -361,7 +370,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the growth of this city.
-	 * 
+	 *
 	 * @param growth The new value. May not be smaller than zero.
 	 */
 	public void setGrowth(final double growth) {
@@ -374,7 +383,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Changes the image. Can only be called once, else an
 	 * {@link UnsupportedOperationException} will be thrown.
-	 * 
+	 *
 	 * @param image The image. May not be null.
 	 */
 	void setImage(final Image image) {
@@ -388,7 +397,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the levels of each resource.
-	 * 
+	 *
 	 * @param levels
 	 */
 	void setLevels(final List<Integer> levels) {
@@ -397,7 +406,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the name of the city. Can only be called once.
-	 * 
+	 *
 	 * @param name Name of the city.
 	 */
 	void setName(final String name) {
@@ -409,7 +418,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Set the number of people in the city.
-	 * 
+	 *
 	 * @param num May not be negative
 	 */
 	public void setNumberOfPeople(final long num) {
@@ -421,7 +430,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Internal use only!
-	 * 
+	 *
 	 * @param num
 	 */
 	void setNumberOfRoundsWithZeroPeople(int num) {
@@ -430,7 +439,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Set the number of soldiers in the city.
-	 * 
+	 *
 	 * @param num May not be negative
 	 */
 	public void setNumberOfSoldiers(final long num) {
@@ -442,7 +451,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Internal use only!
-	 * 
+	 *
 	 * @param value
 	 */
 	void setOldValue(double value) {
@@ -451,7 +460,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the productionrates. s
-	 * 
+	 *
 	 * @param productions
 	 */
 	void setProductionRates(final List<Double> productions) {
@@ -465,7 +474,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the x-Position. May only be called once.
-	 * 
+	 *
 	 * @param x
 	 */
 	void setX(final int x) {
@@ -479,7 +488,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Sets the x-Position. May only be called once.
-	 * 
+	 *
 	 * @param y
 	 */
 	void setY(final int y) {
@@ -496,14 +505,5 @@ public final class City implements Comparable<City> {
 		return "City [image=" + this.image + ", clan=" + this.clan + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
-	}
-
-	/**
-	 * Internal method
-	 * 
-	 * @param read
-	 */
-	void setClan(int read) {
-		this.clan = (byte) read;
 	}
 }
