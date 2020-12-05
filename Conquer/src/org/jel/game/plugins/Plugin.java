@@ -7,32 +7,72 @@ import java.io.OutputStream;
 import java.util.List;
 
 import org.jel.game.data.City;
-import org.jel.game.data.Game;
 import org.jel.game.data.Result;
 import org.jel.game.utils.Graph;
 
+/**
+ * The interface every plugin has to implement.
+ */
 public interface Plugin {
-	default void exit(final Result r) {
+	/**
+	 * Called when the game ended
+	 * 
+	 * @param result The result
+	 */
+	default void exit(final Result result) {
 
 	}
 
+	/**
+	 * An optional list of buttons/labels/... that can be registered
+	 * 
+	 * @return A list of components.
+	 */
 	default List<Component> getButtons() {
 		return List.of();
 	}
 
+	/**
+	 * Returns the name of the plugin. Has to be unique.
+	 * 
+	 * @return Name of the plugin.
+	 */
 	String getName();
 
-	void handle(Graph<City> cities, Context ctx);
+	/**
+	 * Called at the end of every round.
+	 * 
+	 * @param cities All cities
+	 * @param ctx    The context with some data.
+	 */
+	void handle(final Graph<City> cities, final Context ctx);
 
-	default void init(final PluginInterface pi) {
+	/**
+	 * Called at the start of the game. Can be used for adding handlers.
+	 * 
+	 * @param pluginInterface
+	 */
+	default void init(final PluginInterface pluginInterface) {
 
 	}
 
-	default void resume(Game game, InputStream bytes) {
+	/**
+	 * Called when a saved game is restored
+	 * 
+	 * @param game
+	 * @param bytes The written bytes
+	 */
+	default void resume(final PluginInterface game, final InputStream bytes) {
 
 	}
 
-	default void save(OutputStream outputStream) throws IOException {
+	/**
+	 * In case the game is stored, any data may be written to the outputstream.
+	 * 
+	 * @param outputStream Target stream.
+	 * @throws IOException
+	 */
+	default void save(final OutputStream outputStream) throws IOException {
 
 	}
 }
