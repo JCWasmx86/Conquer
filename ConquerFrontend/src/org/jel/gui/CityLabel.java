@@ -196,50 +196,37 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 
 	private void proceed() {
 		final var game = this.city.getGame();
+		final var weight = game.getCities().getWeight(this.city, this.origin);
+		final var count = game.maximumNumberToMove((byte) 0, weight, this.origin.getNumberOfSoldiers());
+		String prompt;
 		if (this.city.getClan() == Shared.PLAYER_CLAN) {
-			final var count = this.city.getGame().maximumNumberToMove((byte) 0,
-					game.getCities().getWeight(this.city, this.origin), this.origin.getNumberOfSoldiers());
-			long l = -1;
-			while (l == -1) {
-				final var s = JOptionPane.showInputDialog(null, "How many soldiers do you want to move from "
-						+ this.origin.getName() + " to " + this.city.getName() + "? (0 ->" + count + ")");
-				if (s == null) {// Exit was pressed
-					return;
-				}
-				try {
-					l = Long.parseLong(s);
-				} catch (final NumberFormatException nfe) {
-					continue;// Invalid input? - Try again
-				}
-				// Too many/few soldiers? - Try again
-				if ((l <= -1) || (l > (this.city.getGame().maximumNumberToMove((byte) 0,
-						game.getCities().getWeight(this.origin, this.city), this.origin.getNumberOfSoldiers())))) {
-					l = -1;
-				}
-			}
-			this.city.getGame().moveSoldiers(this.origin, (Stream<City>) null, (byte) 0, true, this.city, l);
+			prompt = "How many soldiers do you want to move from " + this.origin.getName() + " to "
+					+ this.city.getName() + "? (0 ->" + count + ")";
 		} else {
-			final var count = game.maximumNumberToMove((byte) 0, game.getCities().getWeight(this.city, this.origin),
-					this.origin.getNumberOfSoldiers());
-			long l = -1;
-			while (l == -1) {
-				final var s = JOptionPane.showInputDialog(null, "How many soldiers should be used for the attack from  "
-						+ this.origin.getName() + " to " + this.city.getName() + "? (0 ->" + count + ")");
-				if (s == null) {// Exit was pressed
-					return;
-				}
-				try {
-					l = Long.parseLong(s);
-				} catch (final NumberFormatException nfe) {
-					continue;// Invalid input? - Try again
-				}
-				// Too many/few soldiers? - Try again
-				if ((l <= -1) || (l > (this.city.getGame().maximumNumberToMove((byte) 0,
-						game.getCities().getWeight(this.origin, this.city), this.origin.getNumberOfSoldiers())))) {
-					l = -1;
-				}
+			prompt = "How many soldiers should be used for the attack from  " + this.origin.getName() + " to "
+					+ this.city.getName() + "? (0 ->" + count + ")";
+		}
+		long numberOfSelectedSoldiers = -1;
+		while (numberOfSelectedSoldiers == -1) {
+			final var input = JOptionPane.showInputDialog(null, prompt);
+			if (input == null) {// Exit was pressed
+				return;
 			}
-			this.city.getGame().attack(this.origin, this.city, (byte) 0, true, l);
+			try {
+				numberOfSelectedSoldiers = Long.parseLong(input);
+			} catch (final NumberFormatException nfe) {
+				continue;// Invalid input? - Try again
+			}
+			// Too many/few soldiers? - Try again
+			if ((numberOfSelectedSoldiers <= -1) || (numberOfSelectedSoldiers > (game.maximumNumberToMove((byte) 0,
+					weight, this.origin.getNumberOfSoldiers())))) {
+				numberOfSelectedSoldiers = -1;
+			}
+		}
+		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+			game.moveSoldiers(this.origin, (Stream<City>) null, (byte) 0, true, this.city, numberOfSelectedSoldiers);
+		} else {
+			game.attack(this.origin, this.city, (byte) 0, true, numberOfSelectedSoldiers);
 		}
 	}
 

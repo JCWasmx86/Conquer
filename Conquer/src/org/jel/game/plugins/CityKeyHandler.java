@@ -10,7 +10,7 @@ import org.jel.game.data.City;
 public interface CityKeyHandler {
 	/**
 	 * Called as soon as a city is focused and the specified key is pressed
-	 * 
+	 *
 	 * @param key  The key that was pressed
 	 * @param city The focused city.
 	 */

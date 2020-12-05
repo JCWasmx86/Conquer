@@ -96,7 +96,7 @@ public class Installer implements Runnable {
 	}
 
 	private void extendedBaseInstallation() throws IOException {
-		baseInstallation();
+		this.baseInstallation();
 		try (final var zipStream = ClassLoader.getSystemResource("music/conquer.zip").openStream()) {
 			Installer.BASE_FILE.mkdirs();
 			this.unzipFile(zipStream);

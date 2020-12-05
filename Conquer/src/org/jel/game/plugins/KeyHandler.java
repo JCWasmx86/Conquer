@@ -7,7 +7,7 @@ package org.jel.game.plugins;
 public interface KeyHandler {
 	/**
 	 * Called as soon as the specified key is pressed
-	 * 
+	 *
 	 * @param key The key that was pressed.
 	 */
 	void handleKey(String key);
