@@ -36,7 +36,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void moneyPayed(final List<City> cities, final Clan clan) {
+	public void moneyPaid(final List<City> cities, final Clan clan) {
 		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) {
 			return;
 		}
