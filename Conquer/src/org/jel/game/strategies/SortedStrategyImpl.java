@@ -77,18 +77,18 @@ public final class SortedStrategyImpl implements Strategy {
 					.collect(Collectors.toList());
 			own.forEach(ownCity -> {
 				final var pair = this.values.get(target);
-				final var second = (double) pair.second();
+				final var second = pair.second();
 				final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
-				if (second > (ownCitySoldiers * clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength())) {
+				final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
+				if (second > (ownCitySoldiers * factor)) {
 					obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
-					if (second > (ownCitySoldiers * clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength())) {
+					if (second > (ownCitySoldiers * factor)) {
 						return;
 					}
 				}
 				long numberOfSoldiersUsed;
-				if ((ownCitySoldiers > second) || ((ownCitySoldiers * clan.getSoldiersOffenseStrength()
-						* clan.getSoldiersStrength()) > second)) {
-					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : (long) second;
+				if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
+					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : (long) second.doubleValue();
 				} else {
 					return;
 				}

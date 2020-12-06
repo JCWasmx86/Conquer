@@ -84,8 +84,8 @@ public final class OffensiveStrategyImpl implements Strategy {
 						return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
 					}
 				}).forEach(a -> {
-					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan,
-							this.graph.getWeight(city, a), city.getNumberOfSoldiers());
+					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
+							city.getNumberOfSoldiers());
 					this.object.moveSoldiers(city, null, clan, true, a, numberOfSoldiersToMove);
 				}));
 	}
