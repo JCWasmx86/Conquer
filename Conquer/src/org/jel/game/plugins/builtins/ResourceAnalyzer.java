@@ -28,17 +28,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		final List<Double> killedCivilians = new ArrayList<>();
 		for (var idx = 0; idx < statistics.size(); idx++) {
 			final var resources = clan.getResources();
-			if (statistics.get(idx) < 0) {
-				double saved = clan.getResources().get(idx);
-				saved += statistics.get(idx);
-				if (saved >= 0) {
-					resources.set(idx, saved);
-					statistics.set(idx, 0.0);
-				} else {
-					resources.set(idx, 0.0);
-					statistics.set(idx, -(-statistics.get(0) - clan.getResources().get(idx)));
-				}
-			}
+			this.collectStatistics(statistics, resources, clan, idx);
 			if (statistics.get(idx) < 0) {
 				final double d = statistics.get(idx);
 				final var numSoldiersToGetToZero = ((-d) / Shared.getDataValues()[idx][1]);
@@ -46,16 +36,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 					killedSoldiers.add(numSoldiersToGetToZero);
 					killedCivilians.add(0.0);
 				} else {
-					final var d1 = d + (city.getNumberOfSoldiers() + Shared.getDataValues()[idx][1]);
-					final var numCiviliansToGetToZero = (-d1) / Shared.getDataValues()[idx][0];
-					killedSoldiers.add((double) city.getNumberOfSoldiers());
-					if (!Double.isNaN(numCiviliansToGetToZero)) {
-						killedCivilians
-								.add(numCiviliansToGetToZero > city.getNumberOfPeople() ? city.getNumberOfPeople()
-										: numCiviliansToGetToZero);
-					} else {
-						killedCivilians.add(0.0);
-					}
+					this.killedCiviliansUpdate(city, idx, killedSoldiers, killedCivilians, d);
 				}
 			} else {
 				killedCivilians.add(0.0);
@@ -66,21 +47,21 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		Collections.sort(killedCivilians);
 		final var maxSoldiers = (long) Math.floor(killedSoldiers.get(killedSoldiers.size() - 1));
 		final var maxCivilians = (long) Math.floor(killedCivilians.get(killedCivilians.size() - 1));
-		if (maxSoldiers > 0) {
-			final var tmp = city.getNumberOfSoldiers();
-			city.setNumberOfSoldiers(city.getNumberOfSoldiers() - maxSoldiers);
-			this.events.add(new SoldiersDesertedBecauseOfMissingResourcesMessage(maxSoldiers, city, clan));
-			final var tmp2 = city.getNumberOfSoldiers();
-			final var tmp3 = tmp > 100 ? 100 : tmp2;
-			city.setNumberOfSoldiers(tmp2 == 0 ? tmp3 : tmp2);
-		}
-		if (maxCivilians > 0) {
-			final var tmp = city.getNumberOfPeople();
-			city.setNumberOfPeople(city.getNumberOfPeople() - maxCivilians);
-			this.events.add(new CiviliansDiedBecauseOfMissingResourcesMessage(maxCivilians, city, clan));
-			final var tmp2 = city.getNumberOfPeople();
-			final var tmp3 = tmp > 100 ? 100 : tmp2;
-			city.setNumberOfPeople(tmp2 == 0 ? tmp3 : tmp2);
+		this.killSoldiers(city, maxSoldiers, clan);
+		this.killCivilians(city, maxCivilians, clan);
+	}
+
+	private void collectStatistics(List<Double> statistics, List<Double> resources, Clan clan, int idx) {
+		if (statistics.get(idx) < 0) {
+			double saved = clan.getResources().get(idx);
+			saved += statistics.get(idx);
+			if (saved >= 0) {
+				resources.set(idx, saved);
+				statistics.set(idx, 0.0);
+			} else {
+				resources.set(idx, 0.0);
+				statistics.set(idx, -(-statistics.get(0) - clan.getResources().get(idx)));
+			}
 		}
 	}
 
@@ -99,5 +80,41 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	public void init(final PluginInterface pi) {
 		pi.addResourceHook(this);
 		this.events = pi.getEventList();
+	}
+
+	private void killCivilians(City city, long maxCivilians, Clan clan) {
+		if (maxCivilians <= 0) {
+			return;
+		}
+		final var tmp = city.getNumberOfPeople();
+		city.setNumberOfPeople(city.getNumberOfPeople() - maxCivilians);
+		this.events.add(new CiviliansDiedBecauseOfMissingResourcesMessage(maxCivilians, city, clan));
+		final var tmp2 = city.getNumberOfPeople();
+		final var tmp3 = tmp > 100 ? 100 : tmp2;
+		city.setNumberOfPeople(tmp2 == 0 ? tmp3 : tmp2);
+	}
+
+	private void killedCiviliansUpdate(City city, int idx, List<Double> killedSoldiers, List<Double> killedCivilians,
+			double d) {
+		final var d1 = d + (city.getNumberOfSoldiers() + Shared.getDataValues()[idx][1]);
+		final var numCiviliansToGetToZero = (-d1) / Shared.getDataValues()[idx][0];
+		killedSoldiers.add((double) city.getNumberOfSoldiers());
+		if (!Double.isNaN(numCiviliansToGetToZero)) {
+			killedCivilians.add(Math.min(city.getNumberOfPeople(), numCiviliansToGetToZero));
+		} else {
+			killedCivilians.add(0.0);
+		}
+	}
+
+	private void killSoldiers(City city, long maxSoldiers, Clan clan) {
+		if (maxSoldiers <= 0) {
+			return;
+		}
+		final var tmp = city.getNumberOfSoldiers();
+		city.setNumberOfSoldiers(city.getNumberOfSoldiers() - maxSoldiers);
+		this.events.add(new SoldiersDesertedBecauseOfMissingResourcesMessage(maxSoldiers, city, clan));
+		final var tmp2 = city.getNumberOfSoldiers();
+		final var tmp3 = tmp > 100 ? 100 : tmp2;
+		city.setNumberOfSoldiers(tmp2 == 0 ? tmp3 : tmp2);
 	}
 }

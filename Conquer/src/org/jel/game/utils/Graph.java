@@ -81,7 +81,7 @@ public final class Graph<T> implements Consumer<T> {
 		consumer.accept(this.values.get(start));
 		for (var i = 0; i < this.values.size(); i++) {
 			final var v = this.matrix[i][start];
-			if ((v != -1) && (v != -2) && !this.visited.get(i)) {
+			if ((v != -1) && (v != -2) && !this.visited.get(i).booleanValue()) {
 				this.dfs0(i, consumer);
 			}
 		}
@@ -215,7 +215,7 @@ public final class Graph<T> implements Consumer<T> {
 		consumer.accept(start);
 		for (var i = 0; i < this.values.size(); i++) {
 			final var v = this.matrix[i][start];
-			if ((v != -1) && (v != -2) && !this.visited.get(i)) {
+			if ((v != -1) && (v != -2) && !this.visited.get(i).booleanValue()) {
 				this.idxDfs0(i, consumer);
 			}
 		}
