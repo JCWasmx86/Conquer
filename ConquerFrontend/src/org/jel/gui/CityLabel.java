@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.jel.game.data.City;
-import org.jel.game.data.Shared;
 
 /**
  * Represents a city on the map. It is divided into two parts. The first (upper)
@@ -65,8 +64,8 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.paint(this.getGraphics());
 		var s = "<html>";
 		s += this.city.getName();
-		s += "<br>Clan: " + this.city.getGame().getClanNames().get(this.city.getClan()) + "<br>";
-		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+		s += "<br>Clan: " + this.city.getGame().getClanNames().get(this.city.getClanId()) + "<br>";
+		if (this.city.isPlayerCity()) {
 			s += String.format("People: %d<br>Soldiers: %d</html>", this.city.getNumberOfPeople(),
 					this.city.getNumberOfSoldiers());
 		} else {
@@ -112,7 +111,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 1) {
 			this.consumer.accept(this.city);
-			if (!this.marked && (this.city.getClan() == Shared.PLAYER_CLAN)) {
+			if (!this.marked && (this.city.isPlayerCity())) {
 				this.labels.values().forEach(CityLabel::unmark);
 				this.city.getGame().getCities().getConnected(this.city)
 						.forEach(a -> this.labels.get(a).mark(this.city));
@@ -166,13 +165,13 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			this.timer.stop();
 			return;
 		}
-		if (this.marked && (this.origin != null) && (this.origin.getClan() != Shared.PLAYER_CLAN)) {
+		if (this.marked && (this.origin != null) && (this.origin.isPlayerCity())) {
 			this.unmark();
 		}
 		g.drawImage(this.city.getImage(), 0, 0, null);
 		final var image = this.city.getImage();
 		final var baseYValue = image.getHeight(null);
-		g.setColor(this.city.getGame().getClan(this.city.getClan()).getColor());
+		g.setColor(this.city.getGame().getClan(this.city.getClanId()).getColor());
 		g.fillRect(0, baseYValue, image.getWidth(null), CityLabel.CLAN_COLOR_HEIGHT);
 		if (this.marked) {
 			if (this.counter <= 45) {
@@ -199,7 +198,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var weight = game.getCities().getWeight(this.city, this.origin);
 		final var count = game.maximumNumberToMove((byte) 0, weight, this.origin.getNumberOfSoldiers());
 		String prompt;
-		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+		if (this.city.isPlayerCity()) {
 			prompt = "How many soldiers do you want to move from " + this.origin.getName() + " to "
 					+ this.city.getName() + "? (0 ->" + count + ")";
 		} else {
@@ -223,7 +222,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 				numberOfSelectedSoldiers = -1;
 			}
 		}
-		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+		if (this.city.isPlayerCity()) {
 			game.moveSoldiers(this.origin, (Stream<City>) null, (byte) 0, true, this.city, numberOfSelectedSoldiers);
 		} else {
 			game.attack(this.origin, this.city, (byte) 0, true, numberOfSelectedSoldiers);

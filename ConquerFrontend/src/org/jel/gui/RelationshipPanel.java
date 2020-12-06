@@ -40,8 +40,8 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 		for (var i = 1; i < clans.size(); i++) {
 			final var clan = clans.get(i);
 			final var label = this.labels.get(i - 1);
-			label.setText(clan.getName() + ": "
-					+ String.format("%.2f", this.game.getRelations().getWeight(Shared.PLAYER_CLAN, clan.getId())));
+			label.setText(clan.getName() + ": " + String.format("%.2f",
+					this.game.getRelations().getWeight((int) Shared.PLAYER_CLAN, clan.getId())));
 			this.repaint();
 		}
 	}

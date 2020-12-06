@@ -27,7 +27,7 @@ final class RecruitButton extends JPanel {
 	RecruitButton(City city, CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		final var max = city.getGame().maximumNumberOfSoldiersToRecruit((byte) city.getClan(),
+		final var max = city.getGame().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),
 				city.getNumberOfPeople());
 		this.js = new JSlider(0, (int) max);
 		this.js.setValue((int) (max / 2));
@@ -50,7 +50,7 @@ final class RecruitButton extends JPanel {
 	 * Updates all components on this panel.
 	 */
 	void doUpdate() {
-		if (this.city.getClan() != 0) {
+		if (this.city.getClanId() != 0) {
 			this.jbutton.setEnabled(false);
 			this.js.setEnabled(false);
 			this.sharp = true;
@@ -61,7 +61,7 @@ final class RecruitButton extends JPanel {
 			this.jbutton.setEnabled(true);
 			this.js.setEnabled(true);
 			this.sharp = true;
-			this.js.setMaximum((int) this.city.getGame().maximumNumberOfSoldiersToRecruit((byte) this.city.getClan(),
+			this.js.setMaximum((int) this.city.getGame().maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(),
 					this.city.getNumberOfPeople()));
 			this.sharp = false;
 		}

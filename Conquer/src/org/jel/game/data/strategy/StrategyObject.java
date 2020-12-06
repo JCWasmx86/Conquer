@@ -27,7 +27,7 @@ public interface StrategyObject {
 
 	default void attack(City source, City target, Clan sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer) {
-		this.attack(source, target, (byte) sourceOfClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged);
+		this.attack(source, target, (byte) sourceOfClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged,reallyPlayer);
 	}
 
 	double defenseStrengthOfCity(City city);
@@ -37,10 +37,10 @@ public interface StrategyObject {
 	Graph<Integer> getRelations();
 
 	default double getRelationship(Clan clan, City city) {
-		if (clan.getId() == city.getClan()) {
+		if (clan.getId() == city.getClanId()) {
 			throw new IllegalArgumentException("clan.getID()==city.getClan()");
 		}
-		return this.getRelationship(clan.getId(), city.getClan());
+		return this.getRelationship(clan.getId(), city.getClanId());
 	}
 
 	default double getRelationship(Clan a, Clan b) {

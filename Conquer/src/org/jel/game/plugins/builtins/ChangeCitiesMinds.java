@@ -46,23 +46,23 @@ public final class ChangeCitiesMinds implements Plugin {
 	public void handle(final Graph<City> cities, final Context ctx) {
 		this.context = ctx;
 		StreamUtils.forEach(cities, c -> {
-			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
+			if (StreamUtils.getCitiesAsStream(cities, c.getClanId()).count() == 1) {
 				return;
 			}
-			final var oldClan = c.getClan();
+			final var oldClan = c.getClanId();
 			final var neighbours = cities.getConnected(c);
 			var canChangeClan = false;
 			var otherClan = -1;
 			for (final City city : neighbours) {
-				if ((otherClan == city.getClan()) || (otherClan == -1)) {
-					otherClan = city.getClan();
+				if ((otherClan == city.getClanId()) || (otherClan == -1)) {
+					otherClan = city.getClanId();
 					canChangeClan = true;
 				} else {
 					canChangeClan = false;
 					break;
 				}
 			}
-			if ((!canChangeClan || (otherClan == c.getClan()))
+			if ((!canChangeClan || (otherClan == c.getClanId()))
 					|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
 			}
@@ -81,7 +81,7 @@ public final class ChangeCitiesMinds implements Plugin {
 				changedClan = this.evalClanChange(soldiersToCivilians, c, (byte) otherClan);
 			}
 			if (changedClan) {
-				ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), ctx.getClan(c.getClan())));
+				ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), ctx.getClan(c.getClanId())));
 			}
 		});
 	}

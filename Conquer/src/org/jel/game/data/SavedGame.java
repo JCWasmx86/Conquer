@@ -64,7 +64,7 @@ public class SavedGame {
 			final var city = new City(game);
 			city.setName(dis.readUTF());
 			city.setDefenseBonus(dis.readDouble());
-			city.setClan(dis.read());
+			city.setClan(game.getClan(dis.read()));
 			city.setDefense(dis.readDouble());
 			city.setGrowth(dis.readDouble());
 			final var imageLen = dis.readInt();
@@ -337,7 +337,7 @@ public class SavedGame {
 			try {
 				dos.writeUTF(a.getName());
 				dos.writeDouble(a.getBonus());
-				dos.write(a.getClan());
+				dos.write(a.getClanId());
 				dos.writeDouble(a.getDefense());
 				dos.writeDouble(a.getGrowth());
 				final var imageData = this.extractBytes(a.getImage());
