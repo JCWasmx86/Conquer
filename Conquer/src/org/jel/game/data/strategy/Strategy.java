@@ -14,7 +14,7 @@ public interface Strategy {
 	boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue, DoubleConsumer newValue,
 			StrategyObject strategyObject);
 
-	void applyStrategy(Clan clan, byte clanId, Graph<City> cities, StrategyObject obj);
+	void applyStrategy(Clan clan, Graph<City> cities, StrategyObject obj);
 
 	StrategyData getData();
 

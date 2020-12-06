@@ -57,20 +57,20 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final byte clanId, final Graph<City> cities, final StrategyObject obj) {
+	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		if (this.counter == 7) {
 			this.counter = 0;
 			this.gifts.clear();
 		} else {
 			this.counter++;
 		}
-		this.refreshList(clanId, cities);
-		this.attack(cities, obj, clanId, clan);
-		this.upgradeCities(cities, clanId, obj);
-		this.upgradeClan(clanId, obj);
+		this.refreshList(clan, cities);
+		this.attack(cities, obj, clan);
+		this.upgradeCities(cities, clan, obj);
+		this.upgradeClan(clan, obj);
 	}
 
-	private void attack(final Graph<City> graph, final StrategyObject obj, final byte id, final Clan clan) {
+	private void attack(final Graph<City> graph, final StrategyObject obj, final Clan clan) {
 		for (final City target : this.cities) {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
 					.sorted((a, b) -> Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers()))
@@ -80,7 +80,7 @@ public final class SortedStrategyImpl implements Strategy {
 				final var second = (double) pair.second();
 				final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
 				if (second > (ownCitySoldiers * clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength())) {
-					obj.recruitSoldiers(clan.getCoins() * 0.25, id, ownCity, true, ownCity.getNumberOfPeople());
+					obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
 					if (second > (ownCitySoldiers * clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength())) {
 						return;
 					}
@@ -92,7 +92,7 @@ public final class SortedStrategyImpl implements Strategy {
 				} else {
 					return;
 				}
-				obj.attack(ownCity, target, id, true, numberOfSoldiersUsed, false);
+				obj.attack(ownCity, target, clan, true, numberOfSoldiersUsed, false);
 			});
 		}
 	}
@@ -102,9 +102,9 @@ public final class SortedStrategyImpl implements Strategy {
 		return null;
 	}
 
-	private void refreshList(final byte clanId, final Graph<City> cities2) {
+	private void refreshList(final Clan clan, final Graph<City> cities2) {
 		this.values.clear();
-		StreamUtils.getCitiesAsStreamNot(cities2, clanId).forEach(a -> {
+		StreamUtils.getCitiesAsStreamNot(cities2, clan).forEach(a -> {
 			// Make the strategy a bit wrong to make it possible for the player to win.
 			final var soldiersA = a.getNumberOfSoldiers() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
 					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
@@ -115,8 +115,8 @@ public final class SortedStrategyImpl implements Strategy {
 			this.values.put(a, new Pair<>(peopleA, soldiersA));
 		});
 		this.cities = StreamUtils
-				.getCitiesAsStreamNot(cities2, clanId,
-						a -> cities2.getConnected(a).stream().filter(b -> b.getClan() == clanId).count() > 0)
+				.getCitiesAsStreamNot(cities2, clan,
+						a -> cities2.getConnected(a).stream().filter(b -> b.getClan() == clan.getId()).count() > 0)
 				.sorted((a, b) -> {
 					final var pA = this.values.get(a);
 					final var pB = this.values.get(b);
@@ -126,16 +126,16 @@ public final class SortedStrategyImpl implements Strategy {
 				}).collect(Collectors.toList());
 	}
 
-	private void upgradeCities(final Graph<City> cities, final byte clanId, final StrategyObject obj) {
+	private void upgradeCities(final Graph<City> cities, final Clan clan, final StrategyObject obj) {
 		var didUpgrade = true;
-		final var ownCities = StreamUtils.getCitiesAsStream(cities, clanId).collect(Collectors.toList());
+		final var ownCities = StreamUtils.getCitiesAsStream(cities, clan).collect(Collectors.toList());
 		while (didUpgrade) {
 			var num = 0;
 			for (final City c : ownCities) {
 				var flag = false;
-				flag |= obj.upgradeDefense(clanId, c);
+				flag |= obj.upgradeDefense(clan, c);
 				for (final Resource r : Resource.values()) {
-					flag |= obj.upgradeResource(clanId, r, c);
+					flag |= obj.upgradeResource(clan, r, c);
 				}
 				if (flag) {
 					num++;
@@ -147,12 +147,12 @@ public final class SortedStrategyImpl implements Strategy {
 		}
 	}
 
-	private void upgradeClan(final byte clanId, final StrategyObject obj) {
+	private void upgradeClan(final Clan clan, final StrategyObject obj) {
 		while (true) {
 			var flag = false;
-			flag |= obj.upgradeDefense(clanId);
-			flag |= obj.upgradeOffense(clanId);
-			flag |= obj.upgradeSoldiers(clanId);
+			flag |= obj.upgradeDefense(clan);
+			flag |= obj.upgradeOffense(clan);
+			flag |= obj.upgradeSoldiers(clan);
 			if (!flag) {
 				break;
 			}

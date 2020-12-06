@@ -39,24 +39,24 @@ public final class OffensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final byte clanId, final Graph<City> cities, final StrategyObject obj) {
+	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var data = clan.getData();
 		if (data instanceof OffensiveStrategyData strategyData) {
 			final var action = strategyData.getAction();
 			if (action == OffensiveStrategy.EXPAND) {
-				BuiltinShared.offensiveAttack(clanId, clan, cities, obj);
+				BuiltinShared.offensiveAttack(clan, cities, obj);
 			} else {
 				if (Math.random() < OffensiveStrategyImpl.OFFENSIVE_UPGRADE_PROBABILITY) {
-					this.offensiveResourcesUpgrade(clanId, clan);
+					this.offensiveResourcesUpgrade(clan);
 				} else {
-					BuiltinShared.moderateResourcesUpgrade(cities, obj, clanId, clan);
+					BuiltinShared.moderateResourcesUpgrade(cities, obj, clan);
 				}
-				BuiltinShared.offensiveRecruiting(clanId, cities, obj, clan);
-				this.offensiveSoldierUpgrading(clanId);
+				BuiltinShared.offensiveRecruiting(cities, obj, clan);
+				this.offensiveSoldierUpgrading(clan);
 			}
-			this.moveTroops(clanId);
+			this.moveTroops(clan);
 		} else {
 			throw new InternalError();
 		}
@@ -67,34 +67,33 @@ public final class OffensiveStrategyImpl implements Strategy {
 		return new OffensiveStrategyData();
 	}
 
-	private void moveTroops(byte clanId) {
+	private void moveTroops(Clan clan) {
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
-				.getCitiesAsStream(this.graph, clanId, a -> a.getNumberOfSoldiers() > 0).filter(a -> StreamUtils
-						.getCitiesAroundCity(this.graph, a).filter(b -> b.getClan() != clanId).count() == 0)
+				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
+				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.graph, a, clan).count() == 0)
 				.collect(Collectors.toList());
 		final var citiesOnBorder = StreamUtils
-				.getCitiesAsStream(this.graph, clanId, a -> !citiesWithoutBordersWithSoldiers.contains(a))
+				.getCitiesAsStream(this.graph, clan, a -> !citiesWithoutBordersWithSoldiers.contains(a))
 				.collect(Collectors.toList());
-		citiesWithoutBordersWithSoldiers.forEach(city -> {
-			citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
-				final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
-				if (i != 0) {
-					return i;
-				} else {
-					return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
-				}
-			}).forEach(a -> {
-				final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clanId,
-						this.graph.getWeight(city, a), city.getNumberOfSoldiers());
-				this.object.moveSoldiers(city, null, clanId, true, a, numberOfSoldiersToMove);
-			});
-		});
+		citiesWithoutBordersWithSoldiers
+				.forEach(city -> citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
+					final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
+					if (i != 0) {
+						return i;
+					} else {
+						return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
+					}
+				}).forEach(a -> {
+					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan,
+							this.graph.getWeight(city, a), city.getNumberOfSoldiers());
+					this.object.moveSoldiers(city, null, clan, true, a, numberOfSoldiersToMove);
+				}));
 	}
 
-	private void offensiveResourcesUpgrade(final byte clan, final Clan clanO) {
-		final double iron = clanO.getResourceStats().get(Resource.IRON.getIndex());
-		final double stone = clanO.getResourceStats().get(Resource.STONE.getIndex());
-		final double wood = clanO.getResourceStats().get(Resource.WOOD.getIndex());
+	private void offensiveResourcesUpgrade(final Clan clan) {
+		final double iron = clan.getResourceStats().get(Resource.IRON.getIndex());
+		final double stone = clan.getResourceStats().get(Resource.STONE.getIndex());
+		final double wood = clan.getResourceStats().get(Resource.WOOD.getIndex());
 		if (iron < 0) {
 			this.upgradeResourcesForClan(clan, Resource.IRON);
 		}
@@ -107,22 +106,22 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	}
 
-	private void offensiveSoldierUpgrading(final byte i) {
+	private void offensiveSoldierUpgrading(final Clan clan) {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
-			b = this.object.upgradeOffense(i);
+			b = this.object.upgradeOffense(clan);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
-			b = this.object.upgradeSoldiers(i);
+			b = this.object.upgradeSoldiers(clan);
 			cnter++;
 		}
 	}
 
-	private void upgradeResourcesForClan(final byte clan, final Resource resc) {
+	private void upgradeResourcesForClan(final Clan clan, final Resource resc) {
 		StreamUtils.getCitiesAsStream(this.graph, clan).sorted((a, b) -> {
 			final var index = resc.getIndex();
 			final double resA = a.getProductions().get(index);

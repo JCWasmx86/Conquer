@@ -31,9 +31,8 @@ public final class ModerateStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final byte clanId, final Graph<City> cities,
-			final StrategyObject object) {
-		BuiltinShared.moderatePlay(clanId, cities, object, clan);
+	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject object) {
+		BuiltinShared.moderatePlay(cities, object, clan);
 	}
 
 	@Override
