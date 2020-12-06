@@ -17,6 +17,7 @@
 #include "launcher.h"
 
 static char *getHomeDirectory(void);
+//Make ~/.config/.conquer or %APPDATA%\\Roaming\\.conquer
 void initDirectoryStructure(void) {
 	char *configDirectory = getBaseDirectory();
 #ifndef _WIN32
