@@ -18,7 +18,7 @@ import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.utils.Graph;
 
-public final class BuiltinShared {
+final class BuiltinShared {
 
 	private static final int GOOD_RELATION = 75;
 	private static final int MAX_ITERATIONS = 100;
@@ -34,9 +34,10 @@ public final class BuiltinShared {
 		if (!citiesOfEnemies.isEmpty()) {
 			// Get weakest city
 			final var weakestCity = citiesOfEnemies.get(0);
-			final var powerOfDefenderEstimated = weakestCity.getNumberOfSoldiers();
+			final var estimatedPowerOfDefender = weakestCity.getNumberOfSoldiers();
 			// If this clan may lose the attack cancel it.
-			if ((powerOfDefenderEstimated >= source.getNumberOfSoldiers()) || (source.getNumberOfSoldiers() == 0)) {
+			final var numberOfSoldiersInSource = source.getNumberOfSoldiers();
+			if ((estimatedPowerOfDefender >= numberOfSoldiersInSource) || (numberOfSoldiersInSource == 0)) {
 				return;
 			}
 			// Attack the weakest city
@@ -46,7 +47,7 @@ public final class BuiltinShared {
 
 	static void moderatePlay(final Graph<City> graph, final StrategyObject object, final Clan clan) {
 		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).collect(Collectors.toList());
-		StreamUtils.getCitiesAsStream(graph, clan).forEach(c -> {
+		StreamUtils.forEach(graph, clan, c -> {
 			// If there are too many soldiers in a city, try to move them, else recruit
 			// some.
 			final var diff = c.getCoinDiff();
@@ -102,8 +103,7 @@ public final class BuiltinShared {
 					return Long.compare(cnt1, cnt2);
 					// Attack them, starting with the weakest.
 				}).forEach(own -> {
-					final var cnt = object.maximumNumberToMove(clan, cityGraph.getWeight(own, enemy),
-							own.getNumberOfSoldiers());
+					final var cnt = object.maximumNumberToMove(clan, own, enemy, own.getNumberOfSoldiers());
 					if (own.getNumberOfSoldiers() < enemy.getDefense()) {
 						object.recruitSoldiers(clan.getCoins(), clan, own, false, 0);
 					}
@@ -117,8 +117,7 @@ public final class BuiltinShared {
 
 	static void offensiveRecruiting(final Graph<City> graph, final StrategyObject object, final Clan clan) {
 		// Find all own cities that are on the border to another clan.
-		StreamUtils
-				.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
+		StreamUtils.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
 				.sorted((a, b) -> {
 					// Sort them using the defense strength
 					final var defenseStrengthA = object.defenseStrengthOfCity(a);

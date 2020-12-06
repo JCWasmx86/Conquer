@@ -183,13 +183,12 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getResourceHooks().add(rh);
 	}
 
-	private long aiCalculateNumberOfTroopsToAttackWith(final City src, final byte clan, final City destination) {
-		var powerOfAttacker = src.getNumberOfSoldiers();
+	private long aiCalculateNumberOfTroopsToAttackWith(final City src, final Clan clan, final City destination) {
+		final var powerOfAttacker = src.getNumberOfSoldiers();
 		if (powerOfAttacker == 0) {
 			return 0;
 		}
-		powerOfAttacker = this.maximumNumberToMove(clan, this.getCities().getWeight(src, destination), powerOfAttacker);
-		return powerOfAttacker;
+		return this.maximumNumberToMove(clan, src, destination, powerOfAttacker);
 	}
 
 	@Override
@@ -213,7 +212,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		if (this.cantAttack(src, destination)) {
 			return;
 		}
-		final var powerOfAttacker = this.calculatePowerOfAttacker(src, clan, destination, managed, reallyPlayer, num);
+		final var powerOfAttacker = this.calculatePowerOfAttacker(src, this.getClan(clan), destination, managed,
+				reallyPlayer, num);
 		if ((powerOfAttacker == 0) || ((src.getClan() != 0) && (powerOfAttacker == 1))) {
 			return;
 		}
@@ -275,7 +275,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 	}
 
-	private long calculatePowerOfAttacker(final City src, final byte clan, final City destination,
+	private long calculatePowerOfAttacker(final City src, final Clan clan, final City destination,
 			final boolean managed, final boolean reallyPlayer, final long numberOfSoldiers) {
 		if (!managed) {
 			return this.aiCalculateNumberOfTroopsToAttackWith(src, clan, destination);
@@ -470,11 +470,12 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private void executeCPUPlay(final int clan) {
-		if (isDead(clan)) {
+		if (this.isDead(clan)) {
 			return;
 		}
-		this.clans.get(clan).getStrategy().applyStrategy(this.clans.get(clan), this.cities, this);
-		this.clans.get(clan).update(this.currentRound);
+		final var clanRef = this.getClan(clan);
+		clanRef.getStrategy().applyStrategy(clanRef, this.cities, this);
+		clanRef.update(this.currentRound);
 	}
 
 	/**
@@ -600,8 +601,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.relations;
 	}
 
-	private List<Double> getResources(final int i) {
-		return this.clans.get(i).getResources();
+	private List<Double> getResources(final byte clan) {
+		return this.clans.get(clan).getResources();
 	}
 
 	public int getSoldiersDefenseLevel(final int clan) {
@@ -797,7 +798,7 @@ public final class Game implements PluginInterface, StrategyObject {
 					moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
 				}
 			}
-			moveAmount = this.maximumNumberToMove(i, this.getCities().getWeight(src, destination), moveAmount);
+			moveAmount = this.maximumNumberToMove(this.clans.get(i), src, destination, moveAmount);
 			if (moveAmount == 0) {
 				return;
 			}

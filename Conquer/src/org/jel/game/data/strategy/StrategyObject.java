@@ -17,13 +17,13 @@ public interface StrategyObject {
 		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
 	}
 
+	void attack(City source, City target, byte sourceOfClan, boolean managedByPlayer,
+			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
+
 	default void attack(City source, City target, Clan sourceClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged) {
 		this.attack(source, target, (byte) sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
 	}
-
-	void attack(City source, City target, byte sourceOfClan, boolean managedByPlayer,
-			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
 
 	default void attack(City source, City target, Clan sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer) {
@@ -35,6 +35,13 @@ public interface StrategyObject {
 	Graph<City> getCities();
 
 	Graph<Integer> getRelations();
+
+	default double getRelationship(Clan clan, City city) {
+		if (clan.getId() == city.getClan()) {
+			throw new IllegalArgumentException("clan.getID()==city.getClan()");
+		}
+		return this.getRelationship(clan.getId(), city.getClan());
+	}
 
 	default double getRelationship(Clan a, Clan b) {
 		return this.getRelationship(a.getId(), b.getId());
@@ -50,10 +57,18 @@ public interface StrategyObject {
 		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
 	}
 
-	long maximumNumberToMove(byte clanId, double weight, long numberOfSoldiers);
+	long maximumNumberToMove(byte clanId, double weight, long maximumNumberOfSoldiers);
 
-	default long maximumNumberToMove(Clan clan, double weight, long numberOfSoldiers) {
-		return maximumNumberToMove((byte) clan.getId(), weight, numberOfSoldiers);
+	default long maximumNumberToMove(Clan clan, City first, City second, long maximumNumberOfSoldiers) {
+		if (first == second) {
+			throw new IllegalArgumentException("first==second");
+		}
+		return this.maximumNumberToMove((byte) clan.getId(), this.getCities().getWeight(first, second),
+				maximumNumberOfSoldiers);
+	}
+
+	default long maximumNumberToMove(Clan clan, double weight, long maximumNumberOfSoldiers) {
+		return this.maximumNumberToMove((byte) clan.getId(), weight, maximumNumberOfSoldiers);
 	}
 
 	void moveSoldiers(City source, Stream<City> reachableCities, byte clanId, boolean managedByPlayer, City target,
@@ -61,7 +76,8 @@ public interface StrategyObject {
 
 	default void moveSoldiers(City source, Stream<City> reachableCities, Clan clan, boolean managedByPlayer,
 			City target, long numberOfSoldiersToMoveIfManaged) {
-		moveSoldiers(source, reachableCities, (byte) clan.getId(), managedByPlayer, target, numberOfSoldiersToMoveIfManaged);
+		this.moveSoldiers(source, reachableCities, (byte) clan.getId(), managedByPlayer, target,
+				numberOfSoldiersToMoveIfManaged);
 	}
 
 	Stream<City> reachableCities(City city);
@@ -70,42 +86,38 @@ public interface StrategyObject {
 
 	default void recruitSoldiers(double maxToPay, Clan clan, City city, boolean managedByPlayer,
 			double numberOfSoldiers) {
-		recruitSoldiers(maxToPay, (byte) clan.getId(), city, managedByPlayer, numberOfSoldiers);
+		this.recruitSoldiers(maxToPay, (byte) clan.getId(), city, managedByPlayer, numberOfSoldiers);
 	}
 
 	boolean sendGift(Clan source, Clan destination, Gift gift);
 
 	boolean upgradeDefense(byte clan);
 
-	default boolean upgradeDefense(Clan clan) {
-		return upgradeDefense((byte) clan.getId());
-	}
-
 	boolean upgradeDefense(byte clan, City city);
 
+	default boolean upgradeDefense(Clan clan) {
+		return this.upgradeDefense((byte) clan.getId());
+	}
+
 	default boolean upgradeDefense(Clan clan, City city) {
-		return upgradeDefense((byte) clan.getId(), city);
+		return this.upgradeDefense((byte) clan.getId(), city);
 	}
 
 	boolean upgradeOffense(byte clan);
 
 	default boolean upgradeOffense(Clan clan) {
-		return upgradeOffense((byte) clan.getId());
+		return this.upgradeOffense((byte) clan.getId());
 	}
 
 	boolean upgradeResource(byte clan, Resource resc, City a);
 
-	default boolean upgradeResource(Clan clan, Resource resc, City city) {
-		return upgradeResource((byte) clan.getId(), resc, city);
+	default boolean upgradeResource(Clan clan, Resource resource, City city) {
+		return this.upgradeResource((byte) clan.getId(), resource, city);
 	}
 
 	boolean upgradeSoldiers(byte clan);
 
 	default boolean upgradeSoldiers(Clan clan) {
-		return upgradeSoldiers((byte) clan.getId());
-	}
-
-	default double getRelationship(Clan clan, City a) {
-		return getRelationship(clan.getId(), a.getClan());
+		return this.upgradeSoldiers((byte) clan.getId());
 	}
 }
