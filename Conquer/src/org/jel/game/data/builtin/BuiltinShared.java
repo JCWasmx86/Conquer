@@ -13,6 +13,7 @@ import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.utils.Graph;
@@ -63,7 +64,7 @@ public final class BuiltinShared {
 
 	static void moderateResourcesUpgrade(final Graph<City> graph, final StrategyObject object, final byte clanId,
 			final Clan clan) {
-		if (clanId == 0) {
+		if (clanId == Shared.PLAYER_CLAN) {
 			return;
 		}
 		final List<Double> resources = new ArrayList<>(clan.getResourceStats());

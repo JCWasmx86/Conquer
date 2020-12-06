@@ -73,16 +73,16 @@ final class LevelInfo extends JFrame implements WindowListener {
 		scrollPane.setViewportView(jlist);
 		final JButton backButton = new RoundButton(new ImageResource("back.png"));
 		final JButton forwardButton = new RoundButton(new ImageResource("forward.png"));
-		backButton.setSize(backButton.getIcon().getIconWidth(), backButton.getIcon().getIconHeight());
-		backButton.setLocation(0, 0);
+		final var backwardIcon = backButton.getIcon();
+		backButton.setSize(backwardIcon.getIconWidth(), backwardIcon.getIconHeight());
 		backButton.addActionListener(a -> {
 			final var lsf = new LevelSelectFrame();
 			lsf.init(this.getLocation());
 			this.shouldExit = true;
 			this.dispose();
 		});
-		forwardButton.setSize(forwardButton.getIcon().getIconWidth(), forwardButton.getIcon().getIconHeight());
-		forwardButton.setLocation(800 - 32, 0);
+		final var forwardIcon = forwardButton.getIcon();
+		forwardButton.setSize(forwardIcon.getIconWidth(), forwardIcon.getIconHeight());
 		forwardButton.addActionListener(a -> {
 			game.addContext(context);
 			game.init();
