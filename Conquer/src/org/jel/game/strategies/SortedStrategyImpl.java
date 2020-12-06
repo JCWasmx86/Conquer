@@ -71,7 +71,7 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	private void attack(final Graph<City> graph, final StrategyObject obj, final Clan clan) {
-		cities.forEach(target -> {
+		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
 					.sorted((a, b) -> Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers()))
 					.collect(Collectors.toList());
@@ -88,7 +88,7 @@ public final class SortedStrategyImpl implements Strategy {
 				}
 				long numberOfSoldiersUsed;
 				if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
-					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : (long) second.doubleValue();
+					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
 				} else {
 					return;
 				}
