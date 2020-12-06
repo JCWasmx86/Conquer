@@ -50,9 +50,6 @@ public class Installer implements Runnable {
 
 	/**
 	 * Checks whether the game is installed. If no, it is installed/repaired.
-	 *
-	 * @implNote If the installation fails because of any reason, the JVM is killed
-	 *           with the exit code -127!
 	 */
 	public Installer(OptionChooser chooser, ExtendedOutputStream writeTo, Consumer<Exception> onError) {
 		if (chooser == null) {

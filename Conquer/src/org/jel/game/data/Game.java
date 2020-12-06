@@ -445,6 +445,9 @@ public final class Game implements PluginInterface, StrategyObject {
 	 */
 	public void executeActions() {
 		final var start = System.nanoTime();
+		this.sanityCheckForGrowth();
+		this.sanityCheckForBadCityValues();
+		this.sanityCheckForBadClanValues();
 		this.relationshipEvents();
 		this.payMoney();
 		this.produceResources();
@@ -460,7 +463,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		}
 		this.sanityCheckForGrowth();
 		this.sanityCheckForBadCityValues();
-		sanityCheckForBadClanValues();
+		this.sanityCheckForBadClanValues();
 		StreamUtils.forEach(this.cities, City::endOfRound);
 		this.currentRound++;
 		final var end = System.nanoTime();

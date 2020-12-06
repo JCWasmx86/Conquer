@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,14 +23,24 @@ import org.xml.sax.SAXException;
 public final class XMLReader {
 	private static final XMLReader INSTANCE = new XMLReader();
 	private static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
+	private static Consumer<Throwable> throwableConsumer;
 
 	/**
 	 * Get the singleton instance.
-	 * 
+	 *
 	 * @return The instance
 	 */
 	public static XMLReader getInstance() {
 		return XMLReader.INSTANCE;
+	}
+
+	/**
+	 * Set a consumer that is called, as soon as an exception occurrs.
+	 *
+	 * @param throwable The consumer
+	 */
+	public static synchronized void setThrowableConsumer(Consumer<Throwable> throwable) {
+		XMLReader.throwableConsumer = throwable;
 	}
 
 	private Class<?> checkedLoading(String s) throws ClassNotFoundException {
@@ -60,6 +71,9 @@ public final class XMLReader {
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				Shared.LOGGER.exception(e);
+				if (XMLReader.throwableConsumer != null) {
+					XMLReader.throwableConsumer.accept(e);
+				}
 			}
 		}
 		return ret;
@@ -82,6 +96,9 @@ public final class XMLReader {
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				Shared.LOGGER.exception(e);
+				if (XMLReader.throwableConsumer != null) {
+					XMLReader.throwableConsumer.accept(e);
+				}
 			}
 		}
 		return ret;
@@ -89,7 +106,7 @@ public final class XMLReader {
 
 	/**
 	 * Read the info and instantiate all plugins and strategyproviders.
-	 * 
+	 *
 	 * @return The read context. On error, an empty context is returned.
 	 */
 	public GlobalContext readInfo() {
@@ -99,7 +116,7 @@ public final class XMLReader {
 	/**
 	 * Read the context and instantiate the {@link Plugin}s and
 	 * {@link StrategyProvider}s if {@code instantiate} is true.
-	 * 
+	 *
 	 * @param instantiate Whether the classes are instantiated.
 	 * @return The context that was read. On error, an empty context is returned.
 	 */
@@ -112,6 +129,9 @@ public final class XMLReader {
 			d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
+			if (XMLReader.throwableConsumer != null) {
+				XMLReader.throwableConsumer.accept(e);
+			}
 			return new GlobalContext(installedMaps, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>());
 		}
