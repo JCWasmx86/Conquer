@@ -177,18 +177,20 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var coinsLabel = new JLabel("Coins: " + this.game.getCoins().get(Shared.PLAYER_CLAN));
 		final var run = new JButton("Run forever");
 		run.addActionListener(a -> {
-			// TODO: Run in separate thread.
-			while (!this.game.onlyOneClanAlive()) {
-				this.game.executeActions();
-				this.repaint();
-				this.setTitle("Conquer: Round " + this.game.currentRound());
-				this.labels.values().forEach(b -> b.actionPerformed(null));
-				try {
-					Thread.sleep(50);
-				} catch (final InterruptedException ie) {
-					Shared.LOGGER.exception(ie);
+			run.setEnabled(false);
+			new Thread(() -> {
+				while (!this.game.onlyOneClanAlive()) {
+					this.game.executeActions();
+					this.setTitle("Conquer: Round " + this.game.currentRound());
+					this.labels.values().forEach(b -> b.actionPerformed(null));
+					try {
+						Thread.sleep(50);
+					} catch (final InterruptedException ie) {
+						Shared.LOGGER.exception(ie);
+					}
 				}
-			}
+				run.setEnabled(true);
+			}).start();
 		});
 		this.buttonPanel.add(coinsLabel);
 		this.buttonPanel.add(nextRound);
