@@ -469,13 +469,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.isPlayersTurn = true;
 	}
 
-	private void executeCPUPlay(final Integer j) {
-		this.throwIfNull(j, "j==null");
-		final var clan = j.byteValue();
-		if (StreamUtils.getCitiesAsStream(this.getCities(), clan).count() == 0) {
+	private void executeCPUPlay(final int clan) {
+		if (isDead(clan)) {
 			return;
 		}
-		this.clans.get(clan).getStrategy().applyStrategy(this.clans.get(clan), clan, this.cities, this);
+		this.clans.get(clan).getStrategy().applyStrategy(this.clans.get(clan), this.cities, this);
 		this.clans.get(clan).update(this.currentRound);
 	}
 

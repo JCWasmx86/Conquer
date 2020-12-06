@@ -59,6 +59,11 @@ public interface StrategyObject {
 	void moveSoldiers(City source, Stream<City> reachableCities, byte clanId, boolean managedByPlayer, City target,
 			long numberOfSoldiersToMoveIfManaged);
 
+	default void moveSoldiers(City source, Stream<City> reachableCities, Clan clan, boolean managedByPlayer,
+			City target, long numberOfSoldiersToMoveIfManaged) {
+		moveSoldiers(source, reachableCities, (byte) clan.getId(), managedByPlayer, target, numberOfSoldiersToMoveIfManaged);
+	}
+
 	Stream<City> reachableCities(City city);
 
 	void recruitSoldiers(double maxToPay, byte clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
@@ -98,5 +103,9 @@ public interface StrategyObject {
 
 	default boolean upgradeSoldiers(Clan clan) {
 		return upgradeSoldiers((byte) clan.getId());
+	}
+
+	default double getRelationship(Clan clan, City a) {
+		return getRelationship(clan.getId(), a.getClan());
 	}
 }

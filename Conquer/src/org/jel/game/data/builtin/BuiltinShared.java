@@ -24,12 +24,12 @@ public final class BuiltinShared {
 	private static final int MAX_ITERATIONS = 100;
 	private static final int COINS_TO_RETAIN = 20;
 
-	static void moderateAttack(final byte clan, final City source, final Graph<City> graph,
+	static void moderateAttack(final Clan clan, final City source, final Graph<City> graph,
 			final StrategyObject object) {
 		// Find all cities around the source of clans with a relationship < 75
 		final var citiesOfEnemies = StreamUtils
 				.getCitiesAroundCityNot(graph, source,
-						a -> object.getRelationship(clan, a.getClan()) < BuiltinShared.GOOD_RELATION)
+						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
 		if (!citiesOfEnemies.isEmpty()) {
 			// Get weakest city
@@ -44,27 +44,26 @@ public final class BuiltinShared {
 		}
 	}
 
-	static void moderatePlay(final byte clanId, final Graph<City> graph, final StrategyObject object, final Clan clan) {
-		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clanId).collect(Collectors.toList());
-		StreamUtils.getCitiesAsStream(graph, clanId).forEach(c -> {
+	static void moderatePlay(final Graph<City> graph, final StrategyObject object, final Clan clan) {
+		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).collect(Collectors.toList());
+		StreamUtils.getCitiesAsStream(graph, clan).forEach(c -> {
 			// If there are too many soldiers in a city, try to move them, else recruit
 			// some.
 			final var diff = c.getCoinDiff();
 			if ((diff < -BuiltinShared.COINS_TO_RETAIN) && (citiesOfClan.size() > 1)) {
-				object.moveSoldiers(c, object.reachableCities(c), clanId, false, null, 0);
+				object.moveSoldiers(c, object.reachableCities(c), clan, false, null, 0);
 			} else if (diff > BuiltinShared.COINS_TO_RETAIN) {
-				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, clanId, c, false, 0);
+				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, clan, c, false, 0);
 			}
 			// Do some expansion
-			BuiltinShared.moderateAttack(clanId, c, graph, object);
+			BuiltinShared.moderateAttack(clan, c, graph, object);
 		});
 		// Upgrade resources
-		BuiltinShared.moderateResourcesUpgrade(graph, object, clanId, clan);
+		BuiltinShared.moderateResourcesUpgrade(graph, object, clan);
 	}
 
-	static void moderateResourcesUpgrade(final Graph<City> graph, final StrategyObject object, final byte clanId,
-			final Clan clan) {
-		if (clanId == Shared.PLAYER_CLAN) {
+	static void moderateResourcesUpgrade(final Graph<City> graph, final StrategyObject object, final Clan clan) {
+		if (clan.getId() == Shared.PLAYER_CLAN) {
 			return;
 		}
 		final List<Double> resources = new ArrayList<>(clan.getResourceStats());
@@ -75,61 +74,58 @@ public final class BuiltinShared {
 		Collections.sort(resources);
 		if (resources.get(0) > 0) {
 			// Update defense, because there are too much resources produced.
-			BuiltinShared.tryUpdatingDefense(graph, object, clanId);
+			BuiltinShared.tryUpdatingDefense(graph, object, clan);
 		} else {
 			// Else update the resources
-			BuiltinShared.tryUpdatingResources(graph, object, clanId, map);
+			BuiltinShared.tryUpdatingResources(graph, object, clan, map);
 		}
 	}
 
-	static void offensiveAttack(final byte clanId, final Clan clan, final Graph<City> cityGraph,
-			final StrategyObject object) {
+	static void offensiveAttack(final Clan clan, final Graph<City> cityGraph, final StrategyObject object) {
 		// Predicate to filter for all own cities that have neighbours, that are not of
 		// clan i.
-		final Predicate<City> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clanId).count() > 0;
+		final Predicate<City> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clan).count() > 0;
 		StreamUtils
 				.getCitiesAsStream(cityGraph,
 						city -> StreamUtils.getCitiesAroundCity(cityGraph, city, b -> b.getClan() == clan.getId())
 								.count() > 0)
-				.forEach(enemy -> StreamUtils.getCitiesAroundCity(cityGraph, enemy, clanId).sorted((a, b) -> {
+				.forEach(enemy -> StreamUtils.getCitiesAroundCity(cityGraph, enemy, clan).sorted((a, b) -> {
 					final var cnt1 = StreamUtils.getCitiesAroundCity(cityGraph, a, pre).count();
 					final var cnt2 = StreamUtils.getCitiesAroundCity(cityGraph, b, pre).count();
 					if (cnt1 == cnt2) {
 						final var compared = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
 						if (compared == 0) {
-							return Double.compare(object.getRelationship(clanId, a.getClan()),
-									object.getRelationship(clanId, b.getClan()));
+							return Double.compare(object.getRelationship(clan, a), object.getRelationship(clan, b));
 						}
 						return compared;
 					}
 					return Long.compare(cnt1, cnt2);
 					// Attack them, starting with the weakest.
 				}).forEach(own -> {
-					final var cnt = object.maximumNumberToMove(clanId, cityGraph.getWeight(own, enemy),
+					final var cnt = object.maximumNumberToMove(clan, cityGraph.getWeight(own, enemy),
 							own.getNumberOfSoldiers());
 					if (own.getNumberOfSoldiers() < enemy.getDefense()) {
-						object.recruitSoldiers(clan.getCoins(), clanId, own, false, 0);
+						object.recruitSoldiers(clan.getCoins(), clan, own, false, 0);
 					}
 					if (!cityGraph.isConnected(own, enemy) || (own.getNumberOfSoldiers() < enemy.getDefense())
 							|| (cnt == 0)) {
 						return;
 					}
-					object.attack(own, enemy, clanId, true, cnt, false);
+					object.attack(own, enemy, clan, true, cnt, false);
 				}));
 	}
 
-	static void offensiveRecruiting(final byte clanId, final Graph<City> graph, final StrategyObject object,
-			final Clan clan) {
+	static void offensiveRecruiting(final Graph<City> graph, final StrategyObject object, final Clan clan) {
 		// Find all own cities that are on the border to another clan.
 		StreamUtils
-				.getCitiesAsStream(graph, clanId, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clanId).count() > 0)
+				.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
 				.sorted((a, b) -> {
 					// Sort them using the defense strength
 					final var defenseStrengthA = object.defenseStrengthOfCity(a);
 					final var defenseStrengthB = object.defenseStrengthOfCity(b);
 					return Double.compare(defenseStrengthA, defenseStrengthB);
 					// Make them stronger, starting with the weakest city
-				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clanId, a, false, 0));
+				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clan, a, false, 0));
 	}
 
 	static double sum(Clan clan) {
@@ -140,7 +136,7 @@ public final class BuiltinShared {
 		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
-	private static void tryUpdatingDefense(final Graph<City> graph, final StrategyObject object, final byte clan) {
+	private static void tryUpdatingDefense(final Graph<City> graph, final StrategyObject object, final Clan clan) {
 		// Sort all cities using the basedefense as key
 		final var sortedListOfCities = StreamUtils
 				.getCitiesAsStream(graph, clan, Comparator.comparing(City::getDefense)).collect(Collectors.toList());
@@ -174,7 +170,7 @@ public final class BuiltinShared {
 		});
 	}
 
-	static void tryUpdatingResources(final Graph<City> graph, final StrategyObject object, final byte clan,
+	static void tryUpdatingResources(final Graph<City> graph, final StrategyObject object, final Clan clan,
 			final Map<Integer, Double> map) {
 		// Try to upgrade all resources with negative production
 		map.entrySet().stream().filter(a -> a.getValue() < 0).forEach(a -> {

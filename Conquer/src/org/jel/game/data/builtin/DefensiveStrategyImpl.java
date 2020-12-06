@@ -28,7 +28,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final byte clanId, final Graph<City> cities, final StrategyObject obj) {
+	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var dt = clan.getData();
@@ -36,31 +36,31 @@ public final class DefensiveStrategyImpl implements Strategy {
 			final var ds = dsd.getStrategy();
 			if (ds == DefensiveStrategy.EXPAND) {
 				if (Math.random() > 0.5) {
-					this.tryAttacking(clanId, clan);
-					BuiltinShared.offensiveAttack(clanId, clan, cities, obj);
+					this.tryAttacking(clan);
+					BuiltinShared.offensiveAttack(clan, cities, obj);
 				} else {
-					BuiltinShared.offensiveAttack(clanId, clan, cities, obj);
-					this.tryAttacking(clanId, clan);
+					BuiltinShared.offensiveAttack(clan, cities, obj);
+					this.tryAttacking(clan);
 				}
 			} else if (ds == DefensiveStrategy.FORTIFYANDUPGRADE) {
 				if (Math.random() > 0.5) {
-					BuiltinShared.moderatePlay(clanId, cities, obj, clan);
+					BuiltinShared.moderatePlay(cities, obj, clan);
 				} else {
-					this.defensiveUpgrades(clanId);
-					this.defensiveCityUpgrades(clanId);
-					BuiltinShared.moderateResourcesUpgrade(cities, obj, clanId, clan);
+					this.defensiveUpgrades(clan);
+					this.defensiveCityUpgrades(clan);
+					BuiltinShared.moderateResourcesUpgrade(cities, obj, clan);
 				}
 			} else if (ds == DefensiveStrategy.RECRUIT) {
-				BuiltinShared.offensiveRecruiting(clanId, cities, obj, clan);
+				BuiltinShared.offensiveRecruiting(cities, obj, clan);
 			}
 		} else {
 			throw new InternalError();
 		}
 	}
 
-	private void defensiveCityUpgrades(final byte i) {
-		StreamUtils.getCitiesAsStream(this.graph, i, (a, b) -> {
-			final Predicate<City> predicate = c -> c.getClan() != i;
+	private void defensiveCityUpgrades(final Clan clan) {
+		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
+			final Predicate<City> predicate = c -> c.getClan() != clan.getId();
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.graph, a, predicate).count();
 			final var cnt2 = StreamUtils.getCitiesAroundCity(this.graph, b, predicate).count();
 			if ((cnt1 == cnt2) || ((cnt1 == 0) && (cnt2 == 0))) {
@@ -72,29 +72,29 @@ public final class DefensiveStrategyImpl implements Strategy {
 			var b = true;
 			var cnter = 0;
 			while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-				b = this.object.upgradeDefense(i, a);
+				b = this.object.upgradeDefense(clan, a);
 				cnter++;
 			}
 		});
 	}
 
-	private void defensiveUpgrades(final byte i) {
+	private void defensiveUpgrades(final Clan clan) {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeDefense(i);
+			b = this.object.upgradeDefense(clan);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeSoldiers(i);
+			b = this.object.upgradeSoldiers(clan);
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeOffense(i);
+			b = this.object.upgradeOffense(clan);
 			cnter++;
 		}
 	}
@@ -104,8 +104,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 		return new DefensiveStrategyData();
 	}
 
-	private void tryAttacking(final byte i, final Clan clan) {
-		StreamUtils.forEach(this.graph, i, ownCity -> StreamUtils
+	private void tryAttacking(final Clan clan) {
+		StreamUtils.forEach(this.graph, clan, ownCity -> StreamUtils
 				.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClan()).sorted().forEach(enemy -> {
 					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
 							* clan.getSoldiersStrength();
