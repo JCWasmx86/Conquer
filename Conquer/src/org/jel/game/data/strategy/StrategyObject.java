@@ -27,7 +27,8 @@ public interface StrategyObject {
 
 	default void attack(City source, City target, Clan sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer) {
-		this.attack(source, target, (byte) sourceOfClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged,reallyPlayer);
+		this.attack(source, target, (byte) sourceOfClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged,
+				reallyPlayer);
 	}
 
 	double defenseStrengthOfCity(City city);

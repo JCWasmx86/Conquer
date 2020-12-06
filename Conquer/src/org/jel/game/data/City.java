@@ -110,21 +110,21 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
+	 * Returns the clan of the city.
+	 *
+	 * @return The clan.
+	 */
+	public Clan getClan() {
+		return this.clan;
+	}
+
+	/**
 	 * Returns the clan id.
 	 *
 	 * @return The clan id
 	 */
 	public int getClanId() {
 		return this.clanId;
-	}
-
-	/**
-	 * Returns the clan of the city.
-	 * 
-	 * @return The clan.
-	 */
-	public Clan getClan() {
-		return this.clan;
 	}
 
 	/**
@@ -290,6 +290,15 @@ public final class City implements Comparable<City> {
 		result = (prime * result) + this.x;
 		result = (prime * result) + this.y;
 		return result;
+	}
+
+	/**
+	 * Returns whether this city is owned by the player.
+	 *
+	 * @return {@code true} if the player owns this city.
+	 */
+	public boolean isPlayerCity() {
+		return this.clan.getId() == Shared.PLAYER_CLAN;
 	}
 
 	/**
@@ -507,14 +516,5 @@ public final class City implements Comparable<City> {
 		return "City [image=" + this.image + ", clan=" + this.clanId + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
-	}
-
-	/**
-	 * Returns whether this city is owned by the player.
-	 * 
-	 * @return {@code true} if the player owns this city.
-	 */
-	public boolean isPlayerCity() {
-		return this.clan.getId() == Shared.PLAYER_CLAN;
 	}
 }
