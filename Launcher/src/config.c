@@ -10,10 +10,12 @@ Configuration buildConfiguration(cJSON *cjson);
 
 Configuration getConfiguration(void) {
 	char *base = getBaseDirectory();
+	//The file will be ~/.config/.conquer/config.json
 	char *jsonFile = calloc(strlen(base) + strlen("/config.json") + 1, 1);
 	assert(jsonFile);
 	sprintf(jsonFile, "%s%s", base, "/config.json");
-	FILE *fp = fopen("config.json", "r");
+	FILE *fp = fopen(jsonFile, "r");
+	//Just return an empty configuration. No critical error
 	if (fp == NULL) {
 		fprintf(stderr, "config.json wasn't found!\n");
 		fflush(stderr);
@@ -32,6 +34,7 @@ Configuration getConfiguration(void) {
 		exit(-1);
 	}
 	buf[size] = 0;
+	//Read the entire file into the buffer.
 	fread(buf, 1, size, fp);
 	cJSON *json = cJSON_Parse(buf);
 	if (!json) {
@@ -52,6 +55,7 @@ Configuration getConfiguration(void) {
 	fclose(fp);
 	free(jsonFile);
 	free(base);
+	//Make configuration from the json
 	return buildConfiguration(json);
 }
 Configuration emptyConfiguration(void) {
@@ -60,26 +64,29 @@ Configuration emptyConfiguration(void) {
 Configuration buildConfiguration(cJSON *cjson) {
 	Configuration ret = emptyConfiguration();
 	assert(ret);
+	//This paths will be appended to the classpath.
 	cJSON *classpath = cJSON_GetObjectItem(cjson, "classpath");
 	if (cJSON_IsArray(classpath)) {
 		ret->numClasspaths = cJSON_GetArraySize(classpath);
-		ret->classpaths = calloc(ret->numClasspaths, sizeof(char *));
+		ret->classpaths = calloc(ret->numClasspaths, sizeof(char*));
 		for (size_t i = 0; i < ret->numClasspaths; i++) {
 			cJSON *str = cJSON_GetArrayItem(classpath, i);
 			assert(cJSON_IsString(str));
 			ret->classpaths[i] = strdup(cJSON_GetStringValue(str));
 		}
 	}
+	//JVM Options
 	cJSON *jvmOptions = cJSON_GetObjectItem(cjson, "options");
 	if (cJSON_IsArray(jvmOptions)) {
 		ret->numOptions = cJSON_GetArraySize(jvmOptions);
-		ret->options = calloc(ret->numOptions, sizeof(char *));
+		ret->options = calloc(ret->numOptions, sizeof(char*));
 		for (size_t i = 0; i < ret->numOptions; i++) {
 			cJSON *str = cJSON_GetArrayItem(jvmOptions, i);
 			assert(cJSON_IsString(str));
 			ret->options[i] = strdup(cJSON_GetStringValue(str));
 		}
 	}
+	//Which JVM should be used.
 	cJSON *usedJVM = cJSON_GetObjectItem(cjson, "jvm");
 	if (usedJVM != NULL) {
 		ret->usedJVM = strdup(cJSON_GetStringValue(usedJVM));
