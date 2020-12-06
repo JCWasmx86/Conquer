@@ -12,11 +12,23 @@ import org.jel.game.utils.Graph;
 
 public interface StrategyObject {
 
-	void attack(City source, City target, byte sourceClan, boolean managedByPlayer,
-			long numberOfSoldiersToMoveIfManaged);
+	default void attack(City source, City target, byte sourceClan, boolean managedByPlayer,
+			long numberOfSoldiersToMoveIfManaged) {
+		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
+	}
+
+	default void attack(City source, City target, Clan sourceClan, boolean managedByPlayer,
+			long numberOfSoldiersToMoveIfManaged) {
+		this.attack(source, target, (byte) sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
+	}
 
 	void attack(City source, City target, byte sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
+
+	default void attack(City source, City target, Clan sourceOfClan, boolean managedByPlayer,
+			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer) {
+		this.attack(source, target, (byte) sourceOfClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged);
+	}
 
 	double defenseStrengthOfCity(City city);
 
@@ -40,6 +52,10 @@ public interface StrategyObject {
 
 	long maximumNumberToMove(byte clanId, double weight, long numberOfSoldiers);
 
+	default long maximumNumberToMove(Clan clan, double weight, long numberOfSoldiers) {
+		return maximumNumberToMove((byte) clan.getId(), weight, numberOfSoldiers);
+	}
+
 	void moveSoldiers(City source, Stream<City> reachableCities, byte clanId, boolean managedByPlayer, City target,
 			long numberOfSoldiersToMoveIfManaged);
 
@@ -47,15 +63,40 @@ public interface StrategyObject {
 
 	void recruitSoldiers(double maxToPay, byte clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
 
+	default void recruitSoldiers(double maxToPay, Clan clan, City city, boolean managedByPlayer,
+			double numberOfSoldiers) {
+		recruitSoldiers(maxToPay, (byte) clan.getId(), city, managedByPlayer, numberOfSoldiers);
+	}
+
 	boolean sendGift(Clan source, Clan destination, Gift gift);
 
 	boolean upgradeDefense(byte clan);
 
+	default boolean upgradeDefense(Clan clan) {
+		return upgradeDefense((byte) clan.getId());
+	}
+
 	boolean upgradeDefense(byte clan, City city);
+
+	default boolean upgradeDefense(Clan clan, City city) {
+		return upgradeDefense((byte) clan.getId(), city);
+	}
 
 	boolean upgradeOffense(byte clan);
 
+	default boolean upgradeOffense(Clan clan) {
+		return upgradeOffense((byte) clan.getId());
+	}
+
 	boolean upgradeResource(byte clan, Resource resc, City a);
 
+	default boolean upgradeResource(Clan clan, Resource resc, City city) {
+		return upgradeResource((byte) clan.getId(), resc, city);
+	}
+
 	boolean upgradeSoldiers(byte clan);
+
+	default boolean upgradeSoldiers(Clan clan) {
+		return upgradeSoldiers((byte) clan.getId());
+	}
 }
