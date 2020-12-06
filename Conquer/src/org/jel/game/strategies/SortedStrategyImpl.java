@@ -80,11 +80,8 @@ public final class SortedStrategyImpl implements Strategy {
 				final var second = pair.second();
 				final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
 				final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
-				if (second > (ownCitySoldiers * factor)) {
-					obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
-					if (second > (ownCitySoldiers * factor)) {
-						return;
-					}
+				if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
+					return;// We are too weak to attack.
 				}
 				long numberOfSoldiersUsed;
 				if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
@@ -124,6 +121,17 @@ public final class SortedStrategyImpl implements Strategy {
 					final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
 					return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
 				}).collect(Collectors.toList());
+	}
+
+	private boolean tryRecruiting(Clan clan, double factor, Double second, City ownCity, long ownCitySoldiers,
+			StrategyObject obj) {
+		if (second > (ownCitySoldiers * factor)) {
+			obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
+			if (second > (ownCitySoldiers * factor)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void upgradeCities(final Graph<City> cities, final Clan clan, final StrategyObject obj) {
