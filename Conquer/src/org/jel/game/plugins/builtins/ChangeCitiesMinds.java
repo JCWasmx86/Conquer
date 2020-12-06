@@ -15,6 +15,26 @@ public final class ChangeCitiesMinds implements Plugin {
 	private final Random random = new Random();
 	private Context context;
 
+	private void change(City c, Context ctx, int oldClan, int otherClan) {
+		var changedClan = false;
+		var soldiersToCivilians = 1D;
+		try {
+			soldiersToCivilians = (double) c.getNumberOfSoldiers() / (double) c.getNumberOfPeople();
+		} catch (final ArithmeticException ae) {
+			soldiersToCivilians = 1;
+			Shared.LOGGER.exception(ae);
+		}
+		if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {
+			c.setClan(ctx.getClan(otherClan));
+			changedClan = true;
+		} else {
+			changedClan = this.evalClanChange(soldiersToCivilians, c, (byte) otherClan);
+		}
+		if (changedClan) {
+			ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), ctx.getClan(c.getClanId())));
+		}
+	}
+
 	private boolean evalClanChange(final double soldiersToCivilians, final City c, final byte otherClan) {
 		if (this.random.nextInt(100) > 90) {
 			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
@@ -46,6 +66,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	public void handle(final Graph<City> cities, final Context ctx) {
 		this.context = ctx;
 		StreamUtils.forEach(cities, c -> {
+			// Only continue, if the loss of one city may not extinct one entire clan.
 			if (StreamUtils.getCitiesAsStream(cities, c.getClanId()).count() == 1) {
 				return;
 			}
@@ -66,23 +87,7 @@ public final class ChangeCitiesMinds implements Plugin {
 					|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
 			}
-			var changedClan = false;
-			var soldiersToCivilians = 1D;
-			try {
-				soldiersToCivilians = (double) c.getNumberOfSoldiers() / (double) c.getNumberOfPeople();
-			} catch (final ArithmeticException ae) {
-				soldiersToCivilians = 1;
-				Shared.LOGGER.exception(ae);
-			}
-			if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {
-				c.setClan(ctx.getClan(otherClan));
-				changedClan = true;
-			} else {
-				changedClan = this.evalClanChange(soldiersToCivilians, c, (byte) otherClan);
-			}
-			if (changedClan) {
-				ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), ctx.getClan(c.getClanId())));
-			}
+			this.change(c, ctx, oldClan, otherClan);
 		});
 	}
 }
