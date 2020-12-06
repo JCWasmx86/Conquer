@@ -205,9 +205,9 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
 		this.checkClan(clan);
-		if (reallyPlayer && (src.isPlayerCity())) {
+		if (reallyPlayer && (!src.isPlayerCity())) {
 			throw new IllegalArgumentException(
-					"reallyPlayer is true, but the source city is not clan 0: " + src.getClanId());
+					"reallyPlayer is true, but the source city is not clan Shared.PLAYER_CLAN: " + src.getClanId());
 		}
 		if (this.cantAttack(src, destination)) {
 			return;

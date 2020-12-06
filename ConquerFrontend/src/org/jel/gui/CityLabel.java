@@ -165,7 +165,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			this.timer.stop();
 			return;
 		}
-		if (this.marked && (this.origin != null) && (this.origin.isPlayerCity())) {
+		if (this.marked && (this.origin != null) && (!this.origin.isPlayerCity())) {
 			this.unmark();
 		}
 		g.drawImage(this.city.getImage(), 0, 0, null);
