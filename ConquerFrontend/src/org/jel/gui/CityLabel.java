@@ -196,14 +196,15 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private void proceed() {
 		final var game = this.city.getGame();
 		final var weight = game.getCities().getWeight(this.city, this.origin);
-		final var count = game.maximumNumberToMove((byte) 0, weight, this.origin.getNumberOfSoldiers());
+		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove((byte) 0, weight,
+				this.origin.getNumberOfSoldiers());
 		String prompt;
 		if (this.city.isPlayerCity()) {
 			prompt = "How many soldiers do you want to move from " + this.origin.getName() + " to "
-					+ this.city.getName() + "? (0 ->" + count + ")";
+					+ this.city.getName() + "? (0 ->" + maximumNumberOfSoldiersToMove + ")";
 		} else {
 			prompt = "How many soldiers should be used for the attack from  " + this.origin.getName() + " to "
-					+ this.city.getName() + "? (0 ->" + count + ")";
+					+ this.city.getName() + "? (0 ->" + maximumNumberOfSoldiersToMove + ")";
 		}
 		long numberOfSelectedSoldiers = -1;
 		while (numberOfSelectedSoldiers == -1) {
@@ -217,8 +218,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 				continue;// Invalid input? - Try again
 			}
 			// Too many/few soldiers? - Try again
-			if ((numberOfSelectedSoldiers <= -1) || (numberOfSelectedSoldiers > (game.maximumNumberToMove((byte) 0,
-					weight, this.origin.getNumberOfSoldiers())))) {
+			if ((numberOfSelectedSoldiers <= -1) || (numberOfSelectedSoldiers > maximumNumberOfSoldiersToMove)) {
 				numberOfSelectedSoldiers = -1;
 			}
 		}
