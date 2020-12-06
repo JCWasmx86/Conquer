@@ -121,8 +121,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(context.getStrategies(), "context.getStrategies()==null");
 		this.throwIfNull(context.getInstalledMaps(), "context.getInstalledMaps()==null");
 		this.data.setPlugins(context.getPlugins());
-		context.getStrategies().forEach(st -> {
-			final int idx = st.getId();
+		context.getStrategies().forEach(provider -> {
+			final int idx = provider.getId();
 			if (idx >= 127) {
 				Shared.LOGGER.error("idx >= 127");
 			} else if (idx < 0) {
@@ -130,8 +130,8 @@ public final class Game implements PluginInterface, StrategyObject {
 			} else if ((this.strategies[idx] != null)) {
 				Shared.LOGGER.error("Slot " + idx + " is already set!");
 			} else {
-				this.strategies[idx] = st;
-				Shared.logLevel1(st.getName() + " has index " + idx);
+				this.strategies[idx] = provider;
+				Shared.logLevel1(provider.getName() + " has index " + idx);
 			}
 		});
 	}
@@ -205,24 +205,24 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
 		this.checkClan(clan);
-		if (reallyPlayer && (src.getClan() != Shared.PLAYER_CLAN)) {
+		if (reallyPlayer && (src.isPlayerCity())) {
 			throw new IllegalArgumentException(
-					"reallyPlayer is true, but the source city is not clan 0: " + src.getClan());
+					"reallyPlayer is true, but the source city is not clan 0: " + src.getClanId());
 		}
 		if (this.cantAttack(src, destination)) {
 			return;
 		}
 		final var powerOfAttacker = this.calculatePowerOfAttacker(src, this.getClan(clan), destination, managed,
 				reallyPlayer, num);
-		if ((powerOfAttacker == 0) || ((src.getClan() != 0) && (powerOfAttacker == 1))) {
+		if ((powerOfAttacker == 0) || ((src.getClanId() != 0) && (powerOfAttacker == 1))) {
 			return;
 		}
 		final var diff = this.setup(clan, powerOfAttacker, src, destination);
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - powerOfAttacker);
 		this.data.getAttackHooks().forEach(a -> a.before(src, destination, powerOfAttacker));
-		var relationshipValue = this.getRelationship(src.getClan(), destination.getClan());
+		var relationshipValue = this.getRelationship(src.getClanId(), destination.getClanId());
 		double numberOfSurvivingPeople;
-		final var destinationClan = destination.getClan();
+		final var destinationClan = destination.getClanId();
 		long survivingSoldiers;
 		AttackResult result;
 		if (diff > 0) {// Attack was defeated
@@ -271,7 +271,7 @@ public final class Game implements PluginInterface, StrategyObject {
 			relationshipValue = 0;
 		}
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
-		this.getRelations().addDirectedEdge(src.getClan(), destinationClan, relationshipValue, relationshipValue);
+		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan, relationshipValue, relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 	}
 
@@ -288,7 +288,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private double calculatePowerOfDefender(final City city) {
-		final var clan = this.clans.get(city.getClan());
+		final var clan = this.clans.get(city.getClanId());
 		return city.getDefense() + (city.getNumberOfSoldiers() * city.getBonus() * clan.getSoldiersDefenseStrength()
 				* clan.getSoldiersStrength());
 	}
@@ -304,7 +304,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private boolean cantAttack(final City src, final City destination) {
-		return (src.getClan() == destination.getClan()) || (src == destination)
+		return (src.getClanId() == destination.getClanId()) || (src == destination)
 				|| (!this.cities.isConnected(src, destination));
 	}
 
@@ -337,7 +337,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	@Override
 	public double defenseStrengthOfCity(final City c) {
 		this.throwIfNull(c, "c==null");
-		final var clan = this.clans.get(c.getClan());
+		final var clan = this.clans.get(c.getClanId());
 		return c.getDefenseStrength(clan);
 	}
 
@@ -519,7 +519,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private Clan getClan(City city) {
-		return this.getClan(city.getClan());
+		return this.getClan(city.getClanId());
 	}
 
 	/**
@@ -640,11 +640,11 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.throwIfNull(reachableCities, "reachableCities==null");
 		return Stream.of(reachableCities.toArray(new City[0])).sorted((a, b) -> {
 			final var defense = this.defenseStrengthOfCity(a);
-			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
+			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClanId())
 					.collect(Collectors.toList());
 			final var attack = neighbours.stream().mapToDouble(City::getNumberOfSoldiers).sum();
 			final var defenseB = this.defenseStrengthOfCity(b);
-			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClan())
+			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClanId())
 					.collect(Collectors.toList());
 			final var attackB = neighboursB.stream().mapToDouble(City::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
@@ -720,7 +720,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private boolean isInFriendlyCountry(final City c) {
-		return this.cities.getConnected(c).stream().filter(a -> a.getClan() != c.getClan()).count() == 0;
+		return this.cities.getConnected(c).stream().filter(a -> a.getClanId() != c.getClanId()).count() == 0;
 	}
 
 	/**
@@ -774,7 +774,7 @@ public final class Game implements PluginInterface, StrategyObject {
 		List<City> list = null;
 		if (!managed) {
 			list = this.getWeakestCityInRatioToSurroundingEnemyCities(saved).stream()
-					.filter(a -> a.getClan() == src.getClan()).collect(Collectors.toList());
+					.filter(a -> a.getClanId() == src.getClanId()).collect(Collectors.toList());
 			if (list.isEmpty()) {
 				return;
 			}
@@ -818,7 +818,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	 * @return
 	 */
 	public boolean onlyOneClanAlive() {
-		return StreamUtils.getCitiesAsStream(this.cities).map(City::getClan).distinct().count() == 1;
+		return StreamUtils.getCitiesAsStream(this.cities).map(City::getClanId).distinct().count() == 1;
 	}
 
 	private void pay(final byte clan, final double subtract) {
@@ -846,7 +846,7 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	private void produceResources() {
 		StreamUtils.forEach(this.getCities(), city -> {
-			final var clan = this.clans.get(city.getClan());
+			final var clan = this.clans.get(city.getClanId());
 			final var resourcesOfClan = clan.getResources();
 			for (var i = 0; i < resourcesOfClan.size(); i++) {
 				final var productions = (city.getNumberOfPeople() * city.getProductions().get(i));
@@ -1041,7 +1041,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	}
 
 	private double setup(byte clan, long powerOfAttacker, City src, City destination) {
-		final var srcClan = this.clans.get(src.getClan());
+		final var srcClan = this.clans.get(src.getClanId());
 		this.payForMove(clan, powerOfAttacker, this.getCities().getWeight(src, destination));
 		var newPowerOfAttacker = powerOfAttacker * srcClan.getSoldiersStrength();
 		newPowerOfAttacker *= srcClan.getSoldiersOffenseStrength();
@@ -1192,8 +1192,8 @@ public final class Game implements PluginInterface, StrategyObject {
 
 	private void useResources() {
 		StreamUtils.forEach(this.cities, city -> {
-			final var resources2 = this.clans.get(city.getClan()).getResources();
-			final var stats = this.clans.get(city.getClan()).getResourceStats();
+			final var resources2 = this.clans.get(city.getClanId()).getResources();
+			final var stats = this.clans.get(city.getClanId()).getResourceStats();
 			for (var i = 0; i < Shared.getDataValues().length; i++) {
 				final var va = Shared.getDataValues()[i];
 				final var use = ((city.getNumberOfSoldiers() * va[1]) + (city.getNumberOfPeople() * va[0]));
@@ -1205,7 +1205,7 @@ public final class Game implements PluginInterface, StrategyObject {
 					resources2.set(i, 0.0);
 				}
 			}
-			this.data.getResourceHooks().forEach(a -> a.analyzeStats(city, stats, this.clans.get(city.getClan())));
+			this.data.getResourceHooks().forEach(a -> a.analyzeStats(city, stats, this.clans.get(city.getClanId())));
 		});
 	}
 

@@ -44,9 +44,9 @@ final class ResourceButton extends JPanel {
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 		this.upgradeThisResource.addActionListener(e -> {
 			if (resource != null) {
-				city.getGame().upgradeResource((byte) Shared.PLAYER_CLAN, resource, city);
+				city.getGame().upgradeResource(Shared.PLAYER_CLAN, resource, city);
 			} else {
-				city.getGame().upgradeDefense((byte) Shared.PLAYER_CLAN, city);
+				city.getGame().upgradeDefense(Shared.PLAYER_CLAN, city);
 			}
 			ResourceButton.this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 			cip.doUpdate();
@@ -58,9 +58,9 @@ final class ResourceButton extends JPanel {
 		this.add(this.maximumUpgrade);
 		this.maximumUpgrade.addActionListener(e -> {
 			if (resource != null) {
-				city.getGame().upgradeResourceFully((byte) Shared.PLAYER_CLAN, resource, city);
+				city.getGame().upgradeResourceFully(Shared.PLAYER_CLAN, resource, city);
 			} else {
-				city.getGame().upgradeDefenseFully((byte) Shared.PLAYER_CLAN, city);
+				city.getGame().upgradeDefenseFully(Shared.PLAYER_CLAN, city);
 			}
 			ResourceButton.this.maximumUpgrade.setText(this.getMaxUpgradeText());
 			cip.doUpdate();
@@ -116,7 +116,7 @@ final class ResourceButton extends JPanel {
 	}
 
 	private void updateLabel(int level) {
-		if (this.city.getClan() == Shared.PLAYER_CLAN) {
+		if (this.city.isPlayerCity()) {
 			if (level < ResourceButton.MAX_LEVEL) {
 				this.infoLabel.setText(this.getInfoLabelText());
 			} else {
@@ -138,10 +138,10 @@ final class ResourceButton extends JPanel {
 			}
 			currentLevel++;
 		}
-		if ((currentLevel != level) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
+		if ((currentLevel != level) && this.city.isPlayerCity()) {
 			this.maximumUpgrade.setEnabled(true);
 			this.maximumUpgrade.setText(this.getMaxUpgradeText());
-		} else if ((this.city.getClan() == Shared.PLAYER_CLAN) && (level == ResourceButton.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
 			this.maximumUpgrade.setEnabled(false);
 			this.maximumUpgrade.setText("Maximum value reached!");
 		} else {
@@ -153,10 +153,10 @@ final class ResourceButton extends JPanel {
 	private void updateUpgradeThisResource(int level) {
 		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(this.getIndex()) + 1);
 		final double currentCoins = this.city.getGame().getCoins().get(Shared.PLAYER_CLAN);
-		if ((costsForUpgrade < currentCoins) && (this.city.getClan() == Shared.PLAYER_CLAN)) {
+		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
-		} else if ((this.city.getClan() == Shared.PLAYER_CLAN) && (level == ResourceButton.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
 			this.upgradeThisResource.setEnabled(false);
 			this.upgradeThisResource.setText("Maximum value reached!");
 		} else {

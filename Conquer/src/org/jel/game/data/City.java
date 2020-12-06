@@ -12,7 +12,7 @@ public final class City implements Comparable<City> {
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
 	private double bonus = -1;
-	private byte clan = -1;
+	private byte clanId = -1;
 	private double defense = -1;
 	private final Game game;
 	private double growth;
@@ -27,6 +27,7 @@ public final class City implements Comparable<City> {
 	private int x = -1;
 	private int y = -1;
 	private double oldOne = 1;
+	private Clan clan;
 
 	/**
 	 * Create a new City.
@@ -113,7 +114,16 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The clan id
 	 */
-	public int getClan() {
+	public int getClanId() {
+		return this.clanId;
+	}
+
+	/**
+	 * Returns the clan of the city.
+	 * 
+	 * @return The clan.
+	 */
+	public Clan getClan() {
 		return this.clan;
 	}
 
@@ -149,7 +159,7 @@ public final class City implements Comparable<City> {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
-		if (clan.getId() != this.clan) {
+		if (clan.getId() != this.clanId) {
 			throw new IllegalArgumentException("Wrong clan passed!");
 		}
 		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()
@@ -327,16 +337,8 @@ public final class City implements Comparable<City> {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
-		this.clan = (byte) clan.getId();
-	}
-
-	/**
-	 * Internal method
-	 *
-	 * @param read
-	 */
-	void setClan(int read) {
-		this.clan = (byte) read;
+		this.clanId = (byte) clan.getId();
+		this.clan = clan;
 	}
 
 	/**
@@ -502,8 +504,17 @@ public final class City implements Comparable<City> {
 
 	@Override
 	public String toString() {
-		return "City [image=" + this.image + ", clan=" + this.clan + ", numberOfPeople=" + this.numberOfPeople
+		return "City [image=" + this.image + ", clan=" + this.clanId + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
+	}
+
+	/**
+	 * Returns whether this city is owned by the player.
+	 * 
+	 * @return {@code true} if the player owns this city.
+	 */
+	public boolean isPlayerCity() {
+		return this.clan.getId() == Shared.PLAYER_CLAN;
 	}
 }

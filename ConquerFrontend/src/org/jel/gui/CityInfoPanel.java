@@ -16,7 +16,6 @@ import javax.swing.text.DefaultCaret;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Resource;
-import org.jel.game.data.Shared;
 
 /**
  * This panel shows information about a selected city. At the top it is showing
@@ -64,17 +63,17 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String generateText() {
-		if (this.city.getClan() != Shared.PLAYER_CLAN) {
+		if (!this.city.isPlayerCity()) {
 			return "<html><body>No information available!</body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>Name: ").append(this.city.getName()).append("<br>Clan: ")
-				.append(this.city.getGame().getClanNames().get(this.city.getClan())).append("<br>Soldiers: ")
+				.append(this.city.getGame().getClanNames().get(this.city.getClanId())).append("<br>Soldiers: ")
 				.append(this.city.getNumberOfSoldiers()).append("<br>Civilians: ").append(this.city.getNumberOfPeople())
 				.append("<br>Defense: ").append(String.format("%.2f", this.city.getDefense()))
 				.append("<br>Defense bonus: ").append(String.format("%.2f", this.city.getBonus()))
 				.append("<br>Growth: ").append(String.format("%.2f", this.city.getGrowth()))
 				.append("<br>Recruitable Civilians: ").append(this.city.getGame()
-						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClan(), this.city.getNumberOfPeople()));
+						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
