@@ -9,11 +9,11 @@ import org.jel.game.init.ExtendedOutputStream;
 import org.jel.game.init.Initializer;
 import org.jel.game.init.Installer;
 
-public class Testsuite {
+public class Testsuite1 {
 	private int numErrors = 0;
 
 	public static void main(String[] args) {
-		final var suite = new Testsuite();
+		final var suite = new Testsuite1();
 		int numErrors = suite.start();
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
