@@ -11,7 +11,8 @@ import org.jel.game.init.Installer;
 
 /**
  * This will run as first test in github actions. It will just install the game
- * and then exit. Another testsuite will then run with all other tests.
+ * and then exit. Another testsuite will then run with all other tests. This has
+ * to be done in order to activate all plugins.
  */
 public class Testsuite1 {
 	public static void main(String[] args) {
