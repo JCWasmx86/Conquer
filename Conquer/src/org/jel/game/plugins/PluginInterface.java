@@ -64,7 +64,7 @@ public interface PluginInterface {
 	void addMusic(String fileName);
 
 	/**
-	 * Adds a callback tha is called when soldiers are recruited
+	 * Adds a callback that is called when soldiers are recruited
 	 *
 	 * @param rh The callback. May not be null
 	 */
