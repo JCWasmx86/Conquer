@@ -24,6 +24,12 @@ public final class ImageResource implements Icon {
 			url = ClassLoader.getSystemResource("images/" + string);
 		}
 		if (url == null) {
+			url = ClassLoader.getPlatformClassLoader().getResource(string);
+		}
+		if (url == null) {
+			url = ClassLoader.getPlatformClassLoader().getResource("images/" + string);
+		}
+		if (url == null) {
 			throw new IllegalArgumentException(new FileNotFoundException(string));
 		}
 		this.icon = new ImageIcon(url);
