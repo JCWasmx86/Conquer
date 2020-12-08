@@ -44,7 +44,10 @@ mkdir music
 cd ../Conquer
 shopt -s dotglob
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
+cp -rv data ../conquer-dist/backend
+cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
+cp -rv images ../conquer-dist/frontend
 javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator
@@ -72,7 +75,6 @@ jar -cvf ../tmp/ResourceAnalyzer.jar org/jel/game/plugins/builtins/*.class
 rm -rf org/jel/game/plugins/builtins/
 jar -cvf ../tmp/SortedStrategy.jar org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
-jar -cvf ../Conquer.jar *
 cd ../tmp
 cp -v ../../ScenarioGenerator/bin/*.data .
 cp -v ../../ScenarioGenerator/*.png .
@@ -103,6 +105,7 @@ mv -v *.xml .conquer
 mv -v *.png .conquer
 cd .conquer
 zip ../../conquer.zip -r *
+cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
 	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
@@ -111,13 +114,15 @@ for f in *.mscz; do
 		echo Skipping conversion of "$f"
 	fi
 done
-cd ../conquer-dist
+cd ../conquer-dist/backend
+jar -cvf ../Conquer.jar *
+cd ..
 mkdir -p frontend/music
 cd music
 cp  Credits.wav Defeated.wav Intro.wav MainScreen.wav Victory.wav ../frontend/music
 rm Credits.wav Defeated.wav Intro.wav MainScreen.wav Victory.wav
 cd ..
-cp conquer.zip frontend/music
+cp conquer.zip backend/data
 cd frontend
 jar -cvf ../Conquer_frontend.jar *
 cd ../../Launcher
