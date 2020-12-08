@@ -275,6 +275,10 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 	}
 
+	private boolean bad(double d) {
+		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
+	}
+
 	private long calculatePowerOfAttacker(final City src, final Clan clan, final City destination,
 			final boolean managed, final boolean reallyPlayer, final long numberOfSoldiers) {
 		if (!managed) {
@@ -472,122 +476,6 @@ public final class Game implements PluginInterface, StrategyObject {
 		diff /= 1000;// 10^-3 s
 		Shared.LOGGER.message("CPUPLAY: " + diff + "ms");
 		this.isPlayersTurn = true;
-	}
-
-	private void sanityCheckForBadClanValues() {
-		this.clans.forEach(clan -> {
-			if (clan == null) {
-				throw new InternalError("null value in clans");
-			}
-			if (bad(clan.getCoins())) {
-				throw new InternalError(clan.getName() + " has a bad number of coins: " + clan.getCoins());
-			}
-			if (clan.getId() < 0) {
-				throw new InternalError(clan.getName() + " has a bad id: " + clan.getId());
-			}
-			if (clan.getResources().size() != Resource.values().length) {
-				throw new InternalError(
-						clan.getName() + "has a bad size of the resources list: " + clan.getResources().size());
-			}
-			sanityCheckResources(clan);
-			if (clan.getResourceStats().size() != Resource.values().length) {
-				throw new InternalError(clan.getName() + "has a bad size of the resource stats list: "
-						+ clan.getResourceStats().size());
-			}
-			sanityCheckResourceStats(clan);
-		});
-	}
-
-	private void sanityCheckResourceStats(Clan clan) {
-		clan.getResourceStats().forEach(value -> {
-			if (value == null) {
-				throw new InternalError(clan.getName() + " has a null value in resource stats");
-			}
-			if (Double.isNaN(value) || Double.isInfinite(value)) {
-				throw new InternalError(clan.getName() + "has a bad value in resource stats: " + value);
-			}
-		});
-	}
-
-	private void sanityCheckResources(Clan clan) {
-		clan.getResources().forEach(value -> {
-			if (value == null) {
-				throw new InternalError(clan.getName() + " has a null value in resources");
-			}
-			if (bad(value)) {
-				throw new InternalError(clan.getName() + "has a bad value in resources: " + value);
-			}
-		});
-	}
-
-	private void sanityCheckForBadCityValues() {
-		StreamUtils.getCitiesAsStream(this.cities).forEach(city -> {
-			if (city == null) {
-				throw new InternalError("null value in city graph!");
-			}
-			if (bad(city.getBonus())) {
-				throw new InternalError(city.getName() + " has a bonus lower equals zero!");
-			}
-			if (city.getClan() == null) {
-				throw new InternalError(city.getName() + " has null clan!");
-			}
-			if (city.getClanId() < 0) {
-				throw new InternalError(city.getName() + " has clanId < 0");
-			}
-			if (bad(city.getDefense())) {
-				throw new InternalError(city.getName() + " has defense < 0 or is NaN or infinite!");
-			}
-			if (bad(city.getGrowth())) {
-				throw new InternalError(city.getName() + " has a negative growth");
-			}
-			if (city.getImage() == null) {
-				throw new InternalError(city.getName() + " has a null image");
-			}
-			if (city.getLevels().size() != Resource.values().length + 1) {
-				throw new InternalError(city.getName() + " has an invalid size of the levels");
-			}
-			sanityCheckOfLevels(city.getLevels(), city);
-			if (city.getNumberOfPeople() < 0) {
-				throw new InternalError(city.getName() + " has a negative population");
-			}
-			if (city.getNumberOfSoldiers() < 0) {
-				throw new InternalError(city.getName() + " has a negative number of soliders");
-			}
-			if (city.getX() < 0) {
-				throw new InternalError(city.getName() + "has bad X-Position");
-			}
-			if (city.getY() < 0) {
-				throw new InternalError(city.getName() + "has bad Y-Position");
-			}
-			if (city.getProductions().size() != Resource.values().length) {
-				throw new InternalError(city.getName() + " has an invalid size of the productions");
-			}
-			sanityCheckOfProductions(city.getProductions(), city);
-		});
-	}
-
-	private void sanityCheckOfProductions(List<Double> productions, City city) {
-		productions.forEach(a -> {
-			if (a == null) {
-				throw new InternalError(city.getName() + " has null value in productions");
-			} else if (bad(a)) {
-				throw new InternalError(city.getName() + " has a bad value in productions: " + a);
-			}
-		});
-	}
-
-	private void sanityCheckOfLevels(List<Integer> levels, City city) {
-		levels.forEach(a -> {
-			if (a == null) {
-				throw new InternalError(city.getName() + " has null value in levels");
-			} else if (a < 0 || a > 1000) {
-				throw new InternalError(city.getName() + " has a too small/too big value in levels: " + a);
-			}
-		});
-	}
-
-	private boolean bad(double d) {
-		return d < 0 || Double.isNaN(d) || Double.isInfinite(d);
 	}
 
 	private void executeCPUPlay(final int clan) {
@@ -1046,6 +934,76 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.directory = new File(new File(Shared.BASE_DIRECTORY, "saves"), name);
 	}
 
+	private void sanityCheckForBadCityValues() {
+		StreamUtils.getCitiesAsStream(this.cities).forEach(city -> {
+			if (city == null) {
+				throw new InternalError("null value in city graph!");
+			}
+			if (this.bad(city.getBonus())) {
+				throw new InternalError(city.getName() + " has a bonus lower equals zero!");
+			}
+			if (city.getClan() == null) {
+				throw new InternalError(city.getName() + " has null clan!");
+			}
+			if (city.getClanId() < 0) {
+				throw new InternalError(city.getName() + " has clanId < 0");
+			}
+			if (this.bad(city.getDefense())) {
+				throw new InternalError(city.getName() + " has defense < 0 or is NaN or infinite!");
+			}
+			if (this.bad(city.getGrowth())) {
+				throw new InternalError(city.getName() + " has a negative growth");
+			}
+			if (city.getImage() == null) {
+				throw new InternalError(city.getName() + " has a null image");
+			}
+			if (city.getLevels().size() != (Resource.values().length + 1)) {
+				throw new InternalError(city.getName() + " has an invalid size of the levels");
+			}
+			this.sanityCheckOfLevels(city.getLevels(), city);
+			if (city.getNumberOfPeople() < 0) {
+				throw new InternalError(city.getName() + " has a negative population");
+			}
+			if (city.getNumberOfSoldiers() < 0) {
+				throw new InternalError(city.getName() + " has a negative number of soliders");
+			}
+			if (city.getX() < 0) {
+				throw new InternalError(city.getName() + "has bad X-Position");
+			}
+			if (city.getY() < 0) {
+				throw new InternalError(city.getName() + "has bad Y-Position");
+			}
+			if (city.getProductions().size() != Resource.values().length) {
+				throw new InternalError(city.getName() + " has an invalid size of the productions");
+			}
+			this.sanityCheckOfProductions(city.getProductions(), city);
+		});
+	}
+
+	private void sanityCheckForBadClanValues() {
+		this.clans.forEach(clan -> {
+			if (clan == null) {
+				throw new InternalError("null value in clans");
+			}
+			if (this.bad(clan.getCoins())) {
+				throw new InternalError(clan.getName() + " has a bad number of coins: " + clan.getCoins());
+			}
+			if (clan.getId() < 0) {
+				throw new InternalError(clan.getName() + " has a bad id: " + clan.getId());
+			}
+			if (clan.getResources().size() != Resource.values().length) {
+				throw new InternalError(
+						clan.getName() + "has a bad size of the resources list: " + clan.getResources().size());
+			}
+			this.sanityCheckResources(clan);
+			if (clan.getResourceStats().size() != Resource.values().length) {
+				throw new InternalError(clan.getName() + "has a bad size of the resource stats list: "
+						+ clan.getResourceStats().size());
+			}
+			this.sanityCheckResourceStats(clan);
+		});
+	}
+
 	private void sanityCheckForGrowth() {
 		StreamUtils.forEach(this.cities, a -> a.getGrowth() > Game.GROWTH_LIMIT,
 				a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
@@ -1055,6 +1013,48 @@ public final class Game implements PluginInterface, StrategyObject {
 			}
 			if ((a.getNumberOfPeople() > Game.SOFT_POPULATION_LIMIT) && (a.getGrowth() > 1)) {
 				a.setGrowth(1.001);
+			}
+		});
+	}
+
+	private void sanityCheckOfLevels(List<Integer> levels, City city) {
+		levels.forEach(a -> {
+			if (a == null) {
+				throw new InternalError(city.getName() + " has null value in levels");
+			} else if ((a < 0) || (a > 1000)) {
+				throw new InternalError(city.getName() + " has a too small/too big value in levels: " + a);
+			}
+		});
+	}
+
+	private void sanityCheckOfProductions(List<Double> productions, City city) {
+		productions.forEach(a -> {
+			if (a == null) {
+				throw new InternalError(city.getName() + " has null value in productions");
+			} else if (this.bad(a)) {
+				throw new InternalError(city.getName() + " has a bad value in productions: " + a);
+			}
+		});
+	}
+
+	private void sanityCheckResources(Clan clan) {
+		clan.getResources().forEach(value -> {
+			if (value == null) {
+				throw new InternalError(clan.getName() + " has a null value in resources");
+			}
+			if (this.bad(value)) {
+				throw new InternalError(clan.getName() + "has a bad value in resources: " + value);
+			}
+		});
+	}
+
+	private void sanityCheckResourceStats(Clan clan) {
+		clan.getResourceStats().forEach(value -> {
+			if (value == null) {
+				throw new InternalError(clan.getName() + " has a null value in resource stats");
+			}
+			if (Double.isNaN(value) || Double.isInfinite(value)) {
+				throw new InternalError(clan.getName() + "has a bad value in resource stats: " + value);
 			}
 		});
 	}
