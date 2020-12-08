@@ -4,9 +4,10 @@ import java.io.File;
 
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
+import org.jel.game.data.Reader;
 import org.jel.game.data.XMLReader;
 
-public class Testsuite2 {
+public final class Testsuite2 {
 	private int numErrors = 0;
 
 	public static void main(String[] args) {
@@ -24,9 +25,19 @@ public class Testsuite2 {
 	}
 
 	private void buildGames(GlobalContext context) {
+		if (context.getInstalledMaps().isEmpty()) {
+			error("No scenarios found!");
+		}
+		injectPlugin(context);
 		for (var scenario : context.getInstalledMaps()) {
 			buildGame(scenario, context);
 		}
+	}
+
+	private void injectPlugin(GlobalContext context) {
+		var maliciousPlugin = new MaliciousPlugin();
+		context.getPlugins().add(maliciousPlugin);
+		context.getPluginNames().add(maliciousPlugin.getClass().getCanonicalName());
 	}
 
 	private void buildGame(InstalledScenario scenario, GlobalContext context) {
@@ -43,6 +54,23 @@ public class Testsuite2 {
 		if (!thumbnail.exists()) {
 			error(thumbnail + " doesn\'t exist!");
 			return;
+		}
+		if (scenario.name() == null) {
+			error("scenario.name()==null");
+			return;
+		}
+		final var reader = new Reader(scenario.file());
+		final var game = reader.buildGame();
+		if (game == null) {
+			error("game==null");
+			return;
+		} else {
+			success("" + scenario.name() + " is correct!");
+		}
+		game.addContext(context);
+		game.init();
+		while(!game.onlyOneClanAlive()) {
+			game.executeActions();
 		}
 	}
 

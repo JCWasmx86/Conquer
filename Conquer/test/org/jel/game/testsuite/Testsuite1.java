@@ -14,7 +14,7 @@ import org.jel.game.init.Installer;
  * and then exit. Another testsuite will then run with all other tests. This has
  * to be done in order to activate all plugins.
  */
-public class Testsuite1 {
+public final class Testsuite1 {
 	public static void main(String[] args) {
 		final var suite = new Testsuite1();
 		final var numErrors = suite.start();

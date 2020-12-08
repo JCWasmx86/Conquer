@@ -18,9 +18,12 @@ public final class EventList extends ArrayList<Message> {
 	}
 
 	@Override
-	public boolean add(Message e) {
-		this.listeners.forEach(a -> a.added(e));
-		return super.add(e);
+	public boolean add(Message message) {
+		if (message == null) {
+			throw new IllegalArgumentException("message==null");
+		}
+		this.listeners.forEach(a -> a.added(message));
+		return super.add(message);
 	}
 
 	void addListener(MessageListener ml) {

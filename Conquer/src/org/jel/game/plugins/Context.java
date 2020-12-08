@@ -1,5 +1,6 @@
 package org.jel.game.plugins;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.jel.game.data.Clan;
@@ -26,7 +27,7 @@ public final class Context {
 	/**
 	 * Add an event to the eventlist notifying all handlers
 	 *
-	 * @param message The message to add
+	 * @param message The message to add. May not be null.
 	 */
 	public void appendToEventList(Message message) {
 		this.events.add(message);
@@ -43,6 +44,6 @@ public final class Context {
 	}
 
 	public List<String> getClanNames() {
-		return this.clanNames;
+		return Collections.unmodifiableList(this.clanNames);
 	}
 }
