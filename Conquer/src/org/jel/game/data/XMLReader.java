@@ -138,25 +138,27 @@ public final class XMLReader {
 		final var childs = d.getChildNodes();
 		Node infoNode = null;
 		for (var i = 0; i < childs.getLength(); i++) {
-			if (childs.item(i).getNodeName().equals("info")) {
-				infoNode = childs.item(i);
+			final var child = childs.item(i);
+			if (child.getNodeName().equals("info")) {
+				infoNode = child;
 				break;
 			}
 		}
 		final var topNodes = infoNode.getChildNodes();
 		for (var i = 0; i < topNodes.getLength(); i++) {
 			final var node = topNodes.item(i);
-			if ((node == null) || node.getNodeName().equals("#text") || node.getNodeName().equals("#comment")) {
+			final var nodeName = node == null ? null : node.getNodeName();
+			if ((node == null) || nodeName.equals("#text") || nodeName.equals("#comment")) {
 				continue;
 			}
-			if (node.getNodeName().equals("scenarios")) {
+			if (nodeName.equals("scenarios")) {
 				this.readScenarios(node, installedMaps);
-			} else if (node.getNodeName().equals("plugins")) {
+			} else if (nodeName.equals("plugins")) {
 				this.readPlugins(node, pluginNames);
-			} else if (node.getNodeName().equals("strategies")) {
+			} else if (nodeName.equals("strategies")) {
 				this.readStrategies(node, strategyNames);
 			} else {
-				Shared.LOGGER.error("Unknown attribute: " + node.getNodeName());
+				Shared.LOGGER.error("Unknown attribute: " + nodeName);
 			}
 		}
 		final List<Plugin> plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
@@ -173,7 +175,17 @@ public final class XMLReader {
 					|| pluginInformation.getNodeName().equals("#comment")) {
 				continue;
 			}
-			final var className = pluginInformation.getAttributes().getNamedItem("className").getNodeValue();
+			final var attributes = pluginInformation.getAttributes();
+			if (attributes == null) {
+				Shared.LOGGER.error("readPlugins - attributes==null");
+				continue;
+			}
+			final var classNameNode = attributes.getNamedItem("className");
+			if ((classNameNode == null) || (classNameNode.getNodeValue() == null)) {
+				Shared.LOGGER.error("readPlugins - classNameNode==null");
+				continue;
+			}
+			final var className = classNameNode.getNodeValue();
 			pluginNames.add(className);
 		}
 	}
@@ -187,9 +199,28 @@ public final class XMLReader {
 				continue;
 			}
 			final var attributes = scenarioInformation.getAttributes();
-			installedMaps.add(new InstalledScenario(attributes.getNamedItem("name").getNodeValue(),
-					Shared.BASE_DIRECTORY + "/" + attributes.getNamedItem("file").getNodeValue(),
-					Shared.BASE_DIRECTORY + "/" + attributes.getNamedItem("thumbnail").getNodeValue()));
+			if (attributes == null) {
+				Shared.LOGGER.error("readScenarios - attributes==null");
+				continue;
+			}
+			final var name = attributes.getNamedItem("name");
+			if ((name == null) || (name.getNodeValue() == null)) {
+				Shared.LOGGER.error("readScenarios - name==null");
+				continue;
+			}
+			final var file = attributes.getNamedItem("file");
+			if ((file == null) || (file.getNodeValue() == null)) {
+				Shared.LOGGER.error("readScenarios - file==null");
+				continue;
+			}
+			final var thumbnail = attributes.getNamedItem("thumbnail");
+			if ((thumbnail == null) || (thumbnail.getNodeValue() == null)) {
+				Shared.LOGGER.error("readScenarios - thumbnail==null");
+				continue;
+			}
+			installedMaps
+					.add(new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
+							Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
 		}
 	}
 
@@ -201,7 +232,17 @@ public final class XMLReader {
 					|| strategyInformation.getNodeName().equals("#comment")) {
 				continue;
 			}
-			final var className = strategyInformation.getAttributes().getNamedItem("className").getNodeValue();
+			final var attributes = strategyInformation.getAttributes();
+			if (attributes == null) {
+				Shared.LOGGER.error("readStrategies - attributes==null");
+				continue;
+			}
+			final var classNameNode = attributes.getNamedItem("className");
+			if ((classNameNode == null) || (classNameNode.getNodeValue() == null)) {
+				Shared.LOGGER.error("readStrategies - classNameNode==null");
+				continue;
+			}
+			final var className = classNameNode.getNodeValue();
 			strategyNames.add(className);
 		}
 	}
