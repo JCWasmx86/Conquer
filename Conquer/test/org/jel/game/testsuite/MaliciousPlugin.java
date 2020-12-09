@@ -140,14 +140,14 @@ public class MaliciousPlugin implements Plugin {
 		try {
 			ctx.getClan(ctx.getClanNames().size());
 			hasThrown = false;
-		} catch (IllegalArgumentException iae) {
+		} catch (IndexOutOfBoundsException ioobe) {
 		}
 		checkThrown(hasThrown, "Was able to access out of bounds!");
 		hasThrown = true;
 		try {
 			ctx.getClanNames().add("");
 			hasThrown = false;
-		} catch (IllegalArgumentException iae) {
+		} catch (UnsupportedOperationException iae) {
 		}
 		checkThrown(hasThrown, "Was able to add element to list");
 	}
