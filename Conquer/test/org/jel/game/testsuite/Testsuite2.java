@@ -8,141 +8,142 @@ import org.jel.game.data.Reader;
 import org.jel.game.data.XMLReader;
 
 public final class Testsuite2 {
-	private int numErrors = 0;
-
 	public static void main(String[] args) {
 		final var suite = new Testsuite2();
 		final var numErrors = suite.start();
-		System.out.println(numErrors+ " errors");
+		System.out.println(numErrors + " errors");
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
 
-	private int start() {
-		XMLReader.setThrowableConsumer(this::throwable);
-		final var context = XMLReader.getInstance().readInfo(true);
-		checkContext(context);
-		buildGames(context);
-		return numErrors;
-	}
-
-	private void buildGames(GlobalContext context) {
-		if (context.getInstalledMaps().isEmpty()) {
-			error("No scenarios found!");
-		}
-		injectPlugin(context);
-		for (var scenario : context.getInstalledMaps()) {
-			buildGame(scenario, context);
-		}
-	}
-
-	private void injectPlugin(GlobalContext context) {
-		var maliciousPlugin = new MaliciousPlugin();
-		context.getPlugins().add(maliciousPlugin);
-		context.getPluginNames().add(maliciousPlugin.getClass().getCanonicalName());
-	}
+	private int numErrors = 0;
 
 	private void buildGame(InstalledScenario scenario, GlobalContext context) {
 		if (scenario == null) {
-			error("scenario==null");
+			this.error("scenario==null");
 			return;
 		}
-		var file = new File(scenario.file());
+		final var file = new File(scenario.file());
 		if (!file.exists()) {
-			error(file + " doesn\'t exist!");
+			this.error(file + " doesn\'t exist!");
 			return;
 		}
-		var thumbnail = new File(scenario.thumbnail());
+		final var thumbnail = new File(scenario.thumbnail());
 		if (!thumbnail.exists()) {
-			error(thumbnail + " doesn\'t exist!");
+			this.error(thumbnail + " doesn\'t exist!");
 			return;
 		}
 		if (scenario.name() == null) {
-			error("scenario.name()==null");
+			this.error("scenario.name()==null");
 			return;
 		}
 		final var reader = new Reader(scenario.file());
 		final var game = reader.buildGame();
 		if (game == null) {
-			error("game==null");
+			this.error("game==null");
 			return;
 		} else {
-			success("" + scenario.name() + " is correct!");
+			this.success("" + scenario.name() + " is correct!");
 		}
 		game.addContext(context);
 		game.setErrorHandler(this::throwable);
 		game.init();
 		while (!game.onlyOneClanAlive()) {
 			game.executeActions();
-			if (game.currentRound() == 10000)
+			if (game.currentRound() == 10000) {
 				break;
+			}
+		}
+	}
+
+	private void buildGames(GlobalContext context) {
+		if (context.getInstalledMaps().isEmpty()) {
+			this.error("No scenarios found!");
+		}
+		this.injectPlugin(context);
+		for (final var scenario : context.getInstalledMaps()) {
+			this.buildGame(scenario, context);
 		}
 	}
 
 	private void checkContext(final GlobalContext context) {
 		if (context == null) {
-			error("context==null");
+			this.error("context==null");
 			return;
 		}
 		if (context.getPluginNames().size() != context.getPlugins().size()) {
-			error("context.getPluginNames().size()!=context.getPlugins().size()");
+			this.error("context.getPluginNames().size()!=context.getPlugins().size()");
 			return;
 		} else {
-			success("context.getPluginNames().size()==context.getPlugins().size()");
+			this.success("context.getPluginNames().size()==context.getPlugins().size()");
 		}
 		if (context.getStrategyNames().size() != context.getStrategies().size()) {
-			error("context.getStrategyNames().size()!=context.getStrategies().size()");
+			this.error("context.getStrategyNames().size()!=context.getStrategies().size()");
 			return;
 		} else {
-			success("context.getStrategyNames().size()==context.getStrategies().size()");
+			this.success("context.getStrategyNames().size()==context.getStrategies().size()");
 		}
 		for (var i = 0; i < context.getPlugins().size(); i++) {
-			var plugin = context.getPlugins().get(i);
-			var name = context.getPluginNames().get(i);
+			final var plugin = context.getPlugins().get(i);
+			final var name = context.getPluginNames().get(i);
 			if (plugin == null) {
-				error("plugin==null");
+				this.error("plugin==null");
 				continue;
 			}
 			if (name == null) {
-				error("name==null");
+				this.error("name==null");
 				continue;
 			}
 			if (!plugin.getClass().getCanonicalName().equals(name)) {
-				error("plugin.getClass().getCanonicalName()!=name");
+				this.error("plugin.getClass().getCanonicalName()!=name");
 			} else {
-				success("plugin.getClass().getCanonicalName()==name");
+				this.success("plugin.getClass().getCanonicalName()==name");
 			}
 		}
 		for (var i = 0; i < context.getStrategies().size(); i++) {
-			var strategy = context.getStrategies().get(i);
-			var name = context.getStrategyNames().get(i);
+			final var strategy = context.getStrategies().get(i);
+			final var name = context.getStrategyNames().get(i);
 			if (strategy == null) {
-				error("strategy==null");
+				this.error("strategy==null");
 				continue;
 			}
 			if (name == null) {
-				error("name==null");
+				this.error("name==null");
 				continue;
 			}
 			if (!strategy.getClass().getCanonicalName().equals(name)) {
-				error("strategy.getClass().getCanonicalName()!=name");
+				this.error("strategy.getClass().getCanonicalName()!=name");
 			} else {
-				success("strategy.getClass().getCanonicalName()==name");
+				this.success("strategy.getClass().getCanonicalName()==name");
 			}
 		}
 	}
 
 	private void error(String message) {
 		System.err.println("[ERROR] " + message);
-		numErrors++;
+		this.numErrors++;
+	}
+
+	private void injectPlugin(GlobalContext context) {
+		final var maliciousPlugin = new MaliciousPlugin();
+		context.getPlugins().add(maliciousPlugin);
+		context.getPluginNames().add(maliciousPlugin.getClass().getCanonicalName());
+	}
+
+	private int start() {
+		XMLReader.setThrowableConsumer(this::throwable);
+		final var context = XMLReader.getInstance().readInfo(true);
+		this.checkContext(context);
+		this.buildGames(context);
+		return this.numErrors;
+	}
+
+	private void success(String message) {
+		System.out.println("[SUCCESS] " + message);
 	}
 
 	private void throwable(Throwable t) {
 		System.err.println("Unexpected throwable: ");
 		t.printStackTrace();
-		numErrors++;
-	}
-
-	private void success(String message) {
-		System.out.println("[SUCCESS] " + message);
+		this.numErrors++;
 	}
 }

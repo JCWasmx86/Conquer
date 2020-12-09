@@ -96,10 +96,6 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.strategies[3] = new RandomStrategyProvider();
 	}
 
-	public void setErrorHandler(final Consumer<Throwable> handler) {
-		this.throwableConsumer = handler;
-	}
-
 	@Override
 	public void addAttackHook(final AttackHook ah) {
 		this.throwIfNull(ah);
@@ -1129,6 +1125,10 @@ public final class Game implements PluginInterface, StrategyObject {
 	private void setCoins(final byte clan, final double v) {
 		this.checkClan(clan);
 		this.clans.get(clan).setCoins(v);
+	}
+
+	public void setErrorHandler(final Consumer<Throwable> handler) {
+		this.throwableConsumer = handler;
 	}
 
 	public void setGraph(final Graph<City> g) {
