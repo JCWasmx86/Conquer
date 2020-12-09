@@ -18,7 +18,7 @@ public final class Testsuite1 {
 	public static void main(String[] args) {
 		final var suite = new Testsuite1();
 		final var numErrors = suite.start();
-		System.out.println(numErrors+ " errors");
+		System.out.println(numErrors + " errors");
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
 
