@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -42,7 +43,7 @@ import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
 
 /**
- * One of the most important classes as it combines all together.
+ * One of the most important classes as it combines everything.
  */
 public final class Game implements PluginInterface, StrategyObject {
 	private static final int MAX_LEVEL = 1000;
@@ -77,6 +78,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	private PlayerGiftCallback playerGiftCallback;
 	private boolean resumed;
 	private File directory;
+	private Consumer<Throwable> throwableConsumer;
 
 	Game() {
 		this.data.setRecruitHooks(new ArrayList<>());
@@ -92,6 +94,10 @@ public final class Game implements PluginInterface, StrategyObject {
 		this.strategies[1] = new ModerateStrategyProvider();
 		this.strategies[2] = new OffensiveStrategyProvider();
 		this.strategies[3] = new RandomStrategyProvider();
+	}
+
+	public void setErrorHandler(final Consumer<Throwable> handler) {
+		this.throwableConsumer = handler;
 	}
 
 	@Override
@@ -464,6 +470,9 @@ public final class Game implements PluginInterface, StrategyObject {
 					.forEach(a -> a.handle(this.cities, new Context(this.events, this.getClanNames(), this.clans)));
 		} catch (final Throwable throwable) {// The plugin could throw everything, never trust unknown code.
 			Shared.LOGGER.exception(throwable);
+			if (this.throwableConsumer != null) {
+				this.throwableConsumer.accept(throwable);
+			}
 		}
 		this.sanityCheckForGrowth();
 		this.sanityCheckForBadCityValues();
@@ -500,6 +509,9 @@ public final class Game implements PluginInterface, StrategyObject {
 				Shared.deleteDirectory(this.directory);
 			} catch (final IOException e) {// We are done, we can simply ignore it, but still log it!
 				Shared.LOGGER.exception(e);
+				if (this.throwableConsumer != null) {
+					this.throwableConsumer.accept(e);
+				}
 			}
 		}
 	}

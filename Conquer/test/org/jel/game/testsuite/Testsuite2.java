@@ -13,6 +13,7 @@ public final class Testsuite2 {
 	public static void main(String[] args) {
 		final var suite = new Testsuite2();
 		final var numErrors = suite.start();
+		System.out.println(numErrors+ " errors");
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
 
@@ -68,9 +69,12 @@ public final class Testsuite2 {
 			success("" + scenario.name() + " is correct!");
 		}
 		game.addContext(context);
+		game.setErrorHandler(this::throwable);
 		game.init();
-		while(!game.onlyOneClanAlive()) {
+		while (!game.onlyOneClanAlive()) {
 			game.executeActions();
+			if (game.currentRound() == 10000)
+				break;
 		}
 	}
 
