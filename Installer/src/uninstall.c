@@ -31,7 +31,7 @@ void deleteFile(const char *fileName) {
 	char *name = getBaseDirectory();
 	strcat(name, fileName);
 	// Try to remove the corresponding file.
-	if (!remove(fileName)) {
+	if (!remove(name)) {
 		// If it fails, register the file for deletion after reboot.
 		if (!MoveFileExA(name, NULL, MOVEFILE_DELAY_UNTIL_REBOOT)) {
 			fprintf(stderr, "MoveFileExA failed!\n");
