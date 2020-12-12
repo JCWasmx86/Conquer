@@ -65,10 +65,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					jl = new JLabel(value.name());
 					jl.setFont(jl.getFont().deriveFont(30.0f));
 					try {
-						jl.setToolTipText(String
-								.format(Messages.getString("LevelSelectFrame.imageNotFound"), //$NON-NLS-1$
-										new File(value.thumbnail()).toURI().toURL())
-								.replace("file:/", "file:///")); //$NON-NLS-1$ //$NON-NLS-2$
+						jl.setToolTipText(String.format(Messages.getString("LevelSelectFrame.imageNotFound"), //$NON-NLS-1$
+								new File(value.thumbnail()).toURI().toURL()).replace("file:/", "file:///")); //$NON-NLS-1$ //$NON-NLS-2$
 					} catch (final MalformedURLException e) {
 						Shared.LOGGER.exception(e);
 					}

@@ -6,16 +6,16 @@ import java.util.ResourceBundle;
 final class Messages {
 	private static final String BUNDLE_NAME = "org.jel.gui.messages"; //$NON-NLS-1$
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
-
-	private Messages() {
-	}
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(Messages.BUNDLE_NAME);
 
 	public static String getString(String key) {
 		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+			return Messages.RESOURCE_BUNDLE.getString(key);
+		} catch (final MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+
+	private Messages() {
 	}
 }
