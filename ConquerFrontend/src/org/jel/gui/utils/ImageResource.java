@@ -8,7 +8,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * Reprents any image.
+ * Represents any image.
  */
 public final class ImageResource implements Icon {
 	private final Icon icon;

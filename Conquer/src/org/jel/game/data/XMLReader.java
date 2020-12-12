@@ -121,9 +121,6 @@ public final class XMLReader {
 	 * @return The context that was read. On error, an empty context is returned.
 	 */
 	public GlobalContext readInfo(boolean instantiate) {
-		final List<InstalledScenario> installedMaps = new ArrayList<>();
-		final List<String> pluginNames = new ArrayList<>();
-		final List<String> strategyNames = new ArrayList<>();
 		Document d;
 		try {
 			d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
@@ -132,7 +129,7 @@ public final class XMLReader {
 			if (XMLReader.throwableConsumer != null) {
 				XMLReader.throwableConsumer.accept(e);
 			}
-			return new GlobalContext(installedMaps, new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>());
 		}
 		final var childs = d.getChildNodes();
@@ -144,6 +141,9 @@ public final class XMLReader {
 				break;
 			}
 		}
+		final List<InstalledScenario> installedMaps = new ArrayList<>();
+		final List<String> pluginNames = new ArrayList<>();
+		final List<String> strategyNames = new ArrayList<>();
 		final var topNodes = infoNode.getChildNodes();
 		for (var i = 0; i < topNodes.getLength(); i++) {
 			final var node = topNodes.item(i);
