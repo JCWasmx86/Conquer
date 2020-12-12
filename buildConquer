@@ -1,5 +1,5 @@
 #! /usr/bin/bash
-. $JAVA_HOME/release
+. "${JAVA_HOME}"/release
 major=$(echo $JAVA_VERSION | cut -d. -f1)
 if [ "$major" == "15" ]; then
 	echo Found suitable java installation
@@ -7,13 +7,7 @@ else
 	echo Didn\'t find java, version 15
 	exit 1
 fi
-if ! command -v musescore3 &> /dev/null; then
-	echo Didn\'t find musescore3
-	exit 1
-else
-	echo Found musescore
-fi
-if [ `gcc -dumpversion` != "10" ]; then
+if [[ `gcc -dumpversion` =~ "10.*" ]]; then
 	echo Didn\'t find gcc-10
 	exit 1
 else
@@ -36,6 +30,13 @@ case "${unameOut}" in
 		export IS_WIN="IS_WIN"
 	;;
 esac
+#Check here, as we may update the path to include Musescore
+if ! command -v musescore3 &> /dev/null; then
+	echo Didn\'t find musescore3
+	exit 1
+else
+	echo Found musescore
+fi
 mkdir conquer-dist
 cd conquer-dist
 mkdir backend
@@ -43,6 +44,7 @@ mkdir frontend
 mkdir music
 cd ../Conquer
 shopt -s dotglob
+mkdir data
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
 cp -rv data ../conquer-dist/backend
 cp -rv images ../conquer-dist/backend
@@ -110,7 +112,7 @@ cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
 	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
-		musescore3 -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"|| exit 1
+		musescore3 -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"
 	else
 		echo Skipping conversion of "$f"
 	fi
