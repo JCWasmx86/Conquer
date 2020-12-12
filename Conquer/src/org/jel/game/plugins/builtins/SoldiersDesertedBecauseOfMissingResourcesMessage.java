@@ -5,8 +5,8 @@ import org.jel.game.data.Clan;
 import org.jel.game.data.Shared;
 import org.jel.game.messages.Message;
 
-public record SoldiersDesertedBecauseOfMissingResourcesMessage(final long numberOfSoldiersDeserted, final City city,
-		final Clan clan) implements Message {
+public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSoldiersDeserted, City city, Clan clan)
+		implements Message {
 	@Override
 	public boolean isBadForPlayer() {
 		return this.clan.getId() == Shared.PLAYER_CLAN;

@@ -161,8 +161,8 @@ public final class XMLReader {
 				Shared.LOGGER.error("Unknown attribute: " + nodeName);
 			}
 		}
-		final var plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
-		final var strategies = instantiate ? this.loadStrategies(strategyNames) : new ArrayList<>();
+		final List<Plugin> plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
+		final List<StrategyProvider> strategies = instantiate ? this.loadStrategies(strategyNames) : new ArrayList<>();
 		return new GlobalContext(this.distinct(installedMaps), this.distinct(plugins), this.distinct(strategies),
 				this.distinct(pluginNames), this.distinct(strategyNames));
 	}
