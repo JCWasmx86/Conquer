@@ -10,35 +10,35 @@ import org.jel.game.plugins.PluginInterface;
  * Another interface providing information.
  */
 public interface ConquerInfo extends StrategyObject, PluginInterface {
-	public boolean isDead(int clan);
+	Clan getClan(int index);
 
-	public default boolean isDead(Clan clan) {
+	List<String> getClanNames();
+
+	List<Double> getCoins();
+
+	List<Color> getColors();
+
+	default boolean isDead(Clan clan) {
 		return this.isDead(clan.getId());
 	}
 
-	public List<String> getClanNames();
+	boolean isDead(int clan);
 
-	public long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
-
-	public default long maximumNumberOfSoldiersToRecruit(final Clan clan, final long limit) {
-		return maximumNumberOfSoldiersToRecruit(clan.getId(), limit);
+	default long maximumNumberOfSoldiersToRecruit(final Clan clan, final long limit) {
+		return this.maximumNumberOfSoldiersToRecruit(clan.getId(), limit);
 	}
 
-	public Clan getClan(int index);
+	long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
 
-	public List<Color> getColors();
-
-	public List<Double> getCoins();
-	
-	public void upgradeResourceFully(final int clan, final Resource resources, final City city);
-	
-	public default void upgradeResourceFully(final Clan clan, final Resource resources, final City city) {
-		this.upgradeResourceFully(clan.getId(), resources, city);
-	}
-	public void upgradeDefenseFully(final int clan, final City city);
-	
-	
-	public default void upgradeDefenseFully(final Clan clan, final City city) {
+	default void upgradeDefenseFully(final Clan clan, final City city) {
 		this.upgradeDefenseFully(clan.getId(), city);
 	}
+
+	void upgradeDefenseFully(final int clan, final City city);
+
+	default void upgradeResourceFully(final Clan clan, final Resource resources, final City city) {
+		this.upgradeResourceFully(clan.getId(), resources, city);
+	}
+
+	void upgradeResourceFully(final int clan, final Resource resources, final City city);
 }

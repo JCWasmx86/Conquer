@@ -1227,7 +1227,7 @@ public final class Game implements ConquerInfo {
 		this.checkClan(clan);
 		var shouldNotBreak = true;
 		while (shouldNotBreak) {
-			shouldNotBreak = this.upgradeDefense((byte)clan, city);
+			shouldNotBreak = this.upgradeDefense((byte) clan, city);
 		}
 	}
 

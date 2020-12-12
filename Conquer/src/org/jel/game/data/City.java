@@ -167,15 +167,6 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Returns a handle to the information object
-	 *
-	 * @return A handle to the information object.
-	 */
-	public ConquerInfo getInfo() {
-		return this.game;
-	}
-
-	/**
 	 * Returns the growth of a city. The growth of a city is the factor, for which
 	 * the number of persons increases every round. For example: 1000 Persons and a
 	 * growth of 1.01: Next round: 1010 persons<br>
@@ -194,6 +185,15 @@ public final class City implements Comparable<City> {
 	 */
 	public Image getImage() {
 		return this.image;
+	}
+
+	/**
+	 * Returns a handle to the information object
+	 *
+	 * @return A handle to the information object.
+	 */
+	public ConquerInfo getInfo() {
+		return this.game;
 	}
 
 	/**
@@ -253,7 +253,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Gives the how much every resource is produced every round.
-	 * 
+	 *
 	 * @return A mutable list with the production rates.
 	 */
 	public List<Double> getProductions() {
