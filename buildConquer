@@ -49,6 +49,7 @@ cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
 cp -rv images ../conquer-dist/frontend
 javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
+cp src/org/jel/gui/messages.properties ../conquer-dist/frontend/org/jel/gui/messages.properties
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator
 javac `find src -name "*.java"` -d bin|| exit 1
