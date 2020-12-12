@@ -45,7 +45,11 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.jep.setText(this.generateText());
+		if (this.game.isDead(Shared.PLAYER_CLAN)) {
+			this.jep.setText("<html><body><font color='red'>You are dead!</font></body></html>");
+		} else {
+			this.jep.setText(this.generateText());
+		}
 	}
 
 	private String coinsPerRound() {

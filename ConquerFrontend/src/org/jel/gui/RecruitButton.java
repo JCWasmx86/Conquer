@@ -27,7 +27,7 @@ final class RecruitButton extends JPanel {
 	RecruitButton(City city, CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		final var max = city.getGame().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),
+		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),
 				city.getNumberOfPeople());
 		this.js = new JSlider(0, (int) max);
 		this.js.setValue((int) (max / 2));
@@ -37,7 +37,7 @@ final class RecruitButton extends JPanel {
 				return;
 			}
 			final var cnt = RecruitButton.this.js.getValue();
-			city.getGame().recruitSoldiers(Shared.PLAYER_CLAN, (byte) 0, city, true, cnt);
+			city.getInfo().recruitSoldiers(Shared.PLAYER_CLAN, (byte) 0, city, true, cnt);
 			cip.doUpdate();
 		});
 		this.js.addChangeListener(
@@ -58,12 +58,20 @@ final class RecruitButton extends JPanel {
 			this.js.setMaximum(0);
 			this.sharp = false;
 		} else {
-			this.jbutton.setEnabled(true);
-			this.js.setEnabled(true);
-			this.sharp = true;
-			this.js.setMaximum((int) this.city.getGame().maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(),
-					this.city.getNumberOfPeople()));
-			this.sharp = false;
+			if (!this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
+				this.jbutton.setEnabled(true);
+				this.js.setEnabled(true);
+				this.sharp = true;
+				this.js.setMaximum((int) this.city.getInfo()
+						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
+				this.sharp = false;
+			} else {
+				this.jbutton.setEnabled(false);
+				this.js.setEnabled(false);
+				this.sharp = true;
+				this.js.setMaximum(0);
+				this.sharp = false;
+			}
 		}
 	}
 
