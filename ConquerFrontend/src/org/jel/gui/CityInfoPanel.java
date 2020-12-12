@@ -65,9 +65,11 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 	private String generateText() {
 		if (this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
-			return "<html><body>" + Messages.getString("CityInfoPanel.youAreDead") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead") //$NON-NLS-1$ //$NON-NLS-2$
+					+ "</font></body></html>"; //$NON-NLS-1$
 		} else if (!this.city.isPlayerCity()) {
-			return "<html><body>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON-NLS-1$ //$NON-NLS-2$
+					+ "</font></body></html>"; //$NON-NLS-1$
 		}
 		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("CityInfoPanel.name")) //$NON-NLS-1$ //$NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
@@ -88,7 +90,8 @@ class CityInfoPanel extends JPanel implements ActionListener {
 						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
-			sb.append("<br>").append("").append(Resource.values()[i].getName()).append(": "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			sb.append("<br>").append(Resource.values()[i].getName()).append(": "); //$NON-NLS-1$ //$NON-NLS-2$
+																					// //$NON-NLS-3$
 			final var value = this.city.productionPerRound(Resource.values()[i]);
 			// Not enough is produced.
 			if ((value / this.city.getNumberOfPeople()) < 1) {
