@@ -40,12 +40,15 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		}
 		new Thread(() -> {
 			final var installerWindow = new InstallerWindow();
-			new Installer(options -> JOptionPane.showOptionDialog(null, Messages.getString("Intro.selectTypeOfInstallation"), //$NON-NLS-1$
-					Messages.getString("Intro.installation"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, //$NON-NLS-1$
-					options[1]), installerWindow, exception -> {
+			new Installer(
+					options -> JOptionPane.showOptionDialog(null, Messages.getString("Intro.selectTypeOfInstallation"), //$NON-NLS-1$
+							Messages.getString("Intro.installation"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+							JOptionPane.QUESTION_MESSAGE, null, options, options[1]),
+					installerWindow, exception -> {
 					}).run();
 			Initializer.INSTANCE().initialize(a -> {
-				JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), //$NON-NLS-1$
+						Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 				System.exit(-127);
 			});
 			installerWindow.dispose();

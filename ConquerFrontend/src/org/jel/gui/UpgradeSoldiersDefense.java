@@ -68,7 +68,8 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 
 	private String getOneLevelString() {
 		return String.format(Messages.getString("UpgradeSoldiersDefense.upgradeToLevel"), //$NON-NLS-1$
-				(this.clan.getSoldiersDefenseLevel() + 1), Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersDefenseLevel() + 1)); // $NON-NLS-1$
+				(this.clan.getSoldiersDefenseLevel() + 1),
+				Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersDefenseLevel() + 1)); // $NON-NLS-1$
 	}
 
 	private void initUpgradeMax() {
