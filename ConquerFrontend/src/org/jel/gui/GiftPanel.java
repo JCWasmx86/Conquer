@@ -66,10 +66,12 @@ final class GiftPanel extends JPanel {
 			final var clan = this.game.getClans().stream().filter(b -> b.getName().equals(this.box.getSelectedItem()))
 					.findFirst().orElseThrow();
 			if (!this.game.sendGift(this.game.getClan(0), clan, gift)) {
-				JOptionPane.showMessageDialog(null, this.box.getSelectedItem() + " rejected your gift", "Gift",
+				final var string=String.format("%s rejected your gift",this.box.getSelectedItem());
+				JOptionPane.showMessageDialog(null, string, "Gift",
 						JOptionPane.PLAIN_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null, this.box.getSelectedItem() + " accepted your gift", "Gift",
+				final var string=String.format("%s accepted your gift",this.box.getSelectedItem());
+				JOptionPane.showMessageDialog(null, string, "Gift",
 						JOptionPane.PLAIN_MESSAGE);
 			}
 		});
