@@ -57,7 +57,8 @@ final class LevelInfo extends JFrame implements WindowListener {
 					ClanColorAssociation value, int index, boolean isSelected, boolean cellHasFocus) {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
-					jl = new JLabel(value.clanName() + (index == Shared.PLAYER_CLAN ? " (Player)" : ""));
+					jl = new JLabel(value.clanName()
+							+ (index == Shared.PLAYER_CLAN ? " " + Messages.getString("LevelInfo.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					jl.setForeground(value.color());
 					jl.setFont(jl.getFont().deriveFont(35F));
 					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));
@@ -71,8 +72,8 @@ final class LevelInfo extends JFrame implements WindowListener {
 		});
 		final var scrollPane = new JScrollPane();
 		scrollPane.setViewportView(jlist);
-		final JButton backButton = new RoundButton(new ImageResource("back.png"));
-		final JButton forwardButton = new RoundButton(new ImageResource("forward.png"));
+		final JButton backButton = new RoundButton(new ImageResource("back.png")); //$NON-NLS-1$
+		final JButton forwardButton = new RoundButton(new ImageResource("forward.png")); //$NON-NLS-1$
 		final var backwardIcon = backButton.getIcon();
 		backButton.setSize(backwardIcon.getIconWidth(), backwardIcon.getIconHeight());
 		backButton.addActionListener(a -> {

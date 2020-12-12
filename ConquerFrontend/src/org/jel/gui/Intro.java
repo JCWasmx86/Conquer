@@ -40,12 +40,12 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		}
 		new Thread(() -> {
 			final var installerWindow = new InstallerWindow();
-			new Installer(options -> JOptionPane.showOptionDialog(null, "Please select the type of installation",
-					"Installation", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+			new Installer(options -> JOptionPane.showOptionDialog(null, Messages.getString("Intro.selectTypeOfInstallation"), //$NON-NLS-1$
+					Messages.getString("Intro.installation"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, //$NON-NLS-1$
 					options[1]), installerWindow, exception -> {
 					}).run();
 			Initializer.INSTANCE().initialize(a -> {
-				JOptionPane.showMessageDialog(null, "Initialization failed!", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
 				System.exit(-127);
 			});
 			installerWindow.dispose();
@@ -62,7 +62,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	private Intro() {
 		this.setSize(600, 600);
 		this.setResizable(false);
-		this.sound = new Sound("Intro.wav");
+		this.sound = new Sound(Messages.getString("Intro.4")); //$NON-NLS-1$
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.timer.start();

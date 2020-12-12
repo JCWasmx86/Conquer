@@ -120,7 +120,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		} else {
 			sb.append("<font color='green'>"); //$NON-NLS-1$
 		}
-		return sb.append(r.getName()).append(Messages.getString("ClanInfoPanel.perRound")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+		return sb.append(r.getName()).append(" ").append(Messages.getString("ClanInfoPanel.perRound")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", balance)) //$NON-NLS-1$
 				.append("</font>").toString(); //$NON-NLS-1$
 	}

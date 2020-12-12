@@ -54,7 +54,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	private final LoopPlayer player;
 
 	private MainScreen() {
-		this.player = new LoopPlayer().addSong("MainScreen.wav");
+		this.player = new LoopPlayer().addSong("MainScreen.wav"); //$NON-NLS-1$
 		this.addKeyListener(this);
 		this.addWindowListener(this);
 	}
@@ -64,18 +64,18 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var menu = new JMenuBar();
 		menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		menu.setMaximumSize(new Dimension(100, 25));
-		final var settings = new JMenu("Settings");
-		final var strategiesAndPlugins = new JMenuItem("Strategies and Plugins");
+		final var settings = new JMenu(Messages.getString("MainScreen.settings")); //$NON-NLS-1$
+		final var strategiesAndPlugins = new JMenuItem(Messages.getString("MainScreen.strategiesAndPlugins")); //$NON-NLS-1$
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
-		final var exit = new JMenuItem("Exit");
+		final var exit = new JMenuItem(Messages.getString("MainScreen.exit")); //$NON-NLS-1$
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
 		menu.add(settings);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		final var play = new JButton("Play");
+		final var play = new JButton(Messages.getString("MainScreen.play")); //$NON-NLS-1$
 		play.addActionListener(a -> {
 			MainScreen.forwarded = false;
 			final var lsf = new LevelSelectFrame();
@@ -86,7 +86,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		play.setAlignmentX(Component.CENTER_ALIGNMENT);
 		play.setFont(play.getFont().deriveFont(50.0f));
 		panel.add(play);
-		final var credits = new JButton("Credits");
+		final var credits = new JButton(Messages.getString("MainScreen.credits")); //$NON-NLS-1$
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;
 			final var cf = new CreditFrame();
@@ -97,8 +97,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		credits.setFont(play.getFont());
 		credits.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(credits);
-		final var tutorial = new JButton("Tutorial");
-		tutorial.addActionListener(a -> System.out.println("Tutorial"));
+		final var tutorial = new JButton(Messages.getString("MainScreen.tutorial")); //$NON-NLS-1$
+		tutorial.addActionListener(a -> System.out.println(Messages.getString("MainScreen.tutorial"))); //$NON-NLS-1$
 		tutorial.setFont(play.getFont());
 		tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(tutorial);

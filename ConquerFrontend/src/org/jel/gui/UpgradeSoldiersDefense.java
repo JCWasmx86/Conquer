@@ -62,7 +62,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	}
 
 	private String getInfoText() {
-		return "Soldiers defense power: " + String.format("%.2f", this.clan.getSoldiersDefenseStrength()) + " Level "
+		return "Soldiers defense power: " + String.format("%.2f", this.clan.getSoldiersDefenseStrength()) + " level "
 				+ this.clan.getSoldiersDefenseLevel();
 	}
 
