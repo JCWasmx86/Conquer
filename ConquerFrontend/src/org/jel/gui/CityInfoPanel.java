@@ -65,31 +65,40 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 	private String generateText() {
 		if (this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
-			return "<html><body>You are dead!</body></html>";
+			return "<html><body>" + Messages.getString("CityInfoPanel.youAreDead") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		} else if (!this.city.isPlayerCity()) {
-			return "<html><body>No information available!</body></html>";
+			return "<html><body>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
-		final var sb = new StringBuilder().append("<html><body>Name: ").append(this.city.getName()).append("<br>Clan: ")
-				.append(this.city.getInfo().getClanNames().get(this.city.getClanId())).append("<br>Soldiers: ")
-				.append(this.city.getNumberOfSoldiers()).append("<br>Civilians: ").append(this.city.getNumberOfPeople())
-				.append("<br>Defense: ").append(String.format("%.2f", this.city.getDefense()))
-				.append("<br>Defense bonus: ").append(String.format("%.2f", this.city.getBonus()))
-				.append("<br>Growth: ").append(String.format("%.2f", this.city.getGrowth()))
-				.append("<br>Recruitable Civilians: ").append(this.city.getInfo()
+		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("CityInfoPanel.name")) //$NON-NLS-1$ //$NON-NLS-2$
+				.append(": ") //$NON-NLS-1$
+				.append(this.city.getName()).append("<br>").append(Messages.getString("CityInfoPanel.clan")) //$NON-NLS-1$ //$NON-NLS-2$
+				.append(": ") //$NON-NLS-1$
+				.append(this.city.getInfo().getClanNames().get(this.city.getClanId())).append("<br>") //$NON-NLS-1$
+				.append(Messages.getString("CityInfoPanel.soldiers")) //$NON-NLS-1$
+				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("CityInfoPanel.people")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(this.city.getNumberOfPeople()).append("<br>") //$NON-NLS-1$
+				.append(Messages.getString("CityInfoPanel.defense")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(String.format("%.2f", this.city.getDefense())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("CityInfoPanel.defenseBonus")) //$NON-NLS-1$
+				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(Messages.getString("CityInfoPanel.growth")) //$NON-NLS-1$
+				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo() //$NON-NLS-1$ //$NON-NLS-2$
 						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
-			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
+			sb.append("<br>").append("").append(Resource.values()[i].getName()).append(": "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			final var value = this.city.productionPerRound(Resource.values()[i]);
 			// Not enough is produced.
 			if ((value / this.city.getNumberOfPeople()) < 1) {
-				sb.append("<font color='red'>");
+				sb.append("<font color='red'>"); //$NON-NLS-1$
 			} else {
-				sb.append("<font color='green'>");
+				sb.append("<font color='green'>"); //$NON-NLS-1$
 			}
-			sb.append(String.format("%.2f", value)).append("</font>");
+			sb.append(String.format("%.2f", value)).append("</font>"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		return sb.append("</body></html>").toString();
+		return sb.append("</body></html>").toString(); //$NON-NLS-1$
 	}
 
 	/**
@@ -97,7 +106,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 */
 	void init() {
 		this.setLayout(new FlowLayout());
-		this.statsViewer = new JEditorPane("text/html", this.generateText());
+		this.statsViewer = new JEditorPane("text/html", this.generateText()); //$NON-NLS-1$
 		((DefaultCaret) this.statsViewer.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		this.statsViewer.setEditable(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

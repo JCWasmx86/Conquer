@@ -46,7 +46,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (this.game.isDead(Shared.PLAYER_CLAN)) {
-			this.jep.setText("<html><body><font color='red'>You are dead!</font></body></html>");
+			this.jep.setText("<html><body><font color='red'>" + Messages.getString("ClanInfoPanel.youAreDead") //$NON-NLS-1$ //$NON-NLS-2$
+					+ "</font></body></html>"); //$NON-NLS-1$
 		} else {
 			this.jep.setText(this.generateText());
 		}
@@ -57,20 +58,24 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 				.mapToDouble(c -> (c.getNumberOfPeople() * Shared.COINS_PER_PERSON_PER_ROUND)
 						- (c.getNumberOfSoldiers() * Shared.COINS_PER_SOLDIER_PER_ROUND))
 				.sum();
-		return String.format("<br><font color='%s'>Coins per round: %.2f</font>", production <= 0 ? "red" : "green",
-				production);
+		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				Messages.getString("ClanInfoPanel.coinsPerRound"), production); //$NON-NLS-1$
 	}
 
 	private String generateText() {
-		final var sb = new StringBuilder("<html><body>");
-		sb.append("Name: ").append(this.clan.getName()).append("<br>Number of soldiers: ")
-				.append(this.getNumber(City::getNumberOfSoldiers)).append("<br>Number of people: ")
-				.append(this.getNumber(City::getNumberOfPeople)).append("<br>Coins: ")
-				.append(String.format("%.2f", this.clan.getCoins())).append(this.coinsPerRound());
+		final var sb = new StringBuilder("<html><body>"); //$NON-NLS-1$
+		sb.append(Messages.getString("ClanInfoPanel.name")).append(": ").append(this.clan.getName()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers")) //$NON-NLS-1$
+				.append(": ").append(this.getNumber(City::getNumberOfSoldiers)).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(this.getNumber(City::getNumberOfPeople)).append("<br>") //$NON-NLS-1$
+				.append(Messages.getString("ClanInfoPanel.coins")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(String.format("%.2f", this.clan.getCoins())) //$NON-NLS-1$
+				.append(this.coinsPerRound());
 		for (final var r : Resource.values()) {
 			sb.append(this.resource(r));
 		}
-		return sb.append("</body></html>").toString();
+		return sb.append("</body></html>").toString(); //$NON-NLS-1$
 	}
 
 	private long getNumber(ToLongFunction<City> cc) {
@@ -82,7 +87,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.jep = new JEditorPane("text/html", this.generateText());
+		this.jep = new JEditorPane("text/html", this.generateText()); //$NON-NLS-1$
 		this.jep.setEditable(false);
 		this.jep.setIgnoreRepaint(true);
 		((DefaultCaret) this.jep.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
@@ -100,8 +105,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String resource(Resource r) {
-		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ")
-				.append(String.format("%.2f", this.clan.getResources().get(r.getIndex()))).append("<br>");
+		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(String.format("%.2f", this.clan.getResources().get(r.getIndex()))).append("<br>"); //$NON-NLS-1$ //$NON-NLS-2$
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId())
 				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(r.getIndex()))).sum();
 		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToDouble(c -> {
@@ -111,12 +116,13 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		}).sum();
 		final var balance = productions - usage;
 		if (balance <= 0) {
-			sb.append("<font color='red'>");
+			sb.append("<font color='red'>"); //$NON-NLS-1$
 		} else {
-			sb.append("<font color='green'>");
+			sb.append("<font color='green'>"); //$NON-NLS-1$
 		}
-		return sb.append(r.getName()).append(" per round: ").append(String.format("%.2f", balance)).append("</font>")
-				.toString();
+		return sb.append(r.getName()).append(Messages.getString("ClanInfoPanel.perRound")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(String.format("%.2f", balance)) //$NON-NLS-1$
+				.append("</font>").toString(); //$NON-NLS-1$
 	}
 
 }
