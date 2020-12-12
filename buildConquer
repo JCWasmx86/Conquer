@@ -39,14 +39,12 @@ else
 fi
 mkdir conquer-dist
 cd conquer-dist
-mkdir backend
+mkdir -p backend/data
 mkdir frontend
 mkdir music
 cd ../Conquer
 shopt -s dotglob
-mkdir data
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
-cp -rv data ../conquer-dist/backend
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
 cp -rv images ../conquer-dist/frontend
