@@ -56,8 +56,8 @@ final class EventLog extends JFrame implements MessageListener {
 	static void init(Game game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
-			final var jlabel = new JLabel("Clan: " + clan.getName()
-					+ (clan.getName().equals(a.get(Shared.PLAYER_CLAN).getName()) ? " (Player)" : ""));
+			final var jlabel = new JLabel(Messages.getString("EventLog.clan") + ": " + clan.getName() //$NON-NLS-1$ //$NON-NLS-2$
+					+ (clan.getName().equals(a.get(Shared.PLAYER_CLAN).getName()) ? " " + Messages.getString("EventLog.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			jlabel.setOpaque(true);
 			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(clan.getColor().getRGB())));
@@ -66,7 +66,7 @@ final class EventLog extends JFrame implements MessageListener {
 			EventLog.log.base.add(jlabel);
 			EventLog.log.base.add(EventLog.log.generateEmptySpace(clan.getColor()));
 		}
-		final var jlabel = new JLabel(" ");
+		final var jlabel = new JLabel(" "); //$NON-NLS-1$
 		jlabel.setForeground(new Color(21, 21, 21));
 		jlabel.setBackground(new Color(23, 23, 23));
 		jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
@@ -101,7 +101,7 @@ final class EventLog extends JFrame implements MessageListener {
 		this.timer.start();
 		this.add(this.contentPane);
 		final var menubar = new JMenuBar();
-		final var menu = new JMenu("Settings");
+		final var menu = new JMenu(Messages.getString("EventLog.settings")); //$NON-NLS-1$
 		final var increaseFontSize = new JMenuItem();
 		this.initIncreaseFontSize(increaseFontSize);
 		menu.add(increaseFontSize);
@@ -124,11 +124,11 @@ final class EventLog extends JFrame implements MessageListener {
 			}
 		});
 		exitButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
-		exitButton.setText("Exit");
+		exitButton.setText(Messages.getString("EventLog.closeDialog")); //$NON-NLS-1$
 		menu.add(exitButton);
 		menubar.add(menu);
 		this.setJMenuBar(menubar);
-		this.setTitle("Event log");
+		this.setTitle(Messages.getString("EventLog.eventLog")); //$NON-NLS-1$
 	}
 
 	/**
@@ -173,7 +173,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private Component generateEmptySpace(Color color) {
-		final var jl = new JLabel(" ");
+		final var jl = new JLabel(" "); //$NON-NLS-1$
 		jl.setForeground(color);
 		jl.setFont(jl.getFont().deriveFont(4f));
 		return jl;
@@ -212,7 +212,7 @@ final class EventLog extends JFrame implements MessageListener {
 		});
 		decreaseFontSize.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		decreaseFontSize.setText("Decrease fontsize");
+		decreaseFontSize.setText(Messages.getString("EventLog.decreaseFontsize")); //$NON-NLS-1$
 	}
 
 	private void initIncreaseFontSize(final JMenuItem increaseFontSize) {
@@ -236,11 +236,11 @@ final class EventLog extends JFrame implements MessageListener {
 		});
 		increaseFontSize.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		increaseFontSize.setText("Increase fontsize");
+		increaseFontSize.setText(Messages.getString("EventLog.increaseFontsize")); //$NON-NLS-1$
 	}
 
 	private void initShowGood() {
-		this.showGood = new JCheckBoxMenuItem("Show positive events");
+		this.showGood = new JCheckBoxMenuItem(Messages.getString("EventLog.showPositiveEvents")); //$NON-NLS-1$
 		this.showGood.setSelected(true);
 		this.showGood.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();
@@ -260,7 +260,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private void initShowNegative() {
-		this.showBad = new JCheckBoxMenuItem("Show negative events");
+		this.showBad = new JCheckBoxMenuItem(Messages.getString("EventLog.showNegativeEvents")); //$NON-NLS-1$
 		this.showBad.setSelected(true);
 		this.showBad.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();
@@ -280,7 +280,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private void initShowNeutral() {
-		this.showNeutral = new JCheckBoxMenuItem("Show neutral events");
+		this.showNeutral = new JCheckBoxMenuItem(Messages.getString("EventLog.showNeutralEvents")); //$NON-NLS-1$
 		this.showNeutral.setSelected(true);
 		this.showNeutral.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();

@@ -23,8 +23,8 @@ import org.jel.game.data.City;
  */
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	/**
-	 * Specifies the height of the coloured rectangle that shows the association with
-	 * a clan
+	 * Specifies the height of the coloured rectangle that shows the association
+	 * with a clan
 	 */
 	static final int CLAN_COLOR_HEIGHT = 12;
 	private static final long serialVersionUID = -5091974547825438103L;
@@ -62,14 +62,15 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		this.paint(this.getGraphics());
-		var s = "<html>";
-		s += this.city.getName();
-		s += "<br>Clan: " + this.city.getInfo().getClanNames().get(this.city.getClanId()) + "<br>";
+		var s = "<html>" + this.city.getName(); //$NON-NLS-1$
+		s += String.format("<br>%s: %s<br>", Messages.getString("CityLabel.clanLabel"), this.city.getClan().getName()); //$NON-NLS-1$ //$NON-NLS-2$
 		if (this.city.isPlayerCity()) {
-			s += String.format("People: %d<br>Soldiers: %d</html>", this.city.getNumberOfPeople(),
+			s += String.format("%s: %d<br>%s: %d</html>", Messages.getString("CityLabel.peopleLabel"), //$NON-NLS-1$ //$NON-NLS-2$
+					this.city.getNumberOfPeople(), Messages.getString("CityLabel.soldiersLabel"), //$NON-NLS-1$
 					this.city.getNumberOfSoldiers());
 		} else {
-			s += "People: ???<br>Soldiers: ???</html>";
+			s += String.format("%s: ???<br>%s: ???</html>", Messages.getString("CityLabel.peopleLabel"), //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.getString("CityLabel.soldiersLabel")); //$NON-NLS-1$
 		}
 		this.setToolTipText(s);
 	}
@@ -200,11 +201,11 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 				this.origin.getNumberOfSoldiers());
 		String prompt;
 		if (this.city.isPlayerCity()) {
-			prompt = "How many soldiers do you want to move from " + this.origin.getName() + " to "
-					+ this.city.getName() + "? (0 ->" + maximumNumberOfSoldiersToMove + ")";
+			prompt = String.format(Messages.getString("CityLabel.moveLabel"), //$NON-NLS-1$
+					this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
 		} else {
-			prompt = "How many soldiers should be used for the attack from  " + this.origin.getName() + " to "
-					+ this.city.getName() + "? (0 ->" + maximumNumberOfSoldiersToMove + ")";
+			prompt = String.format(Messages.getString("CityLabel.attackLabel"), //$NON-NLS-1$
+					this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
 		}
 		long numberOfSelectedSoldiers = -1;
 		while (numberOfSelectedSoldiers == -1) {
