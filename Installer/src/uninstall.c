@@ -1,6 +1,6 @@
 #include <assert.h>
-#include <shlobj.h>
 #include <shfolder.h>
+#include <shlobj.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
@@ -30,17 +30,21 @@ char *getBaseDirectory(void) {
 void deleteFile(const char *fileName) {
 	char *name = getBaseDirectory();
 	strcat(name, fileName);
-	if (!MoveFileExA(name, NULL, MOVEFILE_DELAY_UNTIL_REBOOT)) {
-		fprintf(stderr, "MoveFileExA failed!\n");
-		DWORD error = GetLastError();
-		char *s = NULL;
-		FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-						   FORMAT_MESSAGE_FROM_SYSTEM |
-						   FORMAT_MESSAGE_IGNORE_INSERTS,
-					   NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-					   (LPSTR)&s, 0, NULL);
-		fprintf(stderr, "Error: %s\n", s);
-		LocalFree(s);
+	// Try to remove the corresponding file.
+	if (!remove(fileName)) {
+		// If it fails, register the file for deletion after reboot.
+		if (!MoveFileExA(name, NULL, MOVEFILE_DELAY_UNTIL_REBOOT)) {
+			fprintf(stderr, "MoveFileExA failed!\n");
+			DWORD error = GetLastError();
+			char *s = NULL;
+			FormatMessageA(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
+					FORMAT_MESSAGE_IGNORE_INSERTS,
+				NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+				(LPSTR)&s, 0, NULL);
+			fprintf(stderr, "Error: %s\n", s);
+			LocalFree(s);
+		}
 	}
 	free(name);
 }
