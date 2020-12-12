@@ -23,7 +23,7 @@ import org.jel.game.data.City;
  */
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	/**
-	 * Specifies the height of the colored rectangle that shows the association with
+	 * Specifies the height of the coloured rectangle that shows the association with
 	 * a clan
 	 */
 	static final int CLAN_COLOR_HEIGHT = 12;
