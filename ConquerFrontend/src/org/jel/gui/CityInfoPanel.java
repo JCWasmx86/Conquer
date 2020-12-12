@@ -16,6 +16,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 
 /**
  * This panel shows information about a selected city. At the top it is showing
@@ -63,16 +64,18 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String generateText() {
-		if (!this.city.isPlayerCity()) {
+		if (this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
+			return "<html><body>You are dead!</body></html>";
+		} else if (!this.city.isPlayerCity()) {
 			return "<html><body>No information available!</body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>Name: ").append(this.city.getName()).append("<br>Clan: ")
-				.append(this.city.getGame().getClanNames().get(this.city.getClanId())).append("<br>Soldiers: ")
+				.append(this.city.getInfo().getClanNames().get(this.city.getClanId())).append("<br>Soldiers: ")
 				.append(this.city.getNumberOfSoldiers()).append("<br>Civilians: ").append(this.city.getNumberOfPeople())
 				.append("<br>Defense: ").append(String.format("%.2f", this.city.getDefense()))
 				.append("<br>Defense bonus: ").append(String.format("%.2f", this.city.getBonus()))
 				.append("<br>Growth: ").append(String.format("%.2f", this.city.getGrowth()))
-				.append("<br>Recruitable Civilians: ").append(this.city.getGame()
+				.append("<br>Recruitable Civilians: ").append(this.city.getInfo()
 						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
@@ -90,7 +93,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method has to be called in order to initialize the component.
+	 * This method has to be called in order to initialise the component.
 	 */
 	void init() {
 		this.setLayout(new FlowLayout());

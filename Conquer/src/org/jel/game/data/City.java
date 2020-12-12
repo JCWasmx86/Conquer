@@ -14,7 +14,7 @@ public final class City implements Comparable<City> {
 	private double bonus = -1;
 	private byte clanId = -1;
 	private double defense = -1;
-	private final Game game;
+	private final ConquerInfo game;
 	private double growth;
 	private Image image;
 	private List<Integer> levels = new ArrayList<>();
@@ -167,11 +167,11 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Returns a handle to the game object
+	 * Returns a handle to the information object
 	 *
-	 * @return A handle to the game object.
+	 * @return A handle to the information object.
 	 */
-	public Game getGame() {
+	public ConquerInfo getInfo() {
 		return this.game;
 	}
 
@@ -253,6 +253,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Gives the how much every resource is produced every round.
+	 * 
 	 * @return A mutable list with the production rates.
 	 */
 	public List<Double> getProductions() {

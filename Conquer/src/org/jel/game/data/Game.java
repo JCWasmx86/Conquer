@@ -20,7 +20,6 @@ import org.jel.game.data.builtin.DefensiveStrategyProvider;
 import org.jel.game.data.builtin.ModerateStrategyProvider;
 import org.jel.game.data.builtin.OffensiveStrategyProvider;
 import org.jel.game.data.builtin.RandomStrategyProvider;
-import org.jel.game.data.strategy.StrategyObject;
 import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.messages.AnnihilationMessage;
 import org.jel.game.messages.AttackLostMessage;
@@ -37,7 +36,6 @@ import org.jel.game.plugins.MessageListener;
 import org.jel.game.plugins.MoneyHook;
 import org.jel.game.plugins.MoveHook;
 import org.jel.game.plugins.Plugin;
-import org.jel.game.plugins.PluginInterface;
 import org.jel.game.plugins.RecruitHook;
 import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
@@ -45,7 +43,7 @@ import org.jel.game.utils.Graph;
 /**
  * One of the most important classes as it combines everything.
  */
-public final class Game implements PluginInterface, StrategyObject {
+public final class Game implements ConquerInfo {
 	private static final int MAX_LEVEL = 1000;
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
 	private static final double GROWTH_LIMIT = 1.10;
@@ -553,6 +551,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	/**
 	 * @return All clannames.
 	 */
+	@Override
 	public List<String> getClanNames() {
 		return this.clans.stream().map(Clan::getName).collect(Collectors.toList());
 	}
@@ -567,6 +566,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	/**
 	 * @return The coins of every clan.
 	 */
+	@Override
 	public List<Double> getCoins() {
 		return this.clans.stream().map(Clan::getCoins).collect(Collectors.toList());
 	}
@@ -723,15 +723,7 @@ public final class Game implements PluginInterface, StrategyObject {
 	 *
 	 * @param clan
 	 */
-	public boolean isDead(Clan clan) {
-		return this.isDead(clan.getId());
-	}
-
-	/**
-	 * Returns whether a clan is dead.
-	 *
-	 * @param clan
-	 */
+	@Override
 	public boolean isDead(int clan) {
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
@@ -747,7 +739,8 @@ public final class Game implements PluginInterface, StrategyObject {
 		return this.isPlayersTurn;
 	}
 
-	public long maximumNumberOfSoldiersToRecruit(final byte clan, final long limit) {
+	@Override
+	public long maximumNumberOfSoldiersToRecruit(final int clan, final long limit) {
 		this.checkClan(clan);
 		final var resourcesOfClan = this.clans.get(clan).getResources();
 		final List<Long> numbers = new ArrayList<>();
@@ -1229,12 +1222,12 @@ public final class Game implements PluginInterface, StrategyObject {
 		return true;
 	}
 
-	public void upgradeDefenseFully(final byte b, final City city) {
+	public void upgradeDefenseFully(final int clan, final City city) {
 		this.throwIfNull(city, "city==null");
-		this.checkClan(b);
+		this.checkClan(clan);
 		var shouldNotBreak = true;
 		while (shouldNotBreak) {
-			shouldNotBreak = this.upgradeDefense(b, city);
+			shouldNotBreak = this.upgradeDefense((byte)clan, city);
 		}
 	}
 
@@ -1274,13 +1267,13 @@ public final class Game implements PluginInterface, StrategyObject {
 		return true;
 	}
 
-	public void upgradeResourceFully(final byte b, final Resource resources, final City city) {
+	public void upgradeResourceFully(final int clan, final Resource resources, final City city) {
 		this.throwIfNull(city, "city==null");
 		this.throwIfNull(resources, "resources==null");
-		this.checkClan(b);
+		this.checkClan(clan);
 		var shouldNotBreak = true;
 		while (shouldNotBreak) {
-			shouldNotBreak = this.upgradeResource(b, resources, city);
+			shouldNotBreak = this.upgradeResource((byte) clan, resources, city);
 		}
 	}
 
