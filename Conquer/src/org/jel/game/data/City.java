@@ -253,6 +253,7 @@ public final class City implements Comparable<City> {
 
 	/**
 	 * Gives the how much every resource is produced every round.
+	 * @return A mutable list with the production rates.
 	 */
 	public List<Double> getProductions() {
 		return this.productions;

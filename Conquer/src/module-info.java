@@ -1,3 +1,6 @@
+/**
+ * The module exporting all required packages.
+ */
 module org.jel.game {
 	requires transitive java.desktop;
 
