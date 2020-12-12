@@ -27,7 +27,7 @@ final class InstallerWindow extends ExtendedOutputStream {
 		this.jpanel = new JPanel();
 		this.jpanel.setLayout(new BoxLayout(this.jpanel, BoxLayout.Y_AXIS));
 		this.jframe.add(new JScrollPane(this.jpanel));
-		this.jframe.setTitle("Installing conquer...");
+		this.jframe.setTitle(Messages.getString("InstallerWindow.installingConquer")); //$NON-NLS-1$
 		this.jframe.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 	}
 

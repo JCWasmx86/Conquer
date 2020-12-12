@@ -59,19 +59,19 @@ final class GiftPanel extends JPanel {
 		this.box = new JComboBox<>(
 				this.game.getClans().stream().filter(a -> (a.getId() != Shared.PLAYER_CLAN) && !this.game.isDead(a))
 						.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
-		final var button = new JButton("Give gift");
+		final var button = new JButton(Messages.getString("GiftPanel.giveGift")); //$NON-NLS-1$
 		button.addActionListener(a -> {
 			final var gift = new Gift(this.sliders.stream().map(ResourceSlider::getValue).collect(Collectors.toList()),
 					ms.getMoney());
 			final var clan = this.game.getClans().stream().filter(b -> b.getName().equals(this.box.getSelectedItem()))
 					.findFirst().orElseThrow();
 			if (!this.game.sendGift(this.game.getClan(0), clan, gift)) {
-				final var string=String.format("%s rejected your gift",this.box.getSelectedItem());
-				JOptionPane.showMessageDialog(null, string, "Gift",
+				final var string = String.format(Messages.getString("GiftPanel.rejected"), this.box.getSelectedItem()); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, string, Messages.getString("GiftPanel.gift"), //$NON-NLS-1$
 						JOptionPane.PLAIN_MESSAGE);
 			} else {
-				final var string=String.format("%s accepted your gift",this.box.getSelectedItem());
-				JOptionPane.showMessageDialog(null, string, "Gift",
+				final var string = String.format(Messages.getString("GiftPanel.accepted"), this.box.getSelectedItem()); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(null, string, Messages.getString("GiftPanel.gift"), //$NON-NLS-1$
 						JOptionPane.PLAIN_MESSAGE);
 			}
 		});

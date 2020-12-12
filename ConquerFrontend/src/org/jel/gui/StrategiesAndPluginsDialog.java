@@ -148,7 +148,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				try {
 					Files.write(Paths.get(f.toURI()), sb.toString().getBytes());
 				} catch (final IOException e1) {
-					JOptionPane.showMessageDialog(null, "Writing failed: " + e1.getMessage(), "Error",
+					JOptionPane.showMessageDialog(null, "Writing failed: " + e1.getLocalizedMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 				StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);
