@@ -52,7 +52,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 	private JList<String> plugins;
 
 	private void init() {
-		this.setTitle("Strategies and Plugins");
+		this.setTitle(Messages.getString("StrategiesAndPluginsDialog.strategiesAndPlugins")); //$NON-NLS-1$
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo(false);
 		this.pluginNamesListCopy = new ArrayList<>(this.context.getPluginNames());
@@ -64,7 +64,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.plugins.setSelectedIndex(ref.plugins.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
-					final var itemRemove = new JMenuItem("Remove");
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
 						ref.pluginNamesListCopy.remove(ref.plugins.getSelectedValue());
 						ref.plugins.setListData(
@@ -76,10 +76,12 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				}
 			}
 		});
-		final var addPlugin = new SelectPanel("Add plugin", "Plugin classname", a -> {
-			this.pluginNamesListCopy.add(a);
-			this.plugins.setListData(this.pluginNamesListCopy.toArray(new String[this.pluginNamesListCopy.size()]));
-		});
+		final var addPlugin = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addPlugin"), //$NON-NLS-1$
+				Messages.getString("StrategiesAndPluginsDialog.pluginClassname"), a -> { //$NON-NLS-1$
+					this.pluginNamesListCopy.add(a);
+					this.plugins
+							.setListData(this.pluginNamesListCopy.toArray(new String[this.pluginNamesListCopy.size()]));
+				});
 		this.strategyNamesListCopy = new ArrayList<>(this.context.getStrategyNames());
 		this.strategies = new JList<>(this.context.getStrategyNames().toArray(new String[0]));
 		this.strategies.addMouseListener(new MouseAdapter() {
@@ -89,7 +91,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.strategies.setSelectedIndex(ref.strategies.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
-					final var itemRemove = new JMenuItem("Remove");
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
 						ref.strategyNamesListCopy.remove(ref.strategies.getSelectedValue());
 						ref.strategies.setListData(
@@ -101,11 +103,12 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				}
 			}
 		});
-		final var addStrategy = new SelectPanel("Add strategy", "Strategy classname", a -> {
-			this.strategyNamesListCopy.add(a);
-			this.strategies
-					.setListData(this.strategyNamesListCopy.toArray(new String[this.strategyNamesListCopy.size()]));
-		});
+		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"), //$NON-NLS-1$
+				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> { //$NON-NLS-1$
+					this.strategyNamesListCopy.add(a);
+					this.strategies.setListData(
+							this.strategyNamesListCopy.toArray(new String[this.strategyNamesListCopy.size()]));
+				});
 		final var contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.add(this.plugins);
@@ -123,7 +126,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				StrategiesAndPluginsDialog.this.reset();
 			}
 		});
-		clearChanges.setText("Reset changes");
+		clearChanges.setText(Messages.getString("StrategiesAndPluginsDialog.resetChanges")); //$NON-NLS-1$
 		final var saveChanges = new JButton();
 		final var f = new File(Shared.BASE_DIRECTORY).toString() + File.separator + File.separator;
 		saveChanges.setAction(new AbstractAction() {
@@ -132,30 +135,32 @@ final class StrategiesAndPluginsDialog extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				final var sb = new StringBuilder(
-						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->\n<info>\n\t<scenarios>\n");
+						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->\n<info>\n\t<scenarios>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.context.getInstalledMaps()
-						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"")
-								.append(a.file().replace(f, "")).append("\" thumbnail=\"")
-								.append(a.thumbnail().replace(f, "")).append("\"/>\n"));
-				sb.append("\t</scenarios>\n\t<plugins>\n");
+						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"") //$NON-NLS-1$ //$NON-NLS-2$
+								.append(a.file().replace(f, "")).append("\" thumbnail=\"") //$NON-NLS-1$ //$NON-NLS-2$
+								.append(a.thumbnail().replace(f, "")).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
+				sb.append("\t</scenarios>\n\t<plugins>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.pluginNamesListCopy
-						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n"));
-				sb.append("\t</plugins>\n\t<strategies>\n");
+						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
+				sb.append("\t</plugins>\n\t<strategies>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.strategyNamesListCopy
-						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n"));
-				sb.append("\t</strategies>\n</info>\n");
-				final var f = new File(Shared.BASE_DIRECTORY, "info.xml");
+						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
+				sb.append("\t</strategies>\n</info>\n"); //$NON-NLS-1$
+				final var f = new File(Shared.BASE_DIRECTORY, "info.xml"); //$NON-NLS-1$
 				try {
 					Files.write(Paths.get(f.toURI()), sb.toString().getBytes());
 				} catch (final IOException e1) {
-					JOptionPane.showMessageDialog(null, "Writing failed: " + e1.getLocalizedMessage(), "Error",
+					JOptionPane.showMessageDialog(null,
+							Messages.getString("StrategiesAndPluginsDialog.writingFailed") + e1.getLocalizedMessage(), //$NON-NLS-1$
+							Messages.getString("StrategiesAndPluginsDialog.error"), //$NON-NLS-1$
 							JOptionPane.ERROR_MESSAGE);
 				}
 				StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);
 				StrategiesAndPluginsDialog.this.reset();
 			}
 		});
-		saveChanges.setText("Save changes");
+		saveChanges.setText(Messages.getString("StrategiesAndPluginsDialog.saveChanges")); //$NON-NLS-1$
 		buttonPanel.add(clearChanges);
 		buttonPanel.add(saveChanges);
 		contentPanel.add(buttonPanel);

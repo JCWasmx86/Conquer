@@ -40,10 +40,10 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 		this.infoLabel = new JLabel();
 		this.infoLabel.setText(this.getInfoText());
 		this.add(this.infoLabel);
-		this.upgradeOnce = new JButton("");
+		this.upgradeOnce = new JButton(""); //$NON-NLS-1$
 		this.initUpgradeOnce();
 		this.add(this.upgradeOnce);
-		this.upgradeMax = new JButton(new ImageResource("max.png"));
+		this.upgradeMax = new JButton(new ImageResource("max.png")); //$NON-NLS-1$
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
 		this.repaint();
@@ -62,19 +62,19 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	}
 
 	private String getInfoText() {
-		return "Soldiers defense power: " + String.format("%.2f", this.clan.getSoldiersDefenseStrength()) + " level "
-				+ this.clan.getSoldiersDefenseLevel();
+		return String.format(Messages.getString("UpgradeSoldiersDefense.soldiersPower"), //$NON-NLS-1$
+				this.clan.getSoldiersDefenseStrength(), this.clan.getSoldiersDefenseLevel());
 	}
 
 	private String getOneLevelString() {
-		return "Upgrade to level " + (this.clan.getSoldiersDefenseLevel() + 1) + ": " + String.format("%.2f",
-				Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersDefenseLevel() + 1)) + "coins";
+		return String.format(Messages.getString("UpgradeSoldiersDefense.upgradeToLevel"), //$NON-NLS-1$
+				(this.clan.getSoldiersDefenseLevel() + 1), Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersDefenseLevel() + 1)); // $NON-NLS-1$
 	}
 
 	private void initUpgradeMax() {
 		if (this.clan.getSoldiersDefenseLevel() == 1000) {
 			this.upgradeMax.setEnabled(false);
-			this.upgradeMax.setText("Maximum value reached!");
+			this.upgradeMax.setText(Messages.getString("UpgradeSoldiersDefense.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
 		final var count = Shared.maxLevelsAddOffenseDefenseUpgrade(this.clan.getSoldiersDefenseLevel(),
@@ -90,16 +90,17 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 		});
 		this.upgradeMax.setEnabled(count > 1);
 		if (count > 1) {
-			this.upgradeMax.setText("Upgrade to level " + ((this.clan.getSoldiersDefenseLevel() + count) - 1));
+			this.upgradeMax.setText(String.format(Messages.getString("UpgradeSoldiersDefense.upgradeToSpecifiedLevel"), //$NON-NLS-1$
+					((this.clan.getSoldiersDefenseLevel() + count) - 1)));
 		} else {
-			this.upgradeMax.setText("Not enough coins!");
+			this.upgradeMax.setText(Messages.getString("UpgradeSoldiersDefense.notEnoughCoins")); //$NON-NLS-1$
 		}
 	}
 
 	private void initUpgradeOnce() {
 		if (this.clan.getSoldiersDefenseLevel() == 1000) {
 			this.upgradeOnce.setEnabled(false);
-			this.upgradeOnce.setText("Maximum value reached!");
+			this.upgradeOnce.setText(Messages.getString("UpgradeSoldiersDefense.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
 		final var coins = this.clan.getCoins();

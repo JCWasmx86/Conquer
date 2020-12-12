@@ -38,7 +38,7 @@ final class ResourceButton extends JPanel {
 		this.resource = resource;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.infoLabel = new JLabel(this.getInfoLabelText(),
-				new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT);
+				new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT); //$NON-NLS-1$
 		this.add(this.infoLabel);
 		this.upgradeThisResource = new JButton();
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
@@ -53,7 +53,7 @@ final class ResourceButton extends JPanel {
 		});
 		this.add(this.upgradeThisResource);
 		this.maximumUpgrade = new JButton();
-		this.maximumUpgrade.setIcon(new ImageResource("max.png"));
+		this.maximumUpgrade.setIcon(new ImageResource("max.png")); //$NON-NLS-1$
 		this.maximumUpgrade.setText(this.getMaxUpgradeText());
 		this.add(this.maximumUpgrade);
 		this.maximumUpgrade.addActionListener(e -> {
@@ -92,7 +92,8 @@ final class ResourceButton extends JPanel {
 
 	private String getInfoLabelText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		return (this.resource == null ? "Defense" : this.resource.getName()) + " Level " + level;
+		return (this.resource == null ? Messages.getString("ResourceButton.defense") : this.resource.getName()) + " " //$NON-NLS-1$
+				+ Messages.getString("ResourceButton.level") + " " + level; //$NON-NLS-1$
 	}
 
 	private String getMaxUpgradeText() {
@@ -108,15 +109,14 @@ final class ResourceButton extends JPanel {
 			}
 			currentLevel++;
 		}
-		return "Maximum upgrade to level " + currentLevel + " for "
-				+ String.format("%.2f", this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN) - currentCoins)
-				+ "coins";
+		return String.format(Messages.getString("ResourceButton.maxUpgrade"), currentLevel, //$NON-NLS-1$
+				this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN) - currentCoins);
 	}
 
 	private String getUpgradeThisResourceText() {
 		final var level = this.city.getLevels().get(this.getIndex());
 		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(this.getIndex()) + 1);
-		return "Upgrade to level " + (level + 1) + ": " + String.format("%.2f", costsForUpgrade) + "coins";
+		return String.format(Messages.getString("ResourceButton.upgrade"), level + 1, costsForUpgrade); //$NON-NLS-1$
 	}
 
 	private void updateLabel(int level) {
@@ -124,10 +124,12 @@ final class ResourceButton extends JPanel {
 			if (level < ResourceButton.MAX_LEVEL) {
 				this.infoLabel.setText(this.getInfoLabelText());
 			} else {
-				this.infoLabel.setText("Maximum value reached!");
+				this.infoLabel.setText(Messages.getString("ResourceButton.maxValueReached")); //$NON-NLS-1$
 			}
 		} else {
-			this.infoLabel.setText((this.resource == null ? "Defense" : this.resource.getName()) + " Level ???");
+			this.infoLabel.setText(
+					(this.resource == null ? Messages.getString("ResourceButton.defense") : this.resource.getName()) //$NON-NLS-1$
+							+ " " + Messages.getString("ResourceButton.level") + " ???"); //$NON-NLS-1$
 		}
 	}
 
@@ -147,10 +149,10 @@ final class ResourceButton extends JPanel {
 			this.maximumUpgrade.setText(this.getMaxUpgradeText());
 		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
 			this.maximumUpgrade.setEnabled(false);
-			this.maximumUpgrade.setText("Maximum value reached!");
+			this.maximumUpgrade.setText(Messages.getString("ResourceButton.maxValueReached")); //$NON-NLS-1$
 		} else {
 			this.maximumUpgrade.setEnabled(false);
-			this.maximumUpgrade.setText("No upgrade available!");
+			this.maximumUpgrade.setText(Messages.getString("ResourceButton.noUpgrade")); //$NON-NLS-1$
 		}
 	}
 
@@ -162,10 +164,10 @@ final class ResourceButton extends JPanel {
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
 			this.upgradeThisResource.setEnabled(false);
-			this.upgradeThisResource.setText("Maximum value reached!");
+			this.upgradeThisResource.setText(Messages.getString("ResourceButton.maxValueReached")); //$NON-NLS-1$
 		} else {
 			this.upgradeThisResource.setEnabled(false);
-			this.upgradeThisResource.setText("No upgrade available!");
+			this.upgradeThisResource.setText(Messages.getString("ResourceButton.noUpgrade")); //$NON-NLS-1$
 		}
 	}
 }
