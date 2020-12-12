@@ -37,10 +37,10 @@ final class GiftCallback implements PlayerGiftCallback {
 			StrategyObject strategyObject) {
 		final var jframe = new JFrame();
 		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));
-		jframe.setTitle(source.getName() + " offers you a gift");
+		jframe.setTitle(String.format(Messages.getString("GiftCallback.offersAGift"), source.getName())); //$NON-NLS-1$
 		jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() != 0) {
-			final var jlabel = new JLabel(gift.getNumberOfCoins() + " coins");
+			final var jlabel = new JLabel(gift.getNumberOfCoins() + Messages.getString("GiftCallback.coins")); //$NON-NLS-1$
 			jframe.add(jlabel);
 		}
 		for (final var v : gift.getMap().entrySet()) {
@@ -66,7 +66,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				GiftCallback.this.accept();
 			}
 		});
-		accept.setText("Accept");
+		accept.setText(Messages.getString("GiftCallback.accept")); //$NON-NLS-1$
 		final var decline = new JButton(new AbstractAction() {
 			private static final long serialVersionUID = 5614286737761253933L;
 
@@ -75,7 +75,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				jframe.setVisible(false);
 			}
 		});
-		decline.setText("Decline");
+		decline.setText(Messages.getString("GiftCallback.decline")); //$NON-NLS-1$
 		buttonPanel.add(accept);
 		buttonPanel.add(decline);
 		jframe.setAlwaysOnTop(true);
