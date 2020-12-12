@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 import org.jel.game.utils.Logger;
 
+/**
+ * A class with some shared utility methods.
+ */
 public final class Shared {
 	/**
 	 * Describes the directory with all data of the game. (E.g. configuration files,
@@ -349,8 +352,8 @@ public final class Shared {
 	 * @param level
 	 * @return New offense or defense strength.
 	 */
-	public static double newPowerOfSoldiersForOffenseAndDefense(final int x) {
-		return Math.sqrt(Math.log(x) + (4 * x)) / 50;
+	public static double newPowerOfSoldiersForOffenseAndDefense(final int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
 	/**

@@ -16,7 +16,7 @@ public final class ImageResource implements Icon {
 	/**
 	 * Constructs a new ImageResource with the specified icon and loads it.
 	 *
-	 * @param string The icon.
+	 * @param string The icon. If it wasn't found, an {@link IllegalArgumentException} will be thrown.
 	 */
 	public ImageResource(String string) {
 		var url = ClassLoader.getSystemResource(string);
