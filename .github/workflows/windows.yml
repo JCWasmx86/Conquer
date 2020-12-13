@@ -28,4 +28,10 @@ jobs:
             mingw-w64-x86_64-headers-git
       - name: Run a multi-line script
         run: |
+          echo "pwd"
+          pwd
+          echo "ls"
+          ls
+          echo "find"
+          find
           ./buildConquer
