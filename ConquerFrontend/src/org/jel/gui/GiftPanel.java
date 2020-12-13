@@ -89,11 +89,15 @@ final class GiftPanel extends JPanel {
 						.collect(Collectors.toList());
 				final var model = new DefaultComboBoxModel<>(list.toArray(new String[0]));
 				GiftPanel.this.box.setModel(model);
-				if (list.get(selectedIndex).equals(selectedObject)) {
-					this.box.setSelectedIndex(selectedIndex);
-				} else {
-					final var index = list.indexOf(selectedObject);
-					this.box.setSelectedIndex(index == -1 ? 0 : index);
+				try {
+					if (list.get(selectedIndex).equals(selectedObject)) {
+						this.box.setSelectedIndex(selectedIndex);
+					} else {
+						final var index = list.indexOf(selectedObject);
+						this.box.setSelectedIndex(index == -1 ? 0 : index);
+					}
+				} catch (IndexOutOfBoundsException ioobe) {
+					Shared.LOGGER.exception(ioobe);
 				}
 			}
 
