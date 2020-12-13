@@ -21,7 +21,7 @@ jobs:
         run: |
           sudo apt update
           sudo rm /usr/bin/gcc
-          sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev
+          sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev musescore3
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
       - name: Multiple commands
         run: |
