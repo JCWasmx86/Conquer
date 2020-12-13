@@ -29,10 +29,14 @@ jobs:
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-dlfcn
             mingw-w64-x86_64-headers-git
+            zip
+            unzip
       - name: Run a multi-line script
         run: |
           echo $JAVA_HOME
           wget https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
           mv MuseScorePortable-3.5.2.311459983-x86.paf.exe musescore3.exe
-          export PATH=$PATH:.
+          export PATH=.:$PATH:.
+          export QT_QPA_PLATFORM=offscreen
+          musescore3 --help
           ./buildConquer
