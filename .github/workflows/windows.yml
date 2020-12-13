@@ -25,5 +25,4 @@ jobs:
             mingw-w64-x86_64-headers-git
       - name: Run a multi-line script
         run: |
-          msys2 -c chmod +x buildConquer
           msys2 -c time ./buildConquer
