@@ -67,7 +67,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	}
 
 	private String getOneLevelString() {
-		return String.format(Messages.getString("UpgradeSoldiersDefense.upgradeToLevel"), //$NON-NLS-1$
+		return String.format(Messages.getString("Shared.upgradeToLevel"), //$NON-NLS-1$
 				(this.clan.getSoldiersDefenseLevel() + 1),
 				Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersDefenseLevel() + 1)); // $NON-NLS-1$
 	}
@@ -75,7 +75,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	private void initUpgradeMax() {
 		if (this.clan.getSoldiersDefenseLevel() == 1000) {
 			this.upgradeMax.setEnabled(false);
-			this.upgradeMax.setText(Messages.getString("UpgradeSoldiersDefense.maxValueReached")); //$NON-NLS-1$
+			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
 		final var count = Shared.maxLevelsAddOffenseDefenseUpgrade(this.clan.getSoldiersDefenseLevel(),
@@ -91,17 +91,17 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 		});
 		this.upgradeMax.setEnabled(count > 1);
 		if (count > 1) {
-			this.upgradeMax.setText(String.format(Messages.getString("UpgradeSoldiersDefense.upgradeToSpecifiedLevel"), //$NON-NLS-1$
+			this.upgradeMax.setText(String.format(Messages.getString("Shared.upgradeToSpecifiedLevel"), //$NON-NLS-1$
 					((this.clan.getSoldiersDefenseLevel() + count) - 1)));
 		} else {
-			this.upgradeMax.setText(Messages.getString("UpgradeSoldiersDefense.notEnoughCoins")); //$NON-NLS-1$
+			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); //$NON-NLS-1$
 		}
 	}
 
 	private void initUpgradeOnce() {
 		if (this.clan.getSoldiersDefenseLevel() == 1000) {
 			this.upgradeOnce.setEnabled(false);
-			this.upgradeOnce.setText(Messages.getString("UpgradeSoldiersDefense.maxValueReached")); //$NON-NLS-1$
+			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
 		final var coins = this.clan.getCoins();

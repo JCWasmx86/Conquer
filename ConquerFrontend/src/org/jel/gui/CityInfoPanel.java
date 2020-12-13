@@ -71,20 +71,20 @@ class CityInfoPanel extends JPanel implements ActionListener {
 			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON-NLS-1$ //$NON-NLS-2$
 					+ "</font></body></html>"; //$NON-NLS-1$
 		}
-		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("CityInfoPanel.name")) //$NON-NLS-1$ //$NON-NLS-2$
+		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name")) //$NON-NLS-1$ //$NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
-				.append(this.city.getName()).append("<br>").append(Messages.getString("CityInfoPanel.clan")) //$NON-NLS-1$ //$NON-NLS-2$
+				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan")) //$NON-NLS-1$ //$NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
 				.append(this.city.getInfo().getClanNames().get(this.city.getClanId())).append("<br>") //$NON-NLS-1$
-				.append(Messages.getString("CityInfoPanel.soldiers")) //$NON-NLS-1$
+				.append(Messages.getString("Shared.soldiers")) //$NON-NLS-1$
 				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
-				.append(Messages.getString("CityInfoPanel.people")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("Shared.people")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(this.city.getNumberOfPeople()).append("<br>") //$NON-NLS-1$
-				.append(Messages.getString("CityInfoPanel.defense")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("Shared.defense")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.city.getDefense())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
-				.append(Messages.getString("CityInfoPanel.defenseBonus")) //$NON-NLS-1$
+				.append(Messages.getString("Shared.defenseBonus")) //$NON-NLS-1$
 				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				.append(Messages.getString("CityInfoPanel.growth")) //$NON-NLS-1$
+				.append(Messages.getString("Shared.growth")) //$NON-NLS-1$
 				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo() //$NON-NLS-1$ //$NON-NLS-2$
 						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));

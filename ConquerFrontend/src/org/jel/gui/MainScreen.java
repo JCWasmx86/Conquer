@@ -65,7 +65,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		menu.setMaximumSize(new Dimension(100, 25));
 		final var settings = new JMenu(Messages.getString("MainScreen.settings")); //$NON-NLS-1$
-		final var strategiesAndPlugins = new JMenuItem(Messages.getString("MainScreen.strategiesAndPlugins")); //$NON-NLS-1$
+		final var strategiesAndPlugins = new JMenuItem(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
 		final var exit = new JMenuItem(Messages.getString("MainScreen.exit")); //$NON-NLS-1$

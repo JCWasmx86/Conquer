@@ -52,7 +52,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 	private JList<String> plugins;
 
 	private void init() {
-		this.setTitle(Messages.getString("StrategiesAndPluginsDialog.strategiesAndPlugins")); //$NON-NLS-1$
+		this.setTitle(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo(false);
 		this.pluginNamesListCopy = new ArrayList<>(this.context.getPluginNames());

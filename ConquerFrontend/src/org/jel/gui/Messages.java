@@ -12,6 +12,7 @@ final class Messages {
 		try {
 			return Messages.RESOURCE_BUNDLE.getString(key);
 		} catch (final MissingResourceException e) {
+			e.printStackTrace();
 			return '!' + key + '!';
 		}
 	}

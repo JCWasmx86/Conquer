@@ -65,7 +65,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	private Intro() {
 		this.setSize(600, 600);
 		this.setResizable(false);
-		this.sound = new Sound(Messages.getString("Intro.4")); //$NON-NLS-1$
+		this.sound = new Sound("Intro.wav"); //$NON-NLS-1$
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.timer.start();
@@ -162,8 +162,10 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			try {
 				this.sound.play();
 			} catch (final Exception exc) {
+				exc.printStackTrace();
 				Shared.LOGGER.exception(exc);
 			}
+			
 			while (this.sound.isPlaying()) {
 				try {
 					Thread.sleep(1000);

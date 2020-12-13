@@ -55,12 +55,13 @@ public class Sound implements LineListener, Serializable {
 			final var audioStream = AudioSystem.getAudioInputStream(url);
 			final var format = audioStream.getFormat();
 			final var info = new DataLine.Info(Clip.class, format);
+			this.isPlaying = true;
 			this.audioClip = (Clip) AudioSystem.getLine(info);
 			this.audioClip.addLineListener(this);
 			this.audioClip.open(audioStream);
 			this.audioClip.start();
-			this.isPlaying = true;
 		} catch (final Exception e) {
+			this.isPlaying = false;
 			throw new IllegalArgumentException(e);
 		}
 	}
