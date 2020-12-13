@@ -37,6 +37,7 @@ if ! command -v musescore3 &> /dev/null; then
 else
 	echo Found musescore
 	export MUSESCORE=`type -p musescore3`
+	echo Musescore=$MUSESCORE
 fi
 mkdir conquer-dist
 cd conquer-dist
