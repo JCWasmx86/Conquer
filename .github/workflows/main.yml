@@ -20,6 +20,8 @@ jobs:
       - name: Run java 
         run: java --version
       - name: Run a multi-line script
+      - name: Run ls
+        run: ls
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
