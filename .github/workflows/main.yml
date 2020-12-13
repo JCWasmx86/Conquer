@@ -25,7 +25,7 @@ jobs:
           sudo rm /usr/bin/gcc
           sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-      - name: Multiple commands
+      - name: Build conquer
         run: |
           gcc --version
           make --help
@@ -34,3 +34,8 @@ jobs:
           musescore3 --help
           chmod +x buildConquer
           time ./buildConquer
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: .deb file
+          path: conquer-dist/conquer.deb
