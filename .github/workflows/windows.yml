@@ -30,8 +30,10 @@ jobs:
         run: |
           echo "pwd"
           pwd
+          echo $JAVA_HOME
+          echo JAVA_HOME
           echo "ls"
           ls
           echo "find"
-          find
+          find ../../../
           ./buildConquer
