@@ -35,7 +35,7 @@ final class MoneySlider extends JPanel {
 	}
 
 	private String getText() {
-		return Messages.getString("MoneySlider.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
+		return Messages.getString("Shared.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
 				+ String.format("%.2f", (0.01 * this.slider.getValue()) * this.game.getClan(0).getCoins()); //$NON-NLS-1$
 	}
 

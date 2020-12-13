@@ -58,7 +58,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
 					jl = new JLabel(value.clanName()
-							+ (index == Shared.PLAYER_CLAN ? " " + Messages.getString("LevelInfo.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							+ (index == Shared.PLAYER_CLAN ? " " + Messages.getString("Shared.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					jl.setForeground(value.color());
 					jl.setFont(jl.getFont().deriveFont(35F));
 					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));

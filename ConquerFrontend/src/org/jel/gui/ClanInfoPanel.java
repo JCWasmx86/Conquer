@@ -64,12 +64,12 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 
 	private String generateText() {
 		final var sb = new StringBuilder("<html><body>"); //$NON-NLS-1$
-		sb.append(Messages.getString("ClanInfoPanel.name")).append(": ").append(this.clan.getName()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers")) //$NON-NLS-1$
 				.append(": ").append(this.getNumber(City::getNumberOfSoldiers)).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(this.getNumber(City::getNumberOfPeople)).append("<br>") //$NON-NLS-1$
-				.append(Messages.getString("ClanInfoPanel.coins")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(Messages.getString("Shared.coins")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.clan.getCoins())) //$NON-NLS-1$
 				.append(this.coinsPerRound());
 		for (final var r : Resource.values()) {

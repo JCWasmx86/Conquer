@@ -46,7 +46,7 @@ import org.jel.gui.utils.LoopPlayer;
  * </ol>
  */
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
-	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle"); //$NON-NLS-1$
+	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle")+" "; //$NON-NLS-1$
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient Game game;
 	private final Map<City, CityLabel> labels = new HashMap<>();
@@ -176,7 +176,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
-				Messages.getString("GameFrame.coins") + ": " + this.game.getCoins().get(Shared.PLAYER_CLAN)); //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("Shared.coins") + ": " + this.game.getCoins().get(Shared.PLAYER_CLAN)); //$NON-NLS-1$ //$NON-NLS-2$
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
 		run.addActionListener(a -> {
 			run.setEnabled(false);
@@ -207,7 +207,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 		this.coinsLabelUpdateThread = new Thread(() -> {
 			while (true) {
-				coinsLabel.setText(Messages.getString("GameFrame.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
+				coinsLabel.setText(Messages.getString("Shared.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
 						+ String.format("%.2f%n", this.game.getCoins().get(Shared.PLAYER_CLAN))); //$NON-NLS-1$
 				try {
 					Thread.sleep(20);
