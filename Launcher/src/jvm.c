@@ -63,7 +63,7 @@ char *generateClasspath(Configuration configuration) {
 			"\\Conquer\\Conquer_frontend.jar");
 #endif
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
-		sprintf(ret, "%s%s%s", ret, configuration->classpaths[i], &c);
+		sprintf(ret, "%s%s%s", ret, configuration->classpaths[i], c);
 	}
 	char *base = getBaseDirectory();
 	char *libs = calloc(strlen(base) + 10, 1);
