@@ -15,6 +15,9 @@ jobs:
         shell: msys2 {0}
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1.4.3
+        with:
+            java-version: 15
       - uses: msys2/setup-msys2@v2
         with:
           update: true
@@ -28,12 +31,5 @@ jobs:
             mingw-w64-x86_64-headers-git
       - name: Run a multi-line script
         run: |
-          echo "pwd"
-          pwd
           echo $JAVA_HOME
-          echo JAVA_HOME
-          echo "ls"
-          ls
-          echo "find"
-          find ../../../
           ./buildConquer
