@@ -19,7 +19,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run java 
         run: java --version
-      - name: Run a multi-line script
       - name: Run ls
         run: ls
       - name: Multiple commands
