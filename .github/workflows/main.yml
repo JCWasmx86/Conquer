@@ -23,5 +23,5 @@ jobs:
         run: ls
       - name: Multiple commands
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          gcc --version
+          make
