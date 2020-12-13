@@ -1,0 +1,30 @@
+name: Windows
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            git
+            base-devel
+            mingw-w64-x86_64-libarchive
+            mingw-w64-x86_64-curl
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-dlfcn
+            mingw-w64-x86_64-headers-git
+      - name: Run a multi-line script
+        run: |
+          chmod +x buildConquer
+          time ./buildConquer
