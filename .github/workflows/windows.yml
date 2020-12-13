@@ -38,5 +38,5 @@ jobs:
           mv MuseScorePortable-3.5.2.311459983-x86.paf.exe musescore3.exe
           export PATH=.:$PATH:.
           export QT_QPA_PLATFORM=offscreen
-          musescore3 --help
+          ls
           ./buildConquer
