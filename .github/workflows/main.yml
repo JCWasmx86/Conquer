@@ -27,6 +27,7 @@ jobs:
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
       - name: Multiple commands
         run: |
+          echo "allowed_users = anybody" >>/etc/X11/Xwrapper.config
           startxfce4
           export DISPLAY=":0"
           gcc --version
