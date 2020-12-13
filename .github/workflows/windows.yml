@@ -32,4 +32,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo $JAVA_HOME
+          wget https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+          mv https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe musescore3.exe
+          export PATH=$PATH:.
           ./buildConquer
