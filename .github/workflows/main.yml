@@ -27,4 +27,5 @@ jobs:
         run: |
           gcc --version
           make --help
+          dpkg-deb --help
           
