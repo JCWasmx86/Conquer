@@ -13,9 +13,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - uses: actions/checkout@v2 actions/setup-java@v1.4.3
+        with:
+          java-version: 15
+      - name: Run java 
+        run: java --version
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
