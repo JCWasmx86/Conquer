@@ -10,6 +10,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
       - uses: actions/checkout@v2
       - uses: msys2/setup-msys2@v2
@@ -25,4 +28,4 @@ jobs:
             mingw-w64-x86_64-headers-git
       - name: Run a multi-line script
         run: |
-          msys2 -c time ./buildConquer
+          ./buildConquer
