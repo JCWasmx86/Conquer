@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/usr/bin/env bash
 . "${JAVA_HOME}"/release
 major=$(echo $JAVA_VERSION | cut -d. -f1)
 if [ "$major" == "15" ]; then
