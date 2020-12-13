@@ -18,7 +18,7 @@ jobs:
             java-version: 15
       - uses: actions/checkout@v2
       - name: Setup env
-        run: sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev
+        run: sudo apt update&&sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev
       - name: Multiple commands
         run: |
           gcc --version
