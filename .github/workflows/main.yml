@@ -34,8 +34,8 @@ jobs:
           musescore3 --help
           chmod +x buildConquer
           time ./buildConquer
-      - name: Archive code coverage results
+      - name: Upload results
         uses: actions/upload-artifact@v2
         with:
-          name: .deb file
+          name: Build result
           path: conquer-dist/conquer.deb
