@@ -1,0 +1,36 @@
+name: Build
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/setup-java@v1.4.3
+        with:
+            java-version: 15
+      - uses: actions/checkout@v2
+      - name: Setup env
+        run: |
+          sudo apt update
+          sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
+          sudo apt-get update
+          sudo rm /usr/bin/gcc
+          sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3
+          sudo ln /usr/bin/gcc-10 /usr/bin/gcc
+      - name: Multiple commands
+        run: |
+          gcc --version
+          make --help
+          export QT_QPA_PLATFORM=offscreen
+          dpkg-deb --help
+          musescore3 --help
+          chmod +x buildConquer
+          time ./buildConquer
