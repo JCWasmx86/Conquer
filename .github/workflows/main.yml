@@ -17,11 +17,10 @@ jobs:
         with:
             java-version: 15
       - uses: actions/checkout@v2
-      - name: Run java 
-        run: java --version
-      - name: Run ls
-        run: ls
+      - name: Setup env
+        run: sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev
       - name: Multiple commands
         run: |
           gcc --version
-          make
+          make --help
+          
