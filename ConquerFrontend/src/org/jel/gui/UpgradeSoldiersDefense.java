@@ -89,8 +89,8 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 						.upgradeSoldiersDefenseFully((byte) UpgradeSoldiersDefense.this.clan.getId());
 			}
 		});
-		this.upgradeMax.setEnabled(count > 1);
-		if (count > 1) {
+		this.upgradeMax.setEnabled(count > 0);
+		if (count > 0) {
 			this.upgradeMax.setText(String.format(Messages.getString("Shared.upgradeToSpecifiedLevel"), //$NON-NLS-1$
 					((this.clan.getSoldiersDefenseLevel() + count) - 1)));
 		} else {

@@ -85,8 +85,8 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 				UpgradeSoldiersPanel.this.game.upgradeSoldiersFully((byte) UpgradeSoldiersPanel.this.clan.getId());
 			}
 		});
-		this.upgradeMax.setEnabled(count > 1);
-		if (count > 1) {
+		this.upgradeMax.setEnabled(count > 0);
+		if (count > 0) {
 			this.upgradeMax.setText(String.format(Messages.getString("Shared.upgradeToSpecifiedLevel"), //$NON-NLS-1$
 					((count + this.clan.getSoldiersLevel()) - 1)));
 		} else {
