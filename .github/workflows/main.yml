@@ -27,11 +27,12 @@ jobs:
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
       - name: Multiple commands
         run: |
-          echo "allowed_users = anybody" >>/etc/X11/Xwrapper.config
-          startxfce4
-          export DISPLAY=":0"
+          #echo "allowed_users = anybody" >>/etc/X11/Xwrapper.config
+          #startxfce4
+          #export DISPLAY=":0"
           gcc --version
           make --help
+          export QT_QPA_PLATFORM=offscreen
           dpkg-deb --help
           musescore3 --help
           
