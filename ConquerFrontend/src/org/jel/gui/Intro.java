@@ -165,7 +165,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 				exc.printStackTrace();
 				Shared.LOGGER.exception(exc);
 			}
-			
+
 			while (this.sound.isPlaying()) {
 				try {
 					Thread.sleep(1000);
