@@ -42,7 +42,6 @@ public class Foo {
 Encapsulate as much as possible and prefer the usage of Streams and Lambda-expressions over loops.
 Make sure that each method only has one responsibility.
 
-
 ### Properties files for translations
 
 These should be sorted alphabetically (`sort -o foo.properties foo.properties`)
