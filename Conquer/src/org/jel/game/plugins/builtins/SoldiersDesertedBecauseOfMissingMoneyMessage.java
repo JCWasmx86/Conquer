@@ -1,5 +1,7 @@
 package org.jel.game.plugins.builtins;
 
+import java.text.MessageFormat;
+
 import org.jel.game.data.Clan;
 import org.jel.game.data.Shared;
 import org.jel.game.messages.Message;
@@ -18,6 +20,7 @@ public record SoldiersDesertedBecauseOfMissingMoneyMessage(Clan clan, long numbe
 
 	@Override
 	public String getMessageText() {
-		return this.numberOfDesertedSoldiers + " soldiers deserted because they weren't paid!";
+		return MessageFormat.format(MoneyAnalyzerMessages.getString("MoneyAnalyzer.message"),
+				this.numberOfDesertedSoldiers);
 	}
 }

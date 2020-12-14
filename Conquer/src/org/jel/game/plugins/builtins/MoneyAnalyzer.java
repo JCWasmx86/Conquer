@@ -21,7 +21,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 
 	@Override
 	public String getName() {
-		return "MoneyAnalyzer";
+		return "MoneyAnalyzer"; //$NON-NLS-1$
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 
 	@Override
 	public void moneyPaid(final List<City> cities, final Clan clan) {
-		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) {
+		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) { //$NON-NLS-1$
 			return;
 		}
 		if (clan.getCoins() > 0) {

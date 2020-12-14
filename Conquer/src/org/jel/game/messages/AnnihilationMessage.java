@@ -11,6 +11,7 @@ public record AnnihilationMessage(City src, City destination, long numberOfAttac
 
 	@Override
 	public String getMessageText() {
-		return Messages.getMessage("Message.annihilation", this.src.getName(),this.destination.getName(),this.numberOfAttackers);
+		return Messages.getMessage("Message.annihilation", this.src.getName(), this.destination.getName(),
+				this.numberOfAttackers);
 	}
 }

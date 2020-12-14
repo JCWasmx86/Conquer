@@ -1,5 +1,7 @@
 package org.jel.game.plugins.builtins;
 
+import java.text.MessageFormat;
+
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Shared;
@@ -19,7 +21,7 @@ public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCivilia
 
 	@Override
 	public String getMessageText() {
-		return this.numberOfCiviliansDied + " residents of " + this.city.getName()
-				+ " died because of missing resources";
+		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.civilians"), //$NON-NLS-1$
+				this.numberOfCiviliansDied, this.city.getName());
 	}
 }
