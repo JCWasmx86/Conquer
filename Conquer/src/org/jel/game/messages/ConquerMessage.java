@@ -1,5 +1,6 @@
 package org.jel.game.messages;
 
+import org.jel.game.Messages;
 import org.jel.game.data.City;
 
 public record ConquerMessage(City src, City destination, long numberOfAttackers) implements Message {
@@ -15,7 +16,6 @@ public record ConquerMessage(City src, City destination, long numberOfAttackers)
 
 	@Override
 	public String getMessageText() {
-		return this.src.getName() + " conquered " + this.destination.getName() + " with " + this.numberOfAttackers
-				+ " soldiers.";
+		return Messages.getMessage("Message.conquered", this.src.getName(),this.destination.getName(),this.numberOfAttackers);
 	}
 }

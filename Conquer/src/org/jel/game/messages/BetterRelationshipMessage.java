@@ -1,5 +1,6 @@
 package org.jel.game.messages;
 
+import org.jel.game.Messages;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Shared;
 
@@ -11,8 +12,7 @@ public record BetterRelationshipMessage(Clan first, Clan second, double oldValue
 
 	@Override
 	public String getMessageText() {
-		return this.first.getName() + " and " + this.second.getName() + " improved their relationship by "
-				+ String.format("%.2f", this.newValue - this.oldValue) + " points (Now "
-				+ String.format("%.2f", this.newValue) + " points)";
+		return Messages.getMessage("Message.betterRelationship", this.first.getName(), this.second.getName(),
+				String.format("%.2f", this.newValue - this.oldValue), String.format("%.2f", this.newValue));
 	}
 }

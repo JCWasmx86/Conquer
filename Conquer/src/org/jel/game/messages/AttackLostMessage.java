@@ -1,5 +1,6 @@
 package org.jel.game.messages;
 
+import org.jel.game.Messages;
 import org.jel.game.data.City;
 
 public record AttackLostMessage(City src, City destination, long numberOfAttackers) implements Message {
@@ -15,7 +16,6 @@ public record AttackLostMessage(City src, City destination, long numberOfAttacke
 
 	@Override
 	public String getMessageText() {
-		return this.src.getName() + " attacked " + this.destination.getName() + " with " + this.numberOfAttackers
-				+ " soldiers and lost.";
+		return Messages.getMessage("Message.attackLost", this.src.getName(),this.destination.getName(),this.numberOfAttackers);
 	}
 }
