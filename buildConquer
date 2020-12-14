@@ -47,6 +47,7 @@ mkdir music
 cd ../Conquer
 shopt -s dotglob
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
+cp src/org/jel/game/messages.properties ../conquer-dist/backend/org/jel/game/messages.properties
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
 cp -rv images ../conquer-dist/frontend
