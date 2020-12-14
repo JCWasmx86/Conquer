@@ -13,6 +13,6 @@ public enum RandomEvent {
 	}
 
 	public String getMessage() {
-		return propertyName;
+		return this.propertyName;
 	}
 }

@@ -6,7 +6,8 @@ import org.jel.game.Messages;
  * Enumerates all available resources.
  */
 public enum Resource {
-	WHEAT(0, "wheat.png", Messages.getString("Resource.wheat")), FISH(1, "fish.png", Messages.getString("Resource.fish")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	WHEAT(0, "wheat.png", Messages.getString("Resource.wheat")), //$NON-NLS-1$ //$NON-NLS-2$
+	FISH(1, "fish.png", Messages.getString("Resource.fish")), //$NON-NLS-1$ //$NON-NLS-2$
 	WOOD(2, "wood.png", Messages.getString("Resource.wood")), //$NON-NLS-1$ //$NON-NLS-2$
 	COAL(3, "coal.png", Messages.getString("Resource.coal")), MEAT(4, "meat.png", Messages.getString("Resource.meat")), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 	IRON(5, "iron.png", Messages.getString("Resource.iron")), //$NON-NLS-1$ //$NON-NLS-2$

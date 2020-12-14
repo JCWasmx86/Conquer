@@ -1,5 +1,7 @@
 package org.jel.game.plugins.builtins;
 
+import java.text.MessageFormat;
+
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Shared;
@@ -19,7 +21,7 @@ public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSold
 
 	@Override
 	public String getMessageText() {
-		return this.numberOfSoldiersDeserted + " soldiers deserted in " + this.city.getName()
-				+ " because of missing resources";
+		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.soldiers"), //$NON-NLS-1$
+				this.numberOfSoldiersDeserted, this.city.getName());
 	}
 }

@@ -16,6 +16,7 @@ public record AttackLostMessage(City src, City destination, long numberOfAttacke
 
 	@Override
 	public String getMessageText() {
-		return Messages.getMessage("Message.attackLost", this.src.getName(),this.destination.getName(),this.numberOfAttackers);
+		return Messages.getMessage("Message.attackLost", this.src.getName(), this.destination.getName(),
+				this.numberOfAttackers);
 	}
 }

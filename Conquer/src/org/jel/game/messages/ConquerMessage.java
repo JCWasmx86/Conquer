@@ -16,6 +16,7 @@ public record ConquerMessage(City src, City destination, long numberOfAttackers)
 
 	@Override
 	public String getMessageText() {
-		return Messages.getMessage("Message.conquered", this.src.getName(),this.destination.getName(),this.numberOfAttackers);
+		return Messages.getMessage("Message.conquered", this.src.getName(), this.destination.getName(),
+				this.numberOfAttackers);
 	}
 }
