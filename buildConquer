@@ -48,6 +48,7 @@ cd ../Conquer
 shopt -s dotglob
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
 cp src/org/jel/game/messages.properties ../conquer-dist/backend/org/jel/game/messages.properties
+cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
 cp -rv images ../conquer-dist/frontend
@@ -65,17 +66,17 @@ java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist
 mkdir tmp
 cd backend
-jar -cvf ../tmp/ChangeCitiesMinds.jar org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class
-rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class
+jar -cvf ../tmp/ChangeCitiesMinds.jar org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds.properties
+rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds.properties
 jar -cvf ../tmp/DefaultMusic.jar org/jel/game/plugins/builtins/DefaultMusic.class
 rm org/jel/game/plugins/builtins/DefaultMusic.class
 jar -cvf ../tmp/IncreaseGrowth.jar org/jel/game/plugins/builtins/IncreaseGrowth.class
 rm org/jel/game/plugins/builtins/IncreaseGrowth.class
-jar -cvf ../tmp/MoneyAnalyzer.jar org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class
-rm org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class
+jar -cvf ../tmp/MoneyAnalyzer.jar org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer.properties
+rm org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer.properties
 jar -cvf ../tmp/PeriodicGrowthChange.jar org/jel/game/plugins/builtins/PeriodicGrowthChange.class
 rm org/jel/game/plugins/builtins/PeriodicGrowthChange.class
-jar -cvf ../tmp/ResourceAnalyzer.jar org/jel/game/plugins/builtins/*.class
+jar -cvf ../tmp/ResourceAnalyzer.jar org/jel/game/plugins/builtins/*.class org/jel/game/plugins/builtins/*.properties
 rm -rf org/jel/game/plugins/builtins/
 jar -cvf ../tmp/SortedStrategy.jar org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
