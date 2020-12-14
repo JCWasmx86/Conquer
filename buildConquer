@@ -162,7 +162,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The strategy game conquer >>control
 	cd ../..
-	mv Conquer.jar Conquer_frontend.jar conquer/usr/share/java
+	cp Conquer.jar Conquer_frontend.jar conquer/usr/share/java
 	mv launcher conquer/usr/bin
 	dpkg-deb --build conquer
 else
