@@ -10,3 +10,4 @@ Replacements for all images in `Conquer/images` and `ConquerFrontend/images` are
 2. Bug reports in case you find any bug.
 3. Feedback is appreciated.
 4. Write/enhance a tutorial.
+5. Ideas for new scenarios is always welcome.
