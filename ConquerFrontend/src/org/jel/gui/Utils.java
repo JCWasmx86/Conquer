@@ -5,7 +5,7 @@ public final class Utils {
 
 	}
 
-	public static double format(double d) {
-		return Double.parseDouble(String.format("%.2f", d));
+	public static String format(double d) {
+		return String.format("%.2f", d);
 	}
 }
