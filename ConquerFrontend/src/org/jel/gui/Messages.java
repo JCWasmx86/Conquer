@@ -1,5 +1,6 @@
 package org.jel.gui;
 
+import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -15,6 +16,10 @@ final class Messages {
 			e.printStackTrace();
 			return '!' + key + '!';
 		}
+	}
+
+	public static String getMessage(String key, Object... arguments) {
+		return MessageFormat.format(getString(key), arguments);
 	}
 
 	private Messages() {

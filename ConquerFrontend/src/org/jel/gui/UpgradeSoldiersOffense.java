@@ -62,14 +62,13 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	}
 
 	private String getInfoText() {
-		return String.format(Messages.getString("UpgradeSoldiersOffense.soldiersPower"), //$NON-NLS-1$
-				this.clan.getSoldiersOffenseStrength(), this.clan.getSoldiersOffenseLevel());
+		return Messages.getMessage("UpgradeSoldiersOffense.soldiersPower", //$NON-NLS-1$
+				Utils.format(this.clan.getSoldiersOffenseStrength()), this.clan.getSoldiersOffenseLevel());
 	}
 
 	private String getOneLevelString() {
-		return String.format(Messages.getString("Shared.upgradeToLevel"), //$NON-NLS-1$
-				(this.clan.getSoldiersOffenseLevel() + 1),
-				Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersOffenseLevel() + 1));
+		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersOffenseLevel() + 1),
+				Utils.format(Shared.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersOffenseLevel() + 1)));
 	}
 
 	private void initUpgradeMax() {
@@ -91,8 +90,8 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 		});
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
-			this.upgradeMax.setText(String.format(Messages.getString("Shared.upgradeToSpecifiedLevel"), //$NON-NLS-1$
-					((this.clan.getSoldiersOffenseLevel() + count) - 1)));
+			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel", //$NON-NLS-1$
+					this.clan.getSoldiersOffenseLevel() + count - 1));
 		} else {
 			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); //$NON-NLS-1$
 		}

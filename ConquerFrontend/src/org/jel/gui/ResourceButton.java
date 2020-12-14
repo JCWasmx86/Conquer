@@ -109,14 +109,14 @@ final class ResourceButton extends JPanel {
 			}
 			currentLevel++;
 		}
-		return String.format(Messages.getString("ResourceButton.maxUpgrade"), currentLevel, //$NON-NLS-1$
-				this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN) - currentCoins);
+		return Messages.getMessage("ResourceButton.maxUpgrade", currentLevel, //$NON-NLS-1$
+				Utils.format(this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN) - currentCoins));
 	}
 
 	private String getUpgradeThisResourceText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(this.getIndex()) + 1);
-		return String.format(Messages.getString("Shared.upgradeToLevel"), level + 1, costsForUpgrade); //$NON-NLS-1$
+		final var costsForUpgrade = Utils.format(Shared.costs(this.city.getLevels().get(this.getIndex()) + 1));
+		return Messages.getMessage("Shared.upgradeToLevel", level + 1, costsForUpgrade);//$NON-NLS-1$
 	}
 
 	private void updateLabel(int level) {
@@ -127,8 +127,8 @@ final class ResourceButton extends JPanel {
 				this.infoLabel.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			}
 		} else {
-			this.infoLabel.setText(
-					(this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) //$NON-NLS-1$
+			this.infoLabel
+					.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) //$NON-NLS-1$
 							+ " " + Messages.getString("ResourceButton.level") + " ???"); //$NON-NLS-1$
 		}
 	}

@@ -201,10 +201,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 				this.origin.getNumberOfSoldiers());
 		String prompt;
 		if (this.city.isPlayerCity()) {
-			prompt = String.format(Messages.getString("CityLabel.moveLabel"), //$NON-NLS-1$
+			prompt = Messages.getMessage("CityLabel.moveLabel", //$NON-NLS-1$
 					this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
 		} else {
-			prompt = String.format(Messages.getString("CityLabel.attackLabel"), //$NON-NLS-1$
+			prompt = Messages.getMessage("CityLabel.attackLabel", //$NON-NLS-1$
 					this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
 		}
 		long numberOfSelectedSoldiers = -1;
