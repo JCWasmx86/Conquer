@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//Check whether a specified path contains a java installation. This is checked by looking for bin/java(.exe)
+// Check whether a specified path contains a java installation. This is checked
+// by looking for bin/java(.exe)
 int checkForJava(const char *path) {
 	size_t len = strlen(path);
 	char *p2 = calloc(len + 30, 1);

@@ -9,7 +9,7 @@
 #include <shlobj.h>
 #include <windows.h>
 #endif
-#define NUM_PREDEFINED_ARGS 2
+#define NUM_PREDEFINED_ARGS 3
 char *generateClasspath(Configuration);
 void runJVM(Configuration configuration) {
 	char *classpath = generateClasspath(configuration);
@@ -19,6 +19,7 @@ void runJVM(Configuration configuration) {
 	// Just free the first optionstring.
 	jvmoptions[0].optionString = classpath;
 	jvmoptions[1].optionString = "--enable-preview";
+	jvmoptions[2].optionString = "-XX:+ShowCodeDetailsInExceptionMessages";
 	for (size_t i = 0; i < configuration->numOptions; i++)
 		jvmoptions[NUM_PREDEFINED_ARGS + i].optionString =
 			configuration->classpaths[i];
