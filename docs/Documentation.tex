@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\usepackage{listings}
+\usepackage{minted}
+
+\begin{document}
+\section{Conquer - Programming documentation}
+\subsection{Embedding}
+\textit{Conquer} was designed without any GUI in mind. It can run headless and can for example run on a server, or with a GUI made with Swing or JavaFX.
+\begin{minted}{java}
+XMLReader xmlReader = XMLReader.getInstance();
+List<InstalledScenario> scenarios = xmlReader.readInfo().getInstalledMaps();
+Initializer.INSTANCE().initialize(null);
+for (InstalledScenario scenario : scenarios) {
+	Reader reader = new Reader(scenario.file());//*
+	Game conquerInstance = reader.buildGame();//*
+	GlobalContext context = xmlReader.readInfo();
+	conquerInstance.addContext(context);
+	conquerInstance.init();
+	while (!conquerInstance.onlyOneClanAlive()) {//*
+		conquerInstance.executeActions();
+	}
+}
+\end{minted}
+This sample code initializes Conquer and plays every installed scenario, until only one clan is alive.\newline
+All lines marked with \texttt{//*} can be replaced by custom implementations. (For example \texttt{Reader} can be replaced by making an instance of \texttt{ConquerInfo} from JSON instead of a weird
+binary format).
+What does each line do?\newline
+\begin{minted}{java}
+XMLReader xmlReader = XMLReader.getInstance();
+\end{minted}
+Obtains the singleton-instance for the class \texttt{XMLReader}. It has just one method \texttt{readInfo} that returns the \texttt{GlobalContext} (This means: Installed scenarios,
+installed plugins and strategies).
+\begin{minted}{java}
+Initializer.INSTANCE().initialize(null);
+\end{minted}
+This line initializes the engine. It may for example update the system properties with properties from a file. \texttt{null} can be a \texttt{Consumer<Exception>} that will be called if an exception 
+occurs.
+\begin{minted}{java}
+Reader reader = new Reader(scenario.file());
+\end{minted}
+This line constructs a new \texttt{Reader}. \texttt{scenario.file()} returns the path to the datafile of a scenario that contains everything the \texttt{Reader} needs to know in order to construct a \texttt{Game} object.
+\begin{minted}{java}
+Game conquerInstance = reader.buildGame();
+\end{minted}
+Construct the game from the specified file. In case of an error, \texttt{null} will be returned. (Like invalid values, EOF,...).
+\begin{minted}{java}
+conquerInstance.addContext(context);
+\end{minted}
+\texttt{addContext} binds the \texttt{GlobalContext} read by \texttt{XMLReader} to \texttt{conquerInstance}.
+\begin{minted}{java}
+conquerInstance.init();
+\end{minted}
+\texttt{init} does the final initialization like initializing plugins and binding strategies to clans.
+\begin{minted}{java}
+conquerInstance.executeActions()
+\end{minted}
+\texttt{executeActions} is an umbrella for executing plugins, letting the computer play, produce resources and all other things.\newline
+
+The lists returned by \texttt{xmlReader.readInfo()} are mutable, so you are able to add own plugins or strategies as an embedder.\newline
+If you want to write an own implementation for the engine of Conquer, you just have to implement \texttt{ConquerInfo}.
+
+\subsection{Plugin API}
+A plugin has a lifecycle consisting of four parts:
+\begin{itemize}
+	\item \textbf{Instantiation} Every plugin should have a default constructor (No arguments). It is instantiated with reflection. If you want to do something only one time, write it into a static initializer. \textbf{Will only be called once while the JVM is running!}
+	\item \textbf{Initialization} In this part, \texttt{init(PluginInterface)} will be called. In this method it is allowed to register callback functions. 
+	\item \textbf{Round} Every round, the method \texttt{handle(Graph<City>,Context)} will be called. It is undefined, when it is invoked (Before anything else or at the end of the round).
+	\item \textbf{Exit} In this part, \texttt{exit(Result)} will be called. Use this method for cleanup (Closing file descriptors, streams, write data,...).
+	
+\end{itemize}
+\subsection{Strategy API}
+
+\end{document}
