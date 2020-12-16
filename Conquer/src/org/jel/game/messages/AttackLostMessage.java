@@ -11,7 +11,7 @@ public record AttackLostMessage(City src, City destination, long numberOfAttacke
 
 	@Override
 	public boolean isBadForPlayer() {
-		return this.isPlayerInvolved() && (this.src.getClanId() == 0);
+		return this.isPlayerInvolved() && this.src.getClan().isPlayerClan();
 	}
 
 	@Override

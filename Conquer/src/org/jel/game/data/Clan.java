@@ -203,6 +203,15 @@ public final class Clan {
 	}
 
 	/**
+	 * Returns whether the clan is played by the human player or not
+	 * 
+	 * @return {@code true} if the clan is played by the human.
+	 */
+	public boolean isPlayerClan() {
+		return this.id == Shared.PLAYER_CLAN;
+	}
+
+	/**
 	 * Set the coins.
 	 *
 	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is

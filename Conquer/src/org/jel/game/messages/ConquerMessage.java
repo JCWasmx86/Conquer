@@ -11,7 +11,7 @@ public record ConquerMessage(City src, City destination, long numberOfAttackers)
 
 	@Override
 	public boolean isBadForPlayer() {
-		return this.destination.getClanId() == 0;
+		return this.destination.getClan().isPlayerClan();
 	}
 
 	@Override
