@@ -27,11 +27,7 @@ jobs:
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
       - name: Build conquer
         run: |
-          gcc --version
-          make --help
           export QT_QPA_PLATFORM=offscreen
-          dpkg-deb --help
-          musescore3 --help
           chmod +x buildConquer
           time ./buildConquer
       - name: Upload results
