@@ -2,7 +2,6 @@ package org.jel.game.messages;
 
 import org.jel.game.Messages;
 import org.jel.game.data.Clan;
-import org.jel.game.data.Shared;
 
 public record WorseRelationshipMessage(Clan first, Clan second, double oldValue, double newValue) implements Message {
 	@Override

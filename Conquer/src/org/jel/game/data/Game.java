@@ -42,7 +42,8 @@ import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
 
 /**
- * One of the most important classes as it combines everything.
+ * One of the most important classes as it combines everything. It is a
+ * reference-implementation of {@link ConquerInfo}.
  */
 public final class Game implements ConquerInfo {
 	private static final int MAX_LEVEL = 1000;
