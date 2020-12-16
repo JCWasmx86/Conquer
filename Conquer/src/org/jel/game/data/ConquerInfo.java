@@ -10,6 +10,13 @@ import org.jel.game.plugins.PluginInterface;
  * Another interface providing information.
  */
 public interface ConquerInfo extends StrategyObject, PluginInterface {
+	
+	void addContext(GlobalContext context);
+	
+	void init();
+	
+	void executeActions();
+	
 	Clan getClan(int index);
 
 	List<String> getClanNames();
