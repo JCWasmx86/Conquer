@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
-import org.jel.game.data.Shared;
 import org.jel.game.messages.Message;
 
 public record ClanChangeMessage(City city, Clan oldClan, Clan newClan) implements Message {
@@ -16,11 +15,11 @@ public record ClanChangeMessage(City city, Clan oldClan, Clan newClan) implement
 
 	@Override
 	public boolean isBadForPlayer() {
-		return this.oldClan.getId() == Shared.PLAYER_CLAN;
+		return this.oldClan.isPlayerClan();
 	}
 
 	@Override
 	public boolean isPlayerInvolved() {
-		return (this.oldClan.getId() == Shared.PLAYER_CLAN) || (this.newClan.getId() == Shared.PLAYER_CLAN);
+		return this.oldClan().isPlayerClan() || this.newClan().isPlayerClan();
 	}
 }
