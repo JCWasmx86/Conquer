@@ -23,3 +23,16 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 [General](contributing/general.md) \
 [Contribute as a programmer](contributing/code.md) \
 [Contribute as a non-programmer](contributing/non-code.md)
+
+### Compiling
+
+See [compiling](docs/compiling.md)
+
+### History
+
+*Conquer* first was a project for school. Because I already planned writing a separate frontend, I decoupled the logic/the game engine (In the subdirectory Conquer) from the GUI (Originally written with greenfoot), as
+greenfoot had a lot of limitations and a lot of ugly and spooky code (Like reflection) was required to remove this restrictions. Furthermore the dependence on JavaFX and no package support were quite important.
+
+After I gave my project to the teacher, I started to remove some little greenfoot-specific code in the game-engine and started to write a far, far superior GUI using Java Swing. I improved
+the code structure and made some changes. Around 70% are unchanged and are the original code of my assignment.
+
