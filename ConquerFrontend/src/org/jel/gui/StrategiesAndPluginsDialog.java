@@ -155,9 +155,13 @@ final class StrategiesAndPluginsDialog extends JFrame {
 							Messages.getString("StrategiesAndPluginsDialog.writingFailed") + e1.getLocalizedMessage(), //$NON-NLS-1$
 							Messages.getString("StrategiesAndPluginsDialog.error"), //$NON-NLS-1$
 							JOptionPane.ERROR_MESSAGE);
+					StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);
+					StrategiesAndPluginsDialog.this.reset();
+					return;
 				}
 				StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);
 				StrategiesAndPluginsDialog.this.reset();
+				JOptionPane.showMessageDialog(null, Messages.getString("StrategiesAndPluginsDialog.pleaseRestart"));
 			}
 		});
 		saveChanges.setText(Messages.getString("StrategiesAndPluginsDialog.saveChanges")); //$NON-NLS-1$
