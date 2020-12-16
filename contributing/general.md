@@ -1,4 +1,4 @@
-#General
+# General
 
 Contributing is quite easy and appreciated!
 If you want to help *Conquer*, fork the repository, make your changes and make a pull request.
