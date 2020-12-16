@@ -1074,7 +1074,7 @@ public final class Game implements ConquerInfo {
 			throw new IllegalArgumentException("Destination clan is extinct!");
 		}
 		boolean acceptedGift;
-		if (destination.getId() != Shared.PLAYER_CLAN) {
+		if (!destination.isPlayerClan()) {
 			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift,
 					this.getRelationship(source.getId(), destination.getId()), a -> {
 						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);

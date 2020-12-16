@@ -7,7 +7,7 @@ import org.jel.game.data.Shared;
 public record WorseRelationshipMessage(Clan first, Clan second, double oldValue, double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
-		return this.first.getId() == Shared.PLAYER_CLAN || this.second.getId() == Shared.PLAYER_CLAN;
+		return this.first.isPlayerClan() || this.second.isPlayerClan();
 	}
 
 	@Override
