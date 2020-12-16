@@ -116,4 +116,26 @@ This is an optional piece of data that may be used for holding all required valu
 void update(int currentRound);
 \end{minted}
 This method is called after the clan for the parent \texttt{Strategy} played.
+
+\subsection{Messages}
+
+Messages can be seen like an event. You can add a \texttt{MessageListener} and get notified as soon as any message was fired. This can be used for example to listen for attacks, troop movements or random events.
+\texttt{Message} has several important methods:
+\begin{minted}{java}
+String getMessageText();
+\end{minted}
+This should return a (preferably localized) string with the formatted text. This text may be used for showing it in e.g. an event log.
+\begin{minted}{java}
+boolean isBadForPlayer();
+\end{minted}
+Only used for showing, e.g. a bad message for the player is in red, while a good one is in green.
+\begin{minted}{java}
+boolean isPlayerInvolved();
+\end{minted}
+Allows to sort out the unrelated und for the player useless news.
+\begin{minted}{java}
+boolean shouldBeShownToThePlayer();
+\end{minted}
+Allows to sort out messages that are either debug messages or information that would give the player an unfair advantage.
+
 \end{document}
