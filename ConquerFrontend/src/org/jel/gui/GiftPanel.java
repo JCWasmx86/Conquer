@@ -57,7 +57,7 @@ final class GiftPanel extends JPanel {
 		ms.init();
 		this.add(ms);
 		this.box = new JComboBox<>(
-				this.game.getClans().stream().filter(a -> (a.getId() != Shared.PLAYER_CLAN) && !this.game.isDead(a))
+				this.game.getClans().stream().filter(a -> !a.isPlayerClan() && !this.game.isDead(a))
 						.map(Clan::getName).collect(Collectors.toList()).toArray(new String[0]));
 		final var button = new JButton(Messages.getString("GiftPanel.giveGift")); //$NON-NLS-1$
 		button.addActionListener(a -> {

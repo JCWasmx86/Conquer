@@ -297,7 +297,7 @@ public final class City implements Comparable<City> {
 	 * @return {@code true} if the player owns this city.
 	 */
 	public boolean isPlayerCity() {
-		return this.clan.getId() == Shared.PLAYER_CLAN;
+		return this.clan.isPlayerClan();
 	}
 
 	/**

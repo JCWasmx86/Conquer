@@ -2,7 +2,6 @@ package org.jel.game.messages;
 
 import org.jel.game.Messages;
 import org.jel.game.data.Clan;
-import org.jel.game.data.Shared;
 
 public record ExtinctionMessage(Clan clan) implements Message {
 
@@ -13,16 +12,11 @@ public record ExtinctionMessage(Clan clan) implements Message {
 
 	@Override
 	public boolean isBadForPlayer() {
-		return this.clan.getId() == Shared.PLAYER_CLAN;
+		return this.clan.isPlayerClan();
 	}
 
 	@Override
 	public boolean isPlayerInvolved() {
 		return this.isBadForPlayer();
-	}
-
-	@Override
-	public boolean shouldBeShownToThePlayer() {
-		return this.clan.getId() == Shared.PLAYER_CLAN;
 	}
 }
