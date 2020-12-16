@@ -34,8 +34,9 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo $JAVA_HOME
-          wget https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
-          mv MuseScorePortable-3.5.2.311459983-x86.paf.exe musescore3.exe
+          wget https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScore-3.5.2.311459983-x86_64.msi
+          msiexec /a MuseScore-3.5.2.311459983-x86_64.msi  /qn /norestart
+          ls
           export PATH=`pwd`:$PATH:.
           export QT_QPA_PLATFORM=offscreen
           ls
