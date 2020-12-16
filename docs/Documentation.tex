@@ -69,6 +69,52 @@ A plugin has a lifecycle consisting of four parts:
 	\item \textbf{Exit} In this part, \texttt{exit(Result)} will be called. Use this method for cleanup (Closing file descriptors, streams, write data,...).
 	
 \end{itemize}
+\subsubsection{Callbacks}
+\paragraph{\texttt{AttackHook}s} are called when an attack is executed. The interface has two methods: \texttt{before(City,City,long)} and \texttt{after(City,City,long,AttackResult}). The first one will
+be called as soon as the number of soldiers are determined. The latter one after the attack was executed, clan changes were made and soldiers killed. It contains the result as \texttt{AttackResult}.
+\paragraph{\texttt{MessageListener}s} are called as soon as a message was added to or removed from the EventList. It allows you to react to a huge number of different events like changed relationships, random events and anything else.
+\paragraph{\texttt{MoneyHook}s} will be called after every city generated the coins and all cities did generated them.
+\paragraph{\texttt{MoveHook}s} are executed when soldiers are moved. (Between cities of the same clan).  
+\paragraph{\texttt{RecruitHook}s} allow you to get notified when soldiers are recruited.
+\paragraph{\texttt{ResourceHook}s} are executed for each city after resources were produced.\newline
+
+If you combine this callbacks, you are able to access the state of the game nearly every time it changes.
 \subsection{Strategy API}
+\subsubsection{\texttt{StrategyProvider}}
+Only an instance of \texttt{StrategyProvider} is instantiated initially. It must have a default constructor, otherwise it instantiation may fail. \texttt{StrategyProvider} has two important methods:
+\begin{minted}{java}
+Strategy buildStrategy();
+\end{minted}
+This method returns a new \texttt{Strategy} object that will be used by a clan. A different object has to be returned every time this method is invoked, otherwise some weird things may happen.
+\begin{minted}{java}
+byte getId();
+\end{minted}
+This returns an unique, non-negative identifier for this strategy. If two StrategyProviders return the same identifier, the used strategy is undefined.
+\subsubsection{\texttt{Strategy}}
+\texttt{Strategy} has three important methods:
+\begin{minted}{java}
+void applyStrategy(Clan clan, Graph<City> cities, StrategyObject obj);
+\end{minted}
+This method is called every round. \texttt{clan} is the clan for which the strategy should play. \texttt{cities} are all cities in the scenario and  \texttt{obj} is responsible for executing
+actions like attacks or upgrades.
+\begin{minted}{java}
+boolean acceptGift(Clan sourceClan, Clan destinationClan,
+			Gift gift, double oldValue,
+			DoubleConsumer newValue,
+			StrategyObject strategyObject);
+\end{minted}
+This method is called when one clan wants to give a gift to the clan of the strategy. If the strategy accepts the gift, \texttt{newValue} has to be called with the new relationship value. For example, if the relationship
+was at 50 points and after that it should be 57.5, run \texttt{newValue.accept(57.5);} instead of \texttt{newValue.accept(7.5);}. Furthermore \texttt{true} has to be returned if the gift was accepted.
+If the strategy rejected the gift, \texttt{false} has to be returned and \texttt{newValue::accept} mustn't be called.
+\begin{minted}{java}
+StrategyData getData();
+\end{minted}
+This returns an optional wrapper for everything the strategy needs as storage. This method may return null.
+\subsubsection{\texttt{StrategyData}}
+This is an optional piece of data that may be used for holding all required values. This interface only provides one method:
+\begin{minted}{java}
+void update(int currentRound);
+\end{minted}
+This method is called after the clan for the parent \texttt{Strategy} played.
 
 \end{document}
