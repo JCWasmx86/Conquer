@@ -147,9 +147,41 @@ zip -9 ../Music2.zip libs/sounds/Battle11.wav libs/sounds/Battle12.wav libs/soun
 zip -9 ../Music3.zip libs/sounds/Battle18.wav libs/sounds/Battle19.wav libs/sounds/Battle20.wav libs/sounds/Battle21.wav libs/sounds/Battle22.wav libs/sounds/Battle23.wav
 zip -9 ../Music4.zip libs/sounds/Battle24.wav libs/sounds/Battle25.wav libs/sounds/Battle26.wav libs/sounds/Battle27.wav libs/sounds/Battle28.wav libs/sounds/Battle29.wav
 cd ..
+curl https://raw.githubusercontent.com/curl/curl/master/COPYING>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/libarchive/libarchive/master/COPYING >>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/DaveGamble/cJSON/master/LICENSE >>LICENSE.txt
+echo >>LICENSE.txt
+
+echo MIT License >Conquer.license
+echo >>Conquer.license
+echo Copyright \(c\) 2020 JCWasmx86 >>Conquer.license
+echo >>Conquer.license
+echo Permission is hereby granted, free of charge, to any person obtaining a copy >>Conquer.license
+echo of this software and associated documentation files \(the \"Software\"\), to deal >>Conquer.license
+echo in the Software without restriction, including without limitation the rights >>Conquer.license
+echo to use, copy, modify, merge, publish, distribute, sublicense, and/or sell >>Conquer.license
+echo copies of the Software, and to permit persons to whom the Software is >>Conquer.license
+echo furnished to do so, subject to the following conditions: >>Conquer.license
+echo >>Conquer.license
+echo The above copyright notice and this permission notice shall be included in all >>Conquer.license
+echo copies or substantial portions of the Software. >>Conquer.license
+echo >>Conquer.license
+echo THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR>>Conquer.license
+echo IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,>>Conquer.license
+echo FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE>>Conquer.license
+echo AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER>>Conquer.license
+echo LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,>>Conquer.license
+echo OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE>>Conquer.license
+echo SOFTWARE.>>Conquer.license
+echo >>Conquer.license
 if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer/usr/bin
 	mkdir -p conquer/usr/share/java
+	mkdir -p conquer/usr/share/conquer
 	mkdir -p conquer/DEBIAN
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN
@@ -163,11 +195,15 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	cp Conquer.jar Conquer_frontend.jar conquer/usr/share/java
 	mv launcher conquer/usr/bin
+	cp LICENSE.txt conquer/usr/share/conquer
+	cp Conquer.license conquer/usr/share/conquer
 	dpkg-deb --build conquer
 else
 	cp launcher.exe ../Installer
 	cp Conquer.jar ../Installer
 	cp Conquer_frontend.jar ../Installer
+	cp Conquer.license ../Installer
+	cp LICENSE.txt ../Installer
 	cd ../Installer
 	make clean
 	make

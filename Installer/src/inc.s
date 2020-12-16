@@ -31,3 +31,16 @@ uninstall:
 .align 8
 uninstallSize:
 .int uninstallSize - uninstall
+conquerLicense:
+.incbin Conquer.license
+.global conquerLicenseSize
+.align 8
+conquerLicenseSize:
+.int conquerLicenseSize - conquerLicense
+
+license:
+.incbin LICENSE.txt
+.global licenseSize
+.align 8
+licenseSize:
+.int licenseSize - license

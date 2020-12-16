@@ -1,6 +1,6 @@
 #include <assert.h>
-#include <shlobj.h>
 #include <shfolder.h>
+#include <shlobj.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
@@ -13,6 +13,8 @@ int main() {
 	deleteFile("Conquer.jar");
 	deleteFile("Conquer_frontend.jar");
 	deleteFile("uninstall.exe");
+	deleteFile("Conquer.license");
+	deleteFile("LICENSE.txt");
 	deleteFile("");
 	return EXIT_SUCCESS;
 }
