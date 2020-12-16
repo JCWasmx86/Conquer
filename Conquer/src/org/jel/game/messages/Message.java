@@ -18,6 +18,6 @@ public interface Message {
 	}
 	
 	default boolean shouldBeShownToThePlayer() {
-		return isPlayerInvolved();
+		return this.isPlayerInvolved();
 	}
 }

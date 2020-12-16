@@ -18,6 +18,6 @@ public record WorseRelationshipMessage(Clan first, Clan second, double oldValue,
 	@Override
 	public String getMessageText() {
 		return Messages.getMessage("Message.worseRelationship", this.first.getName(), this.second.getName(),
-				String.format("%.2f", this.newValue - this.oldValue), String.format("%.2f", this.newValue));
+				String.format("%.2f", this.oldValue - this.newValue), String.format("%.2f", this.newValue));
 	}
 }
