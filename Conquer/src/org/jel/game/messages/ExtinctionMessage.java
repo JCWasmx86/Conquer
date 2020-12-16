@@ -21,9 +21,4 @@ public record ExtinctionMessage(Clan clan) implements Message {
 		return this.isBadForPlayer();
 	}
 
-	@Override
-	public boolean shouldBeShownToThePlayer() {
-		return true;
-	}
-
 }

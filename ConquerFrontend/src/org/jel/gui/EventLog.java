@@ -153,20 +153,20 @@ final class EventLog extends JFrame implements MessageListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void added(Message s) {
-		if (s.getMessageText() == null) {
+	public void added(Message message) {
+		if (message.getMessageText() == null||!message.shouldBeShownToThePlayer()) {
 			return;
 		}
-		final var jl = new JLabel(s.getMessageText());
-		final var optional = s.getOptionalIconPath();
+		final var jl = new JLabel(message.getMessageText());
+		final var optional = message.getOptionalIconPath();
 		if (!optional.isEmpty()) {
 			jl.setIcon(new ImageResource(optional.get()));
 		}
 		var c = jl.getForeground();
 		this.defaultColor = new Color(c.getRGB());
-		if (s.isPlayerInvolved()) {
+		if (message.isPlayerInvolved()) {
 			jl.setOpaque(true);
-			if (s.isBadForPlayer()) {
+			if (message.isBadForPlayer()) {
 				c = Color.RED;
 				if (!this.showBad.isSelected()) {
 					jl.setVisible(false);
