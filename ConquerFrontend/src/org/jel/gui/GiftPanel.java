@@ -96,7 +96,7 @@ final class GiftPanel extends JPanel {
 						final var index = list.indexOf(selectedObject);
 						this.box.setSelectedIndex(index == -1 ? 0 : index);
 					}
-				} catch (IndexOutOfBoundsException ioobe) {
+				} catch (final IndexOutOfBoundsException ioobe) {
 					Shared.LOGGER.exception(ioobe);
 				}
 			}

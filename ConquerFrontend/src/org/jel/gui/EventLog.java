@@ -116,6 +116,28 @@ final class EventLog extends JFrame implements MessageListener {
 		menu.add(this.showNeutral);
 		this.initShowNegative();
 		menu.add(this.showBad);
+		final var clearButton = new JMenuItem();
+		clearButton.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 8790065267838524992L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (final var c : EventLog.this.contentPane.getViewport().getComponents()) {
+					if (c instanceof JPanel panel) {
+						for (final var cc : panel.getComponents()) {
+							panel.remove(cc);
+						}
+					}
+				}
+				EventLog.this.revalidate();
+				EventLog.this.repaint();
+				EventLog.this.pack();
+			}
+		});
+		clearButton.setAccelerator(
+				KeyStroke.getKeyStroke(KeyEvent.VK_K, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		clearButton.setText(Messages.getString("EventLog.clearButton")); //$NON-NLS-1$
+		menu.add(clearButton);
 		final var exitButton = new JMenuItem();
 		exitButton.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 5612700000874979582L;

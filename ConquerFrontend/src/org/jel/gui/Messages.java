@@ -9,6 +9,10 @@ final class Messages {
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(Messages.BUNDLE_NAME);
 
+	public static String getMessage(String key, Object... arguments) {
+		return MessageFormat.format(Messages.getString(key), arguments);
+	}
+
 	public static String getString(String key) {
 		try {
 			return Messages.RESOURCE_BUNDLE.getString(key);
@@ -16,10 +20,6 @@ final class Messages {
 			e.printStackTrace();
 			return '!' + key + '!';
 		}
-	}
-
-	public static String getMessage(String key, Object... arguments) {
-		return MessageFormat.format(getString(key), arguments);
 	}
 
 	private Messages() {
