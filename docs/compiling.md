@@ -6,7 +6,7 @@
 
 1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
 2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3
-3. Only eclipse is currently supported (Contributions are welcome) as an IDE.
+3. Only eclipse is currently supported (Contributions are welcome) as an IDE. (Optional)
 
 ### Compiling
 
@@ -27,6 +27,11 @@ cd Conquer
 chmod +x buildConquer
 ./buildConquer
 ```
+
+### Notes
+
+Only arm64 and amd64 are supported.
+
 ## Windows
 
 ### Prerequisites
@@ -36,6 +41,7 @@ chmod +x buildConquer
 	git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-headers-git zip unzip
 3. Install musescore3: You have to download the installer and run it.
 4. Install Java 15: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell.
+5. Install eclipse. (Optional)
 
 ### Compiling
 
@@ -56,3 +62,13 @@ chmod +x buildConquer
 ./buildConquer
 ```
 
+### Notes
+
+Only amd64 is supported.
+## MacOS
+
+Not supported (Contributions are welcome)
+
+## Other linux distros
+
+Semi-supported with a bit of manual work. (Contributions are welcome)
