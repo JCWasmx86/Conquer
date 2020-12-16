@@ -114,11 +114,12 @@ cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
 	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
-		"${MUSESCORE}" -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f"
+		"${MUSESCORE}" -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f" &
 	else
 		echo Skipping conversion of "$f"
 	fi
 done
+wait
 cd ../conquer-dist/backend
 jar -cvf ../Conquer.jar *
 cd ..
@@ -142,10 +143,11 @@ cd ../conquer-dist
 cd music
 mkdir -p libs/sounds
 cp *.wav libs/sounds
-zip -9 ../Music1.zip libs/sounds/Battle0.wav libs/sounds/Battle1.wav libs/sounds/Battle2.wav libs/sounds/Battle3.wav libs/sounds/Battle4.wav libs/sounds/Battle5.wav libs/sounds/Battle6.wav libs/sounds/Battle7.wav libs/sounds/Battle8.wav libs/sounds/Battle9.wav libs/sounds/Battle10.wav
-zip -9 ../Music2.zip libs/sounds/Battle11.wav libs/sounds/Battle12.wav libs/sounds/Battle13.wav libs/sounds/Battle14.wav libs/sounds/Battle15.wav libs/sounds/Battle16.wav libs/sounds/Battle17.wav
-zip -9 ../Music3.zip libs/sounds/Battle18.wav libs/sounds/Battle19.wav libs/sounds/Battle20.wav libs/sounds/Battle21.wav libs/sounds/Battle22.wav libs/sounds/Battle23.wav
-zip -9 ../Music4.zip libs/sounds/Battle24.wav libs/sounds/Battle25.wav libs/sounds/Battle26.wav libs/sounds/Battle27.wav libs/sounds/Battle28.wav libs/sounds/Battle29.wav
+zip -9 ../Music1.zip libs/sounds/Battle0.wav libs/sounds/Battle1.wav libs/sounds/Battle2.wav libs/sounds/Battle3.wav libs/sounds/Battle4.wav libs/sounds/Battle5.wav libs/sounds/Battle6.wav libs/sounds/Battle7.wav libs/sounds/Battle8.wav libs/sounds/Battle9.wav libs/sounds/Battle10.wav &
+zip -9 ../Music2.zip libs/sounds/Battle11.wav libs/sounds/Battle12.wav libs/sounds/Battle13.wav libs/sounds/Battle14.wav libs/sounds/Battle15.wav libs/sounds/Battle16.wav libs/sounds/Battle17.wav &
+zip -9 ../Music3.zip libs/sounds/Battle18.wav libs/sounds/Battle19.wav libs/sounds/Battle20.wav libs/sounds/Battle21.wav libs/sounds/Battle22.wav libs/sounds/Battle23.wav &
+zip -9 ../Music4.zip libs/sounds/Battle24.wav libs/sounds/Battle25.wav libs/sounds/Battle26.wav libs/sounds/Battle27.wav libs/sounds/Battle28.wav libs/sounds/Battle29.wav &
+wait
 cd ..
 curl https://raw.githubusercontent.com/curl/curl/master/COPYING>LICENSE.txt
 echo >>LICENSE.txt
