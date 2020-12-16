@@ -115,6 +115,7 @@ public final class Game implements ConquerInfo {
 	 *
 	 * @param context The context obtained by {@link XMLReader#readInfo()}
 	 */
+	@Override
 	public void addContext(final GlobalContext context) {
 		this.throwIfNull(context, "context==null");
 		this.throwIfNull(context.getPlugins(), "context.getPlugins()==null");
@@ -447,6 +448,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * Plays one round. Should be called after the player played.
 	 */
+	@Override
 	public void executeActions() {
 		final var start = System.nanoTime();
 		this.sanityCheckForGrowth();
@@ -710,6 +712,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * Initialises everything. Has to be called.
 	 */
+	@Override
 	public void init() {
 		this.clans.forEach(a -> a.init(this.strategies));
 		if (this.data.getPlugins() != null) {
