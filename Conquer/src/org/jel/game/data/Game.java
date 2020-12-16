@@ -25,6 +25,7 @@ import org.jel.game.messages.AnnihilationMessage;
 import org.jel.game.messages.AttackLostMessage;
 import org.jel.game.messages.BetterRelationshipMessage;
 import org.jel.game.messages.ConquerMessage;
+import org.jel.game.messages.ExtinctionMessage;
 import org.jel.game.messages.RandomEvent;
 import org.jel.game.messages.RandomEventMessage;
 import org.jel.game.messages.WorseRelationshipMessage;
@@ -191,15 +192,6 @@ public final class Game implements ConquerInfo {
 		}
 		return this.maximumNumberToMove(clan, src, destination, powerOfAttacker);
 	}
-
-	@Override
-	public void attack(final City src, final City destination, final byte clan, final boolean managed, final long num) {
-		this.throwIfNull(src, "src==null");
-		this.throwIfNull(destination, "destination==null");
-		this.checkClan(clan);
-		this.attack(src, destination, clan, managed, num, true);
-	}
-
 	@Override
 	public void attack(final City src, final City destination, final byte clan, final boolean managed, final long num,
 			final boolean reallyPlayer) {
@@ -274,6 +266,13 @@ public final class Game implements ConquerInfo {
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
 		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan, relationshipValue, relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
+		checkExtinction(result,destinationClan);
+	}
+
+	private void checkExtinction(AttackResult result, int destinationClan) {
+		if(result == AttackResult.CITY_CONQUERED&& isDead(destinationClan)) {
+			this.events.add(new ExtinctionMessage(this.getClan(destinationClan)));
+		}
 	}
 
 	private boolean bad(double d) {
