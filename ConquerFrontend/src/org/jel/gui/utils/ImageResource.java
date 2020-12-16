@@ -19,7 +19,7 @@ public final class ImageResource implements Icon {
 	 * @param string The icon. If it wasn't found, an
 	 *               {@link IllegalArgumentException} will be thrown.
 	 */
-	public ImageResource(String string) {
+	public ImageResource(final String string) {
 		var url = ClassLoader.getSystemResource(string);
 		if (url == null) {
 			url = ClassLoader.getSystemResource("images/" + string);
@@ -47,7 +47,7 @@ public final class ImageResource implements Icon {
 	}
 
 	@Override
-	public void paintIcon(Component c, Graphics g, int x, int y) {
+	public void paintIcon(final Component c, final Graphics g, final int x, final int y) {
 		this.icon.paintIcon(c, g, x, y);
 	}
 }

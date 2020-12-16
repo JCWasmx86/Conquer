@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 @FunctionalInterface
 public interface StrategyData {
-	default void save(OutputStream out) throws IOException {
+	default void save(final OutputStream out) throws IOException {
 
 	}
 

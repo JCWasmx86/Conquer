@@ -21,7 +21,7 @@ final class MoneySlider extends JPanel {
 	 *
 	 * @param game The source of the data.
 	 */
-	MoneySlider(Game game) {
+	MoneySlider(final Game game) {
 		this.game = game;
 	}
 

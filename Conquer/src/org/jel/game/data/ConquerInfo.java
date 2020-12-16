@@ -25,7 +25,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void init();
 
-	default boolean isDead(Clan clan) {
+	default boolean isDead(final Clan clan) {
 		return this.isDead(clan.getId());
 	}
 

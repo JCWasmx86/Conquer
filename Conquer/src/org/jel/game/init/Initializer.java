@@ -30,7 +30,7 @@ public final class Initializer {
 	/**
 	 * Initialize the required things like properties.
 	 */
-	public void initialize(Consumer<Exception> onError) {
+	public void initialize(final Consumer<Exception> onError) {
 		if (Initializer.initialized) {
 			throw new IllegalStateException("Can't initialize more than once!");
 		}

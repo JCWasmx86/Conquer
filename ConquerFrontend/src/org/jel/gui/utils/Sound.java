@@ -24,7 +24,7 @@ public class Sound implements LineListener, Serializable {
 	 *
 	 * @param name Filename
 	 */
-	public Sound(String name) {
+	public Sound(final String name) {
 		this.filename = name;
 	}
 
@@ -79,7 +79,7 @@ public class Sound implements LineListener, Serializable {
 	}
 
 	@Override
-	public void update(LineEvent event) {
+	public void update(final LineEvent event) {
 		if ((event.getType() == Type.STOP) || (event.getType() == Type.CLOSE)) {
 			this.audioClip.close();
 			this.stop();

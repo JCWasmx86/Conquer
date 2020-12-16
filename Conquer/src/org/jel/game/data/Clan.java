@@ -295,15 +295,15 @@ public final class Clan {
 		this.soldiersStrength = soldiersStrength;
 	}
 
-	void setStrategy(Strategy strategy) {
+	void setStrategy(final Strategy strategy) {
 		this.strategy = strategy;
 	}
 
-	void setStrategyData(StrategyData strategyData) {
+	void setStrategyData(final StrategyData strategyData) {
 		this.strategyData = strategyData;
 	}
 
-	void update(final int currentRound) {
+	public void update(final int currentRound) {
 		if (this.strategyData != null) {
 			this.strategyData.update(currentRound);
 		}

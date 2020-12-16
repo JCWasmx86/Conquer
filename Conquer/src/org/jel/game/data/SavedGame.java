@@ -31,11 +31,11 @@ import org.jel.game.utils.Graph;
 public class SavedGame {
 	private final String name;
 
-	public SavedGame(String name) {
+	public SavedGame(final String name) {
 		this.name = name;
 	}
 
-	private byte[] createSha(File file) throws NoSuchAlgorithmException, IOException {
+	private byte[] createSha(final File file) throws NoSuchAlgorithmException, IOException {
 		final var digest = MessageDigest.getInstance("SHA-3");
 		try (InputStream fis = new FileInputStream(file)) {
 			var n = 0;
@@ -50,14 +50,14 @@ public class SavedGame {
 		return digest.digest();
 	}
 
-	private byte[] extractBytes(Image image) throws IOException {
+	private byte[] extractBytes(final Image image) throws IOException {
 		try (var baos = new ByteArrayOutputStream(4096 * 4096)) {
 			ImageIO.write(this.toBufferedImage(image), "png", baos);
 			return baos.toByteArray();
 		}
 	}
 
-	private void readCities(DataInputStream dis, Game game) throws IOException {
+	private void readCities(final DataInputStream dis, final Game game) throws IOException {
 		final var cities = new Graph<City>(game.getNumPlayers());
 		final var numberOfCities = dis.readInt();
 		for (var i = 0; i < numberOfCities; i++) {
@@ -99,8 +99,8 @@ public class SavedGame {
 		game.setGraph(cities);
 	}
 
-	private Clan readClan(File file, Game game) throws IOException, InstantiationException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
+			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 		try (var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.read());
@@ -143,7 +143,7 @@ public class SavedGame {
 		}
 	}
 
-	private List<Clan> readClans(File saveDirectory, Game game) throws IOException, InstantiationException,
+	private List<Clan> readClans(final File saveDirectory, final Game game) throws IOException, InstantiationException,
 			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 		final List<Clan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
@@ -154,7 +154,7 @@ public class SavedGame {
 		return ret.stream().sorted((a, b) -> Integer.compare(a.getId(), b.getId())).collect(Collectors.toList());
 	}
 
-	private List<Plugin> readPlugins(File saveDirectory, Game game)
+	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
 			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
 			ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
@@ -180,7 +180,7 @@ public class SavedGame {
 		return game;
 	}
 
-	private void restore(Game game, File saveDirectory) throws IOException {
+	private void restore(final Game game, final File saveDirectory) throws IOException {
 		try (var dis = new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
 			final var imageLen = dis.readInt();
 			final var bytes = dis.readNBytes(imageLen);
@@ -201,7 +201,7 @@ public class SavedGame {
 		}
 	}
 
-	private void save(Clan clan, OutputStream outputStream) throws IOException {
+	private void save(final Clan clan, final OutputStream outputStream) throws IOException {
 		try (var dos = new DataOutputStream(outputStream)) {
 			dos.write(clan.getId());
 			dos.writeUTF(clan.getName());
@@ -254,7 +254,7 @@ public class SavedGame {
 		}
 	}
 
-	public void save(Game game) throws Exception {
+	public void save(final Game game) throws Exception {
 		final var saveDirectory = new File(new File(Shared.BASE_DIRECTORY, "saves"), this.name);
 		try {
 			Shared.deleteDirectory(saveDirectory);
@@ -295,7 +295,7 @@ public class SavedGame {
 		}
 	}
 
-	private void save(Game game, File saveDirectory) throws IOException {
+	private void save(final Game game, final File saveDirectory) throws IOException {
 		final var gameFile = new File(saveDirectory, this.name + ".game.save");
 		try (var dos = new DataOutputStream(new FileOutputStream(gameFile))) {
 			final var imageData = this.extractBytes(game.getBackground());
@@ -319,7 +319,7 @@ public class SavedGame {
 		}
 	}
 
-	private BufferedImage toBufferedImage(Image src) {
+	private BufferedImage toBufferedImage(final Image src) {
 		if (src instanceof BufferedImage) {
 			return (BufferedImage) src;
 		}
@@ -330,7 +330,7 @@ public class SavedGame {
 		return image;
 	}
 
-	private void writeCities(Game game, DataOutputStream dos) throws IOException {
+	private void writeCities(final Game game, final DataOutputStream dos) throws IOException {
 		final var cities = game.getCities();
 		dos.writeInt(cities.getValues(new City[0]).length);
 		StreamUtils.getCitiesAsStream(cities).forEach(a -> {

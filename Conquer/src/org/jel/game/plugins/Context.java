@@ -29,7 +29,7 @@ public final class Context {
 	 *
 	 * @param message The message to add. May not be null.
 	 */
-	public void appendToEventList(Message message) {
+	public void appendToEventList(final Message message) {
 		this.events.add(message);
 	}
 
@@ -39,7 +39,7 @@ public final class Context {
 	 * @param index The index
 	 * @return The clan at the specified index.
 	 */
-	public Clan getClan(int index) {
+	public Clan getClan(final int index) {
 		return this.clans.get(index);
 	}
 

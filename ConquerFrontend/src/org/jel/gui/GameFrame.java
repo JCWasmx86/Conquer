@@ -63,7 +63,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 *
 	 * @param game The game to show
 	 */
-	GameFrame(Game game) {
+	GameFrame(final Game game) {
 		this.game = game;
 		this.addComponentListener(this);
 		this.addWindowListener(this);
@@ -110,7 +110,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void componentHidden(ComponentEvent e) {
+	public void componentHidden(final ComponentEvent e) {
 
 	}
 
@@ -118,7 +118,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void componentMoved(ComponentEvent e) {
+	public void componentMoved(final ComponentEvent e) {
 
 	}
 
@@ -126,7 +126,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void componentResized(ComponentEvent e) {
+	public void componentResized(final ComponentEvent e) {
 		this.adjustY();
 		this.adjustX();
 	}
@@ -135,7 +135,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void componentShown(ComponentEvent e) {
+	public void componentShown(final ComponentEvent e) {
 
 	}
 
@@ -224,7 +224,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			private static final long serialVersionUID = -2190001953669516117L;
 
 			@Override
-			public void paint(Graphics g) {
+			public void paint(final Graphics g) {
 				super.paint(g);
 				final var g2d = (Graphics2D) g.create();
 				final var dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
@@ -239,7 +239,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.gameStage.setFocusable(true);
 		this.gameStage.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyPressed(final KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					GameFrame.this.labels.values().forEach(CityLabel::unmark);
 				}
@@ -311,7 +311,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
@@ -319,7 +319,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 
 	}
 
@@ -327,7 +327,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		if (!this.game.onlyOneClanAlive()) {
 			this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 			final var status = JOptionPane.showConfirmDialog(null,
@@ -350,7 +350,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 
 	}
 
@@ -358,7 +358,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
@@ -366,7 +366,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 
 	}
 
@@ -374,7 +374,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 
 	}
 }

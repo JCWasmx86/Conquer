@@ -25,11 +25,11 @@ final class RoundButton extends JButton {
 	private transient Shape shape;
 	private transient Shape base;
 
-	public RoundButton(Icon icon) {
+	public RoundButton(final Icon icon) {
 		this(null, icon);
 	}
 
-	private RoundButton(String text, Icon icon) {
+	private RoundButton(final String text, final Icon icon) {
 		this.setModel(new DefaultButtonModel());
 		this.init(text, icon);
 		if (icon == null) {
@@ -44,7 +44,7 @@ final class RoundButton extends JButton {
 	}
 
 	@Override
-	public boolean contains(int x, int y) {
+	public boolean contains(final int x, final int y) {
 		this.initShape();
 		return this.shape.contains(x, y);
 	}
@@ -66,7 +66,7 @@ final class RoundButton extends JButton {
 	}
 
 	@Override
-	protected void paintBorder(Graphics g) {
+	protected void paintBorder(final Graphics g) {
 		this.initShape();
 		final var g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

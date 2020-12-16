@@ -35,7 +35,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		this.player.abort();
 		this.switchToMainScreen = true;
 		MainScreen.forward(this.getLocation(), false);
@@ -206,7 +206,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 *
 	 * @param location The location, where the frame will appear
 	 */
-	void init(Point location) {
+	void init(final Point location) {
 		this.setLocation(location);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addWindowListener(this);
@@ -235,7 +235,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
@@ -243,7 +243,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 
 	}
 
@@ -251,7 +251,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		if (this.switchToMainScreen) {
 			MainScreen.forward(this.getLocation(), false);
 		} else {
@@ -263,22 +263,14 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 	}
 
 	/**
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeiconified(WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
@@ -286,7 +278,15 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
+
+	}
+
+	/**
+	 * Shouldn't be used
+	 */
+	@Override
+	public void windowOpened(final WindowEvent e) {
 
 	}
 }

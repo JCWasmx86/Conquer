@@ -33,7 +33,7 @@ final class ResourceButton extends JPanel {
 	 * @param city     A reference to the city.
 	 * @param cip      A reference to the parent CityInfoPanel.
 	 */
-	ResourceButton(Resource resource, City city, CityInfoPanel cip) {
+	ResourceButton(final Resource resource, final City city, final CityInfoPanel cip) {
 		this.city = city;
 		this.resource = resource;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -119,7 +119,7 @@ final class ResourceButton extends JPanel {
 		return Messages.getMessage("Shared.upgradeToLevel", level + 1, costsForUpgrade);//$NON-NLS-1$
 	}
 
-	private void updateLabel(int level) {
+	private void updateLabel(final int level) {
 		if (this.city.isPlayerCity()) {
 			if (level < ResourceButton.MAX_LEVEL) {
 				this.infoLabel.setText(this.getInfoLabelText());
@@ -133,7 +133,7 @@ final class ResourceButton extends JPanel {
 		}
 	}
 
-	private void updateMaximumUpgrade(int level) {
+	private void updateMaximumUpgrade(final int level) {
 		double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
 		var currentLevel = level;
 		while (true) {
@@ -156,7 +156,7 @@ final class ResourceButton extends JPanel {
 		}
 	}
 
-	private void updateUpgradeThisResource(int level) {
+	private void updateUpgradeThisResource(final int level) {
 		final var costsForUpgrade = Shared.costs(this.city.getLevels().get(this.getIndex()) + 1);
 		final double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {

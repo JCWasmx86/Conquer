@@ -53,7 +53,7 @@ final class EventLog extends JFrame implements MessageListener {
 	 *
 	 * @param game The game as the source of events.
 	 */
-	static void init(Game game) {
+	static void init(final Game game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
 			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$ //$NON-NLS-2$
@@ -121,8 +121,8 @@ final class EventLog extends JFrame implements MessageListener {
 			private static final long serialVersionUID = 8790065267838524992L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				base.removeAll();
+			public void actionPerformed(final ActionEvent e) {
+				EventLog.this.base.removeAll();
 				EventLog.this.revalidate();
 				EventLog.this.repaint();
 				EventLog.this.pack();
@@ -137,7 +137,7 @@ final class EventLog extends JFrame implements MessageListener {
 			private static final long serialVersionUID = 5612700000874979582L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				EventLog.this.setVisible(false);
 			}
 		});
@@ -153,8 +153,8 @@ final class EventLog extends JFrame implements MessageListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void added(Message message) {
-		if (message.getMessageText() == null||!message.shouldBeShownToThePlayer()) {
+	public void added(final Message message) {
+		if ((message.getMessageText() == null) || !message.shouldBeShownToThePlayer()) {
 			return;
 		}
 		final var jl = new JLabel(message.getMessageText());
@@ -190,14 +190,14 @@ final class EventLog extends JFrame implements MessageListener {
 		this.repaint();
 	}
 
-	private Component generateEmptySpace(Color color) {
+	private Component generateEmptySpace(final Color color) {
 		final var jl = new JLabel(" "); //$NON-NLS-1$
 		jl.setForeground(color);
 		jl.setFont(jl.getFont().deriveFont(4f));
 		return jl;
 	}
 
-	private int getComplementaryColor(int color) {
+	private int getComplementaryColor(final int color) {
 		var r = color & 255;
 		var g = (color >> 8) & 255;
 		var b = (color >> 16) & 255;
@@ -208,12 +208,12 @@ final class EventLog extends JFrame implements MessageListener {
 		return r + (g << 8) + (b << 16) + (a << 24);
 	}
 
-	private void initDecreaseFontSize(JMenuItem decreaseFontSize) {
+	private void initDecreaseFontSize(final JMenuItem decreaseFontSize) {
 		decreaseFontSize.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 4199619851951311213L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				final var components = EventLog.this.base.getComponents();
 				for (final var c : components) {
 					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
@@ -238,7 +238,7 @@ final class EventLog extends JFrame implements MessageListener {
 			private static final long serialVersionUID = 8790065267838524992L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				final var components = EventLog.this.base.getComponents();
 				for (final var c : components) {
 					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
@@ -321,7 +321,7 @@ final class EventLog extends JFrame implements MessageListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void removed(Message s) {
+	public void removed(final Message s) {
 		// Do nothing
 	}
 }

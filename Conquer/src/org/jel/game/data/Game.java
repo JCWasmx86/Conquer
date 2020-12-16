@@ -149,7 +149,7 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public void addMessageListener(MessageListener ml) {
+	public void addMessageListener(final MessageListener ml) {
 		this.throwIfNull(ml);
 		this.events.addListener(ml);
 
@@ -192,6 +192,7 @@ public final class Game implements ConquerInfo {
 		}
 		return this.maximumNumberToMove(clan, src, destination, powerOfAttacker);
 	}
+
 	@Override
 	public void attack(final City src, final City destination, final byte clan, final boolean managed, final long num,
 			final boolean reallyPlayer) {
@@ -266,16 +267,10 @@ public final class Game implements ConquerInfo {
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
 		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan, relationshipValue, relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
-		checkExtinction(result,destinationClan);
+		this.checkExtinction(result, destinationClan);
 	}
 
-	private void checkExtinction(AttackResult result, int destinationClan) {
-		if(result == AttackResult.CITY_CONQUERED&& isDead(destinationClan)) {
-			this.events.add(new ExtinctionMessage(this.getClan(destinationClan)));
-		}
-	}
-
-	private boolean bad(double d) {
+	private boolean bad(final double d) {
 		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
 	}
 
@@ -320,6 +315,12 @@ public final class Game implements ConquerInfo {
 		}
 	}
 
+	private void checkExtinction(final AttackResult result, final int destinationClan) {
+		if ((result == AttackResult.CITY_CONQUERED) && this.isDead(destinationClan)) {
+			this.events.add(new ExtinctionMessage(this.getClan(destinationClan)));
+		}
+	}
+
 	private void cpuPlay() {
 		// Skip clan of the player
 		final var order = IntStream.range(Shared.PLAYER_CLAN + 1, this.getNumPlayers()).boxed()
@@ -345,7 +346,7 @@ public final class Game implements ConquerInfo {
 		return c.getDefenseStrength(clan);
 	}
 
-	private void eval(int selector, int clanOne, int clanTwo, Random r) {
+	private void eval(final int selector, final int clanOne, final int clanTwo, final Random r) {
 		if ((selector >= 4500) && (selector < 4650)) {
 			this.worseRelationship(r, clanOne, clanTwo);
 		} else if ((selector >= 4500) && (selector < 4700)) {
@@ -534,7 +535,7 @@ public final class Game implements ConquerInfo {
 		return this.data.getCityKeyHandlers();
 	}
 
-	private Clan getClan(City city) {
+	private Clan getClan(final City city) {
 		return city.getClan();
 	}
 
@@ -728,7 +729,7 @@ public final class Game implements ConquerInfo {
 	 * @param clan
 	 */
 	@Override
-	public boolean isDead(int clan) {
+	public boolean isDead(final int clan) {
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
 
@@ -804,13 +805,11 @@ public final class Game implements ConquerInfo {
 			if (this.isInFriendlyCountry(src)) {
 				// This city has no connections to other clans==>Move all troops to the borders.
 				moveAmount = src.getNumberOfSoldiers();
+			} else // Which city was attacked more often by the player?
+			if (destination.getNumberAttacksOfPlayer() > src.getNumberAttacksOfPlayer()) {
+				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
 			} else {
-				// Which city was attacked more often by the player?
-				if (destination.getNumberAttacksOfPlayer() > src.getNumberAttacksOfPlayer()) {
-					moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
-				} else {
-					moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
-				}
+				moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
 			}
 			moveAmount = this.maximumNumberToMove(this.clans.get(i), src, destination, moveAmount);
 			if (moveAmount == 0) {
@@ -934,7 +933,7 @@ public final class Game implements ConquerInfo {
 		}
 	}
 
-	void resume(String name) {
+	void resume(final String name) {
 		this.resumed = true;
 		this.directory = new File(new File(Shared.BASE_DIRECTORY, "saves"), name);
 	}
@@ -1022,7 +1021,7 @@ public final class Game implements ConquerInfo {
 		});
 	}
 
-	private void sanityCheckOfLevels(List<Integer> levels, City city) {
+	private void sanityCheckOfLevels(final List<Integer> levels, final City city) {
 		levels.forEach(a -> {
 			if (a == null) {
 				throw new InternalError(city.getName() + " has null value in levels");
@@ -1032,7 +1031,7 @@ public final class Game implements ConquerInfo {
 		});
 	}
 
-	private void sanityCheckOfProductions(List<Double> productions, City city) {
+	private void sanityCheckOfProductions(final List<Double> productions, final City city) {
 		productions.forEach(a -> {
 			if (a == null) {
 				throw new InternalError(city.getName() + " has null value in productions");
@@ -1042,7 +1041,7 @@ public final class Game implements ConquerInfo {
 		});
 	}
 
-	private void sanityCheckResources(Clan clan) {
+	private void sanityCheckResources(final Clan clan) {
 		clan.getResources().forEach(value -> {
 			if (value == null) {
 				throw new InternalError(clan.getName() + " has a null value in resources");
@@ -1053,7 +1052,7 @@ public final class Game implements ConquerInfo {
 		});
 	}
 
-	private void sanityCheckResourceStats(Clan clan) {
+	private void sanityCheckResourceStats(final Clan clan) {
 		clan.getResourceStats().forEach(value -> {
 			if (value == null) {
 				throw new InternalError(clan.getName() + " has a null value in resource stats");
@@ -1065,7 +1064,7 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public boolean sendGift(Clan source, Clan destination, Gift gift) {
+	public boolean sendGift(final Clan source, final Clan destination, final Gift gift) {
 		this.throwIfNull(source, "source==null");
 		this.throwIfNull(destination, "destination==null");
 		this.throwIfNull(gift, "gift==null");
@@ -1136,7 +1135,7 @@ public final class Game implements ConquerInfo {
 		this.cities = g;
 	}
 
-	public void setPlayerGiftCallback(PlayerGiftCallback pgc) {
+	public void setPlayerGiftCallback(final PlayerGiftCallback pgc) {
 		this.throwIfNull(pgc, "PlayerGiftCallback==null");
 		this.playerGiftCallback = pgc;
 	}
@@ -1154,7 +1153,7 @@ public final class Game implements ConquerInfo {
 		this.isPlayersTurn = b;
 	}
 
-	void setPlugins(List<Plugin> plugins) {
+	void setPlugins(final List<Plugin> plugins) {
 		this.data.setPlugins(plugins);
 	}
 
@@ -1166,11 +1165,11 @@ public final class Game implements ConquerInfo {
 		this.relations = relations;
 	}
 
-	void setRound(int r) {
+	void setRound(final int r) {
 		this.currentRound = r;
 	}
 
-	private double setup(byte clan, long powerOfAttacker, City src, City destination) {
+	private double setup(final byte clan, final long powerOfAttacker, final City src, final City destination) {
 		final var srcClan = src.getClan();
 		this.payForMove(clan, powerOfAttacker, this.getCities().getWeight(src, destination));
 		var newPowerOfAttacker = powerOfAttacker * srcClan.getSoldiersStrength();
@@ -1301,21 +1300,21 @@ public final class Game implements ConquerInfo {
 		return true;
 	}
 
-	public void upgradeSoldiersDefenseFully(byte i) {
+	public void upgradeSoldiersDefenseFully(final byte i) {
 		var b = true;
 		while (b) {
 			b = this.upgradeDefense(i);
 		}
 	}
 
-	public void upgradeSoldiersFully(byte i) {
+	public void upgradeSoldiersFully(final byte i) {
 		var b = true;
 		while (b) {
 			b = this.upgradeSoldiers(i);
 		}
 	}
 
-	public void upgradeSoldiersOffenseFully(byte i) {
+	public void upgradeSoldiersOffenseFully(final byte i) {
 		var b = true;
 		while (b) {
 			b = this.upgradeOffense(i);

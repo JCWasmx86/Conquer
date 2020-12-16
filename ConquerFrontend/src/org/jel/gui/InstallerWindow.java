@@ -39,7 +39,7 @@ final class InstallerWindow extends ExtendedOutputStream {
 	}
 
 	@Override
-	public void write(int b) throws IOException {
+	public void write(final int b) throws IOException {
 		this.tmp += (char) b;
 		if (b == '\n') {// If the string had a newline, add a new JLabel.
 			this.jpanel.add(new JLabel(this.tmp));
@@ -52,7 +52,7 @@ final class InstallerWindow extends ExtendedOutputStream {
 	}
 
 	@Override
-	public void write(String s) throws IOException {
+	public void write(final String s) throws IOException {
 		if (this.tmp != null) {
 			this.jpanel.add(new JLabel(this.tmp));
 			this.tmp = null;

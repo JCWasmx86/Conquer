@@ -22,7 +22,7 @@ final class ExtendedTimer extends Timer {
 		ExtendedTimer.registeredTimers.clear();
 	}
 
-	ExtendedTimer(int delay, ActionListener listener) {
+	ExtendedTimer(final int delay, final ActionListener listener) {
 		super(delay, listener);
 		ExtendedTimer.registeredTimers.add(this);
 	}

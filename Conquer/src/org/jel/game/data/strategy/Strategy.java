@@ -18,16 +18,16 @@ public interface Strategy {
 
 	StrategyData getData();
 
-	default void init(InputStream in) throws IOException {
+	default void init(final InputStream in) throws IOException {
 
 	}
 
-	default StrategyData resume(StrategyObject strategyObject, byte[] bytes, boolean hasStrategyData,
-			byte[] dataBytes) {
+	default StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
+			final byte[] dataBytes) {
 		return null;
 	}
 
-	default void save(OutputStream out) throws IOException {
+	default void save(final OutputStream out) throws IOException {
 
 	}
 }

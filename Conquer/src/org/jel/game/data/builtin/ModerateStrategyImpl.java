@@ -15,8 +15,8 @@ public final class ModerateStrategyImpl implements Strategy {
 	private static final int SMALL_RELATIONSHIP_INCREASE_FACTOR = 5;
 
 	@Override
-	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
-			DoubleConsumer newValue, StrategyObject strategyObject) {
+	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
+			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if (Math.random() < (1 - (strategyObject.getRelationship(sourceClan, destinationClan) * 0.1))) {
 			return false;
 		}

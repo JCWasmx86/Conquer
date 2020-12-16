@@ -52,7 +52,8 @@ public class Installer implements Runnable {
 	/**
 	 * Checks whether the game is installed. If no, it is installed/repaired.
 	 */
-	public Installer(OptionChooser chooser, ExtendedOutputStream writeTo, Consumer<Exception> onError) {
+	public Installer(final OptionChooser chooser, final ExtendedOutputStream writeTo,
+			final Consumer<Exception> onError) {
 		if (chooser == null) {
 			throw new IllegalArgumentException("chooser==null"); //$NON-NLS-1$
 		}
@@ -181,7 +182,7 @@ public class Installer implements Runnable {
 		}
 	}
 
-	private void unzipFile(InputStream zipStream) {
+	private void unzipFile(final InputStream zipStream) {
 		try (var zin = new ZipInputStream(zipStream)) {
 			ZipEntry ze = null;
 			while ((ze = zin.getNextEntry()) != null) {
@@ -200,7 +201,7 @@ public class Installer implements Runnable {
 		}
 	}
 
-	private void write(String s) {
+	private void write(final String s) {
 		Shared.LOGGER.message(s);
 		if (this.stream != null) {
 			try {
@@ -211,7 +212,7 @@ public class Installer implements Runnable {
 		}
 	}
 
-	private void writeEntry(ZipInputStream zin, ZipEntry ze) {
+	private void writeEntry(final ZipInputStream zin, final ZipEntry ze) {
 		try (var fos = new FileOutputStream(new File(Installer.BASE_FILE, ze.getName()))) {
 			int read;
 			final var bytes = new byte[1024];
@@ -226,7 +227,7 @@ public class Installer implements Runnable {
 		}
 	}
 
-	private void writeError(String s) {
+	private void writeError(final String s) {
 		Shared.LOGGER.error(s);
 		if (this.stream != null) {
 			try {

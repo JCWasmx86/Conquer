@@ -39,7 +39,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 *
 	 * @param city The city to show.
 	 */
-	CityInfoPanel(City city) {
+	CityInfoPanel(final City city) {
 		this.city = city;
 		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
@@ -50,7 +50,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		this.doUpdate();
 	}
 

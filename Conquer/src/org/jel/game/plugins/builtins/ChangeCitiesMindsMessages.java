@@ -6,16 +6,17 @@ import java.util.ResourceBundle;
 public class ChangeCitiesMindsMessages {
 	private static final String BUNDLE_NAME = "org.jel.game.plugins.builtins.changeCitiesMinds"; //$NON-NLS-1$
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
+			.getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
 
-	private ChangeCitiesMindsMessages() {
-	}
-
-	public static String getString(String key) {
+	public static String getString(final String key) {
 		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
+			return ChangeCitiesMindsMessages.RESOURCE_BUNDLE.getString(key);
+		} catch (final MissingResourceException e) {
 			return '!' + key + '!';
 		}
+	}
+
+	private ChangeCitiesMindsMessages() {
 	}
 }

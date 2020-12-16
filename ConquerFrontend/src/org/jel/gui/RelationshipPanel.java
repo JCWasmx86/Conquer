@@ -26,7 +26,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	 *
 	 * @param game The source of the data.
 	 */
-	RelationshipPanel(Game game) {
+	RelationshipPanel(final Game game) {
 		this.game = game;
 		this.labels = new ArrayList<>();
 	}
@@ -35,7 +35,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	 * Updates the information about the relationship to other clans.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		final var clans = this.game.getClans();
 		for (var i = 1; i < clans.size(); i++) {
 			final var clan = clans.get(i);

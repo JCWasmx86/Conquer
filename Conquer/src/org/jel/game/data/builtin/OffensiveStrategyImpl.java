@@ -21,8 +21,8 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private Graph<City> graph;
 
 	@Override
-	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
-			DoubleConsumer newValue, StrategyObject strategyObject) {
+	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
+			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if (Math.random() > OffensiveStrategyImpl.DECLINE_GIFT_PROBABILITY) {
 			return false;
 		} else {
@@ -67,7 +67,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		return new OffensiveStrategyData();
 	}
 
-	private void moveTroops(Clan clan) {
+	private void moveTroops(final Clan clan) {
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
 				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.graph, a, clan).count() == 0)

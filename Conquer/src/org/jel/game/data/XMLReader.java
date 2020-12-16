@@ -39,11 +39,11 @@ public final class XMLReader {
 	 *
 	 * @param throwable The consumer
 	 */
-	public static synchronized void setThrowableConsumer(Consumer<Throwable> throwable) {
+	public static synchronized void setThrowableConsumer(final Consumer<Throwable> throwable) {
 		XMLReader.throwableConsumer = throwable;
 	}
 
-	private Class<?> checkedLoading(String s) throws ClassNotFoundException {
+	private Class<?> checkedLoading(final String s) throws ClassNotFoundException {
 		try {
 			return Thread.currentThread().getContextClassLoader().loadClass(s);
 		} catch (final ClassNotFoundException cnfe) {
@@ -51,7 +51,7 @@ public final class XMLReader {
 		}
 	}
 
-	private <T> List<T> distinct(Collection<T> collection) {
+	private <T> List<T> distinct(final Collection<T> collection) {
 		return collection.stream().distinct().collect(Collectors.toList());
 	}
 
@@ -120,7 +120,7 @@ public final class XMLReader {
 	 * @param instantiate Whether the classes are instantiated.
 	 * @return The context that was read. On error, an empty context is returned.
 	 */
-	public GlobalContext readInfo(boolean instantiate) {
+	public GlobalContext readInfo(final boolean instantiate) {
 		Document d;
 		try {
 			d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
