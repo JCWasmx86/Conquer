@@ -24,7 +24,7 @@ final class ResourceSlider extends JPanel {
 	 * @param r    The resource
 	 * @param game A reference to a game.
 	 */
-	ResourceSlider(Resource r, Game game) {
+	ResourceSlider(final Resource r, final Game game) {
 		this.resource = r;
 		this.game = game;
 	}

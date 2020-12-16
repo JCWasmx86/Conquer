@@ -16,7 +16,8 @@ public final class GlobalContext {
 	private final List<String> strategyNames;
 
 	GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,
-			final List<StrategyProvider> strategies2, List<String> pluginNames, List<String> strategyNames) {
+			final List<StrategyProvider> strategies2, final List<String> pluginNames,
+			final List<String> strategyNames) {
 		this.installedMaps = installedMaps;
 		this.plugins = plugins;
 		this.strategies = strategies2;

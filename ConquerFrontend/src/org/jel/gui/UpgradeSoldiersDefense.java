@@ -33,7 +33,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	 * @param clan For which clan to upgrade the soldiers
 	 * @param game A reference to the game.
 	 */
-	UpgradeSoldiersDefense(Clan clan, Game game) {
+	UpgradeSoldiersDefense(final Clan clan, final Game game) {
 		this.clan = clan;
 		this.game = game;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -55,7 +55,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	 * Update labels/buttons/...
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		this.infoLabel.setText(this.getInfoText());
 		this.initUpgradeOnce();
 		this.initUpgradeMax();
@@ -83,7 +83,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 			private static final long serialVersionUID = -8569686717119904143L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				UpgradeSoldiersDefense.this.game
 						.upgradeSoldiersDefenseFully((byte) UpgradeSoldiersDefense.this.clan.getId());
 			}
@@ -109,7 +109,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 			private static final long serialVersionUID = 4992960498730337186L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				UpgradeSoldiersDefense.this.game.upgradeDefense((byte) UpgradeSoldiersDefense.this.clan.getId());
 			}
 		});

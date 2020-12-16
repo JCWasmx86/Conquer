@@ -37,7 +37,7 @@ final class GiftPanel extends JPanel {
 	 *
 	 * @param game Data source
 	 */
-	GiftPanel(Game game) {
+	GiftPanel(final Game game) {
 		this.game = game;
 		this.sliders = new ArrayList<>();
 	}

@@ -184,7 +184,7 @@ public final class Shared {
 	 * @param file What directory to delete.
 	 * @throws IOException In case of an exception.
 	 */
-	public static void deleteDirectory(File file) throws IOException {
+	public static void deleteDirectory(final File file) throws IOException {
 		final var list = file.listFiles();
 		if (list != null) {
 			for (final var temp : list) {
@@ -199,7 +199,7 @@ public final class Shared {
 	 *
 	 * @param error The error message
 	 */
-	public static void errorLevel1(String error) {
+	public static void errorLevel1(final String error) {
 		if (System.getProperty("conquer.logging.level1") != null) {
 			Shared.LOGGER_LEVEL1.error(error);
 		}
@@ -210,7 +210,7 @@ public final class Shared {
 	 *
 	 * @param error The error message
 	 */
-	public static void errorLevel2(String error) {
+	public static void errorLevel2(final String error) {
 		if (System.getProperty("conquer.logging.level2") != null) {
 			Shared.LOGGER_LEVEL1.error(error);
 		}
@@ -233,7 +233,7 @@ public final class Shared {
 	 * @param i Upper bound, should be positive
 	 * @return A random number in [0;i[
 	 */
-	public static int getRandomNumber(int i) {
+	public static int getRandomNumber(final int i) {
 		return Shared.RANDOM.nextInt(i);
 	}
 
@@ -255,7 +255,7 @@ public final class Shared {
 	 *
 	 * @param message The message
 	 */
-	public static void logLevel1(String message) {
+	public static void logLevel1(final String message) {
 		if (System.getProperty("conquer.logging.level1") != null) {
 			Shared.LOGGER_LEVEL1.message(message);
 		}
@@ -266,7 +266,7 @@ public final class Shared {
 	 *
 	 * @param message The message
 	 */
-	public static void logLevel2(String message) {
+	public static void logLevel2(final String message) {
 		if (System.getProperty("conquer.logging.level2") != null) {
 			Shared.LOGGER_LEVEL1.message(message);
 		}

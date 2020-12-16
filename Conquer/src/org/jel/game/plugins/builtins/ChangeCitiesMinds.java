@@ -15,7 +15,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	private final Random random = new Random();
 	private Context context;
 
-	private void change(City c, Context ctx, int oldClan, int otherClan) {
+	private void change(final City c, final Context ctx, final int oldClan, final int otherClan) {
 		var changedClan = false;
 		var soldiersToCivilians = 1D;
 		try {

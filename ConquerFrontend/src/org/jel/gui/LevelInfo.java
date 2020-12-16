@@ -41,7 +41,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * @param location On which location the frame should appear
 	 * @param context  The whole context
 	 */
-	LevelInfo(Game game, InstalledScenario is, Point location, GlobalContext context) {
+	LevelInfo(final Game game, final InstalledScenario is, final Point location, final GlobalContext context) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<ClanColorAssociation>();
@@ -53,8 +53,9 @@ final class LevelInfo extends JFrame implements WindowListener {
 			private final Map<ClanColorAssociation, JLabel> map = new HashMap<>();
 
 			@Override
-			public Component getListCellRendererComponent(JList<? extends ClanColorAssociation> list,
-					ClanColorAssociation value, int index, boolean isSelected, boolean cellHasFocus) {
+			public Component getListCellRendererComponent(final JList<? extends ClanColorAssociation> list,
+					final ClanColorAssociation value, final int index, final boolean isSelected,
+					final boolean cellHasFocus) {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
 					jl = new JLabel(value.clanName()
@@ -102,7 +103,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.setLocation(location);
 	}
 
-	private int getComplementaryColor(int color) {
+	private int getComplementaryColor(final int color) {
 		var r = color & 255;
 		var g = (color >> 8) & 255;
 		var b = (color >> 16) & 255;
@@ -117,7 +118,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
@@ -125,14 +126,14 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 	}
 
 	/**
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		if (!this.shouldExit) {
 			System.exit(0);
 		}
@@ -142,7 +143,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 
 	}
 
@@ -150,7 +151,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
@@ -158,7 +159,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 
 	}
 
@@ -166,7 +167,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 
 	}
 

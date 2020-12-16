@@ -35,7 +35,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 * @param clan The clan.
 	 * @param game A reference to the game object.
 	 */
-	ClanInfoPanel(Clan clan, Game game) {
+	ClanInfoPanel(final Clan clan, final Game game) {
 		this.clan = clan;
 		this.game = game;
 	}
@@ -44,7 +44,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		if (this.game.isDead(Shared.PLAYER_CLAN)) {
 			this.jep.setText("<html><body><font color='red'>" + Messages.getString("ClanInfoPanel.youAreDead") //$NON-NLS-1$ //$NON-NLS-2$
 					+ "</font></body></html>"); //$NON-NLS-1$
@@ -78,7 +78,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		return sb.append("</body></html>").toString(); //$NON-NLS-1$
 	}
 
-	private long getNumber(ToLongFunction<City> cc) {
+	private long getNumber(final ToLongFunction<City> cc) {
 		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToLong(cc).sum();
 	}
 
@@ -104,7 +104,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		timer.start();
 	}
 
-	private String resource(Resource r) {
+	private String resource(final Resource r) {
 		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.clan.getResources().get(r.getIndex()))).append("<br>"); //$NON-NLS-1$ //$NON-NLS-2$
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId())

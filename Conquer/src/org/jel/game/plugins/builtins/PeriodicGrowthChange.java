@@ -38,7 +38,7 @@ public final class PeriodicGrowthChange implements Plugin {
 	}
 
 	@Override
-	public void init(PluginInterface pi) {
+	public void init(final PluginInterface pi) {
 		this.values = null;
 	}
 

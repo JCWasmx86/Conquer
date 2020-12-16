@@ -44,7 +44,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * @param consumer A consumer, that is executed as soon as the mouse was clicked
 	 *                 on it.
 	 */
-	CityLabel(City city, Map<City, CityLabel> labels, Consumer<City> consumer) {
+	CityLabel(final City city, final Map<City, CityLabel> labels, final Consumer<City> consumer) {
 		this.city = city;
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
@@ -60,19 +60,19 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		this.paint(this.getGraphics());
-		var s = "<html>" + this.city.getName(); //$NON-NLS-1$
-		s += String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName()); //$NON-NLS-1$ //$NON-NLS-2$
+		StringBuilder s = new StringBuilder("<html>").append(this.city.getName()); //$NON-NLS-1$
+		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName())); //$NON-NLS-1$ //$NON-NLS-2$
 		if (this.city.isPlayerCity()) {
-			s += String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
+			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
 					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), //$NON-NLS-1$
-					this.city.getNumberOfSoldiers());
+					this.city.getNumberOfSoldiers()));
 		} else {
-			s += String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
-					Messages.getString("Shared.soldiers")); //$NON-NLS-1$
+			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.getString("Shared.soldiers"))); //$NON-NLS-1$
 		}
-		this.setToolTipText(s);
+		this.setToolTipText(s.toString());
 	}
 
 	/**
@@ -100,7 +100,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		return this.getY() + (this.city.getImage().getHeight(null) / 2) + (CityLabel.CLAN_COLOR_HEIGHT / 2);
 	}
 
-	private void mark(City origin) {
+	private void mark(final City origin) {
 		this.marked = true;
 		this.origin = origin;
 	}
@@ -109,7 +109,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(final MouseEvent e) {
 		if (e.getClickCount() == 1) {
 			this.consumer.accept(this.city);
 			if (!this.marked && (this.city.isPlayerCity())) {
@@ -127,7 +127,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void mouseEntered(final MouseEvent e) {
 
 	}
 
@@ -135,7 +135,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void mouseExited(MouseEvent e) {
+	public void mouseExited(final MouseEvent e) {
 
 	}
 
@@ -143,7 +143,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(final MouseEvent e) {
 
 	}
 
@@ -151,7 +151,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Shouldn't be used.
 	 */
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public void mouseReleased(final MouseEvent e) {
 
 	}
 
@@ -159,7 +159,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * Repaints the whole CityLabel.
 	 */
 	@Override
-	public void paint(Graphics g) {
+	public void paint(final Graphics g) {
 		try {
 			super.paint(g);
 		} catch (final NullPointerException npe) {

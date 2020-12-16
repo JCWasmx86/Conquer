@@ -12,19 +12,20 @@ import org.jel.game.utils.Graph;
  * several operations.
  */
 public final class StreamUtils {
-	public static void forEach(Graph<City> cities, Clan clan, Consumer<City> consumer) {
+	public static void forEach(final Graph<City> cities, final Clan clan, final Consumer<City> consumer) {
 		StreamUtils.forEach(cities, clan.getId(), consumer);
 	}
 
-	public static void forEach(final Graph<City> cities, Consumer<City> consumer) {
+	public static void forEach(final Graph<City> cities, final Consumer<City> consumer) {
 		StreamUtils.getCitiesAsStream(cities).forEach(consumer);
 	}
 
-	public static void forEach(Graph<City> graph, int i, Consumer<City> consumer) {
+	public static void forEach(final Graph<City> graph, final int i, final Consumer<City> consumer) {
 		StreamUtils.forEach(graph, a -> a.getClanId() == i, consumer);
 	}
 
-	public static void forEach(final Graph<City> cities, Predicate<City> predicate, Consumer<City> consumer) {
+	public static void forEach(final Graph<City> cities, final Predicate<City> predicate,
+			final Consumer<City> consumer) {
 		StreamUtils.getCitiesAsStream(cities, predicate).forEach(consumer);
 	}
 
@@ -32,7 +33,7 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream();
 	}
 
-	public static Stream<City> getCitiesAroundCity(Graph<City> cities, City middle, Clan clan) {
+	public static Stream<City> getCitiesAroundCity(final Graph<City> cities, final City middle, final Clan clan) {
 		return StreamUtils.getCitiesAroundCity(cities, middle, clan.getId());
 	}
 
@@ -45,7 +46,7 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream().filter(predicate);
 	}
 
-	public static Stream<City> getCitiesAroundCityNot(Graph<City> cities, City middle, Clan clan) {
+	public static Stream<City> getCitiesAroundCityNot(final Graph<City> cities, final City middle, final Clan clan) {
 		return StreamUtils.getCitiesAroundCityNot(cities, middle, clan.getId());
 	}
 
@@ -66,11 +67,13 @@ public final class StreamUtils {
 		return StreamUtils.getCitiesAsStream(cities).filter(a -> a.getClanId() == clan.getId());
 	}
 
-	public static Stream<City> getCitiesAsStream(Graph<City> cities, Clan clan, Comparator<City> comparator) {
+	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final Clan clan,
+			final Comparator<City> comparator) {
 		return StreamUtils.getCitiesAsStream(cities, clan.getId(), comparator);
 	}
 
-	public static Stream<City> getCitiesAsStream(Graph<City> cities, Clan clan, Predicate<City> predicate) {
+	public static Stream<City> getCitiesAsStream(final Graph<City> cities, final Clan clan,
+			final Predicate<City> predicate) {
 		return StreamUtils.getCitiesAsStream(cities, clan.getId(), predicate);
 	}
 
@@ -97,11 +100,12 @@ public final class StreamUtils {
 		return StreamUtils.getCitiesAsStream(cities).filter(predicateA).filter(predicateB);
 	}
 
-	public static Stream<City> getCitiesAsStreamNot(Graph<City> cities, Clan clan) {
+	public static Stream<City> getCitiesAsStreamNot(final Graph<City> cities, final Clan clan) {
 		return StreamUtils.getCitiesAsStreamNot(cities, clan.getId());
 	}
 
-	public static Stream<City> getCitiesAsStreamNot(Graph<City> cities, Clan clan, Predicate<City> predicate) {
+	public static Stream<City> getCitiesAsStreamNot(final Graph<City> cities, final Clan clan,
+			final Predicate<City> predicate) {
 		return StreamUtils.getCitiesAsStreamNot(cities, clan.getId(), predicate);
 	}
 

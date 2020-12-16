@@ -36,7 +36,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * @param location  Where the frame will appear
 	 * @param fromIntro Whether the call is coming from the Intro or somewhere else.
 	 */
-	static void forward(Point location, boolean fromIntro) {
+	static void forward(final Point location, final boolean fromIntro) {
 		if (MainScreen.forwarded || (MainScreen.alreadyForwardedOnceFromIntro && fromIntro)) {
 			return;
 		}
@@ -109,7 +109,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 
 	}
 
@@ -118,7 +118,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 */
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 
 	}
 
@@ -126,7 +126,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(final KeyEvent e) {
 	}
 
 	/**
@@ -134,7 +134,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * will stop.
 	 */
 	@Override
-	public void setVisible(boolean b) {
+	public void setVisible(final boolean b) {
 		super.setVisible(b);
 		if (b) {
 			try {
@@ -151,7 +151,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
@@ -159,14 +159,14 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 	}
 
 	/**
 	 * Kills the JVM.
 	 */
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		System.exit(0);
 	}
 
@@ -174,7 +174,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 
 	}
 
@@ -182,7 +182,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
@@ -191,7 +191,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 */
 
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 
 	}
 
@@ -199,7 +199,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 
 	}
 }

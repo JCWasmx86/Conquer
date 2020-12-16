@@ -12,13 +12,13 @@ public final class EventList extends ArrayList<Message> {
 	private final List<MessageListener> listeners = new ArrayList<>(50);
 
 	@Override
-	public void add(int index, Message element) {
+	public void add(final int index, final Message element) {
 		this.listeners.forEach(a -> a.added(element));
 		super.add(index, element);
 	}
 
 	@Override
-	public boolean add(Message message) {
+	public boolean add(final Message message) {
 		if (message == null) {
 			throw new IllegalArgumentException("message==null");
 		}
@@ -26,12 +26,12 @@ public final class EventList extends ArrayList<Message> {
 		return super.add(message);
 	}
 
-	void addListener(MessageListener ml) {
+	void addListener(final MessageListener ml) {
 		this.listeners.add(ml);
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public boolean remove(final Object o) {
 		if (!(o instanceof Message)) {
 			throw new IllegalArgumentException("o has to be an instanceof Message");
 		}

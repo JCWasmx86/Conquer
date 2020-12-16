@@ -51,7 +51,8 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		this.killCivilians(city, maxCivilians, clan);
 	}
 
-	private void collectStatistics(List<Double> statistics, List<Double> resources, Clan clan, int idx) {
+	private void collectStatistics(final List<Double> statistics, final List<Double> resources, final Clan clan,
+			final int idx) {
 		if (statistics.get(idx) < 0) {
 			double saved = clan.getResources().get(idx);
 			saved += statistics.get(idx);
@@ -82,7 +83,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		this.events = pi.getEventList();
 	}
 
-	private void killCivilians(City city, long maxCivilians, Clan clan) {
+	private void killCivilians(final City city, final long maxCivilians, final Clan clan) {
 		if (maxCivilians <= 0) {
 			return;
 		}
@@ -94,8 +95,8 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		city.setNumberOfPeople(tmp2 == 0 ? tmp3 : tmp2);
 	}
 
-	private void killedCiviliansUpdate(City city, int idx, List<Double> killedSoldiers, List<Double> killedCivilians,
-			double d) {
+	private void killedCiviliansUpdate(final City city, final int idx, final List<Double> killedSoldiers,
+			final List<Double> killedCivilians, final double d) {
 		final var d1 = d + (city.getNumberOfSoldiers() + Shared.getDataValues()[idx][1]);
 		final var numCiviliansToGetToZero = (-d1) / Shared.getDataValues()[idx][0];
 		killedSoldiers.add((double) city.getNumberOfSoldiers());
@@ -106,7 +107,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		}
 	}
 
-	private void killSoldiers(City city, long maxSoldiers, Clan clan) {
+	private void killSoldiers(final City city, final long maxSoldiers, final Clan clan) {
 		if (maxSoldiers <= 0) {
 			return;
 		}

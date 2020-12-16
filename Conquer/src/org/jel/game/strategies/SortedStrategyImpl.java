@@ -33,8 +33,8 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public boolean acceptGift(Clan sourceClan, Clan destinationClan, Gift gift, double oldValue,
-			DoubleConsumer newValue, StrategyObject strategyObject) {
+	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
+			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if ((this.gifts.contains(sourceClan) && (Math.random() < 0.8)) || (Math.random() < 0.1)) {
 			return false;
 		}
@@ -123,8 +123,8 @@ public final class SortedStrategyImpl implements Strategy {
 				}).collect(Collectors.toList());
 	}
 
-	private boolean tryRecruiting(Clan clan, double factor, Double second, City ownCity, long ownCitySoldiers,
-			StrategyObject obj) {
+	private boolean tryRecruiting(final Clan clan, final double factor, final Double second, final City ownCity,
+			final long ownCitySoldiers, final StrategyObject obj) {
 		if (second > (ownCitySoldiers * factor)) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
 			if (second > (ownCitySoldiers * factor)) {

@@ -24,7 +24,7 @@ final class RecruitButton extends JPanel {
 	 * @param city Target city
 	 * @param cip  A reference to the CityInfoPanel.
 	 */
-	RecruitButton(City city, CityInfoPanel cip) {
+	RecruitButton(final City city, final CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),
@@ -57,21 +57,19 @@ final class RecruitButton extends JPanel {
 			this.js.setMinimum(0);
 			this.js.setMaximum(0);
 			this.sharp = false;
+		} else if (!this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
+			this.jbutton.setEnabled(true);
+			this.js.setEnabled(true);
+			this.sharp = true;
+			this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(),
+					this.city.getNumberOfPeople()));
+			this.sharp = false;
 		} else {
-			if (!this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
-				this.jbutton.setEnabled(true);
-				this.js.setEnabled(true);
-				this.sharp = true;
-				this.js.setMaximum((int) this.city.getInfo()
-						.maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(), this.city.getNumberOfPeople()));
-				this.sharp = false;
-			} else {
-				this.jbutton.setEnabled(false);
-				this.js.setEnabled(false);
-				this.sharp = true;
-				this.js.setMaximum(0);
-				this.sharp = false;
-			}
+			this.jbutton.setEnabled(false);
+			this.js.setEnabled(false);
+			this.sharp = true;
+			this.js.setMaximum(0);
+			this.sharp = false;
 		}
 	}
 

@@ -31,7 +31,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	 *
 	 * @param args Ignored commandline arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
@@ -74,23 +74,23 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		if (e.getSource() == this.timer) {
 			this.repaint();
 		}
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(final KeyEvent e) {
 		if ((e == null) || (e.getKeyChar() == 32)) {
 			this.setVisible(false);
 			this.needed = false;
@@ -105,12 +105,12 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paint(final Graphics g) {
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 
 	@Override
-	public void setVisible(boolean b) {
+	public void setVisible(final boolean b) {
 		super.setVisible(b);
 		if (!b) {
 			this.sound.stop();
@@ -120,12 +120,12 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	}
 
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 		if (this.sound.isPlaying()) {
 			this.sound.stop();
 		}
@@ -137,35 +137,36 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		if (this.needed) {
 			System.exit(0);
 		}
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 
 	}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 
 	}
 
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 		new Thread(() -> {
 			try {
 				this.sound.play();
 			} catch (final Exception exc) {
 				exc.printStackTrace();
 				Shared.LOGGER.exception(exc);
+				return;
 			}
 
 			while (this.sound.isPlaying()) {

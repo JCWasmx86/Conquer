@@ -3,6 +3,7 @@ package org.jel.game.data;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class represents a city.
@@ -155,7 +156,7 @@ public final class City implements Comparable<City> {
 	 *             {@link IllegalArgumentException} will be thrown.
 	 * @return The defense strength of the city.
 	 */
-	public double getDefenseStrength(Clan clan) {
+	public double getDefenseStrength(final Clan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
@@ -287,11 +288,7 @@ public final class City implements Comparable<City> {
 	 */
 	@Override
 	public int hashCode() {
-		final var prime = 31;
-		var result = 1;
-		result = (prime * result) + this.x;
-		result = (prime * result) + this.y;
-		return result;
+		return Objects.hash(x, y);
 	}
 
 	/**
@@ -331,7 +328,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param num New number of attacks of the player.
 	 */
-	void setAttacksOfPlayer(long num) {
+	void setAttacksOfPlayer(final long num) {
 		if (this.numAttacksOfPlayer == -1) {
 			throw new UnsupportedOperationException(
 					"Can't change the number of attacks of the player after it was set!");
@@ -446,7 +443,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param num
 	 */
-	void setNumberOfRoundsWithZeroPeople(int num) {
+	void setNumberOfRoundsWithZeroPeople(final int num) {
 		this.numberOfRoundsWithZeroPeople = num;
 	}
 
@@ -467,7 +464,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param value
 	 */
-	void setOldValue(double value) {
+	void setOldValue(final double value) {
 		this.oldOne = value;
 	}
 

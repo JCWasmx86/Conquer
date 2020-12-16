@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public abstract class ExtendedOutputStream extends OutputStream {
 	@Override
-	public void write(byte[] bytes) throws IOException {
+	public void write(final byte[] bytes) throws IOException {
 		this.write(new String(bytes));
 	}
 

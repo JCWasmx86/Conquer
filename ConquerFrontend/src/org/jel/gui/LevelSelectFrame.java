@@ -40,7 +40,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 *
 	 * @param location The location of the created frame.
 	 */
-	void init(Point location) {
+	void init(final Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo();
 		final var list = new DefaultListModel<InstalledScenario>();
@@ -58,8 +58,9 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 			private final Map<InstalledScenario, JLabel> map = new HashMap<>();
 
 			@Override
-			public Component getListCellRendererComponent(JList<? extends InstalledScenario> list,
-					InstalledScenario value, int index, boolean isSelected, boolean cellHasFocus) {
+			public Component getListCellRendererComponent(final JList<? extends InstalledScenario> list,
+					final InstalledScenario value, final int index, final boolean isSelected,
+					final boolean cellHasFocus) {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
 					jl = new JLabel(value.name());
@@ -92,7 +93,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(final MouseEvent e) {
 
 	}
 
@@ -100,7 +101,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void mouseEntered(final MouseEvent e) {
 
 	}
 
@@ -108,7 +109,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void mouseExited(MouseEvent e) {
+	public void mouseExited(final MouseEvent e) {
 
 	}
 
@@ -116,7 +117,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Exits the frame and opens a new LevelInfo
 	 */
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(final MouseEvent e) {
 		@SuppressWarnings("unchecked")
 		final var scenario = ((JList<InstalledScenario>) e.getSource()).getSelectedValue();
 		if (scenario == null) {
@@ -134,7 +135,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public void mouseReleased(final MouseEvent e) {
 
 	}
 
@@ -142,7 +143,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(WindowEvent e) {
+	public void windowActivated(final WindowEvent e) {
 
 	}
 
@@ -150,7 +151,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 
 	}
 
@@ -158,7 +159,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used. Closes the window and kills the JVM.
 	 */
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 		if (this.shouldExit) {
 			System.exit(0);
 		}
@@ -168,7 +169,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 
 	}
 
@@ -176,7 +177,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 
 	}
 
@@ -184,7 +185,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 
 	}
 
@@ -192,7 +193,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 
 	}
 }

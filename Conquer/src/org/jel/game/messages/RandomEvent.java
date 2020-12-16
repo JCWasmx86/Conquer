@@ -8,7 +8,7 @@ public enum RandomEvent {
 
 	private String propertyName;
 
-	private RandomEvent(final String propertyName) {
+	RandomEvent(final String propertyName) {
 		this.propertyName = propertyName;
 	}
 

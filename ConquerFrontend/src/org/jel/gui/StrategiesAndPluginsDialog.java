@@ -59,7 +59,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		this.plugins = new JList<>(this.context.getPluginNames().toArray(new String[0]));
 		this.plugins.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.plugins.setSelectedIndex(ref.plugins.locationToIndex(e.getPoint()));
@@ -86,7 +86,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		this.strategies = new JList<>(this.context.getStrategyNames().toArray(new String[0]));
 		this.strategies.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mousePressed(final MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)) {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.strategies.setSelectedIndex(ref.strategies.locationToIndex(e.getPoint()));
@@ -122,7 +122,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 			private static final long serialVersionUID = -6317479161221320082L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				StrategiesAndPluginsDialog.this.reset();
 			}
 		});
@@ -133,7 +133,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 			private static final long serialVersionUID = -3344401911394156158L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				final var sb = new StringBuilder(
 						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->\n<info>\n\t<scenarios>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.context.getInstalledMaps()

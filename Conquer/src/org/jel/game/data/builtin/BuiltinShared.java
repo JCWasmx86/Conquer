@@ -127,11 +127,11 @@ final class BuiltinShared {
 				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clan, a, false, 0));
 	}
 
-	static double sum(Clan clan) {
+	static double sum(final Clan clan) {
 		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
-	static double sum(Gift gift) {
+	static double sum(final Gift gift) {
 		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 

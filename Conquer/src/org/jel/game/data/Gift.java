@@ -21,7 +21,7 @@ public final class Gift {
 		}
 	}
 
-	public Gift(List<Double> resources, double numberOfCoins) {
+	public Gift(final List<Double> resources, final double numberOfCoins) {
 		if (numberOfCoins < 0) {
 			throw new IllegalArgumentException("numberOfCoins < 0");
 		} else if (resources == null) {

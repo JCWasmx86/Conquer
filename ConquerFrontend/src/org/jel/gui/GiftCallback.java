@@ -33,8 +33,8 @@ final class GiftCallback implements PlayerGiftCallback {
 	 * This method blocks until the player accepted or rejected.
 	 */
 	@Override
-	public boolean acceptGift(Clan source, Clan destination, Gift gift, double oldValue, DoubleConsumer newValue,
-			StrategyObject strategyObject) {
+	public boolean acceptGift(final Clan source, final Clan destination, final Gift gift, final double oldValue,
+			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		final var jframe = new JFrame();
 		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));
 		jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
@@ -60,7 +60,7 @@ final class GiftCallback implements PlayerGiftCallback {
 			private static final long serialVersionUID = -1684485024318434611L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				newValue.accept(oldValue + (Math.random() * 15));
 				jframe.setVisible(false);
 				GiftCallback.this.accept();
@@ -71,7 +71,7 @@ final class GiftCallback implements PlayerGiftCallback {
 			private static final long serialVersionUID = 5614286737761253933L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				jframe.setVisible(false);
 			}
 		});
