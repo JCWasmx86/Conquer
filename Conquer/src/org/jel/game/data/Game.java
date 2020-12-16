@@ -545,6 +545,7 @@ public final class Game implements ConquerInfo {
 	 * @param clanId The clan id
 	 * @return A reference to the clan with the id {@code clanID}
 	 */
+	@Override
 	public Clan getClan(final int clanId) {
 		this.checkClan(clanId);
 		return this.clans.get(clanId);
@@ -576,6 +577,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * @return The colors of every clan.
 	 */
+	@Override
 	public List<Color> getColors() {
 		return this.clans.stream().map(Clan::getColor).collect(Collectors.toList());
 	}
@@ -1225,6 +1227,7 @@ public final class Game implements ConquerInfo {
 		return true;
 	}
 
+	@Override
 	public void upgradeDefenseFully(final int clan, final City city) {
 		this.throwIfNull(city, "city==null");
 		this.checkClan(clan);
@@ -1270,6 +1273,7 @@ public final class Game implements ConquerInfo {
 		return true;
 	}
 
+	@Override
 	public void upgradeResourceFully(final int clan, final Resource resources, final City city) {
 		this.throwIfNull(city, "city==null");
 		this.throwIfNull(resources, "resources==null");
