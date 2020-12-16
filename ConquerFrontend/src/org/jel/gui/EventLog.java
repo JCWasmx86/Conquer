@@ -124,9 +124,7 @@ final class EventLog extends JFrame implements MessageListener {
 			public void actionPerformed(ActionEvent e) {
 				for (final var c : EventLog.this.contentPane.getViewport().getComponents()) {
 					if (c instanceof JPanel panel) {
-						for (final var cc : panel.getComponents()) {
-							panel.remove(cc);
-						}
+						panel.removeAll();
 					}
 				}
 				EventLog.this.revalidate();
