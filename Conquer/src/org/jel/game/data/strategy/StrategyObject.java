@@ -16,7 +16,7 @@ public interface StrategyObject {
 			long numberOfSoldiersToMoveIfManaged) {
 		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
 	}
-
+	
 	void attack(City source, City target, byte sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
 

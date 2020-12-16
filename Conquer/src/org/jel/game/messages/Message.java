@@ -3,9 +3,7 @@ package org.jel.game.messages;
 import java.util.Optional;
 
 public interface Message {
-	default String getMessageText() {
-		return "";
-	}
+	String getMessageText();
 
 	default Optional<String> getOptionalIconPath() {
 		return Optional.empty();
