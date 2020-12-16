@@ -46,7 +46,7 @@ import org.jel.gui.utils.LoopPlayer;
  * </ol>
  */
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
-	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle")+" "; //$NON-NLS-1$
+	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " "; //$NON-NLS-1$
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient Game game;
 	private final Map<City, CityLabel> labels = new HashMap<>();

@@ -91,7 +91,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
 			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel", //$NON-NLS-1$
-					this.clan.getSoldiersOffenseLevel() + count - 1));
+					(this.clan.getSoldiersOffenseLevel() + count) - 1));
 		} else {
 			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); //$NON-NLS-1$
 		}
