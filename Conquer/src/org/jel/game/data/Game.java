@@ -1077,13 +1077,13 @@ public final class Game implements ConquerInfo {
 		boolean acceptedGift;
 		if (!destination.isPlayerClan()) {
 			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift,
-					this.getRelationship(source.getId(), destination.getId()), a -> {
+					this.getRelationship(source, destination), a -> {
 						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);
 		} else {
 			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift,
-					this.getRelationship(source.getId(), destination.getId()), a -> {
+					this.getRelationship(source, destination), a -> {
 						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
 						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 					}, this);
