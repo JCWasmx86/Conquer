@@ -20,6 +20,6 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 
 ### Contributing
 
-[General](contributing/general.md)
-[Contribute as a programmer](contributing/code.md)
+[General](contributing/general.md) \
+[Contribute as a programmer](contributing/code.md) \
 [Contribute as a non-programmer](contributing/non-code.md)
