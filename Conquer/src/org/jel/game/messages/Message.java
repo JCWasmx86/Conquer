@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface Message {
 	default String getMessageText() {
-		return null;
+		return "";
 	}
 
 	default Optional<String> getOptionalIconPath() {
@@ -17,5 +17,9 @@ public interface Message {
 
 	default boolean isPlayerInvolved() {
 		return false;
+	}
+	
+	default boolean shouldBeShownToThePlayer() {
+		return isPlayerInvolved();
 	}
 }
