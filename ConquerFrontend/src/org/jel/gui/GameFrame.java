@@ -83,6 +83,11 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.X_AXIS));
 	}
 
+	GameFrame(final String saveName, final Game game) {
+		this(game);
+		this.saveName = saveName;
+	}
+
 	private void adjustX() {
 		if (!this.buttonPanel.isShowing() || !this.gameStageScrollPane.isShowing()) {
 			return;
@@ -392,6 +397,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		if (this.game.onlyOneClanAlive()) {
 			this.cleanup();
 			this.game.exit(this.game.calculateResult());
+			return;
 		}
 		if (this.saveName != null) {
 			if (!this.save()) {
