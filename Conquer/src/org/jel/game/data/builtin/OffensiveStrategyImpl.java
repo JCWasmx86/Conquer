@@ -38,15 +38,6 @@ public final class OffensiveStrategyImpl implements Strategy {
 		}
 	}
 
-	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
-			final byte[] dataBytes) {
-		this.object=strategyObject;
-		if(hasStrategyData) {
-			return new OffensiveStrategyData(dataBytes);
-		}else {
-			return null;
-		}
-	}
 	@Override
 	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		this.object = obj;
@@ -127,6 +118,17 @@ public final class OffensiveStrategyImpl implements Strategy {
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
 			b = this.object.upgradeSoldiers(clan);
 			cnter++;
+		}
+	}
+
+	@Override
+	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
+			final byte[] dataBytes) {
+		this.object = strategyObject;
+		if (hasStrategyData) {
+			return new OffensiveStrategyData(dataBytes);
+		} else {
+			return null;
 		}
 	}
 

@@ -21,7 +21,7 @@ public final class OffensiveStrategyData implements StrategyData {
 		this.action = OffensiveStrategy.EXPAND;
 	}
 
-	OffensiveStrategyData(byte[] dataBytes) {
+	OffensiveStrategyData(final byte[] dataBytes) {
 		this();
 		this.action = OffensiveStrategy.values()[dataBytes[0]];
 		this.counter = ByteBuffer.wrap(dataBytes, 1, dataBytes.length - 1).order(ByteOrder.LITTLE_ENDIAN).getInt();
@@ -29,6 +29,12 @@ public final class OffensiveStrategyData implements StrategyData {
 
 	public OffensiveStrategy getAction() {
 		return this.action;
+	}
+
+	@Override
+	public void save(final OutputStream out) throws IOException {
+		out.write(this.action.ordinal());
+		out.write(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(this.counter).array());
 	}
 
 	@Override
@@ -48,11 +54,5 @@ public final class OffensiveStrategyData implements StrategyData {
 						"Offensive-strategy: " + OffensiveStrategy.EXPAND + " for " + this.counter + " rounds");
 			}
 		}
-	}
-
-	@Override
-	public void save(OutputStream out) throws IOException {
-		out.write(this.action.ordinal());
-		out.write(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(this.counter).array());
 	}
 }
