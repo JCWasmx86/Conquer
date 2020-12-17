@@ -204,7 +204,7 @@ public final class Clan {
 
 	/**
 	 * Returns whether the clan is played by the human player or not
-	 * 
+	 *
 	 * @return {@code true} if the clan is played by the human.
 	 */
 	public boolean isPlayerClan() {

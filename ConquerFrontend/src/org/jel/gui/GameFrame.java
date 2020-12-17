@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -13,8 +14,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -34,6 +33,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
@@ -67,7 +67,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private transient List<DashedLine> lines = new ArrayList<>();
 	private transient Thread coinsLabelUpdateThread;
 	private String saveName;
-	private JPanel basePanel;
+	private final JPanel basePanel;
 
 	/**
 	 * Create a new GameFrame with a specified game as base
@@ -117,6 +117,14 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 			b.repaint();
 		});
+	}
+
+	private void cleanup() {
+		EventLog.clear();
+		this.loopPlayer.abort();
+		MainScreen.forward(this.getLocation(), false);
+		this.coinsLabelUpdateThread.stop();
+		this.dispose();
 	}
 
 	/**
@@ -173,58 +181,6 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.add(this.basePanel);
 		this.pack();
 		this.nonGUIInit();
-	}
-
-	private void initMenubar() {
-		final var jmenubar = new JMenuBar();
-		final var jmenu = new JMenu(Messages.getString("GameFrame.settings"));
-		jmenubar.add(jmenu);
-		final var saveGame = new JMenuItem();
-		saveGame.setAction(new AbstractAction() {
-			private static final long serialVersionUID = 2560703690131079830L;
-
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				if (saveName == null) {
-					saveName = JOptionPane.showInputDialog(null, Messages.getString("GameFrame.pleaseGiveNameToSave"));
-					if (Arrays.binarySearch(Shared.savedGames(), saveName) >= 0) {
-						final var selected = JOptionPane.showConfirmDialog(null,
-								Messages.getMessage("GameFrame.comfirmOverwriting", saveName));
-						if (selected != JOptionPane.YES_OPTION) {
-							return;// Abort saving
-						} else {
-							try {
-								Shared.deleteDirectory(new File(Shared.SAVE_DIRECTORY, saveName));
-							} catch (IOException e) {
-								Shared.LOGGER.exception(e);
-								JOptionPane.showMessageDialog(null,
-										Messages.getMessage("GameFrame.deletingFailed", saveName),
-										Messages.getString("GameFrame.error"), JOptionPane.ERROR_MESSAGE);
-							}
-						}
-					}
-					final var savedGame=new SavedGame(saveName);
-					try {
-						savedGame.save(game);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		jmenu.add(saveGame);
-		final var close = new JMenuItem();
-		close.setAction(new AbstractAction() {
-			private static final long serialVersionUID = 2560703690131079830L;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
-		close.setText(Messages.getString("GameFrame.close"));
-		jmenu.add(close);
-		this.add(jmenubar);
 	}
 
 	private void initButtonPanel() {
@@ -315,6 +271,51 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.gameStage.setLayout(null);
 	}
 
+	private void initMenubar() {
+		final var jmenubar = new JMenuBar();
+		final var jmenu = new JMenu(Messages.getString("GameFrame.settings"));
+		jmenubar.add(jmenu);
+		final var saveGame = new JMenuItem();
+		saveGame.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 2560703690131079830L;
+
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				if (GameFrame.this.saveName == null) {
+					GameFrame.this.setSaveName();
+					if (GameFrame.this.saveName == null) {
+						return;
+					}
+					if (Arrays.binarySearch(Shared.savedGames(), GameFrame.this.saveName) >= 0) {
+						final var selected = JOptionPane.showConfirmDialog(null,
+								Messages.getMessage("GameFrame.comfirmOverwriting", GameFrame.this.saveName));
+						if (selected != JOptionPane.YES_OPTION) {
+							return;// Abort saving
+						}
+					}
+				}
+				GameFrame.this.save();
+			}
+		});
+		saveGame.setText(Messages.getString("GameFrame.save"));
+		saveGame.setAccelerator(
+				KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		jmenu.add(saveGame);
+		final var close = new JMenuItem();
+		close.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 2560703690131079830L;
+
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				GameFrame.this.saveAndMaybeExit();
+			}
+		});
+		close.setText(Messages.getString("GameFrame.close"));
+		close.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
+		jmenu.add(close);
+		this.add(jmenubar);
+	}
+
 	private void initSideBar() {
 		final var cities = this.game.getCities();
 		final var cityInfoPanel = new JPanel();
@@ -374,6 +375,67 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 	}
 
+	private boolean save() {
+		try {
+			new SavedGame(this.saveName).save(this.game);
+		} catch (final Exception e) {
+			Shared.LOGGER.exception(e);
+			JOptionPane.showMessageDialog(null, Messages.getMessage("GameFrame.savingFailed", this.saveName),
+					Messages.getString("GameFrame.error"), JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		return true;
+	}
+
+	private void saveAndMaybeExit() {
+		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		if (this.saveName != null) {
+			if (!this.save()) {
+				return;
+			}
+		} else {
+			final var options = new String[] { Messages.getString("GameFrame.save"),
+					Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel") };
+			final var selected = JOptionPane.showOptionDialog(null, Messages.getString("GameFrame.doYouWantToSave"),
+					Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
+					null, options, options[2]);
+			switch (selected) {
+			default:
+			case JOptionPane.CLOSED_OPTION:
+			case 2:
+				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				return;
+			case 0:
+				this.setSaveName();
+				if (this.saveName == null) {
+					this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+					return;
+				}
+				if (Arrays.binarySearch(Shared.savedGames(), this.saveName) >= 0) {
+					final var selectedValue = JOptionPane.showConfirmDialog(null,
+							Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
+					if (selectedValue != JOptionPane.YES_OPTION) {
+						return;
+					}
+				}
+				this.save();
+				break;
+			case 1:// Do nothing
+				break;
+			}
+		}
+		this.cleanup();
+	}
+
+	private void setSaveName() {
+		do {
+			this.saveName = JOptionPane.showInputDialog(null, Messages.getString("GameFrame.pleaseGiveNameToSave"));
+			if (this.saveName == null) {
+				break;
+			}
+		} while (this.saveName.isEmpty());
+	}
+
 	/**
 	 * Shouldn't be used
 	 */
@@ -395,22 +457,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 */
 	@Override
 	public void windowClosing(final WindowEvent e) {
-		if (!this.game.onlyOneClanAlive()) {
-			this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-			final var status = JOptionPane.showConfirmDialog(null,
-					Messages.getString("GameFrame.doyouReallyWantToQuit"), Messages.getString("GameFrame.exit"), //$NON-NLS-1$ //$NON-NLS-2$
-					JOptionPane.YES_NO_OPTION);
-			if (status == JOptionPane.YES_OPTION) {
-			} else {
-				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				return;
-			}
-		}
-		EventLog.clear();
-		this.loopPlayer.abort();
-		MainScreen.forward(this.getLocation(), false);
-		this.coinsLabelUpdateThread.stop();
-		this.dispose();
+		this.saveAndMaybeExit();
 	}
 
 	/**
