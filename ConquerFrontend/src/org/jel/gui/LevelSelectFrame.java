@@ -2,11 +2,13 @@ package org.jel.gui;
 
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +19,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
@@ -43,18 +49,16 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	void init(final Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.context = XMLReader.getInstance().readInfo();
-		final var list = new DefaultListModel<InstalledScenario>();
-		for (final var scenario : this.context.getInstalledMaps()) {
-			list.addElement(scenario);
-		}
+		final var newScenarios = new DefaultListModel<InstalledScenario>();
+		newScenarios.addAll(this.context.getInstalledMaps());
 		final JButton jb = new RoundButton(new ImageResource("back.png")); //$NON-NLS-1$
 		jb.addActionListener(a -> {
 			this.shouldExit = false;
 			this.dispose();
 			MainScreen.forward(this.getLocation(), false);
 		});
-		final var jlist = new JList<>(list);
-		jlist.setCellRenderer(new ListCellRenderer<>() {
+		final var freshNewScenarios = new JList<>(newScenarios);
+		freshNewScenarios.setCellRenderer(new ListCellRenderer<>() {
 			private final Map<InstalledScenario, JLabel> map = new HashMap<>();
 
 			@Override
@@ -78,11 +82,36 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 				return jl;
 			}
 		});
-		final var scrollPane = new JScrollPane();
-		scrollPane.setViewportView(jlist);
-		jlist.addMouseListener(this);
+		final var newScenariosScrollPane = new JScrollPane();
+		newScenariosScrollPane.setViewportView(freshNewScenarios);
+		freshNewScenarios.addMouseListener(this);
+		final var savedScenarios = new JList<>(Shared.savedGames());
+		savedScenarios.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(final MouseEvent event) {
+				if (SwingUtilities.isRightMouseButton(event)) {
+					savedScenarios.setSelectedIndex(savedScenarios.locationToIndex(event.getPoint()));
+					final var menu = new JPopupMenu();
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
+					itemRemove.addActionListener(a -> {
+						try {
+							Shared.deleteDirectory(new File(Shared.SAVE_DIRECTORY, savedScenarios.getSelectedValue()));
+						} catch (final IOException e1) {
+							Shared.LOGGER.exception(e1);
+							JOptionPane.showMessageDialog(null, e1.getLocalizedMessage());
+							return;
+						}
+						savedScenarios.setListData(Shared.savedGames());
+						LevelSelectFrame.this.pack();
+					});
+					menu.add(itemRemove);
+					menu.show(savedScenarios, event.getPoint().x, event.getPoint().y);
+				}
+			}
+		});
 		this.add(jb);
-		this.add(scrollPane);
+		this.add(newScenariosScrollPane);
+		this.add(savedScenarios);
 		this.pack();
 		this.setVisible(true);
 		this.setLocation(location);
