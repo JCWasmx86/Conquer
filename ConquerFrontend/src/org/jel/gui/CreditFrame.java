@@ -202,7 +202,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	}
 
 	/**
-	 * Init and show this frame at the specified location
+	 * Initialise and show this frame at the specified location
 	 *
 	 * @param location The location, where the frame will appear
 	 */

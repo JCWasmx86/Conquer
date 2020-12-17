@@ -98,7 +98,13 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		credits.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(credits);
 		final var tutorial = new JButton(Messages.getString("MainScreen.tutorial")); //$NON-NLS-1$
-		tutorial.addActionListener(a -> System.out.println(Messages.getString("MainScreen.tutorial"))); //$NON-NLS-1$
+		tutorial.addActionListener(a -> {
+			MainScreen.forwarded = false;
+			final var tutorialFrame = new TutorialFrame();
+			tutorialFrame.init(this.getLocation());
+			this.dispose();
+			this.player.abort();
+		});
 		tutorial.setFont(play.getFont());
 		tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(tutorial);
