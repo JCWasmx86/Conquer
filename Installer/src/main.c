@@ -1,6 +1,6 @@
 #include <assert.h>
-#include <shfolder.h>
 #include <shlobj.h>
+#include <shfolder.h>
 
 #include <stdint.h>
 #include <stdio.h>
@@ -50,6 +50,7 @@ char *getBaseDirectory(void) {
 	return name;
 }
 void writeFile(const char *fileName, void *buf, uint64_t size) {
+	printf("%s, %lld\n",fileName,size);
 	char *name = getBaseDirectory();
 	strcat(name, fileName);
 	FILE *fp = fopen(name, "wb");
