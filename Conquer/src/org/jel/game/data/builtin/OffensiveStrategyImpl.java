@@ -38,6 +38,15 @@ public final class OffensiveStrategyImpl implements Strategy {
 		}
 	}
 
+	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
+			final byte[] dataBytes) {
+		this.object=strategyObject;
+		if(hasStrategyData) {
+			return new OffensiveStrategyData(dataBytes);
+		}else {
+			return null;
+		}
+	}
 	@Override
 	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		this.object = obj;

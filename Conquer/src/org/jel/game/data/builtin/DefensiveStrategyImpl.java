@@ -26,7 +26,15 @@ public final class DefensiveStrategyImpl implements Strategy {
 		newValue.accept(oldValue + (prop * 0.05 * strategyObject.getRelationship(sourceClan, destinationClan)));
 		return true;
 	}
-
+	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
+			final byte[] dataBytes) {
+		this.object=strategyObject;
+		if(hasStrategyData) {
+			return new DefensiveStrategyData(dataBytes);
+		}else {
+			return null;
+		}
+	}
 	@Override
 	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
 		this.object = obj;

@@ -1,9 +1,14 @@
 package org.jel.game.data.builtin;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Random;
 
 import org.jel.game.data.Shared;
 import org.jel.game.data.strategy.StrategyData;
+
 
 public final class DefensiveStrategyData implements StrategyData {
 	private int counter;
@@ -14,6 +19,12 @@ public final class DefensiveStrategyData implements StrategyData {
 		this.random = new Random(System.nanoTime());
 		this.counter = Math.abs(this.random.nextInt(20)) + 1;
 		this.strategy = DefensiveStrategy.values()[Math.abs(this.random.nextInt(DefensiveStrategy.values().length))];
+	}
+
+	DefensiveStrategyData(byte[] dataBytes) {
+		this();
+		this.strategy=DefensiveStrategy.values()[dataBytes[0]];
+		this.counter=ByteBuffer.wrap(dataBytes, 1, dataBytes.length-1).order(ByteOrder.LITTLE_ENDIAN).getInt();
 	}
 
 	public DefensiveStrategy getStrategy() {
@@ -48,5 +59,11 @@ public final class DefensiveStrategyData implements StrategyData {
 
 			}
 		}
+	}
+
+	@Override
+	public void save(OutputStream out) throws IOException {
+		out.write(this.strategy.ordinal());
+		out.write(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(this.counter).array());
 	}
 }

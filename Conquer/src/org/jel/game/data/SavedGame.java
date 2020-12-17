@@ -63,13 +63,13 @@ public class SavedGame {
 	}
 
 	private void readCities(final DataInputStream dis, final Game game) throws IOException {
-		final var cities = new Graph<City>(game.getNumPlayers());
 		final var numberOfCities = dis.readInt();
+		final var cities = new Graph<City>(numberOfCities);
 		for (var i = 0; i < numberOfCities; i++) {
 			final var city = new City(game);
 			city.setName(dis.readUTF());
 			city.setDefenseBonus(dis.readDouble());
-			city.setClan(game.getClan(dis.read()));
+			city.setId(dis.read());
 			city.setDefense(dis.readDouble());
 			city.setGrowth(dis.readDouble());
 			final var imageLen = dis.readInt();
@@ -130,7 +130,7 @@ public class SavedGame {
 			clan.setSoldiersLevel(dis.readInt());
 			clan.setSoldiersDefenseLevel(dis.readInt());
 			clan.setSoldiersOffenseLevel(dis.readInt());
-			clan.setFlags(dis.read());
+			clan.setFlags(dis.readInt());
 			final var hasStrategyData = dis.readBoolean();
 			byte[] dataBytes = null;
 			if (hasStrategyData) {
@@ -166,7 +166,7 @@ public class SavedGame {
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
 		for (final var file : files) {
-			final var pluginName = file.getName();
+			final var pluginName = file.getName().replaceAll("\\.plugin\\.save$", "");
 			final var plugin = (Plugin) Class.forName(pluginName).getConstructor().newInstance();
 			plugin.resume(game, Files.newInputStream(Paths.get(file.toURI())));
 			ret.add(plugin);
@@ -179,6 +179,7 @@ public class SavedGame {
 		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		this.restore(game, saveDirectory);
 		game.setClans(this.readClans(saveDirectory, game));
+		StreamUtils.getCitiesAsStream(game.getCities()).forEach(a -> a.setClan(game.getClan(a.getClanId())));
 		final var plugins = this.readPlugins(saveDirectory, game);
 		game.setPlugins(plugins);
 		game.resume(this.name);

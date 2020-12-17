@@ -1,5 +1,7 @@
 package org.jel.game.plugins.builtins;
 
+import java.io.InputStream;
+
 import org.jel.game.data.City;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
@@ -20,6 +22,13 @@ public final class DefaultMusic implements Plugin {
 
 	@Override
 	public void init(final PluginInterface pi) {
+		for (var i = 0; i < 27; i++) {
+			pi.addMusic("Battle" + i + (Boolean.getBoolean("conquer.useMP3") ? ".mp3" : ".wav"));
+		}
+	}
+
+	@Override
+	public void resume(PluginInterface pi, InputStream bytes) {
 		for (var i = 0; i < 27; i++) {
 			pi.addMusic("Battle" + i + (Boolean.getBoolean("conquer.useMP3") ? ".mp3" : ".wav"));
 		}

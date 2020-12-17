@@ -61,8 +61,9 @@ public interface Plugin {
 	 *
 	 * @param game
 	 * @param bytes The written bytes
+	 * @throws IOException In case of an IO-Error
 	 */
-	default void resume(final PluginInterface game, final InputStream bytes) {
+	default void resume(final PluginInterface game, final InputStream bytes) throws IOException {
 
 	}
 

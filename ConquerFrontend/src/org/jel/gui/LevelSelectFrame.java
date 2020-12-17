@@ -26,9 +26,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
+import org.jel.game.data.Game;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Reader;
+import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
 import org.jel.gui.utils.ImageResource;
@@ -106,12 +108,29 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					});
 					menu.add(itemRemove);
 					menu.show(savedScenarios, event.getPoint().x, event.getPoint().y);
+				}else if(SwingUtilities.isLeftMouseButton(event)) {
+					final var item=savedScenarios.getSelectedValue();
+					final var savedGame=new SavedGame(item);
+					try {
+						final var game = savedGame.restore();
+						final var frame=new GameFrame(game);
+						frame.init();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						Shared.LOGGER.exception(e1);
+						JOptionPane.showMessageDialog(null, e1.getLocalizedMessage());
+						return;
+					}
+					shouldExit = false;
+					dispose();
 				}
 			}
 		});
+		final var savedScenariosScrollPane = new JScrollPane();
+		savedScenariosScrollPane.setViewportView(savedScenarios);
 		this.add(jb);
 		this.add(newScenariosScrollPane);
-		this.add(savedScenarios);
+		this.add(savedScenariosScrollPane);
 		this.pack();
 		this.setVisible(true);
 		this.setLocation(location);
