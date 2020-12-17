@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.jel.game.data.City;
+import org.jel.game.data.Shared;
 
 /**
  * Represents a city on the map. It is divided into two parts. The first (upper)
@@ -224,9 +225,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			}
 		}
 		if (this.city.isPlayerCity()) {
-			game.moveSoldiers(this.origin, (Stream<City>) null, (byte) 0, true, this.city, numberOfSelectedSoldiers);
+			game.moveSoldiers(this.origin, (Stream<City>) null, Shared.PLAYER_CLAN, true, this.city,
+					numberOfSelectedSoldiers);
 		} else {
-			game.attack(this.origin, this.city, (byte) 0, true, numberOfSelectedSoldiers);
+			game.attack(this.origin, this.city, Shared.PLAYER_CLAN, true, numberOfSelectedSoldiers);
 		}
 	}
 
