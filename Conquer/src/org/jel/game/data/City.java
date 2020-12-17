@@ -329,7 +329,7 @@ public final class City implements Comparable<City> {
 	 * @param num New number of attacks of the player.
 	 */
 	void setAttacksOfPlayer(final long num) {
-		if (this.numAttacksOfPlayer == -1) {
+		if (this.numAttacksOfPlayer != -1) {
 			throw new UnsupportedOperationException(
 					"Can't change the number of attacks of the player after it was set!");
 		}
@@ -349,6 +349,9 @@ public final class City implements Comparable<City> {
 		this.clan = clan;
 	}
 
+	void setId(final int id) {
+		this.clanId=(byte)id;
+	}
 	/**
 	 * Updates the value of the defense
 	 *

@@ -936,7 +936,7 @@ public final class Game implements ConquerInfo {
 
 	void resume(final String name) {
 		this.resumed = true;
-		this.directory = new File(new File(Shared.BASE_DIRECTORY, "saves"), name);
+		this.directory = new File(Shared.SAVE_DIRECTORY, name);
 	}
 
 	private void sanityCheckForBadCityValues() {

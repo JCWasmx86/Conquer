@@ -389,6 +389,10 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 
 	private void saveAndMaybeExit() {
 		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		if(this.game.onlyOneClanAlive()) {
+			this.cleanup();
+			this.game.exit(this.game.calculateResult());
+		}
 		if (this.saveName != null) {
 			if (!this.save()) {
 				return;

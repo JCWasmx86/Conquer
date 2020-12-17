@@ -1,5 +1,10 @@
 package org.jel.game.plugins.builtins;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +40,19 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 		this.events = pi.getEventList();
 	}
 
+	@Override
+	public void resume(PluginInterface game, InputStream bytes) throws IOException{
+		try(DataInputStream dis=new DataInputStream(bytes)){
+			this.currentRound=dis.readInt();
+		}
+		this.events=game.getEventList();
+	}
+	@Override
+	public void save(OutputStream outputStream) throws IOException {
+		try(DataOutputStream dos=new DataOutputStream(outputStream)){
+			dos.writeInt(this.currentRound);
+		}
+	}
 	@Override
 	public void moneyPaid(final List<City> cities, final Clan clan) {
 		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) { //$NON-NLS-1$

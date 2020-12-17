@@ -1,5 +1,10 @@
 package org.jel.game.plugins.builtins;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +76,19 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		return "ResourceAnalyzer";
 	}
 
+	@Override
+	public void resume(PluginInterface game, InputStream bytes) throws IOException{
+		try(DataInputStream dis=new DataInputStream(bytes)){
+			this.currentRound=dis.readInt();
+		}
+		this.events=game.getEventList();
+	}
+	@Override
+	public void save(OutputStream outputStream) throws IOException {
+		try(DataOutputStream dos=new DataOutputStream(outputStream)){
+			dos.writeInt(this.currentRound);
+		}
+	}
 	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
 		this.currentRound++;
