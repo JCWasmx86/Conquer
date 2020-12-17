@@ -77,19 +77,6 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	}
 
 	@Override
-	public void resume(PluginInterface game, InputStream bytes) throws IOException{
-		try(DataInputStream dis=new DataInputStream(bytes)){
-			this.currentRound=dis.readInt();
-		}
-		this.events=game.getEventList();
-	}
-	@Override
-	public void save(OutputStream outputStream) throws IOException {
-		try(DataOutputStream dos=new DataOutputStream(outputStream)){
-			dos.writeInt(this.currentRound);
-		}
-	}
-	@Override
 	public void handle(final Graph<City> cities, final Context ctx) {
 		this.currentRound++;
 
@@ -135,5 +122,20 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		final var tmp2 = city.getNumberOfSoldiers();
 		final var tmp3 = tmp > 100 ? 100 : tmp2;
 		city.setNumberOfSoldiers(tmp2 == 0 ? tmp3 : tmp2);
+	}
+
+	@Override
+	public void resume(final PluginInterface game, final InputStream bytes) throws IOException {
+		try (var dis = new DataInputStream(bytes)) {
+			this.currentRound = dis.readInt();
+		}
+		this.events = game.getEventList();
+	}
+
+	@Override
+	public void save(final OutputStream outputStream) throws IOException {
+		try (var dos = new DataOutputStream(outputStream)) {
+			dos.writeInt(this.currentRound);
+		}
 	}
 }

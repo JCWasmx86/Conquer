@@ -41,19 +41,6 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void resume(PluginInterface game, InputStream bytes) throws IOException{
-		try(DataInputStream dis=new DataInputStream(bytes)){
-			this.currentRound=dis.readInt();
-		}
-		this.events=game.getEventList();
-	}
-	@Override
-	public void save(OutputStream outputStream) throws IOException {
-		try(DataOutputStream dos=new DataOutputStream(outputStream)){
-			dos.writeInt(this.currentRound);
-		}
-	}
-	@Override
 	public void moneyPaid(final List<City> cities, final Clan clan) {
 		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) { //$NON-NLS-1$
 			return;
@@ -76,6 +63,21 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 		clan.setCoins(clan.getCoins() + (soldiers * Shared.COINS_PER_SOLDIER_PER_ROUND));
 		if (soldiers > 0) {
 			this.events.add(new SoldiersDesertedBecauseOfMissingMoneyMessage(clan, num));
+		}
+	}
+
+	@Override
+	public void resume(final PluginInterface game, final InputStream bytes) throws IOException {
+		try (var dis = new DataInputStream(bytes)) {
+			this.currentRound = dis.readInt();
+		}
+		this.events = game.getEventList();
+	}
+
+	@Override
+	public void save(final OutputStream outputStream) throws IOException {
+		try (var dos = new DataOutputStream(outputStream)) {
+			dos.writeInt(this.currentRound);
 		}
 	}
 }

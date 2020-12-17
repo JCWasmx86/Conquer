@@ -28,7 +28,7 @@ public final class DefaultMusic implements Plugin {
 	}
 
 	@Override
-	public void resume(PluginInterface pi, InputStream bytes) {
+	public void resume(final PluginInterface pi, final InputStream bytes) {
 		for (var i = 0; i < 27; i++) {
 			pi.addMusic("Battle" + i + (Boolean.getBoolean("conquer.useMP3") ? ".mp3" : ".wav"));
 		}

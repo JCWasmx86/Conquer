@@ -9,7 +9,6 @@ import java.util.Random;
 import org.jel.game.data.Shared;
 import org.jel.game.data.strategy.StrategyData;
 
-
 public final class DefensiveStrategyData implements StrategyData {
 	private int counter;
 	private final Random random;
@@ -21,14 +20,20 @@ public final class DefensiveStrategyData implements StrategyData {
 		this.strategy = DefensiveStrategy.values()[Math.abs(this.random.nextInt(DefensiveStrategy.values().length))];
 	}
 
-	DefensiveStrategyData(byte[] dataBytes) {
+	DefensiveStrategyData(final byte[] dataBytes) {
 		this();
-		this.strategy=DefensiveStrategy.values()[dataBytes[0]];
-		this.counter=ByteBuffer.wrap(dataBytes, 1, dataBytes.length-1).order(ByteOrder.LITTLE_ENDIAN).getInt();
+		this.strategy = DefensiveStrategy.values()[dataBytes[0]];
+		this.counter = ByteBuffer.wrap(dataBytes, 1, dataBytes.length - 1).order(ByteOrder.LITTLE_ENDIAN).getInt();
 	}
 
 	public DefensiveStrategy getStrategy() {
 		return this.strategy;
+	}
+
+	@Override
+	public void save(final OutputStream out) throws IOException {
+		out.write(this.strategy.ordinal());
+		out.write(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(this.counter).array());
 	}
 
 	@Override
@@ -59,11 +64,5 @@ public final class DefensiveStrategyData implements StrategyData {
 
 			}
 		}
-	}
-
-	@Override
-	public void save(OutputStream out) throws IOException {
-		out.write(this.strategy.ordinal());
-		out.write(ByteBuffer.allocate(Integer.BYTES).order(ByteOrder.LITTLE_ENDIAN).putInt(this.counter).array());
 	}
 }

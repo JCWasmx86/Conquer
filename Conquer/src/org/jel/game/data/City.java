@@ -349,9 +349,6 @@ public final class City implements Comparable<City> {
 		this.clan = clan;
 	}
 
-	void setId(final int id) {
-		this.clanId=(byte)id;
-	}
 	/**
 	 * Updates the value of the defense
 	 *
@@ -391,6 +388,10 @@ public final class City implements Comparable<City> {
 			throw new IllegalArgumentException("growth < 0");
 		}
 		this.growth = growth;
+	}
+
+	void setId(final int id) {
+		this.clanId = (byte) id;
 	}
 
 	/**
