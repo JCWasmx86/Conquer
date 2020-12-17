@@ -63,7 +63,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		this.paint(this.getGraphics());
-		StringBuilder s = new StringBuilder("<html>").append(this.city.getName()); //$NON-NLS-1$
+		final var s = new StringBuilder("<html>").append(this.city.getName()); //$NON-NLS-1$
 		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName())); //$NON-NLS-1$ //$NON-NLS-2$
 		if (this.city.isPlayerCity()) {
 			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$

@@ -32,6 +32,11 @@ public class SavedGame {
 	private final String name;
 
 	public SavedGame(final String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("name == null");
+		} else if (name.isEmpty()) {
+			throw new IllegalArgumentException("name.isEmpty() == true");
+		}
 		this.name = name;
 	}
 
@@ -171,7 +176,7 @@ public class SavedGame {
 
 	public Game restore() throws Exception {
 		final var game = new Game();
-		final var saveDirectory = new File(new File(Shared.BASE_DIRECTORY, "saves"), this.name);
+		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		this.restore(game, saveDirectory);
 		game.setClans(this.readClans(saveDirectory, game));
 		final var plugins = this.readPlugins(saveDirectory, game);
@@ -255,7 +260,7 @@ public class SavedGame {
 	}
 
 	public void save(final Game game) throws Exception {
-		final var saveDirectory = new File(new File(Shared.BASE_DIRECTORY, "saves"), this.name);
+		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		try {
 			Shared.deleteDirectory(saveDirectory);
 		} catch (final IOException e) {
