@@ -109,10 +109,13 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					menu.show(savedScenarios, event.getPoint().x, event.getPoint().y);
 				} else if (SwingUtilities.isLeftMouseButton(event)) {
 					final var item = savedScenarios.getSelectedValue();
+					if (item == null) {
+						return;
+					}
 					final var savedGame = new SavedGame(item);
 					try {
 						final var game = savedGame.restore();
-						final var frame = new GameFrame(game);
+						final var frame = new GameFrame(item, game);
 						frame.init();
 					} catch (final Exception e1) {
 						e1.printStackTrace();
@@ -129,7 +132,9 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		savedScenariosScrollPane.setViewportView(savedScenarios);
 		this.add(jb);
 		this.add(newScenariosScrollPane);
-		this.add(savedScenariosScrollPane);
+		if (Shared.savedGames().length > 0) {
+			this.add(savedScenariosScrollPane);
+		}
 		this.pack();
 		this.setVisible(true);
 		this.setLocation(location);
