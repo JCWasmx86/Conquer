@@ -6,22 +6,30 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,6 +39,7 @@ import javax.swing.WindowConstants;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Game;
+import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;
@@ -57,6 +66,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private JPanel buttonPanel;
 	private transient List<DashedLine> lines = new ArrayList<>();
 	private transient Thread coinsLabelUpdateThread;
+	private String saveName;
+	private JPanel basePanel;
 
 	/**
 	 * Create a new GameFrame with a specified game as base
@@ -67,7 +78,9 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.game = game;
 		this.addComponentListener(this);
 		this.addWindowListener(this);
-		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.X_AXIS));
+		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+		this.basePanel = new JPanel();
+		this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.X_AXIS));
 	}
 
 	private void adjustX() {
@@ -154,10 +167,64 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.makeLeftPanel();
 		this.initGameStage();
 		this.initSideBar();
+		this.initMenubar();
 		this.setVisible(true);
 		this.setTitle(GameFrame.TITLE_PART + this.game.currentRound());
+		this.add(this.basePanel);
 		this.pack();
 		this.nonGUIInit();
+	}
+
+	private void initMenubar() {
+		final var jmenubar = new JMenuBar();
+		final var jmenu = new JMenu(Messages.getString("GameFrame.settings"));
+		jmenubar.add(jmenu);
+		final var saveGame = new JMenuItem();
+		saveGame.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 2560703690131079830L;
+
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if (saveName == null) {
+					saveName = JOptionPane.showInputDialog(null, Messages.getString("GameFrame.pleaseGiveNameToSave"));
+					if (Arrays.binarySearch(Shared.savedGames(), saveName) >= 0) {
+						final var selected = JOptionPane.showConfirmDialog(null,
+								Messages.getMessage("GameFrame.comfirmOverwriting", saveName));
+						if (selected != JOptionPane.YES_OPTION) {
+							return;// Abort saving
+						} else {
+							try {
+								Shared.deleteDirectory(new File(Shared.SAVE_DIRECTORY, saveName));
+							} catch (IOException e) {
+								Shared.LOGGER.exception(e);
+								JOptionPane.showMessageDialog(null,
+										Messages.getMessage("GameFrame.deletingFailed", saveName),
+										Messages.getString("GameFrame.error"), JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+					final var savedGame=new SavedGame(saveName);
+					try {
+						savedGame.save(game);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		jmenu.add(saveGame);
+		final var close = new JMenuItem();
+		close.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 2560703690131079830L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		close.setText(Messages.getString("GameFrame.close"));
+		jmenu.add(close);
+		this.add(jmenubar);
 	}
 
 	private void initButtonPanel() {
@@ -274,7 +341,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var relationShipScrollPane = new JScrollPane(relationships);
 		relationShipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.sideBarPane.add(Messages.getString("GameFrame.relationships"), relationShipScrollPane); //$NON-NLS-1$
-		this.add(this.sideBarPane);
+		this.basePanel.add(this.sideBarPane);
 	}
 
 	private void makeLeftPanel() {
@@ -285,7 +352,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 		panel1.add(this.gameStageScrollPane);
 		panel1.add(buttonPanelScrollPane);
-		this.add(panel1);
+		this.basePanel.add(panel1);
 	}
 
 	private void nonGUIInit() {

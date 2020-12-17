@@ -36,7 +36,7 @@ public class SavedGame {
 	}
 
 	private byte[] createSha(final File file) throws NoSuchAlgorithmException, IOException {
-		final var digest = MessageDigest.getInstance("SHA-3");
+		final var digest = MessageDigest.getInstance("SHA-512");
 		try (InputStream fis = new FileInputStream(file)) {
 			var n = 0;
 			final var buffer = new byte[8192];
@@ -259,7 +259,7 @@ public class SavedGame {
 		try {
 			Shared.deleteDirectory(saveDirectory);
 		} catch (final IOException e) {
-			throw new RuntimeException(e);
+			// Nothing
 		}
 		saveDirectory.mkdirs();
 		for (final var plugin : game.getPlugins()) {

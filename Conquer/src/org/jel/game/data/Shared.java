@@ -21,6 +21,8 @@ public final class Shared {
 	public static final String BASE_DIRECTORY = System.getProperty("os.name").toLowerCase().contains("windows")
 			? System.getProperty("user.home") + "\\Appdata\\Roaming\\.conquer\\"
 			: System.getProperty("user.home") + "/.config/.conquer/";
+
+	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 	/**
 	 * The id of the clan of the player.
 	 */
@@ -395,7 +397,7 @@ public final class Shared {
 	 * @return
 	 */
 	public static String[] savedGames() {
-		final var saves = new File(Shared.BASE_DIRECTORY, "saves");
+		final var saves = new File(Shared.SAVE_DIRECTORY);
 		if (!saves.exists()) {
 			return new String[0];
 		}
