@@ -335,8 +335,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.gameStage.add(cityLabel);
 			this.labels.put(city, cityLabel);
 		});
-		cardLayout.show(cityInfoPanel,
-				StreamUtils.getCitiesAsStream(cities).filter(City::isPlayerCity).findFirst().orElseThrow().getName());
+		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(City::isPlayerCity).findFirst()
+				.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel); //$NON-NLS-1$
 		final var clanInfo = new ClanInfoPanel(this.game.getClan(Shared.PLAYER_CLAN), this.game);
