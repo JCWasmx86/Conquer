@@ -152,7 +152,7 @@ public final class Graph<T> implements Consumer<T> {
 			throw new NoSuchElementException();
 		}
 		for (var i = 0; i < this.values.size(); i++) {
-			if ((this.matrix[i][idx] != -1) && (i != idx)) {
+			if ((this.matrix[i][idx] != -1) && (this.matrix[i][idx] != -2) && (i != idx)) {
 				ret.add(this.values.get(i));
 			}
 		}
@@ -244,6 +244,9 @@ public final class Graph<T> implements Consumer<T> {
 	}
 
 	public boolean isConnected(final T c, final T a) {
+		if (c == a) {
+			return false;
+		}
 		if (!this.cached) {
 			final var i1 = this.values.indexOf(c);
 			final var i2 = this.values.indexOf(a);

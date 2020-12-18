@@ -312,12 +312,24 @@ public class SavedGame {
 			this.writeCities(game, dos);
 			final var relations = game.getRelations();
 			final var v = relations.getConnections();
-			dos.writeInt(v.size());
+			var cnt = 0;
+			for (var i = 0; i < v.size(); i++) {
+				final var value = v.get(i).third();
+				if ((value == -1) || (value == -2)) {
+					continue;
+				}
+				cnt++;
+			}
+			dos.writeInt(cnt);
 			v.forEach(a -> {
 				try {
+					final var value = a.third();
+					if ((value == -1) || (value == -2)) {
+						return;
+					}
 					dos.writeInt(a.first());
 					dos.writeInt(a.second());
-					dos.writeDouble(a.third());
+					dos.writeDouble(value);
 				} catch (final Exception e) {
 					throw new RuntimeException(e);
 				}
