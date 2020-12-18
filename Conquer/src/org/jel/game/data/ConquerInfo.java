@@ -44,12 +44,24 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
 
 	default void upgradeDefenseFully(final Clan clan, final City city) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan==null");
+		}
+		if (city == null) {
+			throw new IllegalArgumentException("city==null");
+		}
 		this.upgradeDefenseFully(clan.getId(), city);
 	}
 
 	void upgradeDefenseFully(final int clan, final City city);
 
 	default void upgradeResourceFully(final Clan clan, final Resource resources, final City city) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan==null");
+		}
+		if (city == null) {
+			throw new IllegalArgumentException("city==null");
+		}
 		this.upgradeResourceFully(clan.getId(), resources, city);
 	}
 
