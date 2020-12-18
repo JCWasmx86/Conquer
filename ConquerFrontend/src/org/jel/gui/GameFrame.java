@@ -246,19 +246,19 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					Shared.LOGGER.exception(e);// Oops
 				}
 				if (!flag) {
-					final var playerDead=this.game.isDead(Shared.PLAYER_CLAN);
+					final var playerDead = this.game.isDead(Shared.PLAYER_CLAN);
 					if (playerDead) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();
-						loopPlayer.addSong("Defeated.wav");
+						this.loopPlayer.addSong("Defeated.wav");
 						this.loopPlayer.start();
 						flag = true;
-					} else if (game.onlyOneClanAlive() && !playerDead) {
+					} else if (this.game.onlyOneClanAlive() && !playerDead) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();
-						loopPlayer.addSong("Victory.wav");
+						this.loopPlayer.addSong("Victory.wav");
 						this.loopPlayer.start();
-						flag=true;
+						flag = true;
 					}
 				}
 			}
@@ -330,7 +330,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			private static final long serialVersionUID = 7044880562698255228L;
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				InGameTutorial.showWindow();
 			}
 		});

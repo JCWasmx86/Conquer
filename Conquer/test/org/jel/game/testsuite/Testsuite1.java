@@ -15,7 +15,7 @@ import org.jel.game.init.Installer;
  * to be done in order to activate all plugins.
  */
 public final class Testsuite1 {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		final var suite = new Testsuite1();
 		final var numErrors = suite.start();
 		System.out.println(numErrors + " errors");
@@ -24,7 +24,7 @@ public final class Testsuite1 {
 
 	private int numErrors = 0;
 
-	private void checkContextWithInstantiation(GlobalContext ctx) {
+	private void checkContextWithInstantiation(final GlobalContext ctx) {
 		if (ctx == null) {
 			this.error("readInfo(true) returned null!");
 			return;
@@ -72,7 +72,7 @@ public final class Testsuite1 {
 		});
 	}
 
-	private void checkContextWithoutInstantiation(GlobalContext ctx) {
+	private void checkContextWithoutInstantiation(final GlobalContext ctx) {
 		if (ctx == null) {
 			this.error("readInfo(false) returned null!");
 			return;
@@ -116,7 +116,7 @@ public final class Testsuite1 {
 		});
 	}
 
-	private void checkScenario(InstalledScenario is) {
+	private void checkScenario(final InstalledScenario is) {
 		if (is == null) {
 			this.error("InstalledScenario is null");
 			return;
@@ -132,7 +132,7 @@ public final class Testsuite1 {
 		}
 	}
 
-	private void error(String message) {
+	private void error(final String message) {
 		System.err.println("[ERROR] " + message);
 		this.numErrors++;
 	}
@@ -143,12 +143,12 @@ public final class Testsuite1 {
 		new Installer(a -> a.length - 1, new ExtendedOutputStream() {
 
 			@Override
-			public void write(int b) throws IOException {
+			public void write(final int b) throws IOException {
 				System.out.write(b);
 			}
 
 			@Override
-			public void write(String s) throws IOException {
+			public void write(final String s) throws IOException {
 				System.out.println(s);
 			}
 		}, this::throwable).run();
@@ -174,7 +174,7 @@ public final class Testsuite1 {
 		return this.numErrors;
 	}
 
-	private void success(String message) {
+	private void success(final String message) {
 		System.out.println("[SUCCESS] " + message);
 	}
 
@@ -188,7 +188,7 @@ public final class Testsuite1 {
 		this.error("Didn't get any exception while instantiating Installer with a null-Chooser");
 	}
 
-	private void throwable(Throwable throwable) {
+	private void throwable(final Throwable throwable) {
 		System.err.println("Unexpected throwable: ");
 		throwable.printStackTrace();
 		this.numErrors++;
