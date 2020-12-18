@@ -59,7 +59,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient Game game;
 	private final Map<City, CityLabel> labels = new HashMap<>();
-	private final LoopPlayer loopPlayer = new LoopPlayer();
+	private LoopPlayer loopPlayer = new LoopPlayer();
 	private JLabel gameStage;
 	private JScrollPane gameStageScrollPane;
 	private JTabbedPane sideBarPane;
@@ -208,6 +208,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
 		run.addActionListener(a -> {
 			run.setEnabled(false);
+			nextRound.setEnabled(false);
 			new Thread(() -> {
 				while (!this.game.onlyOneClanAlive()) {
 					this.game.executeActions();
@@ -220,6 +221,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					}
 				}
 				run.setEnabled(true);
+				nextRound.setEnabled(true);
 			}).start();
 		});
 		this.buttonPanel.add(coinsLabel);
@@ -234,6 +236,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			}
 		});
 		this.coinsLabelUpdateThread = new Thread(() -> {
+			var flag = false;
 			while (true) {
 				coinsLabel.setText(Messages.getString("Shared.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
 						+ String.format("%.2f%n", this.game.getCoins().get(Shared.PLAYER_CLAN))); //$NON-NLS-1$
@@ -241,6 +244,22 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					Thread.sleep(20);
 				} catch (final InterruptedException e) {
 					Shared.LOGGER.exception(e);// Oops
+				}
+				if (!flag) {
+					final var playerDead=this.game.isDead(Shared.PLAYER_CLAN);
+					if (playerDead) {
+						this.loopPlayer.abort();
+						this.loopPlayer = new LoopPlayer();
+						loopPlayer.addSong("Defeated.wav");
+						this.loopPlayer.start();
+						flag = true;
+					} else if (game.onlyOneClanAlive() && !playerDead) {
+						this.loopPlayer.abort();
+						this.loopPlayer = new LoopPlayer();
+						loopPlayer.addSong("Victory.wav");
+						this.loopPlayer.start();
+						flag=true;
+					}
 				}
 			}
 		});
@@ -306,6 +325,17 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		saveGame.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		jmenu.add(saveGame);
+		final var tutorial = new JMenuItem();
+		tutorial.setAction(new AbstractAction() {
+			private static final long serialVersionUID = 7044880562698255228L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InGameTutorial.showWindow();
+			}
+		});
+		tutorial.setText(Messages.getString("GameFrame.tutorial"));
+		jmenu.add(tutorial);
 		final var close = new JMenuItem();
 		close.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 2560703690131079830L;
