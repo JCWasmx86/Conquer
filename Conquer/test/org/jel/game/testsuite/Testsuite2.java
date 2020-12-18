@@ -13,15 +13,13 @@ import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Reader;
 import org.jel.game.data.XMLReader;
 
-public final class Testsuite2 {
+public final class Testsuite2 extends Testsuite {
 	public static void main(final String[] args) {
 		final var suite = new Testsuite2();
 		final var numErrors = suite.start();
 		System.out.println(numErrors + " errors");
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
-
-	private int numErrors = 0;
 
 	private void buildGame(final InstalledScenario scenario, final GlobalContext context) {
 		if (scenario == null) {
@@ -128,29 +126,6 @@ public final class Testsuite2 {
 		}
 	}
 
-	private void error(final String message) {
-		System.err.println("[ERROR] " + message);
-		this.numErrors++;
-	}
-
-	void expect(final Runnable runnable, final Class<? extends Throwable> expectedClass) {
-		try {
-			runnable.run();
-		} catch (final Throwable throwable) {
-			if (!expectedClass.isAssignableFrom(throwable.getClass())) {
-				this.error("Expected an instanceof " + expectedClass.getCanonicalName() + " but got an instanceof "
-						+ throwable.getClass().getCanonicalName() + "!");
-				throwable.printStackTrace();
-			} else {
-				this.success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
-						+ throwable.getMessage());
-			}
-			return;
-		}
-		this.error("Didn't get the expected throwable instanceof " + expectedClass.getCanonicalName() + "!");
-		Thread.dumpStack();
-	}
-
 	private void injectPlugin(final GlobalContext context) {
 		final var maliciousPlugin = new MaliciousPlugin();
 		context.getPlugins().add(maliciousPlugin);
@@ -162,17 +137,7 @@ public final class Testsuite2 {
 		final var context = XMLReader.getInstance().readInfo(true);
 		this.checkContext(context);
 		this.buildGames(context);
-		return this.numErrors;
-	}
-
-	private void success(final String message) {
-		System.out.println("[SUCCESS] " + message);
-	}
-
-	private void throwable(final Throwable t) {
-		System.err.println("Unexpected throwable: ");
-		t.printStackTrace();
-		this.numErrors++;
+		return this.numberOfErrors;
 	}
 
 	private void tryBadValues(final ConquerInfo info) {

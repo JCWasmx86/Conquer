@@ -14,15 +14,13 @@ import org.jel.game.init.Installer;
  * and then exit. Another testsuite will then run with all other tests. This has
  * to be done in order to activate all plugins.
  */
-public final class Testsuite1 {
+public final class Testsuite1 extends Testsuite {
 	public static void main(final String[] args) {
 		final var suite = new Testsuite1();
 		final var numErrors = suite.start();
 		System.out.println(numErrors + " errors");
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
-
-	private int numErrors = 0;
 
 	private void checkContextWithInstantiation(final GlobalContext ctx) {
 		if (ctx == null) {
@@ -132,11 +130,6 @@ public final class Testsuite1 {
 		}
 	}
 
-	private void error(final String message) {
-		System.err.println("[ERROR] " + message);
-		this.numErrors++;
-	}
-
 	private int start() {
 		// Just a normal installation
 		this.testChooserEqualsNull();
@@ -172,11 +165,7 @@ public final class Testsuite1 {
 		XMLReader.setThrowableConsumer(this::throwable);
 		this.checkContextWithoutInstantiation(xmlReader.readInfo(false));
 		this.checkContextWithInstantiation(xmlReader.readInfo(true));
-		return this.numErrors;
-	}
-
-	private void success(final String message) {
-		System.out.println("[SUCCESS] " + message);
+		return this.numberOfErrors;
 	}
 
 	private void testChooserEqualsNull() {
@@ -187,12 +176,6 @@ public final class Testsuite1 {
 			return;
 		}
 		this.error("Didn't get any exception while instantiating Installer with a null-Chooser");
-	}
-
-	private void throwable(final Throwable throwable) {
-		System.err.println("Unexpected throwable: ");
-		throwable.printStackTrace();
-		this.numErrors++;
 	}
 
 }
