@@ -140,7 +140,8 @@ public final class Testsuite1 {
 	private int start() {
 		// Just a normal installation
 		this.testChooserEqualsNull();
-		new Installer(a -> a.length - 1, new ExtendedOutputStream() {
+		// -2, because -1 would install the entire music and this would take too long.
+		new Installer(a -> a.length - 2, new ExtendedOutputStream() {
 
 			@Override
 			public void write(final int b) throws IOException {
