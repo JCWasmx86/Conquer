@@ -10,7 +10,7 @@ import org.jel.game.utils.Graph;
 public class MaliciousPlugin implements Plugin {
 	private int numErrors;
 
-	private void checkThrown(boolean hasThrown, String message) {
+	private void checkThrown(final boolean hasThrown, final String message) {
 		if (!hasThrown) {
 			System.err.println("[ERROR] " + message);
 			this.numErrors++;
@@ -18,7 +18,7 @@ public class MaliciousPlugin implements Plugin {
 	}
 
 	@Override
-	public void exit(Result result) {
+	public void exit(final Result result) {
 		Plugin.super.exit(result);
 	}
 
@@ -32,7 +32,7 @@ public class MaliciousPlugin implements Plugin {
 	}
 
 	@Override
-	public void handle(Graph<City> cities, Context ctx) {
+	public void handle(final Graph<City> cities, final Context ctx) {
 		var hasThrown = true;
 		try {
 			ctx.appendToEventList(null);
@@ -58,7 +58,7 @@ public class MaliciousPlugin implements Plugin {
 	}
 
 	@Override
-	public void init(PluginInterface pluginInterface) {
+	public void init(final PluginInterface pluginInterface) {
 		Plugin.super.init(pluginInterface);
 		this.numErrors = 0;
 		var hasThrown = true;

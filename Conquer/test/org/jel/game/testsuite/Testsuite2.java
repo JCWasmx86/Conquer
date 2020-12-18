@@ -14,7 +14,7 @@ import org.jel.game.data.Reader;
 import org.jel.game.data.XMLReader;
 
 public final class Testsuite2 {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		final var suite = new Testsuite2();
 		final var numErrors = suite.start();
 		System.out.println(numErrors + " errors");
@@ -23,7 +23,7 @@ public final class Testsuite2 {
 
 	private int numErrors = 0;
 
-	private void buildGame(InstalledScenario scenario, GlobalContext context) {
+	private void buildGame(final InstalledScenario scenario, final GlobalContext context) {
 		if (scenario == null) {
 			this.error("scenario==null");
 			return;
@@ -53,10 +53,10 @@ public final class Testsuite2 {
 		game.addContext(context);
 		game.setErrorHandler(this::throwable);
 		game.init();
-		for (int i = 0; i < 2; i++) {
+		for (var i = 0; i < 2; i++) {
 			game.executeActions();
 		}
-		tryBadValues(game);
+		this.tryBadValues(game);
 		while (!game.onlyOneClanAlive()) {
 			game.executeActions();
 			if (game.currentRound() == 10000) {
@@ -65,92 +65,7 @@ public final class Testsuite2 {
 		}
 	}
 
-	private void tryBadValues(final ConquerInfo info) {
-		// Just some sample values.
-		City a = info.getCities().getValue(0);
-		City b = info.getCities().getValue(1);
-		Clan c = info.getClan(0);
-		Clan d = info.getClan(1);
-		expect(() -> info.attack(a, null, (byte) 0, false, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(null, b, (byte) 0, false, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, (byte) 1, true, -1), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, (byte) -1, true, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, (byte) 120, true, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(null, b, c, false, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(a, null, c, false, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, null, false, 0), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, c, false, -1), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, (byte) 1, false, 0, true), IllegalArgumentException.class);
-		expect(() -> info.attack(a, b, (byte) -1, false, 0, false), IllegalArgumentException.class);
-		expect(() -> info.defenseStrengthOfCity(null), IllegalArgumentException.class);
-		expect(() -> info.getClan(-1), IllegalArgumentException.class);
-		expect(() -> info.getClan(500), IllegalArgumentException.class);
-		expect(() -> info.getClanNames().add(""), UnsupportedOperationException.class);
-		expect(() -> info.getCoins().add(0.0), UnsupportedOperationException.class);
-		expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
-		expect(() -> info.getRelationship((Clan) null, (Clan) null), IllegalArgumentException.class);
-		expect(() -> info.getRelationship((Clan) null, a), IllegalArgumentException.class);
-		expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
-		expect(() -> info.getRelationship(500, 500), IndexOutOfBoundsException.class);
-		expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<City>) null),
-				IllegalArgumentException.class);
-		expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<City>) null),
-				IllegalArgumentException.class);
-		expect(() -> info.isDead(null), IllegalArgumentException.class);
-		expect(() -> info.isDead(-1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberOfSoldiersToRecruit(null, 5), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberOfSoldiersToRecruit(c, -5), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberOfSoldiersToRecruit(-1, 5), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberOfSoldiersToRecruit(1222, 5), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove((byte) -1, 0, 0), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove((byte) 127, 0, 0), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove((byte) 0, -1, 0), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove((byte) 0, 0, -1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(null, -1, -1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(c, -1, 0), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(c, 0, -1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(c, a, a, 0), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(c, a, b, -1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(null, a, b, -1), IllegalArgumentException.class);
-		expect(() -> info.maximumNumberToMove(c, a, null, -1), IllegalArgumentException.class);
-		// TODO: moveSoldiers
-		expect(() -> info.sendGift(c, d, null), IllegalArgumentException.class);
-		expect(() -> info.sendGift(c, null, new Gift()), IllegalArgumentException.class);
-		expect(() -> info.sendGift(null, d, new Gift()), IllegalArgumentException.class);
-		expect(() -> info.reachableCities(null), IllegalArgumentException.class);
-		expect(() -> info.recruitSoldiers(0, null, null, false, 0), IllegalArgumentException.class);
-		expect(() -> info.recruitSoldiers(-1, c, a, false, -1), IllegalArgumentException.class);
-		expect(() -> info.recruitSoldiers(0, c, b, true, -1), IllegalArgumentException.class);
-		expect(() -> info.recruitSoldiers(0, c, null, false, 0), IllegalArgumentException.class);
-		expect(() -> info.upgradeDefense((byte) -1), IllegalArgumentException.class);
-		expect(() -> info.upgradeDefense((byte) 120), IllegalArgumentException.class);
-		expect(() -> info.upgradeOffense((byte) -1), IllegalArgumentException.class);
-		expect(() -> info.upgradeOffense((byte) 120), IllegalArgumentException.class);
-		expect(() -> info.upgradeSoldiers((byte) -1), IllegalArgumentException.class);
-		expect(() -> info.upgradeSoldiers((byte) 120), IllegalArgumentException.class);
-		expect(() -> info.upgradeDefense((byte) -1, a), IllegalArgumentException.class);
-		expect(() -> info.upgradeDefense((byte) 120, a), IllegalArgumentException.class);
-	}
-
-	void expect(Runnable runnable, Class<? extends Throwable> expectedClass) {
-		try {
-			runnable.run();
-		} catch (Throwable throwable) {
-			if (!expectedClass.isAssignableFrom(throwable.getClass())) {
-				error("Expected an instanceof " + expectedClass.getCanonicalName() + " but got an instanceof "
-						+ throwable.getClass().getCanonicalName() + "!");
-				throwable.printStackTrace();
-			} else {
-				success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
-						+ throwable.getMessage());
-			}
-			return;
-		}
-		error("Didn't get the expected throwable instanceof " + expectedClass.getCanonicalName() + "!");
-		Thread.dumpStack();
-	}
-
-	private void buildGames(GlobalContext context) {
+	private void buildGames(final GlobalContext context) {
 		if (context.getInstalledMaps().isEmpty()) {
 			this.error("No scenarios found!");
 		}
@@ -213,12 +128,30 @@ public final class Testsuite2 {
 		}
 	}
 
-	private void error(String message) {
+	private void error(final String message) {
 		System.err.println("[ERROR] " + message);
 		this.numErrors++;
 	}
 
-	private void injectPlugin(GlobalContext context) {
+	void expect(final Runnable runnable, final Class<? extends Throwable> expectedClass) {
+		try {
+			runnable.run();
+		} catch (final Throwable throwable) {
+			if (!expectedClass.isAssignableFrom(throwable.getClass())) {
+				this.error("Expected an instanceof " + expectedClass.getCanonicalName() + " but got an instanceof "
+						+ throwable.getClass().getCanonicalName() + "!");
+				throwable.printStackTrace();
+			} else {
+				this.success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
+						+ throwable.getMessage());
+			}
+			return;
+		}
+		this.error("Didn't get the expected throwable instanceof " + expectedClass.getCanonicalName() + "!");
+		Thread.dumpStack();
+	}
+
+	private void injectPlugin(final GlobalContext context) {
 		final var maliciousPlugin = new MaliciousPlugin();
 		context.getPlugins().add(maliciousPlugin);
 		context.getPluginNames().add(maliciousPlugin.getClass().getCanonicalName());
@@ -232,13 +165,80 @@ public final class Testsuite2 {
 		return this.numErrors;
 	}
 
-	private void success(String message) {
+	private void success(final String message) {
 		System.out.println("[SUCCESS] " + message);
 	}
 
-	private void throwable(Throwable t) {
+	private void throwable(final Throwable t) {
 		System.err.println("Unexpected throwable: ");
 		t.printStackTrace();
 		this.numErrors++;
+	}
+
+	private void tryBadValues(final ConquerInfo info) {
+		// Just some sample values.
+		final City a = info.getCities().getValue(0);
+		final City b = info.getCities().getValue(1);
+		final Clan c = info.getClan(0);
+		final Clan d = info.getClan(1);
+		this.expect(() -> info.attack(a, null, (byte) 0, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(null, b, (byte) 0, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, (byte) 1, true, -1), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, (byte) -1, true, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, (byte) 120, true, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(null, b, c, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, null, c, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, null, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, c, false, -1), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, (byte) 1, false, 0, true), IllegalArgumentException.class);
+		this.expect(() -> info.attack(a, b, (byte) -1, false, 0, false), IllegalArgumentException.class);
+		this.expect(() -> info.defenseStrengthOfCity(null), IllegalArgumentException.class);
+		this.expect(() -> info.getClan(-1), IllegalArgumentException.class);
+		this.expect(() -> info.getClan(500), IllegalArgumentException.class);
+		this.expect(() -> info.getClanNames().add(""), UnsupportedOperationException.class);
+		this.expect(() -> info.getCoins().add(0.0), UnsupportedOperationException.class);
+		this.expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
+		this.expect(() -> info.getRelationship((Clan) null, (Clan) null), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship((Clan) null, a), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship(500, 500), IndexOutOfBoundsException.class);
+		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<City>) null),
+				IllegalArgumentException.class);
+		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<City>) null),
+				IllegalArgumentException.class);
+		this.expect(() -> info.isDead(null), IllegalArgumentException.class);
+		this.expect(() -> info.isDead(-1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(null, 5), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(c, -5), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(-1, 5), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(1222, 5), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove((byte) -1, 0, 0), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove((byte) 127, 0, 0), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove((byte) 0, -1, 0), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove((byte) 0, 0, -1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(null, -1, -1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(c, -1, 0), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(c, 0, -1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(c, a, a, 0), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(c, a, b, -1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(null, a, b, -1), IllegalArgumentException.class);
+		this.expect(() -> info.maximumNumberToMove(c, a, null, -1), IllegalArgumentException.class);
+		// TODO: moveSoldiers
+		this.expect(() -> info.sendGift(c, d, null), IllegalArgumentException.class);
+		this.expect(() -> info.sendGift(c, null, new Gift()), IllegalArgumentException.class);
+		this.expect(() -> info.sendGift(null, d, new Gift()), IllegalArgumentException.class);
+		this.expect(() -> info.reachableCities(null), IllegalArgumentException.class);
+		this.expect(() -> info.recruitSoldiers(0, null, null, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.recruitSoldiers(-1, c, a, false, -1), IllegalArgumentException.class);
+		this.expect(() -> info.recruitSoldiers(0, c, b, true, -1), IllegalArgumentException.class);
+		this.expect(() -> info.recruitSoldiers(0, c, null, false, 0), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeDefense((byte) -1), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeDefense((byte) 120), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeOffense((byte) -1), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeOffense((byte) 120), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeSoldiers((byte) -1), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeSoldiers((byte) 120), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeDefense((byte) -1, a), IllegalArgumentException.class);
+		this.expect(() -> info.upgradeDefense((byte) 120, a), IllegalArgumentException.class);
 	}
 }

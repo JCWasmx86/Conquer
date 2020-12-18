@@ -73,7 +73,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					try {
 						final var url = new File(value.thumbnail()).toURI().toURL().toString().replace("file:/",
 								"file:///");
-						//A dirty hack...
+						// A dirty hack...
 						jl.setToolTipText(
 								Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));//$NON-NLS-1$
 					} catch (final MalformedURLException e) {
