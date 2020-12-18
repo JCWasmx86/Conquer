@@ -4,10 +4,6 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-/**
- * This class represents a city.
- */
 public final class City implements Comparable<City> {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
