@@ -34,5 +34,6 @@ See [compiling](docs/compiling.md)
 greenfoot had a lot of limitations and a lot of ugly and spooky code (Like reflection) was required to remove this restrictions. Furthermore the dependence on JavaFX and no package support were quite important.
 
 After I gave my project to the teacher, I started to remove some little greenfoot-specific code in the game-engine and started to write a far, far superior GUI using Java Swing. I improved
-the code structure and made some changes. Around 70% are unchanged and are the original code of my assignment.
+the code structure and made some changes. Around 70% are unchanged and are the original code of my assignment. (The greenfoot-based code may be pushed to the Legacy branch)
+
 
