@@ -81,6 +81,10 @@ final class GiftPanel extends JPanel {
 		this.box.setIgnoreRepaint(true);
 		new ExtendedTimer(17, e -> {
 			if (!this.box.isPopupVisible()) {// Else the popup will close all the time
+				if (this.game.onlyOneClanAlive() && !this.game.isDead(Shared.PLAYER_CLAN)) {
+					button.setEnabled(false);
+					return;
+				}
 				final var selectedIndex = this.box.getSelectedIndex();
 				final var selectedObject = this.box.getSelectedItem();
 				final var list = GiftPanel.this.game.getClans().stream()
