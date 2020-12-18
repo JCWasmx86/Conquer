@@ -17,7 +17,7 @@ jobs:
         with:
             java-version: 15
       - uses: actions/checkout@v2
-      - name: Setup env
+      - name: Setup environment
         run: |
           sudo apt update
           sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
@@ -25,7 +25,7 @@ jobs:
           sudo rm /usr/bin/gcc
           sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-      - name: Build conquer
+      - name: Build conquer and run tests
         run: |
           export QT_QPA_PLATFORM=offscreen
           chmod +x buildConquer
