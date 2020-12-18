@@ -200,9 +200,14 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
 		this.checkClan(clan);
+		if (num < 0) {
+			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
+		}
 		if (reallyPlayer && (!src.isPlayerCity())) {
 			throw new IllegalArgumentException(
 					"reallyPlayer is true, but the source city is not clan Shared.PLAYER_CLAN: " + src.getClanId());
+		} else if (reallyPlayer && !managed) {
+			throw new IllegalArgumentException("reallyPlayer is true, but it is not managed!");
 		}
 		if (this.cantAttack(src, destination)) {
 			return;
@@ -557,7 +562,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public List<String> getClanNames() {
-		return this.clans.stream().map(Clan::getName).collect(Collectors.toList());
+		return this.clans.stream().map(Clan::getName).collect(Collectors.toUnmodifiableList());
 	}
 
 	/**
@@ -572,7 +577,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public List<Double> getCoins() {
-		return this.clans.stream().map(Clan::getCoins).collect(Collectors.toList());
+		return this.clans.stream().map(Clan::getCoins).collect(Collectors.toUnmodifiableList());
 	}
 
 	/**
@@ -580,7 +585,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public List<Color> getColors() {
-		return this.clans.stream().map(Clan::getColor).collect(Collectors.toList());
+		return this.clans.stream().map(Clan::getColor).collect(Collectors.toUnmodifiableList());
 	}
 
 	@Override
@@ -731,6 +736,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public boolean isDead(final int clan) {
+		checkClan(clan);
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
 
@@ -748,6 +754,9 @@ public final class Game implements ConquerInfo {
 	@Override
 	public long maximumNumberOfSoldiersToRecruit(final int clan, final long limit) {
 		this.checkClan(clan);
+		if (limit < 0) {
+			throw new IllegalArgumentException("limit < 0");
+		}
 		final var resourcesOfClan = this.clans.get(clan).getResources();
 		final List<Long> numbers = new ArrayList<>();
 		numbers.add(limit);
@@ -883,6 +892,9 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(c, "c==null");
 		if (maxToPay < 0) {
 			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
+		}
+		if (count < 0) {
+			throw new IllegalArgumentException("count < 0 :" + count);
 		}
 		var numberToRecruit = 0L;
 		// Default algorithm used, if the strategy didn't provide one itself.
@@ -1213,6 +1225,9 @@ public final class Game implements ConquerInfo {
 	public boolean upgradeDefense(final byte clan, final City city) {
 		this.checkClan(clan);
 		this.throwIfNull(city, "city==null");
+		if(clan!=city.getClanId()) {
+			throw new IllegalArgumentException("clan!=city.clan");
+		}
 		final var coins = this.getCoins();
 		final var costs = Shared.costs(city.getLevels().get(Resource.values().length) + 1);
 		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == Game.MAX_LEVEL)) {

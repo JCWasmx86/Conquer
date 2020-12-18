@@ -26,12 +26,18 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	void init();
 
 	default boolean isDead(final Clan clan) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan == null");
+		}
 		return this.isDead(clan.getId());
 	}
 
 	boolean isDead(int clan);
 
 	default long maximumNumberOfSoldiersToRecruit(final Clan clan, final long limit) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan==null");
+		}
 		return this.maximumNumberOfSoldiersToRecruit(clan.getId(), limit);
 	}
 
