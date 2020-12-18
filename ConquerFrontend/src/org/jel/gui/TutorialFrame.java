@@ -40,7 +40,7 @@ final class TutorialFrame extends JFrame implements WindowListener, ActionListen
 		this.add(button);
 		button.addActionListener(this);
 		final var tutorialPanel = new TutorialPanel();
-		tutorialPanel.init();
+		tutorialPanel.init(this);
 		final var scrollPane = new JScrollPane(tutorialPanel);
 		this.add(scrollPane);
 		this.pack();

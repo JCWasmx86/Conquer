@@ -65,10 +65,11 @@ chmod +x buildConquer
 ### Notes
 
 Only amd64 is supported.
+
 ## MacOS
 
 Not supported (Contributions are welcome)
 
-## Other linux distros
+## Other linux distributions
 
 Semi-supported with a bit of manual work. (Contributions are welcome)
