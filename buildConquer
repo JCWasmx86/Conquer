@@ -223,7 +223,9 @@ cp -rv ../conquer-dist/backend/data tmp
 cd tmp
 #First install everything
 java --enable-preview org.jel.game.testsuite.Testsuite1||exit
-#Run the tests
+#Run the tests for bad arguments
 java --enable-preview org.jel.game.testsuite.Testsuite2||exit
+#Run the tests for saving and restoring games
+java --enable-preview org.jel.game.testsuite.Testsuite3||exit
 cd ..
 rm -rf tmp
