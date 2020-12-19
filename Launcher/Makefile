@@ -9,7 +9,7 @@ buildCJSON:
 	rm -f cJSON/*.so
 	rm -f cJSON/*.a
 	rm -f cJSON/*.dll
-	cd cJSON&&make CFLAGS="-O3 -march=native -s" &&mkdir -p cjson&&cp cJSON.h cjson&&cp libcjson.a ..&&cd ..
+	cd cJSON&&make CFLAGS="-O3 -s" &&mkdir -p cjson&&cp cJSON.h cjson&&cp libcjson.a ..&&cd ..
 all-win: buildCJSON
 	cc $(INCLUDES) -o launcher $(FILES) -O3 -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
 all-win-debug: buildCJSON
