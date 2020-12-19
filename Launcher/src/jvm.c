@@ -22,7 +22,7 @@ void runJVM(Configuration configuration) {
 	jvmoptions[2].optionString = "-XX:+ShowCodeDetailsInExceptionMessages";
 	for (size_t i = 0; i < configuration->numOptions; i++)
 		jvmoptions[NUM_PREDEFINED_ARGS + i].optionString =
-			configuration->classpaths[i];
+			configuration->options[i];
 	JavaVMInitArgs vmArgs = {JNI_VERSION_10,
 							 configuration->numOptions + NUM_PREDEFINED_ARGS,
 							 jvmoptions, 0};
