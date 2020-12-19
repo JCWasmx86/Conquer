@@ -12,6 +12,9 @@ import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
 import org.jel.game.utils.Graph;
 
+/**
+ * This class saves and restores Game-objects and compares them.
+ */
 public final class Testsuite3 extends Testsuite {
 	public static void main(final String[] args) {
 		final var suite = new Testsuite3();

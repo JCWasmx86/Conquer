@@ -1,6 +1,7 @@
 package org.jel.game.plugins.builtins;
 
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Shared;
@@ -71,18 +72,10 @@ public final class ChangeCitiesMinds implements Plugin {
 				return;
 			}
 			final var oldClan = c.getClanId();
-			final var neighbours = cities.getConnected(c);
-			var canChangeClan = false;
-			var otherClan = -1;
-			for (final City city : neighbours) {
-				if ((otherClan == city.getClanId()) || (otherClan == -1)) {
-					otherClan = city.getClanId();
-					canChangeClan = true;
-				} else {
-					canChangeClan = false;
-					break;
-				}
-			}
+			final var list = StreamUtils.getCitiesAroundCity(cities, c).map(City::getClanId).distinct()
+					.collect(Collectors.toList());
+			final var canChangeClan = list.size() == 1;
+			final var otherClan = list.get(0);
 			if ((!canChangeClan || (otherClan == c.getClanId()))
 					|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
