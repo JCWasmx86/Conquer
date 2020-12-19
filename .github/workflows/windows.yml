@@ -42,10 +42,11 @@ jobs:
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
+          cd ../../..
           #This is there, as I somehow can't access the real appdata in github actions
           mkdir -p tmp/appdata/.conquer/saves
           export APPDATA=`pwd`/tmp/appdata
-          cd ../../../..
+          cd ..
           export QT_QPA_PLATFORM=windows
           ./buildConquer
       - name: Upload results
