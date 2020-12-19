@@ -267,7 +267,11 @@ public class SavedGame {
 		} catch (final IOException e) {
 			// Nothing
 		}
-		saveDirectory.mkdirs();
+		try {
+			Files.createDirectories(Paths.get(saveDirectory.toURI()));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		for (final var plugin : game.getPlugins()) {
 			try (final var outputStream = new FileOutputStream(
 					new File(saveDirectory, plugin.getClass().getCanonicalName() + ".plugin.save"))) {
