@@ -44,8 +44,8 @@ jobs:
           export PATH=`pwd`:$PATH:.
           cd ../../..
           #This is there, as I somehow can't access the real appdata in github actions
-          mkdir -p tmp/appdata/.conquer/saves
-          export APPDATA=`pwd`/tmp/appdata
+          mkdir -p appdata/.conquer/saves
+          export APPDATA=`pwd`/appdata
           cd ..
           export QT_QPA_PLATFORM=windows
           ./buildConquer
