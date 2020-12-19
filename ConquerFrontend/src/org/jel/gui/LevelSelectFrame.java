@@ -98,6 +98,9 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					final var menu = new JPopupMenu();
 					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
+						if(savedScenarios.getSelectedValues() == null){
+							return;
+						}
 						try {
 							Shared.deleteDirectory(new File(Shared.SAVE_DIRECTORY, savedScenarios.getSelectedValue()));
 						} catch (final IOException e1) {
