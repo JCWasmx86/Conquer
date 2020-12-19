@@ -42,7 +42,7 @@ jobs:
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
           cd ../../../..
-          export QT_QPA_PLATFORM=offscreen
+          export QT_QPA_PLATFORM=windows
           ./buildConquer
       - name: Upload results
         uses: actions/upload-artifact@v2
