@@ -67,11 +67,11 @@ char* generateClasspath(Configuration configuration) {
 	sprintf(ret, "%s%s%s;%s%s;", ret, pf, "\\Conquer\\Conquer.jar", pf,
 			"\\Conquer\\Conquer_frontend.jar");
 #endif
-	printf("%s\n",ret);
+	printf("%s\n", ret);
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
 		sprintf(ret, "%s%s%s", ret, configuration->classpaths[i], c);
 	}
-	printf("%s\n",ret);
+	printf("%s\n", ret);
 	char *base = getBaseDirectory();
 	char *libs = calloc(strlen(base) + 10, 1);
 	assert(libs);
@@ -87,7 +87,9 @@ char* generateClasspath(Configuration configuration) {
 				size_t ll = strlen(name);
 				if (ll >= 4 && memcmp(&name[ll - 4], ".jar", 4) == 0) {
 #ifndef _WIN32
-					sprintf(ret, "%s%s%s%s", ret, libs, name, ":");
+					strcat(ret, libs);
+					strcat(ret, name);
+					strcat(ret, ":");
 #else
 				sprintf(ret, "%s%s%s%s", ret, libs, name, ";");
 #endif
@@ -98,8 +100,17 @@ char* generateClasspath(Configuration configuration) {
 		}
 		closedir(dir);
 	}
-	printf("%s\n",ret);
+	printf("%s\n", ret);
 #ifndef _WIN32
+	strcat(ret, libs);
+	strcat(ret, "music");
+	strcat(ret, ":");
+	strcat(ret, libs);
+	strcat(ret, "sounds");
+	strcat(ret, ":");
+	strcat(ret, libs);
+	strcat(ret, "images");
+	strcat(ret, ":");
 	sprintf(ret, "%s%s%s%s", ret, libs, "music", ":");
 	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ":");
 	sprintf(ret, "%s%s%s%s", ret, libs, "images", ":");
@@ -108,8 +119,8 @@ char* generateClasspath(Configuration configuration) {
 	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ";");
 	sprintf(ret, "%s%s%s%s", ret, libs, "images", ";");
 #endif
-	printf("%s\n",ret);
-	sprintf(ret, "%s%s", ret, ".");
-	printf("%s\n",ret);
+	printf("%s\n", ret);
+	strcat(ret,".");
+	printf("%s\n", ret);
 	return ret;
 }
