@@ -43,6 +43,7 @@ jobs:
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
           #This is there, as I somehow can't access the real appdata in github actions
+          mkdir -p tmp/appdata/.conquer/saves
           export APPDATA=`pwd`/tmp/appdata
           cd ../../../..
           export QT_QPA_PLATFORM=windows
