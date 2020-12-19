@@ -26,10 +26,6 @@ void runJVM(Configuration configuration) {
 				configuration->options[i];
 	JavaVMInitArgs vmArgs = { JNI_VERSION_10, configuration->numOptions
 			+ NUM_PREDEFINED_ARGS, jvmoptions, 1 };
-	for (size_t i = 0; i < configuration->numOptions + NUM_PREDEFINED_ARGS;
-			i++) {
-		printf("%s\n", jvmoptions[i].optionString);
-	}
 	JavaVM *jvm;
 	JNIEnv *env = NULL;
 	void *handle = loadJavaLibrary(configuration);
@@ -67,11 +63,9 @@ char* generateClasspath(Configuration configuration) {
 	sprintf(ret, "%s%s%s;%s%s;", ret, pf, "\\Conquer\\Conquer.jar", pf,
 			"\\Conquer\\Conquer_frontend.jar");
 #endif
-	printf("%s\n", ret);
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
 		sprintf(ret, "%s%s%s", ret, configuration->classpaths[i], c);
 	}
-	printf("%s\n", ret);
 	char *base = getBaseDirectory();
 	char *libs = calloc(strlen(base) + 10, 1);
 	assert(libs);
@@ -100,7 +94,6 @@ char* generateClasspath(Configuration configuration) {
 		}
 		closedir(dir);
 	}
-	printf("%s\n", ret);
 #ifndef _WIN32
 	strcat(ret, libs);
 	strcat(ret, "music");
@@ -116,8 +109,6 @@ char* generateClasspath(Configuration configuration) {
 	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ";");
 	sprintf(ret, "%s%s%s%s", ret, libs, "images", ";");
 #endif
-	printf("%s\n", ret);
 	strcat(ret,".");
-	printf("%s\n", ret);
 	return ret;
 }
