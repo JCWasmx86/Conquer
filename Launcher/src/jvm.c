@@ -26,6 +26,9 @@ void runJVM(Configuration configuration) {
 	JavaVMInitArgs vmArgs = {JNI_VERSION_10,
 							 configuration->numOptions + NUM_PREDEFINED_ARGS,
 							 jvmoptions, 1};
+	for(size_t i = 0; i < configuration->numOptions + NUM_PREDEFINED_ARGS; i++) {
+		printf("%s\n", jvmOptions[i].optionString);
+	}
 	JavaVM *jvm;
 	JNIEnv *env = NULL;
 	void *handle = loadJavaLibrary(configuration);
