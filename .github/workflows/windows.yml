@@ -44,3 +44,8 @@ jobs:
           cd ../../../..
           export QT_QPA_PLATFORM=offscreen
           ./buildConquer
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build result
+          path: conquer-dist/Installer.exe
