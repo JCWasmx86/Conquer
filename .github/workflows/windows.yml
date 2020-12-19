@@ -42,6 +42,7 @@ jobs:
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
+          #This is there, as I somehow can't access the real appdata in github actions
           export APPDATA=`pwd`/tmp/appdata
           cd ../../../..
           export QT_QPA_PLATFORM=windows

@@ -13,6 +13,9 @@ import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Reader;
 import org.jel.game.data.XMLReader;
 
+/**
+ * Passes bad arguments to functions.
+ */
 public final class Testsuite2 extends Testsuite {
 	public static void main(final String[] args) {
 		final var suite = new Testsuite2();

@@ -17,7 +17,7 @@
 #include "launcher.h"
 
 static char *getHomeDirectory(void);
-// Make ~/.config/.conquer or %APPDATA%\\Roaming\\.conquer
+// Make ~/.config/.conquer or %APPDATA%\\.conquer
 void initDirectoryStructure(void) {
 	char *configDirectory = getBaseDirectory();
 #ifndef _WIN32
@@ -39,22 +39,24 @@ static char *getHomeDirectory(void) {
 #endif
 }
 char *getBaseDirectory(void) {
+#ifndef _WIN32
 	char *home = getHomeDirectory();
 	assert(home);
-	size_t lenHome = strlen(home);
-	lenHome++;
-#ifndef _WIN32
+	size_t lenHome = strlen(home) + 1;
 	char *append = "/.config/.conquer";
 	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
 	assert(configDirectory);
 	sprintf(configDirectory, "%s%s", home, append);
+	return configDirectory;
 #else
+	char* home=strdup(getenv("APPDATA"));
+	size_t lenHome=strlen(home) + 1;
 	char *append = "\\Appdata\\Roaming\\.conquer";
 	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
 	assert(configDirectory);
 	sprintf(configDirectory, "%s%s", home, append);
-#endif
 	return configDirectory;
+#endif
 }
 int dirExists(const char *name) {
 #ifndef _WIN32

@@ -19,7 +19,7 @@ public final class Shared {
 	 * plugins, strategies,...)
 	 */
 	public static final String BASE_DIRECTORY = System.getProperty("os.name").toLowerCase().contains("windows")
-			? System.getProperty("user.home") + "\\Appdata\\Roaming\\.conquer\\"
+			? System.getenv("APPDATA") + "\\.conquer\\"
 			: System.getProperty("user.home") + "/.config/.conquer/";
 
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
