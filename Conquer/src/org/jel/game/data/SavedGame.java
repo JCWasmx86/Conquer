@@ -168,7 +168,9 @@ public class SavedGame {
 		for (final var file : files) {
 			final var pluginName = file.getName().replaceAll("\\.plugin\\.save$", "");
 			final var plugin = (Plugin) Class.forName(pluginName).getConstructor().newInstance();
-			plugin.resume(game, Files.newInputStream(Paths.get(file.toURI())));
+			try (final var stream = Files.newInputStream(Paths.get(file.toURI()))) {
+				plugin.resume(game, stream);
+			}
 			ret.add(plugin);
 		}
 		return ret;
@@ -265,26 +267,27 @@ public class SavedGame {
 		try {
 			Shared.deleteDirectory(saveDirectory);
 		} catch (final IOException e) {
-			// Nothing
+			//Nothing critical
+			Shared.LOGGER.exception(e);
 		}
 		try {
 			Files.createDirectories(Paths.get(saveDirectory.toURI()));
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 		for (final var plugin : game.getPlugins()) {
-			try (final var outputStream = new FileOutputStream(
-					new File(saveDirectory, plugin.getClass().getCanonicalName() + ".plugin.save"))) {
+			final var file = new File(saveDirectory, plugin.getClass().getCanonicalName() + ".plugin.save");
+			try (final var outputStream = Files.newOutputStream(Paths.get(file.toURI()))) {
 				plugin.save(outputStream);
-			} catch (final IOException e) {
+			} catch (final Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
 		for (final var clan : game.getClans()) {
-			try (final var outputStream = new FileOutputStream(
-					new File(saveDirectory, clan.getName() + ".clan.save"))) {
+			final var file = new File(saveDirectory, clan.getName() + ".clan.save");
+			try (final var outputStream = Files.newOutputStream(Paths.get(file.toURI()))) {
 				this.save(clan, outputStream);
-			} catch (final IOException e) {
+			} catch (final Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
@@ -307,7 +310,7 @@ public class SavedGame {
 
 	private void save(final Game game, final File saveDirectory) throws IOException {
 		final var gameFile = new File(saveDirectory, this.name + ".game.save");
-		try (var dos = new DataOutputStream(new FileOutputStream(gameFile))) {
+		try (var dos = new DataOutputStream(Files.newOutputStream(Paths.get(gameFile.toURI())))) {
 			final var imageData = this.extractBytes(game.getBackground());
 			dos.writeInt(imageData.length);
 			dos.write(imageData);

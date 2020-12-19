@@ -226,6 +226,6 @@ java --enable-preview org.jel.game.testsuite.Testsuite1||exit
 #Run the tests for bad arguments
 java --enable-preview org.jel.game.testsuite.Testsuite2||exit
 #Run the tests for saving and restoring games
-java --enable-preview org.jel.game.testsuite.Testsuite3||exit
+if [[ ! $NO_TESTS3 ]]; then java --enable-preview org.jel.game.testsuite.Testsuite3||exit; fi
 cd ..
 rm -rf tmp
