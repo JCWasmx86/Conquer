@@ -51,7 +51,7 @@ char *getBaseDirectory(void) {
 #else
 	char* home=strdup(getenv("APPDATA"));
 	size_t lenHome=strlen(home) + 1;
-	char *append = "\\Appdata\\Roaming\\.conquer";
+	char *append = "\\.conquer";
 	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
 	assert(configDirectory);
 	sprintf(configDirectory, "%s%s", home, append);

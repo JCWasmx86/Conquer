@@ -395,7 +395,12 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.game.setPlayerGiftCallback(new GiftCallback());
 		final var cities = this.game.getCities();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
-		this.loopPlayer.start();
+		try{
+			this.loopPlayer.start();
+		}catch(IllegalThreadStateException itse){
+			//Nothing serious
+			Shared.LOGGER.exception(itse);
+		}
 		final var connections = cities.getConnections();
 		final Map<Integer, List<Integer>> drawnLines = new HashMap<>();
 		connections.forEach(triple -> {
