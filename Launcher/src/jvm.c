@@ -27,7 +27,7 @@ void runJVM(Configuration configuration) {
 							 configuration->numOptions + NUM_PREDEFINED_ARGS,
 							 jvmoptions, 1};
 	for(size_t i = 0; i < configuration->numOptions + NUM_PREDEFINED_ARGS; i++) {
-		printf("%s\n", jvmOptions[i].optionString);
+		printf("%s\n", jvmoptions[i].optionString);
 	}
 	JavaVM *jvm;
 	JNIEnv *env = NULL;
