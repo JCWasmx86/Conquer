@@ -111,9 +111,6 @@ char* generateClasspath(Configuration configuration) {
 	strcat(ret, libs);
 	strcat(ret, "images");
 	strcat(ret, ":");
-	sprintf(ret, "%s%s%s%s", ret, libs, "music", ":");
-	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ":");
-	sprintf(ret, "%s%s%s%s", ret, libs, "images", ":");
 #else
 	sprintf(ret, "%s%s%s%s", ret, libs, "music", ";");
 	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ";");
