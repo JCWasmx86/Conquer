@@ -13,7 +13,7 @@ if [[ `gcc -dumpversion` =~ "10.*" ]]; then
 else
 	echo Found gcc-10
 fi
-export TARGET="debug"
+export TARGET="all"
 unameOut="$(uname -s)"
 case "${unameOut}" in
     MINGW*)
@@ -26,7 +26,7 @@ case "${unameOut}" in
 		else
 			export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin:`cygpath "C:\\Program Files\\Musescore 3\\bin"`
 		fi
-		export TARGET="all-win-debug"
+		export TARGET="all-win"
 		export IS_WIN="IS_WIN"
 	;;
 esac
