@@ -1,5 +1,6 @@
 # Conquer
 ![Build](https://github.com/JCWasmx86/Conquer/workflows/Build/badge.svg)
+![Windows](https://github.com/JCWasmx86/Conquer/workflows/Windows/badge.svg)
 
 You are the proud leader of a clan! Manage your resources! Move your troops! Conquer the cities of your enemies!
 Will you fail and get defeated or will you lead your clan to endless glory and wealth?
