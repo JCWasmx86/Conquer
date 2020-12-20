@@ -278,13 +278,14 @@ public final class Testsuite3 extends Testsuite {
 			for (var i = 0; i < 5; i++) {
 				game.executeActions();
 			}
-			this.saveGame(game, scenario.name());
-			final var restoredGame = this.restore(scenario.name());
+			final var name = scenario.name();
+			this.saveGame(game, name);
+			final var restoredGame = this.restore(name);
 			if (restoredGame == null) {
 				continue;
 			}
-			this.compare(game, restoredGame, scenario.name());
-			this.continueToPlay(restoredGame, scenario.name());
+			this.compare(game, restoredGame, name);
+			this.continueToPlay(restoredGame, name);
 		}
 		return this.numberOfErrors;
 	}
