@@ -38,3 +38,10 @@ After I gave my project to the teacher, I started to remove some little greenfoo
 the code structure and made some changes. Around 70% are unchanged and are the original code of my assignment. (The greenfoot-based code may be pushed to the Legacy branch)
 
 
+### Credits
+
+1. [cJSON](https://github.com/DaveGamble/cJSON) for the JSON-Parser
+2. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
+3. [libcurl](https://curl.se/libcurl/) to download java.
+4. [Musescore](https://musescore.org/en) that made it possible to provide music.
+5. [flaticon.com](href="https://www.flaticon.com/) for a huge majority images
