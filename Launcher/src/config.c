@@ -67,7 +67,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	assert(ret);
 	// This paths will be appended to the classpath.
 	cJSON *classpath = cJSON_GetObjectItem(cjson, "classpath");
-	if (cJSON_IsArray(classpath)) {
+	if (classpath != NULL && cJSON_IsArray(classpath)) {
 		ret->numClasspaths = cJSON_GetArraySize(classpath);
 		ret->classpaths = calloc(ret->numClasspaths, sizeof(char *));
 		for (size_t i = 0; i < ret->numClasspaths; i++) {
@@ -78,7 +78,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	}
 	// JVM Options
 	cJSON *jvmOptions = cJSON_GetObjectItem(cjson, "options");
-	if (cJSON_IsArray(jvmOptions)) {
+	if (jvmOptions != NULL && cJSON_IsArray(jvmOptions)) {
 		ret->numOptions = cJSON_GetArraySize(jvmOptions);
 		ret->options = calloc(ret->numOptions, sizeof(char *));
 		for (size_t i = 0; i < ret->numOptions; i++) {

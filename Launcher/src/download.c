@@ -91,12 +91,10 @@ static int downloadFile(const char *url, const char *outputFileName) {
 	fflush(stdout);
 #ifndef _WIN32
 	urlToDownload = (char *)url;
-	CURL *curl;
-	FILE *fp;
 	CURLcode res = 1;
-	curl = curl_easy_init();
+	CURL *curl = curl_easy_init();
 	if (curl) {
-		fp = fopen(outputFileName, "wb");
+		FILE *fp = fopen(outputFileName, "wb");
 		if (!fp) {
 			perror("fopen");
 			return 1;
