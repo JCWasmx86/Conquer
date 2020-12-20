@@ -65,11 +65,14 @@ char *generateClasspath(Configuration configuration) {
 #endif
 	TCHAR pf[MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, pf, CSIDL_PROGRAM_FILES, FALSE);
-	sprintf(ret, "%s%s%s;%s%s;", ret, pf, "\\Conquer\\Conquer.jar", pf,
-			"\\Conquer\\Conquer_frontend.jar");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\Conquer.jar");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\Conquer_frontend.jar");
 #endif
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
-		sprintf(ret, "%s%s%s", ret, configuration->classpaths[i], c);
+		strcat(ret, configuration->classpaths[i]);
+		strcat(ret, c);
 	}
 	char *base = getBaseDirectory();
 	char *libs = calloc(strlen(base) + 10, 1);
@@ -90,7 +93,9 @@ char *generateClasspath(Configuration configuration) {
 					strcat(ret, name);
 					strcat(ret, ":");
 #else
-				sprintf(ret, "%s%s%s%s", ret, libs, name, ";");
+				sprintf(ret, libs);
+				sprintf(ret, name);
+				sprintf(ret, ";");
 #endif
 				}
 #ifndef _WIN32
@@ -110,9 +115,15 @@ char *generateClasspath(Configuration configuration) {
 	strcat(ret, "images");
 	strcat(ret, ":");
 #else
-	sprintf(ret, "%s%s%s%s", ret, libs, "music", ";");
-	sprintf(ret, "%s%s%s%s", ret, libs, "sounds", ";");
-	sprintf(ret, "%s%s%s%s", ret, libs, "images", ";");
+	strcat(ret, libs);
+	strcat(ret, "music");
+	strcat(ret, ";");
+	strcat(ret, libs);
+	strcat(ret, "sounds");
+	strcat(ret, ";");
+	strcat(ret, libs);
+	strcat(ret, "images");
+	strcat(ret, ";");
 #endif
 	strcat(ret, ".");
 	free(libs);
