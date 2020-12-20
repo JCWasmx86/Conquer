@@ -106,6 +106,7 @@ boolean acceptGift(Clan sourceClan, Clan destinationClan,
 This method is called when one clan wants to give a gift to the clan of the strategy. If the strategy accepts the gift, \texttt{newValue} has to be called with the new relationship value. For example, if the relationship
 was at 50 points and after that it should be 57.5, run \texttt{newValue.accept(57.5);} instead of \texttt{newValue.accept(7.5);}. Furthermore \texttt{true} has to be returned if the gift was accepted.
 If the strategy rejected the gift, \texttt{false} has to be returned and \texttt{newValue::accept} mustn't be called.
+
 \begin{minted}{java}
 StrategyData getData();
 \end{minted}

@@ -11,8 +11,8 @@ public final class SortedStrategyProvider implements StrategyProvider {
 	}
 
 	@Override
-	public byte getId() {
-		return (byte) 126;
+	public int getId() {
+		return (byte) 1000;
 	}
 
 	@Override

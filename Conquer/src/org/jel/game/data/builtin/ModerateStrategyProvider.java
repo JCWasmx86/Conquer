@@ -11,7 +11,7 @@ public final class ModerateStrategyProvider implements StrategyProvider {
 	}
 
 	@Override
-	public byte getId() {
+	public int getId() {
 		return 1;
 	}
 

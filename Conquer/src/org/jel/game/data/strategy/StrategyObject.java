@@ -12,12 +12,12 @@ import org.jel.game.utils.Graph;
 
 public interface StrategyObject {
 
-	default void attack(final City source, final City target, final byte sourceClan, final boolean managedByPlayer,
+	default void attack(final City source, final City target, final int sourceClan, final boolean managedByPlayer,
 			final long numberOfSoldiersToMoveIfManaged) {
 		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
 	}
 
-	void attack(City source, City target, byte sourceOfClan, boolean managedByPlayer,
+	void attack(City source, City target, int sourceOfClan, boolean managedByPlayer,
 			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
 
 	default void attack(final City source, final City target, final Clan sourceClan, final boolean managedByPlayer,
@@ -25,7 +25,7 @@ public interface StrategyObject {
 		if (sourceClan == null) {
 			throw new IllegalArgumentException("sourceClan==null");
 		}
-		this.attack(source, target, (byte) sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
+		this.attack(source, target, sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
 	}
 
 	default void attack(final City source, final City target, final Clan sourceClan, final boolean managedByPlayer,
@@ -33,8 +33,7 @@ public interface StrategyObject {
 		if (sourceClan == null) {
 			throw new IllegalArgumentException("sourceClan==null");
 		}
-		this.attack(source, target, (byte) sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged,
-				reallyPlayer);
+		this.attack(source, target, sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, reallyPlayer);
 	}
 
 	double defenseStrengthOfCity(City city);
@@ -86,7 +85,7 @@ public interface StrategyObject {
 		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
 	}
 
-	long maximumNumberToMove(byte clanId, double weight, long maximumNumberOfSoldiers);
+	long maximumNumberToMove(int clanId, double weight, long maximumNumberOfSoldiers);
 
 	default long maximumNumberToMove(final Clan clan, final City first, final City second,
 			final long maximumNumberOfSoldiers) {
@@ -102,7 +101,7 @@ public interface StrategyObject {
 		if (first == second) {
 			throw new IllegalArgumentException("first==second");
 		}
-		return this.maximumNumberToMove((byte) clan.getId(), this.getCities().getWeight(first, second),
+		return this.maximumNumberToMove(clan.getId(), this.getCities().getWeight(first, second),
 				maximumNumberOfSoldiers);
 	}
 
@@ -110,10 +109,10 @@ public interface StrategyObject {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
-		return this.maximumNumberToMove((byte) clan.getId(), weight, maximumNumberOfSoldiers);
+		return this.maximumNumberToMove(clan.getId(), weight, maximumNumberOfSoldiers);
 	}
 
-	void moveSoldiers(City source, Stream<City> reachableCities, byte clanId, boolean managedByPlayer, City target,
+	void moveSoldiers(City source, Stream<City> reachableCities, int clanId, boolean managedByPlayer, City target,
 			long numberOfSoldiersToMoveIfManaged);
 
 	default void moveSoldiers(final City source, final Stream<City> reachableCities, final Clan clan,
@@ -121,13 +120,13 @@ public interface StrategyObject {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
-		this.moveSoldiers(source, reachableCities, (byte) clan.getId(), managedByPlayer, target,
+		this.moveSoldiers(source, reachableCities, clan.getId(), managedByPlayer, target,
 				numberOfSoldiersToMoveIfManaged);
 	}
 
 	Stream<City> reachableCities(City city);
 
-	void recruitSoldiers(double maxToPay, byte clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
+	void recruitSoldiers(double maxToPay, int clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
 
 	default void recruitSoldiers(final double maxToPay, final Clan clan, final City city, final boolean managedByPlayer,
 			final double numberOfSoldiers) {
@@ -139,38 +138,38 @@ public interface StrategyObject {
 
 			throw new IllegalArgumentException("clan!=city.clan");
 		}
-		this.recruitSoldiers(maxToPay, (byte) clan.getId(), city, managedByPlayer, numberOfSoldiers);
+		this.recruitSoldiers(maxToPay, clan.getId(), city, managedByPlayer, numberOfSoldiers);
 	}
 
 	boolean sendGift(Clan source, Clan destination, Gift gift);
 
-	boolean upgradeDefense(byte clan);
+	boolean upgradeDefense(int clan);
 
-	boolean upgradeDefense(byte clan, City city);
+	boolean upgradeDefense(int clan, City city);
 
 	default boolean upgradeDefense(final Clan clan) {
-		return this.upgradeDefense((byte) clan.getId());
+		return this.upgradeDefense(clan.getId());
 	}
 
 	default boolean upgradeDefense(final Clan clan, final City city) {
-		return this.upgradeDefense((byte) clan.getId(), city);
+		return this.upgradeDefense(clan.getId(), city);
 	}
 
-	boolean upgradeOffense(byte clan);
+	boolean upgradeOffense(int clan);
 
 	default boolean upgradeOffense(final Clan clan) {
-		return this.upgradeOffense((byte) clan.getId());
+		return this.upgradeOffense(clan.getId());
 	}
 
-	boolean upgradeResource(byte clan, Resource resc, City a);
+	boolean upgradeResource(int clan, Resource resc, City a);
 
 	default boolean upgradeResource(final Clan clan, final Resource resource, final City city) {
-		return this.upgradeResource((byte) clan.getId(), resource, city);
+		return this.upgradeResource(clan.getId(), resource, city);
 	}
 
-	boolean upgradeSoldiers(byte clan);
+	boolean upgradeSoldiers(int clan);
 
 	default boolean upgradeSoldiers(final Clan clan) {
-		return this.upgradeSoldiers((byte) clan.getId());
+		return this.upgradeSoldiers(clan.getId());
 	}
 }

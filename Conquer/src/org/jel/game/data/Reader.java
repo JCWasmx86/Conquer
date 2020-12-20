@@ -66,7 +66,7 @@ public final class Reader {
 			}
 			final var gi = ImageIO.read(new ByteArrayInputStream(data));
 			game.setBackground(gi);
-			final var numPlayers = dis.readByte();
+			final var numPlayers = dis.readInt();
 			if ((numPlayers == 1) || (numPlayers == 0)) {
 				Shared.LOGGER.error("Expected at least 2 players, got " + numPlayers);
 				return null;
@@ -97,7 +97,7 @@ public final class Reader {
 				tmp.get(i).setName(s);
 			}
 			for (var i = 0; i < numPlayers; i++) {
-				final int flags = dis.readByte();
+				final var flags = dis.readInt();
 				tmp.get(i).setFlags(flags);
 			}
 			final List<Color> colors = new ArrayList<>();
@@ -148,11 +148,11 @@ public final class Reader {
 				}
 			}
 			for (var i = 0; i < numberOfRelations; i++) {
-				final var firstClan = dis.readByte();
+				final var firstClan = dis.readInt();
 				if (firstClan >= numPlayers) {
 					Shared.LOGGER.error("firstClan > numPlayers: " + firstClan);
 				}
-				final var secondClan = dis.readByte();
+				final var secondClan = dis.readInt();
 				if (secondClan >= numPlayers) {
 					Shared.LOGGER.error("secondClan > numPlayers: " + secondClan);
 				}
