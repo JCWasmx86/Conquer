@@ -417,7 +417,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 
 	private boolean save() {
 		try {
-			new SavedGame(this.saveName).save(this.game);
+			Shared.save(this.saveName, this.game);
 		} catch (final Exception e) {
 			Shared.LOGGER.exception(e);
 			JOptionPane.showMessageDialog(null, Messages.getMessage("GameFrame.savingFailed", this.saveName),

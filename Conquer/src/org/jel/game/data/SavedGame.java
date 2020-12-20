@@ -28,7 +28,7 @@ import org.jel.game.data.strategy.Strategy;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.utils.Graph;
 
-public class SavedGame {
+class SavedGame implements ConquerSaver{
 	private final String name;
 
 	public SavedGame(final String name) {
@@ -310,6 +310,8 @@ public class SavedGame {
 				dos.write(bytes);
 			}
 		}
+		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
+				this.getClass().getCanonicalName().getBytes());
 	}
 
 	private void save(final Game game, final File saveDirectory) throws IOException {

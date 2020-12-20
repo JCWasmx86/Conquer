@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.SavedGame;
 import org.jel.game.data.ScenarioFileReader;
+import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
 import org.jel.game.utils.Graph;
@@ -254,7 +254,7 @@ public final class Testsuite3 extends Testsuite {
 
 	private ConquerInfo restore(final String name) {
 		try {
-			return new SavedGame(name).restore();
+			return Shared.restore(name);
 		} catch (final Exception e) {
 			this.throwable(e);
 			return null;
@@ -263,7 +263,7 @@ public final class Testsuite3 extends Testsuite {
 
 	private void saveGame(final ConquerInfo game, final String name) {
 		try {
-			new SavedGame(name).save(game);
+			Shared.save(name, game);
 		} catch (final Exception e) {
 			this.throwable(e);
 		}

@@ -29,7 +29,6 @@ import javax.swing.SwingUtilities;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.ScenarioFileReader;
-import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
 import org.jel.gui.utils.ImageResource;
@@ -118,9 +117,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					if (item == null) {
 						return;
 					}
-					final var savedGame = new SavedGame(item);
 					try {
-						final var game = savedGame.restore();
+						final var game = Shared.restore(item);
 						final var frame = new GameFrame(item, game);
 						frame.init();
 					} catch (final Exception e1) {
