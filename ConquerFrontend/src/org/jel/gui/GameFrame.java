@@ -39,7 +39,6 @@ import javax.swing.WindowConstants;
 
 import org.jel.game.data.City;
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.Game;
 import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
@@ -84,7 +83,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.X_AXIS));
 	}
 
-	GameFrame(final String saveName, final Game game) {
+	GameFrame(final String saveName, final ConquerInfo game) {
 		this(game);
 		this.saveName = saveName;
 	}

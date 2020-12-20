@@ -176,7 +176,7 @@ public class SavedGame {
 		return ret;
 	}
 
-	public Game restore() throws Exception {
+	public ConquerInfo restore() throws Exception {
 		final var game = new Game();
 		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		this.restore(game, saveDirectory);
