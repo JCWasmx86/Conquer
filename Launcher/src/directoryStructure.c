@@ -16,7 +16,8 @@
 #endif
 #include "launcher.h"
 
-static char *getHomeDirectory(void);
+static char* getHomeDirectory(void);
+
 // Make ~/.config/.conquer or %APPDATA%\\.conquer
 void initDirectoryStructure(void) {
 	char *configDirectory = getBaseDirectory();
@@ -27,7 +28,7 @@ void initDirectoryStructure(void) {
 #endif
 	free(configDirectory);
 }
-static char *getHomeDirectory(void) {
+static char* getHomeDirectory(void) {
 #ifndef _WIN32
 	char *homedir;
 	if ((homedir = getenv("HOME")) == NULL) {
@@ -38,7 +39,7 @@ static char *getHomeDirectory(void) {
 	return getenv("USERPROFILE");
 #endif
 }
-char *getBaseDirectory(void) {
+char* getBaseDirectory(void) {
 #ifndef _WIN32
 	char *home = getHomeDirectory();
 	assert(home);

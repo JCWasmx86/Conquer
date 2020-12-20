@@ -31,6 +31,10 @@ void runJVM(Configuration configuration) {
 	void *handle = loadJavaLibrary(configuration);
 	createJVM func = getHandleToFunction(handle);
 	jint status = func(&jvm, (void**) &env, &vmArgs);
+	if(status!=JNI_OK){
+		fprintf(stderr,"Couldn't create JVM: %d\n",status);
+		goto cleanup;
+	}
 	jclass introClass = (*env)->FindClass(env, "org/jel/gui/Intro");
 	assert(introClass);
 	jclass stringClass = (*env)->FindClass(env, "java/lang/String");
@@ -43,8 +47,9 @@ void runJVM(Configuration configuration) {
 		(*env)->ExceptionDescribe(env);
 	}
 	(*jvm)->DestroyJavaVM(jvm);
-	free(jvmoptions[0].optionString);
-	free(jvmoptions);
+	cleanup:
+		free(jvmoptions[0].optionString);
+		free(jvmoptions);
 }
 char* generateClasspath(Configuration configuration) {
 	char *ret = calloc(1024 * 1024 * 16, 1);
@@ -110,5 +115,6 @@ char* generateClasspath(Configuration configuration) {
 	sprintf(ret, "%s%s%s%s", ret, libs, "images", ";");
 #endif
 	strcat(ret,".");
+	free(libs);
 	return ret;
 }

@@ -36,7 +36,7 @@ void downloadJDK(void) {
 	char *outputFile;
 	char *base;
 	if (geteuid()) {
-		char *base = getBaseDirectory();
+		base = getBaseDirectory();
 		assert(base);
 		dirBase = calloc(strlen(base) + 20, 1);
 		assert(dirBase);
@@ -80,11 +80,11 @@ void downloadJDK(void) {
 		}
 		extract(outputFile);
 		remove(outputFile);
+	}
 	cleanup:
 		free(base);
 		free(dirBase);
 		free(outputFile);
-	}
 }
 static int downloadFile(const char *url, const char *outputFileName) {
 	printf("Starting download of %s to %s!\n", url, outputFileName);
@@ -93,7 +93,7 @@ static int downloadFile(const char *url, const char *outputFileName) {
 	urlToDownload = (char *)url;
 	CURL *curl;
 	FILE *fp;
-	CURLcode res;
+	CURLcode res=1;
 	curl = curl_easy_init();
 	if (curl) {
 		fp = fopen(outputFileName, "wb");
