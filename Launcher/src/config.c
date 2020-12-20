@@ -3,6 +3,7 @@
 #include <cJSON.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <string.h>
 
 Configuration emptyConfiguration(void);
@@ -41,13 +42,13 @@ Configuration getConfiguration(void) {
 		fputs("Bad config.json\n", stderr);
 		const char *ptr = cJSON_GetErrorPtr();
 		if (ptr != NULL) {
-			free(buf);
-			fclose(fp);
-			free(jsonFile);
-			free(base);
 			fputs(ptr, stderr);
 		}
 		Configuration c = emptyConfiguration();
+		free(buf);
+		fclose(fp);
+		free(jsonFile);
+		free(base);
 		assert(c);
 		return c;
 	}
