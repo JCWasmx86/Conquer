@@ -11,7 +11,7 @@ public final class DefensiveStrategyProvider implements StrategyProvider {
 	}
 
 	@Override
-	public byte getId() {
+	public int getId() {
 		return 0;
 	}
 

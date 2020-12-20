@@ -20,7 +20,7 @@ public final class RandomStrategyProvider implements StrategyProvider {
 	}
 
 	@Override
-	public byte getId() {
+	public int getId() {
 		return 3;
 	}
 

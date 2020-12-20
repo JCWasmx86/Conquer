@@ -10,7 +10,7 @@ public final class City implements Comparable<City> {
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
 	private double bonus = -1;
-	private byte clanId = -1;
+	private int clanId = -1;
 	private double defense = -1;
 	private final ConquerInfo game;
 	private double growth;
@@ -162,6 +162,15 @@ public final class City implements Comparable<City> {
 		}
 		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()
 				* clan.getSoldiersDefenseStrength());
+	}
+
+	/**
+	 * Returns the strength of a city based on its own values and the clan.
+	 * 
+	 * @return The defense strength of the city.
+	 */
+	public double getDefenseStrength() {
+		return this.getDefenseStrength(this.getClan());
 	}
 
 	/**
@@ -342,7 +351,7 @@ public final class City implements Comparable<City> {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
-		this.clanId = (byte) clan.getId();
+		this.clanId = clan.getId();
 		this.clan = clan;
 	}
 
@@ -388,7 +397,7 @@ public final class City implements Comparable<City> {
 	}
 
 	void setId(final int id) {
-		this.clanId = (byte) id;
+		this.clanId = id;
 	}
 
 	/**

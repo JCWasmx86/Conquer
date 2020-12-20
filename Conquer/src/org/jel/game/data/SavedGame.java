@@ -69,7 +69,7 @@ public class SavedGame {
 			final var city = new City(game);
 			city.setName(dis.readUTF());
 			city.setDefenseBonus(dis.readDouble());
-			city.setId(dis.read());
+			city.setId(dis.readInt());
 			city.setDefense(dis.readDouble());
 			city.setGrowth(dis.readDouble());
 			final var imageLen = dis.readInt();
@@ -108,7 +108,7 @@ public class SavedGame {
 			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 		try (var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
-			clan.setId(dis.read());
+			clan.setId(dis.readInt());
 			clan.setName(dis.readUTF());
 			clan.setCoins(dis.readDouble());
 			clan.setColor(new Color(dis.read(), dis.read(), dis.read()));
@@ -194,7 +194,7 @@ public class SavedGame {
 			final var bytes = dis.readNBytes(imageLen);
 			final var image = ImageIO.read(new ByteArrayInputStream(bytes));
 			game.setBackground(image);
-			game.setPlayers((byte) dis.read());
+			game.setPlayers(dis.readInt());
 			game.setRound(dis.readInt());
 			this.readCities(dis, game);
 			final var relations = new Graph<Integer>(game.getNumPlayers());
@@ -211,7 +211,7 @@ public class SavedGame {
 
 	private void save(final Clan clan, final OutputStream outputStream) throws IOException {
 		try (var dos = new DataOutputStream(outputStream)) {
-			dos.write(clan.getId());
+			dos.writeInt(clan.getId());
 			dos.writeUTF(clan.getName());
 			dos.writeDouble(clan.getCoins());
 			final var color = clan.getColor();
@@ -314,7 +314,7 @@ public class SavedGame {
 			final var imageData = this.extractBytes(game.getBackground());
 			dos.writeInt(imageData.length);
 			dos.write(imageData);
-			dos.write(game.getNumPlayers());
+			dos.writeInt(game.getNumPlayers());
 			dos.writeInt(game.currentRound());
 			this.writeCities(game, dos);
 			final var relations = game.getRelations();
@@ -362,7 +362,7 @@ public class SavedGame {
 			try {
 				dos.writeUTF(a.getName());
 				dos.writeDouble(a.getBonus());
-				dos.write(a.getClanId());
+				dos.writeInt(a.getClanId());
 				dos.writeDouble(a.getDefense());
 				dos.writeDouble(a.getGrowth());
 				final var imageData = this.extractBytes(a.getImage());

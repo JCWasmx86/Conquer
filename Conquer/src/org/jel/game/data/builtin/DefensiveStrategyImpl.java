@@ -104,6 +104,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		return new DefensiveStrategyData();
 	}
 
+	@Override
 	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
 			final byte[] dataBytes) {
 		this.object = strategyObject;
@@ -121,7 +122,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 							* clan.getSoldiersStrength();
 					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
 					if (dOwn > (dTwo * 1.1)) {
-						this.object.attack(ownCity, enemy, (byte) ownCity.getClanId(), false, 0, false);
+						this.object.attack(ownCity, enemy, ownCity.getClanId(), false, 0, false);
 					}
 				}));
 	}

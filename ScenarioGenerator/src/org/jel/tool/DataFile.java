@@ -59,7 +59,7 @@ public final class DataFile {
 			final var back = this.readBackground();
 			dos.writeInt(back.length);
 			dos.write(back);
-			dos.writeByte(this.coins.size());
+			dos.writeInt(this.coins.size());
 			this.coins.forEach(t -> {
 				try {
 					dos.writeDouble(t);
@@ -76,7 +76,7 @@ public final class DataFile {
 			});
 			this.flags.forEach(a -> {
 				try {
-					dos.writeByte(a);
+					dos.writeInt(a);
 				} catch (final IOException e) {
 					e.printStackTrace();
 				}
@@ -97,8 +97,8 @@ public final class DataFile {
 			dos.writeInt(size);
 			for (final var a : this.relations.entrySet()) {
 				for (final var b : a.getValue().entrySet()) {
-					dos.writeByte(a.getKey());
-					dos.writeByte(b.getKey());
+					dos.writeInt(a.getKey());
+					dos.writeInt(b.getKey());
 					dos.writeInt(b.getValue());
 				}
 			}

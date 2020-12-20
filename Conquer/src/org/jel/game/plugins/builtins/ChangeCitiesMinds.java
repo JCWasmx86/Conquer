@@ -29,14 +29,14 @@ public final class ChangeCitiesMinds implements Plugin {
 			c.setClan(ctx.getClan(otherClan));
 			changedClan = true;
 		} else {
-			changedClan = this.evalClanChange(soldiersToCivilians, c, (byte) otherClan);
+			changedClan = this.evalClanChange(soldiersToCivilians, c, otherClan);
 		}
 		if (changedClan) {
-			ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), ctx.getClan(c.getClanId())));
+			ctx.appendToEventList(new ClanChangeMessage(c, ctx.getClan(oldClan), c.getClan()));
 		}
 	}
 
-	private boolean evalClanChange(final double soldiersToCivilians, final City c, final byte otherClan) {
+	private boolean evalClanChange(final double soldiersToCivilians, final City c, final int otherClan) {
 		if (this.random.nextInt(100) > 90) {
 			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
 				c.setClan(this.context.getClan(otherClan));

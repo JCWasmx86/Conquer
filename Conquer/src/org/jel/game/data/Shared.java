@@ -31,7 +31,7 @@ public final class Shared {
 	/**
 	 * The id of the clan of the player.
 	 */
-	public static final byte PLAYER_CLAN = 0;
+	public static final int PLAYER_CLAN = 0;
 	/**
 	 * The default logger.
 	 */
