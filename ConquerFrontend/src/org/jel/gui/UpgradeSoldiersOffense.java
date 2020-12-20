@@ -72,7 +72,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeMax() {
-		if (this.clan.getSoldiersOffenseLevel() == 1000) {
+		if (this.clan.getSoldiersOffenseLevel() == Shared.MAX_LEVEL) {
 			this.upgradeMax.setEnabled(false);
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
@@ -98,7 +98,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeOnce() {
-		if (this.clan.getSoldiersOffenseLevel() == 1000) {
+		if (this.clan.getSoldiersOffenseLevel() == Shared.MAX_LEVEL) {
 			this.upgradeOnce.setEnabled(false);
 			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;

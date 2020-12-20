@@ -46,7 +46,6 @@ import org.jel.game.utils.Graph;
  * reference-implementation of {@link ConquerInfo}.
  */
 public final class Game implements ConquerInfo {
-	private static final int MAX_LEVEL = 1000;
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
 	private static final double GROWTH_LIMIT = 1.10;
 	private static final double WEAK_GROWTH_REDUCE_FACTOR = 0.9;
@@ -1067,7 +1066,7 @@ public final class Game implements ConquerInfo {
 		levels.forEach(a -> {
 			if (a == null) {
 				throw new InternalError(city.getName() + " has null value in levels");
-			} else if ((a < 0) || (a > 1000)) {
+			} else if ((a < 0) || (a > Shared.MAX_LEVEL)) {
 				throw new InternalError(city.getName() + " has a too small/too big value in levels: " + a);
 			}
 		});
@@ -1237,7 +1236,7 @@ public final class Game implements ConquerInfo {
 		this.checkClan(clan);
 		final var c = this.clans.get(clan);
 		final var currLevel = c.getSoldiersDefenseLevel();
-		if (currLevel == Game.MAX_LEVEL) {
+		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
@@ -1257,7 +1256,7 @@ public final class Game implements ConquerInfo {
 		this.sameClan(city, clan);
 		final var coins = this.getCoins();
 		final var costs = Shared.costs(city.getLevels().get(Resource.values().length) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == Game.MAX_LEVEL)) {
+		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == Shared.MAX_LEVEL)) {
 			return false;
 		}
 		this.setCoins(clan, coins.get(clan) - costs);
@@ -1284,7 +1283,7 @@ public final class Game implements ConquerInfo {
 		this.checkClan(i);
 		final var c = this.clans.get(i);
 		final var currLevel = c.getSoldiersOffenseLevel();
-		if (currLevel == Game.MAX_LEVEL) {
+		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
@@ -1306,7 +1305,7 @@ public final class Game implements ConquerInfo {
 		final var coins = this.getCoins();
 		final var index = resc.getIndex();
 		final var costs = Shared.costs(city.getLevels().get(index) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(index) == Game.MAX_LEVEL)) {
+		if ((costs > coins.get(clan)) || (city.getLevels().get(index) == Shared.MAX_LEVEL)) {
 			return false;
 		}
 		this.setCoins(clan, coins.get(clan) - costs);
@@ -1333,7 +1332,7 @@ public final class Game implements ConquerInfo {
 		this.checkClan(i);
 		final var c = this.clans.get(i);
 		final var currLevel = c.getSoldiersLevel();
-		if (currLevel == Game.MAX_LEVEL) {
+		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
 		final var costs = Shared.upgradeCostsForSoldiers(currLevel + 1);
