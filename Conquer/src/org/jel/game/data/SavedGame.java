@@ -267,7 +267,7 @@ public class SavedGame {
 		try {
 			Shared.deleteDirectory(saveDirectory);
 		} catch (final IOException e) {
-			//Nothing critical
+			// Nothing critical
 			Shared.LOGGER.exception(e);
 		}
 		try {

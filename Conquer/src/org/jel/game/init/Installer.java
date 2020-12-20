@@ -118,7 +118,7 @@ public class Installer implements Runnable {
 			final var url = new URL(
 					"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/zips/Music" + i + ".zip"); //$NON-NLS-1$ //$NON-NLS-2$
 			final var messageString = Messages.getMessage("Installer.downloading", url.toString()); //$NON-NLS-1$
-			this.write("(" + i + "/5) " + messageString); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			this.write("(" + i + "/5) " + messageString); //$NON-NLS-1$ //$NON-NLS-2$
 			try (var urlStream = url.openStream()) {
 				this.unzipFile(urlStream);
 			} catch (final IOException ioe) {

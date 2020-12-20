@@ -194,18 +194,6 @@ public final class Game implements ConquerInfo {
 		return this.maximumNumberToMove(clan, src, destination, powerOfAttacker);
 	}
 
-	private void checkPreconditions(final City src, final boolean managed, final long num, final boolean reallyPlayer) {
-		if (num < 0) {
-			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
-		}
-		if (reallyPlayer && (!src.isPlayerCity())) {
-			throw new IllegalArgumentException(
-					"reallyPlayer is true, but the source city is not clan Shared.PLAYER_CLAN: " + src.getClanId());
-		} else if (reallyPlayer && !managed) {
-			throw new IllegalArgumentException("reallyPlayer is true, but it is not managed!");
-		}
-	}
-
 	@Override
 	public void attack(final City src, final City destination, final byte clan, final boolean managed, final long num,
 			final boolean reallyPlayer) {
@@ -213,7 +201,7 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(destination, "destination==null");
 		this.checkClan(clan);
 		this.sameClan(src, clan);
-		checkPreconditions(src, managed, num, reallyPlayer);
+		this.checkPreconditions(src, managed, num, reallyPlayer);
 		if (this.cantAttack(src, destination)) {
 			return;
 		}
@@ -257,7 +245,7 @@ public final class Game implements ConquerInfo {
 			survivingSoldiers = 0;
 			result = AttackResult.ALL_SOLDIERS_DEAD;
 		} else {// Conquered
-			survivingSoldiers = calculateNumberOfSurvivingAttackers(diff, src);
+			survivingSoldiers = this.calculateNumberOfSurvivingAttackers(diff, src);
 			destination.setNumberOfSoldiers(survivingSoldiers);
 			relationshipValue -= Game.RELATIONSHIP_CHANGE_CITY_CONQUERED;
 			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_CITY_CONQUERED,
@@ -275,24 +263,16 @@ public final class Game implements ConquerInfo {
 		this.checkExtinction(result, destinationClan);
 	}
 
+	private boolean bad(final double d) {
+		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
+	}
+
 	private long calculateNumberOfSurvivingAttackers(final double diff, final City src) {
 		var cleanedDiff = diff;
 		final var srcClan = this.getClan(src);
 		cleanedDiff /= srcClan.getSoldiersOffenseStrength();
 		cleanedDiff /= srcClan.getSoldiersStrength();
 		return (long) -cleanedDiff;
-	}
-
-	private long numberOfSurvivingDefenders(double diff, City destination, Clan destinationClanObj) {
-		var remainingSoldiersDefender = (diff - destination.getDefense());
-		remainingSoldiersDefender /= destination.getBonus();
-		remainingSoldiersDefender /= destinationClanObj.getSoldiersDefenseStrength();
-		remainingSoldiersDefender /= destinationClanObj.getSoldiersStrength();
-		return (long) Math.abs(remainingSoldiersDefender);
-	}
-
-	private boolean bad(final double d) {
-		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
 	}
 
 	private long calculatePowerOfAttacker(final City src, final Clan clan, final City destination,
@@ -339,6 +319,18 @@ public final class Game implements ConquerInfo {
 	private void checkExtinction(final AttackResult result, final int destinationClan) {
 		if ((result == AttackResult.CITY_CONQUERED) && this.isDead(destinationClan)) {
 			this.events.add(new ExtinctionMessage(this.getClan(destinationClan)));
+		}
+	}
+
+	private void checkPreconditions(final City src, final boolean managed, final long num, final boolean reallyPlayer) {
+		if (num < 0) {
+			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
+		}
+		if (reallyPlayer && (!src.isPlayerCity())) {
+			throw new IllegalArgumentException(
+					"reallyPlayer is true, but the source city is not clan Shared.PLAYER_CLAN: " + src.getClanId());
+		} else if (reallyPlayer && !managed) {
+			throw new IllegalArgumentException("reallyPlayer is true, but it is not managed!");
 		}
 	}
 
@@ -855,6 +847,14 @@ public final class Game implements ConquerInfo {
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - moveAmount);
 		final var finalMoveAmout = moveAmount;
 		this.data.getMoveHooks().forEach(a -> a.handleMove(src, destination, finalMoveAmout));
+	}
+
+	private long numberOfSurvivingDefenders(final double diff, final City destination, final Clan destinationClanObj) {
+		var remainingSoldiersDefender = (diff - destination.getDefense());
+		remainingSoldiersDefender /= destination.getBonus();
+		remainingSoldiersDefender /= destinationClanObj.getSoldiersDefenseStrength();
+		remainingSoldiersDefender /= destinationClanObj.getSoldiersStrength();
+		return (long) Math.abs(remainingSoldiersDefender);
 	}
 
 	/**

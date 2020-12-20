@@ -77,7 +77,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
-		final var count = Shared.maxLevelsAddOffenseDefenseUpgrade(this.clan.getSoldiersOffenseLevel(),
+		final var count = Shared.maxLevelsAddOffenseDefenseUpgrade(this.clan.getSoldiersOffenseLevel() + 1,
 				this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			private static final long serialVersionUID = -8569686717119904143L;
