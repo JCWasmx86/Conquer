@@ -396,6 +396,27 @@ public final class Shared {
 		return (Math.random() * (upper / 100)) + (down / 100);
 	}
 
+	public static ConquerInfo restore(final String name) throws Exception {
+		if (name == null) {
+			throw new IllegalArgumentException("name==null");
+		}
+		final var bytes = Files.readAllBytes(Paths.get(Shared.SAVE_DIRECTORY, name + "/classname"));
+		final var classname = new String(bytes);
+		final var instance = (ConquerSaver) Class.forName(classname).getConstructor(String.class).newInstance(name);
+		return instance.restore();
+	}
+
+	public static void save(final String name, final ConquerInfo info) throws Exception {
+		if (name == null) {
+			throw new IllegalArgumentException("name==null");
+		}
+		if (info == null) {
+			throw new IllegalArgumentException("info==null");
+		}
+		final var saver = info.getSaver(name);
+		saver.save(info);
+	}
+
 	/**
 	 * Returns a list of all saved games available
 	 *
@@ -437,27 +458,6 @@ public final class Shared {
 
 	private static double upgradeCostsForSoldiers0(final double x) {
 		return x - (0.8 * Math.sin(x));
-	}
-
-	public static void save(String name, ConquerInfo info) throws Exception {
-		if (name == null) {
-			throw new IllegalArgumentException("name==null");
-		}
-		if (info == null) {
-			throw new IllegalArgumentException("info==null");
-		}
-		final var saver = info.getSaver(name);
-		saver.save(info);
-	}
-
-	public static ConquerInfo restore(String name) throws Exception {
-		if (name == null) {
-			throw new IllegalArgumentException("name==null");
-		}
-		final var bytes = Files.readAllBytes(Paths.get(SAVE_DIRECTORY, name + "/classname"));
-		final var classname = new String(bytes);
-		final var instance = (ConquerSaver) Class.forName(classname).getConstructor(String.class).newInstance(name);
-		return instance.restore();
 	}
 
 	private Shared() {

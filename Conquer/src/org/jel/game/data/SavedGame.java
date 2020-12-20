@@ -28,7 +28,7 @@ import org.jel.game.data.strategy.Strategy;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.utils.Graph;
 
-class SavedGame implements ConquerSaver{
+class SavedGame implements ConquerSaver {
 	private final String name;
 
 	public SavedGame(final String name) {
@@ -176,6 +176,7 @@ class SavedGame implements ConquerSaver{
 		return ret;
 	}
 
+	@Override
 	public ConquerInfo restore() throws Exception {
 		final var game = new Game();
 		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
@@ -300,6 +301,8 @@ class SavedGame implements ConquerSaver{
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
+		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
+				this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
 		try (var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);
@@ -310,8 +313,6 @@ class SavedGame implements ConquerSaver{
 				dos.write(bytes);
 			}
 		}
-		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
-				this.getClass().getCanonicalName().getBytes());
 	}
 
 	private void save(final Game game, final File saveDirectory) throws IOException {

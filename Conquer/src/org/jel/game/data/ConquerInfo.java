@@ -16,15 +16,33 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void addContext(GlobalContext context);
 
+	Result calculateResult();
+
+	int currentRound();
+
 	void executeActions();
+
+	void exit(Result calculateResult);
+
+	Image getBackground();
 
 	Clan getClan(int index);
 
 	List<String> getClanNames();
 
+	List<Clan> getClans();
+
 	List<Double> getCoins();
 
 	List<Color> getColors();
+
+	List<String> getExtraMusic();
+
+	int getNumPlayers();
+
+	List<Plugin> getPlugins();
+
+	ConquerSaver getSaver(String name);
 
 	void init();
 
@@ -37,6 +55,8 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	boolean isDead(int clan);
 
+	boolean isPlayersTurn();
+
 	default long maximumNumberOfSoldiersToRecruit(final Clan clan, final long limit) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
@@ -45,6 +65,18 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	}
 
 	long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
+
+	default boolean onlyOneClanAlive() {
+		return StreamUtils.getCitiesAsStream(this.getCities()).map(City::getClanId).distinct().count() == 1;
+	}
+
+	default void setErrorHandler(final Consumer<Throwable> onError) {
+
+	}
+
+	void setPlayerGiftCallback(PlayerGiftCallback giftCallback);
+
+	void setPlayersTurn(boolean b);
 
 	default void upgradeDefenseFully(final Clan clan, final City city) {
 		if (clan == null) {
@@ -70,56 +102,24 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void upgradeResourceFully(final int clan, final Resource resources, final City city);
 
-	default void setErrorHandler(Consumer<Throwable> onError) {
-
-	}
-
-	default boolean onlyOneClanAlive() {
-		return StreamUtils.getCitiesAsStream(this.getCities()).map(City::getClanId).distinct().count() == 1;
-	}
-
-	int currentRound();
-
-	List<Clan> getClans();
-
-	Image getBackground();
-
-	boolean isPlayersTurn();
-
-	void setPlayersTurn(boolean b);
-
-	List<Plugin> getPlugins();
-
-	Result calculateResult();
-
-	void setPlayerGiftCallback(PlayerGiftCallback giftCallback);
-
-	void exit(Result calculateResult);
-
-	List<String> getExtraMusic();
-
-	default void upgradeSoldiersDefenseFully(int id) {
+	default void upgradeSoldiersDefenseFully(final int id) {
 		var b = true;
 		while (b) {
 			b = this.upgradeDefense(id);
 		}
 	}
 
-	default void upgradeSoldiersOffenseFully(int id) {
-		var b = true;
-		while (b) {
-			b = this.upgradeOffense(id);
-		}
-	}
-
-	default void upgradeSoldiersFully(int id) {
+	default void upgradeSoldiersFully(final int id) {
 		var b = true;
 		while (b) {
 			b = this.upgradeSoldiers(id);
 		}
 	}
 
-	int getNumPlayers();
-	
-	ConquerSaver getSaver(String name);
+	default void upgradeSoldiersOffenseFully(final int id) {
+		var b = true;
+		while (b) {
+			b = this.upgradeOffense(id);
+		}
+	}
 }

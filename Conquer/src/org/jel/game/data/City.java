@@ -149,6 +149,15 @@ public final class City implements Comparable<City> {
 	/**
 	 * Returns the strength of a city based on its own values and the clan.
 	 *
+	 * @return The defense strength of the city.
+	 */
+	public double getDefenseStrength() {
+		return this.getDefenseStrength(this.getClan());
+	}
+
+	/**
+	 * Returns the strength of a city based on its own values and the clan.
+	 *
 	 * @param clan The clan of the city. If it doesn't match or is null, an
 	 *             {@link IllegalArgumentException} will be thrown.
 	 * @return The defense strength of the city.
@@ -162,15 +171,6 @@ public final class City implements Comparable<City> {
 		}
 		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()
 				* clan.getSoldiersDefenseStrength());
-	}
-
-	/**
-	 * Returns the strength of a city based on its own values and the clan.
-	 * 
-	 * @return The defense strength of the city.
-	 */
-	public double getDefenseStrength() {
-		return this.getDefenseStrength(this.getClan());
 	}
 
 	/**

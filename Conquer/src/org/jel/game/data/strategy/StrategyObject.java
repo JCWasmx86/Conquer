@@ -12,14 +12,6 @@ import org.jel.game.utils.Graph;
 
 public interface StrategyObject {
 
-	default void attack(final City source, final City target, final int sourceClan, final boolean managedByPlayer,
-			final long numberOfSoldiersToMoveIfManaged) {
-		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
-	}
-
-	void attack(City source, City target, int sourceOfClan, boolean managedByPlayer,
-			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
-
 	default void attack(final City source, final City target, final Clan sourceClan, final boolean managedByPlayer,
 			final long numberOfSoldiersToMoveIfManaged) {
 		if (sourceClan == null) {
@@ -35,6 +27,14 @@ public interface StrategyObject {
 		}
 		this.attack(source, target, sourceClan.getId(), managedByPlayer, numberOfSoldiersToMoveIfManaged, reallyPlayer);
 	}
+
+	default void attack(final City source, final City target, final int sourceClan, final boolean managedByPlayer,
+			final long numberOfSoldiersToMoveIfManaged) {
+		this.attack(source, target, sourceClan, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
+	}
+
+	void attack(City source, City target, int sourceOfClan, boolean managedByPlayer,
+			long numberOfSoldiersToMoveIfManaged, boolean reallyPlayer);
 
 	double defenseStrengthOfCity(City city);
 
@@ -85,8 +85,6 @@ public interface StrategyObject {
 		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
 	}
 
-	long maximumNumberToMove(int clanId, double weight, long maximumNumberOfSoldiers);
-
 	default long maximumNumberToMove(final Clan clan, final City first, final City second,
 			final long maximumNumberOfSoldiers) {
 		if (clan == null) {
@@ -112,8 +110,7 @@ public interface StrategyObject {
 		return this.maximumNumberToMove(clan.getId(), weight, maximumNumberOfSoldiers);
 	}
 
-	void moveSoldiers(City source, Stream<City> reachableCities, int clanId, boolean managedByPlayer, City target,
-			long numberOfSoldiersToMoveIfManaged);
+	long maximumNumberToMove(int clanId, double weight, long maximumNumberOfSoldiers);
 
 	default void moveSoldiers(final City source, final Stream<City> reachableCities, final Clan clan,
 			final boolean managedByPlayer, final City target, final long numberOfSoldiersToMoveIfManaged) {
@@ -124,9 +121,10 @@ public interface StrategyObject {
 				numberOfSoldiersToMoveIfManaged);
 	}
 
-	Stream<City> reachableCities(City city);
+	void moveSoldiers(City source, Stream<City> reachableCities, int clanId, boolean managedByPlayer, City target,
+			long numberOfSoldiersToMoveIfManaged);
 
-	void recruitSoldiers(double maxToPay, int clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
+	Stream<City> reachableCities(City city);
 
 	default void recruitSoldiers(final double maxToPay, final Clan clan, final City city, final boolean managedByPlayer,
 			final double numberOfSoldiers) {
@@ -141,11 +139,9 @@ public interface StrategyObject {
 		this.recruitSoldiers(maxToPay, clan.getId(), city, managedByPlayer, numberOfSoldiers);
 	}
 
+	void recruitSoldiers(double maxToPay, int clanId, City city, boolean managedByPlayer, double numberOfSoldiers);
+
 	boolean sendGift(Clan source, Clan destination, Gift gift);
-
-	boolean upgradeDefense(int clan);
-
-	boolean upgradeDefense(int clan, City city);
 
 	default boolean upgradeDefense(final Clan clan) {
 		return this.upgradeDefense(clan.getId());
@@ -155,21 +151,25 @@ public interface StrategyObject {
 		return this.upgradeDefense(clan.getId(), city);
 	}
 
-	boolean upgradeOffense(int clan);
+	boolean upgradeDefense(int clan);
+
+	boolean upgradeDefense(int clan, City city);
 
 	default boolean upgradeOffense(final Clan clan) {
 		return this.upgradeOffense(clan.getId());
 	}
 
-	boolean upgradeResource(int clan, Resource resc, City a);
+	boolean upgradeOffense(int clan);
 
 	default boolean upgradeResource(final Clan clan, final Resource resource, final City city) {
 		return this.upgradeResource(clan.getId(), resource, city);
 	}
 
-	boolean upgradeSoldiers(int clan);
+	boolean upgradeResource(int clan, Resource resc, City a);
 
 	default boolean upgradeSoldiers(final Clan clan) {
 		return this.upgradeSoldiers(clan.getId());
 	}
+
+	boolean upgradeSoldiers(int clan);
 }
