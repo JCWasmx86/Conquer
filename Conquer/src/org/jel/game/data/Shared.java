@@ -439,6 +439,27 @@ public final class Shared {
 		return x - (0.8 * Math.sin(x));
 	}
 
+	public static void save(String name, ConquerInfo info) throws Exception {
+		if (name == null) {
+			throw new IllegalArgumentException("name==null");
+		}
+		if (info == null) {
+			throw new IllegalArgumentException("info==null");
+		}
+		final var saver = info.getSaver(name);
+		saver.save(info);
+	}
+
+	public static ConquerInfo restore(String name) throws Exception {
+		if (name == null) {
+			throw new IllegalArgumentException("name==null");
+		}
+		final var bytes = Files.readAllBytes(Paths.get(SAVE_DIRECTORY, name + "/classname"));
+		final var classname = new String(bytes);
+		final var instance = (ConquerSaver) Class.forName(classname).getConstructor(String.class).newInstance(name);
+		return instance.restore();
+	}
+
 	private Shared() {
 
 	}

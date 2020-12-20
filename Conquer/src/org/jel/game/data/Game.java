@@ -1387,4 +1387,9 @@ public final class Game implements ConquerInfo {
 				new WorseRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
 	}
 
+	@Override
+	public ConquerSaver getSaver(String name) {
+		return new SavedGame(name);
+	}
+
 }

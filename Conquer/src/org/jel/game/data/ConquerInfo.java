@@ -120,4 +120,6 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	}
 
 	int getNumPlayers();
+	
+	ConquerSaver getSaver(String name);
 }
