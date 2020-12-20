@@ -124,7 +124,7 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(context.getInstalledMaps(), "context.getInstalledMaps()==null");
 		this.data.setPlugins(context.getPlugins());
 		context.getStrategies().forEach(provider -> {
-			final int idx = provider.getId();
+			final var idx = provider.getId();
 			if (idx >= 127) {
 				Shared.LOGGER.error("idx >= 127");
 			} else if (idx < 0) {
@@ -297,6 +297,7 @@ public final class Game implements ConquerInfo {
 	 *
 	 * @return
 	 */
+	@Override
 	public Result calculateResult() {
 		return StreamUtils.getCitiesAsStream(this.getCities(), Shared.PLAYER_CLAN).count() == 0 ? Result.CPU_WON
 				: Result.PLAYER_WON;
@@ -342,11 +343,17 @@ public final class Game implements ConquerInfo {
 		this.isPlayersTurn = true;
 	}
 
+	@Override
+	public int getNumPlayers() {
+		return this.numPlayers;
+	}
+
 	/**
 	 * Returns the current round.
 	 *
 	 * @return Current round.
 	 */
+	@Override
 	public int currentRound() {
 		return this.currentRound;
 	}
@@ -509,6 +516,7 @@ public final class Game implements ConquerInfo {
 	 *
 	 * @param result
 	 */
+	@Override
 	public void exit(final Result result) {
 		this.throwIfNull(result, "result==null");
 		this.data.getPlugins().forEach(a -> a.exit(result));
@@ -529,6 +537,7 @@ public final class Game implements ConquerInfo {
 	 *
 	 * @return Background picture
 	 */
+	@Override
 	public Image getBackground() {
 		return this.background;
 	}
@@ -574,6 +583,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * @return All clans
 	 */
+	@Override
 	public List<Clan> getClans() {
 		return this.clans;
 	}
@@ -602,6 +612,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * @return Every registered music.
 	 */
+	@Override
 	public List<String> getExtraMusic() {
 		return this.data.getExtraMusic();
 	}
@@ -614,17 +625,9 @@ public final class Game implements ConquerInfo {
 	}
 
 	/**
-	 * Returns the number of players
-	 *
-	 * @return Number of players.
-	 */
-	public int getNumPlayers() {
-		return this.numPlayers;
-	}
-
-	/**
 	 * @return All plugins
 	 */
+	@Override
 	public List<Plugin> getPlugins() {
 		return this.data.getPlugins();
 	}
@@ -754,6 +757,7 @@ public final class Game implements ConquerInfo {
 	/**
 	 * Returns whether it is the players' turn.
 	 */
+	@Override
 	public boolean isPlayersTurn() {
 		return this.isPlayersTurn;
 	}
@@ -861,6 +865,7 @@ public final class Game implements ConquerInfo {
 	 *
 	 * @return
 	 */
+	@Override
 	public boolean onlyOneClanAlive() {
 		return StreamUtils.getCitiesAsStream(this.cities).map(City::getClanId).distinct().count() == 1;
 	}
@@ -1164,6 +1169,7 @@ public final class Game implements ConquerInfo {
 		this.clans.get(clan).setCoins(v);
 	}
 
+	@Override
 	public void setErrorHandler(final Consumer<Throwable> handler) {
 		this.throwableConsumer = handler;
 	}
@@ -1176,6 +1182,7 @@ public final class Game implements ConquerInfo {
 		this.cities = g;
 	}
 
+	@Override
 	public void setPlayerGiftCallback(final PlayerGiftCallback pgc) {
 		this.throwIfNull(pgc, "PlayerGiftCallback==null");
 		this.playerGiftCallback = pgc;
@@ -1190,6 +1197,7 @@ public final class Game implements ConquerInfo {
 		this.numPlayers = numPlayers;
 	}
 
+	@Override
 	public void setPlayersTurn(final boolean b) {
 		this.isPlayersTurn = b;
 	}
@@ -1345,27 +1353,6 @@ public final class Game implements ConquerInfo {
 		return true;
 	}
 
-	public void upgradeSoldiersDefenseFully(final int i) {
-		var b = true;
-		while (b) {
-			b = this.upgradeDefense(i);
-		}
-	}
-
-	public void upgradeSoldiersFully(final int i) {
-		var b = true;
-		while (b) {
-			b = this.upgradeSoldiers(i);
-		}
-	}
-
-	public void upgradeSoldiersOffenseFully(final int i) {
-		var b = true;
-		while (b) {
-			b = this.upgradeOffense(i);
-		}
-	}
-
 	private void useResources() {
 		StreamUtils.forEach(this.cities, city -> {
 			final var resources2 = city.getClan().getResources();
@@ -1399,4 +1386,5 @@ public final class Game implements ConquerInfo {
 		this.events.add(
 				new WorseRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
 	}
+
 }

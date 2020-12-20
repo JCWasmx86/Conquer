@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jel.game.data.Clan;
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
@@ -28,7 +28,7 @@ import org.jel.game.data.Shared;
 final class GiftPanel extends JPanel {
 
 	private static final long serialVersionUID = -2927785362578307419L;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private final List<ResourceSlider> sliders;
 	private JComboBox<String> box;
 
@@ -37,7 +37,7 @@ final class GiftPanel extends JPanel {
 	 *
 	 * @param game Data source
 	 */
-	GiftPanel(final Game game) {
+	GiftPanel(final ConquerInfo game) {
 		this.game = game;
 		this.sliders = new ArrayList<>();
 	}

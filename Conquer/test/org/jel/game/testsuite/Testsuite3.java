@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
-import org.jel.game.data.Game;
-import org.jel.game.data.Reader;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.SavedGame;
+import org.jel.game.data.ScenarioFileReader;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
 import org.jel.game.utils.Graph;
@@ -153,7 +153,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void compare(final Game game, final Game restoredGame, final String name) {
+	private void compare(final ConquerInfo game, final ConquerInfo restoredGame, final String name) {
 		final var tmp = this.numberOfErrors;
 		if (game.getNumPlayers() != restoredGame.getNumPlayers()) {
 			this.error("game.numPlayers!=restored.numPlayers");
@@ -232,7 +232,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void continueToPlay(Game restoredGame, final String name) {
+	private void continueToPlay(ConquerInfo restoredGame, final String name) {
 		for (var i = 0; i < 10; i++) {
 			for (var j = 0; j < 5; j++) {
 				restoredGame.executeActions();
@@ -252,7 +252,7 @@ public final class Testsuite3 extends Testsuite {
 		return Math.abs(a - b) < 0.000001;
 	}
 
-	private Game restore(final String name) {
+	private ConquerInfo restore(final String name) {
 		try {
 			return new SavedGame(name).restore();
 		} catch (final Exception e) {
@@ -261,7 +261,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void saveGame(final Game game, final String name) {
+	private void saveGame(final ConquerInfo game, final String name) {
 		try {
 			new SavedGame(name).save(game);
 		} catch (final Exception e) {
@@ -272,7 +272,7 @@ public final class Testsuite3 extends Testsuite {
 	private int start() {
 		final var ctx = XMLReader.getInstance().readInfo();
 		for (final var scenario : ctx.getInstalledMaps()) {
-			final var game = new Reader(scenario.file()).buildGame();
+			final var game = new ScenarioFileReader(scenario.file()).buildInfo();
 			game.addContext(ctx);
 			game.init();
 			for (var i = 0; i < 5; i++) {

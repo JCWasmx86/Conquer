@@ -1,9 +1,12 @@
 package org.jel.game.data;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.jel.game.data.strategy.StrategyObject;
+import org.jel.game.plugins.Plugin;
 import org.jel.game.plugins.PluginInterface;
 
 /**
@@ -66,4 +69,55 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	}
 
 	void upgradeResourceFully(final int clan, final Resource resources, final City city);
+
+	default void setErrorHandler(Consumer<Throwable> onError) {
+
+	}
+
+	default boolean onlyOneClanAlive() {
+		return StreamUtils.getCitiesAsStream(this.getCities()).map(City::getClanId).distinct().count() == 1;
+	}
+
+	int currentRound();
+
+	List<Clan> getClans();
+
+	Image getBackground();
+
+	boolean isPlayersTurn();
+
+	void setPlayersTurn(boolean b);
+
+	List<Plugin> getPlugins();
+
+	Result calculateResult();
+
+	void setPlayerGiftCallback(PlayerGiftCallback giftCallback);
+
+	void exit(Result calculateResult);
+
+	List<String> getExtraMusic();
+
+	default void upgradeSoldiersDefenseFully(int id) {
+		var b = true;
+		while (b) {
+			b = this.upgradeDefense(id);
+		}
+	}
+
+	default void upgradeSoldiersOffenseFully(int id) {
+		var b = true;
+		while (b) {
+			b = this.upgradeOffense(id);
+		}
+	}
+
+	default void upgradeSoldiersFully(int id) {
+		var b = true;
+		while (b) {
+			b = this.upgradeSoldiers(id);
+		}
+	}
+
+	int getNumPlayers();
 }

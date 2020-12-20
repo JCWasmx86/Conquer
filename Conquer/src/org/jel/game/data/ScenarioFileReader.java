@@ -19,7 +19,7 @@ import org.jel.game.utils.Graph;
  * The class that builds a Game from a scenariofile.
  *
  */
-public final class Reader {
+public final class ScenarioFileReader {
 	private final File file;
 
 	/**
@@ -27,7 +27,7 @@ public final class Reader {
 	 *
 	 * @param fileName Input file
 	 */
-	public Reader(final String fileName) {
+	public ScenarioFileReader(final String fileName) {
 		if (fileName == null) {
 			throw new IllegalArgumentException("fileName == null");
 		}
@@ -40,7 +40,7 @@ public final class Reader {
 	 *
 	 * @return An uninitialized game or null in case of an error.
 	 */
-	public Game buildGame() {
+	public ConquerInfo buildInfo() {
 		final var game = new Game();
 		final var uri = this.file.toURI();
 		final var path = Paths.get(uri);

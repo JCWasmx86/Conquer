@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Shared;
@@ -41,7 +41,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * @param location On which location the frame should appear
 	 * @param context  The whole context
 	 */
-	LevelInfo(final Game game, final InstalledScenario is, final Point location, final GlobalContext context) {
+	LevelInfo(final ConquerInfo game, final InstalledScenario is, final Point location, final GlobalContext context) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<ClanColorAssociation>();

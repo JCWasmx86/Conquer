@@ -22,7 +22,7 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Shared;
 import org.jel.game.messages.Message;
 import org.jel.game.plugins.MessageListener;
@@ -53,7 +53,7 @@ final class EventLog extends JFrame implements MessageListener {
 	 *
 	 * @param game The game as the source of events.
 	 */
-	static void init(final Game game) {
+	static void init(final ConquerInfo game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
 			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$ //$NON-NLS-2$

@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.jel.game.data.Clan;
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
 
@@ -21,7 +21,7 @@ import org.jel.gui.utils.ImageResource;
 final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -681006129127926269L;
 	private final transient Clan clan;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private final JLabel infoLabel;
 	private final JButton upgradeOnce;
 	private final JButton upgradeMax;
@@ -33,7 +33,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	 * @param clan For which clan to upgrade the soldiers
 	 * @param game A reference to the game.
 	 */
-	UpgradeSoldiersDefense(final Clan clan, final Game game) {
+	UpgradeSoldiersDefense(final Clan clan, final ConquerInfo game) {
 		this.clan = clan;
 		this.game = game;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

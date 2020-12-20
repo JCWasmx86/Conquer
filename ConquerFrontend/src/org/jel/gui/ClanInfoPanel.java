@@ -12,7 +12,7 @@ import javax.swing.text.DefaultCaret;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
@@ -26,7 +26,7 @@ import org.jel.game.data.StreamUtils;
 final class ClanInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 3553281021198844773L;
 	private final transient Clan clan;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private JEditorPane jep;
 
 	/**
@@ -35,7 +35,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 * @param clan The clan.
 	 * @param game A reference to the game object.
 	 */
-	ClanInfoPanel(final Clan clan, final Game game) {
+	ClanInfoPanel(final Clan clan, final ConquerInfo game) {
 		this.clan = clan;
 		this.game = game;
 	}
