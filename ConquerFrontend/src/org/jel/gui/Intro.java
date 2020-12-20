@@ -91,7 +91,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 
 	@Override
 	public void keyTyped(final KeyEvent e) {
-		if ((e == null) || (e.getKeyChar() == 32)) {
+		if ((e == null) || (e.getKeyChar() == KeyEvent.VK_SPACE)) {
 			this.setVisible(false);
 			this.needed = false;
 			if (this.sound.isPlaying()) {
@@ -99,7 +99,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			}
 			this.setVisible(false);
 			MainScreen.forward(this.getLocation(), true);
-		} else if (e.getKeyChar() == 27) {// 27==ESC
+		} else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {// 27==ESC
 			System.exit(0);
 		}
 	}
