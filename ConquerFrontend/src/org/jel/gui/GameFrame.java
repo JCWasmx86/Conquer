@@ -39,7 +39,6 @@ import javax.swing.WindowConstants;
 
 import org.jel.game.data.City;
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;

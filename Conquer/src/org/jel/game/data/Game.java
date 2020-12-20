@@ -343,11 +343,6 @@ public final class Game implements ConquerInfo {
 		this.isPlayersTurn = true;
 	}
 
-	@Override
-	public int getNumPlayers() {
-		return this.numPlayers;
-	}
-
 	/**
 	 * Returns the current round.
 	 *
@@ -624,6 +619,11 @@ public final class Game implements ConquerInfo {
 		return this.data.getKeybindings();
 	}
 
+	@Override
+	public int getNumPlayers() {
+		return this.numPlayers;
+	}
+
 	/**
 	 * @return All plugins
 	 */
@@ -639,6 +639,11 @@ public final class Game implements ConquerInfo {
 
 	private List<Double> getResources(final int clan) {
 		return this.clans.get(clan).getResources();
+	}
+
+	@Override
+	public ConquerSaver getSaver(final String name) {
+		return new SavedGame(name);
 	}
 
 	public int getSoldiersDefenseLevel(final int clan) {
@@ -1385,11 +1390,6 @@ public final class Game implements ConquerInfo {
 		}
 		this.events.add(
 				new WorseRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
-	}
-
-	@Override
-	public ConquerSaver getSaver(String name) {
-		return new SavedGame(name);
 	}
 
 }
