@@ -21,8 +21,8 @@ void extract(const char *filename) {
 	archive_write_disk_set_options(out, flags);
 	archive_write_disk_set_standard_lookup(out);
 	int result = 0;
-	if ((result = archive_read_open_filename(in, filename, BUFFER_SIZE))){
-		fprintf(stderr,"Couldn't open %s: %d\n",filename,result);
+	if ((result = archive_read_open_filename(in, filename, BUFFER_SIZE))) {
+		fprintf(stderr, "Couldn't open %s: %d\n", filename, result);
 		exit(1);
 	}
 	char *c = "/";
@@ -59,20 +59,21 @@ void extract(const char *filename) {
 		sprintf(cc, "%s%s%s", java15, c, &archive_entry_pathname(entry)[6]);
 		archive_entry_set_pathname(entry, cc);
 		result = archive_write_header(out, entry);
-		if(result != ARCHIVE_OK){
-			fprintf(stderr,"Error writing header: %s %d",archive_entry_pathname(entry),result);
+		if (result != ARCHIVE_OK) {
+			fprintf(stderr, "Error writing header: %s %d",
+					archive_entry_pathname(entry), result);
 			exit(-1);
 		}
 		if (archive_entry_size(entry) > 0) {
 			result = copyData(in, out);
-			if(result != ARCHIVE_OK){
-				fprintf(stderr,"Error while copying data: %d\n",result);
+			if (result != ARCHIVE_OK) {
+				fprintf(stderr, "Error while copying data: %d\n", result);
 				exit(-1);
 			}
 		}
 		result = archive_write_finish_entry(out);
-		if(result != ARCHIVE_OK){
-			fprintf(stderr,"Error finishing entry: %d\n",result);
+		if (result != ARCHIVE_OK) {
+			fprintf(stderr, "Error finishing entry: %d\n", result);
 			exit(-1);
 		}
 		free(cc);
