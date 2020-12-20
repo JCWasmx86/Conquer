@@ -23,6 +23,11 @@ public final class Shared {
 			: System.getProperty("user.home") + "/.config/.conquer/";
 
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
+
+	/**
+	 * The maximum level of defense, resource production,...
+	 */
+	public static final int MAX_LEVEL = 1000;
 	/**
 	 * The id of the clan of the player.
 	 */

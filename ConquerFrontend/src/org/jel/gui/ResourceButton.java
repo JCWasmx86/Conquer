@@ -17,7 +17,6 @@ import org.jel.gui.utils.ImageResource;
  * Allows the player to see some information about a resource and upgrade it.
  */
 final class ResourceButton extends JPanel {
-	private static final int MAX_LEVEL = 1000;
 	private static final long serialVersionUID = 8574350366288971896L;
 	private final JButton upgradeThisResource;
 	private final JButton maximumUpgrade;
@@ -121,7 +120,7 @@ final class ResourceButton extends JPanel {
 
 	private void updateLabel(final int level) {
 		if (this.city.isPlayerCity()) {
-			if (level < ResourceButton.MAX_LEVEL) {
+			if (level < Shared.MAX_LEVEL) {
 				this.infoLabel.setText(this.getInfoLabelText());
 			} else {
 				this.infoLabel.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
@@ -147,7 +146,7 @@ final class ResourceButton extends JPanel {
 		if ((currentLevel != level) && this.city.isPlayerCity()) {
 			this.maximumUpgrade.setEnabled(true);
 			this.maximumUpgrade.setText(this.getMaxUpgradeText());
-		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == Shared.MAX_LEVEL)) {
 			this.maximumUpgrade.setEnabled(false);
 			this.maximumUpgrade.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 		} else {
@@ -162,7 +161,7 @@ final class ResourceButton extends JPanel {
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
-		} else if ((this.city.isPlayerCity()) && (level == ResourceButton.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == Shared.MAX_LEVEL)) {
 			this.upgradeThisResource.setEnabled(false);
 			this.upgradeThisResource.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 		} else {

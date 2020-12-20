@@ -71,7 +71,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeMax() {
-		if (this.clan.getSoldiersLevel() == 1000) {
+		if (this.clan.getSoldiersLevel() == Shared.MAX_LEVEL) {
 			this.upgradeMax.setEnabled(false);
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
@@ -95,7 +95,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeOnce() {
-		if (this.clan.getSoldiersLevel() == 1000) {
+		if (this.clan.getSoldiersLevel() == Shared.MAX_LEVEL) {
 			this.upgradeOnce.setEnabled(false);
 			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
