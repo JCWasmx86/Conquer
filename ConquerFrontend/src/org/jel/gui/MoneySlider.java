@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Shared;
 
 /**
@@ -13,7 +13,7 @@ import org.jel.game.data.Shared;
  */
 final class MoneySlider extends JPanel {
 	private static final long serialVersionUID = 794966448509855336L;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private JSlider slider;
 
 	/**
@@ -21,7 +21,7 @@ final class MoneySlider extends JPanel {
 	 *
 	 * @param game The source of the data.
 	 */
-	MoneySlider(final Game game) {
+	MoneySlider(final ConquerInfo game) {
 		this.game = game;
 	}
 

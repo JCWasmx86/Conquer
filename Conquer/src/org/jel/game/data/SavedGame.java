@@ -262,7 +262,11 @@ public class SavedGame {
 		}
 	}
 
-	public void save(final Game game) throws Exception {
+	public void save(final ConquerInfo info) throws Exception {
+		if (!(info instanceof Game)) {
+			throw new UnsupportedOperationException("Can't save instanceof " + info.getClass().getCanonicalName());
+		}
+		final var game = (Game) info;
 		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		try {
 			Shared.deleteDirectory(saveDirectory);

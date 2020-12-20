@@ -9,7 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Shared;
 
 /**
@@ -18,7 +18,7 @@ import org.jel.game.data.Shared;
  */
 final class RelationshipPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -7720369284705527955L;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private final List<JLabel> labels;
 
 	/**
@@ -26,7 +26,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	 *
 	 * @param game The source of the data.
 	 */
-	RelationshipPanel(final Game game) {
+	RelationshipPanel(final ConquerInfo game) {
 		this.game = game;
 		this.labels = new ArrayList<>();
 	}

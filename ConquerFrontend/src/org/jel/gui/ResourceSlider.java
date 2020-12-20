@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
-import org.jel.game.data.Game;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 
@@ -15,7 +15,7 @@ import org.jel.game.data.Shared;
 final class ResourceSlider extends JPanel {
 	private static final long serialVersionUID = 595825972773535456L;
 	private final Resource resource;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private JSlider slider;
 
 	/**
@@ -24,7 +24,7 @@ final class ResourceSlider extends JPanel {
 	 * @param r    The resource
 	 * @param game A reference to a game.
 	 */
-	ResourceSlider(final Resource r, final Game game) {
+	ResourceSlider(final Resource r, final ConquerInfo game) {
 		this.resource = r;
 		this.game = game;
 	}

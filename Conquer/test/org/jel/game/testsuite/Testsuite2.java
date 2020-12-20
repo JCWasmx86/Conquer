@@ -10,7 +10,7 @@ import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
-import org.jel.game.data.Reader;
+import org.jel.game.data.ScenarioFileReader;
 import org.jel.game.data.XMLReader;
 
 /**
@@ -43,8 +43,8 @@ public final class Testsuite2 extends Testsuite {
 			this.error("scenario.name()==null");
 			return;
 		}
-		final var reader = new Reader(scenario.file());
-		final var game = reader.buildGame();
+		final var reader = new ScenarioFileReader(scenario.file());
+		final var game = reader.buildInfo();
 		if (game == null) {
 			this.error("game==null");
 			return;

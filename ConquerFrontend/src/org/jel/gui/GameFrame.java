@@ -38,6 +38,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
 import org.jel.game.data.City;
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Game;
 import org.jel.game.data.SavedGame;
 import org.jel.game.data.Shared;
@@ -57,7 +58,7 @@ import org.jel.gui.utils.LoopPlayer;
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
 	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " "; //$NON-NLS-1$
 	private static final long serialVersionUID = 4456629322882679917L;
-	private final transient Game game;
+	private final transient ConquerInfo game;
 	private final Map<City, CityLabel> labels = new HashMap<>();
 	private LoopPlayer loopPlayer = new LoopPlayer();
 	private JLabel gameStage;
@@ -74,7 +75,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	 *
 	 * @param game The game to show
 	 */
-	GameFrame(final Game game) {
+	GameFrame(final ConquerInfo game) {
 		this.game = game;
 		this.addComponentListener(this);
 		this.addWindowListener(this);
