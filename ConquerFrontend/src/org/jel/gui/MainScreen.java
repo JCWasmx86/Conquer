@@ -68,6 +68,9 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var strategiesAndPlugins = new JMenuItem(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
+		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
+		updates.addActionListener(a -> System.out.println("TBD: Updates"));
+		settings.add(updates);
 		final var exit = new JMenuItem(Messages.getString("MainScreen.exit")); //$NON-NLS-1$
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
