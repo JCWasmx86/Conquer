@@ -82,8 +82,6 @@ final class BuiltinShared {
 	}
 
 	static void offensiveAttack(final Clan clan, final Graph<ICity> cityGraph, final StrategyObject object) {
-		// Predicate to filter for all own cities that have neighbours, that are not of
-		// clan clan.getID();
 		final Predicate<ICity> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clan).count() > 0;
 		StreamUtils
 				.getCitiesAsStream(cityGraph,
