@@ -677,6 +677,11 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
+	public Version getVersion() {
+		return new Version(1, 0, 0);
+	}
+
+	@Override
 	public List<City> getWeakestCityInRatioToSurroundingEnemyCities(final List<City> reachableCities) {
 		this.throwIfNull(reachableCities, "reachableCities==null");
 		reachableCities.forEach(this::throwIfNull);
@@ -739,7 +744,7 @@ public final class Game implements ConquerInfo {
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
 				.collect(Collectors.toList()));
-		this.clans.forEach(a -> a.init(this.strategies));
+		this.clans.forEach(a -> a.init(this.strategies, this.getVersion()));
 		if (this.data.getPlugins() != null) {
 			this.data.getPlugins().forEach(a -> a.init(this));
 		}
@@ -1392,11 +1397,6 @@ public final class Game implements ConquerInfo {
 		}
 		this.events.add(
 				new WorseRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
-	}
-
-	@Override
-	public Version getVersion() {
-		return new Version(1, 0, 0);
 	}
 
 }

@@ -15,6 +15,10 @@ import org.jel.game.utils.Graph;
  * The interface every plugin has to implement.
  */
 public interface Plugin {
+	default boolean compatibleTo(final Version version) {
+		return true;
+	}
+
 	/**
 	 * Called when the game ended
 	 *
@@ -75,9 +79,5 @@ public interface Plugin {
 	 */
 	default void save(final OutputStream outputStream) throws IOException {
 
-	}
-
-	default boolean compatibleTo(final Version version) {
-		return true;
 	}
 }

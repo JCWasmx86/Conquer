@@ -175,7 +175,7 @@ public final class Clan {
 	 *
 	 * @param strategies An array of all strategies available.
 	 */
-	void init(final StrategyProvider[] strategies) {
+	void init(final StrategyProvider[] strategies, final Version version) {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
 		}
@@ -190,7 +190,7 @@ public final class Clan {
 			this.getResourceStats().add(0.0);
 		}
 		final var givenPlayType = this.flags;
-		if (strategies[givenPlayType] == null) {
+		if ((strategies[givenPlayType] == null) || strategies[givenPlayType].compatibleTo(version)) {
 			this.strategy = strategies[1].buildStrategy();
 			Shared.LOGGER.error("Found invalid strategy id: " + this.flags);
 			Shared.LOGGER.message("Clan: " + this.name + " " + strategies[1].getName());
