@@ -44,6 +44,8 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	ConquerSaver getSaver(String name);
 
+	Version getVersion();
+
 	void init();
 
 	default boolean isDead(final Clan clan) {
@@ -122,6 +124,4 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 			b = this.upgradeOffense(id);
 		}
 	}
-	
-	Version getVersion();
 }

@@ -4,11 +4,11 @@ public record Version(int major, int minor, int patch) implements Comparable<Ver
 
 	@Override
 	public String toString() {
-		return major + "." + minor + "." + patch;
+		return this.major + "." + this.minor + "." + this.patch;
 	}
 
 	@Override
-	public int compareTo(Version o) {
+	public int compareTo(final Version o) {
 		if (o == null) {
 			throw new NullPointerException();
 		}
