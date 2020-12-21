@@ -2,9 +2,9 @@ package org.jel.game.data.builtin;
 
 import java.util.function.DoubleConsumer;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
+import org.jel.game.data.ICity;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
 import org.jel.game.data.strategy.StrategyObject;
@@ -31,7 +31,7 @@ public final class ModerateStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject object) {
+	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject object) {
 		BuiltinShared.moderatePlay(cities, object, clan);
 	}
 

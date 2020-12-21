@@ -1,6 +1,6 @@
 package org.jel.game.testsuite;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Result;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
@@ -32,7 +32,7 @@ public class MaliciousPlugin implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		var hasThrown = true;
 		try {
 			ctx.appendToEventList(null);

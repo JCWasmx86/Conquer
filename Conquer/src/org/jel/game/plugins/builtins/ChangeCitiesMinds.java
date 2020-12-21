@@ -3,7 +3,7 @@ package org.jel.game.plugins.builtins;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.plugins.Context;
@@ -16,7 +16,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	private final Random random = new Random();
 	private Context context;
 
-	private void change(final City c, final Context ctx, final int oldClan, final int otherClan) {
+	private void change(final ICity c, final Context ctx, final int oldClan, final int otherClan) {
 		var changedClan = false;
 		var soldiersToCivilians = 1D;
 		try {
@@ -36,7 +36,7 @@ public final class ChangeCitiesMinds implements Plugin {
 		}
 	}
 
-	private boolean evalClanChange(final double soldiersToCivilians, final City c, final int otherClan) {
+	private boolean evalClanChange(final double soldiersToCivilians, final ICity c, final int otherClan) {
 		if (this.random.nextInt(100) > 90) {
 			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
 				c.setClan(this.context.getClan(otherClan));
@@ -64,7 +64,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		this.context = ctx;
 		StreamUtils.forEach(cities, c -> {
 			// Only continue, if the loss of one city may not extinct one entire clan.
@@ -72,7 +72,7 @@ public final class ChangeCitiesMinds implements Plugin {
 				return;
 			}
 			final var oldClan = c.getClanId();
-			final var list = StreamUtils.getCitiesAroundCity(cities, c).map(City::getClanId).distinct()
+			final var list = StreamUtils.getCitiesAroundCity(cities, c).map(ICity::getClanId).distinct()
 					.collect(Collectors.toList());
 			final var canChangeClan = list.size() == 1;
 			final var otherClan = list.get(0);

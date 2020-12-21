@@ -3,9 +3,9 @@ package org.jel.game.data.builtin;
 import java.util.function.DoubleConsumer;
 import java.util.function.Predicate;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
+import org.jel.game.data.ICity;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
@@ -14,7 +14,7 @@ import org.jel.game.utils.Graph;
 
 public final class DefensiveStrategyImpl implements Strategy {
 	private static final int MAX_ITERATIONS = 100;
-	private Graph<City> graph;
+	private Graph<ICity> graph;
 	private StrategyObject object;
 
 	@Override
@@ -28,7 +28,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
+	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var dt = clan.getData();
@@ -60,7 +60,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void defensiveCityUpgrades(final Clan clan) {
 		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
-			final Predicate<City> predicate = c -> c.getClanId() != clan.getId();
+			final Predicate<ICity> predicate = c -> c.getClanId() != clan.getId();
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.graph, a, predicate).count();
 			final var cnt2 = StreamUtils.getCitiesAroundCity(this.graph, b, predicate).count();
 			if ((cnt1 == cnt2) || ((cnt1 == 0) && (cnt2 == 0))) {

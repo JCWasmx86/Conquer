@@ -3,7 +3,7 @@ package org.jel.game.plugins.builtins;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.plugins.PluginInterface;
@@ -17,7 +17,7 @@ public final class DefaultMusic implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		// Do nothing
 	}
 

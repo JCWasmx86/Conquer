@@ -2,8 +2,8 @@ package org.jel.game.plugins;
 
 import java.util.List;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
+import org.jel.game.data.ICity;
 
 /**
  * Called after resources were produced in a city.
@@ -17,6 +17,6 @@ public interface ResourceHook {
 	 * @param statistics The statistics: &gt; 0 means more was produced
 	 * @param clan       The clan of the city.
 	 */
-	void analyzeStats(final City city, final List<Double> statistics, Clan clan);
+	void analyzeStats(final ICity city, final List<Double> statistics, Clan clan);
 
 }

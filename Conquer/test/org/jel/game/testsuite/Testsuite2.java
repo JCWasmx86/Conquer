@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
+import org.jel.game.data.ICity;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.XMLReader;
 import org.jel.game.data.ri.ScenarioFileReader;
@@ -145,9 +145,9 @@ public final class Testsuite2 extends Testsuite {
 
 	private void tryBadValues(final ConquerInfo info) {
 		// Just some sample values.
-		final City a = info.getCities().getValue(0);
-		final City b = info.getCities().getValue(1);
-		final Clan c = info.getClan(0);
+		final var a = info.getCities().getValue(0);
+		final var b = info.getCities().getValue(1);
+		final var c = info.getClan(0);
 		final Clan d = info.getClan(1);
 		this.expect(() -> info.attack(a, null, 0, false, 0), IllegalArgumentException.class);
 		this.expect(() -> info.attack(null, b, 0, false, 0), IllegalArgumentException.class);
@@ -170,9 +170,9 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getRelationship((Clan) null, a), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship(500, 500), IndexOutOfBoundsException.class);
-		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<City>) null),
+		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<ICity>) null),
 				IllegalArgumentException.class);
-		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<City>) null),
+		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<ICity>) null),
 				IllegalArgumentException.class);
 		this.expect(() -> info.isDead(null), IllegalArgumentException.class);
 		this.expect(() -> info.isDead(-1), IllegalArgumentException.class);

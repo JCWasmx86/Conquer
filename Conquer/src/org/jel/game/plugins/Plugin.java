@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Result;
 import org.jel.game.data.Version;
 import org.jel.game.utils.Graph;
@@ -50,7 +50,7 @@ public interface Plugin {
 	 * @param cities All cities
 	 * @param ctx    The context with some data.
 	 */
-	void handle(final Graph<City> cities, final Context ctx);
+	void handle(final Graph<ICity> cities, final Context ctx);
 
 	/**
 	 * Called at the start of the game. Can be used for adding handlers.

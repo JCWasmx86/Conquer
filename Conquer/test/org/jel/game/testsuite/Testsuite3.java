@@ -3,9 +3,9 @@ package org.jel.game.testsuite;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
@@ -23,7 +23,7 @@ public final class Testsuite3 extends Testsuite {
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
 
-	private void checkCities(final Graph<City> cities, final Graph<City> cities2) {
+	private void checkCities(final Graph<ICity> cities, final Graph<ICity> cities2) {
 		final var n = StreamUtils.getCitiesAsStream(cities).count();
 		final var n1 = StreamUtils.getCitiesAsStream(cities2).count();
 		if (n != n1) {
@@ -35,10 +35,10 @@ public final class Testsuite3 extends Testsuite {
 				if (i == j) {
 					continue;
 				}
-				final var cityA = cities.getValue(i);
-				final var cityA2 = cities.getValue(j);
-				final var cityB = cities2.getValue(i);
-				final var cityB2 = cities2.getValue(j);
+				final ICity cityA = cities.getValue(i);
+				final ICity cityA2 = cities.getValue(j);
+				final ICity cityB = cities2.getValue(i);
+				final ICity cityB2 = cities2.getValue(j);
 				if (cities.isConnected(cityA, cityA2) && !cities.isConnected(cityB, cityB2)) {
 					this.error("cities.isConnected(cityA, cityA2)&&!cities.isConnected(cityB, cityB2)");
 				}
@@ -175,7 +175,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void compareCity(final City city, final City city2) {
+	private void compareCity(final ICity city, final ICity city2) {
 		final var tmp = this.numberOfErrors;
 		if (!this.nearlyEquals(city.getBonus(), city2.getBonus())) {
 			this.error("!nearlyEquals(city.getBonus(), city2.getBonus())");
@@ -201,9 +201,6 @@ public final class Testsuite3 extends Testsuite {
 		}
 		if (!city.getName().equals(city2.getName())) {
 			this.error("!city.getName()!=city2.getName()");
-		}
-		if (city.getNumberAttacksOfPlayer() != city2.getNumberAttacksOfPlayer()) {
-			this.error("city.getNumberAttacksOfPlayer()!=city2.getNumberAttacksOfPlayer()");
 		}
 		if (city.getNumberOfPeople() != city2.getNumberOfPeople()) {
 			this.error("city.getNumberOfPeople()!=city2.getNumberOfPeople()");

@@ -3,9 +3,9 @@ package org.jel.game.data.builtin;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
@@ -18,7 +18,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private static final double DECLINE_GIFT_PROBABILITY = 0.875;
 	private static final int MAX_ITERATIONS_PER_ROUND = 100;
 	private StrategyObject object;
-	private Graph<City> graph;
+	private Graph<ICity> graph;
 
 	@Override
 	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
@@ -39,7 +39,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<City> cities, final StrategyObject obj) {
+	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var data = clan.getData();

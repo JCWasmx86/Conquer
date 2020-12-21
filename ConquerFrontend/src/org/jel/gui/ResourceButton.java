@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
@@ -21,7 +21,7 @@ final class ResourceButton extends JPanel {
 	private final JButton upgradeThisResource;
 	private final JButton maximumUpgrade;
 	private final JLabel infoLabel;
-	private final transient City city;
+	private final transient ICity city;
 	private final Resource resource;
 
 	/**
@@ -32,7 +32,7 @@ final class ResourceButton extends JPanel {
 	 * @param city     A reference to the city.
 	 * @param cip      A reference to the parent CityInfoPanel.
 	 */
-	ResourceButton(final Resource resource, final City city, final CityInfoPanel cip) {
+	ResourceButton(final Resource resource, final ICity city, final CityInfoPanel cip) {
 		this.city = city;
 		this.resource = resource;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

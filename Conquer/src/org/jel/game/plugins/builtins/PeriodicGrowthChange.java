@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.plugins.PluginInterface;
@@ -25,9 +25,9 @@ public final class PeriodicGrowthChange implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		this.initList(cities);
-		final var cityArr = cities.getValues(new City[0]);
+		final var cityArr = cities.getValues(new ICity[0]);
 		for (var i = 0; i < cityArr.length; i++) {
 			final var currGrowth = cityArr[i].getGrowth();
 			final var cleanedGrowth = currGrowth / (1 + PeriodicGrowthChange.newGrowth(this.values.get(i)));
@@ -42,10 +42,10 @@ public final class PeriodicGrowthChange implements Plugin {
 		this.values = null;
 	}
 
-	private void initList(final Graph<City> cities) {
+	private void initList(final Graph<ICity> cities) {
 		if (this.values == null) {
 			this.values = new ArrayList<>();
-			final var cityArr = cities.getValues(new City[0]);
+			final var cityArr = cities.getValues(new ICity[0]);
 			for (var i = 0; i < cityArr.length; i++) {
 				this.values.add(PeriodicGrowthChange.RANDOM.nextInt(37));
 				cityArr[i].setGrowth(cityArr[i].getGrowth() * (1 + PeriodicGrowthChange.newGrowth(this.values.get(i))));

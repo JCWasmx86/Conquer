@@ -1,10 +1,10 @@
 package org.jel.game.messages;
 
 import org.jel.game.Messages;
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
 public record RandomEventMessage(RandomEvent randomEvent, double factorOfPeople, double factorOfSoldiers,
-		double growthFactor, City city) implements Message {
+		double growthFactor, ICity city) implements Message {
 	@Override
 	public boolean isBadForPlayer() {
 		if (!this.isPlayerInvolved()) {

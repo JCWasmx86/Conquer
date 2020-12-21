@@ -1,6 +1,6 @@
 package org.jel.game.plugins;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
 /**
  * Called when soldiers are recruited.
@@ -13,5 +13,5 @@ public interface RecruitHook {
 	 * @param city             The specified city
 	 * @param numberOfSoldiers The number of soldiers that were recruited.
 	 */
-	void recruited(City city, long numberOfSoldiers);
+	void recruited(ICity city, long numberOfSoldiers);
 }

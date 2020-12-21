@@ -1,9 +1,9 @@
 package org.jel.game.messages;
 
 import org.jel.game.Messages;
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
-public record AnnihilationMessage(City src, City destination, long numberOfAttackers) implements Message {
+public record AnnihilationMessage(ICity src, ICity destination, long numberOfAttackers) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
 		return this.src.isPlayerCity() || this.destination.isPlayerCity();
