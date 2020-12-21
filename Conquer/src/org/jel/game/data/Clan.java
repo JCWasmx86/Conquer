@@ -30,7 +30,7 @@ public final class Clan {
 
 	private int flags;
 
-	Clan() {
+	public Clan() {
 	}
 
 	/**
@@ -175,7 +175,7 @@ public final class Clan {
 	 *
 	 * @param strategies An array of all strategies available.
 	 */
-	void init(final StrategyProvider[] strategies, final Version version) {
+	public void init(final StrategyProvider[] strategies, final Version version) {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
 		}
@@ -190,7 +190,7 @@ public final class Clan {
 			this.getResourceStats().add(0.0);
 		}
 		final var givenPlayType = this.flags;
-		if ((strategies[givenPlayType] == null) || strategies[givenPlayType].compatibleTo(version)) {
+		if ((strategies[givenPlayType] == null) || !strategies[givenPlayType].compatibleTo(version)) {
 			this.strategy = strategies[1].buildStrategy();
 			Shared.LOGGER.error("Found invalid strategy id: " + this.flags);
 			Shared.LOGGER.message("Clan: " + this.name + " " + strategies[1].getName());
@@ -226,7 +226,7 @@ public final class Clan {
 	 *
 	 * @param color May not be null
 	 */
-	void setColor(final Color color) {
+	public void setColor(final Color color) {
 		if (color == null) {
 			throw new IllegalArgumentException("color == null");
 		} else if (this.color != null) {
@@ -240,7 +240,7 @@ public final class Clan {
 	 *
 	 * @param flags Some unspecified value.
 	 */
-	void setFlags(final int flags) {
+	public void setFlags(final int flags) {
 		this.flags = flags;
 	}
 
@@ -249,7 +249,7 @@ public final class Clan {
 	 *
 	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
 	 */
-	void setId(final int id) {
+	public void setId(final int id) {
 		if (this.id != -1) {
 			throw new UnsupportedOperationException("Can't change id of clan!");
 		} else if ((id < 0) || (id > Byte.MAX_VALUE)) {
@@ -263,7 +263,7 @@ public final class Clan {
 	 *
 	 * @param name May not be null
 	 */
-	void setName(final String name) {
+	public void setName(final String name) {
 		if (this.name != null) {
 			throw new UnsupportedOperationException("Can't change name of clan!");
 		} else if (name == null) {
@@ -272,43 +272,43 @@ public final class Clan {
 		this.name = name;
 	}
 
-	void setResources(final List<Double> resources) {
+	public void setResources(final List<Double> resources) {
 		this.resources = resources;
 	}
 
-	void setResourceStats(final List<Double> resourceStats) {
+	public void setResourceStats(final List<Double> resourceStats) {
 		this.resourceStats = resourceStats;
 	}
 
-	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
+	public void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
 		this.soldiersDefenseLevel = soldiersDefenseLevel;
 	}
 
-	void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
+	public void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
 		this.soldiersDefenseStrength = soldiersDefenseStrength;
 	}
 
-	void setSoldiersLevel(final int soldiersLevel) {
+	public void setSoldiersLevel(final int soldiersLevel) {
 		this.soldiersLevel = soldiersLevel;
 	}
 
-	void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
+	public void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
 		this.soldiersOffenseLevel = soldiersOffenseLevel;
 	}
 
-	void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
+	public void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
 		this.soldiersOffenseStrength = soldiersOffenseStrength;
 	}
 
-	void setSoldiersStrength(final double soldiersStrength) {
+	public void setSoldiersStrength(final double soldiersStrength) {
 		this.soldiersStrength = soldiersStrength;
 	}
 
-	void setStrategy(final Strategy strategy) {
+	public void setStrategy(final Strategy strategy) {
 		this.strategy = strategy;
 	}
 
-	void setStrategyData(final StrategyData strategyData) {
+	public void setStrategyData(final StrategyData strategyData) {
 		this.strategyData = strategyData;
 	}
 

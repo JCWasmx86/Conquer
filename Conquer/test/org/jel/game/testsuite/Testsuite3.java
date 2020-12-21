@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.ScenarioFileReader;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
+import org.jel.game.data.ri.ScenarioFileReader;
 import org.jel.game.utils.Graph;
 
 /**

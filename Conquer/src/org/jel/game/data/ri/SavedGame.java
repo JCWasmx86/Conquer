@@ -1,4 +1,4 @@
-package org.jel.game.data;
+package org.jel.game.data.ri;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -24,11 +24,18 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import org.jel.game.data.City;
+import org.jel.game.data.Clan;
+import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ConquerSaver;
+import org.jel.game.data.Shared;
+import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.utils.Graph;
+import org.jel.game.utils.Triple;
 
-class SavedGame implements ConquerSaver {
+public final class SavedGame implements ConquerSaver {
 	private final String name;
 
 	public SavedGame(final String name) {
@@ -263,6 +270,7 @@ class SavedGame implements ConquerSaver {
 		}
 	}
 
+	@Override
 	public void save(final ConquerInfo info) throws Exception {
 		if (!(info instanceof Game)) {
 			throw new UnsupportedOperationException("Can't save instanceof " + info.getClass().getCanonicalName());
@@ -273,6 +281,7 @@ class SavedGame implements ConquerSaver {
 			Shared.deleteDirectory(saveDirectory);
 		} catch (final IOException e) {
 			// Nothing critical
+			Shared.LOGGER.message("Nothing critical!");
 			Shared.LOGGER.exception(e);
 		}
 		try {
@@ -327,8 +336,8 @@ class SavedGame implements ConquerSaver {
 			final var relations = game.getRelations();
 			final var v = relations.getConnections();
 			var cnt = 0;
-			for (var i = 0; i < v.size(); i++) {
-				final var value = v.get(i).third();
+			for (final Triple<Integer, Integer, Double> element : v) {
+				final var value = element.third();
 				if ((value == -1) || (value == -2)) {
 					continue;
 				}

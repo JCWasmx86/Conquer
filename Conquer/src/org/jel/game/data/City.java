@@ -32,7 +32,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param game A handle to the game object
 	 */
-	public City(final Game game) {
+	public City(final ConquerInfo game) {
 		if (game == null) {
 			throw new IllegalArgumentException("game==null");
 		}
@@ -43,9 +43,9 @@ public final class City implements Comparable<City> {
 	}
 
 	/**
-	 * Increases the number of attacks of the player.
+	 * Increases the number of attacks of the player, Internal Use only!
 	 */
-	void attackByPlayer() {
+	public void attackByPlayer() {
 		if (this.numAttacksOfPlayer == -1) {
 			this.numAttacksOfPlayer++;
 		}
@@ -69,7 +69,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Called at the end of the round.
 	 */
-	void endOfRound() {
+	public void endOfRound() {
 		if (this.numberOfPeople <= City.PEOPLE_THRESHOLD) {
 			this.numberOfRoundsWithZeroPeople++;
 			if (this.numberOfRoundsWithZeroPeople == 3) {
@@ -245,7 +245,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return Number of rounds with a small population.
 	 */
-	int getNumberOfRoundsWithZeroPeople() {
+	public int getNumberOfRoundsWithZeroPeople() {
 		return this.numberOfRoundsWithZeroPeople;
 	}
 
@@ -312,7 +312,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return Internal value.
 	 */
-	double oldOne() {
+	public double oldOne() {
 		return this.oldOne;
 	}
 
@@ -334,7 +334,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param num New number of attacks of the player.
 	 */
-	void setAttacksOfPlayer(final long num) {
+	public void setAttacksOfPlayer(final long num) {
 		if (this.numAttacksOfPlayer != -1) {
 			throw new UnsupportedOperationException(
 					"Can't change the number of attacks of the player after it was set!");
@@ -360,7 +360,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param base New value.
 	 */
-	void setDefense(final double base) {
+	public void setDefense(final double base) {
 		if (this.defense != 0) {
 			this.defense /= this.oldOne;
 			this.defense *= (base < 1 ? 1 / base : base);
@@ -377,7 +377,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param bonus The value.
 	 */
-	void setDefenseBonus(final double bonus) {
+	public void setDefenseBonus(final double bonus) {
 		if (this.bonus != -1) {
 			throw new UnsupportedOperationException("Can't change the defense bonus of a city!");
 		}
@@ -396,7 +396,7 @@ public final class City implements Comparable<City> {
 		this.growth = growth;
 	}
 
-	void setId(final int id) {
+	public void setId(final int id) {
 		this.clanId = id;
 	}
 
@@ -406,7 +406,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param image The image. May not be null.
 	 */
-	void setImage(final Image image) {
+	public void setImage(final Image image) {
 		if (this.image != null) {
 			throw new UnsupportedOperationException("Can't change image of city!");
 		} else if (image == null) {
@@ -420,7 +420,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param levels
 	 */
-	void setLevels(final List<Integer> levels) {
+	public void setLevels(final List<Integer> levels) {
 		this.levels = levels;
 	}
 
@@ -429,7 +429,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param name Name of the city.
 	 */
-	void setName(final String name) {
+	public void setName(final String name) {
 		if (this.name != null) {
 			throw new UnsupportedOperationException("Can't change name of city!");
 		}
@@ -453,7 +453,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param num
 	 */
-	void setNumberOfRoundsWithZeroPeople(final int num) {
+	public void setNumberOfRoundsWithZeroPeople(final int num) {
 		this.numberOfRoundsWithZeroPeople = num;
 	}
 
@@ -474,7 +474,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param value
 	 */
-	void setOldValue(final double value) {
+	public void setOldValue(final double value) {
 		this.oldOne = value;
 	}
 
@@ -483,7 +483,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param productions
 	 */
-	void setProductionRates(final List<Double> productions) {
+	public void setProductionRates(final List<Double> productions) {
 		if (this.productions != null) {
 			throw new UnsupportedOperationException("Can't change the productions!");
 		} else if (productions == null) {
@@ -497,7 +497,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param x
 	 */
-	void setX(final int x) {
+	public void setX(final int x) {
 		if (this.x != -1) {
 			throw new UnsupportedOperationException("Can't change the X-Position!");
 		} else if (x < 0) {
@@ -511,7 +511,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @param y
 	 */
-	void setY(final int y) {
+	public void setY(final int y) {
 		if (this.y != -1) {
 			throw new UnsupportedOperationException("Can't change the Y-Position!");
 		} else if (y < 0) {

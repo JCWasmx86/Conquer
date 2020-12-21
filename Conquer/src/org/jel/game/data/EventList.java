@@ -26,7 +26,7 @@ public final class EventList extends ArrayList<Message> {
 		return super.add(message);
 	}
 
-	void addListener(final MessageListener ml) {
+	public void addListener(final MessageListener ml) {
 		this.listeners.add(ml);
 	}
 

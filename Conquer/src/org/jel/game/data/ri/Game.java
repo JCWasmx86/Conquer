@@ -1,4 +1,4 @@
-package org.jel.game.data;
+package org.jel.game.data.ri;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -16,6 +16,21 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.jel.game.data.AttackResult;
+import org.jel.game.data.City;
+import org.jel.game.data.Clan;
+import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ConquerSaver;
+import org.jel.game.data.EventList;
+import org.jel.game.data.Gift;
+import org.jel.game.data.GlobalContext;
+import org.jel.game.data.PlayerGiftCallback;
+import org.jel.game.data.Resource;
+import org.jel.game.data.Result;
+import org.jel.game.data.Shared;
+import org.jel.game.data.StreamUtils;
+import org.jel.game.data.Version;
+import org.jel.game.data.XMLReader;
 import org.jel.game.data.builtin.DefensiveStrategyProvider;
 import org.jel.game.data.builtin.ModerateStrategyProvider;
 import org.jel.game.data.builtin.OffensiveStrategyProvider;
