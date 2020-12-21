@@ -129,8 +129,8 @@ public class Installer implements Runnable {
 		String newContents = null;
 		try (var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
-			newContents = contents.replace("<!--<plugin className=\"org.jel.game.plugins.DefaultMusic\" />-->", //$NON-NLS-1$
-					"<plugin className=\"org.jel.game.plugins.DefaultMusic\" />"); //$NON-NLS-1$
+			newContents = contents.replace("<!--<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />-->", //$NON-NLS-1$
+					"<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />"); //$NON-NLS-1$
 		}
 		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
 	}

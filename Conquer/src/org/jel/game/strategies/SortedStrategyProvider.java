@@ -12,7 +12,7 @@ public final class SortedStrategyProvider implements StrategyProvider {
 
 	@Override
 	public int getId() {
-		return (byte) 1000;
+		return 1000;
 	}
 
 	@Override

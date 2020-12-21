@@ -1,12 +1,16 @@
 package org.jel.gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -98,6 +102,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 				this.sound.stop();
 			}
 			this.setVisible(false);
+			this.createBufferStrategy(1000);
 			MainScreen.forward(this.getLocation(), true);
 		} else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {// 27==ESC
 			System.exit(0);
@@ -106,7 +111,24 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 
 	@Override
 	public void paint(final Graphics g) {
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		final var r = new Random(System.nanoTime());
+		for (var i = 0; i < 5; i++) {
+			g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+			final var n = 10;
+			final var x = this.randomArray(n, 0, this.getWidth());
+			final var y = this.randomArray(n, 0, this.getHeight());
+			final var p = new Polygon(x, y, n);
+			((Graphics2D) g).draw(p);
+		}
+	}
+
+	private int[] randomArray(final int n, final int min, final int width) {
+		final var ret = new int[n];
+		final var r = new Random(System.nanoTime());
+		for (var i = 0; i < n; i++) {
+			ret[i] = r.nextInt((width - min) + 1) + min;
+		}
+		return ret;
 	}
 
 	@Override
