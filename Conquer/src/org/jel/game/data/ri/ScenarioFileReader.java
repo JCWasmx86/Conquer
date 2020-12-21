@@ -1,4 +1,4 @@
-package org.jel.game.data;
+package org.jel.game.data.ri;
 
 import java.awt.Color;
 import java.io.ByteArrayInputStream;
@@ -13,6 +13,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.jel.game.data.City;
+import org.jel.game.data.Clan;
+import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
 import org.jel.game.utils.Graph;
 
 /**

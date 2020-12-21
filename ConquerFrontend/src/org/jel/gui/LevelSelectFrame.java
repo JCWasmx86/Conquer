@@ -28,9 +28,9 @@ import javax.swing.SwingUtilities;
 
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
-import org.jel.game.data.ScenarioFileReader;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
+import org.jel.game.data.ri.ScenarioFileReader;
 import org.jel.gui.utils.ImageResource;
 
 /**

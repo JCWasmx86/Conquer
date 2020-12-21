@@ -10,8 +10,8 @@ import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
-import org.jel.game.data.ScenarioFileReader;
 import org.jel.game.data.XMLReader;
+import org.jel.game.data.ri.ScenarioFileReader;
 
 /**
  * Passes bad arguments to functions.
