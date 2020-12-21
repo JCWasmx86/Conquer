@@ -78,6 +78,7 @@ public final class Game implements ConquerInfo {
 	private static final int RELATIONSHIP_CHANGE_CITY_CONQUERED = 10;
 	private static final double RELATIONSHIP_CHANGE_ALL_DEAD = 7.5;
 	private static final int RELATIONSHIP_CHANGE_ATTACK_DEFEATED = 5;
+	private static final int MAX_STRATEGIES = 2048;
 	private final Random random = new SecureRandom();
 	private List<Clan> clans;
 	private Image background;
@@ -103,7 +104,7 @@ public final class Game implements ConquerInfo {
 		this.data.setCityKeyHandlers(new HashMap<>());
 		this.data.setExtraMusic(new ArrayList<>());
 		this.data.setKeybindings(new HashMap<>());
-		this.strategies = new StrategyProvider[Byte.MAX_VALUE];
+		this.strategies = new StrategyProvider[Game.MAX_STRATEGIES];
 		this.strategies[0] = new DefensiveStrategyProvider();
 		this.strategies[1] = new ModerateStrategyProvider();
 		this.strategies[2] = new OffensiveStrategyProvider();
@@ -140,10 +141,10 @@ public final class Game implements ConquerInfo {
 		this.data.setPlugins(context.getPlugins());
 		context.getStrategies().forEach(provider -> {
 			final var idx = provider.getId();
-			if (idx >= 127) {
-				Shared.LOGGER.error("idx >= 127");
+			if (idx >= Game.MAX_STRATEGIES) {
+				Shared.LOGGER.error("idx >= " + Game.MAX_STRATEGIES);
 			} else if (idx < 0) {
-				Shared.LOGGER.error("idx < 0");
+				Shared.LOGGER.error("idx < 0: " + provider.getClass().getCanonicalName());
 			} else if ((this.strategies[idx] != null)) {
 				Shared.LOGGER.error("Slot " + idx + " is already set!");
 			} else {
