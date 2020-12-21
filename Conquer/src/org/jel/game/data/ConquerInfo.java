@@ -122,4 +122,6 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 			b = this.upgradeOffense(id);
 		}
 	}
+	
+	Version getVersion();
 }
