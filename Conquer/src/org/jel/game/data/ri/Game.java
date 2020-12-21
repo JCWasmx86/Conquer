@@ -294,7 +294,7 @@ public final class Game implements ConquerInfo {
 		if (!managed) {
 			return this.aiCalculateNumberOfTroopsToAttackWith(src, clan, destination);
 		} else {
-			if (reallyPlayer && destination instanceof City c) {
+			if (reallyPlayer && (destination instanceof City c)) {
 				c.attackByPlayer();
 			}
 			return numberOfSoldiers;
@@ -861,8 +861,8 @@ public final class Game implements ConquerInfo {
 				// This city has no connections to other clans==>Move all troops to the borders.
 				moveAmount = src.getNumberOfSoldiers();
 			} else // Which city was attacked more often by the player?
-			if (destination instanceof City c && src instanceof City c1
-					&& c.getNumberAttacksOfPlayer() > c1.getNumberAttacksOfPlayer()) {
+			if ((destination instanceof City c) && (src instanceof City c1)
+					&& (c.getNumberAttacksOfPlayer() > c1.getNumberAttacksOfPlayer())) {
 				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
 			} else {
 				moveAmount = (int) (0.3 * src.getNumberOfSoldiers());

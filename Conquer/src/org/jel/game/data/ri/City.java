@@ -72,6 +72,14 @@ public class City implements Comparable<City>, ICity {
 				(other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
 	}
 
+	@Override
+	public int compareTo(final ICity other) {
+		if (other instanceof City c) {
+			return this.compareTo(c);
+		}
+		return 0;
+	}
+
 	/**
 	 * Called at the end of the round.
 	 */
@@ -373,6 +381,7 @@ public class City implements Comparable<City>, ICity {
 	 *
 	 * @param clan May not be null.
 	 */
+	@Override
 	public void setClan(final Clan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
@@ -386,6 +395,7 @@ public class City implements Comparable<City>, ICity {
 	 *
 	 * @param base New value.
 	 */
+	@Override
 	public void setDefense(final double base) {
 		if (this.defense != 0) {
 			this.defense /= this.oldOne;
@@ -415,6 +425,7 @@ public class City implements Comparable<City>, ICity {
 	 *
 	 * @param growth The new value. May not be smaller than zero.
 	 */
+	@Override
 	public void setGrowth(final double growth) {
 		if (growth < 0) {
 			throw new IllegalArgumentException("growth < 0");
@@ -467,6 +478,7 @@ public class City implements Comparable<City>, ICity {
 	 *
 	 * @param num May not be negative
 	 */
+	@Override
 	public void setNumberOfPeople(final long num) {
 		if (num < 0) {
 			throw new IllegalArgumentException("num < 0 : " + num);
@@ -488,6 +500,7 @@ public class City implements Comparable<City>, ICity {
 	 *
 	 * @param num May not be negative
 	 */
+	@Override
 	public void setNumberOfSoldiers(final long num) {
 		if (num < 0) {
 			throw new IllegalArgumentException("num < 0 : " + num);
@@ -551,13 +564,5 @@ public class City implements Comparable<City>, ICity {
 		return "City [image=" + this.image + ", clan=" + this.clanId + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
-	}
-
-	@Override
-	public int compareTo(ICity other) {
-		if (other instanceof City c) {
-			return this.compareTo(c);
-		}
-		return 0;
 	}
 }

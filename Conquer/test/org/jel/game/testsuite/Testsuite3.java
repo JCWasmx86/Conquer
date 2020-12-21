@@ -35,10 +35,10 @@ public final class Testsuite3 extends Testsuite {
 				if (i == j) {
 					continue;
 				}
-				final ICity cityA = cities.getValue(i);
-				final ICity cityA2 = cities.getValue(j);
-				final ICity cityB = cities2.getValue(i);
-				final ICity cityB2 = cities2.getValue(j);
+				final var cityA = cities.getValue(i);
+				final var cityA2 = cities.getValue(j);
+				final var cityB = cities2.getValue(i);
+				final var cityB2 = cities2.getValue(j);
 				if (cities.isConnected(cityA, cityA2) && !cities.isConnected(cityB, cityB2)) {
 					this.error("cities.isConnected(cityA, cityA2)&&!cities.isConnected(cityB, cityB2)");
 				}
