@@ -1,7 +1,7 @@
 package org.jel.game.plugins;
 
 import org.jel.game.data.AttackResult;
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
 /**
  * Called when before and after an attack was executed.
@@ -16,7 +16,7 @@ public interface AttackHook {
 	 *                          city
 	 * @param result            Result of the attack
 	 */
-	void after(City src, City destination, long survivingSoldiers, AttackResult result);
+	void after(ICity src, ICity destination, long survivingSoldiers, AttackResult result);
 
 	/**
 	 * Called before the attack
@@ -26,5 +26,5 @@ public interface AttackHook {
 	 * @param numberOfSoldiersMoved Number of soldiers that attack the destination
 	 *                              city.
 	 */
-	void before(City src, City destination, long numberOfSoldiersMoved);
+	void before(ICity src, ICity destination, long numberOfSoldiersMoved);
 }

@@ -8,9 +8,9 @@ import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.EventList;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.MoneyHook;
@@ -30,7 +30,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		this.currentRound++;
 	}
 
@@ -41,7 +41,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void moneyPaid(final List<City> cities, final Clan clan) {
+	public void moneyPaid(final List<ICity> cities, final Clan clan) {
 		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) { //$NON-NLS-1$
 			return;
 		}

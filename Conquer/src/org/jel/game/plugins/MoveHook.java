@@ -1,6 +1,6 @@
 package org.jel.game.plugins;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
 /**
  * A callback that is invoked when troops are moved. (No attack)
@@ -14,5 +14,5 @@ public interface MoveHook {
 	 * @param dest             Destination city
 	 * @param numberOfSoldiers Number of soldiers
 	 */
-	void handleMove(City src, City dest, long numberOfSoldiers);
+	void handleMove(ICity src, ICity dest, long numberOfSoldiers);
 }

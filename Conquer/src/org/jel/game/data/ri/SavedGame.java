@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ConquerSaver;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
@@ -71,9 +71,9 @@ public final class SavedGame implements ConquerSaver {
 
 	private void readCities(final DataInputStream dis, final Game game) throws IOException {
 		final var numberOfCities = dis.readInt();
-		final var cities = new Graph<City>(numberOfCities);
+		final var cities = new Graph<ICity>(numberOfCities);
 		for (var i = 0; i < numberOfCities; i++) {
-			final var city = new City(game);
+			final var city = new CityBuilder(game);
 			city.setName(dis.readUTF());
 			city.setDefenseBonus(dis.readDouble());
 			city.setId(dis.readInt());
@@ -102,7 +102,7 @@ public final class SavedGame implements ConquerSaver {
 			city.setY(dis.readInt());
 			city.setNumberOfRoundsWithZeroPeople(dis.readInt());
 			city.setOldValue(dis.readDouble());
-			cities.add(city);
+			cities.add(city.build());
 		}
 		final var n = dis.readInt();
 		for (var i = 0; i < n; i++) {
@@ -373,44 +373,48 @@ public final class SavedGame implements ConquerSaver {
 
 	private void writeCities(final Game game, final DataOutputStream dos) throws IOException {
 		final var cities = game.getCities();
-		dos.writeInt(cities.getValues(new City[0]).length);
+		dos.writeInt(cities.getValues(new ICity[0]).length);
 		StreamUtils.getCitiesAsStream(cities).forEach(a -> {
-			try {
-				dos.writeUTF(a.getName());
-				dos.writeDouble(a.getBonus());
-				dos.writeInt(a.getClanId());
-				dos.writeDouble(a.getDefense());
-				dos.writeDouble(a.getGrowth());
-				final var imageData = this.extractBytes(a.getImage());
-				dos.writeInt(imageData.length);
-				dos.write(imageData);
-				final var levels = a.getLevels();
-				dos.write(levels.size());
-				levels.forEach(t -> {
-					try {
-						dos.writeInt(t);
-					} catch (final IOException e) {
-						throw new RuntimeException(e);
-					}
-				});
-				dos.writeLong(a.getNumberAttacksOfPlayer());
-				dos.writeLong(a.getNumberOfPeople());
-				dos.writeLong(a.getNumberOfSoldiers());
-				final var productions = a.getProductions();
-				dos.write(productions.size());
-				productions.forEach(t -> {
-					try {
-						dos.writeDouble(t);
-					} catch (final IOException e) {
-						throw new RuntimeException(e);
-					}
-				});
-				dos.writeInt(a.getX());
-				dos.writeInt(a.getY());
-				dos.writeInt(a.getNumberOfRoundsWithZeroPeople());
-				dos.writeDouble(a.oldOne());
-			} catch (final IOException e) {
-				throw new RuntimeException(e);
+			if (a instanceof City c1) {
+				try {
+					dos.writeUTF(a.getName());
+					dos.writeDouble(a.getBonus());
+					dos.writeInt(a.getClanId());
+					dos.writeDouble(a.getDefense());
+					dos.writeDouble(a.getGrowth());
+					final var imageData = this.extractBytes(a.getImage());
+					dos.writeInt(imageData.length);
+					dos.write(imageData);
+					final var levels = a.getLevels();
+					dos.write(levels.size());
+					levels.forEach(t -> {
+						try {
+							dos.writeInt(t);
+						} catch (final IOException e) {
+							throw new RuntimeException(e);
+						}
+					});
+					dos.writeLong(c1.getNumberAttacksOfPlayer());
+					dos.writeLong(a.getNumberOfPeople());
+					dos.writeLong(a.getNumberOfSoldiers());
+					final var productions = a.getProductions();
+					dos.write(productions.size());
+					productions.forEach(t -> {
+						try {
+							dos.writeDouble(t);
+						} catch (final IOException e) {
+							throw new RuntimeException(e);
+						}
+					});
+					dos.writeInt(a.getX());
+					dos.writeInt(a.getY());
+					dos.writeInt(c1.getNumberOfRoundsWithZeroPeople());
+					dos.writeDouble(c1.oldOne());
+				} catch (final IOException e) {
+					throw new RuntimeException(e);
+				}
+			}else {
+				throw new UnsupportedOperationException("Wrong class!");
 			}
 		});
 		final var v = cities.getConnections();

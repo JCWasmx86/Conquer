@@ -1,6 +1,6 @@
 package org.jel.game.plugins;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 
 /**
  * A callback that is called as soon as a city is focused and the specified key
@@ -14,5 +14,5 @@ public interface CityKeyHandler {
 	 * @param key  The key that was pressed
 	 * @param city The focused city.
 	 */
-	void handle(String key, City city);
+	void handle(String key, ICity city);
 }

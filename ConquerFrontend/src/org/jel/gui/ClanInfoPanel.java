@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
@@ -66,9 +66,9 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var sb = new StringBuilder("<html><body>"); //$NON-NLS-1$
 		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers")) //$NON-NLS-1$
-				.append(": ").append(this.getNumber(City::getNumberOfSoldiers)).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
+				.append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
-				.append(this.getNumber(City::getNumberOfPeople)).append("<br>") //$NON-NLS-1$
+				.append(this.getNumber(ICity::getNumberOfPeople)).append("<br>") //$NON-NLS-1$
 				.append(Messages.getString("Shared.coins")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.clan.getCoins())) //$NON-NLS-1$
 				.append(this.coinsPerRound());
@@ -78,7 +78,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		return sb.append("</body></html>").toString(); //$NON-NLS-1$
 	}
 
-	private long getNumber(final ToLongFunction<City> cc) {
+	private long getNumber(final ToLongFunction<ICity> cc) {
 		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToLong(cc).sum();
 	}
 

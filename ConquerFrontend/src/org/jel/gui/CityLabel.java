@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 
 /**
@@ -29,13 +29,13 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 */
 	static final int CLAN_COLOR_HEIGHT = 12;
 	private static final long serialVersionUID = -5091974547825438103L;
-	private final transient City city;
+	private final transient ICity city;
 	private final transient Timer timer;
-	private final transient Map<City, CityLabel> labels;
+	private final transient Map<ICity, CityLabel> labels;
 	private boolean marked = false;
 	private int counter = 0;
-	private transient City origin;
-	private final transient Consumer<City> consumer;
+	private transient ICity origin;
+	private final transient Consumer<ICity> consumer;
 
 	/**
 	 * Constructs a new CityLabel
@@ -45,7 +45,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * @param consumer A consumer, that is executed as soon as the mouse was clicked
 	 *                 on it.
 	 */
-	CityLabel(final City city, final Map<City, CityLabel> labels, final Consumer<City> consumer) {
+	CityLabel(final ICity city, final Map<ICity, CityLabel> labels, final Consumer<ICity> consumer) {
 		this.city = city;
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
@@ -79,7 +79,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	/**
 	 * Returns the city this label is representing
 	 */
-	City getCity() {
+	ICity getCity() {
 		return this.city;
 	}
 
@@ -101,7 +101,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		return this.getY() + (this.city.getImage().getHeight(null) / 2) + (CityLabel.CLAN_COLOR_HEIGHT / 2);
 	}
 
-	private void mark(final City origin) {
+	private void mark(final ICity origin) {
 		this.marked = true;
 		this.origin = origin;
 	}
@@ -225,7 +225,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			}
 		}
 		if (this.city.isPlayerCity()) {
-			game.moveSoldiers(this.origin, (Stream<City>) null, Shared.PLAYER_CLAN, true, this.city,
+			game.moveSoldiers(this.origin, (Stream<ICity>) null, Shared.PLAYER_CLAN, true, this.city,
 					numberOfSelectedSoldiers);
 		} else {
 			game.attack(this.origin, this.city, Shared.PLAYER_CLAN, true, numberOfSelectedSoldiers);

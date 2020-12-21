@@ -14,7 +14,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 
@@ -28,7 +28,7 @@ import org.jel.game.data.Shared;
  */
 class CityInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2409517597504961241L;
-	private final transient City city;
+	private final transient ICity city;
 	private final Timer timer;
 	private JEditorPane statsViewer;
 	private final List<ResourceButton> resourceButtons;
@@ -39,7 +39,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 *
 	 * @param city The city to show.
 	 */
-	CityInfoPanel(final City city) {
+	CityInfoPanel(final ICity city) {
 		this.city = city;
 		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();

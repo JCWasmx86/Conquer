@@ -13,9 +13,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.utils.Graph;
@@ -166,7 +166,7 @@ public final class ScenarioFileReader {
 			}
 			game.setRelations(relations);
 			final int numCities = dis.readShort();
-			final var g = new Graph<City>(numCities);
+			final var g = new Graph<ICity>(numCities);
 			for (var i = 0; i < numCities; i++) {
 				g.add(new City(game));
 			}
@@ -182,7 +182,7 @@ public final class ScenarioFileReader {
 					Shared.LOGGER.error("bytesRead: " + bytesRead + " != bytesOfPicture: " + bytesOfPicture);
 					return null;
 				}
-				final var c = new City(game);
+				final var c = new CityBuilder(game);
 				c.setImage(ImageIO.read(new ByteArrayInputStream(pic)));
 				final var clanN = dis.readInt();
 				if (clanN < 0) {
@@ -244,7 +244,7 @@ public final class ScenarioFileReader {
 					return null;
 				}
 				c.setName(cityN);
-				g._set(i, c);
+				g._set(i, c.build());
 				final int numConnections = dis.readShort();
 				for (var s = 0; s < numConnections; s++) {
 					final int otherCityIndex = dis.readShort();

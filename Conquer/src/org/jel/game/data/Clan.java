@@ -11,7 +11,7 @@ import org.jel.game.data.strategy.StrategyProvider;
 /**
  * A clan represents a group of cities.
  */
-public final class Clan {
+public class Clan {
 	private int id = -1;
 	private double coins;
 	private String name;

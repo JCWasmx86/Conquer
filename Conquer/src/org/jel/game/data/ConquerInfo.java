@@ -69,7 +69,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
 
 	default boolean onlyOneClanAlive() {
-		return StreamUtils.getCitiesAsStream(this.getCities()).map(City::getClanId).distinct().count() == 1;
+		return StreamUtils.getCitiesAsStream(this.getCities()).map(ICity::getClanId).distinct().count() == 1;
 	}
 
 	default void setErrorHandler(final Consumer<Throwable> onError) {
@@ -80,7 +80,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void setPlayersTurn(boolean b);
 
-	default void upgradeDefenseFully(final Clan clan, final City city) {
+	default void upgradeDefenseFully(final Clan clan, final ICity city) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
@@ -90,9 +90,9 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 		this.upgradeDefenseFully(clan.getId(), city);
 	}
 
-	void upgradeDefenseFully(final int clan, final City city);
+	void upgradeDefenseFully(final int clan, final ICity city);
 
-	default void upgradeResourceFully(final Clan clan, final Resource resources, final City city) {
+	default void upgradeResourceFully(final Clan clan, final Resource resources, final ICity city) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
@@ -102,7 +102,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 		this.upgradeResourceFully(clan.getId(), resources, city);
 	}
 
-	void upgradeResourceFully(final int clan, final Resource resources, final City city);
+	void upgradeResourceFully(final int clan, final Resource resources, final ICity city);
 
 	default void upgradeSoldiersDefenseFully(final int id) {
 		var b = true;

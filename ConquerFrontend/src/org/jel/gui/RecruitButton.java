@@ -5,7 +5,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 
-import org.jel.game.data.City;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 
 /**
@@ -15,7 +15,7 @@ final class RecruitButton extends JPanel {
 	private static final long serialVersionUID = 4846741301367606008L;
 	private JSlider js;
 	private JButton jbutton;
-	private final transient City city;
+	private final transient ICity city;
 	private boolean sharp = false;
 
 	/**
@@ -24,7 +24,7 @@ final class RecruitButton extends JPanel {
 	 * @param city Target city
 	 * @param cip  A reference to the CityInfoPanel.
 	 */
-	RecruitButton(final City city, final CityInfoPanel cip) {
+	RecruitButton(final ICity city, final CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),

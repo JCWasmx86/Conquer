@@ -1,11 +1,17 @@
-package org.jel.game.data;
+package org.jel.game.data.ri;
 
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class City implements Comparable<City> {
+import org.jel.game.data.Clan;
+import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ICity;
+import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
+
+public class City implements Comparable<City>, ICity {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
@@ -69,6 +75,7 @@ public final class City implements Comparable<City> {
 	/**
 	 * Called at the end of the round.
 	 */
+	@Override
 	public void endOfRound() {
 		if (this.numberOfPeople <= City.PEOPLE_THRESHOLD) {
 			this.numberOfRoundsWithZeroPeople++;
@@ -103,6 +110,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The defensebonus
 	 */
+	@Override
 	public double getBonus() {
 		return this.bonus;
 	}
@@ -112,6 +120,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The clan.
 	 */
+	@Override
 	public Clan getClan() {
 		return this.clan;
 	}
@@ -121,6 +130,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The clan id
 	 */
+	@Override
 	public int getClanId() {
 		return this.clanId;
 	}
@@ -131,6 +141,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The difference
 	 */
+	@Override
 	public double getCoinDiff() {
 		return (this.numberOfPeople * Shared.COINS_PER_PERSON_PER_ROUND)
 				- (this.numberOfSoldiers * Shared.COINS_PER_SOLDIER_PER_ROUND);
@@ -142,6 +153,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The base defense
 	 */
+	@Override
 	public double getDefense() {
 		return this.defense;
 	}
@@ -151,6 +163,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The defense strength of the city.
 	 */
+	@Override
 	public double getDefenseStrength() {
 		return this.getDefenseStrength(this.getClan());
 	}
@@ -162,6 +175,7 @@ public final class City implements Comparable<City> {
 	 *             {@link IllegalArgumentException} will be thrown.
 	 * @return The defense strength of the city.
 	 */
+	@Override
 	public double getDefenseStrength(final Clan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
@@ -181,6 +195,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The growth of the city.
 	 */
+	@Override
 	public double getGrowth() {
 		return this.growth;
 	}
@@ -190,6 +205,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The icon of the city.
 	 */
+	@Override
 	public Image getImage() {
 		return this.image;
 	}
@@ -199,6 +215,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return A handle to the information object.
 	 */
+	@Override
 	public ConquerInfo getInfo() {
 		return this.game;
 	}
@@ -208,6 +225,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The levels
 	 */
+	@Override
 	public List<Integer> getLevels() {
 		return this.levels;
 	}
@@ -217,6 +235,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return The name of the city.
 	 */
+	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -235,6 +254,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return Number of persons in the city.
 	 */
+	@Override
 	public long getNumberOfPeople() {
 		return this.numberOfPeople;
 	}
@@ -254,6 +274,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return Number of soldiers in this city
 	 */
+	@Override
 	public long getNumberOfSoldiers() {
 		return this.numberOfSoldiers;
 	}
@@ -263,6 +284,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return A mutable list with the production rates.
 	 */
+	@Override
 	public List<Double> getProductions() {
 		return this.productions;
 	}
@@ -272,6 +294,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return x-Position
 	 */
+	@Override
 	public int getX() {
 		return this.x;
 	}
@@ -281,6 +304,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return y-Position
 	 */
+	@Override
 	public int getY() {
 		return this.y;
 	}
@@ -302,6 +326,7 @@ public final class City implements Comparable<City> {
 	 *
 	 * @return {@code true} if the player owns this city.
 	 */
+	@Override
 	public boolean isPlayerCity() {
 		return this.clan.isPlayerClan();
 	}
@@ -322,6 +347,7 @@ public final class City implements Comparable<City> {
 	 * @param resource Resource - May not be null
 	 * @return The production of a resource per round.
 	 */
+	@Override
 	public double productionPerRound(final Resource resource) {
 		if (resource == null) {
 			throw new IllegalArgumentException("resource == null");
@@ -525,5 +551,13 @@ public final class City implements Comparable<City> {
 		return "City [image=" + this.image + ", clan=" + this.clanId + ", numberOfPeople=" + this.numberOfPeople
 				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
 				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
+	}
+
+	@Override
+	public int compareTo(ICity other) {
+		if (other instanceof City c) {
+			return this.compareTo(c);
+		}
+		return 0;
 	}
 }

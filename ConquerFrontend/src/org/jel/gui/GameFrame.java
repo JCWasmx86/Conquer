@@ -37,8 +37,8 @@ import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 
-import org.jel.game.data.City;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;
@@ -57,7 +57,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " "; //$NON-NLS-1$
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient ConquerInfo game;
-	private final Map<City, CityLabel> labels = new HashMap<>();
+	private final Map<ICity, CityLabel> labels = new HashMap<>();
 	private LoopPlayer loopPlayer = new LoopPlayer();
 	private JLabel gameStage;
 	private JScrollPane gameStageScrollPane;
@@ -364,7 +364,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.gameStage.add(cityLabel);
 			this.labels.put(city, cityLabel);
 		});
-		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(City::isPlayerCity).findFirst()
+		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(ICity::isPlayerCity).findFirst()
 				.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel); //$NON-NLS-1$

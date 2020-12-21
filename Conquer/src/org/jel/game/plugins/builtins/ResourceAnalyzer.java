@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jel.game.data.City;
 import org.jel.game.data.Clan;
 import org.jel.game.data.EventList;
+import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
@@ -25,7 +25,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	private int currentRound = 0;
 
 	@Override
-	public void analyzeStats(final City city, final List<Double> statistics, final Clan clan) {
+	public void analyzeStats(final ICity city, final List<Double> statistics, final Clan clan) {
 		if (this.currentRound < Integer.getInteger("resource.analyzer.delay", 10)) {
 			return;
 		}
@@ -77,7 +77,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	}
 
 	@Override
-	public void handle(final Graph<City> cities, final Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		this.currentRound++;
 
 	}
@@ -88,7 +88,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		this.events = pi.getEventList();
 	}
 
-	private void killCivilians(final City city, final long maxCivilians, final Clan clan) {
+	private void killCivilians(final ICity city, final long maxCivilians, final Clan clan) {
 		if (maxCivilians <= 0) {
 			return;
 		}
@@ -100,7 +100,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		city.setNumberOfPeople(tmp2 == 0 ? tmp3 : tmp2);
 	}
 
-	private void killedCiviliansUpdate(final City city, final int idx, final List<Double> killedSoldiers,
+	private void killedCiviliansUpdate(final ICity city, final int idx, final List<Double> killedSoldiers,
 			final List<Double> killedCivilians, final double d) {
 		final var d1 = d + (city.getNumberOfSoldiers() + Shared.getDataValues()[idx][1]);
 		final var numCiviliansToGetToZero = (-d1) / Shared.getDataValues()[idx][0];
@@ -112,7 +112,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		}
 	}
 
-	private void killSoldiers(final City city, final long maxSoldiers, final Clan clan) {
+	private void killSoldiers(final ICity city, final long maxSoldiers, final Clan clan) {
 		if (maxSoldiers <= 0) {
 			return;
 		}
