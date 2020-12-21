@@ -95,7 +95,7 @@ echo "		<plugin className=\"org.jel.game.plugins.builtins.ChangeCitiesMinds\" />
 echo "		<plugin className=\"org.jel.game.plugins.builtins.IncreaseGrowth\" />">>info.xml
 echo "		<plugin className=\"org.jel.game.plugins.builtins.MoneyAnalyzer\" />">>info.xml
 echo "		<plugin className=\"org.jel.game.plugins.builtins.ResourceAnalyzer\" />">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />">>info.xml
+echo "		<!--<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />-->">>info.xml
 echo "		<plugin className=\"org.jel.game.plugins.builtins.PeriodicGrowthChange\" />">>info.xml
 echo "	</plugins>">>info.xml
 echo "	<strategies>">>info.xml
