@@ -42,6 +42,16 @@ public interface StrategyObject {
 
 	Graph<Integer> getRelations();
 
+	default double getRelationship(final Clan a, final Clan b) {
+		if (a == null) {
+			throw new IllegalArgumentException("a==null");
+		}
+		if (b == null) {
+			throw new IllegalArgumentException("b==null");
+		}
+		return this.getRelationship(a.getId(), b.getId());
+	}
+
 	default double getRelationship(final Clan clan, final ICity city) {
 		if (clan == null) {
 			throw new IllegalArgumentException("city==null");
@@ -53,16 +63,6 @@ public interface StrategyObject {
 			throw new IllegalArgumentException("clan.getID()==city.getClan()");
 		}
 		return this.getRelationship(clan.getId(), city.getClanId());
-	}
-
-	default double getRelationship(final Clan a, final Clan b) {
-		if (a == null) {
-			throw new IllegalArgumentException("a==null");
-		}
-		if (b == null) {
-			throw new IllegalArgumentException("b==null");
-		}
-		return this.getRelationship(a.getId(), b.getId());
 	}
 
 	default double getRelationship(final int a, final int b) {
@@ -85,6 +85,13 @@ public interface StrategyObject {
 		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
 	}
 
+	default long maximumNumberToMove(final Clan clan, final double weight, final long maximumNumberOfSoldiers) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan == null");
+		}
+		return this.maximumNumberToMove(clan.getId(), weight, maximumNumberOfSoldiers);
+	}
+
 	default long maximumNumberToMove(final Clan clan, final ICity first, final ICity second,
 			final long maximumNumberOfSoldiers) {
 		if (clan == null) {
@@ -101,13 +108,6 @@ public interface StrategyObject {
 		}
 		return this.maximumNumberToMove(clan.getId(), this.getCities().getWeight(first, second),
 				maximumNumberOfSoldiers);
-	}
-
-	default long maximumNumberToMove(final Clan clan, final double weight, final long maximumNumberOfSoldiers) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan == null");
-		}
-		return this.maximumNumberToMove(clan.getId(), weight, maximumNumberOfSoldiers);
 	}
 
 	long maximumNumberToMove(int clanId, double weight, long maximumNumberOfSoldiers);

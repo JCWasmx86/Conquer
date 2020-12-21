@@ -21,6 +21,7 @@ public interface ICity {
 	 * Returns whether one city is equals to the other one. Not all properties are
 	 * checked, only the name, the X- and Y-position.
 	 */
+	@Override
 	boolean equals(Object obj);
 
 	/**
@@ -165,14 +166,14 @@ public interface ICity {
 	 */
 	double productionPerRound(Resource resource);
 
-	void setNumberOfSoldiers(long l);
+	void setClan(Clan clan);
 
 	void setDefense(double newPowerOfUpdate);
 
-	void setClan(Clan clan);
+	void setGrowth(double d);
 
 	void setNumberOfPeople(long l);
 
-	void setGrowth(double d);
+	void setNumberOfSoldiers(long l);
 
 }

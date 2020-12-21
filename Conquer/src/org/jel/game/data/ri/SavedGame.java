@@ -413,7 +413,7 @@ public final class SavedGame implements ConquerSaver {
 				} catch (final IOException e) {
 					throw new RuntimeException(e);
 				}
-			}else {
+			} else {
 				throw new UnsupportedOperationException("Wrong class!");
 			}
 		});
