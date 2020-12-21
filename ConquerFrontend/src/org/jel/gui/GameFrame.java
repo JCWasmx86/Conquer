@@ -181,7 +181,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.initSideBar();
 		this.initMenubar();
 		this.setVisible(true);
-		this.setTitle(GameFrame.TITLE_PART + this.game.currentRound());
+		this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
 		this.add(this.basePanel);
 		this.pack();
 		this.nonGUIInit();
@@ -197,7 +197,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				this.game.setPlayersTurn(false);
 				this.game.executeActions();
 			}
-			this.setTitle(GameFrame.TITLE_PART + this.game.currentRound());
+			this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
 		});
 		final var openMessages = new JButton(new ImageResource("messagebox.png")); //$NON-NLS-1$
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
@@ -211,7 +211,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			new Thread(() -> {
 				while (!this.game.onlyOneClanAlive()) {
 					this.game.executeActions();
-					this.setTitle(GameFrame.TITLE_PART + this.game.currentRound());
+					this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
 					this.labels.values().forEach(b -> b.actionPerformed(null));
 					try {
 						Thread.sleep(50);

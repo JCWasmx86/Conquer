@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.jel.game.data.City;
 import org.jel.game.data.Result;
+import org.jel.game.data.Version;
 import org.jel.game.utils.Graph;
 
 /**
@@ -74,5 +75,9 @@ public interface Plugin {
 	 */
 	default void save(final OutputStream outputStream) throws IOException {
 
+	}
+
+	default boolean compatibleTo(final Version version) {
+		return true;
 	}
 }
