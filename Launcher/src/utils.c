@@ -17,8 +17,9 @@ int checkForJava(const char *path) {
 #endif
 	FILE *fp = fopen(p2, "rb");
 	int exists = fp != NULL;
-	if (fp)
+	if (fp) {
 		fclose(fp);
+	}
 	free(p2);
 	return exists;
 }

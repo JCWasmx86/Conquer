@@ -47,19 +47,13 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		sb.append("<h1>Image sources</h1>");
 		sb.append("<h2>Image sources for the game</h2>");
 		sb.append(
-				"<b>back.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append(
-				"<b>ban.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append(
 				"<b>coal.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
 				"<b>cotton.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
 				"<b>defenseUpgrade.png (Renamed from \"shield.png\")</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/good-ware\" title=\"Good Ware\">Good Ware</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append("<b>down.png</b>: <div>Same as back.png, but mirrored by me.</div><br>");
 		sb.append(
 				"<b>fish.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/kiranshastry\" title=\"Kiranshastry\">Kiranshastry</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append("<b>forward.png</b>: <div>Same as back.png, but mirrored by me.</div><br>");
 		sb.append(
 				"<b>hourglass.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
@@ -73,12 +67,9 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		sb.append(
 				"<b>messagebox.png (Renamed from \"mail.png\")</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/pixel-perfect\" title=\"Pixel perfect\">Pixel perfect</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
-				"<b>moneygift.png (Renamed from \"agreement.png\")</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/pixel-perfect\" title=\"Pixel perfect\">Pixel perfect</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append(
 				"<b>stone.png</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
 				"<b>textile.png (Renamed from \"fur.png\")</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
-		sb.append("<b>up.png</b>: <div>Same as back.png, but mirrored by me.</div><br>");
 		sb.append(
 				"<b>wheat.png (Renamed from \"cereal.png\")</b>: <div>Icons made by <a href=\"https://www.flaticon.com/authors/freepik\" title=\"Freepik\">Freepik</a> from <a href=\"https://www.flaticon.com/\" title=\"Flaticon\">www.flaticon.com</a></div><br>");
 		sb.append(
