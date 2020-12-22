@@ -296,6 +296,9 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
+			if (cnt + currLevel == Shared.MAX_LEVEL) {
+				return cnt;
+			}
 		}
 		return cnt;
 	}
@@ -317,6 +320,9 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
+			if (cnt + currLevel == Shared.MAX_LEVEL) {
+				return cnt;
+			}
 		}
 		return cnt;
 	}
@@ -338,6 +344,9 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
+			if (cnt + currLevel == Shared.MAX_LEVEL) {
+				return cnt;
+			}
 		}
 		return cnt;
 	}
