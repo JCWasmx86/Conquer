@@ -9,13 +9,12 @@
 \textit{Conquer} was designed without any GUI in mind. It can run headless and can for example run on a server, or with a GUI made with Swing or JavaFX.
 \begin{minted}{java}
 XMLReader xmlReader = XMLReader.getInstance();
-List<InstalledScenario> scenarios = xmlReader.readInfo().getInstalledMaps();
+GlobalContext gc = xmlReader.readInfo();
+List<InstalledScenario> scenarios = gc.getInstalledMaps();
 Initializer.INSTANCE().initialize(null);
 for (InstalledScenario scenario : scenarios) {
-	Reader reader = new Reader(scenario.file());//*
-	Game conquerInstance = reader.buildGame();//*
-	GlobalContext context = xmlReader.readInfo();
-	conquerInstance.addContext(context);
+	ConquerInfo conquerInstance = ctx.loadInfo(scenario);
+	conquerInstance.addContext(gc);
 	conquerInstance.init();
 	while (!conquerInstance.onlyOneClanAlive()) {//*
 		conquerInstance.executeActions();
@@ -37,13 +36,9 @@ Initializer.INSTANCE().initialize(null);
 This line initializes the engine. It may for example update the system properties with properties from a file. \texttt{null} can be a \texttt{Consumer<Exception>} that will be called if an exception 
 occurs.
 \begin{minted}{java}
-Reader reader = new Reader(scenario.file());
+ConquerInfo conquerInstance = ctx.loadInfo(scenario);
 \end{minted}
-This line constructs a new \texttt{Reader}. \texttt{scenario.file()} returns the path to the datafile of a scenario that contains everything the \texttt{Reader} needs to know in order to construct a \texttt{Game} object.
-\begin{minted}{java}
-Game conquerInstance = reader.buildGame();
-\end{minted}
-Construct the game from the specified file. In case of an error, \texttt{null} will be returned. (Like invalid values, EOF,...).
+Construct the game from the specified scenario.
 \begin{minted}{java}
 conquerInstance.addContext(context);
 \end{minted}

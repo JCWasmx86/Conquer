@@ -1,7 +1,6 @@
 package org.jel.game.data;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -35,7 +35,7 @@ public final class XMLReader {
 	}
 
 	/**
-	 * Set a consumer that is called, as soon as an exception occurrs.
+	 * Set a consumer that is called, as soon as an exception occurs.
 	 *
 	 * @param throwable The consumer
 	 */
@@ -68,8 +68,7 @@ public final class XMLReader {
 				final var plugin = (Plugin) rawObject;
 				ret.add(plugin);
 				Shared.LOGGER.message("Loaded plugin: " + plugin.getName());
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			} catch (Exception e) {
 				Shared.LOGGER.exception(e);
 				if (XMLReader.throwableConsumer != null) {
 					XMLReader.throwableConsumer.accept(e);
@@ -93,8 +92,7 @@ public final class XMLReader {
 				final var strategy = (StrategyProvider) rawObject;
 				ret.add(strategy);
 				Shared.LOGGER.message("Loaded StrategyProvider: " + strategy.getName());
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			} catch (Exception e) {
 				Shared.LOGGER.exception(e);
 				if (XMLReader.throwableConsumer != null) {
 					XMLReader.throwableConsumer.accept(e);
@@ -132,14 +130,10 @@ public final class XMLReader {
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
-		final var childs = d.getChildNodes();
-		Node infoNode = null;
-		for (var i = 0; i < childs.getLength(); i++) {
-			final var child = childs.item(i);
-			if (child.getNodeName().equals("info")) {
-				infoNode = child;
-				break;
-			}
+		Node infoNode = findNode(d.getChildNodes());
+		if (infoNode == null) {
+			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
 		final List<InstalledScenario> installedMaps = new ArrayList<>();
 		final List<String> pluginNames = new ArrayList<>();
@@ -148,20 +142,19 @@ public final class XMLReader {
 		final var topNodes = infoNode.getChildNodes();
 		for (var i = 0; i < topNodes.getLength(); i++) {
 			final var node = topNodes.item(i);
-			final var nodeName = node == null ? null : node.getNodeName();
-			if ((node == null) || nodeName.equals("#text") || nodeName.equals("#comment")) {
-				continue;
-			}
-			if (nodeName.equals("scenarios")) {
-				this.readScenarios(node, installedMaps);
-			} else if (nodeName.equals("plugins")) {
-				this.readList(node, pluginNames);
-			} else if (nodeName.equals("strategies")) {
-				this.readList(node, strategyNames);
-			} else if (nodeName.equals("readers")) {
-				this.readList(node, readerFactoryNames);
-			} else {
-				Shared.LOGGER.error("Unknown attribute: " + nodeName);
+			if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+				final var nodeName = node.getNodeName();
+				if (nodeName.equals("scenarios")) {
+					this.readScenarios(node, installedMaps);
+				} else if (nodeName.equals("plugins")) {
+					this.readList(node, pluginNames);
+				} else if (nodeName.equals("strategies")) {
+					this.readList(node, strategyNames);
+				} else if (nodeName.equals("readers")) {
+					this.readList(node, readerFactoryNames);
+				} else {
+					Shared.LOGGER.error("Unknown attribute: " + nodeName);
+				}
 			}
 		}
 		final List<Plugin> plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
@@ -171,6 +164,16 @@ public final class XMLReader {
 		return new GlobalContext(this.distinct(installedMaps), this.distinct(plugins), this.distinct(strategies),
 				readerFactories, this.distinct(pluginNames), this.distinct(strategyNames),
 				this.distinct(readerFactoryNames));
+	}
+
+	private Node findNode(NodeList childs) {
+		for (var i = 0; i < childs.getLength(); i++) {
+			final var child = childs.item(i);
+			if (child.getNodeName().equals("info")) {
+				return child;
+			}
+		}
+		return null;
 	}
 
 	private List<ConquerInfoReaderFactory> loadReaders(List<String> readerFactories) {
@@ -187,8 +190,7 @@ public final class XMLReader {
 				final var plugin = (ConquerInfoReaderFactory) rawObject;
 				ret.add(plugin);
 				Shared.LOGGER.message("Loaded reader: " + s);
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			} catch (Exception e) {
 				Shared.LOGGER.exception(e);
 				if (XMLReader.throwableConsumer != null) {
 					XMLReader.throwableConsumer.accept(e);
@@ -202,52 +204,44 @@ public final class XMLReader {
 		final var nodeList = node.getChildNodes();
 		for (var j = 0; j < nodeList.getLength(); j++) {
 			final var dataNode = nodeList.item(j);
-			if ((dataNode == null) || dataNode.getNodeName().equals("#text")
-					|| dataNode.getNodeName().equals("#comment") || !dataNode.hasAttributes()) {
-				continue;
+			if (goodNode(dataNode)) {
+				final var attributes = dataNode.getAttributes();
+				final var classNameNode = attributes.getNamedItem("className");
+				if (bad(classNameNode)) {
+					Shared.LOGGER.error("readList - classNameNode==null");
+					continue;
+				}
+				final var className = classNameNode.getNodeValue();
+				list.add(className);
 			}
-			final var attributes = dataNode.getAttributes();
-			final var classNameNode = attributes.getNamedItem("className");
-			if ((classNameNode == null) || (classNameNode.getNodeValue() == null)) {
-				Shared.LOGGER.error("readList - classNameNode==null");
-				continue;
-			}
-			final var className = classNameNode.getNodeValue();
-			list.add(className);
 		}
+	}
+
+	private boolean goodNode(Node n) {
+		return (n != null) && !n.getNodeName().equals("#text") && !n.getNodeName().equals("#comment")&&n.hasAttributes();
+	}
+
+	private boolean bad(Node n) {
+		return n == null || n.getNodeValue() == null;
 	}
 
 	private void readScenarios(final Node node, final List<InstalledScenario> installedMaps) {
 		final var scenarioList = node.getChildNodes();
 		for (var j = 0; j < scenarioList.getLength(); j++) {
 			final var scenarioInformation = scenarioList.item(j);
-			if ((scenarioInformation == null) || scenarioInformation.getNodeName().equals("#text")
-					|| scenarioInformation.getNodeName().equals("#comment")) {
-				continue;
+			if (goodNode(scenarioInformation)) {
+				final var attributes = scenarioInformation.getAttributes();
+				final var name = attributes.getNamedItem("name");
+				final var file = attributes.getNamedItem("file");
+				final var thumbnail = attributes.getNamedItem("thumbnail");
+				if (bad(name) || bad(file) || bad(thumbnail)) {
+					Shared.LOGGER.error(name + "//" + file + "//" + thumbnail);
+					continue;
+				}
+				installedMaps.add(
+						new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
+								Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
 			}
-			final var attributes = scenarioInformation.getAttributes();
-			if (attributes == null) {
-				Shared.LOGGER.error("readScenarios - attributes==null");
-				continue;
-			}
-			final var name = attributes.getNamedItem("name");
-			if ((name == null) || (name.getNodeValue() == null)) {
-				Shared.LOGGER.error("readScenarios - name==null");
-				continue;
-			}
-			final var file = attributes.getNamedItem("file");
-			if ((file == null) || (file.getNodeValue() == null)) {
-				Shared.LOGGER.error("readScenarios - file==null");
-				continue;
-			}
-			final var thumbnail = attributes.getNamedItem("thumbnail");
-			if ((thumbnail == null) || (thumbnail.getNodeValue() == null)) {
-				Shared.LOGGER.error("readScenarios - thumbnail==null");
-				continue;
-			}
-			installedMaps
-					.add(new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-							Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
 		}
 	}
 }
