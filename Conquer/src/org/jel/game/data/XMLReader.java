@@ -130,7 +130,7 @@ public final class XMLReader {
 				XMLReader.throwableConsumer.accept(e);
 			}
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-					new ArrayList<>());
+					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
 		final var childs = d.getChildNodes();
 		Node infoNode = null;
@@ -144,6 +144,7 @@ public final class XMLReader {
 		final List<InstalledScenario> installedMaps = new ArrayList<>();
 		final List<String> pluginNames = new ArrayList<>();
 		final List<String> strategyNames = new ArrayList<>();
+		final List<String> readerFactoryNames = new ArrayList<>();
 		final var topNodes = infoNode.getChildNodes();
 		for (var i = 0; i < topNodes.getLength(); i++) {
 			final var node = topNodes.item(i);
@@ -154,39 +155,65 @@ public final class XMLReader {
 			if (nodeName.equals("scenarios")) {
 				this.readScenarios(node, installedMaps);
 			} else if (nodeName.equals("plugins")) {
-				this.readPlugins(node, pluginNames);
+				this.readList(node, pluginNames);
 			} else if (nodeName.equals("strategies")) {
-				this.readStrategies(node, strategyNames);
+				this.readList(node, strategyNames);
+			} else if (nodeName.equals("readers")) {
+				this.readList(node, readerFactoryNames);
 			} else {
 				Shared.LOGGER.error("Unknown attribute: " + nodeName);
 			}
 		}
 		final List<Plugin> plugins = instantiate ? this.loadPlugins(pluginNames) : new ArrayList<>();
 		final List<StrategyProvider> strategies = instantiate ? this.loadStrategies(strategyNames) : new ArrayList<>();
+		final List<ConquerInfoReaderFactory> readerFactories = instantiate ? this.loadReaders(readerFactoryNames)
+				: new ArrayList<>();
 		return new GlobalContext(this.distinct(installedMaps), this.distinct(plugins), this.distinct(strategies),
-				this.distinct(pluginNames), this.distinct(strategyNames));
+				readerFactories, this.distinct(pluginNames), this.distinct(strategyNames),
+				this.distinct(readerFactoryNames));
 	}
 
-	private void readPlugins(final Node node, final List<String> pluginNames) {
-		final var pluginList = node.getChildNodes();
-		for (var j = 0; j < pluginList.getLength(); j++) {
-			final var pluginInformation = pluginList.item(j);
-			if ((pluginInformation == null) || pluginInformation.getNodeName().equals("#text")
-					|| pluginInformation.getNodeName().equals("#comment")) {
+	private List<ConquerInfoReaderFactory> loadReaders(List<String> readerFactories) {
+		final List<ConquerInfoReaderFactory> ret = new ArrayList<>();
+		for (final String s : readerFactories) {
+			try {
+				final var clazz = this.checkedLoading(s);
+				final var rawObject = clazz.getConstructor().newInstance();
+				if (!(rawObject instanceof ConquerInfoReaderFactory)) {
+					Shared.LOGGER.error(
+							"Couldn't load " + clazz.getName() + " as it doesn't implement ConquerInfoReaderFactory!");
+					continue;
+				}
+				final var plugin = (ConquerInfoReaderFactory) rawObject;
+				ret.add(plugin);
+				Shared.LOGGER.message("Loaded reader: " + s);
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				Shared.LOGGER.exception(e);
+				if (XMLReader.throwableConsumer != null) {
+					XMLReader.throwableConsumer.accept(e);
+				}
+			}
+		}
+		return ret;
+	}
+
+	private void readList(Node node, List<String> list) {
+		final var nodeList = node.getChildNodes();
+		for (var j = 0; j < nodeList.getLength(); j++) {
+			final var dataNode = nodeList.item(j);
+			if ((dataNode == null) || dataNode.getNodeName().equals("#text")
+					|| dataNode.getNodeName().equals("#comment") || !dataNode.hasAttributes()) {
 				continue;
 			}
-			final var attributes = pluginInformation.getAttributes();
-			if (attributes == null) {
-				Shared.LOGGER.error("readPlugins - attributes==null");
-				continue;
-			}
+			final var attributes = dataNode.getAttributes();
 			final var classNameNode = attributes.getNamedItem("className");
 			if ((classNameNode == null) || (classNameNode.getNodeValue() == null)) {
-				Shared.LOGGER.error("readPlugins - classNameNode==null");
+				Shared.LOGGER.error("readList - classNameNode==null");
 				continue;
 			}
 			final var className = classNameNode.getNodeValue();
-			pluginNames.add(className);
+			list.add(className);
 		}
 	}
 
@@ -221,29 +248,6 @@ public final class XMLReader {
 			installedMaps
 					.add(new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
 							Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
-		}
-	}
-
-	private void readStrategies(final Node node, final List<String> strategyNames) {
-		final var strategyList = node.getChildNodes();
-		for (var j = 0; j < strategyList.getLength(); j++) {
-			final var strategyInformation = strategyList.item(j);
-			if ((strategyInformation == null) || strategyInformation.getNodeName().equals("#text")
-					|| strategyInformation.getNodeName().equals("#comment")) {
-				continue;
-			}
-			final var attributes = strategyInformation.getAttributes();
-			if (attributes == null) {
-				Shared.LOGGER.error("readStrategies - attributes==null");
-				continue;
-			}
-			final var classNameNode = attributes.getNamedItem("className");
-			if ((classNameNode == null) || (classNameNode.getNodeValue() == null)) {
-				Shared.LOGGER.error("readStrategies - classNameNode==null");
-				continue;
-			}
-			final var className = classNameNode.getNodeValue();
-			strategyNames.add(className);
 		}
 	}
 }

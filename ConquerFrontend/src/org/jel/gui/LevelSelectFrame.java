@@ -30,7 +30,6 @@ import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
-import org.jel.game.data.ri.ScenarioFileReader;
 import org.jel.gui.utils.ImageResource;
 
 /**
@@ -181,8 +180,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		}
 		this.shouldExit = false;
 		this.dispose();
-		final var r = new ScenarioFileReader(scenario.file());
-		final var game = r.buildInfo();
+		final var game = this.context.loadInfo(scenario);
 		final var li = new LevelInfo(game, scenario, this.getLocation(), this.context);
 		li.setVisible(true);
 	}

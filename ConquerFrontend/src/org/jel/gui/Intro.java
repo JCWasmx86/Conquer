@@ -1,6 +1,5 @@
 package org.jel.gui;
 
-import java.awt.BufferCapabilities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -110,7 +109,8 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		}
 	}
 
-	private final Random r=new Random(System.nanoTime());
+	private final Random r = new Random(System.nanoTime());
+
 	@Override
 	public void paint(final Graphics g) {
 		for (var i = 0; i < 5; i++) {

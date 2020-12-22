@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 
 import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.ConquerInfoReader;
 import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
@@ -24,7 +25,7 @@ import org.jel.game.utils.Graph;
  * The class that builds a Game from a scenariofile.
  *
  */
-public final class ScenarioFileReader {
+final class ScenarioFileReader implements ConquerInfoReader {
 	private final File file;
 
 	/**
@@ -45,14 +46,15 @@ public final class ScenarioFileReader {
 	 *
 	 * @return An uninitialized game or null in case of an error.
 	 */
-	public ConquerInfo buildInfo() {
+	@Override
+	public ConquerInfo build() {
 		final var game = new Game();
 		final var uri = this.file.toURI();
 		final var path = Paths.get(uri);
 		try (var dis = new DataInputStream(Files.newInputStream(path))) {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
-			if ((mag1 != 0xAA) && (mag2 != 0x55)) {
+			if ((mag1 != 0xAA) || (mag2 != 0x55)) {
 				Shared.LOGGER.error("Wrong magic number!");
 				return null;
 			}
