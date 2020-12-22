@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.UTFDataFormatException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -40,7 +39,6 @@ final class ScenarioFileReader implements ConquerInfoReader {
 		this.file = new File(fileName);
 	}
 
-	// TODO: Refactor, maybe use JSON/XML???
 	/**
 	 * Read the inputfile and build an uninitialized game.
 	 *
@@ -55,51 +53,39 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
 			if ((mag1 != 0xAA) || (mag2 != 0x55)) {
-				Shared.LOGGER.error("Wrong magic number!");
-				return null;
+				throw new RuntimeException("Wrong magic number!");
 			}
 			final var numBytesOfBackgroundImage = dis.readInt();
 			if (numBytesOfBackgroundImage < 0) {
-				Shared.LOGGER.error(
+				throw new RuntimeException(
 						"Expected a non negative number of bytes in background, got " + numBytesOfBackgroundImage);
-				return null;
 			}
 			final var data = new byte[numBytesOfBackgroundImage];
 			var bytesRead = dis.read(data);
 			if (bytesRead != numBytesOfBackgroundImage) {
-				Shared.LOGGER.error(
+				throw new RuntimeException(
 						"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
-				return null;
 			}
 			final var gi = ImageIO.read(new ByteArrayInputStream(data));
 			game.setBackground(gi);
 			final var numPlayers = dis.readInt();
 			if ((numPlayers == 1) || (numPlayers == 0)) {
-				Shared.LOGGER.error("Expected at least 2 players, got " + numPlayers);
-				return null;
+				throw new RuntimeException("Expected at least 2 players, got " + numPlayers);
 			} else if (numPlayers < 0) {
-				Shared.LOGGER.error("Expected a non negative number of players, got " + numPlayers);
-				return null;
+				throw new RuntimeException("Expected a non negative number of players, got " + numPlayers);
 			}
 			game.setPlayers(numPlayers);
 			final List<Clan> tmp = new ArrayList<>();
 			for (var i = 0; i < numPlayers; i++) {
 				final var d = dis.readDouble();
 				if (d < 0) {
-					Shared.LOGGER.error("Expected a non negative number of coins, got " + d);
-					return null;
+					throw new RuntimeException("Expected a non negative number of coins, got " + d);
 				}
 				tmp.add(new Clan());
 				tmp.get(i).setCoins(d);
 			}
 			for (var i = 0; i < numPlayers; i++) {
-				final String s;
-				try {
-					s = dis.readUTF();
-				} catch (final UTFDataFormatException utf) {
-					Shared.LOGGER.error("Invalid utf!");
-					return null;
-				}
+				final String s = dis.readUTF();
 				tmp.get(i).setId(i);
 				tmp.get(i).setName(s);
 			}
@@ -111,35 +97,28 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			for (var i = 0; i < numPlayers; i++) {
 				final var r = dis.readInt();
 				if (r < 0) {
-					Shared.LOGGER.error("r < 0: " + r);
-					return null;
+					throw new RuntimeException("r < 0: " + r);
 				} else if (r > 255) {
-					Shared.LOGGER.error("r to big: " + r);
-					return null;
+					throw new RuntimeException("r to big: " + r);
 				}
 				final var g = dis.readInt();
 				if (g < 0) {
-					Shared.LOGGER.error("g < 0: " + g);
-					return null;
+					throw new RuntimeException("g < 0: " + g);
 				} else if (g > 255) {
-					Shared.LOGGER.error("g to big: " + g);
-					return null;
+					throw new RuntimeException("g to big: " + g);
 				}
 				final var b = dis.readInt();
 				if (b < 0) {
-					Shared.LOGGER.error("b < 0: " + b);
-					return null;
+					throw new RuntimeException("b < 0: " + b);
 				} else if (b > 255) {
-					Shared.LOGGER.error("b to big: " + b);
-					return null;
+					throw new RuntimeException("b to big: " + b);
 				}
 				colors.add(new Color(r, g, b));
 				tmp.get(i).setColor(colors.get(i));
 			}
 			final var numberOfRelations = dis.readInt();
 			if (numberOfRelations < 0) {
-				Shared.LOGGER.error("Expected a non negative number of relations, got  " + numberOfRelations);
-				return null;
+				throw new RuntimeException("Expected a non negative number of relations, got  " + numberOfRelations);
 			}
 			final var relations = new Graph<Integer>(numPlayers);
 			for (var i = 0; i < numPlayers; i++) {
@@ -157,11 +136,11 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			for (var i = 0; i < numberOfRelations; i++) {
 				final var firstClan = dis.readInt();
 				if (firstClan >= numPlayers) {
-					Shared.LOGGER.error("firstClan > numPlayers: " + firstClan);
+					throw new RuntimeException("firstClan > numPlayers: " + firstClan);
 				}
 				final var secondClan = dis.readInt();
 				if (secondClan >= numPlayers) {
-					Shared.LOGGER.error("secondClan > numPlayers: " + secondClan);
+					throw new RuntimeException("secondClan > numPlayers: " + secondClan);
 				}
 				final var value = dis.readInt() % 101;
 				relations.addDirectedEdge(firstClan, secondClan, value, value);
@@ -175,95 +154,77 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			for (var i = 0; i < numCities; i++) {
 				final var bytesOfPicture = dis.readInt();
 				if (bytesOfPicture < 0) {
-					Shared.LOGGER.error("Expected a non negative number of bytes in image ,got " + bytesOfPicture);
-					return null;
+					throw new RuntimeException(
+							"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
 				}
 				final var pic = new byte[bytesOfPicture];
 				bytesRead = dis.read(pic);
 				if (bytesRead != bytesOfPicture) {
-					Shared.LOGGER.error("bytesRead: " + bytesRead + " != bytesOfPicture: " + bytesOfPicture);
-					return null;
+					throw new RuntimeException("bytesRead: " + bytesRead + " != bytesOfPicture: " + bytesOfPicture);
 				}
 				final var c = new CityBuilder(game);
 				c.setImage(ImageIO.read(new ByteArrayInputStream(pic)));
 				final var clanN = dis.readInt();
 				if (clanN < 0) {
-					Shared.LOGGER.error("clan < 0: " + clanN);
-					return null;
+					throw new RuntimeException("clan < 0: " + clanN);
 				}
 				if (clanN >= numPlayers) {
-					Shared.LOGGER.error("clan >= numPlayers : " + clanN);
-					return null;
+					throw new RuntimeException("clan >= numPlayers : " + clanN);
 				}
 				c.setClan(tmp.get(clanN));
 				final var numPeople = dis.readInt();
 				if (numPeople < 0) {
-					Shared.LOGGER.error("numPeople < 0: " + numPeople);
-					return null;
+					throw new RuntimeException("numPeople < 0: " + numPeople);
 				}
 				c.setNumberOfPeople(numPeople);
 				final var numSoldiers = dis.readInt();
 				if (numSoldiers < 0) {
-					Shared.LOGGER.error("numSoldiers < 0: " + numSoldiers);
-					return null;
+					throw new RuntimeException("numSoldiers < 0: " + numSoldiers);
 				}
 				c.setNumberOfSoldiers(numSoldiers);
 				final var x = dis.readInt();
 				if (x < 0) {
-					Shared.LOGGER.error("x < 0: " + x);
-					return null;
+					throw new RuntimeException("x < 0: " + x);
 				}
 				c.setX(x);
 				final var y = dis.readInt();
 				if (y < 0) {
-					Shared.LOGGER.error("y < 0: " + y);
-					return null;
+					throw new RuntimeException("y < 0: " + y);
 				}
 				c.setY(y);
 				final var defense = dis.readInt();
 				if (defense < 0) {
-					Shared.LOGGER.error("defense < 0: " + defense);
-					return null;
+					throw new RuntimeException("defense < 0: " + defense);
 				}
 				c.setDefense(defense);
 				final var bonus = dis.readDouble();
 				if (bonus < 0) {
-					Shared.LOGGER.error("bonus < 0: " + bonus);
-					return null;
+					throw new RuntimeException("bonus < 0: " + bonus);
+
 				}
 				c.setDefenseBonus(bonus);
 				final var growth = dis.readDouble();
 				if (growth < 0) {
-					Shared.LOGGER.error("growth < 0: " + growth);
-					return null;
+					throw new RuntimeException("growth < 0: " + growth);
 				}
 				c.setGrowth(growth);
-				final String cityN;
-				try {
-					cityN = dis.readUTF();
-				} catch (final UTFDataFormatException utf) {
-					Shared.LOGGER.error("Invalid utf!");
-					return null;
-				}
+				final String cityN = dis.readUTF();
 				c.setName(cityN);
 				g._set(i, c.build());
 				final int numConnections = dis.readShort();
 				for (var s = 0; s < numConnections; s++) {
 					final int otherCityIndex = dis.readShort();
 					if (otherCityIndex < 0) {
-						Shared.LOGGER.error("otherCityIndex < 0: " + otherCityIndex);
-						return null;
+						throw new RuntimeException("otherCityIndex < 0: " + otherCityIndex);
 					} else if (otherCityIndex == i) {
-						Shared.LOGGER.error("Can\'t have a connection to itself!");
-						return null;
+						throw new RuntimeException("Can\'t have a connection to itself!");
+
 					} else if (otherCityIndex > numCities) {
-						Shared.LOGGER.error("Index out of range: " + otherCityIndex);
-						return null;
+						throw new RuntimeException("Index out of range: " + otherCityIndex);
 					}
 					final var distanceToCity = dis.readDouble();
 					if (distanceToCity < 0) {
-						Shared.LOGGER.error("distanceToCity < 0: " + distanceToCity);
-						return null;
+						throw new RuntimeException("distanceToCity < 0: " + distanceToCity);
 					}
 					g.addDirectedEdge(otherCityIndex, i, distanceToCity, distanceToCity);
 				}
@@ -271,8 +232,7 @@ final class ScenarioFileReader implements ConquerInfoReader {
 				for (var j = 0; j < Resource.values().length; j++) {
 					final var prodRate = dis.readDouble();
 					if (prodRate < 0) {
-						Shared.LOGGER.error("prodRate < 0: " + prodRate);
-						return null;
+						throw new RuntimeException("prodRate < 0: " + prodRate);
 					}
 					productions.add(prodRate);
 				}
@@ -282,11 +242,10 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			game.setGraph(g);
 		} catch (final IOException ioe) {
 			Shared.LOGGER.exception(ioe);
-			return null;
 		}
 		if (!game.getCities().isConnected()) {
-			Shared.LOGGER.error("Disconnected graph!");
-			return null;
+			throw new RuntimeException("Disconnected graph!");
+
 		}
 		return game;
 	}
