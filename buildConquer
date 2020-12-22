@@ -101,6 +101,9 @@ echo "	</plugins>">>info.xml
 echo "	<strategies>">>info.xml
 echo "		<strategy className=\"org.jel.game.strategies.SortedStrategyProvider\" />">>info.xml
 echo "	</strategies>">>info.xml
+echo "	<readers>">>info.xml
+echo "		<reader className=\"org.jel.game.data.ri.ScenarioFileReaderFactory\" />">>info.xml
+echo "	</readers>">>info.xml
 echo "</info>">>info.xml
 mkdir .conquer
 mkdir .conquer/libs

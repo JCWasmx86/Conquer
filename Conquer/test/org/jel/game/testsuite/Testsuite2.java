@@ -11,7 +11,6 @@ import org.jel.game.data.GlobalContext;
 import org.jel.game.data.ICity;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.XMLReader;
-import org.jel.game.data.ri.ScenarioFileReader;
 
 /**
  * Passes bad arguments to functions.
@@ -43,8 +42,7 @@ public final class Testsuite2 extends Testsuite {
 			this.error("scenario.name()==null");
 			return;
 		}
-		final var reader = new ScenarioFileReader(scenario.file());
-		final var game = reader.buildInfo();
+		final var game = context.loadInfo(scenario);
 		if (game == null) {
 			this.error("game==null");
 			return;

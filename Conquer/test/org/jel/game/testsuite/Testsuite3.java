@@ -9,7 +9,6 @@ import org.jel.game.data.ICity;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
-import org.jel.game.data.ri.ScenarioFileReader;
 import org.jel.game.utils.Graph;
 
 /**
@@ -269,7 +268,7 @@ public final class Testsuite3 extends Testsuite {
 	private int start() {
 		final var ctx = XMLReader.getInstance().readInfo();
 		for (final var scenario : ctx.getInstalledMaps()) {
-			final var game = new ScenarioFileReader(scenario.file()).buildInfo();
+			final var game = ctx.loadInfo(scenario);
 			game.addContext(ctx);
 			game.init();
 			for (var i = 0; i < 5; i++) {
