@@ -1,5 +1,6 @@
 package org.jel.gui;
 
+import java.awt.BufferCapabilities;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -62,6 +63,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		final var main = new Intro();
 		main.setLocationByPlatform(true);
 		main.setVisible(true);
+		main.createBufferStrategy(4);
 	}
 
 	private final Sound sound;
@@ -75,6 +77,7 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.timer.start();
+		this.setTitle(Messages.getString("Intro.title"));
 	}
 
 	@Override
@@ -96,24 +99,22 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	@Override
 	public void keyTyped(final KeyEvent e) {
 		if ((e == null) || (e.getKeyChar() == KeyEvent.VK_SPACE)) {
-			this.setVisible(false);
 			this.needed = false;
 			if (this.sound.isPlaying()) {
 				this.sound.stop();
 			}
-			this.setVisible(false);
-			this.createBufferStrategy(1000);
 			MainScreen.forward(this.getLocation(), true);
+			this.setVisible(false);
 		} else if (e.getKeyChar() == KeyEvent.VK_ESCAPE) {// 27==ESC
 			System.exit(0);
 		}
 	}
 
+	private final Random r=new Random(System.nanoTime());
 	@Override
 	public void paint(final Graphics g) {
-		final var r = new Random(System.nanoTime());
 		for (var i = 0; i < 5; i++) {
-			g.setColor(new Color(r.nextFloat(), r.nextFloat(), r.nextFloat()));
+			g.setColor(new Color(this.r.nextFloat(), this.r.nextFloat(), this.r.nextFloat()));
 			final var n = 10;
 			final var x = this.randomArray(n, 0, this.getWidth());
 			final var y = this.randomArray(n, 0, this.getHeight());
@@ -124,9 +125,8 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 
 	private int[] randomArray(final int n, final int min, final int width) {
 		final var ret = new int[n];
-		final var r = new Random(System.nanoTime());
 		for (var i = 0; i < n; i++) {
-			ret[i] = r.nextInt((width - min) + 1) + min;
+			ret[i] = this.r.nextInt((width - min) + 1) + min;
 		}
 		return ret;
 	}
@@ -200,8 +200,8 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			}
 			this.setVisible(false);
 			this.needed = false;
-			this.setVisible(false);
 			MainScreen.forward(this.getLocation(), true);
+			this.setVisible(false);
 		}).start();
 	}
 }
