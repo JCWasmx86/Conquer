@@ -44,10 +44,6 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			// fear anything, if an exception is thrown.
 			e.printStackTrace();
 		}
-		for(int i=1;i<1000;i++) {
-			System.out.println(Shared.newPowerForSoldiers(i));
-			System.out.println("//"+Shared.upgradeCostsForSoldiers(i));
-		}
 		new Thread(() -> {
 			final var installerWindow = new InstallerWindow();
 			new Installer(
