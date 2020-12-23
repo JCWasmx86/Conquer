@@ -439,7 +439,7 @@ public final class Shared {
 		if (x == 0) {
 			return 40;
 		}
-		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * x;
+		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
 	/**
@@ -449,7 +449,7 @@ public final class Shared {
 	 * @return Costs
 	 */
 	public static double upgradeCostsForSoldiers(final int x) {
-		return Shared.upgradeCostsForOffenseAndDefense(x) * (x / 2.0);// Legacy
+		return Shared.upgradeCostsForOffenseAndDefense(x) * 10;
 	}
 
 	private Shared() {
