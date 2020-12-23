@@ -15,7 +15,7 @@ public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSold
 
 	@Override
 	public boolean isPlayerInvolved() {
-		return isBadForPlayer();
+		return this.isBadForPlayer();
 	}
 
 	@Override

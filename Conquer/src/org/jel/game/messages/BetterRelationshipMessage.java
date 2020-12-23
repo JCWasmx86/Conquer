@@ -3,7 +3,8 @@ package org.jel.game.messages;
 import org.jel.game.Messages;
 import org.jel.game.data.Clan;
 
-public record BetterRelationshipMessage(Clan first, Clan second, double oldValue, double newValue) implements Message {
+public record BetterRelationshipMessage(Clan first, Clan second, double oldValue,
+		double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
 		return this.first.isPlayerClan() || this.second.isPlayerClan();
