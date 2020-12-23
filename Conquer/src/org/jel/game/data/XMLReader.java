@@ -43,6 +43,10 @@ public final class XMLReader {
 		XMLReader.throwableConsumer = throwable;
 	}
 
+	private boolean bad(final Node n) {
+		return (n == null) || (n.getNodeValue() == null);
+	}
+
 	private Class<?> checkedLoading(final String s) throws ClassNotFoundException {
 		try {
 			return Thread.currentThread().getContextClassLoader().loadClass(s);
@@ -53,6 +57,21 @@ public final class XMLReader {
 
 	private <T> List<T> distinct(final Collection<T> collection) {
 		return collection.stream().distinct().collect(Collectors.toList());
+	}
+
+	private Node findNode(final NodeList childs) {
+		for (var i = 0; i < childs.getLength(); i++) {
+			final var child = childs.item(i);
+			if (child.getNodeName().equals("info")) {
+				return child;
+			}
+		}
+		return null;
+	}
+
+	private boolean goodNode(final Node n) {
+		return (n != null) && !n.getNodeName().equals("#text") && !n.getNodeName().equals("#comment")
+				&& n.hasAttributes();
 	}
 
 	private List<Plugin> loadPlugins(final List<String> pluginNames) {
@@ -68,7 +87,31 @@ public final class XMLReader {
 				final var plugin = (Plugin) rawObject;
 				ret.add(plugin);
 				Shared.LOGGER.message("Loaded plugin: " + plugin.getName());
-			} catch (Exception e) {
+			} catch (final Exception e) {
+				Shared.LOGGER.exception(e);
+				if (XMLReader.throwableConsumer != null) {
+					XMLReader.throwableConsumer.accept(e);
+				}
+			}
+		}
+		return ret;
+	}
+
+	private List<ConquerInfoReaderFactory> loadReaders(final List<String> readerFactories) {
+		final List<ConquerInfoReaderFactory> ret = new ArrayList<>();
+		for (final String s : readerFactories) {
+			try {
+				final var clazz = this.checkedLoading(s);
+				final var rawObject = clazz.getConstructor().newInstance();
+				if (!(rawObject instanceof ConquerInfoReaderFactory)) {
+					Shared.LOGGER.error(
+							"Couldn't load " + clazz.getName() + " as it doesn't implement ConquerInfoReaderFactory!");
+					continue;
+				}
+				final var plugin = (ConquerInfoReaderFactory) rawObject;
+				ret.add(plugin);
+				Shared.LOGGER.message("Loaded reader: " + s);
+			} catch (final Exception e) {
 				Shared.LOGGER.exception(e);
 				if (XMLReader.throwableConsumer != null) {
 					XMLReader.throwableConsumer.accept(e);
@@ -92,7 +135,7 @@ public final class XMLReader {
 				final var strategy = (StrategyProvider) rawObject;
 				ret.add(strategy);
 				Shared.LOGGER.message("Loaded StrategyProvider: " + strategy.getName());
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				Shared.LOGGER.exception(e);
 				if (XMLReader.throwableConsumer != null) {
 					XMLReader.throwableConsumer.accept(e);
@@ -130,7 +173,7 @@ public final class XMLReader {
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
-		Node infoNode = findNode(d.getChildNodes());
+		final var infoNode = this.findNode(d.getChildNodes());
 		if (infoNode == null) {
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
@@ -142,7 +185,7 @@ public final class XMLReader {
 		final var topNodes = infoNode.getChildNodes();
 		for (var i = 0; i < topNodes.getLength(); i++) {
 			final var node = topNodes.item(i);
-			if (node != null && node.getNodeType() == Node.ELEMENT_NODE) {
+			if ((node != null) && (node.getNodeType() == Node.ELEMENT_NODE)) {
 				final var nodeName = node.getNodeName();
 				if (nodeName.equals("scenarios")) {
 					this.readScenarios(node, installedMaps);
@@ -166,48 +209,14 @@ public final class XMLReader {
 				this.distinct(readerFactoryNames));
 	}
 
-	private Node findNode(NodeList childs) {
-		for (var i = 0; i < childs.getLength(); i++) {
-			final var child = childs.item(i);
-			if (child.getNodeName().equals("info")) {
-				return child;
-			}
-		}
-		return null;
-	}
-
-	private List<ConquerInfoReaderFactory> loadReaders(List<String> readerFactories) {
-		final List<ConquerInfoReaderFactory> ret = new ArrayList<>();
-		for (final String s : readerFactories) {
-			try {
-				final var clazz = this.checkedLoading(s);
-				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof ConquerInfoReaderFactory)) {
-					Shared.LOGGER.error(
-							"Couldn't load " + clazz.getName() + " as it doesn't implement ConquerInfoReaderFactory!");
-					continue;
-				}
-				final var plugin = (ConquerInfoReaderFactory) rawObject;
-				ret.add(plugin);
-				Shared.LOGGER.message("Loaded reader: " + s);
-			} catch (Exception e) {
-				Shared.LOGGER.exception(e);
-				if (XMLReader.throwableConsumer != null) {
-					XMLReader.throwableConsumer.accept(e);
-				}
-			}
-		}
-		return ret;
-	}
-
-	private void readList(Node node, List<String> list) {
+	private void readList(final Node node, final List<String> list) {
 		final var nodeList = node.getChildNodes();
 		for (var j = 0; j < nodeList.getLength(); j++) {
 			final var dataNode = nodeList.item(j);
-			if (goodNode(dataNode)) {
+			if (this.goodNode(dataNode)) {
 				final var attributes = dataNode.getAttributes();
 				final var classNameNode = attributes.getNamedItem("className");
-				if (bad(classNameNode)) {
+				if (this.bad(classNameNode)) {
 					Shared.LOGGER.error("readList - classNameNode==null");
 					continue;
 				}
@@ -217,24 +226,16 @@ public final class XMLReader {
 		}
 	}
 
-	private boolean goodNode(Node n) {
-		return (n != null) && !n.getNodeName().equals("#text") && !n.getNodeName().equals("#comment")&&n.hasAttributes();
-	}
-
-	private boolean bad(Node n) {
-		return n == null || n.getNodeValue() == null;
-	}
-
 	private void readScenarios(final Node node, final List<InstalledScenario> installedMaps) {
 		final var scenarioList = node.getChildNodes();
 		for (var j = 0; j < scenarioList.getLength(); j++) {
 			final var scenarioInformation = scenarioList.item(j);
-			if (goodNode(scenarioInformation)) {
+			if (this.goodNode(scenarioInformation)) {
 				final var attributes = scenarioInformation.getAttributes();
 				final var name = attributes.getNamedItem("name");
 				final var file = attributes.getNamedItem("file");
 				final var thumbnail = attributes.getNamedItem("thumbnail");
-				if (bad(name) || bad(file) || bad(thumbnail)) {
+				if (this.bad(name) || this.bad(file) || this.bad(thumbnail)) {
 					Shared.LOGGER.error(name + "//" + file + "//" + thumbnail);
 					continue;
 				}

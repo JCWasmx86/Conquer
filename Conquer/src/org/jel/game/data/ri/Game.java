@@ -62,7 +62,7 @@ import org.jel.game.utils.Graph;
  */
 public final class Game implements ConquerInfo {
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
-	private static final double GROWTH_LIMIT = 1.10;
+	private static final double GROWTH_LIMIT = 1.05;
 	private static final double WEAK_GROWTH_REDUCE_FACTOR = 0.9;
 	private static final double ALTERNATIVE_GROWTH_LIMIT = 1.075;
 	private static final int SOFT_POPULATION_LIMIT = 1_000_000;

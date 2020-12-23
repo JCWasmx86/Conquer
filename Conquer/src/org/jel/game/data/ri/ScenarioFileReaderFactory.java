@@ -6,7 +6,7 @@ import org.jel.game.data.ConquerInfoReaderFactory;
 public final class ScenarioFileReaderFactory implements ConquerInfoReaderFactory {
 
 	@Override
-	public ConquerInfoReader getForFile(String file) {
+	public ConquerInfoReader getForFile(final String file) {
 		return new ScenarioFileReader(file);
 	}
 

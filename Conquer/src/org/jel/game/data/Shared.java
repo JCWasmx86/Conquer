@@ -296,7 +296,7 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
-			if (cnt + currLevel == Shared.MAX_LEVEL) {
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
 				return cnt;
 			}
 		}
@@ -320,7 +320,7 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
-			if (cnt + currLevel == Shared.MAX_LEVEL) {
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
 				return cnt;
 			}
 		}
@@ -344,7 +344,7 @@ public final class Shared {
 			}
 			coins -= costs;
 			cnt++;
-			if (cnt + currLevel == Shared.MAX_LEVEL) {
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
 				return cnt;
 			}
 		}
@@ -358,7 +358,7 @@ public final class Shared {
 	 * @return New strength.
 	 */
 	public static double newPowerForSoldiers(final int level) {
-		return Shared.upgradeCostsForSoldiers(level) / 25000;
+		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
 	}
 
 	/**
@@ -381,17 +381,7 @@ public final class Shared {
 	 * @return New amount.
 	 */
 	public static double newPowerOfUpdate(final int level, final double oldValue) {
-		if (level == 0) {
-			return oldValue * 1.3;
-		}
-		var c = ((level + 1.0) / level);
-		while (c > Math.E) {
-			c = Math.log(c);
-		}
-		while (c > 1.002) {
-			c = Math.pow(c, 1 / (c * c * c));
-		}
-		return oldValue * Math.pow(c, 6);
+		return oldValue * 1.001 * (1 - (level / (double) Shared.MAX_LEVEL));
 	}
 
 	/**
@@ -447,9 +437,9 @@ public final class Shared {
 	 */
 	public static double upgradeCostsForOffenseAndDefense(final int x) {
 		if (x == 0) {
-			return 40.02;
+			return 40;
 		}
-		return Math.pow(Math.log(x) + (4 * x), 3);
+		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * x;
 	}
 
 	/**
@@ -459,14 +449,7 @@ public final class Shared {
 	 * @return Costs
 	 */
 	public static double upgradeCostsForSoldiers(final int x) {
-		if (x == 0) {
-			return 230.02;
-		}
-		return Shared.upgradeCostsForSoldiers0(Shared.upgradeCostsForSoldiers0((0.1 * x) + 3)) * 1000;
-	}
-
-	private static double upgradeCostsForSoldiers0(final double x) {
-		return x - (0.8 * Math.sin(x));
+		return Shared.upgradeCostsForOffenseAndDefense(x) * (x / 2.0);// Legacy
 	}
 
 	private Shared() {

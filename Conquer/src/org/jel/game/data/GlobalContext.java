@@ -2,7 +2,6 @@ package org.jel.game.data;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -21,17 +20,9 @@ public final class GlobalContext {
 	private final List<StrategyProvider> strategies;
 	private final List<String> pluginNames;
 	private final List<String> strategyNames;
-	private List<ConquerInfoReaderFactory> readers;
+	private final List<ConquerInfoReaderFactory> readers;
 
-	public List<ConquerInfoReaderFactory> getReaders() {
-		return readers;
-	}
-
-	public List<String> getReaderNames() {
-		return readerNames;
-	}
-
-	private List<String> readerNames;
+	private final List<String> readerNames;
 
 	GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,
 			final List<StrategyProvider> strategies, final List<ConquerInfoReaderFactory> readers,
@@ -57,6 +48,14 @@ public final class GlobalContext {
 		return this.plugins;
 	}
 
+	public List<String> getReaderNames() {
+		return this.readerNames;
+	}
+
+	public List<ConquerInfoReaderFactory> getReaders() {
+		return this.readers;
+	}
+
 	public List<StrategyProvider> getStrategies() {
 		return this.strategies;
 	}
@@ -65,25 +64,25 @@ public final class GlobalContext {
 		return this.strategyNames;
 	}
 
-	public ConquerInfo loadInfo(InstalledScenario is) {
-		var list = this.readers.stream()
+	public ConquerInfo loadInfo(final InstalledScenario is) {
+		final var list = this.readers.stream()
 				.sorted((a, b) -> Integer.compare(a.getMagicNumber().length, b.getMagicNumber().length))
 				.collect(Collectors.toList());
-		int maxLength = list.get(list.size() - 1).getMagicNumber().length;
-		try (InputStream stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
-			byte[] b = new byte[maxLength];
-			int n = stream.read(b);
-			for (var factory : list) {
+		final var maxLength = list.get(list.size() - 1).getMagicNumber().length;
+		try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
+			final var b = new byte[maxLength];
+			final var n = stream.read(b);
+			for (final var factory : list) {
 				final var magic = factory.getMagicNumber();
 				if (magic.length > n) {
 					continue;
 				}
 				if (Arrays.equals(b, 0, magic.length, magic, 0, magic.length)) {
-					var reader = factory.getForFile(is.file());
+					final var reader = factory.getForFile(is.file());
 					return reader.build();
 				}
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 		throw new UnsupportedOperationException("No supported file format");
