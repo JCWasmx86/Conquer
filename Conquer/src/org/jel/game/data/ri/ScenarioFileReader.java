@@ -85,7 +85,7 @@ final class ScenarioFileReader implements ConquerInfoReader {
 				tmp.get(i).setCoins(d);
 			}
 			for (var i = 0; i < numPlayers; i++) {
-				final String s = dis.readUTF();
+				final var s = dis.readUTF();
 				tmp.get(i).setId(i);
 				tmp.get(i).setName(s);
 			}
@@ -208,7 +208,7 @@ final class ScenarioFileReader implements ConquerInfoReader {
 					throw new RuntimeException("growth < 0: " + growth);
 				}
 				c.setGrowth(growth);
-				final String cityN = dis.readUTF();
+				final var cityN = dis.readUTF();
 				c.setName(cityN);
 				g._set(i, c.build());
 				final int numConnections = dis.readShort();

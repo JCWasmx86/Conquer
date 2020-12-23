@@ -14,7 +14,7 @@ public record SoldiersDesertedBecauseOfMissingMoneyMessage(Clan clan, long numbe
 
 	@Override
 	public boolean isPlayerInvolved() {
-		return isBadForPlayer();
+		return this.isBadForPlayer();
 	}
 
 	@Override

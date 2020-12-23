@@ -9,8 +9,8 @@ import org.jel.game.messages.Message;
 public record ClanChangeMessage(ICity city, Clan oldClan, Clan newClan) implements Message {
 	@Override
 	public String getMessageText() {
-		return MessageFormat.format(ChangeCitiesMindsMessages.getString("ClanChangeMessage.message"), city.getName(), //$NON-NLS-1$
-				this.newClan.getName());
+		return MessageFormat.format(ChangeCitiesMindsMessages.getString("ClanChangeMessage.message"), //$NON-NLS-1$
+				this.city.getName(), this.newClan.getName());
 	}
 
 	@Override
