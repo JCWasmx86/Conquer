@@ -39,4 +39,17 @@ public final class EventList extends ArrayList<Message> {
 		return super.remove(o);
 	}
 
+	@Override
+	public int hashCode() {
+		return super.hashCode() ^ listeners.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		} else {
+			return super.equals(o);
+		}
+	}
 }

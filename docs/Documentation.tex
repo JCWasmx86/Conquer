@@ -16,14 +16,12 @@ for (InstalledScenario scenario : scenarios) {
 	ConquerInfo conquerInstance = ctx.loadInfo(scenario);
 	conquerInstance.addContext(gc);
 	conquerInstance.init();
-	while (!conquerInstance.onlyOneClanAlive()) {//*
+	while (!conquerInstance.onlyOneClanAlive()) {
 		conquerInstance.executeActions();
 	}
 }
 \end{minted}
 This sample code initializes Conquer and plays every installed scenario, until only one clan is alive.\newline
-All lines marked with \texttt{//*} can be replaced by custom implementations. (For example \texttt{Reader} can be replaced by making an instance of \texttt{ConquerInfo} from JSON instead of a weird
-binary format).
 What does each line do?\newline
 \begin{minted}{java}
 XMLReader xmlReader = XMLReader.getInstance();
