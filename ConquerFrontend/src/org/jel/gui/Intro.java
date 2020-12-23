@@ -69,6 +69,8 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 	private boolean needed = true;
 	private final Timer timer = new Timer(17, this);
 
+	private final Random r = new Random(System.nanoTime());
+
 	private Intro() {
 		this.setSize(600, 600);
 		this.setResizable(false);
@@ -108,8 +110,6 @@ public final class Intro extends JFrame implements WindowListener, KeyListener, 
 			System.exit(0);
 		}
 	}
-
-	private final Random r = new Random(System.nanoTime());
 
 	@Override
 	public void paint(final Graphics g) {

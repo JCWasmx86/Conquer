@@ -31,25 +31,25 @@ public final class EventList extends ArrayList<Message> {
 	}
 
 	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		} else {
+			return super.equals(o);
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode() ^ this.listeners.hashCode();
+	}
+
+	@Override
 	public boolean remove(final Object o) {
 		if (!(o instanceof Message)) {
 			throw new IllegalArgumentException("o has to be an instanceof Message");
 		}
 		this.listeners.forEach(a -> a.added((Message) o));
 		return super.remove(o);
-	}
-
-	@Override
-	public int hashCode() {
-		return super.hashCode() ^ listeners.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		} else {
-			return super.equals(o);
-		}
 	}
 }
