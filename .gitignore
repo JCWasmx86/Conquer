@@ -9,6 +9,11 @@ ConquerFrontend/.project
 ConquerFrontend/.settings/
 ConquerFrontend/bin/
 ConquerFrontend/music/
+ConquerTest/.*
+ConquerTest/.classpath
+ConquerTest/.project
+ConquerTest/.settings/
+ConquerTest/bin/
 Launcher/.cproject
 Launcher/.project
 Launcher/.settings/
