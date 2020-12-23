@@ -381,7 +381,7 @@ public final class Shared {
 	 * @return New amount.
 	 */
 	public static double newPowerOfUpdate(final int level, final double oldValue) {
-		return oldValue * 1.001 * (1 - (level / (double) Shared.MAX_LEVEL));
+		return 1.01 * oldValue + (level / (double) MAX_LEVEL);
 	}
 
 	/**
