@@ -397,7 +397,7 @@ public final class Shared {
 
 	/**
 	 * Restore a ConquerInfo that was saved before
-	 * 
+	 *
 	 * @param name The name of the saved Info
 	 * @return The restored info
 	 * @throws Exception
@@ -414,7 +414,7 @@ public final class Shared {
 
 	/**
 	 * Save a ConquerInfo with the specified name
-	 * 
+	 *
 	 * @param name The name of the save
 	 * @param info The ConquerInfo to save.
 	 * @throws Exception

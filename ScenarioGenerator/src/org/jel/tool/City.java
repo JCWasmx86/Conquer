@@ -14,8 +14,9 @@ public final class City {
 
 	private List<Double> productions = new ArrayList<>();
 
-	public City(double growth, String cityIcon, String name, int clanId, int numberOfPeople, int numberOfSoldiers,
-			int x, int y, int defense, double defenseBonus, List<Double> productions) {
+	public City(final double growth, final String cityIcon, final String name, final int clanId,
+			final int numberOfPeople, final int numberOfSoldiers, final int x, final int y, final int defense,
+			final double defenseBonus, final List<Double> productions) {
 		if (productions.size() != 9) {
 			throw new IllegalArgumentException("productions.size()!=9");
 		}
@@ -76,45 +77,45 @@ public final class City {
 		return this.y;
 	}
 
-	public void setBackground(String background) {
+	public void setBackground(final String background) {
 		this.background = background;
 	}
 
-	public void setClan(int clan) {
+	public void setClan(final int clan) {
 		this.clan = clan;
 	}
 
-	public void setDefense(int defense) {
+	public void setDefense(final int defense) {
 		this.Defense = defense;
 	}
 
-	public void setDefenseBonus(double defenseBonus) {
+	public void setDefenseBonus(final double defenseBonus) {
 		this.defenseBonus = defenseBonus;
 	}
 
-	public void setGrowth(double growth) {
+	public void setGrowth(final double growth) {
 		this.growth = growth;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 
 	}
 
-	public void setNumberOfPeople(int numberOfPeople) {
+	public void setNumberOfPeople(final int numberOfPeople) {
 		this.numberOfPeople = numberOfPeople;
 	}
 
-	public void setNumberOfSoldiers(int numberOfSoldiers) {
+	public void setNumberOfSoldiers(final int numberOfSoldiers) {
 		this.numberOfSoldiers = numberOfSoldiers;
 	}
 
-	public void setX(int x) {
+	public void setX(final int x) {
 		this.x = x;
 	}
 
-	public void setY(int y) {
+	public void setY(final int y) {
 		this.y = y;
 	}
-	
+
 }

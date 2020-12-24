@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 public class Belenos {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new DataFile().setBackground("Background1-res.png").addPlayer(1000, "Deinitia", new Color(255, 0, 120), 0)
 				.addPlayer(1000, "Valosepulca", new Color(100, 100, 100), 3)
 				.addPlayer(7500, "Deforma", new Color(255, 0, 0), 2).addPlayer(1200, "Invaria", new Color(0, 255, 0), 1)
