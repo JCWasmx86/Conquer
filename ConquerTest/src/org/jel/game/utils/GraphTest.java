@@ -24,7 +24,7 @@ public class GraphTest {
 		graph.add(2);
 		MatcherAssert.assertThat("It is connected, although it shouldn't!", !graph.isConnected(1, 2));
 		graph.addDirectedEdge(0, 1, 2.0);
-		MatcherAssert.assertThat("It isn't connected, although it shouldn!", graph.isConnected(1, 2));
+		MatcherAssert.assertThat("It isn't connected, although it shouldn't!", graph.isConnected(1, 2));
 		MatcherAssert.assertThat("It is connected, although it shouldn't!", !graph.isConnected(2, 1));
 		graph.addDirectedEdge(1, 0, 2.0);
 		MatcherAssert.assertThat("It isn't connected, although it shouldn!", graph.isConnected(2, 1));
