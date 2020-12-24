@@ -122,7 +122,7 @@ public class GraphTest {
 
 	@Test
 	public void testDFS() {
-		var g = getTestGraph();
+		var g = this.getTestGraph();
 		final AtomicInteger i = new AtomicInteger();
 		g.dfs(0, a -> i.incrementAndGet());
 		MatcherAssert.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
@@ -131,7 +131,7 @@ public class GraphTest {
 
 	@Test
 	public void testBridges() {
-		var g = getTestGraph();
+		var g = this.getTestGraph();
 		final var bridges = g.getBridges();
 		assert bridges.size() == 1;
 		assert bridges.get(0).first() == 4;
@@ -140,7 +140,7 @@ public class GraphTest {
 
 	@Test
 	public void testComponents() {
-		var g = getTestGraph();
+		var g = this.getTestGraph();
 		final var bridges = g.getBridges();
 		assert bridges.size() == 1;
 		assert bridges.get(0).first() == 4;
@@ -153,7 +153,7 @@ public class GraphTest {
 
 	@Test
 	public void getWeight() {
-		var g = getTestGraph();
+		var g = this.getTestGraph();
 		MatcherAssert.assertThat("getWeight failed", g.getWeight(0, 1) == 2.3);
 	}
 
@@ -163,12 +163,12 @@ public class GraphTest {
 		g.add(1);
 		g.add(2);
 		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected());
-		MatcherAssert.assertThat("Should be connected", getTestGraph().isConnected());
+		MatcherAssert.assertThat("Should be connected", this.getTestGraph().isConnected());
 	}
 
 	@Test
 	public void testConnection() {
-		var g = getTestGraph();
+		var g = this.getTestGraph();
 		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected(0, 9));
 		MatcherAssert.assertThat("Should be connected", g.isConnected(4, 5));
 	}
