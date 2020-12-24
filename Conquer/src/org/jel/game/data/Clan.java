@@ -184,8 +184,7 @@ public class Clan {
 		}
 		this.setResources(list);
 		final var resourceStatsList = new ArrayList<Double>();
-		for (@SuppressWarnings("unused")
-		final var unusedVariable : Resource.values()) {
+		for (int i = 0; i < Resource.values().length; i++) {
 			resourceStatsList.add(0.0);
 		}
 		this.setResourceStats(resourceStatsList);
