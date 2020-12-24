@@ -395,6 +395,13 @@ public final class Shared {
 		return (Math.random() * (upper / 100)) + (down / 100);
 	}
 
+	/**
+	 * Restore a ConquerInfo that was saved before
+	 * 
+	 * @param name The name of the saved Info
+	 * @return The restored info
+	 * @throws Exception
+	 */
 	public static ConquerInfo restore(final String name) throws Exception {
 		if (name == null) {
 			throw new IllegalArgumentException("name==null");
@@ -405,6 +412,13 @@ public final class Shared {
 		return instance.restore();
 	}
 
+	/**
+	 * Save a ConquerInfo with the specified name
+	 * 
+	 * @param name The name of the save
+	 * @param info The ConquerInfo to save.
+	 * @throws Exception
+	 */
 	public static void save(final String name, final ConquerInfo info) throws Exception {
 		if (name == null) {
 			throw new IllegalArgumentException("name==null");

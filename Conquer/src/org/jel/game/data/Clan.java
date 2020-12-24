@@ -25,12 +25,11 @@ public class Clan {
 	private double soldiersDefenseStrength = 1;
 	private int soldiersDefenseLevel = 0;
 	private double soldiersOffenseStrength = 1;
-
 	private int soldiersOffenseLevel = 0;
-
 	private int flags;
 
 	public Clan() {
+		// Constructor for incrementally building a clan.
 	}
 
 	/**
@@ -179,16 +178,17 @@ public class Clan {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
 		}
-		final List<Double> list = new ArrayList<>();
+		final var list = new ArrayList<Double>();
 		for (var j = 0; j < Resource.values().length; j++) {
 			list.add(0.0);
 		}
-		this.setResources(new ArrayList<>(list));
-		this.setResourceStats(new ArrayList<>());
+		this.setResources(list);
+		final var resourceStatsList = new ArrayList<Double>();
 		for (@SuppressWarnings("unused")
-		final Resource unusedVariable : Resource.values()) {
-			this.getResourceStats().add(0.0);
+		final var unusedVariable : Resource.values()) {
+			resourceStatsList.add(0.0);
 		}
+		this.setResourceStats(resourceStatsList);
 		final var givenPlayType = this.flags;
 		if ((strategies[givenPlayType] == null) || !strategies[givenPlayType].compatibleTo(version)) {
 			this.strategy = strategies[1].buildStrategy();
@@ -273,15 +273,45 @@ public class Clan {
 	}
 
 	public void setResources(final List<Double> resources) {
+		if (this.resources != null) {
+			throw new IllegalArgumentException("resources can't be changed!");
+		} else if (resources == null) {
+			throw new IllegalArgumentException("resources==null");
+		} else if (resources.size() != Resource.values().length) {
+			throw new IllegalArgumentException("resources.size() != Resource.values.length: " + resources.size());
+		}
 		this.resources = resources;
 	}
 
 	public void setResourceStats(final List<Double> resourceStats) {
+		if (this.resourceStats != null) {
+			throw new IllegalArgumentException("Resource stats can't be changed!");
+		} else if (resourceStats == null) {
+			throw new IllegalArgumentException("resourceStats==null");
+		} else if (resourceStats.size() != Resource.values().length) {
+			throw new IllegalArgumentException(
+					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
+		}
 		this.resourceStats = resourceStats;
 	}
 
 	public void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
 		this.soldiersDefenseLevel = soldiersDefenseLevel;
+	}
+
+	public boolean upgradeSoldiersDefense() {
+		final var currLevel = this.getSoldiersDefenseLevel();
+		if (currLevel == Shared.MAX_LEVEL) {
+			return false;
+		}
+		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
+		if (costs > this.getCoins()) {
+			return false;
+		}
+		this.setCoins(this.getCoins() - costs);
+		this.setSoldiersDefenseLevel(currLevel + 1);
+		this.setSoldiersDefenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		return true;
 	}
 
 	public void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
@@ -292,8 +322,38 @@ public class Clan {
 		this.soldiersLevel = soldiersLevel;
 	}
 
+	public boolean upgradeSoldiers() {
+		final var currLevel = this.getSoldiersLevel();
+		if (currLevel == Shared.MAX_LEVEL) {
+			return false;
+		}
+		final var costs = Shared.upgradeCostsForSoldiers(currLevel + 1);
+		if (costs > this.getCoins()) {
+			return false;
+		}
+		this.setCoins(this.getCoins() - costs);
+		this.setSoldiersLevel(currLevel + 1);
+		this.setSoldiersStrength(1 + Shared.newPowerForSoldiers(currLevel + 1));
+		return true;
+	}
+
 	public void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
 		this.soldiersOffenseLevel = soldiersOffenseLevel;
+	}
+
+	public boolean upgradeSoldiersOffense() {
+		final var currLevel = this.getSoldiersOffenseLevel();
+		if (currLevel == Shared.MAX_LEVEL) {
+			return false;
+		}
+		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
+		if (costs > this.getCoins()) {
+			return false;
+		}
+		this.setCoins(this.getCoins() - costs);
+		this.setSoldiersOffenseLevel(currLevel + 1);
+		this.setSoldiersOffenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		return true;
 	}
 
 	public void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
@@ -305,6 +365,11 @@ public class Clan {
 	}
 
 	public void setStrategy(final Strategy strategy) {
+		if (this.strategy != null) {
+			throw new IllegalArgumentException("strategy can't be changed!");
+		} else if (strategy == null) {
+			throw new IllegalArgumentException("strategy==null");
+		}
 		this.strategy = strategy;
 	}
 

@@ -1272,19 +1272,7 @@ public final class Game implements ConquerInfo {
 	@Override
 	public boolean upgradeDefense(final int clan) {
 		this.checkClan(clan);
-		final var c = this.clans.get(clan);
-		final var currLevel = c.getSoldiersDefenseLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
-			return false;
-		}
-		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
-		if (costs > c.getCoins()) {
-			return false;
-		}
-		c.setCoins(c.getCoins() - costs);
-		c.setSoldiersDefenseLevel(currLevel + 1);
-		c.setSoldiersDefenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
-		return true;
+		return this.getClan(clan).upgradeSoldiersDefense();
 	}
 
 	@Override
@@ -1317,21 +1305,9 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public boolean upgradeOffense(final int i) {
-		this.checkClan(i);
-		final var c = this.clans.get(i);
-		final var currLevel = c.getSoldiersOffenseLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
-			return false;
-		}
-		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
-		if (costs > c.getCoins()) {
-			return false;
-		}
-		c.setCoins(c.getCoins() - costs);
-		c.setSoldiersOffenseLevel(currLevel + 1);
-		c.setSoldiersOffenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
-		return true;
+	public boolean upgradeOffense(final int clan) {
+		this.checkClan(clan);
+		return this.getClan(clan).upgradeSoldiersOffense();
 	}
 
 	@Override
@@ -1366,21 +1342,9 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public boolean upgradeSoldiers(final int i) {
-		this.checkClan(i);
-		final var c = this.clans.get(i);
-		final var currLevel = c.getSoldiersLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
-			return false;
-		}
-		final var costs = Shared.upgradeCostsForSoldiers(currLevel + 1);
-		if (costs > c.getCoins()) {
-			return false;
-		}
-		c.setCoins(c.getCoins() - costs);
-		c.setSoldiersLevel(currLevel + 1);
-		c.setSoldiersStrength(1 + Shared.newPowerForSoldiers(currLevel + 1));
-		return true;
+	public boolean upgradeSoldiers(final int clan) {
+		this.checkClan(clan);
+		return this.getClan(clan).upgradeSoldiers();
 	}
 
 	private void useResources() {
