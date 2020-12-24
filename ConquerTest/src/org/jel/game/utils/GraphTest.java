@@ -1,11 +1,10 @@
 package org.jel.game.utils;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hamcrest.MatcherAssert;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class GraphTest {
@@ -19,7 +18,7 @@ public class GraphTest {
 
 	@Test
 	public void testConnected() {
-		var graph = new Graph<Integer>(2);
+		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
 		MatcherAssert.assertThat("It is connected, although it shouldn't!", !graph.isConnected(1, 2));
@@ -32,7 +31,7 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBadEdgeWeight1() {
-		var graph = new Graph<Integer>(2);
+		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
 		graph.addDirectedEdge(0, 1, -2);
@@ -40,7 +39,7 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBadEdgeWeight2() {
-		var graph = new Graph<Integer>(2);
+		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
 		graph.addDirectedEdge(0, 1, -1);
@@ -48,7 +47,7 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testBadEdgeWeight3() {
-		var graph = new Graph<Integer>(2);
+		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
 		graph.addDirectedEdge(0, 1, 2, -2);
@@ -56,7 +55,7 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test_set() {
-		var graph = new Graph<Integer>(3);
+		final var graph = new Graph<Integer>(3);
 		graph.add(1);
 		graph.add(2);
 		graph._set(3, null);
@@ -64,7 +63,7 @@ public class GraphTest {
 
 	@Test
 	public void test_set1() {
-		var graph = new Graph<Integer>(3);
+		final var graph = new Graph<Integer>(3);
 		graph.add(1);
 		graph.add(2);
 		graph._set(1, null);
@@ -73,7 +72,7 @@ public class GraphTest {
 
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testAddTooMuch() {
-		var graph = new Graph<Integer>(2);
+		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
 		graph.add(3);
@@ -81,7 +80,7 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test_set2() {
-		var graph = new Graph<Integer>(3);
+		final var graph = new Graph<Integer>(3);
 		graph.add(1);
 		graph.add(2);
 		graph._set(-1, null);
@@ -89,7 +88,7 @@ public class GraphTest {
 
 	@Test
 	public void testAdd() {
-		var graph = new Graph<Integer>(3);
+		final var graph = new Graph<Integer>(3);
 		graph.add(1);
 		graph.add(2);
 		MatcherAssert.assertThat("Bad value: " + graph.getValue(1) + " expected 2!", graph.getValue(1) == 2);
@@ -107,14 +106,14 @@ public class GraphTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void dfsNullComparator() {
-		var g = new Graph<Integer>(3);
+		final var g = new Graph<Integer>(3);
 		g.add(0);
 		g.dfs(0, null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void dfsBadIndex() {
-		var g = new Graph<Integer>(3);
+		final var g = new Graph<Integer>(3);
 		g.add(0);
 		g.dfs(1, a -> {
 		});
@@ -122,8 +121,8 @@ public class GraphTest {
 
 	@Test
 	public void testDFS() {
-		var g = this.getTestGraph();
-		final AtomicInteger i = new AtomicInteger();
+		final var g = this.getTestGraph();
+		final var i = new AtomicInteger();
 		g.dfs(0, a -> i.incrementAndGet());
 		MatcherAssert.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
 				i.get() == GraphTest.N_VALUES);
@@ -131,7 +130,7 @@ public class GraphTest {
 
 	@Test
 	public void testBridges() {
-		var g = this.getTestGraph();
+		final var g = this.getTestGraph();
 		final var bridges = g.getBridges();
 		assert bridges.size() == 1;
 		assert bridges.get(0).first() == 4;
@@ -140,26 +139,26 @@ public class GraphTest {
 
 	@Test
 	public void testComponents() {
-		var g = this.getTestGraph();
+		final var g = this.getTestGraph();
 		final var bridges = g.getBridges();
 		assert bridges.size() == 1;
 		assert bridges.get(0).first() == 4;
 		assert bridges.get(0).second() == 5;
-		var components = g.getComponents();
+		final var components = g.getComponents();
 		assert components.size() == 1;
-		var c = components.get(0);
-		assertEquals(c.first(), Set.of(0, 1, 2, 3, 4));
+		final var c = components.get(0);
+		Assert.assertEquals(c.first(), Set.of(0, 1, 2, 3, 4));
 	}
 
 	@Test
 	public void getWeight() {
-		var g = this.getTestGraph();
+		final var g = this.getTestGraph();
 		MatcherAssert.assertThat("getWeight failed", g.getWeight(0, 1) == 2.3);
 	}
 
 	@Test
 	public void testIsConnected() {
-		var g = new Graph<Integer>(2);
+		final var g = new Graph<Integer>(2);
 		g.add(1);
 		g.add(2);
 		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected());
@@ -168,14 +167,14 @@ public class GraphTest {
 
 	@Test
 	public void testConnection() {
-		var g = this.getTestGraph();
+		final var g = this.getTestGraph();
 		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected(0, 9));
 		MatcherAssert.assertThat("Should be connected", g.isConnected(4, 5));
 	}
 
 	private Graph<Integer> getTestGraph() {
-		var ret = new Graph<Integer>(GraphTest.N_VALUES);
-		for (int i = 0; i < GraphTest.N_VALUES; i++) {
+		final var ret = new Graph<Integer>(GraphTest.N_VALUES);
+		for (var i = 0; i < GraphTest.N_VALUES; i++) {
 			ret.add(i);
 		}
 		ret.addUndirectedEdge(0, 1, 2.3);

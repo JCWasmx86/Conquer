@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Freedo {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new DataFile().setBackground("Background4-res.png").addPlayer(4500, "Rhomortina", new Color(255, 255, 200), 0)
 				.addPlayer(3500, "Epsilamda", new Color(255, 0, 0), 3)
 				.addPlayer(1200, "Medianes", new Color(0, 255, 0), 1)

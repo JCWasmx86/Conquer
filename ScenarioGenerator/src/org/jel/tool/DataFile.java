@@ -20,12 +20,12 @@ public final class DataFile {
 	private final HashMap<Integer, HashMap<Integer, Integer>> relations = new HashMap<>();
 	private final List<Integer> flags = new ArrayList<>();
 
-	public DataFile addCity(City c) {
+	public DataFile addCity(final City c) {
 		this.cities.add(c);
 		return this;
 	}
 
-	public DataFile addCityConnection(int cityA, int cityB, double distance) {
+	public DataFile addCityConnection(final int cityA, final int cityB, final double distance) {
 		if (this.matrix == null) {
 			this.matrix = new double[this.cities.size()][this.cities.size()];
 		}
@@ -34,7 +34,7 @@ public final class DataFile {
 		return this;
 	}
 
-	public DataFile addPlayer(double coins, String name, Color clanColor, int flags) {
+	public DataFile addPlayer(final double coins, final String name, final Color clanColor, final int flags) {
 		this.coins.add(coins);
 		this.clanNames.add(name);
 		this.colors.add(clanColor);
@@ -42,7 +42,7 @@ public final class DataFile {
 		return this;
 	}
 
-	public DataFile addRelation(int clanA, int clanB, int relationship) {
+	public DataFile addRelation(final int clanA, final int clanB, final int relationship) {
 		var c = this.relations.get(clanA);
 		if (c == null) {
 			c = new HashMap<>();
@@ -52,7 +52,7 @@ public final class DataFile {
 		return this;
 	}
 
-	public void dump(String out) {
+	public void dump(final String out) {
 		try (var dos = new DataOutputStream((new FileOutputStream(out)))) {
 			dos.write(0xAA);
 			dos.write(0x55);
@@ -146,11 +146,11 @@ public final class DataFile {
 		return Files.readAllBytes(Paths.get("images", this.background));
 	}
 
-	private byte[] readFile(String s) throws IOException {
+	private byte[] readFile(final String s) throws IOException {
 		return Files.readAllBytes(Paths.get("images", s));
 	}
 
-	public DataFile setBackground(String file) {
+	public DataFile setBackground(final String file) {
 		this.background = file;
 		return this;
 	}
