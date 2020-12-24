@@ -3,13 +3,14 @@ package org.jel.game.data;
 import java.awt.Image;
 import java.util.List;
 
-public interface ICity {
+public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Compares one city with another. The comparison is quite simple. The strength
 	 * of each city is calculated by adding the defense to the product of the
 	 * defense bonus and the number of soldiers in the city.
 	 */
+	@Override
 	int compareTo(ICity other);
 
 	/**
@@ -170,10 +171,10 @@ public interface ICity {
 
 	void setDefense(double newPowerOfUpdate);
 
-	void setGrowth(double d);
+	void setGrowth(double growth);
 
-	void setNumberOfPeople(long l);
+	void setNumberOfPeople(long numberOfPeople);
 
-	void setNumberOfSoldiers(long l);
+	void setNumberOfSoldiers(long numberOfSoldiers);
 
 }

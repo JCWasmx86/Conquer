@@ -2,6 +2,7 @@ package org.jel.game.testsuite;
 
 import java.io.File;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import org.jel.game.data.Clan;
@@ -167,7 +168,7 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getRelationship((Clan) null, (Clan) null), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship((Clan) null, a), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
-		this.expect(() -> info.getRelationship(500, 500), IndexOutOfBoundsException.class);
+		this.expect(() -> info.getRelationship(500, 500), NoSuchElementException.class);
 		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<ICity>) null),
 				IllegalArgumentException.class);
 		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<ICity>) null),

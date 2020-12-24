@@ -11,7 +11,7 @@ import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 
-public class City implements Comparable<City>, ICity {
+public class City implements ICity {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
@@ -63,8 +63,7 @@ public class City implements Comparable<City>, ICity {
 	 * of each city is calculated by adding the defense to the product of the
 	 * defense bonus and the number of soldiers in the city.
 	 */
-	@Override
-	public int compareTo(final City other) {
+	public int compareTo2(final City other) {
 		if (other == null) {
 			throw new IllegalArgumentException("other==null");
 		}
@@ -75,7 +74,7 @@ public class City implements Comparable<City>, ICity {
 	@Override
 	public int compareTo(final ICity other) {
 		if (other instanceof City c) {
-			return this.compareTo(c);
+			return this.compareTo2(c);
 		}
 		return 0;
 	}
