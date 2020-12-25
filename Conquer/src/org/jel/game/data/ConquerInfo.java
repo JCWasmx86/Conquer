@@ -26,11 +26,11 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	Image getBackground();
 
-	Clan getClan(int index);
+	IClan getClan(int index);
 
 	List<String> getClanNames();
 
-	List<Clan> getClans();
+	List<IClan> getClans();
 
 	List<Double> getCoins();
 
@@ -48,7 +48,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void init();
 
-	default boolean isDead(final Clan clan) {
+	default boolean isDead(final IClan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
@@ -59,7 +59,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	boolean isPlayersTurn();
 
-	default long maximumNumberOfSoldiersToRecruit(final Clan clan, final long limit) {
+	default long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
@@ -80,7 +80,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void setPlayersTurn(boolean b);
 
-	default void upgradeDefenseFully(final Clan clan, final ICity city) {
+	default void upgradeDefenseFully(final IClan clan, final ICity city) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
@@ -92,7 +92,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void upgradeDefenseFully(final int clan, final ICity city);
 
-	default void upgradeResourceFully(final Clan clan, final Resource resources, final ICity city) {
+	default void upgradeResourceFully(final IClan clan, final Resource resources, final ICity city) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}

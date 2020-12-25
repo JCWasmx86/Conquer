@@ -2,11 +2,11 @@ package org.jel.game.plugins.builtins;
 
 import java.text.MessageFormat;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.messages.Message;
 
-public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSoldiersDeserted, ICity city, Clan clan)
+public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSoldiersDeserted, ICity city, IClan clan)
 		implements Message {
 	@Override
 	public boolean isBadForPlayer() {

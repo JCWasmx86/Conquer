@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
@@ -24,7 +24,7 @@ public final class SortedStrategyImpl implements Strategy {
 	private static final double FIFTY_FIFTY_PROBABILITY = 0.5;
 	private List<ICity> cities;
 	private final Map<ICity, Pair<Double, Double>> values = new HashMap<>();
-	private final List<Clan> gifts;
+	private final List<IClan> gifts;
 	private int counter;
 
 	public SortedStrategyImpl() {
@@ -33,8 +33,8 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
-			final DoubleConsumer newValue, final StrategyObject strategyObject) {
+	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
+			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if ((this.gifts.contains(sourceClan) && (Math.random() < 0.8)) || (Math.random() < 0.1)) {
 			return false;
 		}
@@ -57,7 +57,7 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject obj) {
+	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject obj) {
 		if (this.counter == 7) {
 			this.counter = 0;
 			this.gifts.clear();
@@ -70,7 +70,7 @@ public final class SortedStrategyImpl implements Strategy {
 		this.upgradeClan(clan, obj);
 	}
 
-	private void attack(final Graph<ICity> graph, final StrategyObject obj, final Clan clan) {
+	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
 		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
 					.sorted((a, b) -> Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers()))
@@ -99,7 +99,7 @@ public final class SortedStrategyImpl implements Strategy {
 		return null;
 	}
 
-	private void refreshList(final Clan clan, final Graph<ICity> cities2) {
+	private void refreshList(final IClan clan, final Graph<ICity> cities2) {
 		this.values.clear();
 		StreamUtils.getCitiesAsStreamNot(cities2, clan).forEach(a -> {
 			// Make the strategy a bit wrong to make it possible for the player to win.
@@ -123,7 +123,7 @@ public final class SortedStrategyImpl implements Strategy {
 				}).collect(Collectors.toList());
 	}
 
-	private boolean tryRecruiting(final Clan clan, final double factor, final Double second, final ICity ownCity,
+	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
 			final long ownCitySoldiers, final StrategyObject obj) {
 		if (second > (ownCitySoldiers * factor)) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
@@ -134,7 +134,7 @@ public final class SortedStrategyImpl implements Strategy {
 		return false;
 	}
 
-	private void upgradeCities(final Graph<ICity> cities, final Clan clan, final StrategyObject obj) {
+	private void upgradeCities(final Graph<ICity> cities, final IClan clan, final StrategyObject obj) {
 		var didUpgrade = true;
 		final var ownCities = StreamUtils.getCitiesAsStream(cities, clan).collect(Collectors.toList());
 		while (didUpgrade) {
@@ -155,7 +155,7 @@ public final class SortedStrategyImpl implements Strategy {
 		}
 	}
 
-	private void upgradeClan(final Clan clan, final StrategyObject obj) {
+	private void upgradeClan(final IClan clan, final StrategyObject obj) {
 		while (true) {
 			var flag = false;
 			flag |= obj.upgradeDefense(clan);

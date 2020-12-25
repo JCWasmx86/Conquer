@@ -2,10 +2,10 @@ package org.jel.game.plugins.builtins;
 
 import java.text.MessageFormat;
 
-import org.jel.game.data.Clan;
+import org.jel.game.data.IClan;
 import org.jel.game.messages.Message;
 
-public record SoldiersDesertedBecauseOfMissingMoneyMessage(Clan clan, long numberOfDesertedSoldiers)
+public record SoldiersDesertedBecauseOfMissingMoneyMessage(IClan clan, long numberOfDesertedSoldiers)
 		implements Message {
 	@Override
 	public boolean isBadForPlayer() {

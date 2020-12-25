@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 
-public class City implements ICity {
+class City implements ICity {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
@@ -31,7 +31,7 @@ public class City implements ICity {
 	private int x = -1;
 	private int y = -1;
 	private double oldOne = 1;
-	private Clan clan;
+	private IClan clan;
 
 	/**
 	 * Create a new City.
@@ -128,7 +128,7 @@ public class City implements ICity {
 	 * @return The clan.
 	 */
 	@Override
-	public Clan getClan() {
+	public IClan getClan() {
 		return this.clan;
 	}
 
@@ -183,7 +183,7 @@ public class City implements ICity {
 	 * @return The defense strength of the city.
 	 */
 	@Override
-	public double getDefenseStrength(final Clan clan) {
+	public double getDefenseStrength(final IClan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
@@ -381,7 +381,7 @@ public class City implements ICity {
 	 * @param clan May not be null.
 	 */
 	@Override
-	public void setClan(final Clan clan) {
+	public void setClan(final IClan clan) {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}

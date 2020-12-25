@@ -1,9 +1,9 @@
 package org.jel.game.messages;
 
 import org.jel.game.Messages;
-import org.jel.game.data.Clan;
+import org.jel.game.data.IClan;
 
-public record BetterRelationshipMessage(Clan first, Clan second, double oldValue,
+public record BetterRelationshipMessage(IClan first, IClan second, double oldValue,
 		double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {

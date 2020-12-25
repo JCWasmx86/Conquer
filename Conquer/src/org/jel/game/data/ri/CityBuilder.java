@@ -3,10 +3,10 @@ package org.jel.game.data.ri;
 import java.awt.Image;
 import java.util.List;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
+import org.jel.game.data.IClan;
 
-public class CityBuilder {
+class CityBuilder {
 	private final City tmp;
 
 	public CityBuilder(final ConquerInfo info) {
@@ -22,7 +22,7 @@ public class CityBuilder {
 		return this;
 	}
 
-	public CityBuilder setClan(final Clan clan) {
+	public CityBuilder setClan(final IClan clan) {
 		this.tmp.setClan(clan);
 		return this;
 	}

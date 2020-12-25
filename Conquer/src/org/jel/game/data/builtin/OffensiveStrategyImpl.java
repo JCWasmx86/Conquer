@@ -3,9 +3,9 @@ package org.jel.game.data.builtin;
 import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
@@ -21,8 +21,8 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private Graph<ICity> graph;
 
 	@Override
-	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
-			final DoubleConsumer newValue, final StrategyObject strategyObject) {
+	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
+			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if (Math.random() > OffensiveStrategyImpl.DECLINE_GIFT_PROBABILITY) {
 			return false;
 		} else {
@@ -39,7 +39,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject obj) {
+	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var data = clan.getData();
@@ -67,7 +67,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		return new OffensiveStrategyData();
 	}
 
-	private void moveTroops(final Clan clan) {
+	private void moveTroops(final IClan clan) {
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
 				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.graph, a, clan).count() == 0)
@@ -90,7 +90,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 				}));
 	}
 
-	private void offensiveResourcesUpgrade(final Clan clan) {
+	private void offensiveResourcesUpgrade(final IClan clan) {
 		final double iron = clan.getResourceStats().get(Resource.IRON.getIndex());
 		final double stone = clan.getResourceStats().get(Resource.STONE.getIndex());
 		final double wood = clan.getResourceStats().get(Resource.WOOD.getIndex());
@@ -106,7 +106,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	}
 
-	private void offensiveSoldierUpgrading(final Clan clan) {
+	private void offensiveSoldierUpgrading(final IClan clan) {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
@@ -132,7 +132,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		}
 	}
 
-	private void upgradeResourcesForClan(final Clan clan, final Resource resc) {
+	private void upgradeResourcesForClan(final IClan clan, final Resource resc) {
 		StreamUtils.getCitiesAsStream(this.graph, clan).sorted((a, b) -> {
 			final var index = resc.getIndex();
 			final double resA = a.getProductions().get(index);

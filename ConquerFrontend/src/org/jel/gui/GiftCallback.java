@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
+import org.jel.game.data.IClan;
 import org.jel.game.data.PlayerGiftCallback;
 import org.jel.game.data.strategy.StrategyObject;
 import org.jel.gui.utils.ImageResource;
@@ -33,7 +33,7 @@ final class GiftCallback implements PlayerGiftCallback {
 	 * This method blocks until the player accepted or rejected.
 	 */
 	@Override
-	public boolean acceptGift(final Clan source, final Clan destination, final Gift gift, final double oldValue,
+	public boolean acceptGift(final IClan source, final IClan destination, final Gift gift, final double oldValue,
 			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		final var jframe = new JFrame();
 		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));
