@@ -15,7 +15,7 @@ import org.jel.game.data.strategy.StrategyProvider;
 /**
  * A clan represents a group of cities.
  */
-class Clan implements IClan {
+final class Clan implements IClan {
 	private int id = -1;
 	private double coins;
 	private String name;
@@ -322,7 +322,7 @@ class Clan implements IClan {
 		this.resourceStats = resourceStats;
 	}
 
-	public void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
+	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
 		this.soldiersDefenseLevel = soldiersDefenseLevel;
 	}
 
@@ -342,11 +342,11 @@ class Clan implements IClan {
 		return true;
 	}
 
-	public void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
+	void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
 		this.soldiersDefenseStrength = soldiersDefenseStrength;
 	}
 
-	public void setSoldiersLevel(final int soldiersLevel) {
+	void setSoldiersLevel(final int soldiersLevel) {
 		this.soldiersLevel = soldiersLevel;
 	}
 
@@ -366,7 +366,7 @@ class Clan implements IClan {
 		return true;
 	}
 
-	public void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
+	void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
 		this.soldiersOffenseLevel = soldiersOffenseLevel;
 	}
 
@@ -386,11 +386,11 @@ class Clan implements IClan {
 		return true;
 	}
 
-	public void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
+	void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
 		this.soldiersOffenseStrength = soldiersOffenseStrength;
 	}
 
-	public void setSoldiersStrength(final double soldiersStrength) {
+	void setSoldiersStrength(final double soldiersStrength) {
 		this.soldiersStrength = soldiersStrength;
 	}
 
