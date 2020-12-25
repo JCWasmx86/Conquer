@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ConquerSaver;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
@@ -155,9 +155,9 @@ public final class SavedGame implements ConquerSaver {
 		}
 	}
 
-	private List<Clan> readClans(final File saveDirectory, final Game game) throws IOException, InstantiationException,
+	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException, InstantiationException,
 			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
-		final List<Clan> ret = new ArrayList<>();
+		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
 		for (final var file : files) {
@@ -217,7 +217,7 @@ public final class SavedGame implements ConquerSaver {
 		}
 	}
 
-	private void save(final Clan clan, final OutputStream outputStream) throws IOException {
+	private void save(final IClan clan, final OutputStream outputStream) throws IOException {
 		try (var dos = new DataOutputStream(outputStream)) {
 			dos.writeInt(clan.getId());
 			dos.writeUTF(clan.getName());
@@ -297,7 +297,7 @@ public final class SavedGame implements ConquerSaver {
 				throw new RuntimeException(e);
 			}
 		}
-		for (final var clan : game.getClans()) {
+		for (final IClan clan : game.getClans()) {
 			final var file = new File(saveDirectory, clan.getName() + ".clan.save");
 			try (final var outputStream = Files.newOutputStream(Paths.get(file.toURI()))) {
 				this.save(clan, outputStream);

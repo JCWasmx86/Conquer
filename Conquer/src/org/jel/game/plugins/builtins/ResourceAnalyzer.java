@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.EventList;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Shared;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
@@ -25,7 +25,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	private int currentRound = 0;
 
 	@Override
-	public void analyzeStats(final ICity city, final List<Double> statistics, final Clan clan) {
+	public void analyzeStats(final ICity city, final List<Double> statistics, final IClan clan) {
 		if (this.currentRound < Integer.getInteger("resource.analyzer.delay", 10)) {
 			return;
 		}
@@ -56,7 +56,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		this.killCivilians(city, maxCivilians, clan);
 	}
 
-	private void collectStatistics(final List<Double> statistics, final List<Double> resources, final Clan clan,
+	private void collectStatistics(final List<Double> statistics, final List<Double> resources, final IClan clan,
 			final int idx) {
 		if (statistics.get(idx) < 0) {
 			double saved = clan.getResources().get(idx);
@@ -88,7 +88,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		this.events = pi.getEventList();
 	}
 
-	private void killCivilians(final ICity city, final long maxCivilians, final Clan clan) {
+	private void killCivilians(final ICity city, final long maxCivilians, final IClan clan) {
 		if (maxCivilians <= 0) {
 			return;
 		}
@@ -112,7 +112,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		}
 	}
 
-	private void killSoldiers(final ICity city, final long maxSoldiers, final Clan clan) {
+	private void killSoldiers(final ICity city, final long maxSoldiers, final IClan clan) {
 		if (maxSoldiers <= 0) {
 			return;
 		}

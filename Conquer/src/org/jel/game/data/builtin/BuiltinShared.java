@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.StrategyObject;
@@ -23,7 +23,7 @@ final class BuiltinShared {
 	private static final int MAX_ITERATIONS = 100;
 	private static final int COINS_TO_RETAIN = 20;
 
-	static void moderateAttack(final Clan clan, final ICity source, final Graph<ICity> graph,
+	static void moderateAttack(final IClan clan, final ICity source, final Graph<ICity> graph,
 			final StrategyObject object) {
 		// Find all cities around the source of clans with a relationship < 75
 		final var citiesOfEnemies = StreamUtils
@@ -44,7 +44,7 @@ final class BuiltinShared {
 		}
 	}
 
-	static void moderatePlay(final Graph<ICity> graph, final StrategyObject object, final Clan clan) {
+	static void moderatePlay(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
 		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).collect(Collectors.toList());
 		StreamUtils.forEach(graph, clan, c -> {
 			// If there are too many soldiers in a city, try to move them, else recruit
@@ -62,7 +62,7 @@ final class BuiltinShared {
 		BuiltinShared.moderateResourcesUpgrade(graph, object, clan);
 	}
 
-	static void moderateResourcesUpgrade(final Graph<ICity> graph, final StrategyObject object, final Clan clan) {
+	static void moderateResourcesUpgrade(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
 		if (clan.isPlayerClan()) {
 			return;
 		}
@@ -81,7 +81,7 @@ final class BuiltinShared {
 		}
 	}
 
-	static void offensiveAttack(final Clan clan, final Graph<ICity> cityGraph, final StrategyObject object) {
+	static void offensiveAttack(final IClan clan, final Graph<ICity> cityGraph, final StrategyObject object) {
 		final Predicate<ICity> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clan).count() > 0;
 		StreamUtils
 				.getCitiesAsStream(cityGraph,
@@ -112,7 +112,7 @@ final class BuiltinShared {
 				}));
 	}
 
-	static void offensiveRecruiting(final Graph<ICity> graph, final StrategyObject object, final Clan clan) {
+	static void offensiveRecruiting(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
 		// Find all own cities that are on the border to another clan.
 		StreamUtils.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
 				.sorted((a, b) -> {
@@ -124,7 +124,7 @@ final class BuiltinShared {
 				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clan, a, false, 0));
 	}
 
-	static double sum(final Clan clan) {
+	static double sum(final IClan clan) {
 		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
@@ -132,7 +132,7 @@ final class BuiltinShared {
 		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
-	private static void tryUpdatingDefense(final Graph<ICity> graph, final StrategyObject object, final Clan clan) {
+	private static void tryUpdatingDefense(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
 		// Sort all cities using the basedefense as key
 		final var sortedListOfCities = StreamUtils
 				.getCitiesAsStream(graph, clan, Comparator.comparing(ICity::getDefense)).collect(Collectors.toList());
@@ -166,7 +166,7 @@ final class BuiltinShared {
 		});
 	}
 
-	static void tryUpdatingResources(final Graph<ICity> graph, final StrategyObject object, final Clan clan,
+	static void tryUpdatingResources(final Graph<ICity> graph, final StrategyObject object, final IClan clan,
 			final Map<Integer, Double> map) {
 		// Try to upgrade all resources with negative production
 		map.entrySet().stream().filter(a -> a.getValue() < 0).forEach(a -> {

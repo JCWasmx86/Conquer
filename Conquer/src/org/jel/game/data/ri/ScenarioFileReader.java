@@ -12,10 +12,10 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ConquerInfoReader;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.utils.Graph;
@@ -75,7 +75,7 @@ final class ScenarioFileReader implements ConquerInfoReader {
 				throw new RuntimeException("Expected a non negative number of players, got " + numPlayers);
 			}
 			game.setPlayers(numPlayers);
-			final List<Clan> tmp = new ArrayList<>();
+			final List<IClan> tmp = new ArrayList<>();
 			for (var i = 0; i < numPlayers; i++) {
 				final var d = dis.readDouble();
 				if (d < 0) {

@@ -1,9 +1,13 @@
-package org.jel.game.data;
+package org.jel.game.data.ri;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jel.game.data.IClan;
+import org.jel.game.data.Resource;
+import org.jel.game.data.Shared;
+import org.jel.game.data.Version;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
 import org.jel.game.data.strategy.StrategyProvider;
@@ -11,7 +15,7 @@ import org.jel.game.data.strategy.StrategyProvider;
 /**
  * A clan represents a group of cities.
  */
-public class Clan {
+class Clan implements IClan {
 	private int id = -1;
 	private double coins;
 	private String name;
@@ -37,6 +41,7 @@ public class Clan {
 	 *
 	 * @return Number of coins.
 	 */
+	@Override
 	public double getCoins() {
 		return this.coins;
 	}
@@ -46,6 +51,7 @@ public class Clan {
 	 *
 	 * @return Clan color
 	 */
+	@Override
 	public Color getColor() {
 		return this.color;
 	}
@@ -55,6 +61,7 @@ public class Clan {
 	 *
 	 * @return Optional Data. May be null
 	 */
+	@Override
 	public StrategyData getData() {
 		return this.strategyData;
 	}
@@ -64,6 +71,7 @@ public class Clan {
 	 *
 	 * @return Some integer
 	 */
+	@Override
 	public int getFlags() {
 		return this.flags;
 	}
@@ -73,6 +81,7 @@ public class Clan {
 	 *
 	 * @return Clan id.
 	 */
+	@Override
 	public int getId() {
 		return this.id;
 	}
@@ -82,6 +91,7 @@ public class Clan {
 	 *
 	 * @return Name of the clan
 	 */
+	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -92,6 +102,7 @@ public class Clan {
 	 *
 	 * @return List of resources.
 	 */
+	@Override
 	public List<Double> getResources() {
 		return this.resources;
 	}
@@ -102,6 +113,7 @@ public class Clan {
 	 *
 	 * @return Production of resources.
 	 */
+	@Override
 	public List<Double> getResourceStats() {
 		return this.resourceStats;
 	}
@@ -111,6 +123,7 @@ public class Clan {
 	 *
 	 * @return Defenselevel
 	 */
+	@Override
 	public int getSoldiersDefenseLevel() {
 		return this.soldiersDefenseLevel;
 	}
@@ -120,6 +133,7 @@ public class Clan {
 	 *
 	 * @return Defensestrength
 	 */
+	@Override
 	public double getSoldiersDefenseStrength() {
 		return this.soldiersDefenseStrength;
 	}
@@ -129,6 +143,7 @@ public class Clan {
 	 *
 	 * @return Level
 	 */
+	@Override
 	public int getSoldiersLevel() {
 		return this.soldiersLevel;
 	}
@@ -138,6 +153,7 @@ public class Clan {
 	 *
 	 * @return Offensivelevel
 	 */
+	@Override
 	public int getSoldiersOffenseLevel() {
 		return this.soldiersOffenseLevel;
 	}
@@ -147,6 +163,7 @@ public class Clan {
 	 *
 	 * @return Offensestrength
 	 */
+	@Override
 	public double getSoldiersOffenseStrength() {
 		return this.soldiersOffenseStrength;
 	}
@@ -156,6 +173,7 @@ public class Clan {
 	 *
 	 * @return Strength
 	 */
+	@Override
 	public double getSoldiersStrength() {
 		return this.soldiersStrength;
 	}
@@ -165,6 +183,7 @@ public class Clan {
 	 *
 	 * @return The strategy of the clan.
 	 */
+	@Override
 	public Strategy getStrategy() {
 		return this.strategy;
 	}
@@ -174,6 +193,7 @@ public class Clan {
 	 *
 	 * @param strategies An array of all strategies available.
 	 */
+	@Override
 	public void init(final StrategyProvider[] strategies, final Version version) {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
@@ -206,6 +226,7 @@ public class Clan {
 	 *
 	 * @return {@code true} if the clan is played by the human.
 	 */
+	@Override
 	public boolean isPlayerClan() {
 		return this.id == Shared.PLAYER_CLAN;
 	}
@@ -216,6 +237,7 @@ public class Clan {
 	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
 	 *              0.
 	 */
+	@Override
 	public void setCoins(final double coins) {
 		this.coins = coins < 0 ? 0 : coins;
 	}
@@ -225,6 +247,7 @@ public class Clan {
 	 *
 	 * @param color May not be null
 	 */
+	@Override
 	public void setColor(final Color color) {
 		if (color == null) {
 			throw new IllegalArgumentException("color == null");
@@ -239,6 +262,7 @@ public class Clan {
 	 *
 	 * @param flags Some unspecified value.
 	 */
+	@Override
 	public void setFlags(final int flags) {
 		this.flags = flags;
 	}
@@ -248,6 +272,7 @@ public class Clan {
 	 *
 	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
 	 */
+	@Override
 	public void setId(final int id) {
 		if (this.id != -1) {
 			throw new UnsupportedOperationException("Can't change id of clan!");
@@ -262,6 +287,7 @@ public class Clan {
 	 *
 	 * @param name May not be null
 	 */
+	@Override
 	public void setName(final String name) {
 		if (this.name != null) {
 			throw new UnsupportedOperationException("Can't change name of clan!");
@@ -271,6 +297,7 @@ public class Clan {
 		this.name = name;
 	}
 
+	@Override
 	public void setResources(final List<Double> resources) {
 		if (this.resources != null) {
 			throw new IllegalArgumentException("resources can't be changed!");
@@ -282,6 +309,7 @@ public class Clan {
 		this.resources = resources;
 	}
 
+	@Override
 	public void setResourceStats(final List<Double> resourceStats) {
 		if (this.resourceStats != null) {
 			throw new IllegalArgumentException("Resource stats can't be changed!");
@@ -298,6 +326,7 @@ public class Clan {
 		this.soldiersDefenseLevel = soldiersDefenseLevel;
 	}
 
+	@Override
 	public boolean upgradeSoldiersDefense() {
 		final var currLevel = this.getSoldiersDefenseLevel();
 		if (currLevel == Shared.MAX_LEVEL) {
@@ -321,6 +350,7 @@ public class Clan {
 		this.soldiersLevel = soldiersLevel;
 	}
 
+	@Override
 	public boolean upgradeSoldiers() {
 		final var currLevel = this.getSoldiersLevel();
 		if (currLevel == Shared.MAX_LEVEL) {
@@ -340,6 +370,7 @@ public class Clan {
 		this.soldiersOffenseLevel = soldiersOffenseLevel;
 	}
 
+	@Override
 	public boolean upgradeSoldiersOffense() {
 		final var currLevel = this.getSoldiersOffenseLevel();
 		if (currLevel == Shared.MAX_LEVEL) {
@@ -363,6 +394,7 @@ public class Clan {
 		this.soldiersStrength = soldiersStrength;
 	}
 
+	@Override
 	public void setStrategy(final Strategy strategy) {
 		if (this.strategy != null) {
 			throw new IllegalArgumentException("strategy can't be changed!");
@@ -372,10 +404,12 @@ public class Clan {
 		this.strategy = strategy;
 	}
 
+	@Override
 	public void setStrategyData(final StrategyData strategyData) {
 		this.strategyData = strategyData;
 	}
 
+	@Override
 	public void update(final int currentRound) {
 		if (this.strategyData != null) {
 			this.strategyData.update(currentRound);

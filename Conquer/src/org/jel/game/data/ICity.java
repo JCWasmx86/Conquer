@@ -38,7 +38,7 @@ public interface ICity extends Comparable<ICity> {
 	 *
 	 * @return The clan.
 	 */
-	Clan getClan();
+	IClan getClan();
 
 	/**
 	 * Returns the clan id.
@@ -77,7 +77,7 @@ public interface ICity extends Comparable<ICity> {
 	 *             {@link IllegalArgumentException} will be thrown.
 	 * @return The defense strength of the city.
 	 */
-	double getDefenseStrength(Clan clan);
+	double getDefenseStrength(IClan clan);
 
 	/**
 	 * Returns the growth of a city. The growth of a city is the factor, for which
@@ -167,7 +167,7 @@ public interface ICity extends Comparable<ICity> {
 	 */
 	double productionPerRound(Resource resource);
 
-	void setClan(Clan clan);
+	void setClan(IClan clan);
 
 	void setDefense(double newPowerOfUpdate);
 

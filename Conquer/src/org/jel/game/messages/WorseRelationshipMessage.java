@@ -1,9 +1,9 @@
 package org.jel.game.messages;
 
 import org.jel.game.Messages;
-import org.jel.game.data.Clan;
+import org.jel.game.data.IClan;
 
-public record WorseRelationshipMessage(Clan first, Clan second, double oldValue, double newValue) implements Message {
+public record WorseRelationshipMessage(IClan first, IClan second, double oldValue, double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
 		return this.first.isPlayerClan() || this.second.isPlayerClan();

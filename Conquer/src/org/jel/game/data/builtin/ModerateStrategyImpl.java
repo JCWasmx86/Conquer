@@ -2,9 +2,9 @@ package org.jel.game.data.builtin;
 
 import java.util.function.DoubleConsumer;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
 import org.jel.game.data.strategy.StrategyObject;
@@ -15,8 +15,8 @@ public final class ModerateStrategyImpl implements Strategy {
 	private static final int SMALL_RELATIONSHIP_INCREASE_FACTOR = 5;
 
 	@Override
-	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
-			final DoubleConsumer newValue, final StrategyObject strategyObject) {
+	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
+			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if (Math.random() < (1 - (strategyObject.getRelationship(sourceClan, destinationClan) * 0.1))) {
 			return false;
 		}
@@ -31,7 +31,7 @@ public final class ModerateStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject object) {
+	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject object) {
 		BuiltinShared.moderatePlay(cities, object, clan);
 	}
 

@@ -1,9 +1,9 @@
 package org.jel.game.messages;
 
 import org.jel.game.Messages;
-import org.jel.game.data.Clan;
+import org.jel.game.data.IClan;
 
-public record ExtinctionMessage(Clan clan) implements Message {
+public record ExtinctionMessage(IClan clan) implements Message {
 
 	@Override
 	public String getMessageText() {

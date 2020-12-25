@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.XMLReader;
 
@@ -147,7 +147,7 @@ public final class Testsuite2 extends Testsuite {
 		final var a = info.getCities().getValue(0);
 		final var b = info.getCities().getValue(1);
 		final var c = info.getClan(0);
-		final Clan d = info.getClan(1);
+		final IClan d = info.getClan(1);
 		this.expect(() -> info.attack(a, null, 0, false, 0), IllegalArgumentException.class);
 		this.expect(() -> info.attack(null, b, 0, false, 0), IllegalArgumentException.class);
 		this.expect(() -> info.attack(a, b, 1, true, -1), IllegalArgumentException.class);
@@ -165,8 +165,8 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getClanNames().add(""), UnsupportedOperationException.class);
 		this.expect(() -> info.getCoins().add(0.0), UnsupportedOperationException.class);
 		this.expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
-		this.expect(() -> info.getRelationship((Clan) null, (Clan) null), IllegalArgumentException.class);
-		this.expect(() -> info.getRelationship((Clan) null, a), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship((IClan) null, (IClan) null), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship((IClan) null, a), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship(500, 500), NoSuchElementException.class);
 		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<ICity>) null),

@@ -3,8 +3,8 @@ package org.jel.game.plugins;
 import java.util.Collections;
 import java.util.List;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.EventList;
+import org.jel.game.data.IClan;
 import org.jel.game.messages.Message;
 
 /**
@@ -13,12 +13,12 @@ import org.jel.game.messages.Message;
 public final class Context {
 	private final EventList events;
 	private final List<String> clanNames;
-	private final List<Clan> clans;
+	private final List<IClan> clans;
 
 	/**
 	 * Shouldn't be used from the outside.
 	 */
-	public Context(final EventList events, final List<String> clanNames, final List<Clan> clans) {
+	public Context(final EventList events, final List<String> clanNames, final List<IClan> clans) {
 		this.events = events;
 		this.clanNames = clanNames;
 		this.clans = clans;
@@ -39,7 +39,7 @@ public final class Context {
 	 * @param index The index
 	 * @return The clan at the specified index.
 	 */
-	public Clan getClan(final int index) {
+	public IClan getClan(final int index) {
 		return this.clans.get(index);
 	}
 

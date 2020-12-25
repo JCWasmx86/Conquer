@@ -3,9 +3,9 @@ package org.jel.game.data.builtin;
 import java.util.function.DoubleConsumer;
 import java.util.function.Predicate;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
@@ -18,7 +18,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 	private StrategyObject object;
 
 	@Override
-	public boolean acceptGift(final Clan sourceClan, final Clan destinationClan, final Gift gift, final double oldValue,
+	public boolean acceptGift(
+			final IClan sourceClan, final IClan destinationClan, final Gift gift, final double oldValue,
 			final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		final var own = BuiltinShared.sum(destinationClan);
 		final var giftValue = BuiltinShared.sum(gift);
@@ -28,7 +29,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	@Override
-	public void applyStrategy(final Clan clan, final Graph<ICity> cities, final StrategyObject obj) {
+	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject obj) {
 		this.object = obj;
 		this.graph = cities;
 		final var dt = clan.getData();
@@ -58,7 +59,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		}
 	}
 
-	private void defensiveCityUpgrades(final Clan clan) {
+	private void defensiveCityUpgrades(final IClan clan) {
 		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
 			final Predicate<ICity> predicate = c -> c.getClanId() != clan.getId();
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.graph, a, predicate).count();
@@ -78,7 +79,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		});
 	}
 
-	private void defensiveUpgrades(final Clan clan) {
+	private void defensiveUpgrades(final IClan clan) {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
@@ -115,7 +116,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		}
 	}
 
-	private void tryAttacking(final Clan clan) {
+	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan, ownCity -> StreamUtils
 				.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClanId()).sorted().forEach(enemy -> {
 					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()

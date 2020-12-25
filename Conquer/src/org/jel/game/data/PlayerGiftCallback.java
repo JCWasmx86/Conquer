@@ -21,6 +21,6 @@ public interface PlayerGiftCallback {
 	 * @param strategyObject A handle to a strategyobject, e.g. {@link Game}.
 	 * @return True if the gift has been accepted, false otherwise.
 	 */
-	boolean acceptGift(Clan source, Clan destination, Gift gift, double oldValue, DoubleConsumer newValue,
+	boolean acceptGift(IClan source, IClan destination, Gift gift, double oldValue, DoubleConsumer newValue,
 			StrategyObject strategyObject);
 }

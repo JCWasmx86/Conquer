@@ -3,9 +3,9 @@ package org.jel.game.testsuite;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.jel.game.data.Clan;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
+import org.jel.game.data.IClan;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
@@ -61,10 +61,10 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void checkClans(final List<Clan> clans, final List<Clan> clans2) {
+	private void checkClans(final List<IClan> clans, final List<IClan> clans2) {
 		for (var i = 0; i < clans.size(); i++) {
-			final var oldClan = clans.get(i);
-			final var newClan = clans2.get(i);
+			final IClan oldClan = clans.get(i);
+			final IClan newClan = clans2.get(i);
 			this.compare(oldClan, newClan);
 		}
 	}
@@ -91,7 +91,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void checkSoldiers(final Clan oldClan, final Clan newClan) {
+	private void checkSoldiers(final IClan oldClan, final IClan newClan) {
 		if (oldClan.getSoldiersLevel() != newClan.getSoldiersLevel()) {
 			this.error("oldClan.getSoldiersLevel()!=newClan.getSoldiersLevel()");
 		}
@@ -121,7 +121,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void compare(final Clan oldClan, final Clan newClan) {
+	private void compare(final IClan oldClan, final IClan newClan) {
 		final var tmp = this.numberOfErrors;
 		if (!oldClan.getName().equals(newClan.getName())) {
 			this.error("oldClan.name!=newClan.name");
