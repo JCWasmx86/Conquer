@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -45,9 +46,8 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<ClanColorAssociation>();
-		for (var i = 0; i < game.getNumPlayers(); i++) {
-			assocs.addElement(new ClanColorAssociation(game.getClan(i).getName(), game.getClan(i).getColor()));
-		}
+		assocs.addAll(game.getClans().stream().map(a -> new ClanColorAssociation(a.getName(), a.getColor()))
+				.collect(Collectors.toList()));
 		final var jlist = new JList<>(assocs);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
 			private final Map<ClanColorAssociation, JLabel> map = new HashMap<>();

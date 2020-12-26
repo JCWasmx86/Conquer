@@ -31,12 +31,12 @@ final class MoneySlider extends JPanel {
 	 * @return Amount of coins
 	 */
 	double getMoney() {
-		return (0.01 * this.slider.getValue()) * this.game.getClan(Shared.PLAYER_CLAN).getCoins();
+		return (0.01 * this.slider.getValue()) * this.game.getPlayerClan().getCoins();
 	}
 
 	private String getText() {
 		return Messages.getString("Shared.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
-				+ String.format("%.2f", (0.01 * this.slider.getValue()) * this.game.getClan(0).getCoins()); //$NON-NLS-1$
+				+ String.format("%.2f", (0.01 * this.slider.getValue()) * this.game.getPlayerClan().getCoins()); //$NON-NLS-1$
 	}
 
 	/**

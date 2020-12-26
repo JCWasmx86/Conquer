@@ -186,27 +186,101 @@ string is either \texttt{null} or \texttt{string.isEmpty()} is true.
 
 \subsubsection{\texttt{boolean isDead(IClan)}}
 An \texttt{IllegalArgumentException} shall be thrown, if \texttt{null} is passed.
-This method is the preferred overloaded version to the raw \texttt{boolean isDead(int)}.
-
-\subsubsection{\texttt{boolean isDead(int)}}
-Returns \texttt{true} if the clan with the given id is dead (=Has no cities).
-An \texttt{IllegalArgumentException} shall be thrown, if the given clan id is out of bounds.
 
 \subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(IClan,long)}}
 Returns the maximum number of soldiers that could be recruited in a clan. This value may never be \texttt{null}.
 An \texttt{IllegalArgumentException} shall be thrown if the given clan is either \texttt{null} or the given long is negative.
 This is the preferred overloaded version to \texttt{long maximumNumberOfSoldiersToRecruit(int,long)}.
 
-\subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(int,long)}}
-An \texttt{IllegalArgumentException} shall be thrown if the given clan id is out of bounds or the long argument is negative.
-A negative value shall not be returned.
-
 \subsubsection{\texttt{void setPlayerGiftCallback(PlayerGiftCallback)}}
 The argument shall never be \texttt{null}.
 If it is \texttt{null}, an \texttt{IllegalArgumentException} has to be thrown.
 
 \subsubsection{\texttt{void upgradeDefenseFully(ICity)}}
-The given city must be \texttt{null}.
+The given city mustn't be \texttt{null}.
 Otherwise an \texttt{IllegalArgumentException} must be thrown.
+
+\subsubsection{\texttt{void upgradeResourceFully(Resource,ICity)}}
+The given city and the resource mustn't be \texttt{null}
+Otherwise an \texttt{IllegalArgumentException} must be thrown.
+
+\subsubsection{\texttt{void upgradeSoldiersDefenseFully(IClan)}}
+The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void upgradeSoldiersFully(IClan)}}
+The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void upgradeSoldiersOffenseFully(IClan)}}
+The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsection{PluginInterface}
+
+\subsubsection{\texttt{void addAttackHook(AttackHook)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addCityKeyHandler(String,CityKeyHandler)}}
+The arguments may never be \texttt{null}. If one of them is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addKeyHandler(String,KeyHandler)}}
+The arguments may never be \texttt{null}. If one of them is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addMessageListener(MessageListener)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addMoneyHook(MoneyHook)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addMoveHook(MoveHook)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addMusic(String)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addRecruitHook(RecruitHook)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{void addResourceHook(ResourceHook)}}
+The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
+shall be thrown.
+
+\subsubsection{\texttt{EventList getEventList()}}
+The valid, non-null \texttt{EventList} must be returned.
+
+\subsection{ConquerInfoReader}
+
+\subsection{\texttt{ConquerInfo build()}}
+
+Any exception may be thrown. 
+
+\subsection{ConquerInfoReaderFactory}
+
+\subsubsection{\texttt{ConquerInfoReader getForFile(String)}}
+
+The given String may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException} shall be thrown.
+The returned object may never be \texttt{null}.
+
+\subsubsection{\texttt{byte[] getMagicNumber()}}
+The returned byte-array must be non-null.
+
+\subsection{ConquerSaver}
+
+Any class implementing this interface must have an accessible constructor taking a String parameter
+with the name of the saved name.
+\subsubsection{\texttt{ConquerInfo restore() throws Exception}}
+Any exception may be thrown. \texttt{null} may never be returned.
+
+\subsubsection{\texttt{void save(ConquerInfo) throws Exception}}
+The given object may not be \texttt{null}. Otherwise an \texttt{IllegalArgumentException} may be thrown.
 
 \end{document}
