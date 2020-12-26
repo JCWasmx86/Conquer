@@ -322,14 +322,6 @@ public final class Game implements ConquerInfo {
 				|| (!this.cities.isConnected(src, destination));
 	}
 
-	private void checkClan(final int clan) {
-		if (clan < 0) {
-			throw new IllegalArgumentException("clan < 0: " + clan);
-		} else if (clan >= this.clans.size()) {
-			throw new IllegalArgumentException("clan >= this.clans.size(): " + clan);
-		}
-	}
-
 	private void checkExtinction(final AttackResult result, final IClan destinationClan) {
 		if ((result == AttackResult.CITY_CONQUERED) && this.isDead(destinationClan)) {
 			this.events.add(new ExtinctionMessage(destinationClan));
@@ -576,7 +568,9 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public IClan getClan(final int clanId) {
-		this.checkClan(clanId);
+		if (clanId < 0 || clanId >= this.numPlayers) {
+			throw new IllegalArgumentException("clanId out of bounds");
+		}
 		return this.clans.get(clanId);
 	}
 
@@ -653,36 +647,6 @@ public final class Game implements ConquerInfo {
 	@Override
 	public ConquerSaver getSaver(final String name) {
 		return new SavedGame(name);
-	}
-
-	public int getSoldiersDefenseLevel(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersDefenseLevel();
-	}
-
-	public double getSoldiersDefenseStrength(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersDefenseStrength();
-	}
-
-	public int getSoldiersLevel(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersLevel();
-	}
-
-	public int getSoldiersOffenseLevel(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersOffenseLevel();
-	}
-
-	public double getSoldiersOffenseStrength(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersOffenseStrength();
-	}
-
-	public double getSoldiersStrength(final int clan) {
-		this.checkClan(clan);
-		return this.clans.get(clan).getSoldiersStrength();
 	}
 
 	@Override
@@ -1261,16 +1225,17 @@ public final class Game implements ConquerInfo {
 	@Override
 	public boolean upgradeDefense(final ICity city) {
 		this.throwIfNull(city, "city==null");
-		final var costs = Shared.costs(city.getLevels().get(Resource.values().length) + 1);
+		final var levels = city.getLevels();
+		final var costs = Shared.costs(levels.get(Resource.values().length) + 1);
 		final var clan = city.getClan();
-		if ((costs > clan.getCoins()) || (city.getLevels().get(Resource.values().length) == Shared.MAX_LEVEL)) {
+		if ((costs > clan.getCoins()) || (levels.get(Resource.values().length) == Shared.MAX_LEVEL)) {
 			return false;
 		}
 		clan.setCoins(clan.getCoins() - costs);
 		var defense = city.getDefense();
 		defense = defense < 1 ? 1 : defense;
-		city.setDefense(Shared.newPowerOfUpdate(city.getLevels().get(Resource.values().length) + 1, defense));
-		city.getLevels().set(Resource.values().length, city.getLevels().get(Resource.values().length) + 1);
+		city.setDefense(Shared.newPowerOfUpdate(levels.get(Resource.values().length) + 1, defense));
+		levels.set(Resource.values().length, levels.get(Resource.values().length) + 1);
 		return true;
 	}
 
@@ -1293,15 +1258,16 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(city, "city==null");
 		this.throwIfNull(resc, "resc==null");
 		final var index = resc.getIndex();
-		final var costs = Shared.costs(city.getLevels().get(index) + 1);
+		final var levels = city.getLevels();
+		final var costs = Shared.costs(levels.get(index) + 1);
 		final var clan = city.getClan();
-		if ((costs > clan.getCoins()) || (city.getLevels().get(index) == Shared.MAX_LEVEL)) {
+		if ((costs > clan.getCoins()) || (levels.get(index) == Shared.MAX_LEVEL)) {
 			return false;
 		}
 		clan.setCoins(clan.getCoins() - costs);
 		city.getProductions().set(resc.getIndex(),
-				Shared.newPowerOfUpdate(city.getLevels().get(index + 1), city.getProductions().get(index)));
-		city.getLevels().set(resc.getIndex(), city.getLevels().get(index) + 1);
+				Shared.newPowerOfUpdate(levels.get(index + 1), city.getProductions().get(index)));
+		levels.set(resc.getIndex(), levels.get(index) + 1);
 		return true;
 	}
 
