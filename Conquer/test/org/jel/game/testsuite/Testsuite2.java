@@ -146,7 +146,7 @@ public final class Testsuite2 extends Testsuite {
 		final var a = info.getCities().getValue(0);
 		final var b = info.getCities().getValue(1);
 		final var c = info.getClan(0);
-		final IClan d = info.getClan(1);
+		final var d = info.getClan(1);
 		this.expect(() -> info.defenseStrengthOfCity(null), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(-1), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(500), IllegalArgumentException.class);
