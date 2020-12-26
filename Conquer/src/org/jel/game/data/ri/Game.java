@@ -314,7 +314,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public Result calculateResult() {
-		return StreamUtils.getCitiesAsStream(this.getCities(), Shared.PLAYER_CLAN).count() == 0 ? Result.CPU_WON
+		return StreamUtils.getCitiesAsStream(this.getCities(), this.getPlayerClan()).count() == 0 ? Result.CPU_WON
 				: Result.PLAYER_WON;
 	}
 
@@ -699,11 +699,11 @@ public final class Game implements ConquerInfo {
 		reachableCities.forEach(this::throwIfNull);
 		return Stream.of(reachableCities.toArray(new City[0])).sorted((a, b) -> {
 			final var defense = this.defenseStrengthOfCity(a);
-			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClanId())
+			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
 					.collect(Collectors.toList());
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = this.defenseStrengthOfCity(b);
-			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClanId())
+			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClan())
 					.collect(Collectors.toList());
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
@@ -729,8 +729,8 @@ public final class Game implements ConquerInfo {
 	 * @return Returns {@code true} if only the player is left.
 	 */
 	public boolean hasResult() {
-		final var others = StreamUtils.getCitiesAsStreamNot(this.getCities(), 0).count();
-		final var player = StreamUtils.getCitiesAsStream(this.getCities(), 0).count();
+		final var others = StreamUtils.getCitiesAsStreamNot(this.getCities(), this.getPlayerClan()).count();
+		final var player = StreamUtils.getCitiesAsStream(this.getCities(), this.getPlayerClan()).count();
 		return (others == 0) || (player == 0);
 	}
 
@@ -1130,7 +1130,7 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(source, "source==null");
 		this.throwIfNull(destination, "destination==null");
 		this.throwIfNull(gift, "gift==null");
-		if (source.getId() == destination.getId()) {
+		if (source == destination) {
 			throw new IllegalArgumentException("source==destination");
 		} else if (this.isDead(destination)) {
 			throw new IllegalArgumentException("Destination clan is extinct!");

@@ -54,7 +54,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String coinsPerRound() {
-		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId())
+		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
 				.mapToDouble(c -> (c.getNumberOfPeople() * Shared.COINS_PER_PERSON_PER_ROUND)
 						- (c.getNumberOfSoldiers() * Shared.COINS_PER_SOLDIER_PER_ROUND))
 				.sum();
@@ -79,7 +79,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private long getNumber(final ToLongFunction<ICity> cc) {
-		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToLong(cc).sum();
+		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToLong(cc).sum();
 	}
 
 	/**
@@ -108,9 +108,9 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var index = r.getIndex();
 		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.clan.getResources().get(index))).append("<br>"); //$NON-NLS-1$ //$NON-NLS-2$
-		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId())
+		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
 				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
-		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan.getId()).mapToDouble(c -> {
+		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(c -> {
 			final var va = Shared.getDataValues()[index];
 			return ((c.getNumberOfSoldiers() * va[1]) + (c.getNumberOfPeople() * va[0]));
 		}).sum();

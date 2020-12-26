@@ -2,7 +2,6 @@ package org.jel.game.testsuite;
 
 import java.io.File;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import org.jel.game.data.ConquerInfo;

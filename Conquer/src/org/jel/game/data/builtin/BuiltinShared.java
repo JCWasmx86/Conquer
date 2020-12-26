@@ -85,8 +85,8 @@ final class BuiltinShared {
 		final Predicate<ICity> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clan).count() > 0;
 		StreamUtils
 				.getCitiesAsStream(cityGraph,
-						city -> (StreamUtils.getCitiesAroundCity(cityGraph, city, b -> b.getClan() == clan)
-								.count() > 0) && (city.getClanId() != clan.getId()))
+						city -> (StreamUtils.getCitiesAroundCity(cityGraph, city, b -> b.getClan() == clan).count() > 0)
+								&& (city.getClan() != clan))
 				.forEach(enemy -> StreamUtils.getCitiesAroundCity(cityGraph, enemy, clan).sorted((a, b) -> {
 					final var cnt1 = StreamUtils.getCitiesAroundCity(cityGraph, a, pre).count();
 					final var cnt2 = StreamUtils.getCitiesAroundCity(cityGraph, b, pre).count();
