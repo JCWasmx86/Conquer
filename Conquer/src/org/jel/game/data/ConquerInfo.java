@@ -55,7 +55,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit);
 
 	default boolean onlyOneClanAlive() {
-		return StreamUtils.getCitiesAsStream(this.getCities()).map(ICity::getClanId).distinct().count() == 1;
+		return StreamUtils.getCitiesAsStream(this.getCities()).map(ICity::getClan).distinct().count() == 1;
 	}
 
 	default void setErrorHandler(final Consumer<Throwable> onError) {
