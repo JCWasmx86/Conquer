@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.jel.game.data.AttackResult;
@@ -220,7 +219,7 @@ public final class Game implements ConquerInfo {
 			return;
 		}
 		final var powerOfAttacker = this.calculatePowerOfAttacker(src, clan, destination, managed, reallyPlayer, num);
-		if ((powerOfAttacker == 0) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
+		if ((powerOfAttacker == 0&&!src.isPlayerCity()) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
 			return;
 		}
 		final var diff = this.setup(clan, powerOfAttacker, src, destination);
@@ -352,8 +351,7 @@ public final class Game implements ConquerInfo {
 
 	private void cpuPlay() {
 		// Skip clan of the player
-		final var order = IntStream.range(Shared.PLAYER_CLAN + 1, this.getNumPlayers()).boxed()
-				.collect(Collectors.toList());
+		final var order = this.clans.stream().filter(a -> !a.isPlayerClan()).collect(Collectors.toList());
 		Collections.shuffle(order);
 		order.forEach(this::executeCPUPlay);
 		this.isPlayersTurn = true;
@@ -513,13 +511,12 @@ public final class Game implements ConquerInfo {
 		this.isPlayersTurn = true;
 	}
 
-	private void executeCPUPlay(final int clan) {
-		if (this.isDead(this.clans.get(clan))) {
+	private void executeCPUPlay(final IClan clan) {
+		if (this.isDead(clan)) {
 			return;
 		}
-		final var clanRef = this.getClan(clan);
-		clanRef.getStrategy().applyStrategy(clanRef, this.cities, this);
-		clanRef.update(this.currentRound);
+		clan.getStrategy().applyStrategy(clan, this.cities, this);
+		clan.update(this.currentRound);
 	}
 
 	/**

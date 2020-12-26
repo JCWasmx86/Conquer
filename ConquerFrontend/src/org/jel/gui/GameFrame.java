@@ -368,7 +368,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel); //$NON-NLS-1$
-		final var clanInfo = new ClanInfoPanel(this.game.getClan(Shared.PLAYER_CLAN), this.game);
+		final var clanInfo = new ClanInfoPanel(this.game.getPlayerClan(), this.game);
 		clanInfo.init();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.clanInfo"), clanInfo); //$NON-NLS-1$
 		final var relationships = new RelationshipPanel(this.game);

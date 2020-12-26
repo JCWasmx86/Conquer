@@ -242,10 +242,10 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			game.setGraph(g);
 		} catch (final IOException ioe) {
 			Shared.LOGGER.exception(ioe);
+			throw new RuntimeException(ioe);
 		}
 		if (!game.getCities().isConnected()) {
 			throw new RuntimeException("Disconnected graph!");
-
 		}
 		return game;
 	}
