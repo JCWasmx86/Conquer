@@ -1255,7 +1255,7 @@ public final class Game implements ConquerInfo {
 
 	@Override
 	public boolean upgradeDefense(final IClan clan) {
-		return clan.upgradeSoldiers();
+		return clan.upgradeSoldiersDefense();
 	}
 
 	@Override
@@ -1285,7 +1285,7 @@ public final class Game implements ConquerInfo {
 
 	@Override
 	public boolean upgradeOffense(final IClan clan) {
-		return clan.upgradeSoldiers();
+		return clan.upgradeSoldiersOffense();
 	}
 
 	@Override
