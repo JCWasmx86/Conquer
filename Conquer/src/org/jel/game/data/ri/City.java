@@ -187,7 +187,7 @@ class City implements ICity {
 		if (clan == null) {
 			throw new IllegalArgumentException("clan == null");
 		}
-		if (clan.getId() != this.clanId) {
+		if (clan != this.clan) {
 			throw new IllegalArgumentException("Wrong clan passed!");
 		}
 		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()

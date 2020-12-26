@@ -74,7 +74,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 				.append(": ") //$NON-NLS-1$
 				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan")) //$NON-NLS-1$ //$NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
-				.append(this.city.getInfo().getClanNames().get(this.city.getClanId())).append("<br>") //$NON-NLS-1$
+				.append(this.city.getClan().getName()).append("<br>") //$NON-NLS-1$
 				.append(Messages.getString("Shared.soldiers")) //$NON-NLS-1$
 				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(Messages.getString("Shared.people")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$

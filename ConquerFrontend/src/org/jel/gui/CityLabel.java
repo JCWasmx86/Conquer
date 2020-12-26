@@ -172,7 +172,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		g.drawImage(this.city.getImage(), 0, 0, null);
 		final var image = this.city.getImage();
 		final var baseYValue = image.getHeight(null);
-		g.setColor(this.city.getInfo().getClan(this.city.getClanId()).getColor());
+		g.setColor(this.city.getClan().getColor());
 		g.fillRect(0, baseYValue, image.getWidth(null), CityLabel.CLAN_COLOR_HEIGHT);
 		if (this.marked) {
 			if (this.counter <= 45) {

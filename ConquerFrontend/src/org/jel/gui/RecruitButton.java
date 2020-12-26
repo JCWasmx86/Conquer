@@ -48,7 +48,7 @@ final class RecruitButton extends JPanel {
 	 * Updates all components on this panel.
 	 */
 	void doUpdate() {
-		if (this.city.getClanId() != 0) {
+		if (!this.city.isPlayerCity()) {
 			this.jbutton.setEnabled(false);
 			this.js.setEnabled(false);
 			this.sharp = true;

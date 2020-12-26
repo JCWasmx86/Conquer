@@ -319,7 +319,7 @@ public final class Game implements ConquerInfo {
 	}
 
 	private boolean cantAttack(final ICity src, final ICity destination) {
-		return (src.getClanId() == destination.getClanId()) || (src == destination)
+		return (src.getClan() == destination.getClan()) || (src == destination)
 				|| (!this.cities.isConnected(src, destination));
 	}
 
@@ -770,14 +770,14 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public boolean isDead(final IClan clan) {
-		if(clan==null) {
+		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
 
 	private boolean isInFriendlyCountry(final ICity c) {
-		return this.cities.getConnected(c).stream().filter(a -> a.getClanId() != c.getClanId()).count() == 0;
+		return this.cities.getConnected(c).stream().filter(a -> a.getClan() != c.getClan()).count() == 0;
 	}
 
 	/**
@@ -790,7 +790,7 @@ public final class Game implements ConquerInfo {
 
 	@Override
 	public long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit) {
-		if(clan==null) {
+		if (clan == null) {
 			throw new IllegalArgumentException("clan==null");
 		}
 		if (limit < 0) {
@@ -841,7 +841,7 @@ public final class Game implements ConquerInfo {
 		List<ICity> list = null;
 		if (!managed) {
 			list = this.getWeakestCityInRatioToSurroundingEnemyCities(saved).stream()
-					.filter(a -> a.getClanId() == src.getClanId()).collect(Collectors.toList());
+					.filter(a -> a.getClan() == src.getClan()).collect(Collectors.toList());
 			if (list.isEmpty()) {
 				return;
 			}
@@ -894,7 +894,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public boolean onlyOneClanAlive() {
-		return StreamUtils.getCitiesAsStream(this.cities).map(ICity::getClanId).distinct().count() == 1;
+		return StreamUtils.getCitiesAsStream(this.cities).map(ICity::getClan).distinct().count() == 1;
 	}
 
 	private void pay(final IClan srcClan, final double subtract) {
