@@ -40,7 +40,7 @@ public final class StreamUtils {
 
 	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> cities, final ICity middle,
 			final IClan clan) {
-		return StreamUtils.getCitiesAroundCityNot(cities, middle, a -> a.getClan() != clan);
+		return StreamUtils.getCitiesAroundCity(cities, middle).filter(a -> a.getClan() != clan);
 	}
 
 	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> graph, final ICity source,
