@@ -146,7 +146,10 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				sb.append("\t</plugins>\n\t<strategies>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.strategyNamesListCopy
 						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
-				sb.append("\t</strategies>\n</info>\n"); //$NON-NLS-1$
+				sb.append("\t</strategies>\n\t<readers>");
+				StrategiesAndPluginsDialog.this.context.getReaderNames()
+						.forEach(a -> sb.append("\t\t<reader className=\"").append(a).append("\"/>\n"));
+				sb.append("\t</readers>\n</info>\n"); //$NON-NLS-1$
 				final var f = new File(Shared.BASE_DIRECTORY, "info.xml"); //$NON-NLS-1$
 				try {
 					Files.write(Paths.get(f.toURI()), sb.toString().getBytes());
