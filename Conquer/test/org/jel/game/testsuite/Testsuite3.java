@@ -63,8 +63,8 @@ public final class Testsuite3 extends Testsuite {
 
 	private void checkClans(final List<IClan> clans, final List<IClan> clans2) {
 		for (var i = 0; i < clans.size(); i++) {
-			final IClan oldClan = clans.get(i);
-			final IClan newClan = clans2.get(i);
+			final var oldClan = clans.get(i);
+			final var newClan = clans2.get(i);
 			this.compare(oldClan, newClan);
 		}
 	}

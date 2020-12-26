@@ -7,7 +7,6 @@ import javax.swing.JTextField;
 
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Resource;
-import org.jel.game.data.Shared;
 
 /**
  * Shows a slider that determines the amount of a resource to be send as a gift
