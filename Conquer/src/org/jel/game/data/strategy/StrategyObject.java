@@ -35,8 +35,8 @@ public interface StrategyObject {
 		if (city == null) {
 			throw new IllegalArgumentException("city==null");
 		}
-		if (clan.getId() == city.getClanId()) {
-			throw new IllegalArgumentException("clan.getID()==city.getClan()");
+		if (clan == city.getClan()) {
+			throw new IllegalArgumentException("clan==city.getClan()");
 		}
 		return this.getRelationship(clan, city.getClan());
 	}

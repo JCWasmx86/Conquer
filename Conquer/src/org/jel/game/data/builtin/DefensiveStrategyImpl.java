@@ -60,7 +60,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void defensiveCityUpgrades(final IClan clan) {
 		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
-			final Predicate<ICity> predicate = c -> c.getClanId() != clan.getId();
+			final Predicate<ICity> predicate = c -> c.getClan() != clan;
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.graph, a, predicate).count();
 			final var cnt2 = StreamUtils.getCitiesAroundCity(this.graph, b, predicate).count();
 			if ((cnt1 == cnt2) || ((cnt1 == 0) && (cnt2 == 0))) {
@@ -117,7 +117,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan, ownCity -> StreamUtils
-				.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClanId()).sorted().forEach(enemy -> {
+				.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClan()).sorted().forEach(enemy -> {
 					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
 							* clan.getSoldiersStrength();
 					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
