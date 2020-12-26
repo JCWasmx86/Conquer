@@ -6,7 +6,6 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.Shared;
 
 /**
  * Shows a slider that determines the amount of coins to be send as a gift

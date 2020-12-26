@@ -219,7 +219,7 @@ public final class Game implements ConquerInfo {
 			return;
 		}
 		final var powerOfAttacker = this.calculatePowerOfAttacker(src, clan, destination, managed, reallyPlayer, num);
-		if ((powerOfAttacker == 0&&!src.isPlayerCity()) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
+		if (((powerOfAttacker == 0) && !src.isPlayerCity()) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
 			return;
 		}
 		final var diff = this.setup(clan, powerOfAttacker, src, destination);
