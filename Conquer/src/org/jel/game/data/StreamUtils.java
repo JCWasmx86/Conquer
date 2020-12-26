@@ -46,7 +46,8 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream().filter(predicate);
 	}
 
-	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> cities, final ICity middle, final IClan clan) {
+	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> cities, final ICity middle,
+			final IClan clan) {
 		return StreamUtils.getCitiesAroundCityNot(cities, middle, clan.getId());
 	}
 

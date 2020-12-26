@@ -14,7 +14,7 @@ import org.jel.game.plugins.PluginInterface;
  */
 public interface ConquerInfo extends StrategyObject, PluginInterface {
 
-	void addContext(GlobalContext context);
+	void addContext(final GlobalContext context);
 
 	Result calculateResult();
 
@@ -22,11 +22,11 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void executeActions();
 
-	void exit(Result calculateResult);
+	void exit(final Result calculateResult);
 
 	Image getBackground();
 
-	IClan getClan(int index);
+	IClan getClan(final int index);
 
 	List<String> getClanNames();
 
@@ -42,31 +42,17 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	List<Plugin> getPlugins();
 
-	ConquerSaver getSaver(String name);
+	ConquerSaver getSaver(final String name);
 
 	Version getVersion();
 
 	void init();
 
-	default boolean isDead(final IClan clan) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan == null");
-		}
-		return this.isDead(clan.getId());
-	}
-
-	boolean isDead(int clan);
+	boolean isDead(final IClan clan);
 
 	boolean isPlayersTurn();
 
-	default long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan==null");
-		}
-		return this.maximumNumberOfSoldiersToRecruit(clan.getId(), limit);
-	}
-
-	long maximumNumberOfSoldiersToRecruit(final int clan, final long limit);
+	long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit);
 
 	default boolean onlyOneClanAlive() {
 		return StreamUtils.getCitiesAsStream(this.getCities()).map(ICity::getClanId).distinct().count() == 1;
@@ -80,48 +66,30 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void setPlayersTurn(boolean b);
 
-	default void upgradeDefenseFully(final IClan clan, final ICity city) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan==null");
-		}
-		if (city == null) {
-			throw new IllegalArgumentException("city==null");
-		}
-		this.upgradeDefenseFully(clan.getId(), city);
-	}
+	void upgradeDefenseFully(final ICity city);
 
-	void upgradeDefenseFully(final int clan, final ICity city);
+	void upgradeResourceFully(final Resource resources, final ICity city);
 
-	default void upgradeResourceFully(final IClan clan, final Resource resources, final ICity city) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan==null");
-		}
-		if (city == null) {
-			throw new IllegalArgumentException("city==null");
-		}
-		this.upgradeResourceFully(clan.getId(), resources, city);
-	}
-
-	void upgradeResourceFully(final int clan, final Resource resources, final ICity city);
-
-	default void upgradeSoldiersDefenseFully(final int id) {
+	default void upgradeSoldiersDefenseFully(final IClan clan) {
 		var b = true;
 		while (b) {
-			b = this.upgradeDefense(id);
+			b = this.upgradeDefense(clan);
 		}
 	}
 
-	default void upgradeSoldiersFully(final int id) {
+	default void upgradeSoldiersFully(final IClan clan) {
 		var b = true;
 		while (b) {
-			b = this.upgradeSoldiers(id);
+			b = this.upgradeSoldiers(clan);
 		}
 	}
 
-	default void upgradeSoldiersOffenseFully(final int id) {
+	default void upgradeSoldiersOffenseFully(final IClan clan) {
 		var b = true;
 		while (b) {
-			b = this.upgradeOffense(id);
+			b = this.upgradeOffense(clan);
 		}
 	}
+
+	IClan getPlayerClan();
 }

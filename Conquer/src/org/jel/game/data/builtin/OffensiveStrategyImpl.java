@@ -86,7 +86,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 				}).forEach(a -> {
 					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
 							city.getNumberOfSoldiers());
-					this.object.moveSoldiers(city, null, clan, true, a, numberOfSoldiersToMove);
+					this.object.moveSoldiers(city, null, true, a, numberOfSoldiersToMove);
 				}));
 	}
 
@@ -139,7 +139,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 			final double resB = b.getProductions().get(index);
 			return Double.compare(resA, resB);
 		}).collect(Collectors.toList()).forEach(a -> {
-			while (this.object.upgradeResource(clan, resc, a)) {
+			while (this.object.upgradeResource(resc, a)) {
 				// Empty
 			}
 		});

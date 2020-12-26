@@ -4,6 +4,8 @@
 \usepackage{minted}
 
 \begin{document}
+\tableofcontents
+\newpage
 \section{Conquer - Programming documentation}
 \subsection{Embedding}
 \textit{Conquer} was designed without any GUI in mind. It can run headless and can for example run on a server, or with a GUI made with Swing or JavaFX.
@@ -91,7 +93,7 @@ void applyStrategy(Clan clan, Graph<City> cities, StrategyObject obj);
 This method is called every round. \texttt{clan} is the clan for which the strategy should play. \texttt{cities} are all cities in the scenario and  \texttt{obj} is responsible for executing
 actions like attacks or upgrades.
 \begin{minted}{java}
-boolean acceptGift(Clan sourceClan, Clan destinationClan,
+boolean acceptGift(IClan sourceClan, IClan destinationClan,
 			Gift gift, double oldValue,
 			DoubleConsumer newValue,
 			StrategyObject strategyObject);
@@ -130,4 +132,81 @@ Allows to sort out the unrelated und for the player useless news.
 boolean shouldBeShownToThePlayer();
 \end{minted}
 Allows to sort out messages that are either debug messages or information that would give the player an unfair advantage.
+
+\section{Conquer - Interfaces}
+
+In order to make compatibility between different engines possible, a 
+set of interfaces with specified behavior is required.
+In the following:
+If an clan id is out of bounds, it means, it is either negative or
+bigger equals the number of clans. (Zero-based indexing)
+\subsection{ConquerInfo}
+
+\subsubsection{\texttt{void addContext(GlobalContext)}}
+A conforming implementation shall throw an \texttt{IllegalArgumentException}, if the context is \texttt{null}.
+Furthermore an \texttt{IllegalArgumentException} shall be thrown if the list
+of plugins, strategies or installed maps is \texttt{null}.
+
+\subsubsection{\texttt{int currentRound()}}
+This method shall only return a non-negative integer.
+
+\subsubsection{\texttt{void exit(Result)}}
+A conforming implementation must throw an \texttt{IllegalArgumentException},
+if the result is \texttt{null}.
+
+\subsubsection{\texttt{Image getBackground()}}
+This method may return \texttt{null}.
+
+\subsubsection{\texttt{IClan getClan(int)}}
+An \texttt{IllegalArgumentException} shall be thrown, if the given
+id is out of bounds.
+
+\subsubsection{\texttt{List<String> getClanNames()}}
+This method should return an unmodifiable list of clan names, sorted by
+ascending id.
+
+\subsubsection{\texttt{List<IClan> getClans()}}
+This method must return the original list of clans, so modifications are mirrored at the internal state.
+
+\subsubsection{\texttt{List<Double> getCoins()}}
+This method should return an unmodifiable list of coins every clan has, sorted by
+ascending id.
+
+\subsubsection{\texttt{List<Color> getColors()}}
+This method should return an unmodifiable list of color an clan is associated with, sorted by
+ascending id.
+
+\subsubsection{\texttt{List<Plugin> getPlugins()}}
+This method shall return the original non-null list of plugins in no specified order.
+
+\subsubsection{\texttt{ConquerSaver getSaver(String)}}
+
+An \texttt{IllegalArgumentException} shall be thrown, if the given
+string is either \texttt{null} or \texttt{string.isEmpty()} is true.
+
+\subsubsection{\texttt{boolean isDead(IClan)}}
+An \texttt{IllegalArgumentException} shall be thrown, if \texttt{null} is passed.
+This method is the preferred overloaded version to the raw \texttt{boolean isDead(int)}.
+
+\subsubsection{\texttt{boolean isDead(int)}}
+Returns \texttt{true} if the clan with the given id is dead (=Has no cities).
+An \texttt{IllegalArgumentException} shall be thrown, if the given clan id is out of bounds.
+
+\subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(IClan,long)}}
+Returns the maximum number of soldiers that could be recruited in a clan. This value may never be \texttt{null}.
+An \texttt{IllegalArgumentException} shall be thrown if the given clan is either \texttt{null} or the given long is negative.
+This is the preferred overloaded version to \texttt{long maximumNumberOfSoldiersToRecruit(int,long)}.
+
+\subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(int,long)}}
+An \texttt{IllegalArgumentException} shall be thrown if the given clan id is out of bounds or the long argument is negative.
+A negative value shall not be returned.
+
+\subsubsection{\texttt{void setPlayerGiftCallback(PlayerGiftCallback)}}
+The argument shall never be \texttt{null}.
+If it is \texttt{null}, an \texttt{IllegalArgumentException} has to be thrown.
+
+\subsubsection{\texttt{void upgradeDefenseFully(ICity)}}
+The given city must be \texttt{null}.
+Otherwise an \texttt{IllegalArgumentException} must be thrown.
+
 \end{document}

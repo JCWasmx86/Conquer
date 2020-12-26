@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import org.jel.game.data.ICity;
-import org.jel.game.data.Shared;
 
 /**
  * Represents a city on the map. It is divided into two parts. The first (upper)
@@ -198,7 +197,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private void proceed() {
 		final var game = this.city.getInfo();
 		final var weight = game.getCities().getWeight(this.city, this.origin);
-		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove((byte) 0, weight,
+		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove(game.getPlayerClan(), weight,
 				this.origin.getNumberOfSoldiers());
 		String prompt;
 		if (this.city.isPlayerCity()) {
@@ -225,10 +224,9 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			}
 		}
 		if (this.city.isPlayerCity()) {
-			game.moveSoldiers(this.origin, (Stream<ICity>) null, Shared.PLAYER_CLAN, true, this.city,
-					numberOfSelectedSoldiers);
+			game.moveSoldiers(this.origin, (Stream<ICity>) null, true, this.city, numberOfSelectedSoldiers);
 		} else {
-			game.attack(this.origin, this.city, Shared.PLAYER_CLAN, true, numberOfSelectedSoldiers);
+			game.attack(this.origin, this.city, true, numberOfSelectedSoldiers);
 		}
 	}
 

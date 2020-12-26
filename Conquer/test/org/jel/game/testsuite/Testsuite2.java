@@ -148,17 +148,6 @@ public final class Testsuite2 extends Testsuite {
 		final var b = info.getCities().getValue(1);
 		final var c = info.getClan(0);
 		final IClan d = info.getClan(1);
-		this.expect(() -> info.attack(a, null, 0, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(null, b, 0, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, 1, true, -1), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, -1, true, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, 120, true, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(null, b, c, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, null, c, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, null, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, c, false, -1), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, 1, false, 0, true), IllegalArgumentException.class);
-		this.expect(() -> info.attack(a, b, -1, false, 0, false), IllegalArgumentException.class);
 		this.expect(() -> info.defenseStrengthOfCity(null), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(-1), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(500), IllegalArgumentException.class);
@@ -167,22 +156,13 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
 		this.expect(() -> info.getRelationship((IClan) null, (IClan) null), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship((IClan) null, a), IllegalArgumentException.class);
-		this.expect(() -> info.getRelationship(-1, -1), IllegalArgumentException.class);
-		this.expect(() -> info.getRelationship(500, 500), NoSuchElementException.class);
 		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<ICity>) null),
 				IllegalArgumentException.class);
 		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<ICity>) null),
 				IllegalArgumentException.class);
 		this.expect(() -> info.isDead(null), IllegalArgumentException.class);
-		this.expect(() -> info.isDead(-1), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(null, 5), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(c, -5), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(-1, 5), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(1222, 5), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberToMove(-1, 0, 0), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberToMove(127, 0, 0), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberToMove(0, -1, 0), IllegalArgumentException.class);
-		this.expect(() -> info.maximumNumberToMove(0, 0, -1), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberToMove(null, -1, -1), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberToMove(c, -1, 0), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberToMove(c, 0, -1), IllegalArgumentException.class);
@@ -195,17 +175,5 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.sendGift(c, null, new Gift()), IllegalArgumentException.class);
 		this.expect(() -> info.sendGift(null, d, new Gift()), IllegalArgumentException.class);
 		this.expect(() -> info.reachableCities(null), IllegalArgumentException.class);
-		this.expect(() -> info.recruitSoldiers(0, null, null, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.recruitSoldiers(-1, c, a, false, -1), IllegalArgumentException.class);
-		this.expect(() -> info.recruitSoldiers(0, c, b, true, -1), IllegalArgumentException.class);
-		this.expect(() -> info.recruitSoldiers(0, c, null, false, 0), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeDefense(-1), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeDefense(120), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeOffense(-1), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeOffense(120), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeSoldiers(-1), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeSoldiers(120), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeDefense(-1, a), IllegalArgumentException.class);
-		this.expect(() -> info.upgradeDefense(120, a), IllegalArgumentException.class);
 	}
 }

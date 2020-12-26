@@ -245,7 +245,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					Shared.LOGGER.exception(e);// Oops
 				}
 				if (!flag) {
-					final var playerDead = this.game.isDead(Shared.PLAYER_CLAN);
+					final var playerDead = this.game.isDead(this.game.getPlayerClan());
 					if (playerDead) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();

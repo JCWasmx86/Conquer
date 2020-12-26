@@ -43,9 +43,9 @@ final class ResourceButton extends JPanel {
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 		this.upgradeThisResource.addActionListener(e -> {
 			if (resource != null) {
-				city.getInfo().upgradeResource(Shared.PLAYER_CLAN, resource, city);
+				city.getInfo().upgradeResource(resource, city);
 			} else {
-				city.getInfo().upgradeDefense(Shared.PLAYER_CLAN, city);
+				city.getInfo().upgradeDefense(city);
 			}
 			ResourceButton.this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 			cip.doUpdate();
@@ -57,9 +57,9 @@ final class ResourceButton extends JPanel {
 		this.add(this.maximumUpgrade);
 		this.maximumUpgrade.addActionListener(e -> {
 			if (resource != null) {
-				city.getInfo().upgradeResourceFully(Shared.PLAYER_CLAN, resource, city);
+				city.getInfo().upgradeResourceFully(resource, city);
 			} else {
-				city.getInfo().upgradeDefenseFully(Shared.PLAYER_CLAN, city);
+				city.getInfo().upgradeDefenseFully(city);
 			}
 			ResourceButton.this.maximumUpgrade.setText(this.getMaxUpgradeText());
 			cip.doUpdate();
@@ -79,7 +79,7 @@ final class ResourceButton extends JPanel {
 		this.updateLabel(level);
 		this.updateUpgradeThisResource(level);
 		this.updateMaximumUpgrade(level);
-		if (this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
+		if (this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
 			this.upgradeThisResource.setEnabled(false);
 			this.maximumUpgrade.setEnabled(false);
 		}
