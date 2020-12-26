@@ -82,7 +82,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				UpgradeSoldiersPanel.this.game.upgradeSoldiersFully(UpgradeSoldiersPanel.this.clan.getId());
+				UpgradeSoldiersPanel.this.game.upgradeSoldiersFully(UpgradeSoldiersPanel.this.clan);
 			}
 		});
 		this.upgradeMax.setEnabled(count > 0);
@@ -107,7 +107,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				UpgradeSoldiersPanel.this.game.upgradeSoldiers((byte) UpgradeSoldiersPanel.this.clan.getId());
+				UpgradeSoldiersPanel.this.game.upgradeSoldiers(UpgradeSoldiersPanel.this.clan);
 			}
 		});
 		this.upgradeOnce.setEnabled(costs < coins);

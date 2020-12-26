@@ -4,26 +4,10 @@ import java.awt.Image;
 import java.util.List;
 
 public interface ICity extends Comparable<ICity> {
-
-	/**
-	 * Compares one city with another. The comparison is quite simple. The strength
-	 * of each city is calculated by adding the defense to the product of the
-	 * defense bonus and the number of soldiers in the city.
-	 */
-	@Override
-	int compareTo(ICity other);
-
 	/**
 	 * Called at the end of the round.
 	 */
 	void endOfRound();
-
-	/**
-	 * Returns whether one city is equals to the other one. Not all properties are
-	 * checked, only the name, the X- and Y-position.
-	 */
-	@Override
-	boolean equals(Object obj);
 
 	/**
 	 * Gives the defensebonus: Suppose there are 500 Soldiers in the city and there

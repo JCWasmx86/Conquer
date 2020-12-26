@@ -40,7 +40,7 @@ final class BuiltinShared {
 				return;
 			}
 			// Attack the weakest city
-			object.attack(source, weakestCity, clan, false, 0, false);
+			object.attack(source, weakestCity, false, 0, false);
 		}
 	}
 
@@ -51,9 +51,9 @@ final class BuiltinShared {
 			// some.
 			final var diff = c.getCoinDiff();
 			if ((diff < -BuiltinShared.COINS_TO_RETAIN) && (citiesOfClan.size() > 1)) {
-				object.moveSoldiers(c, object.reachableCities(c), clan, false, null, 0);
+				object.moveSoldiers(c, object.reachableCities(c), false, null, 0);
 			} else if (diff > BuiltinShared.COINS_TO_RETAIN) {
-				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, clan, c, false, 0);
+				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, c, false, 0);
 			}
 			// Do some expansion
 			BuiltinShared.moderateAttack(clan, c, graph, object);
@@ -102,13 +102,13 @@ final class BuiltinShared {
 				}).forEach(own -> {
 					final var cnt = object.maximumNumberToMove(clan, own, enemy, own.getNumberOfSoldiers());
 					if (own.getNumberOfSoldiers() < enemy.getDefense()) {
-						object.recruitSoldiers(clan.getCoins(), clan, own, false, 0);
+						object.recruitSoldiers(clan.getCoins(), own, false, 0);
 					}
 					if (!cityGraph.isConnected(own, enemy) || (own.getNumberOfSoldiers() < enemy.getDefense())
 							|| (cnt == 0)) {
 						return;
 					}
-					object.attack(own, enemy, clan, true, cnt, false);
+					object.attack(own, enemy, true, cnt, false);
 				}));
 	}
 
@@ -121,7 +121,7 @@ final class BuiltinShared {
 					final var defenseStrengthB = object.defenseStrengthOfCity(b);
 					return Double.compare(defenseStrengthA, defenseStrengthB);
 					// Make them stronger, starting with the weakest city
-				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), clan, a, false, 0));
+				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), a, false, 0));
 	}
 
 	static double sum(final IClan clan) {
@@ -147,7 +147,7 @@ final class BuiltinShared {
 			}
 			// Upgrade cities, that are below the average
 			while (city.getDefense() < avg) {
-				final var b = object.upgradeDefense(clan, city);
+				final var b = object.upgradeDefense(city);
 				if (!b) {
 					break;
 				}
@@ -157,7 +157,7 @@ final class BuiltinShared {
 		object.getWeakestCityInRatioToSurroundingEnemyCities(StreamUtils.getCitiesAsStream(graph, clan)).forEach(a -> {
 			var cnter = 0;
 			while (true) {
-				final var b = object.upgradeDefense(clan, a);
+				final var b = object.upgradeDefense(a);
 				cnter++;
 				if ((!b) || (cnter >= BuiltinShared.MAX_ITERATIONS)) {
 					break;
@@ -181,8 +181,7 @@ final class BuiltinShared {
 			var cnter = 0;
 			// Upgrade resource
 			while (cnter != sortedListOfCities.size()) {
-				final var b = object.upgradeResource(clan, Resource.values()[a.getKey()],
-						sortedListOfCities.get(cnter));
+				final var b = object.upgradeResource(Resource.values()[a.getKey()], sortedListOfCities.get(cnter));
 				if (!b) {
 					cnter++;
 				}

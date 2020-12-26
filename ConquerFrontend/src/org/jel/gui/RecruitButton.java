@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 import org.jel.game.data.ICity;
-import org.jel.game.data.Shared;
 
 /**
  * Allows the player to recruit soldiers
@@ -27,8 +26,7 @@ final class RecruitButton extends JPanel {
 	RecruitButton(final ICity city, final CityInfoPanel cip) {
 		this.city = city;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit((byte) city.getClanId(),
-				city.getNumberOfPeople());
+		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit(city.getClan(), city.getNumberOfPeople());
 		this.js = new JSlider(0, (int) max);
 		this.js.setValue((int) (max / 2));
 		this.jbutton = new JButton(Messages.getMessage("RecruitButton.recruitNSoldiers", max / 2)); //$NON-NLS-1$
@@ -37,7 +35,7 @@ final class RecruitButton extends JPanel {
 				return;
 			}
 			final var cnt = RecruitButton.this.js.getValue();
-			city.getInfo().recruitSoldiers(Shared.PLAYER_CLAN, (byte) 0, city, true, cnt);
+			city.getInfo().recruitSoldiers(0.0, city, true, cnt);
 			cip.doUpdate();
 		});
 		this.js.addChangeListener(e -> RecruitButton.this.jbutton
@@ -57,11 +55,11 @@ final class RecruitButton extends JPanel {
 			this.js.setMinimum(0);
 			this.js.setMaximum(0);
 			this.sharp = false;
-		} else if (!this.city.getInfo().isDead(Shared.PLAYER_CLAN)) {
+		} else if (!this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
 			this.jbutton.setEnabled(true);
 			this.js.setEnabled(true);
 			this.sharp = true;
-			this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit((byte) this.city.getClanId(),
+			this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit(this.city.getClan(),
 					this.city.getNumberOfPeople()));
 			this.sharp = false;
 		} else {

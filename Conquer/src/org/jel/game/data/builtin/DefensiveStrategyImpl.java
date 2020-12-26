@@ -18,9 +18,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 	private StrategyObject object;
 
 	@Override
-	public boolean acceptGift(
-			final IClan sourceClan, final IClan destinationClan, final Gift gift, final double oldValue,
-			final DoubleConsumer newValue, final StrategyObject strategyObject) {
+	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
+			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		final var own = BuiltinShared.sum(destinationClan);
 		final var giftValue = BuiltinShared.sum(gift);
 		final var prop = own == 0 ? Math.random() * 2 : (giftValue / own);
@@ -73,7 +72,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 			var b = true;
 			var cnter = 0;
 			while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-				b = this.object.upgradeDefense(clan, a);
+				b = this.object.upgradeDefense(a);
 				cnter++;
 			}
 		});
@@ -123,7 +122,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 							* clan.getSoldiersStrength();
 					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
 					if (dOwn > (dTwo * 1.1)) {
-						this.object.attack(ownCity, enemy, ownCity.getClanId(), false, 0, false);
+						this.object.attack(ownCity, enemy, false, 0, false);
 					}
 				}));
 	}

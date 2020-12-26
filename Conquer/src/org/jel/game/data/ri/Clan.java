@@ -32,7 +32,7 @@ final class Clan implements IClan {
 	private int soldiersOffenseLevel = 0;
 	private int flags;
 
-	public Clan() {
+	Clan() {
 		// Constructor for incrementally building a clan.
 	}
 

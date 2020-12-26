@@ -89,7 +89,7 @@ public final class SortedStrategyImpl implements Strategy {
 				} else {
 					return;
 				}
-				obj.attack(ownCity, target, clan, true, numberOfSoldiersUsed, false);
+				obj.attack(ownCity, target, true, numberOfSoldiersUsed, false);
 			});
 		});
 	}
@@ -126,7 +126,7 @@ public final class SortedStrategyImpl implements Strategy {
 	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
 			final long ownCitySoldiers, final StrategyObject obj) {
 		if (second > (ownCitySoldiers * factor)) {
-			obj.recruitSoldiers(clan.getCoins() * 0.25, clan, ownCity, true, ownCity.getNumberOfPeople());
+			obj.recruitSoldiers(clan.getCoins() * 0.25, ownCity, true, ownCity.getNumberOfPeople());
 			if (second > (ownCitySoldiers * factor)) {
 				return true;
 			}
@@ -141,9 +141,9 @@ public final class SortedStrategyImpl implements Strategy {
 			var num = 0;
 			for (final var c : ownCities) {
 				var flag = false;
-				flag |= obj.upgradeDefense(clan, c);
+				flag |= obj.upgradeDefense(c);
 				for (final Resource r : Resource.values()) {
-					flag |= obj.upgradeResource(clan, r, c);
+					flag |= obj.upgradeResource(r, c);
 				}
 				if (flag) {
 					num++;

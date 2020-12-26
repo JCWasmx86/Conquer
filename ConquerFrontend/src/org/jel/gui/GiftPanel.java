@@ -80,7 +80,7 @@ final class GiftPanel extends JPanel {
 		p.add(button);
 		this.box.setIgnoreRepaint(true);
 		new ExtendedTimer(17, e -> {
-			if (this.game.onlyOneClanAlive() && !this.game.isDead(Shared.PLAYER_CLAN)) {
+			if (this.game.onlyOneClanAlive() && !this.game.isDead(this.game.getPlayerClan())) {
 				button.setEnabled(false);
 				return;
 			}

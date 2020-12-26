@@ -1,0 +1,33 @@
+\contentsline {section}{\numberline {1}Conquer - Programming documentation}{2}{}%
+\contentsline {subsection}{\numberline {1.1}Embedding}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Plugin API}{3}{}%
+\contentsline {subsubsection}{\numberline {1.2.1}Callbacks}{3}{}%
+\contentsline {paragraph}{\texttt {AttackHook}s}{3}{}%
+\contentsline {paragraph}{\texttt {MessageListener}s}{3}{}%
+\contentsline {paragraph}{\texttt {MoneyHook}s}{3}{}%
+\contentsline {paragraph}{\texttt {MoveHook}s}{3}{}%
+\contentsline {paragraph}{\texttt {RecruitHook}s}{3}{}%
+\contentsline {paragraph}{\texttt {ResourceHook}s}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Strategy API}{4}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}\texttt {StrategyProvider}}{4}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}\texttt {Strategy}}{4}{}%
+\contentsline {subsubsection}{\numberline {1.3.3}\texttt {StrategyData}}{5}{}%
+\contentsline {subsection}{\numberline {1.4}Messages}{5}{}%
+\contentsline {section}{\numberline {2}Conquer - Interfacedocumentation}{5}{}%
+\contentsline {subsection}{\numberline {2.1}ConquerInfo}{5}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}\texttt {void addContext(GlobalContext)}}{5}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}\texttt {int currentRound()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.3}\texttt {void exit(Result)}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.4}\texttt {Image getBackground()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.5}\texttt {IClan getClan(int)}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.6}\texttt {List<String> getClanNames()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.7}\texttt {List<IClan> getClans()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.8}\texttt {List<Double> getCoins()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.9}\texttt {List<Color> getColors()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.10}\texttt {List<Plugin> getPlugins()}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.11}\texttt {ConquerSaver getSaver(String)}}{6}{}%
+\contentsline {subsubsection}{\numberline {2.1.12}\texttt {boolean isDead(IClan)}}{7}{}%
+\contentsline {subsubsection}{\numberline {2.1.13}\texttt {boolean isDead(int)}}{7}{}%
+\contentsline {subsubsection}{\numberline {2.1.14}\texttt {long maximumNumberOfSoldiersToRecruit(IClan,long)}}{7}{}%
+\contentsline {subsubsection}{\numberline {2.1.15}\texttt {long maximumNumberOfSoldiersToRecruit(int,long)}}{7}{}%
+\contentsline {subsubsection}{\numberline {2.1.16}\texttt {void setPlayerGiftCallback(PlayerGiftCallback)}}{7}{}%

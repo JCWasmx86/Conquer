@@ -210,31 +210,29 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public void attack(final ICity src, final ICity destination, final int clan, final boolean managed, final long num,
+	public void attack(final ICity src, final ICity destination, final boolean managed, final long num,
 			final boolean reallyPlayer) {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
-		this.checkClan(clan);
-		this.sameClan(src, clan);
+		final var clan = src.getClan();
 		this.checkPreconditions(src, managed, num, reallyPlayer);
 		if (this.cantAttack(src, destination)) {
 			return;
 		}
-		final var powerOfAttacker = this.calculatePowerOfAttacker(src, this.getClan(clan), destination, managed,
-				reallyPlayer, num);
+		final var powerOfAttacker = this.calculatePowerOfAttacker(src, clan, destination, managed, reallyPlayer, num);
 		if ((powerOfAttacker == 0) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
 			return;
 		}
 		final var diff = this.setup(clan, powerOfAttacker, src, destination);
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - powerOfAttacker);
 		this.data.getAttackHooks().forEach(a -> a.before(src, destination, powerOfAttacker));
-		var relationshipValue = this.getRelationship(src.getClanId(), destination.getClanId());
+		var relationshipValue = this.getRelationship(src.getClan(), destination.getClan());
 		double numberOfSurvivingPeople;
-		final var destinationClan = destination.getClanId();
+		final var destinationClan = destination.getClan();
 		long survivingSoldiers;
 		AttackResult result;
 		if (diff > 0) {// Attack was defeated
-			final IClan destinationClanObj = this.getClan(destination);
+			final var destinationClanObj = this.getClan(destination);
 			final var remainingSoldiersDefender = this.numberOfSurvivingDefenders(diff, destination,
 					destinationClanObj);
 			var surviving = remainingSoldiersDefender;
@@ -273,7 +271,8 @@ public final class Game implements ConquerInfo {
 			relationshipValue = 0;
 		}
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
-		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan, relationshipValue, relationshipValue);
+		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan.getId(), relationshipValue,
+				relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 		this.checkExtinction(result, destinationClan);
 	}
@@ -284,7 +283,7 @@ public final class Game implements ConquerInfo {
 
 	private long calculateNumberOfSurvivingAttackers(final double diff, final ICity src) {
 		var cleanedDiff = diff;
-		final IClan srcClan = this.getClan(src);
+		final var srcClan = this.getClan(src);
 		cleanedDiff /= srcClan.getSoldiersOffenseStrength();
 		cleanedDiff /= srcClan.getSoldiersStrength();
 		return (long) -cleanedDiff;
@@ -303,7 +302,7 @@ public final class Game implements ConquerInfo {
 	}
 
 	private double calculatePowerOfDefender(final ICity city) {
-		final IClan clan = city.getClan();
+		final var clan = city.getClan();
 		return city.getDefense() + (city.getNumberOfSoldiers() * city.getBonus() * clan.getSoldiersDefenseStrength()
 				* clan.getSoldiersStrength());
 	}
@@ -332,9 +331,9 @@ public final class Game implements ConquerInfo {
 		}
 	}
 
-	private void checkExtinction(final AttackResult result, final int destinationClan) {
+	private void checkExtinction(final AttackResult result, final IClan destinationClan) {
 		if ((result == AttackResult.CITY_CONQUERED) && this.isDead(destinationClan)) {
-			this.events.add(new ExtinctionMessage(this.getClan(destinationClan)));
+			this.events.add(new ExtinctionMessage(destinationClan));
 		}
 	}
 
@@ -373,7 +372,7 @@ public final class Game implements ConquerInfo {
 	@Override
 	public double defenseStrengthOfCity(final ICity c) {
 		this.throwIfNull(c, "c==null");
-		final IClan clan = c.getClan();
+		final var clan = c.getClan();
 		return c.getDefenseStrength(clan);
 	}
 
@@ -515,10 +514,10 @@ public final class Game implements ConquerInfo {
 	}
 
 	private void executeCPUPlay(final int clan) {
-		if (this.isDead(clan)) {
+		if (this.isDead(this.clans.get(clan))) {
 			return;
 		}
-		final IClan clanRef = this.getClan(clan);
+		final var clanRef = this.getClan(clan);
 		clanRef.getStrategy().applyStrategy(clanRef, this.cities, this);
 		clanRef.update(this.currentRound);
 	}
@@ -654,10 +653,6 @@ public final class Game implements ConquerInfo {
 		return this.relations;
 	}
 
-	private List<Double> getResources(final int clan) {
-		return this.clans.get(clan).getResources();
-	}
-
 	@Override
 	public ConquerSaver getSaver(final String name) {
 		return new SavedGame(name);
@@ -774,8 +769,10 @@ public final class Game implements ConquerInfo {
 	 * @param clan
 	 */
 	@Override
-	public boolean isDead(final int clan) {
-		this.checkClan(clan);
+	public boolean isDead(final IClan clan) {
+		if(clan==null) {
+			throw new IllegalArgumentException("clan==null");
+		}
 		return StreamUtils.getCitiesAsStream(this.cities, clan).count() == 0;
 	}
 
@@ -792,15 +789,17 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public long maximumNumberOfSoldiersToRecruit(final int clan, final long limit) {
-		this.checkClan(clan);
+	public long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit) {
+		if(clan==null) {
+			throw new IllegalArgumentException("clan==null");
+		}
 		if (limit < 0) {
 			throw new IllegalArgumentException("limit < 0");
 		}
-		final var resourcesOfClan = this.clans.get(clan).getResources();
+		final var resourcesOfClan = clan.getResources();
 		final List<Long> numbers = new ArrayList<>();
 		numbers.add(limit);
-		numbers.add((long) (this.clans.get(clan).getCoins() / Shared.COINS_PER_SOLDIER_INITIAL));
+		numbers.add((long) (clan.getCoins() / Shared.COINS_PER_SOLDIER_INITIAL));
 		numbers.add((long) (resourcesOfClan.get(Resource.IRON.getIndex()) / Shared.IRON_PER_SOLDIER_INITIAL));
 		numbers.add((long) (resourcesOfClan.get(Resource.WOOD.getIndex()) / Shared.WOOD_PER_SOLDIER_INITIAL));
 		numbers.add((long) (resourcesOfClan.get(Resource.STONE.getIndex()) / Shared.STONE_PER_SOLDIER_INITIAL));
@@ -809,25 +808,22 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public long maximumNumberToMove(final int clan, final double distance, final long numberOfSoldiers) {
-		this.checkClan(clan);
+	public long maximumNumberToMove(final IClan clan, final double distance, final long numberOfSoldiers) {
 		if (distance < 0) {
 			throw new IllegalArgumentException("distance < 0 : " + distance);
 		}
 		if (numberOfSoldiers < 0) {
 			throw new IllegalArgumentException("numberOfSoldiers < 0 : " + numberOfSoldiers);
 		}
-		final var maxPay = (long) (this.clans.get(clan).getCoins()
+		final var maxPay = (long) (clan.getCoins()
 				/ (Shared.COINS_PER_MOVE_OF_SOLDIER_BASE + (Shared.COINS_PER_MOVE_OF_SOLDIER * distance)));
 		return Math.min(numberOfSoldiers, maxPay);
 	}
 
 	@Override
-	public void moveSoldiers(final ICity src, final Stream<ICity> reachableCities, final int i, final boolean managed,
+	public void moveSoldiers(final ICity src, final Stream<ICity> reachableCities, final boolean managed,
 			final ICity other, final long numberOfSoldiersToMove) {
-		this.checkClan(i);
 		this.throwIfNull(src, "src==null");
-		this.sameClan(src, i);
 		if (numberOfSoldiersToMove < 0) {
 			throw new IllegalArgumentException("num < 0 : " + numberOfSoldiersToMove);
 		} else if (!managed && (reachableCities == null)) {
@@ -868,7 +864,7 @@ public final class Game implements ConquerInfo {
 			} else {
 				moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
 			}
-			moveAmount = this.maximumNumberToMove(this.clans.get(i), src, destination, moveAmount);
+			moveAmount = this.maximumNumberToMove(src.getClan(), src, destination, moveAmount);
 			if (moveAmount == 0) {
 				return;
 			}
@@ -876,7 +872,7 @@ public final class Game implements ConquerInfo {
 			moveAmount = numberOfSoldiersToMove;
 		}
 		destination.setNumberOfSoldiers(destination.getNumberOfSoldiers() + moveAmount);
-		this.payForMove(i, moveAmount, this.getCities().getWeight(src, destination));
+		this.payForMove(src.getClan(), moveAmount, this.getCities().getWeight(src, destination));
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - moveAmount);
 		final var finalMoveAmout = moveAmount;
 		this.data.getMoveHooks().forEach(a -> a.handleMove(src, destination, finalMoveAmout));
@@ -901,15 +897,12 @@ public final class Game implements ConquerInfo {
 		return StreamUtils.getCitiesAsStream(this.cities).map(ICity::getClanId).distinct().count() == 1;
 	}
 
-	private void pay(final int clan, final double subtract) {
-		if ((clan < 0) || (clan >= this.clans.size())) {
-			throw new IllegalArgumentException("clan outside of range");
-		}
-		this.setCoins(clan, this.getCoins().get(clan) - subtract);
+	private void pay(final IClan srcClan, final double subtract) {
+		srcClan.setCoins(srcClan.getCoins() - subtract);
 	}
 
-	private void payForMove(final int clan, final long numSoldiers, final double weight) {
-		this.pay(clan,
+	private void payForMove(final IClan srcClan, final long numSoldiers, final double weight) {
+		this.pay(srcClan,
 				numSoldiers * (Shared.COINS_PER_MOVE_OF_SOLDIER_BASE + (Shared.COINS_PER_MOVE_OF_SOLDIER * weight)));
 	}
 
@@ -943,10 +936,8 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public void recruitSoldiers(final double maxToPay, final int clan, final ICity c, final boolean managed,
-			final double count) {
-		this.checkClan(clan);
-		this.sameClan(c, clan);
+	public void recruitSoldiers(final double maxToPay, final ICity c, final boolean managed, final double count) {
+		final var clan = c.getClan();
 		this.throwIfNull(c, "c==null");
 		if (maxToPay < 0) {
 			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
@@ -971,7 +962,7 @@ public final class Game implements ConquerInfo {
 		}
 		c.setNumberOfPeople(c.getNumberOfPeople() - numberToRecruit);
 		c.setNumberOfSoldiers(c.getNumberOfSoldiers() + numberToRecruit);
-		final var resourcesOfClan = this.getResources(clan);
+		final var resourcesOfClan = clan.getResources();
 		final var ironNew = resourcesOfClan.get(Resource.IRON.getIndex())
 				- (numberToRecruit * Shared.IRON_PER_SOLDIER_INITIAL);
 		final var woodNew = resourcesOfClan.get(Resource.WOOD.getIndex())
@@ -981,7 +972,7 @@ public final class Game implements ConquerInfo {
 		resourcesOfClan.set(Resource.IRON.getIndex(), ironNew);
 		resourcesOfClan.set(Resource.WOOD.getIndex(), woodNew);
 		resourcesOfClan.set(Resource.STONE.getIndex(), stoneNew);
-		this.setCoins(clan, this.getCoins().get(clan) - (numberToRecruit * Shared.COINS_PER_SOLDIER_INITIAL));
+		clan.setCoins(clan.getCoins() - (numberToRecruit * Shared.COINS_PER_SOLDIER_INITIAL));
 		final var finalNumberToRecruit = numberToRecruit;
 		this.data.getRecruitHooks().forEach(a -> a.recruited(c, finalNumberToRecruit));
 	}
@@ -993,11 +984,11 @@ public final class Game implements ConquerInfo {
 		for (var i = 0; i < numTries; i++) {
 			final var selector = r.nextInt(Game.MAX_SELECTOR_VALUE);
 			final var clanOne = r.nextInt(size);
-			if (this.isDead(clanOne)) {
+			if (this.isDead(this.clans.get(clanOne))) {
 				continue;
 			}
 			var clanTwo = r.nextInt(size);
-			while ((clanTwo == clanOne) && !this.isDead(clanTwo)) {
+			while ((clanTwo == clanOne) && !this.isDead(this.clans.get(clanTwo))) {
 				clanTwo = r.nextInt(size);
 			}
 			this.eval(selector, clanOne, clanTwo, r);
@@ -1007,12 +998,6 @@ public final class Game implements ConquerInfo {
 	void resume(final String name) {
 		this.resumed = true;
 		this.directory = new File(Shared.SAVE_DIRECTORY, name);
-	}
-
-	private void sameClan(final ICity city, final int clan) {
-		if (city.getClanId() != clan) {
-			throw new IllegalArgumentException("city.clan!=clan");
-		}
 	}
 
 	private void sanityCheckForBadCityValues() {
@@ -1179,6 +1164,13 @@ public final class Game implements ConquerInfo {
 		return acceptedGift;
 	}
 
+	@Override
+	public double getRelationship(final IClan a, final IClan b) {
+		this.throwIfNull(a);
+		this.throwIfNull(b);
+		return this.relations.getWeight(a.getId(), b.getId());
+	}
+
 	void setBackground(final Image gi) {
 		this.throwIfNull(gi, "gi==null");
 		if (this.background != null) {
@@ -1193,11 +1185,6 @@ public final class Game implements ConquerInfo {
 			throw new UnsupportedOperationException("Can't change clans!");
 		}
 		this.clans = clans;
-	}
-
-	private void setCoins(final int clan, final double v) {
-		this.checkClan(clan);
-		this.clans.get(clan).setCoins(v);
 	}
 
 	@Override
@@ -1249,9 +1236,8 @@ public final class Game implements ConquerInfo {
 		this.currentRound = r;
 	}
 
-	private double setup(final int clan, final long powerOfAttacker, final ICity src, final ICity destination) {
-		final IClan srcClan = src.getClan();
-		this.payForMove(clan, powerOfAttacker, this.getCities().getWeight(src, destination));
+	private double setup(final IClan srcClan, final long powerOfAttacker, final ICity src, final ICity destination) {
+		this.payForMove(srcClan, powerOfAttacker, this.getCities().getWeight(src, destination));
 		var newPowerOfAttacker = powerOfAttacker * srcClan.getSoldiersStrength();
 		newPowerOfAttacker *= srcClan.getSoldiersOffenseStrength();
 		final var powerOfDefender = this.calculatePowerOfDefender(destination);
@@ -1271,22 +1257,19 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public boolean upgradeDefense(final int clan) {
-		this.checkClan(clan);
-		return this.getClan(clan).upgradeSoldiersDefense();
+	public boolean upgradeDefense(final IClan clan) {
+		return clan.upgradeSoldiers();
 	}
 
 	@Override
-	public boolean upgradeDefense(final int clan, final ICity city) {
-		this.checkClan(clan);
+	public boolean upgradeDefense(final ICity city) {
 		this.throwIfNull(city, "city==null");
-		this.sameClan(city, clan);
-		final var coins = this.getCoins();
 		final var costs = Shared.costs(city.getLevels().get(Resource.values().length) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(Resource.values().length) == Shared.MAX_LEVEL)) {
+		final var clan = city.getClan();
+		if ((costs > clan.getCoins()) || (city.getLevels().get(Resource.values().length) == Shared.MAX_LEVEL)) {
 			return false;
 		}
-		this.setCoins(clan, coins.get(clan) - costs);
+		clan.setCoins(clan.getCoins() - costs);
 		var defense = city.getDefense();
 		defense = defense < 1 ? 1 : defense;
 		city.setDefense(Shared.newPowerOfUpdate(city.getLevels().get(Resource.values().length) + 1, defense));
@@ -1295,35 +1278,30 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public void upgradeDefenseFully(final int clan, final ICity city) {
+	public void upgradeDefenseFully(final ICity city) {
 		this.throwIfNull(city, "city==null");
-		this.sameClan(city, clan);
-		this.checkClan(clan);
 		var shouldNotBreak = true;
 		while (shouldNotBreak) {
-			shouldNotBreak = this.upgradeDefense(clan, city);
+			shouldNotBreak = this.upgradeDefense(city);
 		}
 	}
 
 	@Override
-	public boolean upgradeOffense(final int clan) {
-		this.checkClan(clan);
-		return this.getClan(clan).upgradeSoldiersOffense();
+	public boolean upgradeOffense(final IClan clan) {
+		return clan.upgradeSoldiers();
 	}
 
 	@Override
-	public boolean upgradeResource(final int clan, final Resource resc, final ICity city) {
-		this.checkClan(clan);
+	public boolean upgradeResource(final Resource resc, final ICity city) {
 		this.throwIfNull(city, "city==null");
 		this.throwIfNull(resc, "resc==null");
-		this.sameClan(city, clan);
-		final var coins = this.getCoins();
 		final var index = resc.getIndex();
 		final var costs = Shared.costs(city.getLevels().get(index) + 1);
-		if ((costs > coins.get(clan)) || (city.getLevels().get(index) == Shared.MAX_LEVEL)) {
+		final var clan = city.getClan();
+		if ((costs > clan.getCoins()) || (city.getLevels().get(index) == Shared.MAX_LEVEL)) {
 			return false;
 		}
-		this.setCoins(clan, coins.get(clan) - costs);
+		clan.setCoins(clan.getCoins() - costs);
 		city.getProductions().set(resc.getIndex(),
 				Shared.newPowerOfUpdate(city.getLevels().get(index + 1), city.getProductions().get(index)));
 		city.getLevels().set(resc.getIndex(), city.getLevels().get(index) + 1);
@@ -1331,21 +1309,18 @@ public final class Game implements ConquerInfo {
 	}
 
 	@Override
-	public void upgradeResourceFully(final int clan, final Resource resources, final ICity city) {
+	public void upgradeResourceFully(final Resource resources, final ICity city) {
 		this.throwIfNull(city, "city==null");
 		this.throwIfNull(resources, "resources==null");
-		this.checkClan(clan);
-		this.sameClan(city, clan);
 		var shouldNotBreak = true;
 		while (shouldNotBreak) {
-			shouldNotBreak = this.upgradeResource(clan, resources, city);
+			shouldNotBreak = this.upgradeResource(resources, city);
 		}
 	}
 
 	@Override
-	public boolean upgradeSoldiers(final int clan) {
-		this.checkClan(clan);
-		return this.getClan(clan).upgradeSoldiers();
+	public boolean upgradeSoldiers(final IClan clan) {
+		return clan.upgradeSoldiers();
 	}
 
 	private void useResources() {
@@ -1380,6 +1355,11 @@ public final class Game implements ConquerInfo {
 		}
 		this.events.add(
 				new WorseRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
+	}
+
+	@Override
+	public IClan getPlayerClan() {
+		return this.clans.get(0);
 	}
 
 }
