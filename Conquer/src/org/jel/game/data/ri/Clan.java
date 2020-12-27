@@ -197,6 +197,8 @@ final class Clan implements IClan {
 	public void init(final StrategyProvider[] strategies, final Version version) {
 		if (strategies == null) {
 			throw new IllegalArgumentException("strategies==null");
+		} else if (version == null) {
+			throw new IllegalArgumentException("version==null");
 		}
 		final var list = new ArrayList<Double>();
 		for (var j = 0; j < Resource.values().length; j++) {
@@ -276,7 +278,7 @@ final class Clan implements IClan {
 	public void setId(final int id) {
 		if (this.id != -1) {
 			throw new UnsupportedOperationException("Can't change id of clan!");
-		} else if ((id < 0) || (id > Byte.MAX_VALUE)) {
+		} else if (id < 0) {
 			throw new IllegalArgumentException("Out of bounds!");
 		}
 		this.id = id;
@@ -300,7 +302,7 @@ final class Clan implements IClan {
 	@Override
 	public void setResources(final List<Double> resources) {
 		if (this.resources != null) {
-			throw new IllegalArgumentException("resources can't be changed!");
+			throw new UnsupportedOperationException("resources can't be changed!");
 		} else if (resources == null) {
 			throw new IllegalArgumentException("resources==null");
 		} else if (resources.size() != Resource.values().length) {
@@ -312,7 +314,7 @@ final class Clan implements IClan {
 	@Override
 	public void setResourceStats(final List<Double> resourceStats) {
 		if (this.resourceStats != null) {
-			throw new IllegalArgumentException("Resource stats can't be changed!");
+			throw new UnsupportedOperationException("Resource stats can't be changed!");
 		} else if (resourceStats == null) {
 			throw new IllegalArgumentException("resourceStats==null");
 		} else if (resourceStats.size() != Resource.values().length) {
@@ -411,6 +413,9 @@ final class Clan implements IClan {
 
 	@Override
 	public void update(final int currentRound) {
+		if (currentRound < 0) {
+			throw new IllegalArgumentException("currentRound < 0");
+		}
 		if (this.strategyData != null) {
 			this.strategyData.update(currentRound);
 		}
