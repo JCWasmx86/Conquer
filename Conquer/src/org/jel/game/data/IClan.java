@@ -155,7 +155,7 @@ public interface IClan {
 	/**
 	 * Change the id of the clan. May only be called once.
 	 *
-	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
+	 * @param id Has to be positive or zero.
 	 */
 	void setId(int id);
 

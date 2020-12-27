@@ -2,7 +2,14 @@
 
 \usepackage{listings}
 \usepackage{minted}
-
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=blue,
+    urlcolor=black
+}
 \begin{document}
 \tableofcontents
 \newpage
@@ -133,13 +140,13 @@ boolean shouldBeShownToThePlayer();
 \end{minted}
 Allows to sort out messages that are either debug messages or information that would give the player an unfair advantage.
 
+\newpage
+
 \section{Conquer - Interfaces}
 
 In order to make compatibility between different engines possible, a 
 set of interfaces with specified behavior is required.
-In the following:
-If an clan id is out of bounds, it means, it is either negative or
-bigger equals the number of clans. (Zero-based indexing)
+
 \subsection{ConquerInfo}
 
 \subsubsection{\texttt{void addContext(GlobalContext)}}
@@ -190,7 +197,6 @@ An \texttt{IllegalArgumentException} shall be thrown, if \texttt{null} is passed
 \subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(IClan,long)}}
 Returns the maximum number of soldiers that could be recruited in a clan. This value may never be \texttt{null}.
 An \texttt{IllegalArgumentException} shall be thrown if the given clan is either \texttt{null} or the given long is negative.
-This is the preferred overloaded version to \texttt{long maximumNumberOfSoldiersToRecruit(int,long)}.
 
 \subsubsection{\texttt{void setPlayerGiftCallback(PlayerGiftCallback)}}
 The argument shall never be \texttt{null}.
@@ -201,7 +207,7 @@ The given city mustn't be \texttt{null}.
 Otherwise an \texttt{IllegalArgumentException} must be thrown.
 
 \subsubsection{\texttt{void upgradeResourceFully(Resource,ICity)}}
-The given city and the resource mustn't be \texttt{null}
+The given city and the resource mustn't be \texttt{null}.
 Otherwise an \texttt{IllegalArgumentException} must be thrown.
 
 \subsubsection{\texttt{void upgradeSoldiersDefenseFully(IClan)}}
@@ -288,7 +294,8 @@ The given object may not be \texttt{null}. Otherwise an \texttt{IllegalArgumentE
 
 \subsubsection{\texttt{boolean acceptGift(IClan,IClan,Gift,double,...)}}
 \begin{minted}{java}
-boolean acceptGift(IClan source, IClan destination, Gift gift, double oldValue,
+boolean acceptGift(IClan source, IClan destination, Gift gift,
+			double oldValue,
 			DoubleConsumer newValue,
 			StrategyObject strategyObject);
 \end{minted}
@@ -343,11 +350,9 @@ The length of the list should be equals to the number of resources plus one.
 The return value must be positive or zero.
 
 \subsubsection{\texttt{long getNumberOfSoldiers()}}
-
 The return value must be positive or zero.
 
 \subsubsection{\texttt{List<Double> getProductions()}}
-
 The list that was returned must be non-null. Every element in it has to be non-null,
 too and have a positive value.
 The length of the list should be equals to the number of resources.
@@ -376,6 +381,73 @@ The argument may never be negative, otherwise an \texttt{IllegalArgumentExceptio
 
 \subsubsection{\texttt{void setNumberOfSoldiers(long)}}
 The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
+
+\subsection{IClan}
+
+\subsubsection{\texttt{double getCoins()}}
+The returned value must be positive or zero.
+
+\subsubsection{\texttt{Color getColor()}}
+The returned value mustn't be \texttt{null}
+
+\subsubsection{\texttt{StrategyData getData()}}
+StrategyData is optional. This may result in the return value being \texttt{null}.
+
+\subsubsection{\texttt{int getId()}}
+The id of a clan is an unique, positive or zero identifier.
+
+\subsubsection{\texttt{String getName()}}
+The name may never be \texttt{null}.
+
+\subsubsection{\texttt{List<Double> getResources()}}
+The list mustn't be \texttt{null}. Every element must be positive or zero.
+The length of the list is equals to the number of resources. (\texttt{Resource.values().length})
+
+\subsubsection{\texttt{List<Double> getResourceState()}}
+The list mustn't be \texttt{null}. Every element must be positive or zero.
+The length of the list is equals to the number of resources. (\texttt{Resource.values().length})
+
+\subsubsection{\texttt{int getSoldiersXXXLevel()}}
+The returned value has to be greater equals zero.
+
+\subsubsection{\texttt{double getSoldiersXXXStrength()}}
+The returned value must be greater equals one.
+
+\subsubsection{\texttt{Strategy getStrategy()}}
+The returned strategy may never be \texttt{null}.
+
+\subsubsection{\texttt{void init(StrategyProvider[],Version)}}
+None of the arguments may be \texttt{null}. Otherwise an \texttt{IllegalArgumentException} will be thrown.
+
+\subsubsection{\texttt{void setColor(Color)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is \texttt{null}.
+After setting the color, calling this method again will result in an \texttt{UnsupportedOperationException}.
+
+\subsubsection{\texttt{void setId(int)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is negative.
+After setting the id, calling this method again will result in an \texttt{UnsupportedOperationException}.
+
+\subsubsection{\texttt{void setName(String)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is \texttt{null}.
+After setting the name, calling this method again will result in an \texttt{UnsupportedOperationException}.
+
+\subsubsection{\texttt{void setResources(List<Double>)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is either \texttt{null}
+or the length of the list is not equals to the number of resources.
+A second call to this method with valid arguments will result in an \texttt{UnsupportedOperationException}.
+
+\subsubsection{\texttt{void setResourceStats(List<Double>)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is either \texttt{null}
+or the length of the list is not equals to the number of resources.
+A second call to this method with valid arguments will result in an \texttt{UnsupportedOperationException}.
+
+\subsubsection{\texttt{void setStrategy(Strategy)}}
+An \texttt{IllegalArgumentException} will be thrown, if the argument is negative.
+After setting the strategy, calling this method again will result in an \texttt{UnsupportedOperationException}.
+This method should only be used to restore a clan after saving it, otherwise \texttt{init} should be used.
+
+\subsubsection{\texttt{void update(int)}}
+The argument must be positive or zero. Otherwise an \texttt{IllegalArgumentException} will be thrown.
 
 
 \end{document}
