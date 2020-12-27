@@ -66,9 +66,9 @@ char *generateClasspath(Configuration configuration) {
 	TCHAR pf[MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, pf, CSIDL_PROGRAM_FILES, FALSE);
 	strcat(ret, pf);
-	strcat(ret, "\\Conquer\\Conquer.jar");
+	strcat(ret, "\\Conquer\\Conquer.jar;");
 	strcat(ret, pf);
-	strcat(ret, "\\Conquer\\Conquer_frontend.jar");
+	strcat(ret, "\\Conquer\\Conquer_frontend.jar;");
 #endif
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
 		strcat(ret, configuration->classpaths[i]);
@@ -93,9 +93,9 @@ char *generateClasspath(Configuration configuration) {
 					strcat(ret, name);
 					strcat(ret, ":");
 #else
-				sprintf(ret, libs);
-				sprintf(ret, name);
-				sprintf(ret, ";");
+				strcat(ret, libs);
+				strcat(ret, name);
+				strcat(ret, ";");
 #endif
 				}
 #ifndef _WIN32
