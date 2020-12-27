@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.IClan;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
@@ -21,7 +20,6 @@ import org.jel.gui.utils.ImageResource;
 final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -681006129127926269L;
 	private final transient IClan clan;
-	private final transient ConquerInfo game;
 	private final JLabel infoLabel;
 	private final JButton upgradeOnce;
 	private final JButton upgradeMax;
@@ -33,9 +31,8 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	 * @param clan For which clan to upgrade the soldiers
 	 * @param game A reference to the game.
 	 */
-	UpgradeSoldiersDefense(final IClan clan, final ConquerInfo game) {
+	UpgradeSoldiersDefense(final IClan clan) {
 		this.clan = clan;
-		this.game = game;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.infoLabel = new JLabel();
 		this.infoLabel.setText(this.getInfoText());
@@ -84,7 +81,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				UpgradeSoldiersDefense.this.game.upgradeSoldiersDefenseFully(UpgradeSoldiersDefense.this.clan);
+				UpgradeSoldiersDefense.this.clan.upgradeSoldiersDefenseFully();
 			}
 		});
 		this.upgradeMax.setEnabled(count > 0);
@@ -109,7 +106,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				UpgradeSoldiersDefense.this.game.upgradeDefense(UpgradeSoldiersDefense.this.clan);
+				UpgradeSoldiersDefense.this.clan.upgradeSoldiersDefense();
 			}
 		});
 		this.upgradeOnce.setEnabled(costs < coins);

@@ -82,19 +82,19 @@ public final class DefensiveStrategyImpl implements Strategy {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeDefense(clan);
+			b = clan.upgradeSoldiersDefense();
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeSoldiers(clan);
+			b = clan.upgradeSoldiers();
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < DefensiveStrategyImpl.MAX_ITERATIONS)) {
-			b = this.object.upgradeOffense(clan);
+			b = clan.upgradeSoldiersOffense();
 			cnter++;
 		}
 	}
@@ -122,7 +122,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 							* clan.getSoldiersStrength();
 					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
 					if (dOwn > (dTwo * 1.1)) {
-						this.object.attack(ownCity, enemy, false, 0, false);
+						this.object.attack(ownCity, enemy, false, 0);
 					}
 				}));
 	}

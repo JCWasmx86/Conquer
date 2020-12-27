@@ -40,7 +40,7 @@ final class BuiltinShared {
 				return;
 			}
 			// Attack the weakest city
-			object.attack(source, weakestCity, false, 0, false);
+			object.attack(source, weakestCity, false, 0);
 		}
 	}
 
@@ -51,7 +51,7 @@ final class BuiltinShared {
 			// some.
 			final var diff = c.getCoinDiff();
 			if ((diff < -BuiltinShared.COINS_TO_RETAIN) && (citiesOfClan.size() > 1)) {
-				object.moveSoldiers(c, object.reachableCities(c), false, null, 0);
+				object.moveSoldiers(c, StreamUtils.getCitiesAroundCity(graph, c), false, null, 0);
 			} else if (diff > BuiltinShared.COINS_TO_RETAIN) {
 				object.recruitSoldiers(diff - BuiltinShared.COINS_TO_RETAIN, c, false, 0);
 			}
@@ -108,7 +108,11 @@ final class BuiltinShared {
 							|| (cnt == 0)) {
 						return;
 					}
-					object.attack(own, enemy, true, cnt, false);
+					// Should never happen, but it happens...
+					if (own.getClan() == enemy.getClan()) {
+						return;
+					}
+					object.attack(own, enemy, true, cnt);
 				}));
 	}
 
@@ -117,8 +121,8 @@ final class BuiltinShared {
 		StreamUtils.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
 				.sorted((a, b) -> {
 					// Sort them using the defense strength
-					final var defenseStrengthA = object.defenseStrengthOfCity(a);
-					final var defenseStrengthB = object.defenseStrengthOfCity(b);
+					final var defenseStrengthA = a.getDefenseStrength();
+					final var defenseStrengthB = b.getDefenseStrength();
 					return Double.compare(defenseStrengthA, defenseStrengthB);
 					// Make them stronger, starting with the weakest city
 				}).forEach(a -> object.recruitSoldiers(clan.getCoins(), a, false, 0));
@@ -154,7 +158,19 @@ final class BuiltinShared {
 			}
 		}
 		// Now find the cities, that are at the border==> Make these cities stronger.
-		object.getWeakestCityInRatioToSurroundingEnemyCities(StreamUtils.getCitiesAsStream(graph, clan)).forEach(a -> {
+		StreamUtils.getCitiesAsStream(graph, clan).sorted((a, b) -> {
+			final var defense = a.getDefenseStrength();
+			final var neighbours = StreamUtils.getCitiesAroundCityNot(graph, a, a.getClan())
+					.collect(Collectors.toList());
+			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
+			final var defenseB = b.getDefenseStrength();
+			final var neighboursB = StreamUtils.getCitiesAroundCityNot(graph, b, b.getClan())
+					.collect(Collectors.toList());
+			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
+			final var diff = attack - defense;
+			final var diff2 = attackB - defenseB;
+			return Double.compare(diff, diff2);
+		}).forEach(a -> {
 			var cnter = 0;
 			while (true) {
 				final var b = object.upgradeDefense(a);

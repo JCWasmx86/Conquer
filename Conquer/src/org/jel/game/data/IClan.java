@@ -181,5 +181,26 @@ public interface IClan {
 	void setStrategyData(StrategyData strategyData);
 
 	void update(int currentRound);
+	
+	default void upgradeSoldiersDefenseFully() {
+		var b = true;
+		while (b) {
+			b = this.upgradeSoldiersDefense();
+		}
+	}
+
+	default void upgradeSoldiersFully() {
+		var b = true;
+		while (b) {
+			b = this.upgradeSoldiers();
+		}
+	}
+
+	default void upgradeSoldiersOffenseFully() {
+		var b = true;
+		while (b) {
+			b = this.upgradeSoldiersOffense();
+		}
+	}
 
 }

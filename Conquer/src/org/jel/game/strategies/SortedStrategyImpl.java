@@ -89,7 +89,7 @@ public final class SortedStrategyImpl implements Strategy {
 				} else {
 					return;
 				}
-				obj.attack(ownCity, target, true, numberOfSoldiersUsed, false);
+				obj.attack(ownCity, target, true, numberOfSoldiersUsed);
 			});
 		});
 	}
@@ -158,9 +158,9 @@ public final class SortedStrategyImpl implements Strategy {
 	private void upgradeClan(final IClan clan, final StrategyObject obj) {
 		while (true) {
 			var flag = false;
-			flag |= obj.upgradeDefense(clan);
-			flag |= obj.upgradeOffense(clan);
-			flag |= obj.upgradeSoldiers(clan);
+			flag |= clan.upgradeSoldiersDefense();
+			flag |= clan.upgradeSoldiersOffense();
+			flag |= clan.upgradeSoldiers();
 			if (!flag) {
 				break;
 			}

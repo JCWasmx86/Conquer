@@ -1,7 +1,5 @@
 package org.jel.game.data.strategy;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jel.game.data.Gift;
@@ -12,15 +10,7 @@ import org.jel.game.utils.Graph;
 
 public interface StrategyObject {
 
-	default void attack(final ICity source, final ICity target, final boolean managedByPlayer,
-			final long numberOfSoldiersToMoveIfManaged) {
-		this.attack(source, target, managedByPlayer, numberOfSoldiersToMoveIfManaged, true);
-	}
-
-	void attack(ICity source, ICity target, boolean managedByPlayer, long numberOfSoldiersToMoveIfManaged,
-			boolean reallyPlayer);
-
-	double defenseStrengthOfCity(ICity city);
+	void attack(ICity source, ICity target, boolean managedByPlayer, long numberOfSoldiersToMoveIfManaged);
 
 	Graph<ICity> getCities();
 
@@ -41,15 +31,6 @@ public interface StrategyObject {
 		return this.getRelationship(clan, city.getClan());
 	}
 
-	Iterable<ICity> getWeakestCityInRatioToSurroundingEnemyCities(List<ICity> cities);
-
-	default Iterable<ICity> getWeakestCityInRatioToSurroundingEnemyCities(final Stream<ICity> cities) {
-		if (cities == null) {
-			throw new IllegalArgumentException("cities == null");
-		}
-		return this.getWeakestCityInRatioToSurroundingEnemyCities(cities.collect(Collectors.toList()));
-	}
-
 	default long maximumNumberToMove(final IClan clan, final ICity first, final ICity second,
 			final long maximumNumberOfSoldiers) {
 		if (clan == null) {
@@ -67,24 +48,16 @@ public interface StrategyObject {
 		return this.maximumNumberToMove(clan, this.getCities().getWeight(first, second), maximumNumberOfSoldiers);
 	}
 
-	long maximumNumberToMove(IClan clanId, double weight, long maximumNumberOfSoldiers);
+	long maximumNumberToMove(IClan clan, double weight, long maximumNumberOfSoldiers);
 
-	void moveSoldiers(ICity source, Stream<ICity> reachableCities, boolean managedByPlayer, ICity target,
+	void moveSoldiers(ICity source, Stream<ICity> reachableCities, boolean managedByExternalStrategy, ICity target,
 			long numberOfSoldiersToMoveIfManaged);
 
-	Stream<ICity> reachableCities(ICity city);
-
-	void recruitSoldiers(double maxToPay, ICity city, boolean managedByPlayer, double numberOfSoldiers);
+	void recruitSoldiers(double maxToPay, ICity city, boolean managedByPlayer, long numberOfSoldiers);
 
 	boolean sendGift(IClan source, IClan destination, Gift gift);
 
-	boolean upgradeDefense(IClan clan);
-
 	boolean upgradeDefense(ICity city);
 
-	boolean upgradeOffense(IClan clan);
-
 	boolean upgradeResource(Resource resc, ICity a);
-
-	boolean upgradeSoldiers(IClan clan);
 }

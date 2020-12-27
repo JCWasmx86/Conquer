@@ -110,13 +110,13 @@ public final class OffensiveStrategyImpl implements Strategy {
 		var b = true;
 		var cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
-			b = this.object.upgradeOffense(clan);
+			b = clan.upgradeSoldiersOffense();
 			cnter++;
 		}
 		b = true;
 		cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
-			b = this.object.upgradeSoldiers(clan);
+			b =clan.upgradeSoldiers();
 			cnter++;
 		}
 	}
