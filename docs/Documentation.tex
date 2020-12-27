@@ -3,6 +3,7 @@
 \usepackage{listings}
 \usepackage{minted}
 \usepackage{hyperref}
+\usepackage[a4paper, total={6in, 9in}]{geometry}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -302,7 +303,7 @@ boolean acceptGift(IClan source, IClan destination, Gift gift,
 You can make several assumptions:
 \begin{itemize}
 	\item None of this values may be \texttt{null}.
-	\item The clan \texttt{source} is always the clan of the player.
+	\item The clan \texttt{destination} is always the clan of the player.
 	\item \texttt{oldValue} is in range $]0;100[$
 \end{itemize}
 
@@ -448,6 +449,39 @@ This method should only be used to restore a clan after saving it, otherwise \te
 
 \subsubsection{\texttt{void update(int)}}
 The argument must be positive or zero. Otherwise an \texttt{IllegalArgumentException} will be thrown.
+
+\subsection{Strategy}
+
+\subsubsection{\texttt{boolean acceptGift(IClan,IClan,Gift,double,...)}}
+\begin{minted}{java}
+boolean acceptGift(IClan sourceClan, IClan destinationClan, Gift gift,
+                        double oldValue,
+                        DoubleConsumer newValue,
+                        StrategyObject strategyObject);
+\end{minted}
+\texttt{destinationClan} is always the clan of this strategy. No argument may ever be \texttt{null}.
+
+\subsubsection{\texttt{void applyStrategy(IClan,Graph<ICity>,StrategyObject)}}
+No argument can be \texttt{null}. The given clan is the clan for this strategy.
+
+\subsubsection{\texttt{StrategyData getData()}}
+\texttt{null} may be returned.
+
+\subsubsection{\texttt{StrategyData resume(StrategyObject,byte[],boolean,byte[])}}
+\begin{minted}{java}
+StrategyData resume(final StrategyObject strategyObject,
+			final byte[] bytes,
+			final boolean hasStrategyData,
+			final byte[] dataBytes)
+\end{minted}
+\texttt{strategyObject} and \texttt{bytes} may never be \texttt{null}.
+The value of \texttt{dataBytes} is undefined, if \texttt{hasStrategyData} equals \texttt{false}.
+Otherwise this array is non-null.
+If \texttt{hasStrategyData} is \texttt{true}, a non-null object has to be returned, \texttt{null} otherwise.
+
+\subsubsection{\texttt{void save(OutputStream) throws IOException}}
+Only save the state of the strategy. The state of the StrategyData, if available, will be saved by itself.
+The stream is never \texttt{null} and may not be closed.
 
 
 \end{document}
