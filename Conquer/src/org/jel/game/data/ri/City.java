@@ -396,6 +396,9 @@ class City implements ICity {
 	 */
 	@Override
 	public void setDefense(final double base) {
+		if (base < 0) {
+			throw new IllegalArgumentException("argument < 0");
+		}
 		if (this.defense != 0) {
 			this.defense /= this.oldOne;
 			this.defense *= (base < 1 ? 1 / base : base);
@@ -517,7 +520,7 @@ class City implements ICity {
 	}
 
 	/**
-	 * Sets the productionrates. s
+	 * Sets the productionrates.
 	 *
 	 * @param productions
 	 */
@@ -526,6 +529,9 @@ class City implements ICity {
 			throw new UnsupportedOperationException("Can't change the productions!");
 		} else if (productions == null) {
 			throw new IllegalArgumentException("productions == null");
+		} else if (productions.size() != Resource.values().length) {
+			throw new IllegalArgumentException(
+					"Wrong length, expected " + Resource.values().length + ", got " + productions.size());
 		}
 		this.productions = productions;
 	}

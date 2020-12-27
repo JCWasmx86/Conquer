@@ -259,7 +259,7 @@ The valid, non-null \texttt{EventList} must be returned.
 
 \subsection{ConquerInfoReader}
 
-\subsection{\texttt{ConquerInfo build()}}
+\subsubsection{\texttt{ConquerInfo build()}}
 
 Any exception may be thrown. 
 
@@ -277,10 +277,105 @@ The returned byte-array must be non-null.
 
 Any class implementing this interface must have an accessible constructor taking a String parameter
 with the name of the saved name.
+
 \subsubsection{\texttt{ConquerInfo restore() throws Exception}}
 Any exception may be thrown. \texttt{null} may never be returned.
 
 \subsubsection{\texttt{void save(ConquerInfo) throws Exception}}
 The given object may not be \texttt{null}. Otherwise an \texttt{IllegalArgumentException} may be thrown.
+
+\subsection{PlayerGiftCallback}
+
+\subsubsection{\texttt{boolean acceptGift(IClan,IClan,Gift,double,...)}}
+\begin{minted}{java}
+boolean acceptGift(IClan source, IClan destination, Gift gift, double oldValue,
+			DoubleConsumer newValue,
+			StrategyObject strategyObject);
+\end{minted}
+You can make several assumptions:
+\begin{itemize}
+	\item None of this values may be \texttt{null}.
+	\item The clan \texttt{source} is always the clan of the player.
+	\item \texttt{oldValue} is in range $]0;100[$
+\end{itemize}
+
+If the player accepted the gift, \texttt{newValue} has to consume the new relationship value and
+\texttt{true} has to be returned.
+If \texttt{false} is returned, \texttt{newValue} mustn't be called.
+
+\subsection{ICity}
+
+\subsubsection{\texttt{double getBonus()}}
+The returned value must always be greater equals 1.
+
+\subsubsection{\texttt{IClan getClan()}}
+The returned value mustn't be \texttt{null}
+
+\subsubsection{\texttt{int getClanId()}}
+The clan id must be non-negative.
+
+\subsubsection{\texttt{double getDefense()}}
+The base defense that is returned must be non-negative.
+
+\subsubsection{\texttt{double getDefenseStrength()}}
+The defense strength of a city is always positive or zero.
+
+\subsubsection{\texttt{double getDefenseStrength(IClan)}}
+The argument mustn't be \texttt{null}, otherwise an \texttt{IllegalArgumentException} shall be thrown.
+The returned value is always positive or zero.
+
+\subsubsection{\texttt{double getGrowth()}}
+The returned value must be positive, and should be in the range $]0.75;1.25[$.
+
+\subsubsection{\texttt{Image getImage()}}
+The returned value may be \texttt{null}.
+
+\subsubsection{\texttt{ConquerInfo getInfo()}}
+The returnvalue must be non-null.
+
+\subsubsection{\texttt{List<Integer> getLevels()}}
+The list that was returned mustn't be \texttt{null}. Every element in it
+should be non-null, too and have a positive value.
+The length of the list should be equals to the number of resources plus one.
+(\texttt{Resource.values().length + 1}, the additional value is for the defense)
+
+\subsubsection{\texttt{long getNumberOfPeople()}}
+The return value must be positive or zero.
+
+\subsubsection{\texttt{long getNumberOfSoldiers()}}
+
+The return value must be positive or zero.
+
+\subsubsection{\texttt{List<Double> getProductions()}}
+
+The list that was returned must be non-null. Every element in it has to be non-null,
+too and have a positive value.
+The length of the list should be equals to the number of resources.
+
+\subsubsection{\texttt{int getX()}}
+The return value must be positive or zero.
+
+\subsubsection{\texttt{int getY()}}
+The return value must be positive or zero.
+
+\subsubsection{\texttt{double productionPerRound(Resource)}}
+The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} is thrown.
+The returned value must be positive or zero.
+
+\subsubsection{\texttt{void setClan(IClan)}}
+The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} is thrown.
+
+\subsubsection{\texttt{void setDefense(double)}}
+The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
+
+\subsubsection{\texttt{void setGrowth(double)}}
+The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
+
+\subsubsection{\texttt{void setNumberOfPeople(long)}}
+The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
+
+\subsubsection{\texttt{void setNumberOfSoldiers(long)}}
+The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
+
 
 \end{document}
