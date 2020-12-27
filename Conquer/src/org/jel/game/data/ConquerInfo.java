@@ -70,26 +70,5 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	void upgradeResourceFully(final Resource resources, final ICity city);
 
-	default void upgradeSoldiersDefenseFully(final IClan clan) {
-		var b = true;
-		while (b) {
-			b = this.upgradeDefense(clan);
-		}
-	}
-
-	default void upgradeSoldiersFully(final IClan clan) {
-		var b = true;
-		while (b) {
-			b = this.upgradeSoldiers(clan);
-		}
-	}
-
-	default void upgradeSoldiersOffenseFully(final IClan clan) {
-		var b = true;
-		while (b) {
-			b = this.upgradeOffense(clan);
-		}
-	}
-
 	IClan getPlayerClan();
 }

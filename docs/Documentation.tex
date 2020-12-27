@@ -483,5 +483,87 @@ If \texttt{hasStrategyData} is \texttt{true}, a non-null object has to be return
 Only save the state of the strategy. The state of the StrategyData, if available, will be saved by itself.
 The stream is never \texttt{null} and may not be closed.
 
+\subsection{StrategyData}
 
+\subsubsection{\texttt{void save(OutputStream) throws IOException}}
+The stream will never be \texttt{null}.
+
+\subsubsection{\texttt{void update(int)}}
+The argument will always be positive or zero.
+
+\subsection{StrategyProvider}
+
+\subsubsection{\texttt{Strategy buildStrategy()}}
+May never return \texttt{null}.
+
+\subsubsection{\texttt{boolean compatibleTo(Version)}}
+The argument is never \texttt{null}.
+
+\subsubsection{\texttt{String getName()}}
+Never returns \texttt{null}.
+
+\subsection{StrategyObject}
+
+\subsubsection{\texttt{void attack(ICity,ICity,boolean,long)}}
+\begin{minted}{java}
+void attack(ICity source, ICity target,
+		boolean managedByExternalStrategy,
+		long numberOfSoldiersToMoveIfManaged);
+\end{minted}
+Neither source nor target may be \texttt{null}.
+If \texttt{managedByExternalStrategy} is \texttt{true}, the long parameter must be non-negative (An \texttt{IllegalArgumentException} shall be thrown if it is negative), otherwise it is ignored.
+If \texttt{managedByExternalStrategy} is \texttt{false}, a default, implementation-defined algorithm should be used for determining the number of soldiers.
+If one of the following assertions is true, an \texttt{IllegalArgumentException} will be thrown:
+\begin{itemize}
+	\item \texttt{source == target}
+	\item \texttt{source.getClan() == target.getClan()}
+	\item \texttt{not connected(source, target)}
+\end{itemize}
+
+\subsubsection{\texttt{Graph<ICity> getCities()}}
+The returnvalue may never be \texttt{null}.
+
+\subsubsection{\texttt{Graph<Integer> getRelations()}}
+The returnvalue may never be \texttt{null} and the number of nodes
+in this graph is equals to the number of clans.
+
+\subsubsection{\texttt{double getRelationship(IClan,IClan)}}
+If one of the clans is \texttt{null} or both clans are the same clan,
+an \texttt{IllegalArgumentException} has to be thrown.
+
+\subsubsection{\texttt{long maximumNumberToMove(IClan,double,long)}}
+The given clan may not be \texttt{null}. Neither the weight, nor the 
+maximum number of soldiers may be negative.
+Otherwise an \texttt{IllegalArgumentException} shall be thrown.
+The return value is always greater equals zero.
+
+\subsubsection{\texttt{void moveSoldiers(ICity,Stream<ICity>,boolean,ICity,long)}}
+\begin{minted}{java}
+void moveSoldiers(ICity source, Stream<ICity> reachableCities,
+	boolean managedByExternalStrategy, ICity target,
+	long numberOfSoldiersToMoveIfManaged);
+\end{minted}
+\texttt{source} may never be \texttt{null}. 
+If \texttt{managedByExternalStrategy} is \texttt{true}, \texttt{target} mustn't be \texttt{null} and
+\texttt{numberOfSoldiersToMoveIfManaged} mustn't be negative.
+Else, \texttt{reachableCities} mustn't be \texttt{null}.
+Furthermore if \texttt{managedByExternalStrategy} is \texttt{false}, a default, implementation-defined
+algorithm may be used for determining the number of soldiers that are moved.
+
+If any of these assertions fails, an \texttt{IllegalArgumentException} shall be thrown.
+
+\subsubsection{\texttt{void recruitSoldiers(double,ICity,boolean,long)}}
+\begin{minted}{java}
+void recruitSoldiers(double maxToPay, ICity city,
+		boolean managedByExternalStrategy, long numberOfSoldiers);
+\end{minted}
+\texttt{city} may never be \texttt{null}.
+If \texttt{managedByExternalStrategy} is \texttt{true}, \texttt{numberOfSoldiers} must be positive or zero.
+Else if \texttt{managedByExternalStrategy} is \texttt{false}, \texttt{maxToPay} must be positive or zero.
+
+\subsubsection{\texttt{boolean upgradeDefense(ICity)}}
+The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} must be thrown.
+
+\subsubsection{\texttt{boolean upgradeResource(Resource,ICity}}
+No argument may be \texttt{null}, otherwise an \texttt{IllegalArgumentException} must be thrown.
 \end{document}

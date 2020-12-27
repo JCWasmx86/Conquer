@@ -1,13 +1,10 @@
 package org.jel.game.testsuite;
 
 import java.io.File;
-import java.util.List;
-import java.util.stream.Stream;
 
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
-import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
 import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.XMLReader;
@@ -147,7 +144,6 @@ public final class Testsuite2 extends Testsuite {
 		final var b = info.getCities().getValue(1);
 		final var c = info.getClan(0);
 		final var d = info.getClan(1);
-		this.expect(() -> info.defenseStrengthOfCity(null), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(-1), IllegalArgumentException.class);
 		this.expect(() -> info.getClan(500), IllegalArgumentException.class);
 		this.expect(() -> info.getClanNames().add(""), UnsupportedOperationException.class);
@@ -155,10 +151,6 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
 		this.expect(() -> info.getRelationship((IClan) null, (IClan) null), IllegalArgumentException.class);
 		this.expect(() -> info.getRelationship((IClan) null, a), IllegalArgumentException.class);
-		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((List<ICity>) null),
-				IllegalArgumentException.class);
-		this.expect(() -> info.getWeakestCityInRatioToSurroundingEnemyCities((Stream<ICity>) null),
-				IllegalArgumentException.class);
 		this.expect(() -> info.isDead(null), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(null, 5), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(c, -5), IllegalArgumentException.class);
@@ -173,6 +165,5 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.sendGift(c, d, null), IllegalArgumentException.class);
 		this.expect(() -> info.sendGift(c, null, new Gift()), IllegalArgumentException.class);
 		this.expect(() -> info.sendGift(null, d, new Gift()), IllegalArgumentException.class);
-		this.expect(() -> info.reachableCities(null), IllegalArgumentException.class);
 	}
 }

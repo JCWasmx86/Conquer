@@ -1,7 +1,6 @@
 package org.jel.game.data.strategy;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.function.DoubleConsumer;
 
@@ -17,10 +16,6 @@ public interface Strategy {
 	void applyStrategy(IClan clan, Graph<ICity> cities, StrategyObject obj);
 
 	StrategyData getData();
-
-	default void init(final InputStream in) throws IOException {
-
-	}
 
 	default StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
 			final byte[] dataBytes) {
