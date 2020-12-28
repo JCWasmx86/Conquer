@@ -289,7 +289,7 @@ public final class Game implements ConquerInfo {
 		if (!managed) {
 			return this.aiCalculateNumberOfTroopsToAttackWith(src, destination);
 		} else {
-			if (destination.isPlayerCity() && destination instanceof City c) {
+			if (destination.isPlayerCity() && (destination instanceof City c)) {
 				c.attackByPlayer();
 			}
 			return numberOfSoldiers;
@@ -330,7 +330,7 @@ public final class Game implements ConquerInfo {
 	}
 
 	private void checkPreconditions(final ICity src, final boolean managed, final long num) {
-		if (managed && num < 0) {
+		if (managed && (num < 0)) {
 			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
 		}
 	}
@@ -555,7 +555,7 @@ public final class Game implements ConquerInfo {
 	 */
 	@Override
 	public IClan getClan(final int clanId) {
-		if (clanId < 0 || clanId >= this.numPlayers) {
+		if ((clanId < 0) || (clanId >= this.numPlayers)) {
 			throw new IllegalArgumentException("clanId out of bounds");
 		}
 		return this.clans.get(clanId);
@@ -880,9 +880,9 @@ public final class Game implements ConquerInfo {
 	public void recruitSoldiers(final double maxToPay, final ICity c, final boolean managed, final long count) {
 		final var clan = c.getClan();
 		this.throwIfNull(c, "c==null");
-		if ((!managed) && maxToPay < 0) {
+		if ((!managed) && (maxToPay < 0)) {
 			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
-		} else if (managed && count < 0) {
+		} else if (managed && (count < 0)) {
 			throw new IllegalArgumentException("count < 0 :" + count);
 		}
 		var numberToRecruit = 0L;

@@ -68,13 +68,19 @@ public final class OffensiveStrategyImpl implements Strategy {
 	}
 
 	private void moveTroops(final IClan clan) {
+		// All cities, of the own clan, that are not at the border (=Are only surrounded
+		// by cities of the same clan), and have soldiers. (Set W in the following)
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
 				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.graph, a, clan).count() == 0)
 				.collect(Collectors.toList());
+		// All cities that are adjacent to another clan. (Set B in the following)
 		final var citiesOnBorder = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> !citiesWithoutBordersWithSoldiers.contains(a))
 				.collect(Collectors.toList());
+		// For each city in W, now all adjacent cities from B are sorted, first by the
+		// number of soldiers, then by
+		// the distance (A city with less soldiers will be supported earlier)
 		citiesWithoutBordersWithSoldiers
 				.forEach(city -> citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
 					final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
@@ -84,12 +90,14 @@ public final class OffensiveStrategyImpl implements Strategy {
 						return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
 					}
 				}).forEach(a -> {
+					// And then move the maximum amount of soldiers to every city.
 					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
 							city.getNumberOfSoldiers());
 					this.object.moveSoldiers(city, null, true, a, numberOfSoldiersToMove);
 				}));
 	}
 
+	// Only upgrade the essential resources that are needed for recruiting soldiers
 	private void offensiveResourcesUpgrade(final IClan clan) {
 		final double iron = clan.getResourceStats().get(Resource.IRON.getIndex());
 		final double stone = clan.getResourceStats().get(Resource.STONE.getIndex());
@@ -106,6 +114,8 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	}
 
+	// Upgrade the only the soldiers strength and the soldiers offense strength.
+	// Upgrading the defense is a "waste of money" for this algorithm.
 	private void offensiveSoldierUpgrading(final IClan clan) {
 		var b = true;
 		var cnter = 0;
@@ -116,7 +126,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		b = true;
 		cnter = 0;
 		while (b && (cnter < OffensiveStrategyImpl.MAX_ITERATIONS_PER_ROUND)) {
-			b =clan.upgradeSoldiers();
+			b = clan.upgradeSoldiers();
 			cnter++;
 		}
 	}
@@ -132,13 +142,22 @@ public final class OffensiveStrategyImpl implements Strategy {
 		}
 	}
 
+	// If there are no cities that don't have any connection to another clan,
+	// all cities are used for upgrading the resource production.
+	// The cities are upgraded in ascending order.
 	private void upgradeResourcesForClan(final IClan clan, final Resource resc) {
-		StreamUtils.getCitiesAsStream(this.graph, clan).sorted((a, b) -> {
+		final var citiesWithoutBorders = StreamUtils
+				.getCitiesAsStream(this.graph, clan,
+						a -> StreamUtils.getCitiesAroundCityNot(this.graph, a, clan).count() == 0)
+				.collect(Collectors.toList());
+		final var cityStream = (citiesWithoutBorders.isEmpty() ? StreamUtils.getCitiesAsStream(this.graph, clan)
+				: citiesWithoutBorders.stream());
+		cityStream.sorted((a, b) -> {
 			final var index = resc.getIndex();
 			final double resA = a.getProductions().get(index);
 			final double resB = b.getProductions().get(index);
 			return Double.compare(resA, resB);
-		}).collect(Collectors.toList()).forEach(a -> {
+		}).forEach(a -> {
 			while (this.object.upgradeResource(resc, a)) {
 				// Empty
 			}

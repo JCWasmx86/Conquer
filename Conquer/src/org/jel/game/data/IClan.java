@@ -181,7 +181,7 @@ public interface IClan {
 	void setStrategyData(StrategyData strategyData);
 
 	void update(int currentRound);
-	
+
 	default void upgradeSoldiersDefenseFully() {
 		var b = true;
 		while (b) {
