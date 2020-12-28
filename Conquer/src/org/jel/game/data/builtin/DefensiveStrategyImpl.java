@@ -59,6 +59,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	private void defensiveCityUpgrades(final IClan clan) {
+		// Try to build fortresses that are difficult to conquer, starting with
+		// upgrading the weakest cities.
 		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
 			final Predicate<ICity> predicate = c -> c.getClan() != clan;
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.graph, a, predicate).count();
@@ -116,14 +118,18 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	private void tryAttacking(final IClan clan) {
-		StreamUtils.forEach(this.graph, clan, ownCity -> StreamUtils
-				.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClan()).sorted().forEach(enemy -> {
-					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
-							* clan.getSoldiersStrength();
-					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
-					if (dOwn > (dTwo * 1.1)) {
-						this.object.attack(ownCity, enemy, false, 0);
-					}
-				}));
+		StreamUtils.forEach(this.graph, clan,
+				ownCity -> StreamUtils.getCitiesAroundCityNot(this.graph, ownCity, ownCity.getClan()).sorted()
+						.forEach(enemy -> {
+							// Strength of the own soldiers
+							final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
+									* clan.getSoldiersStrength();
+							// Estimated strength of the enemy
+							final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
+							// Only attack, if a victory is very probable.
+							if (dOwn > (dTwo * 1.1)) {
+								this.object.attack(ownCity, enemy, false, 0);
+							}
+						}));
 	}
 }

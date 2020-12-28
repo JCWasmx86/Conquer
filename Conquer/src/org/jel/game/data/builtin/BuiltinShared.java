@@ -30,18 +30,19 @@ final class BuiltinShared {
 				.getCitiesAroundCityNot(graph, source,
 						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
-		if (!citiesOfEnemies.isEmpty()) {
-			// Get weakest city
-			final var weakestCity = citiesOfEnemies.get(0);
-			final var estimatedPowerOfDefender = weakestCity.getNumberOfSoldiers();
-			// If this clan may lose the attack cancel it.
-			final var numberOfSoldiersInSource = source.getNumberOfSoldiers();
-			if ((estimatedPowerOfDefender >= numberOfSoldiersInSource) || (numberOfSoldiersInSource == 0)) {
-				return;
-			}
-			// Attack the weakest city
-			object.attack(source, weakestCity, false, 0);
+		if (citiesOfEnemies.isEmpty()) {
+			return;
 		}
+		// Get weakest city
+		final var weakestCity = citiesOfEnemies.get(0);
+		final var estimatedPowerOfDefender = weakestCity.getNumberOfSoldiers();
+		// If this clan may lose the attack cancel it.
+		final var numberOfSoldiersInSource = source.getNumberOfSoldiers();
+		if ((estimatedPowerOfDefender >= numberOfSoldiersInSource) || (numberOfSoldiersInSource == 0)) {
+			return;
+		}
+		// Attack the weakest city
+		object.attack(source, weakestCity, false, 0);
 	}
 
 	static void moderatePlay(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
@@ -73,7 +74,7 @@ final class BuiltinShared {
 		}
 		Collections.sort(resources);
 		if (resources.get(0) > 0) {
-			// Update defense, because there are too much resources produced.
+			// Update defense, because there are enough resources produced.
 			BuiltinShared.tryUpdatingDefense(graph, object, clan);
 		} else {
 			// Else update the resources
@@ -82,14 +83,14 @@ final class BuiltinShared {
 	}
 
 	static void offensiveAttack(final IClan clan, final Graph<ICity> cityGraph, final StrategyObject object) {
-		final Predicate<ICity> pre = city -> StreamUtils.getCitiesAroundCityNot(cityGraph, city, clan).count() > 0;
-		StreamUtils
-				.getCitiesAsStream(cityGraph,
-						city -> (StreamUtils.getCitiesAroundCity(cityGraph, city, b -> b.getClan() == clan).count() > 0)
-								&& (city.getClan() != clan))
-				.forEach(enemy -> StreamUtils.getCitiesAroundCity(cityGraph, enemy, clan).sorted((a, b) -> {
-					final var cnt1 = StreamUtils.getCitiesAroundCity(cityGraph, a, pre).count();
-					final var cnt2 = StreamUtils.getCitiesAroundCity(cityGraph, b, pre).count();
+		final Predicate<ICity> inSafeCountry = city -> StreamUtils.getCitiesAroundCity(cityGraph, city, clan)
+				.count() > 0;
+		final Predicate<ICity> isReachableCityOfTheEnemy = city -> (StreamUtils
+				.getCitiesAroundCity(cityGraph, city, clan).count() > 0) && (city.getClan() != clan);
+		StreamUtils.getCitiesAsStream(cityGraph, isReachableCityOfTheEnemy).distinct()
+				.forEach(enemyCity -> StreamUtils.getCitiesAroundCity(cityGraph, enemyCity, clan).sorted((a, b) -> {
+					final var cnt1 = StreamUtils.getCitiesAroundCity(cityGraph, a, inSafeCountry).count();
+					final var cnt2 = StreamUtils.getCitiesAroundCity(cityGraph, b, inSafeCountry).count();
 					if (cnt1 == cnt2) {
 						final var compared = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
 						if ((compared == 0) && (a.getClan() != clan) && (b.getClan() != clan)) {
@@ -100,19 +101,16 @@ final class BuiltinShared {
 					return Long.compare(cnt1, cnt2);
 					// Attack them, starting with the weakest.
 				}).forEach(own -> {
-					final var cnt = object.maximumNumberToMove(clan, own, enemy, own.getNumberOfSoldiers());
-					if (own.getNumberOfSoldiers() < enemy.getDefense()) {
+					final var cnt = object.maximumNumberToMove(clan, own, enemyCity, own.getNumberOfSoldiers());
+					if (own.getNumberOfSoldiers() < enemyCity.getDefense()) {
 						object.recruitSoldiers(clan.getCoins(), own, false, 0);
 					}
-					if (!cityGraph.isConnected(own, enemy) || (own.getNumberOfSoldiers() < enemy.getDefense())
-							|| (cnt == 0)) {
+					// The enemy city could already be conquered...
+					if ((own.getNumberOfSoldiers() < enemyCity.getDefense()) || (cnt == 0)
+							|| own.getClan() == enemyCity.getClan()) {
 						return;
 					}
-					// Should never happen, but it happens...
-					if (own.getClan() == enemy.getClan()) {
-						return;
-					}
-					object.attack(own, enemy, true, cnt);
+					object.attack(own, enemyCity, true, cnt);
 				}));
 	}
 
@@ -172,12 +170,10 @@ final class BuiltinShared {
 			return Double.compare(diff, diff2);
 		}).forEach(a -> {
 			var cnter = 0;
-			while (true) {
-				final var b = object.upgradeDefense(a);
+			var b = true;
+			while (b && cnter < BuiltinShared.MAX_ITERATIONS) {
+				b = object.upgradeDefense(a);
 				cnter++;
-				if ((!b) || (cnter >= BuiltinShared.MAX_ITERATIONS)) {
-					break;
-				}
 			}
 		});
 	}

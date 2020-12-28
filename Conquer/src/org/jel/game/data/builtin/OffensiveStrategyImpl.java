@@ -47,15 +47,19 @@ public final class OffensiveStrategyImpl implements Strategy {
 			final var action = strategyData.getAction();
 			if (action == OffensiveStrategy.EXPAND) {
 				BuiltinShared.offensiveAttack(clan, cities, obj);
-			} else {
+			} else {// Upgrades
 				if (Math.random() < OffensiveStrategyImpl.OFFENSIVE_UPGRADE_PROBABILITY) {
+					// Rarely, only the resources for recruiting soldiers upgraded
 					this.offensiveResourcesUpgrade(clan);
 				} else {
 					BuiltinShared.moderateResourcesUpgrade(cities, obj, clan);
 				}
+				// Recruit as many soldiers as possible
 				BuiltinShared.offensiveRecruiting(cities, obj, clan);
+				// Strengthen the soldiers
 				this.offensiveSoldierUpgrading(clan);
 			}
+			// Move troops to the borders
 			this.moveTroops(clan);
 		} else {
 			throw new InternalError();
