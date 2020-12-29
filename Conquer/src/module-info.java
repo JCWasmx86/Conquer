@@ -9,6 +9,5 @@ module org.jel.game {
 	exports org.jel.game.utils;
 	exports org.jel.game.plugins;
 	exports org.jel.game.data.strategy;
-	exports org.jel.game.data.ri;
 	exports org.jel.game.messages;
 }
