@@ -68,6 +68,9 @@ public final class GlobalContext {
 		final var list = this.readers.stream()
 				.sorted((a, b) -> Integer.compare(a.getMagicNumber().length, b.getMagicNumber().length))
 				.collect(Collectors.toList());
+		if (list.isEmpty()) {
+			throw new UnsupportedOperationException("No reader found");
+		}
 		final var maxLength = list.get(list.size() - 1).getMagicNumber().length;
 		try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 			final var b = new byte[maxLength];

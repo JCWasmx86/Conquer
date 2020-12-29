@@ -179,10 +179,15 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 			return;
 		}
 		this.shouldExit = false;
-		this.dispose();
-		final var game = this.context.loadInfo(scenario);
-		final var li = new LevelInfo(game, scenario, this.getLocation(), this.context);
-		li.setVisible(true);
+		try {
+			final var game = this.context.loadInfo(scenario);
+			this.dispose();
+			final var li = new LevelInfo(game, scenario, this.getLocation(), this.context);
+			li.setVisible(true);
+		} catch (UnsupportedOperationException uoe) {
+			JOptionPane.showMessageDialog(null, Messages.getString("LevelSelectFrame.noReaderFound"),
+					Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
