@@ -20,6 +20,7 @@ Launcher/.settings/
 Launcher/cJSON
 Launcher/launcher
 Launcher/libcjson.a
+Launcher/conquer_launcher
 ScenarioGenerator/.*
 ScenarioGenerator/.classpath
 ScenarioGenerator/.project
