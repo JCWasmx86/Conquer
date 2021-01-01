@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
 	// Try to read the configuration file
 	Configuration config = getConfiguration();
 	if (config->usedJVM == NULL) {
-		downloadJDK();
+		downloadJDK(NULL, NULL, NULL);
 	} else {
 		// If the specified path is no usable Java installation(==Not there),
 		// still download it.
@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
 			fprintf(stderr,
 					"The specified java installation %s is not suitable.\n",
 					config->usedJVM);
-			downloadJDK();
+			downloadJDK(NULL, NULL, NULL);
 			free(config->usedJVM);
 			config->usedJVM = NULL;
 		}

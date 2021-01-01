@@ -9,7 +9,8 @@
 
 static int copyData(struct archive *in, struct archive *out);
 
-void extract(const char *filename) {
+void extract(const char *filename,
+		void (*callback)(void*, const char*, int, int), void *someData) {
 	int flags = ARCHIVE_EXTRACT_TIME;
 	flags |= ARCHIVE_EXTRACT_PERM;
 	flags |= ARCHIVE_EXTRACT_ACL;
@@ -47,6 +48,7 @@ void extract(const char *filename) {
 		sprintf(java15, "%s%s%s", baseName, c, "java-15");
 	}
 #endif
+	int cnt = 0;
 	for (;;) {
 		errno = 0;
 		result = archive_read_next_header(in, &entry);
@@ -54,7 +56,7 @@ void extract(const char *filename) {
 			break;
 		}
 		char *cc = calloc(
-			strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
+				strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
 		sprintf(cc, "%s%s%s", java15, c, &archive_entry_pathname(entry)[6]);
 		archive_entry_set_pathname(entry, cc);
@@ -71,12 +73,17 @@ void extract(const char *filename) {
 				exit(-1);
 			}
 		}
+		if (callback) {
+			callback(someData, archive_entry_pathname(entry), cnt,
+					archive_file_count(in));
+		}
 		result = archive_write_finish_entry(out);
 		if (result != ARCHIVE_OK) {
 			fprintf(stderr, "Error finishing entry: %d\n", result);
 			exit(-1);
 		}
 		free(cc);
+		cnt++;
 	}
 	archive_read_close(in);
 	archive_read_free(in);

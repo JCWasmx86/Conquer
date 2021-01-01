@@ -4,24 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifndef _WIN32
 #include <curl/curl.h>
-static int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
-					curl_off_t ultotal, curl_off_t ulnow);
-static size_t writeData(void *ptr, size_t size, size_t nmemb, FILE *stream);
+static int progress(void*, curl_off_t, curl_off_t, curl_off_t, curl_off_t);
+static size_t writeData(void*, size_t, size_t, FILE*);
 static int lastInteger = 0;
 static char *urlToDownload;
-#else
-#ifndef _WIN64
-#error 64-bit support is required!
-#endif
-#include <windows.h>
-#endif
+static int downloadFile(const char*, const char*, void*,
+		int (*)(void*, curl_off_t, curl_off_t, curl_off_t, curl_off_t));
 
 #include "launcher.h"
 
-static int downloadFile(const char *url, const char *output);
-void downloadJDK(void) {
+char* hasToDownloadJava(void) {
 #ifdef _WIN32
 	char *base = getBaseDirectory();
 	assert(base);
@@ -54,35 +47,49 @@ void downloadJDK(void) {
 #ifndef _WIN32
 	shouldDownload &= !dirExists("/opt/java-15");
 #endif
+	free(base);
+	free(dirBase);
 	if (shouldDownload) {
-		if (downloadFile("https://mirrors.huaweicloud.com/openjdk/15/"
+		return outputFile;
+	} else {
+		free(outputFile);
+		return NULL;
+	}
+}
+char* getURL() {
 #ifndef _WIN32
 #ifndef __aarch64__
-						 "openjdk-15_linux-x64_bin.tar.gz",
+	return "https://mirrors.huaweicloud.com/openjdk/15/openjdk-15_linux-x64_bin.tar.gz";
 #else
-						 "openjdk-15_linux-aarch64_bin.tar.gz",
+	return "https://mirrors.huaweicloud.com/openjdk/15/openjdk-15_linux-aarch64_bin.tar.gz";
 #endif
 #else
-						 "openjdk-15_windows-x64_bin.zip",
+	return "https://mirrors.huaweicloud.com/openjdk/15/openjdk-15_windows-x64_bin.zip";
 #endif
-						 outputFile)) {
+}
+void downloadJDK(void *data,
+		int (*progressFunc)(void*, curl_off_t, curl_off_t, curl_off_t,
+				curl_off_t),
+		void (*extractCallback)(void*, const char*, int, int)) {
+	char *outputFile = hasToDownloadJava();
+	if (outputFile) {
+		if (downloadFile(getURL(), outputFile, data, progressFunc)) {
 			fputs("Download of java 15 failed!", stderr);
 			fflush(stderr);
 			goto cleanup;
 		}
-		extract(outputFile);
+		extract(outputFile, extractCallback, data);
 		remove(outputFile);
 	}
-cleanup:
-	free(base);
-	free(dirBase);
-	free(outputFile);
+	cleanup: free(outputFile);
 }
-static int downloadFile(const char *url, const char *outputFileName) {
+static int downloadFile(const char *url, const char *outputFileName, void *data,
+		int (*progressFunc)(void*, curl_off_t, curl_off_t, curl_off_t,
+				curl_off_t)) {
 	printf("Starting download of %s to %s!\n", url, outputFileName);
 	fflush(stdout);
 #ifndef _WIN32
-	urlToDownload = (char *)url;
+	urlToDownload = (char*) url;
 	CURLcode res = 1;
 	CURL *curl = curl_easy_init();
 	if (curl) {
@@ -94,8 +101,10 @@ static int downloadFile(const char *url, const char *outputFileName) {
 		curl_easy_setopt(curl, CURLOPT_URL, url);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+		curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, data);
 		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
-		curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progress);
+		curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION,
+				progressFunc==NULL?progress:progressFunc);
 		res = curl_easy_perform(curl);
 		curl_easy_cleanup(curl);
 		fclose(fp);
@@ -107,19 +116,18 @@ static int downloadFile(const char *url, const char *outputFileName) {
 	return URLDownloadToFile(NULL, url, outputFileName, 0, NULL) != S_OK;
 #endif
 }
-#ifndef _WIN32
 static size_t writeData(void *ptr, size_t size, size_t nmemb, FILE *stream) {
 	return fwrite(ptr, size, nmemb, stream);
 }
 static int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
-					curl_off_t ultotal, curl_off_t ulnow) {
+		curl_off_t ultotal, curl_off_t ulnow) {
 	double expected = dltotal;
 	double current = dlnow;
 	double percentage = (current / expected) * 100;
 	if (isnan(percentage)) {
 		return 0;
 	}
-	int integer = (int)round(percentage);
+	int integer = (int) round(percentage);
 	if (integer == lastInteger) {
 		return 0;
 	}
@@ -128,4 +136,3 @@ static int progress(void *clientp, curl_off_t dltotal, curl_off_t dlnow,
 	printf("\033[1A");
 	return 0;
 }
-#endif
