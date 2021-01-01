@@ -4,13 +4,14 @@
 #ifndef LAUNCHER_H_
 #define LAUNCHER_H_
 #ifndef _WIN32
-#define SEP ':'
-#define DELIM '/'
+#define SEP ":"
+#define DELIM "/"
 #include <unistd.h>
 #else
-#define SEP ';'
-#define DELIM '\\'
+#define SEP ";"
+#define DELIM "\\"
 #endif
+#define NUM_PREDEFINED_ARGS 3
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 typedef struct _config {
 	// JVM Options
@@ -42,4 +43,5 @@ void runJVM(Configuration configuration);
 char *hasToDownloadJava(void);
 // Get Java URL
 char *getURL(void);
+char *generateClasspath(Configuration);
 #endif

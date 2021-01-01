@@ -9,8 +9,6 @@
 #include <shlobj.h>
 #include <windows.h>
 #endif
-#define NUM_PREDEFINED_ARGS 3
-char *generateClasspath(Configuration);
 void runJVM(Configuration configuration) {
 	char *classpath = generateClasspath(configuration);
 	JavaVMOption *jvmoptions = calloc(
@@ -73,6 +71,7 @@ char *generateClasspath(Configuration configuration) {
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
 		strcat(ret, configuration->classpaths[i]);
 		strcat(ret, c);
+		strcat(ret, SEP);
 	}
 	char *base = getBaseDirectory();
 	char *libs = calloc(strlen(base) + 10, 1);
