@@ -247,6 +247,7 @@ cleanup:
 }
 int main(int argc, char **argv) {
 	gtk_init(&argc, &argv);
+	//Hack, TODO
 	counts[0] = 0;
 	counts[1] = 0;
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
