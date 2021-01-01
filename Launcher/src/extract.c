@@ -10,7 +10,7 @@
 static int copyData(struct archive *in, struct archive *out);
 
 void extract(const char *filename,
-		void (*callback)(void*, const char*, int, int), void *someData) {
+			 void (*callback)(void *, const char *, int, int), void *someData) {
 	int flags = ARCHIVE_EXTRACT_TIME;
 	flags |= ARCHIVE_EXTRACT_PERM;
 	flags |= ARCHIVE_EXTRACT_ACL;
@@ -56,7 +56,7 @@ void extract(const char *filename,
 			break;
 		}
 		char *cc = calloc(
-				strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
+			strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
 		sprintf(cc, "%s%s%s", java15, c, &archive_entry_pathname(entry)[6]);
 		archive_entry_set_pathname(entry, cc);
@@ -75,7 +75,7 @@ void extract(const char *filename,
 		}
 		if (callback) {
 			callback(someData, archive_entry_pathname(entry), cnt,
-					archive_file_count(in));
+					 archive_file_count(in));
 		}
 		result = archive_write_finish_entry(out);
 		if (result != ARCHIVE_OK) {
