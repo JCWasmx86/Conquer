@@ -55,15 +55,6 @@ public interface ICity extends Comparable<ICity> {
 	double getDefenseStrength();
 
 	/**
-	 * Returns the strength of a city based on its own values and the clan.
-	 *
-	 * @param clan The clan of the city. If it doesn't match or is null, an
-	 *             {@link IllegalArgumentException} will be thrown.
-	 * @return The defense strength of the city.
-	 */
-	double getDefenseStrength(IClan clan);
-
-	/**
 	 * Returns the growth of a city. The growth of a city is the factor, for which
 	 * the number of persons increases every round. For example: 1000 Persons and a
 	 * growth of 1.01: Next round: 1010 persons<br>

@@ -172,26 +172,8 @@ class City implements ICity {
 	 */
 	@Override
 	public double getDefenseStrength() {
-		return this.getDefenseStrength(this.getClan());
-	}
-
-	/**
-	 * Returns the strength of a city based on its own values and the clan.
-	 *
-	 * @param clan The clan of the city. If it doesn't match or is null, an
-	 *             {@link IllegalArgumentException} will be thrown.
-	 * @return The defense strength of the city.
-	 */
-	@Override
-	public double getDefenseStrength(final IClan clan) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan == null");
-		}
-		if (clan != this.clan) {
-			throw new IllegalArgumentException("Wrong clan passed!");
-		}
-		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * clan.getSoldiersStrength()
-				* clan.getSoldiersDefenseStrength());
+		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * this.clan.getSoldiersStrength()
+				* this.clan.getSoldiersDefenseStrength());
 	}
 
 	/**
@@ -272,7 +254,7 @@ class City implements ICity {
 	 *
 	 * @return Number of rounds with a small population.
 	 */
-	public int getNumberOfRoundsWithZeroPeople() {
+	int getNumberOfRoundsWithZeroPeople() {
 		return this.numberOfRoundsWithZeroPeople;
 	}
 
@@ -344,7 +326,7 @@ class City implements ICity {
 	 *
 	 * @return Internal value.
 	 */
-	public double oldOne() {
+	double oldOne() {
 		return this.oldOne;
 	}
 
@@ -435,7 +417,7 @@ class City implements ICity {
 		this.growth = growth;
 	}
 
-	public void setId(final int id) {
+	void setId(final int id) {
 		this.clanId = id;
 	}
 
@@ -493,7 +475,7 @@ class City implements ICity {
 	 *
 	 * @param num
 	 */
-	public void setNumberOfRoundsWithZeroPeople(final int num) {
+	void setNumberOfRoundsWithZeroPeople(final int num) {
 		this.numberOfRoundsWithZeroPeople = num;
 	}
 
@@ -515,7 +497,7 @@ class City implements ICity {
 	 *
 	 * @param value
 	 */
-	public void setOldValue(final double value) {
+	void setOldValue(final double value) {
 		this.oldOne = value;
 	}
 
