@@ -14,6 +14,9 @@ ConquerTest/.classpath
 ConquerTest/.project
 ConquerTest/.settings/
 ConquerTest/bin/
+Installer/bin/
+Installer/uninstall.exe
+Installer/Installer.exe
 Launcher/.cproject
 Launcher/.project
 Launcher/.settings/
