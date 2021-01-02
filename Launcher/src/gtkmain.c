@@ -218,8 +218,10 @@ static void showExceptionScreen(JNIEnv *env) {
 	jmethodID printStackTrace =
 		(*env)->GetMethodID(env, (*env)->GetObjectClass(env, throwable),
 							"printStackTrace", "(Ljava/io/PrintWriter;)V");
-	jstring string =
-		(*env)->CallObjectMethod(env, throwable, printStackTrace, pw);
+	(*env)->CallVoidMethod(env, throwable, printStackTrace, pw);
+	jmethodID mid = (*env)->GetMethodID(env, stringWriter, "toString",
+										"()Ljava/lang/String;");
+	jstring string = (*env)->CallObjectMethod(env, stringWriter, mid);
 	GtkTextBuffer *textBufferName = gtk_text_buffer_new(NULL);
 	gtk_text_buffer_set_text(textBufferName,
 							 (*env)->GetStringUTFChars(env, string, NULL), -1);
