@@ -1,11 +1,12 @@
 #include <assert.h>
+#include <aclapi.h>
+#include <winbase.h>
 #include <shlobj.h>
 #include <shfolder.h>
 
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 extern uint8_t launcher;
 extern uint8_t conquer;
@@ -29,7 +30,7 @@ int main(int argc, char **argv) {
 	char *name = getBaseDirectory();
 	CreateDirectory(name, NULL);
 	HANDLE h = CreateFileA(name, GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_ALWAYS,
-				FILE_ATTRIBUTE_NORMAL);
+				FILE_ATTRIBUTE_NORMAL,NULL);
 	SetSecurityInfo(h, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, NULL, NULL);
 	free(name);
 	writeFile("launcher.exe", &launcher, launcherSize);
