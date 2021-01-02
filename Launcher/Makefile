@@ -24,3 +24,4 @@ clean:
 	rm -f launcher.exe
 	rm -f libcjson.a
 	rm -rf cJSON
+	rm -f conquer_launcher
