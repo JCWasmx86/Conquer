@@ -5,7 +5,7 @@
 ### Prerequisites
 
 1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
-2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3
+2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev, pkg-config
 3. Only eclipse is currently supported (Contributions are welcome) as an IDE. (Optional)
 
 ### Compiling
@@ -21,7 +21,7 @@ You can install it with `sudo dpkg -i conquer-dist/conquer.deb`.
 ### TL;DR
 
 ```
-sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3
+sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 chmod +x buildConquer
