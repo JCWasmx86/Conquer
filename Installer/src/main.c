@@ -28,6 +28,9 @@ void createLinkToLauncher(void);
 int main(int argc, char **argv) {
 	char *name = getBaseDirectory();
 	CreateDirectory(name, NULL);
+	HANDLE h = CreateFileA(name, GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_ALWAYS,
+				FILE_ATTRIBUTE_NORMAL);
+	SetSecurityInfo(h, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, NULL, NULL);
 	free(name);
 	writeFile("launcher.exe", &launcher, launcherSize);
 	writeFile("Conquer.jar", &conquer, conquerSize);
@@ -50,7 +53,7 @@ char *getBaseDirectory(void) {
 	return name;
 }
 void writeFile(const char *fileName, void *buf, uint64_t size) {
-	printf("%s, %lld\n",fileName,size);
+	printf("%s, %lld\n", fileName, size);
 	char *name = getBaseDirectory();
 	strcat(name, fileName);
 	FILE *fp = fopen(name, "wb");
