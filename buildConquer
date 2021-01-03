@@ -13,7 +13,7 @@ if [[ `gcc -dumpversion` =~ "10.*" ]]; then
 else
 	echo Found gcc-10
 fi
-export TARGET="all"
+export TARGET="all-gtk"
 unameOut="$(uname -s)"
 case "${unameOut}" in
     MINGW*)
@@ -138,7 +138,7 @@ cd ../../Launcher
 make clean
 make $TARGET|| exit 1
 if [[ -z "${IS_WIN}" ]]; then
-	cp launcher ../conquer-dist
+	cp launcher conquer_launcher ../conquer-dist
 else
 	cp launcher.exe ../conquer-dist
 fi
@@ -199,7 +199,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Description: The strategy game conquer >>control
 	cd ../..
 	cp Conquer.jar Conquer_frontend.jar conquer/usr/share/java
-	mv launcher conquer/usr/bin
+	mv launcher conquer_launcher conquer/usr/bin
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
 	dpkg-deb --build conquer
@@ -212,7 +212,7 @@ else
 	cp LICENSE.txt ../Installer
 	cd ../Installer
 	make clean
-	make
+	make||exit
 	cd ..
 	cp Installer/Installer.exe conquer-dist
 fi
