@@ -214,7 +214,7 @@ static void showExceptionScreen(JNIEnv *env) {
 		(*env)->GetMethodID(env, printWriter, "<init>", "(Ljava/io/Writer;)V");
 	jobject sw = (*env)->NewObject(env, stringWriter, noArgsConstructor);
 	jobject pw = (*env)->NewObject(env, printWriter, printWriterConstructor,
-								   printWriter);
+								   sw);
 	jmethodID printStackTrace =
 		(*env)->GetMethodID(env, (*env)->GetObjectClass(env, throwable),
 							"printStackTrace", "(Ljava/io/PrintWriter;)V");
