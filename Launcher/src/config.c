@@ -7,7 +7,7 @@
 #include <string.h>
 
 Configuration emptyConfiguration(void);
-Configuration buildConfiguration(cJSON *cjson);
+Configuration buildConfiguration(cJSON *);
 
 Configuration getConfiguration(void) {
 	char *base = getBaseDirectory();

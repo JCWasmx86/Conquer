@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int copyData(struct archive *in, struct archive *out);
+static int copyData(struct archive *, struct archive *);
 
 void extract(const char *filename,
 			 void (*callback)(void *, const char *, int, int), void *someData) {

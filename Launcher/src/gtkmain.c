@@ -206,7 +206,7 @@ static void showExceptionScreen(JNIEnv *env) {
 	GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
 	GtkWidget *table = gtk_grid_new();
 	gtk_container_add(GTK_CONTAINER(scrolledWindow), table);
-	gtk_container_add(GTK_CONTAINER(window),scrolledWindow);
+	gtk_container_add(GTK_CONTAINER(window), scrolledWindow);
 	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
 	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
 	jmethodID noArgsConstructor =
@@ -332,7 +332,7 @@ int main(int argc, char **argv) {
 	data->table = table;
 	g_signal_connect(startButton, "clicked", G_CALLBACK(onStartPressed), data);
 	Configuration c = getConfiguration();
-	//TODO: Allow to remove options/classpaths
+	// TODO: Allow to remove options/classpaths
 	if (c) {
 		for (size_t i = 0; i < c->numOptions; i++) {
 			GtkWidget *item = gtk_label_new(c->options[i]);
