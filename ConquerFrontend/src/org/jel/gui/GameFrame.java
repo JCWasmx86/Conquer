@@ -128,6 +128,10 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.loopPlayer.abort();
 		MainScreen.forward(this.getLocation(), false);
 		this.coinsLabelUpdateThread.stop();
+		if (this.endlessThread.isAlive()) {
+			this.endlessThread.stop();
+		}
+		this.callback.stop();
 		this.dispose();
 	}
 
@@ -187,6 +191,9 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.nonGUIInit();
 	}
 
+	private Thread endlessThread;
+	private GiftCallback callback;
+
 	private void initButtonPanel() {
 		this.buttonPanel = new JPanel();
 		this.buttonPanel.setLayout(new FlowLayout());
@@ -205,23 +212,24 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var coinsLabel = new JLabel(
 				Messages.getString("Shared.coins") + ": " + this.game.getCoins().get(Shared.PLAYER_CLAN)); //$NON-NLS-1$ //$NON-NLS-2$
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
+		this.endlessThread = new Thread(() -> {
+			while (!this.game.onlyOneClanAlive()) {
+				this.game.executeActions();
+				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
+				this.labels.values().forEach(b -> b.actionPerformed(null));
+				try {
+					Thread.sleep(50);
+				} catch (final InterruptedException ie) {
+					Shared.LOGGER.exception(ie);
+				}
+			}
+			run.setEnabled(true);
+			nextRound.setEnabled(true);
+		});
 		run.addActionListener(a -> {
 			run.setEnabled(false);
 			nextRound.setEnabled(false);
-			new Thread(() -> {
-				while (!this.game.onlyOneClanAlive()) {
-					this.game.executeActions();
-					this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
-					this.labels.values().forEach(b -> b.actionPerformed(null));
-					try {
-						Thread.sleep(50);
-					} catch (final InterruptedException ie) {
-						Shared.LOGGER.exception(ie);
-					}
-				}
-				run.setEnabled(true);
-				nextRound.setEnabled(true);
-			}).start();
+			this.endlessThread.start();
 		});
 		this.buttonPanel.add(coinsLabel);
 		this.buttonPanel.add(nextRound);
@@ -391,7 +399,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	private void nonGUIInit() {
-		this.game.setPlayerGiftCallback(new GiftCallback());
+		this.callback = new GiftCallback();
+		this.game.setPlayerGiftCallback(this.callback);
 		final var cities = this.game.getCities();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
 		try {

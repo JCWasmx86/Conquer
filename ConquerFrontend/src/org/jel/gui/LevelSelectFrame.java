@@ -184,7 +184,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 			this.dispose();
 			final var li = new LevelInfo(game, scenario, this.getLocation(), this.context);
 			li.setVisible(true);
-		} catch (UnsupportedOperationException uoe) {
+		} catch (final UnsupportedOperationException uoe) {
 			JOptionPane.showMessageDialog(null, Messages.getString("LevelSelectFrame.noReaderFound"),
 					Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
 		}

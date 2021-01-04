@@ -107,7 +107,7 @@ final class BuiltinShared {
 					}
 					// The enemy city could already be conquered...
 					if ((own.getNumberOfSoldiers() < enemyCity.getDefense()) || (cnt == 0)
-							|| own.getClan() == enemyCity.getClan()) {
+							|| (own.getClan() == enemyCity.getClan())) {
 						return;
 					}
 					object.attack(own, enemyCity, true, cnt);
@@ -171,7 +171,7 @@ final class BuiltinShared {
 		}).forEach(a -> {
 			var cnter = 0;
 			var b = true;
-			while (b && cnter < BuiltinShared.MAX_ITERATIONS) {
+			while (b && (cnter < BuiltinShared.MAX_ITERATIONS)) {
 				b = object.upgradeDefense(a);
 				cnter++;
 			}

@@ -24,6 +24,7 @@ import org.jel.gui.utils.ImageResource;
 final class GiftCallback implements PlayerGiftCallback {
 
 	private boolean accepted;
+	private JFrame jframe;
 
 	private void accept() {
 		this.accepted = true;
@@ -35,13 +36,14 @@ final class GiftCallback implements PlayerGiftCallback {
 	@Override
 	public boolean acceptGift(final IClan source, final IClan destination, final Gift gift, final double oldValue,
 			final DoubleConsumer newValue, final StrategyObject strategyObject) {
-		final var jframe = new JFrame();
-		jframe.setLayout(new BoxLayout(jframe.getContentPane(), BoxLayout.Y_AXIS));
-		jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
-		jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.jframe = new JFrame();
+		this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.Y_AXIS));
+		this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
+		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() != 0) {
-			final var jlabel = new JLabel(gift.getNumberOfCoins() + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
-			jframe.add(jlabel);
+			final var jlabel = new JLabel(
+					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
+			this.jframe.add(jlabel);
 		}
 		for (final var v : gift.getMap().entrySet()) {
 			final double value = v.getValue();
@@ -49,9 +51,9 @@ final class GiftCallback implements PlayerGiftCallback {
 			if (value == 0) {
 				continue;
 			}
-			final var jlabel = new JLabel(value + resource.getName(), new ImageResource(resource.getImage()),
-					SwingConstants.LEFT);
-			jframe.add(jlabel);
+			final var jlabel = new JLabel(String.format("%.2f", value) + " " + resource.getName(),
+					new ImageResource(resource.getImage()), SwingConstants.LEFT);
+			this.jframe.add(jlabel);
 		}
 		final var buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -62,8 +64,9 @@ final class GiftCallback implements PlayerGiftCallback {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				newValue.accept(oldValue + (Math.random() * 15));
-				jframe.setVisible(false);
+				GiftCallback.this.jframe.setVisible(false);
 				GiftCallback.this.accept();
+				GiftCallback.this.jframe.dispose();
 			}
 		});
 		accept.setText(Messages.getString("GiftCallback.accept")); //$NON-NLS-1$
@@ -72,23 +75,34 @@ final class GiftCallback implements PlayerGiftCallback {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				jframe.setVisible(false);
+				GiftCallback.this.jframe.setVisible(false);
+				GiftCallback.this.jframe.dispose();
 			}
 		});
 		decline.setText(Messages.getString("GiftCallback.decline")); //$NON-NLS-1$
 		buttonPanel.add(accept);
 		buttonPanel.add(decline);
-		jframe.setAlwaysOnTop(true);
-		jframe.pack();
-		jframe.setVisible(true);
+		this.jframe.add(buttonPanel);
+		this.jframe.setAlwaysOnTop(true);
+		this.jframe.pack();
+		this.jframe.setVisible(true);
+		new Thread(() -> {
 
-		while (jframe.isVisible()) {
+		}).start();
+		while (this.jframe.isDisplayable()) {
 			// Wait for input
 		}
 		final var tmp = this.accepted;
 		this.accepted = false;
-		jframe.dispose();
+		this.jframe.dispose();
+		this.jframe = null;
 		return tmp;
+	}
+
+	void stop() {
+		if (this.jframe != null) {
+			this.jframe.dispose();
+		}
 	}
 
 }

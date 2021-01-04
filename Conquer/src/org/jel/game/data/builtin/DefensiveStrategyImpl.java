@@ -56,36 +56,35 @@ public final class DefensiveStrategyImpl implements Strategy {
 			} else if (ds == DefensiveStrategy.RECRUIT) {
 				BuiltinShared.offensiveRecruiting(cities, obj, clan);
 			}
-			sendGift(clan);
+			this.sendGift(clan);
 		} else {
 			throw new InternalError();
 		}
 	}
 
-	private void sendGift(IClan clan) {
+	private void sendGift(final IClan clan) {
 		// Create a working copy.
 		final var list = new ArrayList<>(clan.getResources());
 		Collections.sort(list);
 		if (list.get(0) < 150) {
 			// Don't waste resources, we may need them.
-			return;
 		}
 		final var giftedResources = new ArrayList<Double>();
 		for (final var totalResource : clan.getResources()) {
 			// Give up to 50% of a resource as gift.
 			final var amount = Math.random() * 0.5 * totalResource;
-			giftedResources.add(Math.min(totalResource,amount));
+			giftedResources.add(Math.min(totalResource, amount));
 		}
-		double totalCoins = clan.getCoins() * Math.random() * 0.33;
+		final var totalCoins = clan.getCoins() * Math.random() * 0.33;
 		final var gift = new Gift(giftedResources, totalCoins);
 		final var clans = StreamUtils.getCitiesAsStream(this.graph).map(ICity::getClan).distinct()
 				.filter(a -> a != clan).sorted((a, b) -> Double.compare(this.object.getRelationship(a, clan),
 						this.object.getRelationship(b, clan)))
 				.collect(Collectors.toList());
 		// Improve relationship, start from the one with the worst relationship.
-		for(var otherClan:clans) {
-			final var b=object.sendGift(clan, otherClan, gift);
-			if(b) {
+		for (final var otherClan : clans) {
+			final var b = this.object.sendGift(clan, otherClan, gift);
+			if (b) {
 				break;
 			}
 		}

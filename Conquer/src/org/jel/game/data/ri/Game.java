@@ -1070,7 +1070,7 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(source, "source==null");
 		this.throwIfNull(destination, "destination==null");
 		this.throwIfNull(gift, "gift==null");
-		this.throwIfNull(playerGiftCallback, "playerGiftCallback==null");
+		this.throwIfNull(this.playerGiftCallback, "playerGiftCallback==null");
 		if (source == destination) {
 			throw new IllegalArgumentException("source==destination");
 		} else if (this.isDead(destination)) {
@@ -1091,7 +1091,7 @@ public final class Game implements ConquerInfo {
 					}, this);
 		}
 		if (acceptedGift) {
-			if(source.getCoins()<gift.getNumberOfCoins()) {
+			if (source.getCoins() < gift.getNumberOfCoins()) {
 				throw new IllegalArgumentException("More coins were gifted than available!");
 			}
 			source.setCoins(source.getCoins() - gift.getNumberOfCoins());
@@ -1101,8 +1101,9 @@ public final class Game implements ConquerInfo {
 			gift.getMap().entrySet().forEach(d -> {
 				final var index = d.getKey().getIndex();
 				final var value = d.getValue();
-				if(a.get(index)<value) {
-					throw new IllegalArgumentException("More " +d.getKey().getName()+" was gifted than available: ("+a.get(index)+"/"+value+")");
+				if (a.get(index) < value) {
+					throw new IllegalArgumentException("More " + d.getKey().getName() + " was gifted than available: ("
+							+ a.get(index) + "/" + value + ")");
 				}
 				a.set(index, a.get(index) - value);
 				b.set(index, b.get(index) + value);
