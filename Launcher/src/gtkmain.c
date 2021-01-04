@@ -201,11 +201,12 @@ static void showExceptionScreen(JNIEnv *env) {
 	(*env)->ExceptionClear(env);
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0 - Exception");
-	gtk_window_set_default_size(GTK_WINDOW(window), 400, 200);
+	gtk_window_set_default_size(GTK_WINDOW(window), 800, 800);
 	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
 	GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
 	GtkWidget *table = gtk_grid_new();
 	gtk_container_add(GTK_CONTAINER(scrolledWindow), table);
+	gtk_container_add(GTK_CONTAINER(window),scrolledWindow);
 	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
 	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
 	jmethodID noArgsConstructor =
@@ -221,7 +222,8 @@ static void showExceptionScreen(JNIEnv *env) {
 	(*env)->CallVoidMethod(env, throwable, printStackTrace, pw);
 	jmethodID mid = (*env)->GetMethodID(env, stringWriter, "toString",
 										"()Ljava/lang/String;");
-	jstring string = (*env)->CallObjectMethod(env, stringWriter, mid);
+	assert(mid);
+	jstring string = (*env)->CallObjectMethod(env, sw, mid);
 	GtkTextBuffer *textBufferName = gtk_text_buffer_new(NULL);
 	gtk_text_buffer_set_text(textBufferName,
 							 (*env)->GetStringUTFChars(env, string, NULL), -1);
