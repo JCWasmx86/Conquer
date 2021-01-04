@@ -213,8 +213,8 @@ static void showExceptionScreen(JNIEnv *env) {
 	jmethodID printWriterConstructor =
 		(*env)->GetMethodID(env, printWriter, "<init>", "(Ljava/io/Writer;)V");
 	jobject sw = (*env)->NewObject(env, stringWriter, noArgsConstructor);
-	jobject pw = (*env)->NewObject(env, printWriter, printWriterConstructor,
-								   sw);
+	jobject pw =
+		(*env)->NewObject(env, printWriter, printWriterConstructor, sw);
 	jmethodID printStackTrace =
 		(*env)->GetMethodID(env, (*env)->GetObjectClass(env, throwable),
 							"printStackTrace", "(Ljava/io/PrintWriter;)V");
@@ -330,6 +330,7 @@ int main(int argc, char **argv) {
 	data->table = table;
 	g_signal_connect(startButton, "clicked", G_CALLBACK(onStartPressed), data);
 	Configuration c = getConfiguration();
+	//TODO: Allow to remove options/classpaths
 	if (c) {
 		for (size_t i = 0; i < c->numOptions; i++) {
 			GtkWidget *item = gtk_label_new(c->options[i]);
