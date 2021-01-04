@@ -25,6 +25,7 @@ Initializer.INSTANCE().initialize(null);
 for (InstalledScenario scenario : scenarios) {
 	ConquerInfo conquerInstance = ctx.loadInfo(scenario);
 	conquerInstance.addContext(gc);
+	conquerInstance.setPlayerGiftCallback((a,b,c,d,e,f)->false);
 	conquerInstance.init();
 	while (!conquerInstance.onlyOneClanAlive()) {
 		conquerInstance.executeActions();
@@ -51,6 +52,10 @@ Construct the game from the specified scenario.
 conquerInstance.addContext(context);
 \end{minted}
 \texttt{addContext} binds the \texttt{GlobalContext} read by \texttt{XMLReader} to \texttt{conquerInstance}.
+\begin{minted}{java}
+conquerInstance.setPlayerGiftCallback((a,b,c,d,e,f)->false);
+\end{minted}
+This sets a default handler, if the player is offered a gift. This one always rejects the gift. Not setting the callback results in implementation-defined behavior.
 \begin{minted}{java}
 conquerInstance.init();
 \end{minted}
