@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1081,18 +1082,15 @@ public final class Game implements ConquerInfo {
 			return false;
 		}
 		boolean acceptedGift;
+		final DoubleConsumer dc = newValue -> {
+			final var d = newValue < 0 ? 0 : (newValue > 100 ? 100 : newValue);
+			this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
+		};
+		final var relationship = this.getRelationship(source, destination);
 		if (!destination.isPlayerClan()) {
-			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift,
-					this.getRelationship(source, destination), a -> {
-						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
-						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
-					}, this);
+			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift, relationship, dc, this);
 		} else {
-			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift,
-					this.getRelationship(source, destination), a -> {
-						final var d = a < 0 ? 0 : (a > 100 ? 100 : a);
-						this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
-					}, this);
+			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift, relationship, dc, this);
 		}
 		if (acceptedGift) {
 			this.calculateChanges(source, destination, gift);
