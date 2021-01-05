@@ -213,7 +213,7 @@ public final class Game implements ConquerInfo {
 	public void attack(final ICity src, final ICity destination, final boolean managed, final long num) {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
-		this.checkPreconditions(src, managed, num);
+		this.checkPreconditions(managed, num);
 		this.cantAttack(src, destination);
 		final var powerOfAttacker = this.calculatePowerOfAttacker(src, destination, managed, num);
 		if (((powerOfAttacker == 0) && !src.isPlayerCity()) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
@@ -330,7 +330,7 @@ public final class Game implements ConquerInfo {
 		}
 	}
 
-	private void checkPreconditions(final ICity src, final boolean managed, final long num) {
+	private void checkPreconditions(final boolean managed, final long num) {
 		if (managed && (num < 0)) {
 			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
 		}
@@ -435,19 +435,8 @@ public final class Game implements ConquerInfo {
 			if ((factorOfPeople == 1) && (factorOfSoldiers == 1) && (growthFactor == 1)) {
 				return;
 			}
-			if ((long) (a.getNumberOfPeople() * factorOfPeople) < 0) {
-				a.setNumberOfPeople(0);
-			} else {
-				a.setNumberOfPeople((long) (a.getNumberOfPeople() * factorOfPeople));
-			}
-			if (a.getNumberOfPeople() < 0) {
-				a.setNumberOfPeople(5);
-			}
-			if ((long) (a.getNumberOfSoldiers() * factorOfPeople) < 0) {
-				a.setNumberOfSoldiers(0);
-			} else {
-				a.setNumberOfSoldiers((long) (a.getNumberOfSoldiers() * factorOfSoldiers));
-			}
+			a.setNumberOfPeople((long) (a.getNumberOfPeople() * factorOfPeople));
+			a.setNumberOfSoldiers((long) (a.getNumberOfSoldiers() * factorOfSoldiers));
 			a.setGrowth(a.getGrowth() * growthFactor);
 			this.events.add(new RandomEventMessage(re, factorOfPeople, factorOfSoldiers, growthFactor, a));
 		});
