@@ -1076,8 +1076,8 @@ public final class Game implements ConquerInfo {
 		} else if (this.isDead(destination)) {
 			throw new IllegalArgumentException("Destination clan is extinct!");
 		}
-		if (gift.getNumberOfCoins() == 0
-				&& gift.getMap().entrySet().stream().filter(a -> a.getValue() == 0).count() == 0) {
+		if ((gift.getNumberOfCoins() == 0)
+				&& (gift.getMap().entrySet().stream().filter(a -> a.getValue() == 0).count() == 0)) {
 			return false;
 		}
 		boolean acceptedGift;
@@ -1095,25 +1095,29 @@ public final class Game implements ConquerInfo {
 					}, this);
 		}
 		if (acceptedGift) {
-			if (source.getCoins() < gift.getNumberOfCoins()) {
-				throw new IllegalArgumentException("More coins were gifted than available!");
-			}
-			source.setCoins(source.getCoins() - gift.getNumberOfCoins());
-			destination.setCoins(destination.getCoins() + gift.getNumberOfCoins());
-			final var a = source.getResources();
-			final var b = destination.getResources();
-			gift.getMap().entrySet().forEach(d -> {
-				final var index = d.getKey().getIndex();
-				final var value = d.getValue();
-				if (a.get(index) < value) {
-					throw new IllegalArgumentException("More " + d.getKey().getName() + " was gifted than available: ("
-							+ a.get(index) + "/" + value + ")");
-				}
-				a.set(index, a.get(index) - value);
-				b.set(index, b.get(index) + value);
-			});
+			this.calculateChanges(source, destination, gift);
 		}
 		return acceptedGift;
+	}
+
+	private void calculateChanges(final IClan source, final IClan destination, final Gift gift) {
+		if (source.getCoins() < gift.getNumberOfCoins()) {
+			throw new IllegalArgumentException("More coins were gifted than available!");
+		}
+		source.setCoins(source.getCoins() - gift.getNumberOfCoins());
+		destination.setCoins(destination.getCoins() + gift.getNumberOfCoins());
+		final var a = source.getResources();
+		final var b = destination.getResources();
+		gift.getMap().entrySet().forEach(d -> {
+			final var index = d.getKey().getIndex();
+			final var value = d.getValue();
+			if (a.get(index) < value) {
+				throw new IllegalArgumentException("More " + d.getKey().getName() + " was gifted than available: ("
+						+ a.get(index) + "/" + value + ")");
+			}
+			a.set(index, a.get(index) - value);
+			b.set(index, b.get(index) + value);
+		});
 	}
 
 	@Override
