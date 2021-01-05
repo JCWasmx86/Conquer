@@ -55,6 +55,7 @@ jobs:
         run: |
           export PATH=$PATH:"$JAVA_HOME/bin"
           echo $JAVA_HOME
+          fin $JAVA_HOME
           chmod +x testPerformance
           ./testPerformance
       - name: Upload results
