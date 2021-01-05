@@ -33,7 +33,6 @@ public final class XMLReader {
 	 * @return The instance
 	 */
 	public static XMLReader getInstance() {
-		new PrintWriter(new StringWriter());
 		return XMLReader.INSTANCE;
 	}
 
