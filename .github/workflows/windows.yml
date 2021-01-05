@@ -51,7 +51,6 @@ jobs:
           #These are failing on windows CI, but work on my machine
           export NO_TESTS3=notest
           ./buildConquer
-          ./testPerformance
       - name: Run performance tests
         run: |
           export PATH=$PATH:"${JAVA_HOME}/bin"
