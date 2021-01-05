@@ -77,7 +77,9 @@ public final class ModerateStrategyImpl implements Strategy {
 			}
 			final var coinsToGive = Math.random() * 0.25 * ownCoins;
 			final var gift = new Gift(resourcesToGive, coinsToGive);
-			object.sendGift(clan, otherClan, gift);
+			if (Math.random() < 0.2) {
+				object.sendGift(clan, otherClan, gift);
+			}
 		}
 	}
 

@@ -86,10 +86,10 @@ public final class DefensiveStrategyImpl implements Strategy {
 				.collect(Collectors.toList());
 		// Improve relationship, start from the one with the worst relationship.
 		for (final var otherClan : clans) {
-			final var b = this.object.sendGift(clan, otherClan, gift);
-			if (b) {
-				break;
+			if(Math.random()<0.75) {
+				continue;
 			}
+			this.object.sendGift(clan, otherClan, gift);
 		}
 	}
 

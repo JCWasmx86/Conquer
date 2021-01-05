@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
+import org.jel.game.data.PlayerGiftCallback;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.XMLReader;
@@ -15,6 +16,8 @@ import org.jel.game.utils.Graph;
  * This class saves and restores Game-objects and compares them.
  */
 public final class Testsuite3 extends Testsuite {
+	private static final PlayerGiftCallback CALLBACK = (a, b, c, d, e, f) -> false;
+
 	public static void main(final String[] args) {
 		final var suite = new Testsuite3();
 		final var numErrors = suite.start();
@@ -238,6 +241,7 @@ public final class Testsuite3 extends Testsuite {
 			if (restoredGame1 == null) {
 				return;
 			}
+			restoredGame1.setPlayerGiftCallback(Testsuite3.CALLBACK);
 			this.compare(restoredGame, restoredGame1, name);
 			restoredGame = restoredGame1;
 		}
@@ -270,6 +274,7 @@ public final class Testsuite3 extends Testsuite {
 		for (final var scenario : ctx.getInstalledMaps()) {
 			final var game = ctx.loadInfo(scenario);
 			game.addContext(ctx);
+			game.setPlayerGiftCallback(Testsuite3.CALLBACK);
 			game.init();
 			for (var i = 0; i < 5; i++) {
 				game.executeActions();
@@ -280,6 +285,7 @@ public final class Testsuite3 extends Testsuite {
 			if (restoredGame == null) {
 				continue;
 			}
+			restoredGame.setPlayerGiftCallback(Testsuite3.CALLBACK);
 			this.compare(game, restoredGame, name);
 			this.continueToPlay(restoredGame, name);
 		}

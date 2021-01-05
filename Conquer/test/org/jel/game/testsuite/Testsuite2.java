@@ -7,12 +7,15 @@ import org.jel.game.data.Gift;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.IClan;
 import org.jel.game.data.InstalledScenario;
+import org.jel.game.data.PlayerGiftCallback;
 import org.jel.game.data.XMLReader;
 
 /**
  * Passes bad arguments to functions.
  */
 public final class Testsuite2 extends Testsuite {
+	private static final PlayerGiftCallback CALLBACK = (a, b, c, d, e, f) -> false;
+
 	public static void main(final String[] args) {
 		final var suite = new Testsuite2();
 		final var numErrors = suite.start();
@@ -47,6 +50,7 @@ public final class Testsuite2 extends Testsuite {
 			this.success("" + scenario.name() + " is correct!");
 		}
 		game.addContext(context);
+		game.setPlayerGiftCallback(Testsuite2.CALLBACK);
 		game.setErrorHandler(this::throwable);
 		game.init();
 		for (var i = 0; i < 2; i++) {

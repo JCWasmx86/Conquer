@@ -128,7 +128,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.loopPlayer.abort();
 		MainScreen.forward(this.getLocation(), false);
 		this.coinsLabelUpdateThread.stop();
-		if (this.endlessThread.isAlive()) {
+		if ((this.endlessThread != null) && this.endlessThread.isAlive()) {
 			this.endlessThread.stop();
 		}
 		this.callback.stop();
@@ -192,7 +192,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	private Thread endlessThread;
-	private GiftCallback callback;
+	private transient GiftCallback callback;
 
 	private void initButtonPanel() {
 		this.buttonPanel = new JPanel();
@@ -200,11 +200,13 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var nextRound = new JButton(new ImageResource("hourglass.png")); //$NON-NLS-1$
 		nextRound.setToolTipText(Messages.getString("GameFrame.nextRound")); //$NON-NLS-1$
 		nextRound.addActionListener(a -> {
-			if (this.game.isPlayersTurn()) {
-				this.game.setPlayersTurn(false);
-				this.game.executeActions();
-			}
-			this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
+			new Thread(() -> {
+				if (this.game.isPlayersTurn()) {
+					this.game.setPlayersTurn(false);
+					this.game.executeActions();
+				}
+				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
+			}).start();
 		});
 		final var openMessages = new JButton(new ImageResource("messagebox.png")); //$NON-NLS-1$
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
