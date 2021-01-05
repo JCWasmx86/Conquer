@@ -194,7 +194,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Version: 0.0.1>>control
 	echo Section: games>>control
 	echo Architecture: `dpkg --print-architecture`>>control
-	echo Depends: libcurl4, libarchive13>>control
+	echo Depends: libcurl4, libarchive13, libgtk-3-0>>control
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The strategy game conquer >>control
 	cd ../..
