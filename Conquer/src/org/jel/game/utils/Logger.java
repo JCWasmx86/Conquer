@@ -31,6 +31,19 @@ public final class Logger {
 		}
 	}
 
+	public void reopen() {
+		try {
+			this.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			this.bw = new BufferedWriter(new FileWriter(this.file, true));
+		} catch (final IOException e) {
+			throw new InternalError(e);
+		}
+	}
+
 	public void exception(final Throwable throwable) {
 		try {
 			this.bw.write("[EXCEPTION date= " + new Date() + "]\n");
