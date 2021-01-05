@@ -1,6 +1,9 @@
 package org.jel.game.testsuite;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
@@ -36,7 +39,41 @@ public final class PerformanceTest {
 		}
 		final var end = System.nanoTime();
 		final var diff = end - start;
-		final var nsPerRound = ((double) diff) / MAX_ROUNDS;
-		System.out.println("ns/round: " + String.format("%.2f", nsPerRound));
+		final var nsPerRound = (((double) diff) / MAX_ROUNDS);
+		final var roundsPerSecond = 1_000_000_000 / nsPerRound;
+		System.out.println("ns/round (With loading of the scenarios): " + String.format("%.2f", nsPerRound));
+		System.out.println("rounds/s (With loading of the scenarios): " + String.format("%.2f", roundsPerSecond));
+		Shared.LOGGER.reopen();// Sync the changes with the filesystem
+		try (final var reader = new BufferedReader(new FileReader(new File(Shared.BASE_DIRECTORY, "logs.log")))) {
+			var max = 0.0;
+			var min = Double.MAX_VALUE;
+			var total = 0.0;
+			while (reader.ready()) {
+				final var line = reader.readLine();
+				if (line.contains("CPUPLAY:")) {
+					final var number = line.split("CPUPLAY:")[1].trim().replace("ms", "");
+					final var value = Double.parseDouble(number);// 10^-6 seconds
+					final var valueInNS = value * 1000;
+					max = Math.max(max, valueInNS);
+					min = Math.min(min, valueInNS);
+					total += valueInNS;
+				}
+			}
+			final var adjustedNsPerRound = total / MAX_ROUNDS;
+			final var adjustedRoundsPerSecond = 1_000_000_000 / adjustedNsPerRound;
+			System.out.println(
+					"ns/round (Without loading of the scenarios): " + String.format("%.2f", adjustedNsPerRound));
+			System.out.println(
+					"rounds/s (Without loading of the scenarios): " + String.format("%.2f", adjustedRoundsPerSecond));
+			System.out.println("Maximum length of one round in ns: " + String.format("%.2f", max));
+			System.out.println("Minimum length of one round in ns: " + String.format("%.2f", min));
+			if (max > 50_000) {
+				throw new Error("The maximum length of one round is too big: " + max + " (Expected <=50_000)");
+			} else if (adjustedNsPerRound > 150) {
+				throw new Error("One round is on average too slow: " + adjustedNsPerRound + " (Expected <=150)");
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
