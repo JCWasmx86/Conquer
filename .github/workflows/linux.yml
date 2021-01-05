@@ -30,6 +30,9 @@ jobs:
           export QT_QPA_PLATFORM=offscreen
           chmod +x buildConquer
           time ./buildConquer
+      - name: Run performance tests
+          chmod +x testPerformance
+          ./testPerformance
       - name: Upload results
         uses: actions/upload-artifact@v2
         with:

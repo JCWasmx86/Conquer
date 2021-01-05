@@ -51,6 +51,9 @@ jobs:
           #These are failing on windows CI, but work on my machine
           export NO_TESTS3=notest
           ./buildConquer
+      - name: Run performance tests
+          chmod +x testPerformance
+          ./testPerformance
       - name: Upload results
         uses: actions/upload-artifact@v2
         with:
