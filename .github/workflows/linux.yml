@@ -31,6 +31,7 @@ jobs:
           chmod +x buildConquer
           time ./buildConquer
       - name: Run performance tests
+        run: |
           chmod +x testPerformance
           ./testPerformance
       - name: Upload results

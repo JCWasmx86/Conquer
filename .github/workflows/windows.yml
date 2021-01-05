@@ -52,6 +52,7 @@ jobs:
           export NO_TESTS3=notest
           ./buildConquer
       - name: Run performance tests
+        run: |
           chmod +x testPerformance
           ./testPerformance
       - name: Upload results
