@@ -1078,7 +1078,7 @@ public final class Game implements ConquerInfo {
 			throw new IllegalArgumentException("Destination clan is extinct!");
 		}
 		if ((gift.getNumberOfCoins() == 0)
-				&& (gift.getMap().entrySet().stream().filter(a -> a.getValue() == 0).count() == 0)) {
+				&& (gift.getMap().entrySet().stream().filter(a -> a.getValue() != 0).count() == 0)) {
 			return false;
 		}
 		boolean acceptedGift;
