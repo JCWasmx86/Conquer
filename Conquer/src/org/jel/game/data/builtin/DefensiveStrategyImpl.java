@@ -89,7 +89,9 @@ public final class DefensiveStrategyImpl implements Strategy {
 			if(Math.random()<0.75) {
 				continue;
 			}
-			this.object.sendGift(clan, otherClan, gift);
+			if(this.object.sendGift(clan, otherClan, gift)) {
+				break;
+			}
 		}
 	}
 
