@@ -212,23 +212,23 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var coinsLabel = new JLabel(
 				Messages.getString("Shared.coins") + ": " + this.game.getCoins().get(Shared.PLAYER_CLAN)); //$NON-NLS-1$ //$NON-NLS-2$
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
-		this.endlessThread = new Thread(() -> {
-			while (!this.game.onlyOneClanAlive()) {
-				this.game.executeActions();
-				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
-				this.labels.values().forEach(b -> b.actionPerformed(null));
-				try {
-					Thread.sleep(50);
-				} catch (final InterruptedException ie) {
-					Shared.LOGGER.exception(ie);
-				}
-			}
-			run.setEnabled(true);
-			nextRound.setEnabled(true);
-		});
 		run.addActionListener(a -> {
 			run.setEnabled(false);
 			nextRound.setEnabled(false);
+			this.endlessThread = new Thread(() -> {
+				while (!this.game.onlyOneClanAlive()) {
+					this.game.executeActions();
+					this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
+					this.labels.values().forEach(b -> b.actionPerformed(null));
+					try {
+						Thread.sleep(50);
+					} catch (final InterruptedException ie) {
+						Shared.LOGGER.exception(ie);
+					}
+				}
+				run.setEnabled(true);
+				nextRound.setEnabled(true);
+			});
 			this.endlessThread.start();
 		});
 		this.buttonPanel.add(coinsLabel);

@@ -1,10 +1,15 @@
 package org.jel.game.data.builtin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.DoubleConsumer;
+import java.util.stream.Collectors;
 
 import org.jel.game.data.Gift;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
+import org.jel.game.data.StreamUtils;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
 import org.jel.game.data.strategy.StrategyObject;
@@ -33,6 +38,47 @@ public final class ModerateStrategyImpl implements Strategy {
 	@Override
 	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject object) {
 		BuiltinShared.moderatePlay(cities, object, clan);
+		this.sendGift(clan, cities, object);
+	}
+
+	private void sendGift(final IClan clan, final Graph<ICity> cities, final StrategyObject object) {
+		final var map = new HashMap<IClan, Integer>();
+		StreamUtils.forEach(cities, a -> {
+			final var clanObject = a.getClan();
+			if (!map.containsKey(clanObject)) {
+				map.put(clanObject, 1);
+			} else {
+				map.put(clanObject, map.get(clanObject) + 1);
+			}
+		});
+		final var clansSortedByDescendingSize = map.entrySet().stream().filter(a -> a.getKey() != clan)
+				.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+				.filter(otherClan -> object.getRelationship(clan, otherClan.getKey()) < 65).map(Map.Entry::getKey)
+				.collect(Collectors.toList());
+		// Try to get relationships with the strongest clans.
+		for (final var otherClan : clansSortedByDescendingSize) {
+			final var resourcesToGive = new ArrayList<Double>();
+			final var stats = otherClan.getResourceStats();
+			for (var i = 0; i < stats.size(); i++) {
+				final double value = stats.get(i);
+				final double ownValue = clan.getResourceStats().get(i);
+				if ((ownValue < 0) || (value > 0) || (value > ownValue)) {
+					resourcesToGive.add(0d);
+				} else {
+					final var numRoundsOfResourceStored = clan.getResources().get(i) / ownValue;
+					final var roundsToGive = Math.random() * 0.5 * numRoundsOfResourceStored;
+					resourcesToGive.add(roundsToGive * ownValue);
+				}
+			}
+			final var ownCoins = clan.getCoins();
+			final var coins = otherClan.getCoins();
+			if ((ownCoins < coins) || (ownCoins == 0)) {
+				continue;
+			}
+			final var coinsToGive = Math.random() * 0.25 * ownCoins;
+			final var gift = new Gift(resourcesToGive, coinsToGive);
+			object.sendGift(clan, otherClan, gift);
+		}
 	}
 
 	@Override

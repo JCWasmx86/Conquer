@@ -63,10 +63,13 @@ public final class DefensiveStrategyImpl implements Strategy {
 	}
 
 	private void sendGift(final IClan clan) {
+		if (StreamUtils.getCitiesAsStream(this.graph, clan).count() < 2) {
+			return;// We can't waste our power.
+		}
 		// Create a working copy.
 		final var list = new ArrayList<>(clan.getResources());
 		Collections.sort(list);
-		if (list.get(0) < 150) {
+		if (list.get(0) < 1500) {
 			// Don't waste resources, we may need them.
 		}
 		final var giftedResources = new ArrayList<Double>();

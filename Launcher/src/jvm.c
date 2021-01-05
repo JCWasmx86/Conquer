@@ -87,15 +87,9 @@ char *generateClasspath(Configuration configuration) {
 				char *name = ent->d_name;
 				size_t ll = strlen(name);
 				if (ll >= 4 && memcmp(&name[ll - 4], ".jar", 4) == 0) {
-#ifndef _WIN32
 					strcat(ret, libs);
 					strcat(ret, name);
-					strcat(ret, ":");
-#else
-				strcat(ret, libs);
-				strcat(ret, name);
-				strcat(ret, ";");
-#endif
+					strcat(ret, SEP);
 				}
 #ifndef _WIN32
 			}
@@ -103,27 +97,15 @@ char *generateClasspath(Configuration configuration) {
 		}
 		closedir(dir);
 	}
-#ifndef _WIN32
 	strcat(ret, libs);
 	strcat(ret, "music");
-	strcat(ret, ":");
+	strcat(ret, SEP);
 	strcat(ret, libs);
 	strcat(ret, "sounds");
-	strcat(ret, ":");
+	strcat(ret, SEP);
 	strcat(ret, libs);
 	strcat(ret, "images");
-	strcat(ret, ":");
-#else
-	strcat(ret, libs);
-	strcat(ret, "music");
-	strcat(ret, ";");
-	strcat(ret, libs);
-	strcat(ret, "sounds");
-	strcat(ret, ";");
-	strcat(ret, libs);
-	strcat(ret, "images");
-	strcat(ret, ";");
-#endif
+	strcat(ret, SEP);
 	strcat(ret, ".");
 	free(libs);
 	return ret;

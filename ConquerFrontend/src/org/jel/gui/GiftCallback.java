@@ -65,8 +65,8 @@ final class GiftCallback implements PlayerGiftCallback {
 			public void actionPerformed(final ActionEvent e) {
 				newValue.accept(oldValue + (Math.random() * 15));
 				GiftCallback.this.jframe.setVisible(false);
-				GiftCallback.this.accept();
 				GiftCallback.this.jframe.dispose();
+				GiftCallback.this.accept();
 			}
 		});
 		accept.setText(Messages.getString("GiftCallback.accept")); //$NON-NLS-1$
@@ -86,9 +86,6 @@ final class GiftCallback implements PlayerGiftCallback {
 		this.jframe.setAlwaysOnTop(true);
 		this.jframe.pack();
 		this.jframe.setVisible(true);
-		new Thread(() -> {
-
-		}).start();
 		while (this.jframe.isDisplayable()) {
 			// Wait for input
 		}
