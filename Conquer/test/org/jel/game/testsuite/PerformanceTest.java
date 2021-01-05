@@ -67,8 +67,8 @@ public final class PerformanceTest {
 					"rounds/s (Without loading of the scenarios): " + String.format("%.2f", adjustedRoundsPerSecond));
 			System.out.println("Maximum length of one round in ns: " + String.format("%.2f", max));
 			System.out.println("Minimum length of one round in ns: " + String.format("%.2f", min));
-			if (max > 50_000) {
-				throw new Error("The maximum length of one round is too big: " + max + " (Expected <=50_000)");
+			if (max > 150_000) {
+				throw new Error("The maximum length of one round is too big: " + max + " (Expected <=150_000)");
 			} else if (adjustedNsPerRound > 150) {
 				throw new Error("One round is on average too slow: " + adjustedNsPerRound + " (Expected <=150)");
 			}
