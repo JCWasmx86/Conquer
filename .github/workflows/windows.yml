@@ -42,11 +42,7 @@ jobs:
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
-          cd ../../..
-          #This is there, as I somehow can't access the real appdata in github actions
-          mkdir -p appdata/.conquer/saves
-          export APPDATA=`pwd`/appdata
-          cd ..
+          cd ../../../..
           export QT_QPA_PLATFORM=windows
           #These are failing on windows CI, but work on my machine
           export NO_TESTS3=notest
@@ -54,8 +50,6 @@ jobs:
       - name: Run performance tests
         run: |
           export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
-          echo $JAVA_HOME
-          find $JAVA_HOME
           chmod +x testPerformance
           ./testPerformance
       - name: Upload results
