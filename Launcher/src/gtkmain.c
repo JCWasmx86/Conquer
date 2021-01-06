@@ -74,6 +74,7 @@ static int onDownloadProgress(void *clientp, curl_off_t dltotal,
 }
 static void initialize_window(GtkWidget *window) {
 	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0");
+	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
 }
 static GtkWidget *newInputField(const gchar *s) {
 	GtkWidget *view = gtk_entry_new();
