@@ -55,7 +55,6 @@ static Configuration buildFromProgramData(ProgramData);
 static void showExceptionScreen(JNIEnv *);
 static void dumpConfiguration(Configuration);
 static void destroyWindow(GtkWidget *widget, gpointer data) { gtk_main_quit(); }
-
 static void startConquer(ProgramData);
 static void onExtractFunc(void *ptr, const char *s, int current, int count) {
 	status = 1;
@@ -75,8 +74,6 @@ static int onDownloadProgress(void *clientp, curl_off_t dltotal,
 }
 static void initialize_window(GtkWidget *window) {
 	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0");
-	gtk_window_set_default_size(GTK_WINDOW(window), 400, 200);
-	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
 }
 static GtkWidget *newInputField(const gchar *s) {
 	GtkWidget *view = gtk_entry_new();
@@ -201,12 +198,9 @@ static void showExceptionScreen(JNIEnv *env) {
 	(*env)->ExceptionClear(env);
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0 - Exception");
-	gtk_window_set_default_size(GTK_WINDOW(window), 800, 800);
 	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
-	GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
 	GtkWidget *table = gtk_grid_new();
-	gtk_container_add(GTK_CONTAINER(scrolledWindow), table);
-	gtk_container_add(GTK_CONTAINER(window), scrolledWindow);
+	gtk_container_add(GTK_CONTAINER(window), table);
 	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
 	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
 	jmethodID noArgsConstructor =
@@ -224,11 +218,12 @@ static void showExceptionScreen(JNIEnv *env) {
 										"()Ljava/lang/String;");
 	assert(mid);
 	jstring string = (*env)->CallObjectMethod(env, sw, mid);
-	GtkTextBuffer *textBufferName = gtk_text_buffer_new(NULL);
-	gtk_text_buffer_set_text(textBufferName,
+	GtkTextBuffer *exceptionString = gtk_text_buffer_new(NULL);
+	gtk_text_buffer_set_text(exceptionString,
 							 (*env)->GetStringUTFChars(env, string, NULL), -1);
-	GtkWidget *widgetName = gtk_text_view_new_with_buffer(textBufferName);
-	gtk_grid_attach(GTK_GRID(table), widgetName, 0, 0, 1, 1);
+	GtkWidget *exceptionView = gtk_text_view_new_with_buffer(exceptionString);
+	gtk_text_view_set_editable(GTK_TEXT_VIEW(exceptionView), FALSE);
+	gtk_grid_attach(GTK_GRID(table), exceptionView, 0, 0, 1, 1);
 	gtk_widget_show_all(window);
 	gtk_main();
 }
@@ -301,10 +296,8 @@ int main(int argc, char **argv) {
 	counts[1] = 0;
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	initialize_window(window);
-	GtkWidget *scrolledWindow = gtk_scrolled_window_new(NULL, NULL);
 	GtkWidget *table = gtk_grid_new();
-	gtk_container_add(GTK_CONTAINER(scrolledWindow), table);
-	gtk_container_add(GTK_CONTAINER(window), scrolledWindow);
+	gtk_container_add(GTK_CONTAINER(window), table);
 	GtkWidget *classpathLabel = gtk_label_new("Classpaths");
 	gtk_widget_set_hexpand(classpathLabel, TRUE);
 	gtk_grid_attach(GTK_GRID(table), classpathLabel, 0, 0, 1, 1);
