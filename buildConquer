@@ -207,7 +207,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	rm -r conquer-engine
 	mkdir -p conquer-engine/usr/bin
 	mkdir -p conquer-engine/usr/share/java
-	mkdir -p conquer-engine/usr/share/conquer
+	mkdir -p conquer-engine/usr/share/conquer-engine
 	mkdir -p conquer-engine/DEBIAN
 	chmod 0755 conquer-engine/DEBIAN
 	cd conquer-engine/DEBIAN
@@ -219,7 +219,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Description: The game engine for the strategy game conquer>>control
 	cd ../..
 	cp Conquer.jar conquer-engine/usr/share/java
-	cp LICENSE.txt conquer-engine/usr/share/conquer
+	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	dpkg-deb --build conquer-engine
 	cd ..
 else
