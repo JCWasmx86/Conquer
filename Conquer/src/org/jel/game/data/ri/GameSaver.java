@@ -35,10 +35,10 @@ import org.jel.game.plugins.Plugin;
 import org.jel.game.utils.Graph;
 import org.jel.game.utils.Triple;
 
-public final class SavedGame implements ConquerSaver {
+public final class GameSaver implements ConquerSaver {
 	private final String name;
 
-	public SavedGame(final String name) {
+	public GameSaver(final String name) {
 		if (name == null) {
 			throw new IllegalArgumentException("name == null");
 		} else if (name.isEmpty()) {

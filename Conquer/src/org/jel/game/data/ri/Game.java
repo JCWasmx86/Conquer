@@ -623,7 +623,7 @@ public final class Game implements ConquerInfo {
 
 	@Override
 	public ConquerSaver getSaver(final String name) {
-		return new SavedGame(name);
+		return new GameSaver(name);
 	}
 
 	@Override
