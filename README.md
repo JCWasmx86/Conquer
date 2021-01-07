@@ -19,12 +19,6 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 5. A steadily growing set of default plugins.
 6. Adding new scenarios is easily possible.
 
-### Contributing
-
-[General](contributing/general.md) \
-[Contribute as a programmer](contributing/code.md) \
-[Contribute as a non-programmer](contributing/non-code.md)
-
 ### Installing
 
 #### Linux
@@ -34,6 +28,13 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 
 #### Windows
 Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
+
+
+### Contributing
+
+[General](contributing/general.md) \
+[Contribute as a programmer](contributing/code.md) \
+[Contribute as a non-programmer](contributing/non-code.md)
 
 ### Compiling
 
