@@ -73,7 +73,7 @@ static int onDownloadProgress(void *clientp, curl_off_t dltotal,
 	return 0;
 }
 static void initialize_window(GtkWidget *window) {
-	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0");
+	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.1.0");
 	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
 }
 static GtkWidget *newInputField(const gchar *s) {
@@ -198,7 +198,7 @@ static void showExceptionScreen(JNIEnv *env) {
 	jthrowable throwable = (*env)->ExceptionOccurred(env);
 	(*env)->ExceptionClear(env);
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.0.0 - Exception");
+	gtk_window_set_title(GTK_WINDOW(window), "Conquer - 1.1.0 - Exception");
 	g_signal_connect(window, "destroy", G_CALLBACK(destroyWindow), NULL);
 	GtkWidget *table = gtk_grid_new();
 	gtk_container_add(GTK_CONTAINER(window), table);
