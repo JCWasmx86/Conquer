@@ -194,7 +194,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Package: conquer>control
 	echo Version: 1.1.1>>control
 	echo Section: games>>control
-	echo Architecture: all >>control
+	echo Architecture: `dpkg --print-architecture` >>control
 	echo Depends: conquer, libcurl4, libarchive13, libgtk-3-0>>control
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The GUI for the strategy game conquer >>control
