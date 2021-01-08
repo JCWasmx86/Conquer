@@ -1,6 +1,8 @@
 # Conquer
 ![Linux](https://github.com/JCWasmx86/Conquer/workflows/Linux/badge.svg)
 ![Windows](https://github.com/JCWasmx86/Conquer/workflows/Windows/badge.svg)
+![GitHub all releases](https://img.shields.io/github/downloads/JCWasmx86/Conquer/total?style=social)
+![GitHub issues by-label](https://img.shields.io/github/issues-raw/JCWasmx86/Conquer/good%20first%20issue)
 
 You are the proud leader of a clan! Manage your resources! Move your troops! Conquer the cities of your enemies!
 Will you fail and get defeated or will you lead your clan to endless glory and wealth?
