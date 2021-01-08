@@ -16,10 +16,10 @@ fi
 export TARGET="all-gtk"
 unameOut="$(uname -s)"
 case "${unameOut}" in
-    MINGW*)
+	MINGW*)
 		:
 	;&
-    MSYS*)
+	MSYS*)
 		if [[ -z "${JAVA_HOME}" ]]; then
 			echo JAVA_HOME is not set\!
 			exit 1
@@ -192,14 +192,13 @@ if [[ -z "${IS_WIN}" ]]; then
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN
 	echo Package: conquer>control
-	echo Version: 1.1.1>>control
+	echo Version: 1.1.2>>control
 	echo Section: games>>control
 	echo Architecture: `dpkg --print-architecture` >>control
-	echo Depends: conquer-engine, libcurl4, libarchive13, libgtk-3-0>>control
+	echo Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0>>control
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The GUI for the strategy game conquer >>control
 	cd ../..
-	cp Conquer_frontend.jar conquer/usr/share/java
 	mv launcher conquer_launcher conquer/usr/bin
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
@@ -212,7 +211,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	chmod 0755 conquer-engine/DEBIAN
 	cd conquer-engine/DEBIAN
 	echo Package: conquer-engine>control
-	echo Version: 1.1.1>>control
+	echo Version: 1.1.2>>control
 	echo Section: games>>control
 	echo Architecture: all >>control
 	echo Maintainer: JCWasmx86 >>control
@@ -221,6 +220,24 @@ if [[ -z "${IS_WIN}" ]]; then
 	cp Conquer.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	dpkg-deb --build conquer-engine
+	rm -r conquer-gui
+	mkdir -p conquer-gui/usr/bin
+	mkdir -p conquer-gui/usr/share/java
+	mkdir -p conquer-gui/usr/share/conquer-gui
+	mkdir -p conquer-gui/DEBIAN
+	chmod 0755 conquer-gui/DEBIAN
+	cd conquer-gui/DEBIAN
+	echo Package: conquer-gui>control
+	echo Version: 1.1.2>>control
+	echo Section: games>>control
+	echo Architecture: all>>control
+	echo Depends: conquer-engine>>control
+	echo Maintainer: JCWasmx86>>control
+	echo Description: GUI for Conquer. \(Without launcher\)>>control
+	cd ../..
+	mv Conquer_frontend.jar conquer-gui/usr/share/java
+	cp Conquer.license conquer-gui/usr/share/conquer-gui
+	dpkg-deb --build conquer-gui
 	cd ..
 else
 	cp launcher.exe ../Installer
