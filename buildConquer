@@ -117,7 +117,7 @@ cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
 	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.wav" ]]; then
-		"${MUSESCORE}" -b 33554432 -o  "../conquer-dist/music/${f%.mscz}.wav" "$f" &
+		"${MUSESCORE}" -o  "../conquer-dist/music/${f%.mscz}.wav" "$f" &
 	else
 		echo Skipping conversion of "$f"
 	fi

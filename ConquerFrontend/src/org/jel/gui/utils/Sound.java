@@ -2,6 +2,7 @@ package org.jel.gui.utils;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.net.URL;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -42,11 +43,14 @@ public class Sound implements LineListener, Serializable {
 	 */
 	public void play() {
 		try {
-			var url = ClassLoader.getSystemResource(this.filename);
+			var url = this.locate(this.filename);
 			if (url == null) {
-				url = ClassLoader.getSystemResource("music/" + this.filename);
+				url = this.locate(this.filename + ".wav");
 				if (url == null) {
-					url = ClassLoader.getSystemResource("sounds/" + this.filename);
+					url = this.locate(this.filename + ".ogg");
+					if (url == null) {
+						url = this.locate(this.filename + ".mp3");
+					}
 				}
 			}
 			if (url == null) {
@@ -64,6 +68,17 @@ public class Sound implements LineListener, Serializable {
 			this.isPlaying = false;
 			throw new IllegalArgumentException(e);
 		}
+	}
+
+	private URL locate(String filename) {
+		var url = ClassLoader.getSystemResource(filename);
+		if (url == null) {
+			url = ClassLoader.getSystemResource("music/" + filename);
+			if (url == null) {
+				url = ClassLoader.getSystemResource("sounds/" + filename);
+			}
+		}
+		return url;
 	}
 
 	/**
