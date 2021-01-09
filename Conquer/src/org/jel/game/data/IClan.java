@@ -236,6 +236,7 @@ public interface IClan {
 		}
 	}
 
+	@Deprecated
 	default double upgradeCostsForOffense(final int x) {
 		// Duplicated, as it would otherwise depend on another method.
 		if (x == 0) {
@@ -244,6 +245,7 @@ public interface IClan {
 		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
+	@Deprecated
 	default double upgradeCostsForDefense(final int x) {
 		if (x == 0) {
 			return 40;
@@ -316,7 +318,7 @@ public interface IClan {
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+			if ((cnt + currLevel) == this.getInfo().getMaximumLevel()) {
 				return cnt;
 			}
 		}
@@ -381,7 +383,7 @@ public interface IClan {
 	}
 
 	default double newPowerOfUpdate(final int level, final double oldValue) {
-		return (1.01 * oldValue) + (level / (double) Shared.MAX_LEVEL);
+		return (1.01 * oldValue) + (level / (double) this.getInfo().getMaximumLevel());
 	}
 
 	default double costs(final int level) {
@@ -406,5 +408,9 @@ public interface IClan {
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}
+	}
+
+	default ConquerInfo getInfo() {
+		throw new UnsupportedOperationException("Didn't have access to a matching ConquerInfo");
 	}
 }

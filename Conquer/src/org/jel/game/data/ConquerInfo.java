@@ -76,4 +76,8 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	default ResourceUsage getResourceUsage() {
 		return new ResourceUsage(Shared.getDataValues());
 	}
+	
+	default int getMaximumLevel() {
+		return 1000;
+	}
 }

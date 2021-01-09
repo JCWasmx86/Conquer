@@ -1021,7 +1021,7 @@ public final class Game implements ConquerInfo {
 		levels.forEach(a -> {
 			if (a == null) {
 				throw new InternalError(city.getName() + " has null value in levels");
-			} else if ((a < 0) || (a > Shared.MAX_LEVEL)) {
+			} else if ((a < 0) || (a > this.getMaximumLevel())) {
 				throw new InternalError(city.getName() + " has a too small/too big value in levels: " + a);
 			}
 		});
@@ -1213,7 +1213,7 @@ public final class Game implements ConquerInfo {
 		final var levels = city.getLevels();
 		final var costs = this.getPlayerClan().costs(levels.get(Resource.values().length) + 1);
 		final var clan = city.getClan();
-		if ((costs > clan.getCoins()) || (levels.get(Resource.values().length) == Shared.MAX_LEVEL)) {
+		if ((costs > clan.getCoins()) || (levels.get(Resource.values().length) == this.getMaximumLevel())) {
 			return false;
 		}
 		clan.setCoins(clan.getCoins() - costs);
@@ -1241,7 +1241,7 @@ public final class Game implements ConquerInfo {
 		final var levels = city.getLevels();
 		final var costs = this.getPlayerClan().costs(levels.get(index) + 1);
 		final var clan = city.getClan();
-		if ((costs > clan.getCoins()) || (levels.get(index) == Shared.MAX_LEVEL)) {
+		if ((costs > clan.getCoins()) || (levels.get(index) == this.getMaximumLevel())) {
 			return false;
 		}
 		clan.setCoins(clan.getCoins() - costs);

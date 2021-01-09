@@ -74,7 +74,7 @@ public final class Shared {
 	/**
 	 * Describes how many coins a person produces per round.
 	 */
-	@Deprecated	public static final double COINS_PER_PERSON_PER_ROUND = 0.75;
+	public static final double COINS_PER_PERSON_PER_ROUND = 0.75;
 	/**
 	 * Initial costs for recruiting one soldier.
 	 */
@@ -82,15 +82,17 @@ public final class Shared {
 	/**
 	 * The amount of coins a soldier uses every round.
 	 */
-	@Deprecated	public static final double COINS_PER_SOLDIER_PER_ROUND = 6;
+	public static final double COINS_PER_SOLDIER_PER_ROUND = 6;
 	/**
 	 * The amount of food every person uses per round.
 	 */
-	@Deprecated	public static final double FOOD_PER_PERSON_PER_ROUND = 0.8;
+	@Deprecated
+	public static final double FOOD_PER_PERSON_PER_ROUND = 0.8;
 	/**
 	 * The amount of food every soldier uses per round.
 	 */
-	@Deprecated	public static final double FOOD_PER_SOLDIER_PER_ROUND = 2.2;
+	@Deprecated
+	public static final double FOOD_PER_SOLDIER_PER_ROUND = 2.2;
 	/**
 	 * Initial use of iron for recruiting one soldier.
 	 */
@@ -98,55 +100,66 @@ public final class Shared {
 	/**
 	 * The amount of iron every soldier uses per round.
 	 */
-	@Deprecated	public static final double IRON_PER_SOLDIER_PER_ROUND = 4;
+	@Deprecated
+	public static final double IRON_PER_SOLDIER_PER_ROUND = 4;
 	/**
 	 * The amount of leather every person uses per round.
 	 */
-	@Deprecated	public static final double LEATHER_PER_PERSON_PER_ROUND = 0.4;
+	@Deprecated
+	public static final double LEATHER_PER_PERSON_PER_ROUND = 0.4;
 	/**
 	 * The amount of leather every soldier uses per round.
 	 */
-	@Deprecated	public static final double LEATHER_PER_SOLDIER_PER_ROUND = 4;
+	@Deprecated
+	public static final double LEATHER_PER_SOLDIER_PER_ROUND = 4;
 	/**
 	 * The amount of stone every person uses per round.
 	 */
-	@Deprecated	public static final double STONE_PER_PERSON_PER_ROUND = 0.1;
+	@Deprecated
+	public static final double STONE_PER_PERSON_PER_ROUND = 0.1;
 	/**
 	 * Initial use of stone for recruiting one soldier.
 	 */
-	@Deprecated	public static final double STONE_PER_SOLDIER_INITIAL = 14.8;
+	public static final double STONE_PER_SOLDIER_INITIAL = 14.8;
 	/**
 	 * The amount of stone every soldier uses per round.
 	 */
-	@Deprecated	public static final double STONE_PER_SOLDIER_PER_ROUND = 2;
+	@Deprecated
+	public static final double STONE_PER_SOLDIER_PER_ROUND = 2;
 	/**
 	 * The amount of textiles every person uses per round.
 	 */
-	@Deprecated	public static final double TEXTILES_PER_PERSON_PER_ROUND = 0.5;
+	@Deprecated
+	public static final double TEXTILES_PER_PERSON_PER_ROUND = 0.5;
 	/**
 	 * The amount of textiles every soldier uses per round.
 	 */
-	@Deprecated	public static final double TEXTILES_PER_SOLDIER_PER_ROUND = 2;
+	@Deprecated
+	public static final double TEXTILES_PER_SOLDIER_PER_ROUND = 2;
 	/**
 	 * The amount of wood every person uses per round.
 	 */
-	@Deprecated	public static final double WOOD_PER_PERSON_PER_ROUND = 0.01;
+	@Deprecated
+	public static final double WOOD_PER_PERSON_PER_ROUND = 0.01;
 	/**
 	 * Initial use of wood for recruiting one soldier.
 	 */
-	@Deprecated	public static final double WOOD_PER_SOLDIER_INITIAL = 41.2;
+	public static final double WOOD_PER_SOLDIER_INITIAL = 41.2;
 	/**
 	 * The amount of wood every soldier uses per round.
 	 */
-	@Deprecated	public static final double WOOD_PER_SOLDIER_PER_ROUND = 1.5;
+	@Deprecated
+	public static final double WOOD_PER_SOLDIER_PER_ROUND = 1.5;
 	/**
 	 * The amount of coal every person uses per round.
 	 */
-	@Deprecated	public static final double COAL_PER_PERSON_PER_ROUND = 1;
+	@Deprecated
+	public static final double COAL_PER_PERSON_PER_ROUND = 1;
 	/**
 	 * The amount of coal every soldier uses per round.
 	 */
-	@Deprecated	public static final double COAL_PER_SOLDIER_PER_ROUND = 1.5;
+	@Deprecated
+	public static final double COAL_PER_SOLDIER_PER_ROUND = 1.5;
 	/**
 	 * The amount of wheat every soldier uses per round.
 	 */
@@ -155,7 +168,8 @@ public final class Shared {
 	/**
 	 * The amount of wheat every person uses per round.
 	 */
-	@Deprecated public static final double WHEAT_PER_PERSON_PER_ROUND = 0.94;
+	@Deprecated
+	public static final double WHEAT_PER_PERSON_PER_ROUND = 0.94;
 	private static final double[][] DATA_VALUES = {
 			{ Shared.WHEAT_PER_PERSON_PER_ROUND, Shared.WHEAT_PER_SOLDIER_PER_ROUND },
 			{ Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND },

@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
@@ -23,6 +24,7 @@ final class ResourceButton extends JPanel {
 	private final JLabel infoLabel;
 	private final transient ICity city;
 	private final Resource resource;
+	private final ConquerInfo info;
 
 	/**
 	 * Create a new button for a specified city
@@ -35,6 +37,7 @@ final class ResourceButton extends JPanel {
 	ResourceButton(final Resource resource, final ICity city, final CityInfoPanel cip) {
 		this.city = city;
 		this.resource = resource;
+		this.info = city.getInfo();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.infoLabel = new JLabel(this.getInfoLabelText(),
 				new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT); //$NON-NLS-1$
@@ -121,7 +124,7 @@ final class ResourceButton extends JPanel {
 
 	private void updateLabel(final int level) {
 		if (this.city.isPlayerCity()) {
-			if (level < Shared.MAX_LEVEL) {
+			if (level < this.info.getMaximumLevel()) {
 				this.infoLabel.setText(this.getInfoLabelText());
 			} else {
 				this.infoLabel.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
@@ -147,7 +150,7 @@ final class ResourceButton extends JPanel {
 		if ((currentLevel != level) && this.city.isPlayerCity()) {
 			this.maximumUpgrade.setEnabled(true);
 			this.maximumUpgrade.setText(this.getMaxUpgradeText());
-		} else if ((this.city.isPlayerCity()) && (level == Shared.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == this.info.getMaximumLevel())) {
 			this.maximumUpgrade.setEnabled(false);
 			this.maximumUpgrade.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 		} else {
@@ -162,7 +165,7 @@ final class ResourceButton extends JPanel {
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
-		} else if ((this.city.isPlayerCity()) && (level == Shared.MAX_LEVEL)) {
+		} else if ((this.city.isPlayerCity()) && (level == this.info.getMaximumLevel())) {
 			this.upgradeThisResource.setEnabled(false);
 			this.upgradeThisResource.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 		} else {

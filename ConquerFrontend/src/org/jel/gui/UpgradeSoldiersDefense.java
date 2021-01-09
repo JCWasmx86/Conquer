@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import org.jel.game.data.IClan;
-import org.jel.game.data.Shared;
 import org.jel.game.data.SoldierUpgrade;
 import org.jel.gui.utils.ImageResource;
 
@@ -70,7 +69,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeMax() {
-		if (this.clan.getSoldiersDefenseLevel() == Shared.MAX_LEVEL) {
+		if (this.clan.getSoldiersDefenseLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeMax.setEnabled(false);
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
@@ -95,7 +94,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 	}
 
 	private void initUpgradeOnce() {
-		if (this.clan.getSoldiersDefenseLevel() == Shared.MAX_LEVEL) {
+		if (this.clan.getSoldiersDefenseLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeOnce.setEnabled(false);
 			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;

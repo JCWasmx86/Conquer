@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
@@ -32,9 +33,14 @@ final class Clan implements IClan {
 	private double soldiersOffenseStrength = 1;
 	private int soldiersOffenseLevel = 0;
 	private int flags;
+	private ConquerInfo info;
 
 	Clan() {
 		// Constructor for incrementally building a clan.
+	}
+
+	void setInfo(final ConquerInfo info) {
+		this.info = info;
 	}
 
 	/**
@@ -332,7 +338,7 @@ final class Clan implements IClan {
 	@Override
 	public boolean upgradeSoldiersDefense() {
 		final var currLevel = this.getSoldiersDefenseLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
+		if (currLevel == this.info.getMaximumLevel()) {
 			return false;
 		}
 		final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + 1);
@@ -356,7 +362,7 @@ final class Clan implements IClan {
 	@Override
 	public boolean upgradeSoldiers() {
 		final var currLevel = this.getSoldiersLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
+		if (currLevel == this.info.getMaximumLevel()) {
 			return false;
 		}
 		final var costs = this.upgradeCosts(SoldierUpgrade.BOTH, currLevel + 1);
@@ -376,7 +382,7 @@ final class Clan implements IClan {
 	@Override
 	public boolean upgradeSoldiersOffense() {
 		final var currLevel = this.getSoldiersOffenseLevel();
-		if (currLevel == Shared.MAX_LEVEL) {
+		if (currLevel == this.info.getMaximumLevel()) {
 			return false;
 		}
 		final var costs = this.upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + 1);
@@ -420,5 +426,10 @@ final class Clan implements IClan {
 		if (this.strategyData != null) {
 			this.strategyData.update(currentRound);
 		}
+	}
+
+	@Override
+	public ConquerInfo getInfo() {
+		return this.info;
 	}
 }
