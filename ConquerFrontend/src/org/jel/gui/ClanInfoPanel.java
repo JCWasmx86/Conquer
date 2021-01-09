@@ -111,7 +111,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
 				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
 		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(c -> {
-			final var va = Shared.getDataValues()[index];
+			final var va = this.game.getResourceUsage().get(index);
 			return ((c.getNumberOfSoldiers() * va[1]) + (c.getNumberOfPeople() * va[0]));
 		}).sum();
 		final var balance = productions - usage;

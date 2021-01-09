@@ -12,7 +12,6 @@ import java.util.List;
 import org.jel.game.data.EventList;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
-import org.jel.game.data.Shared;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.plugins.PluginInterface;
@@ -36,7 +35,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 			this.collectStatistics(statistics, resources, clan, idx);
 			if (statistics.get(idx) < 0) {
 				final double d = statistics.get(idx);
-				final var numSoldiersToGetToZero = ((-d) / Shared.getDataValues()[idx][1]);
+				final var numSoldiersToGetToZero = ((-d) / city.getInfo().getResourceUsage().soldierUsage()[idx]);
 				if (numSoldiersToGetToZero < city.getNumberOfSoldiers()) {
 					killedSoldiers.add(numSoldiersToGetToZero);
 					killedCivilians.add(0.0);
@@ -102,8 +101,8 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 
 	private void killedCiviliansUpdate(final ICity city, final int idx, final List<Double> killedSoldiers,
 			final List<Double> killedCivilians, final double d) {
-		final var d1 = d + (city.getNumberOfSoldiers() + Shared.getDataValues()[idx][1]);
-		final var numCiviliansToGetToZero = (-d1) / Shared.getDataValues()[idx][0];
+		final var d1 = d + (city.getNumberOfSoldiers() + city.getInfo().getResourceUsage().soldierUsage()[idx]);
+		final var numCiviliansToGetToZero = (-d1) / city.getInfo().getResourceUsage().personUsage()[idx];
 		killedSoldiers.add((double) city.getNumberOfSoldiers());
 		if (!Double.isNaN(numCiviliansToGetToZero)) {
 			killedCivilians.add(Math.min(city.getNumberOfPeople(), numCiviliansToGetToZero));

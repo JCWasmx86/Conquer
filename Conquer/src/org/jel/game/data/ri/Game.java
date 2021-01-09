@@ -1265,8 +1265,8 @@ public final class Game implements ConquerInfo {
 		StreamUtils.forEach(this.cities, city -> {
 			final var resources2 = city.getClan().getResources();
 			final var stats = city.getClan().getResourceStats();
-			for (var i = 0; i < Shared.getDataValues().length; i++) {
-				final var va = Shared.getDataValues()[i];
+			for (var i = 0; i < Resource.values().length; i++) {
+				final var va = this.getResourceUsage().get(i);
 				final var use = ((city.getNumberOfSoldiers() * va[1]) + (city.getNumberOfPeople() * va[0]));
 				resources2.set(i, resources2.get(i) - use);
 				stats.set(i, stats.get(i) - use);
