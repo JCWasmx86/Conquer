@@ -3,6 +3,7 @@ package org.jel.game.data;
 import java.awt.Color;
 import java.util.List;
 
+import org.jel.game.InternalUseOnly;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
 import org.jel.game.data.strategy.StrategyProvider;
@@ -182,6 +183,23 @@ public interface IClan {
 
 	void update(int currentRound);
 
+	default void upgradeFully(SoldierUpgrade upgradeType) {
+		switch (upgradeType) {
+		case BOTH:
+			upgradeSoldiersFully();
+			break;
+		case DEFENSE:
+			upgradeSoldiersDefenseFully();
+			break;
+		case OFFENSE:
+			upgradeSoldiersOffenseFully();
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + upgradeType);
+		}
+	}
+
+	@InternalUseOnly
 	default void upgradeSoldiersDefenseFully() {
 		var b = true;
 		while (b) {
@@ -189,6 +207,7 @@ public interface IClan {
 		}
 	}
 
+	@InternalUseOnly
 	default void upgradeSoldiersFully() {
 		var b = true;
 		while (b) {
@@ -196,6 +215,7 @@ public interface IClan {
 		}
 	}
 
+	@InternalUseOnly
 	default void upgradeSoldiersOffenseFully() {
 		var b = true;
 		while (b) {
@@ -203,4 +223,114 @@ public interface IClan {
 		}
 	}
 
+	default double upgradeCosts(SoldierUpgrade upgrade, int x) {
+		switch (upgrade) {
+		case BOTH:
+			return upgradeCostsForSoldiers(x);
+		case DEFENSE:
+		case OFFENSE:
+			return upgradeCostsForOffenseAndDefense(x);
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		}
+	}
+
+	@InternalUseOnly
+	default double upgradeCostsForOffenseAndDefense(final int x) {
+		if (x == 0) {
+			return 40;
+		}
+		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
+	}
+
+	@InternalUseOnly
+	default double upgradeCostsForSoldiers(final int x) {
+		return upgradeCostsForOffenseAndDefense(x) * 10;
+	}
+
+	@InternalUseOnly
+	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
+		var cnt = 0;
+		while (true) {
+			final var costs = upgradeCostsForOffenseAndDefense(currLevel + cnt);
+			if (costs > coins) {
+				break;
+			}
+			coins -= costs;
+			cnt++;
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+				return cnt;
+			}
+		}
+		return cnt;
+	}
+
+	default int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
+		var cnt = 0;
+		while (true) {
+			final var costs = costs(currLevel + cnt);
+			if (costs > coins) {
+				break;
+			}
+			coins -= costs;
+			cnt++;
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+				return cnt;
+			}
+		}
+		return cnt;
+	}
+
+	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
+		var cnt = 0;
+		while (true) {
+			final var costs = upgradeCostsForSoldiers(currLevel + cnt);
+			if (costs > coins) {
+				break;
+			}
+			coins -= costs;
+			cnt++;
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+				return cnt;
+			}
+		}
+		return cnt;
+	}
+
+	default double newPower(SoldierUpgrade upgrade, int x) {
+		switch (upgrade) {
+		case BOTH:
+			return newPowerForSoldiers(x);
+		case DEFENSE:
+		case OFFENSE:
+			return newPowerOfSoldiersForOffenseAndDefense(x);
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		}
+	}
+
+	@InternalUseOnly
+	default double newPowerForSoldiers(final int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
+	}
+
+	@InternalUseOnly
+	default double newPowerOfSoldiersForOffenseAndDefense(final int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+	}
+
+	default double newPowerOfUpdate(final int level, final double oldValue) {
+		return (1.01 * oldValue) + (level / (double) Shared.MAX_LEVEL);
+	}
+
+	default double costs(final int level) {
+		var ret = Math.pow(level, Math.E);
+		if (level != 0) {
+			ret = Math.pow(ret, 1.0d / 8.0d) * Math.pow(level, 1.0d / 3.0d);
+		}
+		ret = Math.pow(ret, (Math.PI / Math.E) + Math.pow(level, 1.0d / 40.0d));
+		ret *= Math.toRadians(level);
+		ret *= Math.toDegrees(level / 360.0d) / Math.PI;
+		return ret;
+	}
 }

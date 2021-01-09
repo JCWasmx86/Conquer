@@ -334,13 +334,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
+		final var costs = upgradeCostsForOffenseAndDefense(currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersDefenseLevel(currLevel + 1);
-		this.setSoldiersDefenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		this.setSoldiersDefenseStrength(1 + newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
 		return true;
 	}
 
@@ -358,13 +358,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = Shared.upgradeCostsForSoldiers(currLevel + 1);
+		final var costs = upgradeCostsForSoldiers(currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersLevel(currLevel + 1);
-		this.setSoldiersStrength(1 + Shared.newPowerForSoldiers(currLevel + 1));
+		this.setSoldiersStrength(1 + newPowerForSoldiers(currLevel + 1));
 		return true;
 	}
 
@@ -378,13 +378,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + 1);
+		final var costs = upgradeCostsForOffenseAndDefense(currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersOffenseLevel(currLevel + 1);
-		this.setSoldiersOffenseStrength(1 + Shared.newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		this.setSoldiersOffenseStrength(1 + newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
 		return true;
 	}
 

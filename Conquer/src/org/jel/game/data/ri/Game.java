@@ -1207,7 +1207,7 @@ public final class Game implements ConquerInfo {
 	public boolean upgradeDefense(final ICity city) {
 		this.throwIfNull(city, "city==null");
 		final var levels = city.getLevels();
-		final var costs = Shared.costs(levels.get(Resource.values().length) + 1);
+		final var costs = this.getPlayerClan().costs(levels.get(Resource.values().length) + 1);
 		final var clan = city.getClan();
 		if ((costs > clan.getCoins()) || (levels.get(Resource.values().length) == Shared.MAX_LEVEL)) {
 			return false;
@@ -1215,7 +1215,7 @@ public final class Game implements ConquerInfo {
 		clan.setCoins(clan.getCoins() - costs);
 		var defense = city.getDefense();
 		defense = defense < 1 ? 1 : defense;
-		city.setDefense(Shared.newPowerOfUpdate(levels.get(Resource.values().length) + 1, defense));
+		city.setDefense(this.getPlayerClan().newPowerOfUpdate(levels.get(Resource.values().length) + 1, defense));
 		levels.set(Resource.values().length, levels.get(Resource.values().length) + 1);
 		return true;
 	}
@@ -1235,14 +1235,14 @@ public final class Game implements ConquerInfo {
 		this.throwIfNull(resc, "resc==null");
 		final var index = resc.getIndex();
 		final var levels = city.getLevels();
-		final var costs = Shared.costs(levels.get(index) + 1);
+		final var costs = this.getPlayerClan().costs(levels.get(index) + 1);
 		final var clan = city.getClan();
 		if ((costs > clan.getCoins()) || (levels.get(index) == Shared.MAX_LEVEL)) {
 			return false;
 		}
 		clan.setCoins(clan.getCoins() - costs);
 		city.getProductions().set(resc.getIndex(),
-				Shared.newPowerOfUpdate(levels.get(index + 1), city.getProductions().get(index)));
+				this.getPlayerClan().newPowerOfUpdate(levels.get(index + 1), city.getProductions().get(index)));
 		levels.set(resc.getIndex(), levels.get(index) + 1);
 		return true;
 	}

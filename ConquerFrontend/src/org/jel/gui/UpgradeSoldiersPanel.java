@@ -64,7 +64,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 
 	private String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1), //$NON-NLS-1$
-				Utils.format(Shared.upgradeCostsForSoldiers(this.clan.getSoldiersLevel() + 1)));
+				Utils.format(clan.upgradeCostsForSoldiers(this.clan.getSoldiersLevel() + 1)));
 	}
 
 	private void initUpgradeMax() {
@@ -73,7 +73,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
-		final var count = Shared.maxLevelsAddSoldiersUpgrade(this.clan.getSoldiersLevel() + 1, this.clan.getCoins());
+		final var count = clan.maxLevelsAddSoldiersUpgrade(this.clan.getSoldiersLevel() + 1, this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 8078867867027862129L;
 
@@ -98,7 +98,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 			return;
 		}
 		final var coins = this.clan.getCoins();
-		final var costs = Shared.upgradeCostsForSoldiers(this.clan.getSoldiersLevel() + 1);
+		final var costs = clan.upgradeCostsForSoldiers(this.clan.getSoldiersLevel() + 1);
 		this.upgradeOnce.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 8078867867027862129L;
 

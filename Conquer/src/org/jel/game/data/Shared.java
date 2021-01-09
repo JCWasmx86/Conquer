@@ -168,24 +168,6 @@ public final class Shared {
 	private static final Random RANDOM = new Random(System.nanoTime());
 
 	/**
-	 * Calculate the cost of upgrading the resource to the specified level (The next
-	 * level)
-	 *
-	 * @param level The next level
-	 * @return The costs in coins for upgrading.
-	 */
-	public static double costs(final int level) {
-		var ret = Math.pow(level, Math.E);
-		if (level != 0) {
-			ret = Math.pow(ret, 1.0d / 8.0d) * Math.pow(level, 1.0d / 3.0d);
-		}
-		ret = Math.pow(ret, (Math.PI / Math.E) + Math.pow(level, 1.0d / 40.0d));
-		ret *= Math.toRadians(level);
-		ret *= Math.toDegrees(level / 360.0d) / Math.PI;
-		return ret;
-	}
-
-	/**
 	 * Utility method to delete an entire directory.
 	 *
 	 * @param file What directory to delete.
@@ -280,111 +262,6 @@ public final class Shared {
 	}
 
 	/**
-	 * Calculates the maximum number of levels that can be bought with a given
-	 * startlevel and an amount of coins
-	 *
-	 * @param currLevel The current level
-	 * @param coins     Number of coins
-	 * @return Maximum number of levels.
-	 */
-	public static int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		while (true) {
-			final var costs = Shared.upgradeCostsForOffenseAndDefense(currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
-		return cnt;
-	}
-
-	/**
-	 * Calculates the maximum number of levels that can be bought with a given
-	 * startlevel and an amount of coins
-	 *
-	 * @param currLevel The current level
-	 * @param coins     Number of coins
-	 * @return Maximum number of levels.
-	 */
-	public static int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		while (true) {
-			final var costs = Shared.costs(currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
-		return cnt;
-	}
-
-	/**
-	 * Calculates the maximum number of levels that can be bought with a given
-	 * startlevel and an amount of coins
-	 *
-	 * @param currLevel The current level
-	 * @param coins     Number of coins
-	 * @return Maximum number of levels.
-	 */
-	public static int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		while (true) {
-			final var costs = Shared.upgradeCostsForSoldiers(currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
-		return cnt;
-	}
-
-	/**
-	 * Returns the new strength of the soldiers of a clan for a given level
-	 *
-	 * @param level
-	 * @return New strength.
-	 */
-	public static double newPowerForSoldiers(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
-	}
-
-	/**
-	 * Returns the new offense or defense strength of the soldiers of a clan for a
-	 * given level
-	 *
-	 * @param level
-	 * @return New offense or defense strength.
-	 */
-	public static double newPowerOfSoldiersForOffenseAndDefense(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
-	}
-
-	/**
-	 * Returns the new amount, how much of each resource is produced every round
-	 * based on the last value and the level
-	 *
-	 * @param level
-	 * @param oldValue
-	 * @return New amount.
-	 */
-	public static double newPowerOfUpdate(final int level, final double oldValue) {
-		return (1.01 * oldValue) + (level / (double) Shared.MAX_LEVEL);
-	}
-
-	/**
 	 * Returns a percentage in [down;upper]
 	 *
 	 * @param down  Lower limit
@@ -441,29 +318,6 @@ public final class Shared {
 			return new String[0];
 		}
 		return Arrays.stream(saves.list()).collect(Collectors.toList()).toArray(new String[0]);
-	}
-
-	/**
-	 * Returns the costs for upgrading the offense/defense strength.
-	 *
-	 * @param x Current level
-	 * @return Costs
-	 */
-	public static double upgradeCostsForOffenseAndDefense(final int x) {
-		if (x == 0) {
-			return 40;
-		}
-		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
-	}
-
-	/**
-	 * Returns the costs for upgrading the strength of the soldiers of a clan..
-	 *
-	 * @param x Current level
-	 * @return Costs
-	 */
-	public static double upgradeCostsForSoldiers(final int x) {
-		return Shared.upgradeCostsForOffenseAndDefense(x) * 10;
 	}
 
 	private Shared() {
