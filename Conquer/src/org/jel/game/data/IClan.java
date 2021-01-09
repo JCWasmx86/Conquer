@@ -228,14 +228,36 @@ public interface IClan {
 		case BOTH:
 			return upgradeCostsForSoldiers(x);
 		case DEFENSE:
+			return upgradeCostsForDefense(x);
 		case OFFENSE:
-			return upgradeCostsForOffenseAndDefense(x);
+			return upgradeCostsForOffense(x);
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}
 	}
 
+	default double upgradeCostsForOffense(int x) {
+		//Duplicated, as it would otherwise depend on another method.
+		if (x == 0) {
+			return 40;
+		}
+		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
+	}
+
+	default double upgradeCostsForDefense(int x) {
+		if (x == 0) {
+			return 40;
+		}
+		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
+	}
+
+	@Deprecated
+	default int maxLevelsAddOffenseDefenseUpgrade(final int x, final double coins) {
+		return maxLevelsAddDefenseUpgrade(x, coins);
+	}
+
 	@InternalUseOnly
+	@Deprecated
 	default double upgradeCostsForOffenseAndDefense(final int x) {
 		if (x == 0) {
 			return 40;
@@ -244,15 +266,35 @@ public interface IClan {
 	}
 
 	@InternalUseOnly
+	@Deprecated
 	default double upgradeCostsForSoldiers(final int x) {
 		return upgradeCostsForOffenseAndDefense(x) * 10;
 	}
 
 	@InternalUseOnly
-	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
+	@Deprecated
+	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = upgradeCostsForOffenseAndDefense(currLevel + cnt);
+			final var costs = upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+			if (costs > coins) {
+				break;
+			}
+			coins -= costs;
+			cnt++;
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+				return cnt;
+			}
+		}
+		return cnt;
+	}
+
+	@InternalUseOnly
+	@Deprecated
+	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
+		var cnt = 0;
+		while (true) {
+			final var costs = upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -281,10 +323,12 @@ public interface IClan {
 		return cnt;
 	}
 
+	@Deprecated
+	@InternalUseOnly
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = upgradeCostsForSoldiers(currLevel + cnt);
+			final var costs = upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -302,19 +346,32 @@ public interface IClan {
 		case BOTH:
 			return newPowerForSoldiers(x);
 		case DEFENSE:
+			return newPowerOfSoldiersForDefense(x);
 		case OFFENSE:
-			return newPowerOfSoldiersForOffenseAndDefense(x);
+			return newPowerOfSoldiersForOffense(x);
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}
 	}
 
 	@InternalUseOnly
+	default double newPowerOfSoldiersForDefense(int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+	}
+
+	@InternalUseOnly
+	default double newPowerOfSoldiersForOffense(int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+	}
+
+	@InternalUseOnly
+	@Deprecated
 	default double newPowerForSoldiers(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
 	}
 
 	@InternalUseOnly
+	@Deprecated
 	default double newPowerOfSoldiersForOffenseAndDefense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
@@ -332,5 +389,18 @@ public interface IClan {
 		ret *= Math.toRadians(level);
 		ret *= Math.toDegrees(level / 360.0d) / Math.PI;
 		return ret;
+	}
+
+	default int maxLevels(SoldierUpgrade upgrade, int level, double coins) {
+		switch (upgrade) {
+		case BOTH:
+			return maxLevelsAddSoldiersUpgrade(level, coins);
+		case DEFENSE:
+			return maxLevelsAddDefenseUpgrade(level, coins);
+		case OFFENSE:
+			return maxLevelsAddOffenseUpgrade(level, coins);
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		}
 	}
 }

@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 import org.jel.game.data.IClan;
 import org.jel.game.data.Shared;
+import org.jel.game.data.SoldierUpgrade;
 import org.jel.gui.utils.ImageResource;
 
 /**
@@ -65,7 +66,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 
 	private String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersOffenseLevel() + 1),
-				Utils.format(clan.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersOffenseLevel() + 1)));
+				Utils.format(clan.upgradeCosts(SoldierUpgrade.OFFENSE, this.clan.getSoldiersOffenseLevel() + 1)));
 	}
 
 	private void initUpgradeMax() {
@@ -74,7 +75,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
 			return;
 		}
-		final var count = clan.maxLevelsAddOffenseDefenseUpgrade(this.clan.getSoldiersOffenseLevel() + 1,
+		final var count = clan.maxLevels(SoldierUpgrade.OFFENSE, this.clan.getSoldiersOffenseLevel() + 1,
 				this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			private static final long serialVersionUID = -8569686717119904143L;
@@ -100,7 +101,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 			return;
 		}
 		final var coins = this.clan.getCoins();
-		final var costs = clan.upgradeCostsForOffenseAndDefense(this.clan.getSoldiersOffenseLevel() + 1);
+		final var costs = clan.upgradeCosts(SoldierUpgrade.OFFENSE, this.clan.getSoldiersOffenseLevel() + 1);
 		this.upgradeOnce.setAction(new AbstractAction() {
 			private static final long serialVersionUID = 4992960498730337186L;
 

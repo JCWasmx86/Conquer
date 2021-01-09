@@ -7,6 +7,7 @@ import java.util.List;
 import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
+import org.jel.game.data.SoldierUpgrade;
 import org.jel.game.data.Version;
 import org.jel.game.data.strategy.Strategy;
 import org.jel.game.data.strategy.StrategyData;
@@ -334,13 +335,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = upgradeCostsForOffenseAndDefense(currLevel + 1);
+		final var costs = upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersDefenseLevel(currLevel + 1);
-		this.setSoldiersDefenseStrength(1 + newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		this.setSoldiersDefenseStrength(1 + newPower(SoldierUpgrade.DEFENSE, currLevel + 1));
 		return true;
 	}
 
@@ -358,13 +359,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = upgradeCostsForSoldiers(currLevel + 1);
+		final var costs = upgradeCosts(SoldierUpgrade.BOTH, currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersLevel(currLevel + 1);
-		this.setSoldiersStrength(1 + newPowerForSoldiers(currLevel + 1));
+		this.setSoldiersStrength(1 + newPower(SoldierUpgrade.BOTH, currLevel + 1));
 		return true;
 	}
 
@@ -378,13 +379,13 @@ final class Clan implements IClan {
 		if (currLevel == Shared.MAX_LEVEL) {
 			return false;
 		}
-		final var costs = upgradeCostsForOffenseAndDefense(currLevel + 1);
+		final var costs = upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + 1);
 		if (costs > this.getCoins()) {
 			return false;
 		}
 		this.setCoins(this.getCoins() - costs);
 		this.setSoldiersOffenseLevel(currLevel + 1);
-		this.setSoldiersOffenseStrength(1 + newPowerOfSoldiersForOffenseAndDefense(currLevel + 1));
+		this.setSoldiersOffenseStrength(1 + newPower(SoldierUpgrade.DEFENSE, currLevel + 1));
 		return true;
 	}
 
