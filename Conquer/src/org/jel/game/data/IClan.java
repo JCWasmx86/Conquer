@@ -237,7 +237,7 @@ public interface IClan {
 	}
 
 	default double upgradeCostsForOffense(int x) {
-		//Duplicated, as it would otherwise depend on another method.
+		// Duplicated, as it would otherwise depend on another method.
 		if (x == 0) {
 			return 40;
 		}
@@ -354,12 +354,16 @@ public interface IClan {
 		}
 	}
 
+	// All of those are repeated, so you can override only one without effecting
+	// (probably) others.
 	@InternalUseOnly
+	@Deprecated
 	default double newPowerOfSoldiersForDefense(int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
 	@InternalUseOnly
+	@Deprecated
 	default double newPowerOfSoldiersForOffense(int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}

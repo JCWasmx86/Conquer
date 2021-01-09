@@ -212,6 +212,7 @@ public final class Shared {
 	 *
 	 * @return The array describing the use of a resource.
 	 */
+	@Deprecated
 	public static double[][] getDataValues() {
 		return Arrays.copyOf(Shared.DATA_VALUES, Shared.DATA_VALUES.length);
 	}
@@ -235,6 +236,7 @@ public final class Shared {
 	 * @param upper
 	 * @return The result
 	 */
+	@Deprecated
 	public static boolean isBetween(final int x, final int lower, final int upper) {
 		return (lower <= x) && (x <= upper);
 	}
@@ -320,6 +322,42 @@ public final class Shared {
 		return Arrays.stream(saves.list()).collect(Collectors.toList()).toArray(new String[0]);
 	}
 
+	@Deprecated
+	public static double costs(final int level) {
+		throw new UnsupportedOperationException("Use IClan::costs instead");
+	}
+	@Deprecated
+	public static double maxLevelsAddOffenseDefenseUpgrade(final int level) {
+		throw new UnsupportedOperationException("Use IClan::maxLevelsAddOffenseDefenseUpgrade instead");
+	}
+	@Deprecated
+	public static int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
+		throw new UnsupportedOperationException("Use IClan::maxLevelsAddResourcesUpgrade instead");
+	}
+	@Deprecated
+	public static int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
+		throw new UnsupportedOperationException("Use IClan::maxLevelsAddSoldiersUpgrade instead");
+	}
+	@Deprecated
+	public static double newPowerForSoldiers(final int level) {
+		throw new UnsupportedOperationException("Use IClan::newPowerForSoldiers instead");
+	}
+	@Deprecated
+	public static double newPowerOfSoldiersForOffenseAndDefense(final int level) {
+		throw new UnsupportedOperationException("Use IClan::newPowerOfSoldiersForOffenseAndDefense instead");
+	}
+	@Deprecated
+	public static double newPowerOfUpdate(final int level, final double oldValue) {
+		throw new UnsupportedOperationException("Use IClan::newPowerOfUpdate instead");
+	}
+	@Deprecated
+	public static double upgradeCostsForOffenseAndDefense(final int level) {
+		throw new UnsupportedOperationException("Use IClan::upgradeCostsForOffenseAndDefense instead");
+	}
+	@Deprecated
+	public static double upgradeCostsForSoldiers(final int level) {
+		throw new UnsupportedOperationException("Use IClan::upgradeCostsForSoldiers instead");
+	}
 	private Shared() {
 
 	}
