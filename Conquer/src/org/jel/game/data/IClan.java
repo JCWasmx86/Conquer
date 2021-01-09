@@ -183,16 +183,16 @@ public interface IClan {
 
 	void update(int currentRound);
 
-	default void upgradeFully(SoldierUpgrade upgradeType) {
+	default void upgradeFully(final SoldierUpgrade upgradeType) {
 		switch (upgradeType) {
 		case BOTH:
-			upgradeSoldiersFully();
+			this.upgradeSoldiersFully();
 			break;
 		case DEFENSE:
-			upgradeSoldiersDefenseFully();
+			this.upgradeSoldiersDefenseFully();
 			break;
 		case OFFENSE:
-			upgradeSoldiersOffenseFully();
+			this.upgradeSoldiersOffenseFully();
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgradeType);
@@ -223,20 +223,20 @@ public interface IClan {
 		}
 	}
 
-	default double upgradeCosts(SoldierUpgrade upgrade, int x) {
+	default double upgradeCosts(final SoldierUpgrade upgrade, final int x) {
 		switch (upgrade) {
 		case BOTH:
-			return upgradeCostsForSoldiers(x);
+			return this.upgradeCostsForSoldiers(x);
 		case DEFENSE:
-			return upgradeCostsForDefense(x);
+			return this.upgradeCostsForDefense(x);
 		case OFFENSE:
-			return upgradeCostsForOffense(x);
+			return this.upgradeCostsForOffense(x);
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}
 	}
 
-	default double upgradeCostsForOffense(int x) {
+	default double upgradeCostsForOffense(final int x) {
 		// Duplicated, as it would otherwise depend on another method.
 		if (x == 0) {
 			return 40;
@@ -244,7 +244,7 @@ public interface IClan {
 		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
-	default double upgradeCostsForDefense(int x) {
+	default double upgradeCostsForDefense(final int x) {
 		if (x == 0) {
 			return 40;
 		}
@@ -253,7 +253,7 @@ public interface IClan {
 
 	@Deprecated
 	default int maxLevelsAddOffenseDefenseUpgrade(final int x, final double coins) {
-		return maxLevelsAddDefenseUpgrade(x, coins);
+		return this.maxLevelsAddDefenseUpgrade(x, coins);
 	}
 
 	@InternalUseOnly
@@ -268,7 +268,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double upgradeCostsForSoldiers(final int x) {
-		return upgradeCostsForOffenseAndDefense(x) * 10;
+		return this.upgradeCostsForOffenseAndDefense(x) * 10;
 	}
 
 	@InternalUseOnly
@@ -276,7 +276,7 @@ public interface IClan {
 	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -294,7 +294,7 @@ public interface IClan {
 	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -310,7 +310,7 @@ public interface IClan {
 	default int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = costs(currLevel + cnt);
+			final var costs = this.costs(currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -328,7 +328,7 @@ public interface IClan {
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		while (true) {
-			final var costs = upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
@@ -341,14 +341,14 @@ public interface IClan {
 		return cnt;
 	}
 
-	default double newPower(SoldierUpgrade upgrade, int x) {
+	default double newPower(final SoldierUpgrade upgrade, final int x) {
 		switch (upgrade) {
 		case BOTH:
-			return newPowerForSoldiers(x);
+			return this.newPowerForSoldiers(x);
 		case DEFENSE:
-			return newPowerOfSoldiersForDefense(x);
+			return this.newPowerOfSoldiersForDefense(x);
 		case OFFENSE:
-			return newPowerOfSoldiersForOffense(x);
+			return this.newPowerOfSoldiersForOffense(x);
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}
@@ -358,13 +358,13 @@ public interface IClan {
 	// (probably) others.
 	@InternalUseOnly
 	@Deprecated
-	default double newPowerOfSoldiersForDefense(int level) {
+	default double newPowerOfSoldiersForDefense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
 	@InternalUseOnly
 	@Deprecated
-	default double newPowerOfSoldiersForOffense(int level) {
+	default double newPowerOfSoldiersForOffense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
@@ -395,14 +395,14 @@ public interface IClan {
 		return ret;
 	}
 
-	default int maxLevels(SoldierUpgrade upgrade, int level, double coins) {
+	default int maxLevels(final SoldierUpgrade upgrade, final int level, final double coins) {
 		switch (upgrade) {
 		case BOTH:
-			return maxLevelsAddSoldiersUpgrade(level, coins);
+			return this.maxLevelsAddSoldiersUpgrade(level, coins);
 		case DEFENSE:
-			return maxLevelsAddDefenseUpgrade(level, coins);
+			return this.maxLevelsAddDefenseUpgrade(level, coins);
 		case OFFENSE:
-			return maxLevelsAddOffenseUpgrade(level, coins);
+			return this.maxLevelsAddOffenseUpgrade(level, coins);
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		}

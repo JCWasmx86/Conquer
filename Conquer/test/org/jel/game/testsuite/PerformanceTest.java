@@ -10,7 +10,7 @@ import org.jel.game.data.XMLReader;
 import org.jel.game.init.Initializer;
 
 public final class PerformanceTest {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new File(Shared.BASE_DIRECTORY, "logs.log").delete();
 		Shared.LOGGER.reopen();
 		Initializer.INSTANCE().initialize(a -> {
@@ -24,14 +24,14 @@ public final class PerformanceTest {
 		final var info = XMLReader.getInstance().readInfo();
 		var currentRound = 0;
 		final var MAX_ROUNDS = 1000000;
-		long start = System.nanoTime();
+		final var start = System.nanoTime();
 		while (currentRound < MAX_ROUNDS) {
 			for (final var s : info.getInstalledMaps()) {
 				final var game = info.loadInfo(s);
 				game.addContext(info);
 				game.setPlayerGiftCallback((a, b, c, d, e, f) -> false);
 				game.init();
-				while (!game.onlyOneClanAlive() && currentRound < MAX_ROUNDS) {
+				while (!game.onlyOneClanAlive() && (currentRound < MAX_ROUNDS)) {
 					game.executeActions();
 					currentRound++;
 				}
@@ -72,7 +72,7 @@ public final class PerformanceTest {
 			} else if (adjustedNsPerRound > 150) {
 				throw new Error("One round is on average too slow: " + adjustedNsPerRound + " (Expected <=150)");
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

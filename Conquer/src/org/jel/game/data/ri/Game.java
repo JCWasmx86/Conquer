@@ -380,57 +380,57 @@ public final class Game implements ConquerInfo {
 			var factorOfSoldiers = 1.0;
 			var growthFactor = 1.0;
 			RandomEvent re = null;
-			if (isBetween(number, 0, 300)) {// pestilence
+			if (this.isBetween(number, 0, 300)) {// pestilence
 				factorOfPeople = Shared.randomPercentage(30, 80);
 				factorOfSoldiers = Shared.randomPercentage(30, 80);
 				growthFactor = Shared.randomPercentage(85, 95);
 				re = RandomEvent.PESTILENCE;
-			} else if (isBetween(number, 3200, 3300)) {// fire
+			} else if (this.isBetween(number, 3200, 3300)) {// fire
 				factorOfPeople = Shared.randomPercentage(85, 95);
 				factorOfSoldiers = Shared.randomPercentage(80, 90);
 				growthFactor = Shared.randomPercentage(80, 95);
 				re = RandomEvent.FIRE;
-			} else if (isBetween(number, 4500, 6500)) {// growth
+			} else if (this.isBetween(number, 4500, 6500)) {// growth
 				factorOfPeople = Shared.randomPercentage(105, 115);
 				growthFactor = Shared.randomPercentage(104, 112.5);
 				re = RandomEvent.GROWTH;
-			} else if (isBetween(number, 7900, 8900)) {// bad harvesting
+			} else if (this.isBetween(number, 7900, 8900)) {// bad harvesting
 				factorOfPeople = Shared.randomPercentage(85, 90);
 				factorOfSoldiers = Shared.randomPercentage(80, 90);
 				growthFactor = Shared.randomPercentage(85, 90);
 				re = RandomEvent.CROP_FAILURE;
-			} else if (isBetween(number, 12_670, 12_900)) {// rebellion
+			} else if (this.isBetween(number, 12_670, 12_900)) {// rebellion
 				factorOfPeople = Shared.randomPercentage(28, 60);
 				factorOfSoldiers = Shared.randomPercentage(20, 85);
 				growthFactor = Shared.randomPercentage(15, 30);
 				re = RandomEvent.REBELLION;
-			} else if (isBetween(number, 19_200, 19_330)) {// civil war
+			} else if (this.isBetween(number, 19_200, 19_330)) {// civil war
 				factorOfPeople = Shared.randomPercentage(2, 12);
 				factorOfSoldiers = Shared.randomPercentage(20, 45);
 				growthFactor = Shared.randomPercentage(2, 30);
 				re = RandomEvent.CIVIL_WAR;
-			} else if (isBetween(number, 239_400, 250_100)) {// migration
+			} else if (this.isBetween(number, 239_400, 250_100)) {// migration
 				factorOfPeople = Shared.randomPercentage(102, 135);
 				factorOfSoldiers = Shared.randomPercentage(100, 103.5);
 				growthFactor = Shared.randomPercentage(107, 145);
 				re = RandomEvent.MIGRATION;
-			} else if (isBetween(number, 405_200, 409_900)) {// economic growth
+			} else if (this.isBetween(number, 405_200, 409_900)) {// economic growth
 				growthFactor = Shared.randomPercentage(102, 105);
 				re = RandomEvent.ECONOMIC_GROWTH;
-			} else if (isBetween(number, 562_000, 569_900)) {// pandemic
+			} else if (this.isBetween(number, 562_000, 569_900)) {// pandemic
 				factorOfPeople = Shared.randomPercentage(2, 35);
 				factorOfSoldiers = Shared.randomPercentage(0, 20);
 				growthFactor = Shared.randomPercentage(45, 60);
 				re = RandomEvent.PANDEMIC;
-			} else if (isBetween(number, 1_000_000, 5_000_000)) {// accident
+			} else if (this.isBetween(number, 1_000_000, 5_000_000)) {// accident
 				final var numberOfPeople = a.getNumberOfPeople() - (this.random.nextInt(12) + 1);
 				a.setNumberOfPeople(numberOfPeople < 0 ? 0 : numberOfPeople);
-			} else if (isBetween(number, 5_100_100, 5_100_200)) {// alchemic accident
+			} else if (this.isBetween(number, 5_100_100, 5_100_200)) {// alchemic accident
 				factorOfPeople = Shared.randomPercentage(92, 99);
 				factorOfSoldiers = Shared.randomPercentage(92, 99);
 				growthFactor = Shared.randomPercentage(98, 99);
 				re = RandomEvent.ACCIDENT;
-			} else if (isBetween(number, 12_010_000, 12_015_000)) {// sabotage
+			} else if (this.isBetween(number, 12_010_000, 12_015_000)) {// sabotage
 				factorOfPeople = Shared.randomPercentage(80, 90);
 				factorOfSoldiers = Shared.randomPercentage(75, 90);
 				growthFactor = Shared.randomPercentage(90, 98);

@@ -100,7 +100,7 @@ final class ResourceButton extends JPanel {
 		double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
 		int currentLevel = level;
 		while (true) {
-			final var costs = city.getClan().costs(currentLevel + 1);
+			final var costs = this.city.getClan().costs(currentLevel + 1);
 			currentCoins -= costs;
 			if (currentCoins <= 0) {
 				currentCoins += costs;
@@ -114,7 +114,8 @@ final class ResourceButton extends JPanel {
 
 	private String getUpgradeThisResourceText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		final var costsForUpgrade = Utils.format(city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
+		final var costsForUpgrade = Utils
+				.format(this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
 		return Messages.getMessage("Shared.upgradeToLevel", level + 1, costsForUpgrade);//$NON-NLS-1$
 	}
 
@@ -136,7 +137,7 @@ final class ResourceButton extends JPanel {
 		double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
 		var currentLevel = level;
 		while (true) {
-			final var costs = city.getClan().costs(currentLevel + 1);
+			final var costs = this.city.getClan().costs(currentLevel + 1);
 			currentCoins -= costs;
 			if (currentCoins <= 0) {
 				break;
@@ -156,7 +157,7 @@ final class ResourceButton extends JPanel {
 	}
 
 	private void updateUpgradeThisResource(final int level) {
-		final var costsForUpgrade = city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1);
+		final var costsForUpgrade = this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1);
 		final double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);

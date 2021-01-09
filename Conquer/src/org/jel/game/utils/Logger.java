@@ -34,7 +34,7 @@ public final class Logger {
 	public void reopen() {
 		try {
 			this.close();
-		} catch (IOException e1) {
+		} catch (final IOException e1) {
 			e1.printStackTrace();
 		}
 		try {
