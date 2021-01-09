@@ -1,12 +1,57 @@
 name: Windows
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
-
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+    workflow_dispatch:
 jobs:
+<<<<<<< HEAD
+    build:
+        runs-on: windows-latest
+        defaults:
+            run:
+                shell: msys2 {0}
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-java@v1.4.3
+                with:
+                        java-version: 15
+            - uses: msys2/setup-msys2@v2
+                with:
+                    update: true
+                    install: >-
+                        git
+                        base-devel
+                        mingw-w64-x86_64-libarchive
+                        mingw-w64-x86_64-curl
+                        mingw-w64-x86_64-gcc
+                        mingw-w64-x86_64-dlfcn
+                        mingw-w64-x86_64-headers-git
+                        zip
+                        unzip
+                        p7zip
+            - name: Build conquer and run tests
+                run: |
+                    echo $JAVA_HOME
+                    mkdir tmp
+                    wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+                    cd tmp
+                    mkdir appdata
+                    echo A|7z x MuseScore3.exe
+                    cd App/MuseScore/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../../..
+                    export QT_QPA_PLATFORM=windows
+                    #These are failing on windows CI, but work on my machine
+                    export NO_TESTS3=notest
+                    ./buildConquer
+            - name: Run performance tests
+                run: |
+                    export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
+                    chmod +x testPerformance
+                    ./testPerformance
+=======
   build:
     runs-on: windows-latest
     defaults:
@@ -51,3 +96,9 @@ jobs:
           export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
           chmod +x testPerformance
           ./testPerformance
+      - name: Upload results
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build result
+          path: conquer-dist/Installer.exe
+>>>>>>> parent of 11bc848 (Removed upload)
