@@ -31,7 +31,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 
 	// Construct a new CreditFrame
 	CreditFrame() {
-		this.player = new LoopPlayer().addSong("Credits.wav");
+		this.player = new LoopPlayer().addSong("Credits");
 	}
 
 	@Override

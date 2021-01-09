@@ -24,14 +24,14 @@ public final class DefaultMusic implements Plugin {
 	@Override
 	public void init(final PluginInterface pi) {
 		for (var i = 0; i < 27; i++) {
-			pi.addMusic("Battle" + i + (Boolean.getBoolean("conquer.useMP3") ? ".mp3" : ".wav"));
+			pi.addMusic("Battle" + i);
 		}
 	}
 
 	@Override
 	public void resume(final PluginInterface pi, final InputStream bytes) throws IOException {
 		for (var i = 0; i < 27; i++) {
-			pi.addMusic("Battle" + i + (Boolean.getBoolean("conquer.useMP3") ? ".mp3" : ".wav"));
+			pi.addMusic("Battle" + i);
 		}
 	}
 

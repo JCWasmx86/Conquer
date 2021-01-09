@@ -49,12 +49,9 @@ public class Sound implements LineListener, Serializable {
 				if (url == null) {
 					url = this.locate(this.filename + ".ogg");
 					if (url == null) {
-						url = this.locate(this.filename + ".mp3");
+						throw new IllegalArgumentException(new FileNotFoundException(this.filename + " wasn't found!"));
 					}
 				}
-			}
-			if (url == null) {
-				throw new IllegalArgumentException(new FileNotFoundException(this.filename + " wasn't found!"));
 			}
 			final var audioStream = AudioSystem.getAudioInputStream(url);
 			final var format = audioStream.getFormat();

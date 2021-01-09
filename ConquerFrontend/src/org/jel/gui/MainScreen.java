@@ -54,7 +54,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	private final LoopPlayer player;
 
 	private MainScreen() {
-		this.player = new LoopPlayer().addSong("MainScreen.wav"); //$NON-NLS-1$
+		this.player = new LoopPlayer().addSong("MainScreen"); //$NON-NLS-1$
 		this.addKeyListener(this);
 		this.addWindowListener(this);
 	}

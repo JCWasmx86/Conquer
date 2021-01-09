@@ -259,13 +259,13 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 					if (playerDead) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();
-						this.loopPlayer.addSong("Defeated.wav");
+						this.loopPlayer.addSong("Defeated");
 						this.loopPlayer.start();
 						flag = true;
 					} else if (this.game.onlyOneClanAlive() && !playerDead) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();
-						this.loopPlayer.addSong("Victory.wav");
+						this.loopPlayer.addSong("Victory");
 						this.loopPlayer.start();
 						flag = true;
 					}
