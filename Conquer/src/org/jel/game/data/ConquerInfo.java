@@ -71,7 +71,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	void upgradeResourceFully(final Resource resources, final ICity city);
 
 	IClan getPlayerClan();
-	
+
 	@SuppressWarnings("deprecation")
 	default ResourceUsage getResourceUsage() {
 		return new ResourceUsage(Shared.getDataValues());

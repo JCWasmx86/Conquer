@@ -1,8 +1,8 @@
 package org.jel.game.data;
 
 public class ResourceUsage {
-	private double[] personUsed;
-	private double[] soldierUsed;
+	private final double[] personUsed;
+	private final double[] soldierUsed;
 
 	public ResourceUsage(final double[][] stats) {
 		if (stats.length != Resource.values().length) {
@@ -10,21 +10,21 @@ public class ResourceUsage {
 		}
 		this.personUsed = new double[Resource.values().length];
 		this.soldierUsed = new double[Resource.values().length];
-		for (int i = 0; i < stats.length; i++) {
+		for (var i = 0; i < stats.length; i++) {
 			this.personUsed[i] = stats[i][0];
 			this.soldierUsed[i] = stats[i][1];
 		}
 	}
 
 	public double[] personUsage() {
-		return personUsed;
+		return this.personUsed;
 	}
 
 	public double[] soldierUsage() {
-		return soldierUsed;
+		return this.soldierUsed;
 	}
 
-	public double[] get(int idx) {
+	public double[] get(final int idx) {
 		return new double[] { this.personUsed[idx], this.soldierUsed[idx] };
 	}
 }
