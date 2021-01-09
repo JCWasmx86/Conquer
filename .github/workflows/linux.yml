@@ -6,32 +6,6 @@ on:
         branches: [main]
     workflow_dispatch:
 jobs:
-<<<<<<< HEAD
-    build:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/setup-java@v1.4.3
-            with:
-                java-version: 15
-            - uses: actions/checkout@v2
-            - name: Setup environment
-            run: |
-                sudo apt update
-                sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
-                sudo apt-get update
-                sudo rm /usr/bin/gcc
-                sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev
-                sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-            - name: Build conquer and run tests
-            run: |
-                export QT_QPA_PLATFORM=offscreen
-                chmod +x buildConquer
-                time ./buildConquer
-            - name: Run performance tests
-            run: |
-                chmod +x testPerformance
-                ./testPerformance
-=======
   build:
     runs-on: ubuntu-latest
     steps:
@@ -61,4 +35,3 @@ jobs:
         with:
           name: Build result
           path: conquer-dist/conquer.deb
->>>>>>> parent of 11bc848 (Removed upload)
