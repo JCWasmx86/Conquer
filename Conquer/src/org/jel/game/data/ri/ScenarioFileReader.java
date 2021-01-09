@@ -83,6 +83,7 @@ final class ScenarioFileReader implements ConquerInfoReader {
 				}
 				tmp.add(new Clan());
 				tmp.get(i).setCoins(d);
+				((Clan) tmp.get(i)).setInfo(game);
 			}
 			for (var i = 0; i < numPlayers; i++) {
 				final var s = dis.readUTF();

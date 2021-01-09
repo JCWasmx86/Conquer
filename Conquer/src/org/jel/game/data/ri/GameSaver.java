@@ -192,6 +192,7 @@ public final class GameSaver implements ConquerSaver {
 		StreamUtils.getCitiesAsStream(game.getCities()).forEach(a -> a.setClan(game.getClan(a.getClanId())));
 		final var plugins = this.readPlugins(saveDirectory, game);
 		game.setPlugins(plugins);
+		game.getClans().forEach(a -> ((Clan) a).setInfo(game));
 		game.resume(this.name);
 		return game;
 	}
