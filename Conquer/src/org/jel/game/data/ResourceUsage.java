@@ -3,8 +3,9 @@ package org.jel.game.data;
 public class ResourceUsage {
 	private final double[] personUsed;
 	private final double[] soldierUsed;
+	private double coinsPerRoundPerPerson;
 
-	public ResourceUsage(final double[][] stats) {
+	public ResourceUsage(final double[][] stats, final double coinsPerRoundPerPerson) {
 		if (stats.length != Resource.values().length) {
 			throw new IllegalArgumentException("Wrong length!");
 		}
@@ -14,6 +15,7 @@ public class ResourceUsage {
 			this.personUsed[i] = stats[i][0];
 			this.soldierUsed[i] = stats[i][1];
 		}
+		this.coinsPerRoundPerPerson = coinsPerRoundPerPerson;
 	}
 
 	public double[] personUsage() {
@@ -26,5 +28,9 @@ public class ResourceUsage {
 
 	public double[] get(final int idx) {
 		return new double[] { this.personUsed[idx], this.soldierUsed[idx] };
+	}
+
+	public double getCoinsPerRoundPerPerson() {
+		return coinsPerRoundPerPerson;
 	}
 }

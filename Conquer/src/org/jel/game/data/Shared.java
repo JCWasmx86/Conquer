@@ -65,23 +65,28 @@ public final class Shared {
 	 * Describes the usage of coins for each soldier for each distance-unit at every
 	 * move. (Additional to {@link Shared#COINS_PER_MOVE_OF_SOLDIER_BASE})
 	 */
+	@Deprecated
 	public static final double COINS_PER_MOVE_OF_SOLDIER = 1.8;
 	/**
 	 * For every soldier, exactly this amount of coins has to be spent per move as a
 	 * base.
 	 */
+	@Deprecated
 	public static final double COINS_PER_MOVE_OF_SOLDIER_BASE = 4.0;
 	/**
 	 * Describes how many coins a person produces per round.
 	 */
+	@Deprecated
 	public static final double COINS_PER_PERSON_PER_ROUND = 0.75;
 	/**
 	 * Initial costs for recruiting one soldier.
 	 */
+	@Deprecated
 	public static final double COINS_PER_SOLDIER_INITIAL = 150.0;
 	/**
 	 * The amount of coins a soldier uses every round.
 	 */
+	@Deprecated
 	public static final double COINS_PER_SOLDIER_PER_ROUND = 6;
 	/**
 	 * The amount of food every person uses per round.
@@ -96,6 +101,7 @@ public final class Shared {
 	/**
 	 * Initial use of iron for recruiting one soldier.
 	 */
+	@Deprecated
 	public static final double IRON_PER_SOLDIER_INITIAL = 5;
 	/**
 	 * The amount of iron every soldier uses per round.
@@ -120,6 +126,7 @@ public final class Shared {
 	/**
 	 * Initial use of stone for recruiting one soldier.
 	 */
+	@Deprecated
 	public static final double STONE_PER_SOLDIER_INITIAL = 14.8;
 	/**
 	 * The amount of stone every soldier uses per round.
@@ -144,6 +151,7 @@ public final class Shared {
 	/**
 	 * Initial use of wood for recruiting one soldier.
 	 */
+	@Deprecated
 	public static final double WOOD_PER_SOLDIER_INITIAL = 41.2;
 	/**
 	 * The amount of wood every soldier uses per round.
@@ -170,6 +178,7 @@ public final class Shared {
 	 */
 	@Deprecated
 	public static final double WHEAT_PER_PERSON_PER_ROUND = 0.94;
+	@Deprecated
 	private static final double[][] DATA_VALUES = {
 			{ Shared.WHEAT_PER_PERSON_PER_ROUND, Shared.WHEAT_PER_SOLDIER_PER_ROUND },
 			{ Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND },
