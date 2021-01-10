@@ -24,10 +24,14 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 ### Installing
 
 #### Linux
-1. Run `echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/  main extras" | sudo tee -a /etc/apt/sources.list` to add the repo to the package manager sources
-2. Run `wget https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/jcwasmx86.pgp&&sudo apt-key add jcwasmx86.pgp&&rm jcwasmx86.pgp` to add the public key.
-3. To install conquer: `sudo apt update&&sudo apt install conquer`
-
+```
+#Add repo to the package manager sources (apt)
+echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/  main extras" | sudo tee -a /etc/apt/sources.list
+#Add public key
+wget https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/jcwasmx86.pgp&&sudo apt-key add jcwasmx86.pgp&&rm jcwasmx86.pgp
+#Install conquer
+sudo apt update&&sudo apt install conquer
+```
 #### Windows
 Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
 
