@@ -41,15 +41,20 @@ public class Sound implements LineListener, Serializable {
 	/**
 	 * Play the sound
 	 */
+	//TODO: Support ogg
 	public void play() {
 		try {
 			var url = this.locate(this.filename);
 			if (url == null) {
 				url = this.locate(this.filename + ".wav");
 				if (url == null) {
-					url = this.locate(this.filename + ".ogg");
+					url = this.locate(this.filename + ".aiff");
 					if (url == null) {
-						throw new IllegalArgumentException(new FileNotFoundException(this.filename + " wasn't found!"));
+						url = this.locate(this.filename + ".au");
+						if (url == null) {
+							throw new IllegalArgumentException(
+									new FileNotFoundException(this.filename + " wasn't found!"));
+						}
 					}
 				}
 			}
