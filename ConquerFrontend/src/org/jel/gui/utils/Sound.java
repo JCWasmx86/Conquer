@@ -41,7 +41,7 @@ public class Sound implements LineListener, Serializable {
 	/**
 	 * Play the sound
 	 */
-	//TODO: Support ogg
+	// TODO: Support ogg
 	public void play() {
 		try {
 			var url = this.locate(this.filename);
@@ -72,7 +72,7 @@ public class Sound implements LineListener, Serializable {
 		}
 	}
 
-	private URL locate(String filename) {
+	private URL locate(final String filename) {
 		var url = ClassLoader.getSystemResource(filename);
 		if (url == null) {
 			url = ClassLoader.getSystemResource("music/" + filename);

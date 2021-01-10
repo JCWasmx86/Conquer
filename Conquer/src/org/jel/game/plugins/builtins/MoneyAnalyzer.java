@@ -11,7 +11,6 @@ import java.util.Random;
 import org.jel.game.data.EventList;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
-import org.jel.game.data.Shared;
 import org.jel.game.plugins.Context;
 import org.jel.game.plugins.MoneyHook;
 import org.jel.game.plugins.Plugin;
@@ -48,7 +47,8 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 		if (clan.getCoins() > 0) {
 			return;
 		}
-		final var soldiers = Math.abs(clan.getCoins()) / Shared.COINS_PER_SOLDIER_PER_ROUND;
+		final var costs = clan.getInfo().getSoldierCosts().coinsPerSoldierPerRound();
+		final var soldiers = Math.abs(clan.getCoins()) / costs;
 		var num = 0L;
 		var cnter = 0;
 		while ((num < soldiers) && (cnter < MoneyAnalyzer.MAX_ITERATIONS)) {
@@ -60,7 +60,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 			c.setNumberOfSoldiers(c.getNumberOfSoldiers() - desertingSoldiers);
 			cnter++;
 		}
-		clan.setCoins(clan.getCoins() + (soldiers * Shared.COINS_PER_SOLDIER_PER_ROUND));
+		clan.setCoins(clan.getCoins() + (soldiers * costs));
 		if (soldiers > 0) {
 			this.events.add(new SoldiersDesertedBecauseOfMissingMoneyMessage(clan, num));
 		}

@@ -739,11 +739,12 @@ public final class Game implements ConquerInfo {
 		}
 		final var resourcesOfClan = clan.getResources();
 		final List<Long> numbers = new ArrayList<>();
+		final var costs = this.getSoldierCosts();
 		numbers.add(limit);
-		numbers.add((long) (clan.getCoins() / Shared.COINS_PER_SOLDIER_INITIAL));
-		numbers.add((long) (resourcesOfClan.get(Resource.IRON.getIndex()) / Shared.IRON_PER_SOLDIER_INITIAL));
-		numbers.add((long) (resourcesOfClan.get(Resource.WOOD.getIndex()) / Shared.WOOD_PER_SOLDIER_INITIAL));
-		numbers.add((long) (resourcesOfClan.get(Resource.STONE.getIndex()) / Shared.STONE_PER_SOLDIER_INITIAL));
+		numbers.add((long) (clan.getCoins() / costs.coinsPerSoldierInitial()));
+		numbers.add((long) (resourcesOfClan.get(Resource.IRON.getIndex()) / costs.ironPerSoldierInitial()));
+		numbers.add((long) (resourcesOfClan.get(Resource.WOOD.getIndex()) / costs.woodPerSoldierInitial()));
+		numbers.add((long) (resourcesOfClan.get(Resource.STONE.getIndex()) / costs.stonePerSoldierInitial()));
 		Collections.sort(numbers);
 		return numbers.get(0);
 	}
@@ -756,8 +757,9 @@ public final class Game implements ConquerInfo {
 		if (numberOfSoldiers < 0) {
 			throw new IllegalArgumentException("numberOfSoldiers < 0 : " + numberOfSoldiers);
 		}
+		final var costs = this.getSoldierCosts();
 		final var maxPay = (long) (clan.getCoins()
-				/ (Shared.COINS_PER_MOVE_OF_SOLDIER_BASE + (Shared.COINS_PER_MOVE_OF_SOLDIER * distance)));
+				/ (costs.coinsPerMoveOfSoldierBase() + (costs.coinsPerMovePerSoldier() * distance)));
 		return Math.min(numberOfSoldiers, maxPay);
 	}
 
@@ -843,8 +845,9 @@ public final class Game implements ConquerInfo {
 	}
 
 	private void payForMove(final IClan srcClan, final long numSoldiers, final double weight) {
+		final var costs = this.getSoldierCosts();
 		this.pay(srcClan,
-				numSoldiers * (Shared.COINS_PER_MOVE_OF_SOLDIER_BASE + (Shared.COINS_PER_MOVE_OF_SOLDIER * weight)));
+				numSoldiers * (costs.coinsPerMoveOfSoldierBase() + (costs.coinsPerMovePerSoldier() * weight)));
 	}
 
 	private void payMoney() {
@@ -879,13 +882,14 @@ public final class Game implements ConquerInfo {
 		} else if (managed && (count < 0)) {
 			throw new IllegalArgumentException("count < 0 :" + count);
 		}
+		final var costs = this.getSoldierCosts();
 		var numberToRecruit = 0L;
 		// Default algorithm used, if the strategy didn't provide one itself.
 		if (!managed) {
 			if ((maxToPay < 0) || (c.getNumberOfPeople() < Game.RETAINED_PEOPLE)) {
 				return;
 			}
-			numberToRecruit = (int) (maxToPay / Shared.COINS_PER_SOLDIER_INITIAL);
+			numberToRecruit = (int) (maxToPay / costs.coinsPerSoldierInitial());
 			numberToRecruit = Math.min(c.getNumberOfPeople() - Game.RETAINED_PEOPLE, numberToRecruit);
 			numberToRecruit = this.maximumNumberOfSoldiersToRecruit(clan, numberToRecruit);
 			if (numberToRecruit == 0) {
@@ -898,15 +902,15 @@ public final class Game implements ConquerInfo {
 		c.setNumberOfSoldiers(c.getNumberOfSoldiers() + numberToRecruit);
 		final var resourcesOfClan = clan.getResources();
 		final var ironNew = resourcesOfClan.get(Resource.IRON.getIndex())
-				- (numberToRecruit * Shared.IRON_PER_SOLDIER_INITIAL);
+				- (numberToRecruit * costs.ironPerSoldierInitial());
 		final var woodNew = resourcesOfClan.get(Resource.WOOD.getIndex())
-				- (numberToRecruit * Shared.WOOD_PER_SOLDIER_INITIAL);
+				- (numberToRecruit * costs.woodPerSoldierInitial());
 		final var stoneNew = resourcesOfClan.get(Resource.STONE.getIndex())
-				- (numberToRecruit * Shared.STONE_PER_SOLDIER_INITIAL);
+				- (numberToRecruit * costs.stonePerSoldierInitial());
 		resourcesOfClan.set(Resource.IRON.getIndex(), ironNew);
 		resourcesOfClan.set(Resource.WOOD.getIndex(), woodNew);
 		resourcesOfClan.set(Resource.STONE.getIndex(), stoneNew);
-		clan.setCoins(clan.getCoins() - (numberToRecruit * Shared.COINS_PER_SOLDIER_INITIAL));
+		clan.setCoins(clan.getCoins() - (numberToRecruit * costs.coinsPerSoldierInitial()));
 		final var finalNumberToRecruit = numberToRecruit;
 		this.data.getRecruitHooks().forEach(a -> a.recruited(c, finalNumberToRecruit));
 	}

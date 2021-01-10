@@ -14,7 +14,6 @@ import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
 import org.jel.game.data.Resource;
-import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 
 /**
@@ -55,8 +54,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 
 	private String coinsPerRound() {
 		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
-				.mapToDouble(c -> (c.getNumberOfPeople() * game.getResourceUsage().getCoinsPerRoundPerPerson() )
-						- (c.getNumberOfSoldiers() * game.getSoldierCosts().coinsPerSoldierPerRound()))
+				.mapToDouble(c -> (c.getNumberOfPeople() * this.game.getResourceUsage().getCoinsPerRoundPerPerson())
+						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts().coinsPerSoldierPerRound()))
 				.sum();
 		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				Messages.getString("ClanInfoPanel.coinsPerRound"), production); //$NON-NLS-1$

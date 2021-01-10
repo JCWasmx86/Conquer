@@ -3,7 +3,7 @@ package org.jel.game.data;
 public class ResourceUsage {
 	private final double[] personUsed;
 	private final double[] soldierUsed;
-	private double coinsPerRoundPerPerson;
+	private final double coinsPerRoundPerPerson;
 
 	public ResourceUsage(final double[][] stats, final double coinsPerRoundPerPerson) {
 		if (stats.length != Resource.values().length) {
@@ -31,6 +31,6 @@ public class ResourceUsage {
 	}
 
 	public double getCoinsPerRoundPerPerson() {
-		return coinsPerRoundPerPerson;
+		return this.coinsPerRoundPerPerson;
 	}
 }
