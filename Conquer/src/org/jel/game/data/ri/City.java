@@ -515,7 +515,7 @@ class City implements ICity {
 			throw new IllegalArgumentException(
 					"Wrong length, expected " + Resource.values().length + ", got " + productions.size());
 		}
-		this.productions = productions;
+		this.productions = new GoodDoubleList(productions);
 	}
 
 	/**

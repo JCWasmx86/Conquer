@@ -1,7 +1,6 @@
 package org.jel.game.data.ri;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jel.game.data.ConquerInfo;
@@ -207,12 +206,12 @@ final class Clan implements IClan {
 		} else if (version == null) {
 			throw new IllegalArgumentException("version==null");
 		}
-		final var list = new ArrayList<Double>();
+		final var list = new GoodDoubleList();
 		for (var j = 0; j < Resource.values().length; j++) {
 			list.add(0.0);
 		}
 		this.setResources(list);
-		final var resourceStatsList = new ArrayList<Double>();
+		final var resourceStatsList = new GoodDoubleList();
 		for (var i = 0; i < Resource.values().length; i++) {
 			resourceStatsList.add(0.0);
 		}
@@ -315,7 +314,7 @@ final class Clan implements IClan {
 		} else if (resources.size() != Resource.values().length) {
 			throw new IllegalArgumentException("resources.size() != Resource.values.length: " + resources.size());
 		}
-		this.resources = resources;
+		this.resources = new GoodDoubleList(resources);
 	}
 
 	@Override
@@ -328,7 +327,7 @@ final class Clan implements IClan {
 			throw new IllegalArgumentException(
 					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
 		}
-		this.resourceStats = resourceStats;
+		this.resourceStats = new GoodDoubleList(resourceStats,true);
 	}
 
 	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
