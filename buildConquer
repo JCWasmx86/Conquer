@@ -273,7 +273,9 @@ fi
 java --version>versions
 gcc --version>>versions
 musescore3 --version>>versions
-dpkg-deb --version>>versions
+if [[ -z "${IS_WIN}" ]]; then
+	dpkg-deb --version>>versions
+fi
 zip --version>>versions
 cd ../Launcher/cJSON
 git rev-parse HEAD>>../../conquer-dist/versions
