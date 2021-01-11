@@ -69,20 +69,24 @@ java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist
 mkdir tmp
 cd backend
-touch -t 201108231405.14 **/* *
-jar -cvf ../tmp/ChangeCitiesMinds.jar org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
+mkdir META-INF
+echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
+echo Created-By: $major >>META-INF/MANIFEST.MF
+touch -t 201108231405.14 **/* * org/jel/game/plugins/*
+find . -exec touch -t 201108231405.14 {} \;
+zip -X ../tmp/ChangeCitiesMinds.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
 rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
-jar -cvf ../tmp/DefaultMusic.jar org/jel/game/plugins/builtins/DefaultMusic.class
+zip -X ../tmp/DefaultMusic.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/DefaultMusic.class
 rm org/jel/game/plugins/builtins/DefaultMusic.class
-jar -cvf ../tmp/IncreaseGrowth.jar org/jel/game/plugins/builtins/IncreaseGrowth.class
+zip -X ../tmp/IncreaseGrowth.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/IncreaseGrowth.class
 rm org/jel/game/plugins/builtins/IncreaseGrowth.class
-jar -cvf ../tmp/MoneyAnalyzer.jar org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer*.properties
+zip -X ../tmp/MoneyAnalyzer.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer*.properties
 rm org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer*.properties
-jar -cvf ../tmp/PeriodicGrowthChange.jar org/jel/game/plugins/builtins/PeriodicGrowthChange.class
+zip -X ../tmp/PeriodicGrowthChange.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/PeriodicGrowthChange.class
 rm org/jel/game/plugins/builtins/PeriodicGrowthChange.class
-jar -cvf ../tmp/ResourceAnalyzer.jar org/jel/game/plugins/builtins/*.class org/jel/game/plugins/builtins/*.properties
+zip -X ../tmp/ResourceAnalyzer.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/*.class org/jel/game/plugins/builtins/*.properties
 rm -rf org/jel/game/plugins/builtins/
-jar -cvf ../tmp/SortedStrategy.jar org/jel/game/strategies/*.class
+zip -X ../tmp/SortedStrategy.jar META-INF/MANIFEST.MF org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
 cd ../tmp
 cp -v ../../ScenarioGenerator/bin/*.data .
@@ -117,6 +121,7 @@ mv -v *.xml .conquer
 mv -v *.png .conquer
 cd .conquer
 touch -t 201108231405.14 . * **/*
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../../conquer.zip -r *
 cp ../../conquer.zip ../../backend/data
 cd ../../../music
@@ -129,8 +134,12 @@ for f in *.mscz; do
 done
 wait
 cd ../conquer-dist/backend
-touch -t 201108231405.14 . * **/*
-jar -cvf ../Conquer.jar *
+mkdir META-INF
+echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
+echo Created-By: $major >>META-INF/MANIFEST.MF
+touch -t 201108231405.14 . * **/* *.class **/*.class **/*.properties
+find . -exec touch -t 201108231405.14 {} \;
+zip -X -r ../Conquer.jar *
 cd ..
 mkdir -p frontend/music
 cd music
@@ -139,8 +148,12 @@ rm Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION
 cd ..
 cp conquer.zip backend/data
 cd frontend
+mkdir META-INF
+echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
+echo Created-By: $major >>META-INF/MANIFEST.MF
 touch -t 201108231405.14 . * **/*
-jar -cvf ../Conquer_frontend.jar *
+find . -exec touch -t 201108231405.14 {} \;
+zip -X -r ../Conquer_frontend.jar *
 cd ../../Launcher
 make clean
 make $TARGET|| exit 1
@@ -154,6 +167,7 @@ cd music
 mkdir -p libs/sounds
 cp *.$EXTENSION libs/sounds
 touch -t 201108231405.14 . libs/sounds/*
+find . -exec touch -t 201108231405.14 {} \;
 zip -X -9 ../Music1.zip libs/sounds/Battle0.$EXTENSION libs/sounds/Battle1.$EXTENSION libs/sounds/Battle2.$EXTENSION libs/sounds/Battle3.$EXTENSION libs/sounds/Battle4.$EXTENSION libs/sounds/Battle5.$EXTENSION libs/sounds/Battle6.$EXTENSION libs/sounds/Battle7.$EXTENSION libs/sounds/Battle8.$EXTENSION libs/sounds/Battle9.$EXTENSION libs/sounds/Battle10.$EXTENSION &
 zip -X -9 ../Music2.zip libs/sounds/Battle11.$EXTENSION libs/sounds/Battle12.$EXTENSION libs/sounds/Battle13.$EXTENSION libs/sounds/Battle14.$EXTENSION libs/sounds/Battle15.$EXTENSION libs/sounds/Battle16.$EXTENSION libs/sounds/Battle17.$EXTENSION &
 zip -X -9 ../Music3.zip libs/sounds/Battle18.$EXTENSION libs/sounds/Battle19.$EXTENSION libs/sounds/Battle20.$EXTENSION libs/sounds/Battle21.$EXTENSION libs/sounds/Battle22.$EXTENSION libs/sounds/Battle23.$EXTENSION &
@@ -191,6 +205,7 @@ echo LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FRO
 echo OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE>>Conquer.license
 echo SOFTWARE.>>Conquer.license
 echo >>Conquer.license
+find . -exec touch -t 201108231405.14 {} \;
 if [[ -z "${IS_WIN}" ]]; then
 	rm -r conquer
 	mkdir -p conquer/usr/bin
@@ -210,6 +225,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	mv launcher conquer_launcher conquer/usr/bin
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
+	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer
 	rm -r conquer-engine
 	mkdir -p conquer-engine/usr/bin
@@ -227,6 +243,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	cp Conquer.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
+	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-engine
 	rm -r conquer-gui
 	mkdir -p conquer-gui/usr/bin
@@ -245,6 +262,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	mv Conquer_frontend.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
+	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 	cd ..
 else
