@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export SOURCE_DATE_EPOCH=0
 if [[ -z "${EXTENSION}" ]]; then
 	export EXTENSION="wav"
 fi
