@@ -69,6 +69,7 @@ java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist
 mkdir tmp
 cd backend
+touch -t 201108231405.14 **/* *
 jar -cvf ../tmp/ChangeCitiesMinds.jar org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
 rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
 jar -cvf ../tmp/DefaultMusic.jar org/jel/game/plugins/builtins/DefaultMusic.class
@@ -115,7 +116,8 @@ mv -v *.data .conquer
 mv -v *.xml .conquer
 mv -v *.png .conquer
 cd .conquer
-zip ../../conquer.zip -r *
+touch -t 201108231405.14 . * **/*
+zip -X ../../conquer.zip -r *
 cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
@@ -127,6 +129,7 @@ for f in *.mscz; do
 done
 wait
 cd ../conquer-dist/backend
+touch -t 201108231405.14 . * **/*
 jar -cvf ../Conquer.jar *
 cd ..
 mkdir -p frontend/music
@@ -136,6 +139,7 @@ rm Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION
 cd ..
 cp conquer.zip backend/data
 cd frontend
+touch -t 201108231405.14 . * **/*
 jar -cvf ../Conquer_frontend.jar *
 cd ../../Launcher
 make clean
@@ -149,10 +153,11 @@ cd ../conquer-dist
 cd music
 mkdir -p libs/sounds
 cp *.$EXTENSION libs/sounds
-zip -9 ../Music1.zip libs/sounds/Battle0.$EXTENSION libs/sounds/Battle1.$EXTENSION libs/sounds/Battle2.$EXTENSION libs/sounds/Battle3.$EXTENSION libs/sounds/Battle4.$EXTENSION libs/sounds/Battle5.$EXTENSION libs/sounds/Battle6.$EXTENSION libs/sounds/Battle7.$EXTENSION libs/sounds/Battle8.$EXTENSION libs/sounds/Battle9.$EXTENSION libs/sounds/Battle10.$EXTENSION &
-zip -9 ../Music2.zip libs/sounds/Battle11.$EXTENSION libs/sounds/Battle12.$EXTENSION libs/sounds/Battle13.$EXTENSION libs/sounds/Battle14.$EXTENSION libs/sounds/Battle15.$EXTENSION libs/sounds/Battle16.$EXTENSION libs/sounds/Battle17.$EXTENSION &
-zip -9 ../Music3.zip libs/sounds/Battle18.$EXTENSION libs/sounds/Battle19.$EXTENSION libs/sounds/Battle20.$EXTENSION libs/sounds/Battle21.$EXTENSION libs/sounds/Battle22.$EXTENSION libs/sounds/Battle23.$EXTENSION &
-zip -9 ../Music4.zip libs/sounds/Battle24.$EXTENSION libs/sounds/Battle25.$EXTENSION libs/sounds/Battle26.$EXTENSION libs/sounds/Battle27.$EXTENSION libs/sounds/Battle28.$EXTENSION libs/sounds/Battle29.$EXTENSION &
+touch -t 201108231405.14 . libs/sounds/*
+zip -X -9 ../Music1.zip libs/sounds/Battle0.$EXTENSION libs/sounds/Battle1.$EXTENSION libs/sounds/Battle2.$EXTENSION libs/sounds/Battle3.$EXTENSION libs/sounds/Battle4.$EXTENSION libs/sounds/Battle5.$EXTENSION libs/sounds/Battle6.$EXTENSION libs/sounds/Battle7.$EXTENSION libs/sounds/Battle8.$EXTENSION libs/sounds/Battle9.$EXTENSION libs/sounds/Battle10.$EXTENSION &
+zip -X -9 ../Music2.zip libs/sounds/Battle11.$EXTENSION libs/sounds/Battle12.$EXTENSION libs/sounds/Battle13.$EXTENSION libs/sounds/Battle14.$EXTENSION libs/sounds/Battle15.$EXTENSION libs/sounds/Battle16.$EXTENSION libs/sounds/Battle17.$EXTENSION &
+zip -X -9 ../Music3.zip libs/sounds/Battle18.$EXTENSION libs/sounds/Battle19.$EXTENSION libs/sounds/Battle20.$EXTENSION libs/sounds/Battle21.$EXTENSION libs/sounds/Battle22.$EXTENSION libs/sounds/Battle23.$EXTENSION &
+zip -X -9 ../Music4.zip libs/sounds/Battle24.$EXTENSION libs/sounds/Battle25.$EXTENSION libs/sounds/Battle26.$EXTENSION libs/sounds/Battle27.$EXTENSION libs/sounds/Battle28.$EXTENSION libs/sounds/Battle29.$EXTENSION &
 wait
 cd ..
 curl https://raw.githubusercontent.com/curl/curl/master/COPYING>LICENSE.txt

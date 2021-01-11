@@ -191,7 +191,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.nonGUIInit();
 	}
 
-	private Thread endlessThread;
+	private transient Thread endlessThread;
 	private transient GiftCallback callback;
 
 	private void initButtonPanel() {
@@ -201,11 +201,13 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		nextRound.setToolTipText(Messages.getString("GameFrame.nextRound")); //$NON-NLS-1$
 		nextRound.addActionListener(a -> {
 			new Thread(() -> {
+				nextRound.setEnabled(false);
 				if (this.game.isPlayersTurn()) {
 					this.game.setPlayersTurn(false);
 					this.game.executeActions();
 				}
 				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
+				nextRound.setEnabled(true);
 			}).start();
 		});
 		final var openMessages = new JButton(new ImageResource("messagebox.png")); //$NON-NLS-1$
