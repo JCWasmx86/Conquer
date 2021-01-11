@@ -259,7 +259,6 @@ if [[ -z "${IS_WIN}" ]]; then
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
-	cd ..
 else
 	cp launcher.exe ../Installer
 	cp Conquer.jar ../Installer
@@ -269,10 +268,16 @@ else
 	cd ../Installer
 	make clean
 	make||exit
-	cd ..
-	cp Installer/Installer.exe conquer-dist
+	cp ../Installer/Installer.exe conquer-dist
 fi
-cd Conquer
+java --version>versions
+gcc --version>>versions
+musescore3 --version>>versions
+dpkg-deb --version>>versions
+zip --version>>versions
+cd ../Launcher/cJSON
+git rev-parse HEAD>>../../conquer-dist/versions
+cd ../../Conquer
 mkdir tmp
 javac `find src test -name "*.java"` -d tmp --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
