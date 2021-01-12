@@ -67,7 +67,8 @@ public final class ModerateStrategyImpl implements Strategy {
 				} else {
 					final var numRoundsOfResourceStored = clan.getResources().get(i) / ownValue;
 					final var roundsToGive = Math.random() * 0.5 * numRoundsOfResourceStored;
-					resourcesToGive.add(roundsToGive * ownValue);
+					resourcesToGive.add(Double.isNaN(roundsToGive) || Double.isInfinite(roundsToGive) ? 0
+							: roundsToGive * ownValue);
 				}
 			}
 			final var ownCoins = clan.getCoins();
