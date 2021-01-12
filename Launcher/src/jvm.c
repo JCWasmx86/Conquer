@@ -9,12 +9,13 @@
 #include <shlobj.h>
 #include <windows.h>
 #else
-void appendAllJarsFromDir(const char *, char *);
+void appendAllJarsFromDir(const char*, char*);
 #endif
 void runJVM(Configuration configuration) {
 	char *classpath = generateClasspath(configuration);
 	JavaVMOption *jvmoptions = calloc(
-		configuration->numOptions + NUM_PREDEFINED_ARGS, sizeof(JavaVMOption));
+			configuration->numOptions + NUM_PREDEFINED_ARGS,
+			sizeof(JavaVMOption));
 	assert(jvmoptions);
 	// Just free the first optionstring.
 	jvmoptions[0].optionString = classpath;
@@ -22,15 +23,14 @@ void runJVM(Configuration configuration) {
 	jvmoptions[2].optionString = "-XX:+ShowCodeDetailsInExceptionMessages";
 	for (size_t i = 0; i < configuration->numOptions; i++)
 		jvmoptions[NUM_PREDEFINED_ARGS + i].optionString =
-			configuration->options[i];
-	JavaVMInitArgs vmArgs = {JNI_VERSION_10,
-							 configuration->numOptions + NUM_PREDEFINED_ARGS,
-							 jvmoptions, 1};
+				configuration->options[i];
+	JavaVMInitArgs vmArgs = { JNI_VERSION_10, configuration->numOptions
+			+ NUM_PREDEFINED_ARGS, jvmoptions, 1 };
 	JavaVM *jvm;
 	JNIEnv *env = NULL;
 	void *handle = loadJavaLibrary(configuration);
 	createJVM func = getHandleToFunction(handle);
-	jint status = func(&jvm, (void **)&env, &vmArgs);
+	jint status = func(&jvm, (void**) &env, &vmArgs);
 	if (status != JNI_OK) {
 		fprintf(stderr, "Couldn't create JVM: %d\n", status);
 		goto cleanup;
@@ -40,25 +40,24 @@ void runJVM(Configuration configuration) {
 	jclass stringClass = (*env)->FindClass(env, "java/lang/String");
 	assert(stringClass);
 	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main",
-													 "([Ljava/lang/String;)V");
+			"([Ljava/lang/String;)V");
 	jobjectArray arr = (*env)->NewObjectArray(env, 0, stringClass, NULL);
 	(*env)->CallStaticVoidMethod(env, introClass, mainMethod, arr);
 	if ((*env)->ExceptionOccurred(env)) {
 		(*env)->ExceptionDescribe(env);
 	}
 	(*jvm)->DestroyJavaVM(jvm);
-cleanup:
-	free(jvmoptions[0].optionString);
+	cleanup: free(jvmoptions[0].optionString);
 	free(jvmoptions);
 }
-char *generateClasspath(Configuration configuration) {
+char* generateClasspath(Configuration configuration) {
 	char *ret = calloc(1024 * 1024 * 16, 1);
 	assert(ret);
 	strcat(ret, "-Djava.class.path=");
 	char *c = "/";
 #ifndef _WIN32
 	strcat(ret,
-		   "/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:");
+			"/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:");
 #else
 #ifdef UNICODE
 #error UNICODE has to be undefined!
@@ -100,11 +99,15 @@ char *generateClasspath(Configuration configuration) {
 		closedir(dir);
 	}
 #ifndef _WIN32
-	appendAllJarsFromDir("/usr/share/java/conquer/plugins",ret);
-	appendAllJarsFromDir("/usr/share/java/conquer/strategies",ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/plugins", ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/strategies", ret);
 	strcat(ret, "/usr/share/conquer/music:");
 	strcat(ret, "/usr/share/conquer/sounds:");
 	strcat(ret, "/usr/share/conquer/images:");
+	strcat(ret,
+			"/usr/share/java/conquer/jlayer.jar:/usr/share/java/conquer/jorbis.jar:/usr/share/java/conquer/mp3spi.jar:");
+	strcat(ret,
+			"/usr/share/java/conquer/tritonus.jar:/usr/share/java/conquer/vorbisspi.jar:");
 #endif
 	strcat(ret, libs);
 	strcat(ret, "music");

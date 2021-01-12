@@ -53,8 +53,14 @@ public class Sound implements LineListener, Serializable {
 					url = this.locate(this.filename + ".aiff");
 					if (url == null) {
 						url = this.locate(this.filename + ".au");
-						if (url == null && !new File(this.filename).exists()) {
-							throw new RuntimeException(new FileNotFoundException(this.filename));
+						if (url == null) {
+							url = this.locate(this.filename + ".ogg");
+							if (url == null) {
+								url = this.locate(this.filename + ".mp3");
+								if (url == null && !new File(this.filename).exists()) {
+									throw new RuntimeException(new FileNotFoundException(this.filename));
+								}
+							}
 						}
 					}
 				}

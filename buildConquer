@@ -260,6 +260,12 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	mv Conquer_frontend.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
+	mkdir conquer-gui/usr/share/java/conquer
+	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o conquer-gui/usr/share/java/conquer/jlayer.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o conquer-gui/usr/share/java/conquer/mp3spi.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o conquer-gui/usr/share/java/conquer/tritonus.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o conquer-gui/usr/share/java/conquer/jorbis.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o conquer-gui/usr/share/java/conquer/vorbisspi.jar
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 else
@@ -269,6 +275,11 @@ else
 	cp Conquer.license ../Installer
 	cp LICENSE.txt ../Installer
 	cd ../Installer
+	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o tritonus.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o jorbis.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o vorbisspi.jar
 	make clean
 	make||exit
 	cp Installer.exe ../conquer-dist
