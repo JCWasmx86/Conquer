@@ -43,6 +43,7 @@ else
 	export MUSESCORE=`type -p musescore3`
 	echo Musescore=$MUSESCORE
 fi
+mkdir music_tmp
 mkdir conquer-dist
 cd conquer-dist
 mkdir -p backend/data
@@ -125,13 +126,15 @@ zip -X ../../conquer.zip -r *
 cp ../../conquer.zip ../../backend/data
 cd ../../../music
 for f in *.mscz; do
-	if [[ "$f" -nt "../conquer-dist/music/${f%.mscz}.$EXTENSION" ]]; then
-		"${MUSESCORE}" -o  "../conquer-dist/music/${f%.mscz}.$EXTENSION" "$f" &
+	if [[ "$f" -nt "../music_tmp/${f%.mscz}.$EXTENSION" ]]; then
+		"${MUSESCORE}" -o  "../music_tmp/${f%.mscz}.$EXTENSION" "$f" &
 	else
 		echo Skipping conversion of "$f"
 	fi
 done
 wait
+mkdir ../conquer-dist/music
+cp -v ../music_tmp/* ../conquer-dist/music
 cd ../conquer-dist/backend
 mkdir META-INF
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
@@ -141,7 +144,7 @@ zip -X -r ../Conquer.jar *
 cd ..
 mkdir -p frontend/music
 cd music
-cp  Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION Victory.$EXTENSION ../frontend/music
+cp Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION Victory.$EXTENSION ../frontend/music
 rm Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION Victory.$EXTENSION
 cd ..
 cp conquer.zip backend/data
