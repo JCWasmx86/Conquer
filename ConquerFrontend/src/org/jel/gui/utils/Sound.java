@@ -1,12 +1,14 @@
 package org.jel.gui.utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.net.URL;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
@@ -51,21 +53,29 @@ public class Sound implements LineListener, Serializable {
 					url = this.locate(this.filename + ".aiff");
 					if (url == null) {
 						url = this.locate(this.filename + ".au");
-						if (url == null) {
-							throw new IllegalArgumentException(
-									new FileNotFoundException(this.filename + " wasn't found!"));
+						if (url == null && !new File(this.filename).exists()) {
+							throw new RuntimeException(new FileNotFoundException(this.filename));
 						}
 					}
 				}
 			}
-			final var audioStream = AudioSystem.getAudioInputStream(url);
-			final var format = audioStream.getFormat();
-			final var info = new DataLine.Info(Clip.class, format);
-			this.isPlaying = true;
-			this.audioClip = (Clip) AudioSystem.getLine(info);
-			this.audioClip.addLineListener(this);
-			this.audioClip.open(audioStream);
-			this.audioClip.start();
+			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
+					: AudioSystem.getAudioInputStream(url);
+			AudioFormat format = audioStream.getFormat();
+			float frameRate = 44100;
+			int channels = format.getChannels();
+			AudioFormat targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, channels,
+					channels * 2, frameRate, false);
+			if (AudioSystem.isConversionSupported(targetFormat, format)) {
+				AudioInputStream din = AudioSystem.getAudioInputStream(targetFormat, audioStream);
+				this.isPlaying = true;
+				this.audioClip = AudioSystem.getClip();
+				this.audioClip.addLineListener(this);
+				this.audioClip.open(din);
+				this.audioClip.start();
+			} else {
+				throw new IllegalArgumentException("Conversion not supported!");
+			}
 		} catch (final Exception e) {
 			this.isPlaying = false;
 			throw new IllegalArgumentException(e);

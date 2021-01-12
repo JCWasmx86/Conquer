@@ -33,8 +33,9 @@ jobs:
       - name: Test reproducible build
         run: |
           export QT_QPA_PLATFORM=offscreen
-          rm -r conquer-dist
+          rm -r conquer-dist music_tmp
           ./buildConquer
+          rm -r music_tmp
           mkdir oldFiles
           mv conquer-dist oldFiles
           ./buildConquer
