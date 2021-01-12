@@ -268,7 +268,8 @@ else
 	cd ../Installer
 	make clean
 	make||exit
-	cp ../Installer/Installer.exe conquer-dist
+	cp Installer.exe ../conquer-dist
+	cd ../conquer-dist
 fi
 java --version>versions
 gcc --version>>versions
