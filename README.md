@@ -25,11 +25,11 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 
 #### Linux
 ```
-#Add repo to the package manager sources (apt)
+# Add repo to the package manager sources (apt)
 echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/  main extras" | sudo tee -a /etc/apt/sources.list
-#Add public key
+# Add public key
 wget https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/jcwasmx86.pgp&&sudo apt-key add jcwasmx86.pgp&&rm jcwasmx86.pgp
-#Install conquer
+# Install conquer
 sudo apt update&&sudo apt install conquer
 ```
 #### Windows
