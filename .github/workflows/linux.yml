@@ -51,16 +51,22 @@ jobs:
             echo Old: $CONQUER_DEB_OLD
             echo New: $CONQUER_DEB
             exit 1
+          else
+            echo conquer.deb matches: $CONQUER_DEB
           fi
           if [ $CONQUER_GUI_DEB_OLD != $CONQUER_GUI_DEB ]; then
             echo conquer-gui.deb differs:
             echo Old: $CONQUER_GUI_DEB_OLD
             echo New: $CONQUER_GUI_DEB
             exit 2
+          else
+            echo conquer-gui.deb matches: $CONQUER_GUI_DEB
           fi
           if [ $CONQUER_ENGINE_DEB_OLD != $CONQUER_ENGINE_DEB ]; then
             echo conquer-engine.deb differs:
             echo Old: $CONQUER_ENGINE_DEB_OLD
             echo New: $CONQUER_ENGINE_DEB
             exit 3
+          else
+            echo conquer-engine.deb matches: $CONQUER_ENGINE_DEB
           fi
