@@ -33,6 +33,10 @@ public final class Gift {
 		for (var i = 0; i < resources.size(); i++) {
 			if (resources.get(i) < 0) {
 				throw new IllegalArgumentException("resources.get(i) < 0, i=" + i);
+			} else if (Double.isNaN(resources.get(i))) {
+				throw new IllegalArgumentException("resources.get(i) isNaN" + i);
+			} else if (Double.isInfinite(resources.get(i))) {
+				throw new IllegalArgumentException("resources.get(i) isInfinite" + i);
 			}
 			this.map.put(Resource.values()[i], resources.get(i));
 		}
