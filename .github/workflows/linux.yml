@@ -30,3 +30,37 @@ jobs:
         run: |
           chmod +x testPerformance
           ./testPerformance
+      - name: Test reproducible build
+        run: |
+          export QT_QPA_PLATFORM=offscreen
+          rm -r conquer-dist
+          ./buildConquer
+          mkdir oldFiles
+          mv conquer-dist oldFiles
+          ./buildConquer
+          cd oldFiles
+          export CONQUER_DEB_OLD=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          cd ..
+          export CONQUER_DEB=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          if [ $CONQUER_DEB_OLD != $CONQUER_DEB ]; then
+            echo conquer.deb differs:
+            echo Old: $CONQUER_DEB_OLD
+            echo New: $CONQUER_DEB
+            exit 1
+          fi
+          if [ $CONQUER_GUI_DEB_OLD != $CONQUER_GUI_DEB ]; then
+            echo conquer-gui.deb differs:
+            echo Old: $CONQUER_GUI_DEB_OLD
+            echo New: $CONQUER_GUI_DEB
+            exit 2
+          fi
+          if [ $CONQUER_ENGINE_DEB_OLD != $CONQUER_ENGINE_DEB ]; then
+            echo conquer-engine.deb differs:
+            echo Old: $CONQUER_ENGINE_DEB_OLD
+            echo New: $CONQUER_ENGINE_DEB
+            exit 3
+          fi
