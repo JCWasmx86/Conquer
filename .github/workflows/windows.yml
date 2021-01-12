@@ -50,8 +50,3 @@ jobs:
           export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
           chmod +x testPerformance
           ./testPerformance
-      - name: Upload results
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build result
-          path: conquer-dist/Installer.exe
