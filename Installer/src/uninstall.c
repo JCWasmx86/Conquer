@@ -15,6 +15,11 @@ int main() {
 	deleteFile("uninstall.exe");
 	deleteFile("Conquer.license");
 	deleteFile("LICENSE.txt");
+	deleteFile("jlayer.jar");
+	deleteFile("mp3spi.jar");
+	deleteFile("tritonus.jar");
+	deleteFile("jorbis.jar");
+	deleteFile("vorbisspi.jar");
 	deleteFile("");
 	return EXIT_SUCCESS;
 }
