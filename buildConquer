@@ -259,6 +259,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	mv Conquer_frontend.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
+	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
 	#TODO: Replace with maven itself.
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o conquer-gui/usr/share/java/conquer/jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o conquer-gui/usr/share/java/conquer/mp3spi.jar
