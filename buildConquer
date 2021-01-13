@@ -173,7 +173,20 @@ echo >>LICENSE.txt
 echo >>LICENSE.txt
 curl https://raw.githubusercontent.com/DaveGamble/cJSON/master/LICENSE >>LICENSE.txt
 echo >>LICENSE.txt
-
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jlayer/LICENSE.txt>>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jorbis/COPYING.LIB>>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/pdudits/soundlibs/master/mp3spi/LICENSE.txt>>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/pdudits/soundlibs/master/tritonus-cvs/LGPL>>LICENSE.txt
+echo >>LICENSE.txt
+echo >>LICENSE.txt
+curl https://raw.githubusercontent.com/pdudits/soundlibs/master/vorbisspi/LICENSE.txt>>LICENSE.txt
 echo MIT License >Conquer.license
 echo >>Conquer.license
 echo Copyright \(c\) 2020 JCWasmx86 >>Conquer.license
