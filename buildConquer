@@ -43,13 +43,8 @@ else
 	export MUSESCORE=`type -p musescore3`
 	echo Musescore=$MUSESCORE
 fi
-mkdir music_tmp
-mkdir conquer-dist
-cd conquer-dist
-mkdir -p backend/data
-mkdir frontend
-mkdir music
-cd ../Conquer
+mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music}
+cd Conquer
 shopt -s dotglob
 javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
@@ -167,10 +162,7 @@ cd music
 mkdir -p libs/sounds
 cp *.$EXTENSION libs/sounds
 find . -exec touch -t 201108231405.14 {} \;
-zip -X -9 ../Music1.zip libs/sounds/Battle0.$EXTENSION libs/sounds/Battle1.$EXTENSION libs/sounds/Battle2.$EXTENSION libs/sounds/Battle3.$EXTENSION libs/sounds/Battle4.$EXTENSION libs/sounds/Battle5.$EXTENSION libs/sounds/Battle6.$EXTENSION libs/sounds/Battle7.$EXTENSION libs/sounds/Battle8.$EXTENSION libs/sounds/Battle9.$EXTENSION libs/sounds/Battle10.$EXTENSION &
-zip -X -9 ../Music2.zip libs/sounds/Battle11.$EXTENSION libs/sounds/Battle12.$EXTENSION libs/sounds/Battle13.$EXTENSION libs/sounds/Battle14.$EXTENSION libs/sounds/Battle15.$EXTENSION libs/sounds/Battle16.$EXTENSION libs/sounds/Battle17.$EXTENSION &
-zip -X -9 ../Music3.zip libs/sounds/Battle18.$EXTENSION libs/sounds/Battle19.$EXTENSION libs/sounds/Battle20.$EXTENSION libs/sounds/Battle21.$EXTENSION libs/sounds/Battle22.$EXTENSION libs/sounds/Battle23.$EXTENSION &
-zip -X -9 ../Music4.zip libs/sounds/Battle24.$EXTENSION libs/sounds/Battle25.$EXTENSION libs/sounds/Battle26.$EXTENSION libs/sounds/Battle27.$EXTENSION libs/sounds/Battle28.$EXTENSION libs/sounds/Battle29.$EXTENSION &
+zip -X -9 ../Music.zip libs/sounds/*.$EXTENSION
 wait
 cd ..
 curl https://raw.githubusercontent.com/curl/curl/master/COPYING>LICENSE.txt
@@ -206,9 +198,7 @@ echo SOFTWARE.>>Conquer.license
 echo >>Conquer.license
 if [[ -z "${IS_WIN}" ]]; then
 	rm -r conquer
-	mkdir -p conquer/usr/bin
-	mkdir -p conquer/usr/share/java
-	mkdir -p conquer/usr/share/conquer
+	mkdir -p conquer/usr/{bin,share/java,share/conquer}
 	mkdir -p conquer/DEBIAN
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN
@@ -226,9 +216,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer
 	rm -r conquer-engine
-	mkdir -p conquer-engine/usr/bin
-	mkdir -p conquer-engine/usr/share/java
-	mkdir -p conquer-engine/usr/share/conquer-engine
+	mkdir -p conquer-engine/usr/{bin,share/java,share/conquer-engine}
 	mkdir -p conquer-engine/DEBIAN
 	chmod 0755 conquer-engine/DEBIAN
 	cd conquer-engine/DEBIAN
@@ -244,9 +232,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-engine
 	rm -r conquer-gui
-	mkdir -p conquer-gui/usr/bin
-	mkdir -p conquer-gui/usr/share/java
-	mkdir -p conquer-gui/usr/share/conquer-gui
+	mkdir -p conquer-gui/usr/{bin,share/java,share/conquer-gui,share/java/conquer}
 	mkdir -p conquer-gui/DEBIAN
 	chmod 0755 conquer-gui/DEBIAN
 	cd conquer-gui/DEBIAN
@@ -260,7 +246,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	mv Conquer_frontend.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
-	mkdir conquer-gui/usr/share/java/conquer
+	#TODO: Replace with maven itself.
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o conquer-gui/usr/share/java/conquer/jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o conquer-gui/usr/share/java/conquer/mp3spi.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o conquer-gui/usr/share/java/conquer/tritonus.jar

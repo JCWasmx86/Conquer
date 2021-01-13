@@ -15,8 +15,8 @@ extern uint8_t uninstall;
 extern uint8_t conquerLicense;
 extern uint8_t license;
 extern uint8_t jlayerJar;
-extern uint8_t mp3spiJar
-extern uint8_t tritonusJar
+extern uint8_t mp3spiJar;
+extern uint8_t tritonusJar;
 extern uint8_t jorbisJar;
 extern uint8_t vorbisspiJar;
 extern uint64_t launcherSize;
