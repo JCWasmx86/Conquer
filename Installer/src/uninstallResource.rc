@@ -4,20 +4,20 @@
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "uninstall.exe.manifest"
 
 1 VERSIONINFO
-FILEVERSION     1,2,1,0
-PRODUCTVERSION  1,2,1,0
+FILEVERSION     1,2,2,0
+PRODUCTVERSION  1,2,2,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
     BLOCK "080904E4"
     BEGIN
       VALUE "FileDescription", "Uninstaller for Conquer"
-      VALUE "FileVersion", "1.2.1"
+      VALUE "FileVersion", "1.2.2"
       VALUE "InternalName", "uninstall.exe"
       VALUE "LegalCopyright", "MIT-License"
       VALUE "OriginalFilename", "uninstall.exe"
       VALUE "ProductName", "Conquer"
-      VALUE "ProductVersion", "1.2.1"
+      VALUE "ProductVersion", "1.2.2"
     END
   END
 
