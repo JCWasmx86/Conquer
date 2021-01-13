@@ -14,12 +14,22 @@ extern uint8_t conquerFrontend;
 extern uint8_t uninstall;
 extern uint8_t conquerLicense;
 extern uint8_t license;
+extern uint8_t jlayerJar;
+extern uint8_t mp3spiJar
+extern uint8_t tritonusJar
+extern uint8_t jorbisJar;
+extern uint8_t vorbisspiJar;
 extern uint64_t launcherSize;
 extern uint64_t conquerSize;
 extern uint64_t conquerFrontendSize;
 extern uint64_t uninstallSize;
 extern uint64_t conquerLicenseSize;
 extern uint64_t licenseSize;
+extern uint64_t jlayerJarSize;
+extern uint64_t mp3spiJarSize;
+extern uint64_t tritonusJarSize;
+extern uint64_t jorbisJarSize;
+extern uint64_t vorbisspiJarSize;
 
 char *getBaseDirectory(void);
 void writeFile(const char *fileName, void *buf, uint64_t size);
@@ -39,6 +49,11 @@ int main(int argc, char **argv) {
 	writeFile("uninstall.exe", &uninstall, uninstallSize);
 	writeFile("Conquer.license", &conquerLicense, conquerLicenseSize);
 	writeFile("LICENSE.txt", &license, licenseSize);
+	writeFile("jlayer.jar", &jlayerJar, jlayerJarSize);
+	writeFile("mp3spi.jar", &mp3spiJar, mp3spiJarSize);
+	writeFile("tritonus.jar", &tritonusJar, tritonusJarSize);
+	writeFile("jorbis.jar", &jorbisJar, jorbisJarSize);
+	writeFile("vorbisspi.jar", &vorbisspiJar, vorbisspiJarSize);
 	createLinkToLauncher();
 	return EXIT_SUCCESS;
 }

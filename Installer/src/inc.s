@@ -59,3 +59,58 @@ license:
 .align 8
 licenseSize:
 .int licenseSize - license
+
+
+.global jlayerJar
+.align 8
+jlayerJar:
+.incbin "jlayer.jar"
+
+.global jlayerJarSize
+.align 8
+jlayerJarSize:
+.int jlayerJarSize - jlayerJar
+
+
+.global mp3SpiJar
+.align 8
+mp3SpiJar:
+.incbin "mp3spi.jar"
+
+.global mp3SpiJarSize
+.align 8
+mp3SpiJarSize:
+.int mp3SpiJarSize - mp3SpiJar
+
+
+.global tritonusJar
+.align 8
+tritonusJar:
+.incbin "tritonus.jar"
+
+.global tritonusJarSize
+.align 8
+tritonusJarSize:
+.int tritonusJarSize - tritonusJar
+
+
+.global jorbisJar
+.align 8
+jorbisJar:
+.incbin "jorbis.jar"
+
+.global jorbisJarSize
+.align 8
+jorbisJarSize:
+.int jorbisJarSize - jorbisJar
+
+
+.global vorbisspiJar
+.align 8
+vorbisspiJar:
+.incbin "vorbisspi.jar"
+
+.global vorbisspiJarSize
+.align 8
+vorbisspiJarSize:
+.int vorbisspiJarSize - vorbisspiJar
