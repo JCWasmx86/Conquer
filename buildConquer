@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export SOURCE_DATE_EPOCH=0
 if [[ -z "${EXTENSION}" ]]; then
-	export EXTENSION="wav"
+	export EXTENSION="ogg"
 fi
 . "${JAVA_HOME}"/release
 major=$(echo $JAVA_VERSION | cut -d. -f1)
