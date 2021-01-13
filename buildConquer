@@ -203,7 +203,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN
 	echo Package: conquer>control
-	echo Version: 1.1.2>>control
+	echo Version: 1.2.0>>control
 	echo Section: games>>control
 	echo Architecture: `dpkg --print-architecture` >>control
 	echo Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0>>control
@@ -221,7 +221,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	chmod 0755 conquer-engine/DEBIAN
 	cd conquer-engine/DEBIAN
 	echo Package: conquer-engine>control
-	echo Version: 1.1.2>>control
+	echo Version: 1.2.0>>control
 	echo Section: games>>control
 	echo Architecture: all >>control
 	echo Maintainer: JCWasmx86 >>control
@@ -237,7 +237,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	chmod 0755 conquer-gui/DEBIAN
 	cd conquer-gui/DEBIAN
 	echo Package: conquer-gui>control
-	echo Version: 1.1.2>>control
+	echo Version: 1.2.0>>control
 	echo Section: games>>control
 	echo Architecture: all>>control
 	echo Depends: conquer-engine>>control
