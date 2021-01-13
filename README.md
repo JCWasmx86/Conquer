@@ -33,7 +33,7 @@ wget https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/jcwa
 sudo apt update&&sudo apt install conquer
 ```
 #### Windows
-Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/tag/1.1.0) and execute it. (Needs admin rights)
+Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
 
 
 ### Contributing
