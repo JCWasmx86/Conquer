@@ -21,7 +21,6 @@ public final class GlobalContext {
 	private final List<String> pluginNames;
 	private final List<String> strategyNames;
 	private final List<ConquerInfoReaderFactory> readers;
-
 	private final List<String> readerNames;
 
 	GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,

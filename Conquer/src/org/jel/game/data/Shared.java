@@ -32,6 +32,7 @@ public final class Shared {
 	/**
 	 * The id of the clan of the player.
 	 */
+	@Deprecated
 	public static final int PLAYER_CLAN = 0;
 	/**
 	 * The default logger.

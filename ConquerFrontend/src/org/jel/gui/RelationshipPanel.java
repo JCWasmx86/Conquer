@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.jel.game.data.ConquerInfo;
-import org.jel.game.data.Shared;
 
 /**
  * One of the panels in the JTabbedPane of {@link GameFrame}. It allows to see
@@ -52,7 +51,9 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
-		for (var i = Shared.PLAYER_CLAN + 1; i < clans.size(); i++) {
+		for (var i = 0; i < clans.size(); i++) {
+			if (clans.get(i).isPlayerClan())
+				continue;
 			final var clan = clans.get(i);
 			final var text = clan.getName();
 			final var clanLabel = new JLabel(text);

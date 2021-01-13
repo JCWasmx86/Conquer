@@ -11,7 +11,6 @@ import javax.swing.SwingConstants;
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ICity;
 import org.jel.game.data.Resource;
-import org.jel.game.data.Shared;
 import org.jel.gui.utils.ImageResource;
 
 /**
@@ -100,7 +99,7 @@ final class ResourceButton extends JPanel {
 
 	private String getMaxUpgradeText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
+		double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		int currentLevel = level;
 		while (true) {
 			final var costs = this.city.getClan().costs(currentLevel + 1);
@@ -112,7 +111,7 @@ final class ResourceButton extends JPanel {
 			currentLevel++;
 		}
 		return Messages.getMessage("ResourceButton.maxUpgrade", currentLevel, //$NON-NLS-1$
-				Utils.format(this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN) - currentCoins));
+				Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
 	}
 
 	private String getUpgradeThisResourceText() {
@@ -137,7 +136,7 @@ final class ResourceButton extends JPanel {
 	}
 
 	private void updateMaximumUpgrade(final int level) {
-		double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
+		double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		var currentLevel = level;
 		while (true) {
 			final var costs = this.city.getClan().costs(currentLevel + 1);
@@ -161,7 +160,7 @@ final class ResourceButton extends JPanel {
 
 	private void updateUpgradeThisResource(final int level) {
 		final var costsForUpgrade = this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1);
-		final double currentCoins = this.city.getInfo().getCoins().get(Shared.PLAYER_CLAN);
+		final double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());

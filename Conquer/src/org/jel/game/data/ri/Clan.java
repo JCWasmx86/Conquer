@@ -236,7 +236,7 @@ final class Clan implements IClan {
 	 */
 	@Override
 	public boolean isPlayerClan() {
-		return this.id == Shared.PLAYER_CLAN;
+		return this.id == 0;
 	}
 
 	/**
