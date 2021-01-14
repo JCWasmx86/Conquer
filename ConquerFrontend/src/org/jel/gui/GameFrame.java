@@ -214,7 +214,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
-				Messages.getString("Shared.coins") + ": " + this.game.getCoins().get(Shared.PLAYER_CLAN)); //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins()); //$NON-NLS-1$ //$NON-NLS-2$
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
 		run.addActionListener(a -> {
 			run.setEnabled(false);
@@ -250,7 +250,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			var flag = false;
 			while (true) {
 				coinsLabel.setText(Messages.getString("Shared.coins") + ": " //$NON-NLS-1$ //$NON-NLS-2$
-						+ String.format("%.2f%n", this.game.getCoins().get(Shared.PLAYER_CLAN))); //$NON-NLS-1$
+						+ String.format("%.2f%n", this.game.getPlayerClan().getCoins())); //$NON-NLS-1$
 				try {
 					Thread.sleep(20);
 				} catch (final InterruptedException e) {

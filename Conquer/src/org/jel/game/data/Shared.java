@@ -24,6 +24,7 @@ public final class Shared {
 
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 
+	public static final String PROPERTIES_FILE = BASE_DIRECTORY + File.separatorChar + "game.properties";
 	/**
 	 * The maximum level of defense, resource production,...
 	 */
@@ -391,6 +392,23 @@ public final class Shared {
 	@Deprecated
 	public static double upgradeCostsForSoldiers(final int level) {
 		throw new UnsupportedOperationException("Use IClan::upgradeCostsForSoldiers instead");
+	}
+
+	public static int getNetworktimeout() {
+		// Default timeout is 500ms
+		return Integer.getInteger("conquer.network.timeout", 500);
+	}
+
+	public static boolean useSPI() {
+		return Boolean.getBoolean("conquer.usespi");
+	}
+
+	public static boolean level1Logging() {
+		return Boolean.getBoolean("conquer.logging.level1");
+	}
+
+	public static boolean level2Logging() {
+		return Boolean.getBoolean("conquer.logging.level2");
 	}
 
 	private Shared() {

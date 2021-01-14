@@ -35,14 +35,12 @@ public final class Initializer {
 			throw new IllegalStateException("Can't initialize more than once!");
 		}
 		Initializer.initialized = true;
-		final var file = new File(Shared.BASE_DIRECTORY);
-		final var propertiesFile = new File(file, "game.properties");
 		try {
 			Thread.sleep(500);
 			while (Initializer.installing) {
 				// Do nothing, as we are waiting for the end of the installation process
 			}
-			System.getProperties().load(Files.newInputStream(Paths.get(propertiesFile.toURI())));
+			System.getProperties().load(Files.newInputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI())));
 		} catch (final IOException | RuntimeException | InterruptedException e) {
 			Shared.LOGGER.error("Initialization failed!");
 			Shared.LOGGER.exception(e);
