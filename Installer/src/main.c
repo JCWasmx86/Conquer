@@ -1,8 +1,8 @@
-#include <assert.h>
 #include <aclapi.h>
-#include <winbase.h>
+#include <assert.h>
 #include <shlobj.h>
 #include <shfolder.h>
+#include <winbase.h>
 
 #include <stdint.h>
 #include <stdio.h>
@@ -39,9 +39,10 @@ void createLinkToLauncher(void);
 int main(int argc, char **argv) {
 	char *name = getBaseDirectory();
 	CreateDirectory(name, NULL);
-	HANDLE h = CreateFileA(name, GENERIC_WRITE, FILE_SHARE_DELETE, NULL, CREATE_ALWAYS,
-				FILE_ATTRIBUTE_NORMAL,NULL);
-	SetSecurityInfo(h, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, NULL, NULL);
+	HANDLE h = CreateFileA(name, GENERIC_WRITE, FILE_SHARE_DELETE, NULL,
+						   CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	SetSecurityInfo(h, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL,
+					NULL, NULL);
 	free(name);
 	writeFile("launcher.exe", &launcher, launcherSize);
 	writeFile("Conquer.jar", &conquer, conquerSize);
@@ -55,6 +56,9 @@ int main(int argc, char **argv) {
 	writeFile("jorbis.jar", &jorbisJar, jorbisJarSize);
 	writeFile("vorbisspi.jar", &vorbisspiJar, vorbisspiJarSize);
 	createLinkToLauncher();
+	MessageBox(NULL, "Installed Conquer!", "Success",
+			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
+				   MB_TOPMOST);
 	return EXIT_SUCCESS;
 }
 char *getBaseDirectory(void) {

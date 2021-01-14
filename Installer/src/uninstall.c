@@ -21,6 +21,11 @@ int main() {
 	deleteFile("jorbis.jar");
 	deleteFile("vorbisspi.jar");
 	deleteFile("");
+	MessageBox(
+		NULL,
+		"Uninstalled Conquer! To finish the removal, please restart sometime.",
+		"Success",
+		MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL | MB_TOPMOST);
 	return EXIT_SUCCESS;
 }
 char *getBaseDirectory(void) {
