@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.net.URL;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
@@ -57,7 +56,7 @@ public class Sound implements LineListener, Serializable {
 							url = this.locate(this.filename + ".ogg");
 							if (url == null) {
 								url = this.locate(this.filename + ".mp3");
-								if (url == null && !new File(this.filename).exists()) {
+								if ((url == null) && !new File(this.filename).exists()) {
 									throw new RuntimeException(new FileNotFoundException(this.filename));
 								}
 							}
@@ -67,13 +66,13 @@ public class Sound implements LineListener, Serializable {
 			}
 			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
 					: AudioSystem.getAudioInputStream(url);
-			AudioFormat format = audioStream.getFormat();
-			float frameRate = 44100;
-			int channels = format.getChannels();
-			AudioFormat targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, channels,
+			final var format = audioStream.getFormat();
+			final var frameRate = 44100F;
+			final var channels = format.getChannels();
+			final var targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, channels,
 					channels * 2, frameRate, false);
 			if (AudioSystem.isConversionSupported(targetFormat, format)) {
-				AudioInputStream din = AudioSystem.getAudioInputStream(targetFormat, audioStream);
+				final var din = AudioSystem.getAudioInputStream(targetFormat, audioStream);
 				this.isPlaying = true;
 				this.audioClip = AudioSystem.getClip();
 				this.audioClip.addLineListener(this);

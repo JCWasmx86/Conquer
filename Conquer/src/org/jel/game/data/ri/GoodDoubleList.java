@@ -8,11 +8,11 @@ class GoodDoubleList extends ArrayList<Double> {
 	private static final long serialVersionUID = 1502828784649438269L;
 	private boolean allowNegative = false;
 
-	GoodDoubleList(Collection<Double> initial) {
+	GoodDoubleList(final Collection<Double> initial) {
 		this.addAll(initial);
 	}
 
-	GoodDoubleList(Collection<Double> initial, boolean b) {
+	GoodDoubleList(final Collection<Double> initial, final boolean b) {
 		this(b);
 		this.addAll(initial);
 	}
@@ -21,7 +21,7 @@ class GoodDoubleList extends ArrayList<Double> {
 		this(false);
 	}
 
-	GoodDoubleList(boolean b) {
+	GoodDoubleList(final boolean b) {
 		this.allowNegative = b;
 	}
 
@@ -34,7 +34,7 @@ class GoodDoubleList extends ArrayList<Double> {
 	private void check(final Double element) {
 		if (element == null) {
 			throw new IllegalArgumentException("element==null");
-		} else if ((!allowNegative) && element < 0) {
+		} else if ((!this.allowNegative) && (element < 0)) {
 			throw new IllegalArgumentException("element < 0: " + element);
 		} else if (Double.isNaN(element)) {
 			throw new IllegalArgumentException("element is NaN");

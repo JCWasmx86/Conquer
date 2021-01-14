@@ -114,15 +114,15 @@ public class Installer implements Runnable {
 			return;
 		}
 		this.write(Messages.getString("Installer.pleaseWait")); //$NON-NLS-1$
-			final var url = new URL(
-					"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip"); //$NON-NLS-1$ //$NON-NLS-2$
-			final var messageString = Messages.getMessage("Installer.downloading", url.toString()); //$NON-NLS-1$
-			this.write(messageString); //$NON-NLS-1$ //$NON-NLS-2$
-			try (var urlStream = url.openStream()) {
-				this.unzipFile(urlStream);
-			} catch (final IOException ioe) {
-				this.writeError(Messages.getString("Installer.downloadFailed") + url); //$NON-NLS-1$
-			}
+		final var url = new URL(
+				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip"); //$NON-NLS-1$
+		final var messageString = Messages.getMessage("Installer.downloading", url.toString()); //$NON-NLS-1$
+		this.write(messageString); // $NON-NLS-1$
+		try (var urlStream = url.openStream()) {
+			this.unzipFile(urlStream);
+		} catch (final IOException ioe) {
+			this.writeError(Messages.getString("Installer.downloadFailed") + url); //$NON-NLS-1$
+		}
 		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile(); //$NON-NLS-1$
 		String newContents = null;
 		try (var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
@@ -211,6 +211,9 @@ public class Installer implements Runnable {
 	}
 
 	private void writeEntry(final ZipInputStream zin, final ZipEntry ze) {
+		if (ze.getName().contains("/")) {
+			new File(Installer.BASE_FILE, ze.getName()).getParentFile().mkdirs();
+		}
 		try (var fos = new FileOutputStream(new File(Installer.BASE_FILE, ze.getName()))) {
 			int read;
 			final var bytes = new byte[1024];

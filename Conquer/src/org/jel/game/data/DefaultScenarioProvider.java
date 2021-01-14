@@ -7,7 +7,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -16,9 +15,9 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 
 	@Override
 	public List<InstalledScenario> getScenarios() {
-		List<InstalledScenario> ret = new ArrayList<>();
+		final List<InstalledScenario> ret = new ArrayList<>();
 		try {
-			Document d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
+			final var d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
 			final var infoNode = this.findNode(d.getChildNodes());
 			final var topNodes = infoNode.getChildNodes();
 			for (var i = 0; i < topNodes.getLength(); i++) {

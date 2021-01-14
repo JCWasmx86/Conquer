@@ -20,33 +20,35 @@ import org.jel.game.data.Shared;
 final class SettingsDialog extends JFrame {
 	private static final long serialVersionUID = -2372114950563857591L;
 	private static final SettingsDialog INSTANCE = new SettingsDialog();
-	private JCheckBox useSPI = new JCheckBox(Messages.getString("Settings.useSPI"), Shared.useSPI());
-	private JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
-	private JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"), Shared.level1Logging());
-	private JCheckBox level2Logging = new JCheckBox(Messages.getString("Settings.level2"), Shared.level2Logging());
+	private final JCheckBox useSPI = new JCheckBox(Messages.getString("Settings.useSPI"), Shared.useSPI());
+	private final JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
+	private final JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"),
+			Shared.level1Logging());
+	private final JCheckBox level2Logging = new JCheckBox(Messages.getString("Settings.level2"),
+			Shared.level2Logging());
 
 	public static void showWindow() {
 		SettingsDialog.INSTANCE.setVisible(true);
-		INSTANCE.update();
+		SettingsDialog.INSTANCE.update();
 	}
 
 	private void update() {
 		this.useSPI.setSelected(Shared.useSPI());
 		this.level1Logging.setSelected(Shared.level1Logging());
 		this.level2Logging.setSelected(Shared.level2Logging());
-		jtextfield.setText(Shared.getNetworktimeout() + "");
+		this.jtextfield.setText(Shared.getNetworktimeout() + "");
 	}
 
 	private SettingsDialog() {
 		this.setTitle("Settings");
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		this.add(useSPI);
-		this.add(level1Logging);
-		this.add(level2Logging);
+		this.add(this.useSPI);
+		this.add(this.level1Logging);
+		this.add(this.level2Logging);
 		final var networkTimeOutPanel = new JPanel();
 		networkTimeOutPanel.setLayout(new BoxLayout(networkTimeOutPanel, BoxLayout.X_AXIS));
 		networkTimeOutPanel.add(new JLabel(Messages.getString("Settings.timeout")));
-		networkTimeOutPanel.add(jtextfield);
+		networkTimeOutPanel.add(this.jtextfield);
 		networkTimeOutPanel.add(new JLabel("ms"));
 		this.add(networkTimeOutPanel);
 		final var buttonPanel = new JPanel();
@@ -55,37 +57,37 @@ final class SettingsDialog extends JFrame {
 		final var reset = new JButton(Messages.getString("Settings.reset"));
 		buttonPanel.add(save);
 		buttonPanel.add(reset);
-		reset.addActionListener(a -> update());
-		save.addActionListener(a -> dump());
+		reset.addActionListener(a -> this.update());
+		save.addActionListener(a -> this.dump());
 		this.add(buttonPanel);
 		this.pack();
 	}
 
 	private void dump() {
 		try {
-			int i = Integer.parseInt(jtextfield.getText());
+			final var i = Integer.parseInt(this.jtextfield.getText());
 			if (i < 0) {
 				JOptionPane.showMessageDialog(null, Messages.getString("Settings.negativeInteger"));
 				return;
 			}
-		} catch (NumberFormatException nfe) {
+		} catch (final NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(null, Messages.getString("Settings.badInteger"));
 			return;
 		}
 		final var p = new Properties();
 		try (final var in = Files.newInputStream(Paths.get(Shared.PROPERTIES_FILE))) {
 			p.load(in);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
-		p.put("conquer.network.timeout", jtextfield.getText());
-		p.put("conquer.usespi", useSPI.isSelected() + "");
-		p.put("conquer.logging.level1", level1Logging.isSelected() + "");
-		p.put("conquer.logging.level2", level2Logging.isSelected() + "");
+		p.put("conquer.network.timeout", this.jtextfield.getText());
+		p.put("conquer.usespi", this.useSPI.isSelected() + "");
+		p.put("conquer.logging.level1", this.level1Logging.isSelected() + "");
+		p.put("conquer.logging.level2", this.level2Logging.isSelected() + "");
 		System.getProperties().putAll(p);
 		try (final var fw = new FileWriter(Shared.PROPERTIES_FILE)) {
 			p.store(fw, null);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
 	}

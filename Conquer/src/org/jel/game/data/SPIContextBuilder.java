@@ -13,8 +13,9 @@ public class SPIContextBuilder {
 		final var installedScenarios = new ArrayList<InstalledScenario>();
 		final var providers = ServiceLoader.load(InstalledScenarioProvider.class);
 		providers.forEach(a -> {
-			if (a.getScenarios() == null)
+			if (a.getScenarios() == null) {
 				return;
+			}
 			for (var b : a.getScenarios()) {
 				if (b != null) {
 					installedScenarios.add(b);

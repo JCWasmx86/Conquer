@@ -20,11 +20,14 @@ module org.jel.game {
 	exports org.jel.game.plugins;
 	exports org.jel.game.data.strategy;
 	exports org.jel.game.messages;
+	exports org.jel.game.data.ri;
 
 	uses org.jel.game.data.InstalledScenarioProvider;
 	uses org.jel.game.data.strategy.StrategyProvider;
 	uses org.jel.game.plugins.Plugin;
 	uses org.jel.game.data.ConquerInfoReaderFactory;
+
+	opens org.jel.game.data.ri to java.base;
 
 	provides ConquerInfoReaderFactory with ScenarioFileReaderFactory;
 	provides StrategyProvider

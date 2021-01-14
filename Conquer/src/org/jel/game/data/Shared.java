@@ -24,7 +24,7 @@ public final class Shared {
 
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 
-	public static final String PROPERTIES_FILE = BASE_DIRECTORY + File.separatorChar + "game.properties";
+	public static final String PROPERTIES_FILE = Shared.BASE_DIRECTORY + File.separatorChar + "game.properties";
 	/**
 	 * The maximum level of defense, resource production,...
 	 */

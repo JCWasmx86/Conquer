@@ -52,8 +52,9 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
 		for (var i = 0; i < clans.size(); i++) {
-			if (clans.get(i).isPlayerClan())
+			if (clans.get(i).isPlayerClan()) {
 				continue;
+			}
 			final var clan = clans.get(i);
 			final var text = clan.getName();
 			final var clanLabel = new JLabel(text);

@@ -327,7 +327,7 @@ final class Clan implements IClan {
 			throw new IllegalArgumentException(
 					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
 		}
-		this.resourceStats = new GoodDoubleList(resourceStats,true);
+		this.resourceStats = new GoodDoubleList(resourceStats, true);
 	}
 
 	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {

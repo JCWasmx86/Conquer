@@ -99,7 +99,7 @@ final class ResourceButton extends JPanel {
 
 	private String getMaxUpgradeText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
+		var currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		int currentLevel = level;
 		while (true) {
 			final var costs = this.city.getClan().costs(currentLevel + 1);
@@ -136,7 +136,7 @@ final class ResourceButton extends JPanel {
 	}
 
 	private void updateMaximumUpgrade(final int level) {
-		double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
+		var currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		var currentLevel = level;
 		while (true) {
 			final var costs = this.city.getClan().costs(currentLevel + 1);
@@ -160,7 +160,7 @@ final class ResourceButton extends JPanel {
 
 	private void updateUpgradeThisResource(final int level) {
 		final var costsForUpgrade = this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1);
-		final double currentCoins = this.city.getInfo().getPlayerClan().getCoins();
+		final var currentCoins = this.city.getInfo().getPlayerClan().getCoins();
 		if ((costsForUpgrade < currentCoins) && (this.city.isPlayerCity())) {
 			this.upgradeThisResource.setEnabled(true);
 			this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
