@@ -66,22 +66,36 @@ java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist
 mkdir tmp
 cd backend
-mkdir META-INF
+mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
 echo Created-By: $major >>META-INF/MANIFEST.MF
+echo org.jel.game.plugins.builtins.ChangeCitiesMinds>META-INF/services/org.jel.game.plugins.Plugin
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/ChangeCitiesMinds.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
 rm org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
+echo org.jel.game.plugins.builtins.DefaultMusic>META-INF/services/org.jel.game.plugins.Plugin
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/DefaultMusic.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/DefaultMusic.class
 rm org/jel/game/plugins/builtins/DefaultMusic.class
+echo org.jel.game.plugins.builtins.IncreaseGrowth>META-INF/services/org.jel.game.plugins.Plugin
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/IncreaseGrowth.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/IncreaseGrowth.class
 rm org/jel/game/plugins/builtins/IncreaseGrowth.class
+echo org.jel.game.plugins.builtins.MoneyAnalyzer>META-INF/services/org.jel.game.plugins.Plugin
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/MoneyAnalyzer.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer*.properties
 rm org/jel/game/plugins/builtins/MoneyAnalyzer.class org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoneyMessage.class org/jel/game/plugins/builtins/MoneyAnalyzerMessages.class org/jel/game/plugins/builtins/moneyAnalyzer*.properties
+echo org.jel.game.plugins.builtins.PeriodicGrowthChange>META-INF/services/org.jel.game.plugins.Plugin
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/PeriodicGrowthChange.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/PeriodicGrowthChange.class
 rm org/jel/game/plugins/builtins/PeriodicGrowthChange.class
+echo org.jel.game.plugins.builtins.ResourceAnalyzer>META-INF/services/org.jel.game.plugins.Plugin
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/ResourceAnalyzer.jar META-INF/MANIFEST.MF org/jel/game/plugins/builtins/*.class org/jel/game/plugins/builtins/*.properties
 rm -rf org/jel/game/plugins/builtins/
+rm META-INF/services/org.jel.game.plugins.Plugin
+echo org.jel.game.strategies.SortedStrategyProvider>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/SortedStrategy.jar META-INF/MANIFEST.MF org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
 cd ../tmp
@@ -131,9 +145,15 @@ wait
 mkdir ../conquer-dist/music
 cp -v ../music_tmp/* ../conquer-dist/music
 cd ../conquer-dist/backend
-mkdir META-INF
+mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
 echo Created-By: $major >>META-INF/MANIFEST.MF
+echo org.jel.game.data.ConquerInfoReaderFactory>META-INF/services/org.jel.game.data.ConquerInfoReaderFactory
+echo org.jel.game.data.builtin.OffensiveStrategyProvider>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+echo org.jel.game.data.builtin.DefensiveStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+echo org.jel.game.data.builtin.ModerateStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+echo org.jel.game.data.builtin.RandomStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+echo org.jel.game.data.DefaultScenarioProvider>META-INF/services/org.jel.game.data.InstalledScenarioProvider
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer.jar *
 cd ..

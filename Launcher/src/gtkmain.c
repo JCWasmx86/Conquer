@@ -346,6 +346,7 @@ int main(int argc, char **argv) {
 
 static void dumpConfiguration(Configuration c) {
 	char *base = getBaseDirectory();
+	initDirectoryStructure();
 	// The file will be ~/.config/.conquer/config.json
 	char *jsonFile = calloc(strlen(base) + strlen("/config.json") + 1, 1);
 	assert(jsonFile);
