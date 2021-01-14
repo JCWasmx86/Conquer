@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
  */
 public final class XMLReader {
 	private static final XMLReader INSTANCE = new XMLReader();
-	private static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
+	static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
 	private static Consumer<Throwable> throwableConsumer;
 
 	/**

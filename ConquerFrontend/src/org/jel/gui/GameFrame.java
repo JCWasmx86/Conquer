@@ -411,6 +411,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.loopPlayer.start();
 		} catch (final IllegalThreadStateException itse) {
 			// Nothing serious
+			Shared.LOGGER.message("Nothing serious");
 			Shared.LOGGER.exception(itse);
 		}
 		final var connections = cities.getConnections();

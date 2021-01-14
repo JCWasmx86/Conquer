@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-public final class Logger {
+public final class Logger{
 	private final String file;
 	private BufferedWriter bw;
 

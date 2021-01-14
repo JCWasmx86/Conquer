@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
+import org.jel.game.data.SPIContextBuilder;
 import org.jel.game.data.Shared;
 import org.jel.game.data.XMLReader;
 import org.jel.gui.utils.ImageResource;
@@ -47,7 +48,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 */
 	void init(final Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		this.context = XMLReader.getInstance().readInfo();
+		this.context = Shared.useSPI() ? new SPIContextBuilder().buildContext() : XMLReader.getInstance().readInfo();
 		final var newScenarios = new DefaultListModel<InstalledScenario>();
 		newScenarios.addAll(this.context.getInstalledMaps());
 		final JButton jb = new RoundButton(new ImageResource("back.png")); //$NON-NLS-1$
