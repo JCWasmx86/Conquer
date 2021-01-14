@@ -149,7 +149,7 @@ cd ../conquer-dist/backend
 mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
 echo Created-By: $major >>META-INF/MANIFEST.MF
-echo org.jel.game.data.ConquerInfoReaderFactory>META-INF/services/org.jel.game.data.ConquerInfoReaderFactory
+echo org.jel.game.data.ri.ScenarioFileReaderFactory>META-INF/services/org.jel.game.data.ConquerInfoReaderFactory
 echo org.jel.game.data.builtin.OffensiveStrategyProvider>META-INF/services/org.jel.game.data.strategy.StrategyProvider
 echo org.jel.game.data.builtin.DefensiveStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
 echo org.jel.game.data.builtin.ModerateStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider

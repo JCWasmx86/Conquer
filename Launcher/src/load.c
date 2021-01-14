@@ -42,20 +42,19 @@ void *loadJavaLibrary(Configuration conf) {
 	SetDllDirectoryA(binDir);
 	free(binDir);
 #endif
-	void *handle = NULL;
 #ifndef _WIN32
 	char *path = "lib/server/libjvm.so";
 	char *pathToSo = calloc(strlen(directory) + strlen(path) + 1, 1);
 	assert(pathToSo);
 	sprintf(pathToSo, "%s%s", directory, path);
-	handle = dlopen(pathToSo, RTLD_LAZY);
+	void* handle = dlopen(pathToSo, RTLD_LAZY);
 	free(pathToSo);
 #else
 	char *path = "bin\\server\\jvm.dll";
 	char *pathToDll = calloc(strlen(directory) + strlen(path) + 1, 1);
 	assert(pathToDll);
 	sprintf(pathToDll, "%s%s", directory, path);
-	handle = LoadLibrary(pathToDll);
+	void* handle = LoadLibrary(pathToDll);
 	free(pathToDll);
 #endif
 	free(directory);
@@ -66,7 +65,6 @@ void *loadJavaLibrary(Configuration conf) {
 		perror("LoadLibrary");
 #endif
 		fflush(stderr);
-		assert(handle);
 	}
 	return handle;
 }

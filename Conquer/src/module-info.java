@@ -27,8 +27,6 @@ module org.jel.game {
 	uses org.jel.game.plugins.Plugin;
 	uses org.jel.game.data.ConquerInfoReaderFactory;
 
-	opens org.jel.game.data.ri to java.base;
-
 	provides ConquerInfoReaderFactory with ScenarioFileReaderFactory;
 	provides StrategyProvider
 			with OffensiveStrategyProvider, DefensiveStrategyProvider, ModerateStrategyProvider, RandomStrategyProvider;
