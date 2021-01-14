@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -61,6 +62,16 @@ final class SettingsDialog extends JFrame {
 	}
 
 	private void dump() {
+		try {
+			int i = Integer.parseInt(jtextfield.getText());
+			if (i < 0) {
+				JOptionPane.showMessageDialog(null, Messages.getString("Settings.negativeInteger"));
+				return;
+			}
+		} catch (NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(null, Messages.getString("Settings.badInteger"));
+			return;
+		}
 		final var p = new Properties();
 		try (final var in = Files.newInputStream(Paths.get(Shared.PROPERTIES_FILE))) {
 			p.load(in);
