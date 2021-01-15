@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
+//This is there because of legacy reasons.
 public final class Logger {
 	private final String file;
 	private BufferedWriter bw;

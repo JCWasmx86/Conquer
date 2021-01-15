@@ -248,6 +248,9 @@ if [[ -z "${IS_WIN}" ]]; then
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
 	find . -exec touch -t 201108231405.14 {} \;
+	cd conquer/DEBIAN
+	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
+	cd ../..
 	dpkg-deb --build conquer
 	rm -r conquer-engine
 	mkdir -p conquer-engine/usr/{bin,share/java,share/conquer-engine}
@@ -263,6 +266,9 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	cp Conquer.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
+	cd conquer-engine/DEBIAN
+	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
+	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-engine
 	rm -r conquer-gui
@@ -287,6 +293,9 @@ if [[ -z "${IS_WIN}" ]]; then
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o conquer-gui/usr/share/java/conquer/tritonus.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o conquer-gui/usr/share/java/conquer/jorbis.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o conquer-gui/usr/share/java/conquer/vorbisspi.jar
+	cd conquer-gui/DEBIAN
+	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
+	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 else
