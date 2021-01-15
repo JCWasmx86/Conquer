@@ -64,6 +64,9 @@ public final class GlobalContext {
 	}
 
 	public ConquerInfo loadInfo(final InstalledScenario is) {
+		if (is == null) {
+			throw new IllegalArgumentException("is==null");
+		}
 		final var list = this.readers.stream()
 				.sorted((a, b) -> Integer.compare(a.getMagicNumber().length, b.getMagicNumber().length))
 				.collect(Collectors.toList());

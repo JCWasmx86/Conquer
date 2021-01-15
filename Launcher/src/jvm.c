@@ -20,8 +20,7 @@ void runJVM(Configuration configuration) {
 	jvmoptions[0].optionString = classpath;
 	jvmoptions[1].optionString = "--enable-preview";
 	jvmoptions[2].optionString = "-XX:+ShowCodeDetailsInExceptionMessages";
-	jvmoptions[3].optionString = "-Xmx6G";
-	jvmoptions[4].optionString = "-Xms3G";
+	jvmoptions[3].optionString = "-Xms1G";
 	for (size_t i = 0; i < configuration->numOptions; i++)
 		jvmoptions[NUM_PREDEFINED_ARGS + i].optionString =
 			configuration->options[i];

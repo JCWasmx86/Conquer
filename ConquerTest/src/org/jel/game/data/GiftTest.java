@@ -25,4 +25,25 @@ public class GiftTest {
 	public void testNullResources() {
 		new Gift(null, 50);
 	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNan() {
+		new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.NaN), 50);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNegative() {
+		new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0), 50);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testNegativeInfinity() {
+		new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.NEGATIVE_INFINITY), 50);
+		new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.POSITIVE_INFINITY), 50);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testPositiveInfinity() {
+		new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.POSITIVE_INFINITY), 50);
+	}
 }

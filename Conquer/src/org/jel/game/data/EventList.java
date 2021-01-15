@@ -13,6 +13,9 @@ public final class EventList extends ArrayList<Message> {
 
 	@Override
 	public void add(final int index, final Message element) {
+		if (element == null) {
+			throw new IllegalArgumentException("message==null");
+		}
 		this.listeners.forEach(a -> a.added(element));
 		super.add(index, element);
 	}
@@ -49,7 +52,7 @@ public final class EventList extends ArrayList<Message> {
 		if (!(o instanceof Message)) {
 			throw new IllegalArgumentException("o has to be an instanceof Message");
 		}
-		this.listeners.forEach(a -> a.added((Message) o));
+		this.listeners.forEach(a -> a.removed((Message) o));
 		return super.remove(o);
 	}
 }

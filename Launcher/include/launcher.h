@@ -11,7 +11,7 @@
 #define SEP ";"
 #define DELIM "\\"
 #endif
-#define NUM_PREDEFINED_ARGS 5
+#define NUM_PREDEFINED_ARGS 4
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 typedef struct _config {
 	// JVM Options

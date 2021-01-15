@@ -60,7 +60,7 @@ import org.jel.game.utils.Graph;
  * One of the most important classes as it combines everything. It is a
  * reference-implementation of {@link ConquerInfo}.
  */
-public final class Game implements ConquerInfo {
+final class Game implements ConquerInfo {
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
 	private static final double GROWTH_LIMIT = 1.05;
 	private static final double WEAK_GROWTH_REDUCE_FACTOR = 0.9;
