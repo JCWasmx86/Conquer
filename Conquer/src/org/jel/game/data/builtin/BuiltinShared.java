@@ -23,8 +23,19 @@ final class BuiltinShared {
 	private static final int MAX_ITERATIONS = 100;
 	private static final int COINS_TO_RETAIN = 20;
 
+	// Method for checking things that MUST be true.
+	static void assertThat(final boolean b, final String message) {
+		if (!b) {
+			throw new InternalError("Assertion failed: " + message);
+		}
+	}
+
 	static void moderateAttack(final IClan clan, final ICity source, final Graph<ICity> graph,
 			final StrategyObject object) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(source != null, "source==null");
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
 		// Find all cities around the source of clans with a relationship < 75
 		final var citiesOfEnemies = StreamUtils
 				.getCitiesAroundCityNot(graph, source,
@@ -46,6 +57,9 @@ final class BuiltinShared {
 	}
 
 	static void moderatePlay(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
 		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).collect(Collectors.toList());
 		StreamUtils.forEach(graph, clan, c -> {
 			// If there are too many soldiers in a city, try to move them, else recruit
@@ -67,6 +81,9 @@ final class BuiltinShared {
 		if (clan.isPlayerClan()) {
 			return;
 		}
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
 		final List<Double> resources = new ArrayList<>(clan.getResourceStats());
 		final var map = new HashMap<Integer, Double>();
 		for (var i = 0; i < resources.size(); i++) {
@@ -83,6 +100,9 @@ final class BuiltinShared {
 	}
 
 	static void offensiveAttack(final IClan clan, final Graph<ICity> cityGraph, final StrategyObject object) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(cityGraph != null, "cityGraph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
 		final Predicate<ICity> inSafeCountry = city -> StreamUtils.getCitiesAroundCity(cityGraph, city, clan)
 				.count() > 0;
 		final Predicate<ICity> isReachableCityOfTheEnemy = city -> (StreamUtils
@@ -116,6 +136,9 @@ final class BuiltinShared {
 
 	static void offensiveRecruiting(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
 		// Find all own cities that are on the border to another clan.
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
+		BuiltinShared.assertThat(clan != null, "clan==null");
 		StreamUtils.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
 				.sorted((a, b) -> {
 					// Sort them using the defense strength
@@ -127,14 +150,19 @@ final class BuiltinShared {
 	}
 
 	static double sum(final IClan clan) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
 		return clan.getCoins() + clan.getResources().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
 	static double sum(final Gift gift) {
+		BuiltinShared.assertThat(gift != null, "gift==null");
 		return gift.getNumberOfCoins() + gift.getMap().values().stream().mapToDouble(Double::doubleValue).sum();
 	}
 
 	private static void tryUpdatingDefense(final Graph<ICity> graph, final StrategyObject object, final IClan clan) {
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
+		BuiltinShared.assertThat(clan != null, "clan==null");
 		// Sort all cities using the basedefense as key
 		final var sortedListOfCities = StreamUtils
 				.getCitiesAsStream(graph, clan, Comparator.comparing(ICity::getDefense)).collect(Collectors.toList());
@@ -180,6 +208,11 @@ final class BuiltinShared {
 
 	static void tryUpdatingResources(final Graph<ICity> graph, final StrategyObject object, final IClan clan,
 			final Map<Integer, Double> map) {
+		BuiltinShared.assertThat(graph != null, "graph==null");
+		BuiltinShared.assertThat(object != null, "object==null");
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(map != null, "map==null");
+		// Further checks would be nice, but would be too slow.
 		// Try to upgrade all resources with negative production
 		map.entrySet().stream().filter(a -> a.getValue() < 0).forEach(a -> {
 			final var aKey = a.getKey();

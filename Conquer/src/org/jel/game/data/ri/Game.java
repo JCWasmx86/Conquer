@@ -355,6 +355,9 @@ final class Game implements ConquerInfo {
 	}
 
 	private void eval(final int selector, final int clanOne, final int clanTwo, final Random r) {
+		if (this.isDead(this.getClan(clanOne)) || this.isDead(this.getClan(clanTwo))) {
+			return;
+		}
 		if ((selector >= 4500) && (selector < 4650)) {
 			this.worseRelationship(r, clanOne, clanTwo);
 		} else if ((selector >= 4500) && (selector < 4700)) {

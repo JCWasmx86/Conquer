@@ -22,6 +22,12 @@ public final class ModerateStrategyImpl implements Strategy {
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
 			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
+		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
+		BuiltinShared.assertThat(gift != null, "gift==null");
+		BuiltinShared.assertThat(newValue != null, "newValue==null");
+		BuiltinShared.assertThat(strategyObject != null, "strategyObject==null");
+		BuiltinShared.assertThat(oldValue >= 0, "oldValue<0: " + oldValue);
 		if (Math.random() < (1 - (strategyObject.getRelationship(sourceClan, destinationClan) * 0.1))) {
 			return false;
 		}
@@ -37,6 +43,9 @@ public final class ModerateStrategyImpl implements Strategy {
 
 	@Override
 	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject object) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(cities != null, "cities==null");
+		BuiltinShared.assertThat(object != null, "object==null");
 		BuiltinShared.moderatePlay(cities, object, clan);
 		this.sendGift(clan, cities, object);
 	}

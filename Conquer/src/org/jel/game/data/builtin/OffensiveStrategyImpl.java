@@ -23,6 +23,12 @@ public final class OffensiveStrategyImpl implements Strategy {
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
 			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
+		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
+		BuiltinShared.assertThat(gift != null, "gift==null");
+		BuiltinShared.assertThat(newValue != null, "newValue==null");
+		BuiltinShared.assertThat(strategyObject != null, "strategyObject==null");
+		BuiltinShared.assertThat(oldValue >= 0, "oldValue<0: " + oldValue);
 		if (Math.random() > OffensiveStrategyImpl.DECLINE_GIFT_PROBABILITY) {
 			return false;
 		} else {
@@ -40,6 +46,9 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	@Override
 	public void applyStrategy(final IClan clan, final Graph<ICity> cities, final StrategyObject obj) {
+		BuiltinShared.assertThat(clan != null, "clan==null");
+		BuiltinShared.assertThat(cities != null, "cities==null");
+		BuiltinShared.assertThat(obj != null, "obj==null");
 		this.object = obj;
 		this.graph = cities;
 		final var data = clan.getData();
