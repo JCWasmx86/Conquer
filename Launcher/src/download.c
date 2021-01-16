@@ -20,9 +20,6 @@ static int downloadFile(const char *, const char *, void *,
 
 char *hasToDownloadJava(void) {
 #ifdef _WIN32
-	MessageBox(NULL, "Downloading Java 15! Please wait!", "Please wait!",
-			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
-				   MB_TOPMOST);
 	char *base = getBaseDirectory();
 	assert(base);
 	char *dirBase = calloc(strlen(base) + 20, 1);
@@ -83,6 +80,9 @@ void downloadJDK(void *data,
 				 void (*extractCallback)(void *, const char *, int, int)) {
 	char *outputFile = hasToDownloadJava();
 	if (outputFile) {
+		MessageBox(NULL, "Downloading Java 15! Please wait!", "Please wait!",
+                           MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
+                                   MB_TOPMOST);
 		if (downloadFile(getURL(), outputFile, data, progressFunc)) {
 			fputs("Download of java 15 failed!", stderr);
 			fflush(stderr);
