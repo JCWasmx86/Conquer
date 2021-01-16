@@ -336,12 +336,12 @@ zip --version>>versions
 cd ../Launcher/cJSON
 git rev-parse HEAD>>../../conquer-dist/versions
 cd ../../Conquer
-mkdir tmp
+mkdir -p tmp/data
 javac `find src test -name "*.java"` -d tmp --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
-cp -rv ../conquer-dist/backend/data tmp
+cp -rv ../conquer-dist/conquer.zip tmp/data
 cd tmp
 #First install everything
 java --enable-preview org.jel.game.testsuite.Testsuite1||exit
