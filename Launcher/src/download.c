@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 static int progress(void *, curl_off_t, curl_off_t, curl_off_t, curl_off_t);
 static size_t writeData(void *, size_t, size_t, FILE *);
 static int lastInteger = 0;
@@ -17,6 +20,9 @@ static int downloadFile(const char *, const char *, void *,
 
 char *hasToDownloadJava(void) {
 #ifdef _WIN32
+	MessageBox(NULL, "Downloading Java 15! Please wait!", "Please wait!",
+			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
+				   MB_TOPMOST);
 	char *base = getBaseDirectory();
 	assert(base);
 	char *dirBase = calloc(strlen(base) + 20, 1);
