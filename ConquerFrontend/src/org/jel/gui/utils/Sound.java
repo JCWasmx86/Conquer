@@ -48,21 +48,21 @@ public class Sound implements LineListener, Serializable {
 			var url = this.locate(this.filename);
 			if (url == null) {
 				url = this.locate(this.filename + ".wav");
-				if (url == null) {
-					url = this.locate(this.filename + ".aiff");
-					if (url == null) {
-						url = this.locate(this.filename + ".au");
-						if (url == null) {
-							url = this.locate(this.filename + ".ogg");
-							if (url == null) {
-								url = this.locate(this.filename + ".mp3");
-								if ((url == null) && !new File(this.filename).exists()) {
-									throw new RuntimeException(new FileNotFoundException(this.filename));
-								}
-							}
-						}
-					}
-				}
+			}
+			if (url == null) {
+				url = this.locate(this.filename + ".aiff");
+			}
+			if (url == null) {
+				url = this.locate(this.filename + ".au");
+			}
+			if (url == null) {
+				url = this.locate(this.filename + ".ogg");
+			}
+			if (url == null) {
+				url = this.locate(this.filename + ".mp3");
+			}
+			if ((url == null) && !new File(this.filename).exists()) {
+				throw new RuntimeException(new FileNotFoundException(this.filename));
 			}
 			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
 					: AudioSystem.getAudioInputStream(url);
