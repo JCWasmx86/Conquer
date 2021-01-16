@@ -114,3 +114,27 @@ vorbisspiJar:
 .align 8
 vorbisspiJarSize:
 .int vorbisspiJarSize - vorbisspiJar
+
+
+.global resourcesJar
+.align 8
+resourcesJar:
+.incbin "Conquer_resources.jar"
+
+.global resourcesJarSize
+.align 8
+resourcesJarSize:
+.int resourcesJarSize - resourcesJar
+
+
+
+
+.global guiResourcesJar
+.align 8
+guiResourcesJar:
+.incbin "Conquer_frontend_resources.jar"
+
+.global guiResourcesJarSize
+.align 8
+guiResourcesJarSize:
+.int guiResourcesJarSize - guiResourcesJar

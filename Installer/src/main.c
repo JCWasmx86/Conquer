@@ -19,6 +19,7 @@ extern uint8_t mp3SpiJar;
 extern uint8_t tritonusJar;
 extern uint8_t jorbisJar;
 extern uint8_t vorbisspiJar;
+extern uint8_t resourcesJar;
 extern uint64_t launcherSize;
 extern uint64_t conquerSize;
 extern uint64_t conquerFrontendSize;
@@ -30,7 +31,7 @@ extern uint64_t mp3SpiJarSize;
 extern uint64_t tritonusJarSize;
 extern uint64_t jorbisJarSize;
 extern uint64_t vorbisspiJarSize;
-
+extern uint64_t resourcesJarSize;
 char *getBaseDirectory(void);
 void writeFile(const char *fileName, void *buf, uint64_t size);
 char *getDesktopDirectory(void);
@@ -55,6 +56,8 @@ int main(int argc, char **argv) {
 	writeFile("tritonus.jar", &tritonusJar, tritonusJarSize);
 	writeFile("jorbis.jar", &jorbisJar, jorbisJarSize);
 	writeFile("vorbisspi.jar", &vorbisspiJar, vorbisspiJarSize);
+	writeFile("Conquer_resources.jar", &resourcesJar, resourcesJarSize);
+	writeFile("Conquer_frontend_resources.jar", &guiResourcesJar, guiResourcesJarSize);
 	createLinkToLauncher();
 	MessageBox(NULL, "Installed Conquer!", "Success",
 			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |

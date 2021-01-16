@@ -11,7 +11,7 @@
 #define SEP ";"
 #define DELIM "\\"
 #endif
-#define NUM_PREDEFINED_ARGS 4
+#define NUM_PREDEFINED_ARGS 6
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 typedef struct _config {
 	// JVM Options
@@ -44,4 +44,5 @@ char *hasToDownloadJava(void);
 // Get Java URL
 char *getURL(void);
 char *generateClasspath(Configuration);
+char* generateModulePath(void);
 #endif

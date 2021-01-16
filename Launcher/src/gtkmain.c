@@ -242,6 +242,8 @@ static void startConquer(ProgramData pd) {
 	jvmoptions[1].optionString = "--enable-preview";
 	jvmoptions[2].optionString = "-XX:+ShowCodeDetailsInExceptionMessages";
 	jvmoptions[3].optionString = "-Xms1G";
+	jvmoptions[4].optionString = generateModulePath();
+	jvmoptions[5].optionString = "--add-modules=org.jel.game,org.jel.frontend";
 	for (size_t i = 0; i < configuration->numOptions; i++)
 		jvmoptions[NUM_PREDEFINED_ARGS + i].optionString =
 				configuration->options[i];

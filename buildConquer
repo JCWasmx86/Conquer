@@ -146,9 +146,13 @@ wait
 mkdir ../conquer-dist/music
 cp -v ../music_tmp/* ../conquer-dist/music
 cd ../conquer-dist/backend
+rm -rf META-INF/
 mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
 echo Created-By: $major >>META-INF/MANIFEST.MF
+find . -exec touch -t 201108231405.14 {} \;
+zip -X -r ../Conquer_resources.jar META-INF images data
+rm -r images data
 echo org.jel.game.data.ri.ScenarioFileReaderFactory>META-INF/services/org.jel.game.data.ConquerInfoReaderFactory
 echo org.jel.game.data.builtin.OffensiveStrategyProvider>META-INF/services/org.jel.game.data.strategy.StrategyProvider
 echo org.jel.game.data.builtin.DefensiveStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
@@ -165,10 +169,13 @@ rm Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION
 cd ..
 cp conquer.zip backend/data
 cd frontend
+rm -r META-INF
 mkdir META-INF
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
 echo Created-By: $major >>META-INF/MANIFEST.MF
 find . -exec touch -t 201108231405.14 {} \;
+zip -X -r ../Conquer_frontend_resources.jar images music META-INF
+rm -r images music
 zip -X -r ../Conquer_frontend.jar *
 cd ../../Launcher
 make clean
@@ -265,6 +272,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Description: The game engine for the strategy game conquer>>control
 	cd ../..
 	cp Conquer.jar conquer-engine/usr/share/java
+	cp Conquer_resources.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	cd conquer-engine/DEBIAN
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
@@ -284,7 +292,8 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86>>control
 	echo Description: GUI for Conquer. \(Without launcher\)>>control
 	cd ../..
-	mv Conquer_frontend.jar conquer-gui/usr/share/java
+	cp Conquer_frontend.jar conquer-gui/usr/share/java
+	cp Conquer_frontend_resources.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
 	#TODO: Replace with maven itself.
@@ -304,6 +313,8 @@ else
 	cp Conquer_frontend.jar ../Installer
 	cp Conquer.license ../Installer
 	cp LICENSE.txt ../Installer
+	cp Conquer_resources.jar ../Installer
+	cp Conquer_frontend_resources.jar ../Installer
 	cd ../Installer
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar

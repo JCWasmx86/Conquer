@@ -93,6 +93,12 @@ public class Sound implements LineListener, Serializable {
 			url = ClassLoader.getSystemResource("music/" + filename);
 			if (url == null) {
 				url = ClassLoader.getSystemResource("sounds/" + filename);
+				if (url == null) {
+					url = ClassLoader.getSystemResource("resources/music/" + filename);
+					if (url == null) {
+						url = ClassLoader.getSystemResource("resources/sounds/" + filename);
+					}
+				}
 			}
 		}
 		return url;

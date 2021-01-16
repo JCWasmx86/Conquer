@@ -20,6 +20,8 @@ int main() {
 	deleteFile("tritonus.jar");
 	deleteFile("jorbis.jar");
 	deleteFile("vorbisspi.jar");
+	deleteFile("Conquer_resources.jar");
+	deleteFile("Conquer_frontend_resources.jar");
 	deleteFile("");
 	MessageBox(
 		NULL,
