@@ -47,14 +47,14 @@ void *loadJavaLibrary(Configuration conf) {
 	char *pathToSo = calloc(strlen(directory) + strlen(path) + 1, 1);
 	assert(pathToSo);
 	sprintf(pathToSo, "%s%s", directory, path);
-	void* handle = dlopen(pathToSo, RTLD_LAZY);
+	void *handle = dlopen(pathToSo, RTLD_LAZY);
 	free(pathToSo);
 #else
 	char *path = "bin\\server\\jvm.dll";
 	char *pathToDll = calloc(strlen(directory) + strlen(path) + 1, 1);
 	assert(pathToDll);
 	sprintf(pathToDll, "%s%s", directory, path);
-	void* handle = LoadLibrary(pathToDll);
+	void *handle = LoadLibrary(pathToDll);
 	free(pathToDll);
 #endif
 	free(directory);

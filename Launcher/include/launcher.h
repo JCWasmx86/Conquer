@@ -44,5 +44,5 @@ char *hasToDownloadJava(void);
 // Get Java URL
 char *getURL(void);
 char *generateClasspath(Configuration);
-char* generateModulePath(void);
+char *generateModulePath(void);
 #endif
