@@ -82,7 +82,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 			this.shouldExit = true;
 			this.dispose();
 		});
-		final var selectPanel = new PluginStrategySelectPanel(context);
+		final var selectPanel = new PluginStrategySelectPanel(context, game);
 		final var forwardIcon = forwardButton.getIcon();
 		forwardButton.setSize(forwardIcon.getIconWidth(), forwardIcon.getIconHeight());
 		forwardButton.addActionListener(a -> {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import org.jel.game.data.strategy.StrategyObject;
+import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
 import org.jel.game.plugins.PluginInterface;
 
@@ -86,5 +87,13 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	default int getMaximumLevel() {
 		return 1000;
+	}
+
+	default List<Class<Plugin>> requiredPlugins() {
+		return List.of();
+	}
+
+	default List<Class<StrategyProvider>> requiredStrategyProviders() {
+		return List.of();
 	}
 }

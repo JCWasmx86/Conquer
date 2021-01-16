@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
@@ -17,9 +18,11 @@ final class PluginStrategySelectPanel extends JPanel {
 	private transient GlobalContext context;
 	private final List<JCheckBox> plugins = new ArrayList<>();
 	private final List<JCheckBox> strategies = new ArrayList<>();
+	private final ConquerInfo info;
 
-	PluginStrategySelectPanel(final GlobalContext context) {
+	PluginStrategySelectPanel(final GlobalContext context, final ConquerInfo info) {
 		this.context = context;
+		this.info = info;
 		this.init();
 	}
 
@@ -30,6 +33,7 @@ final class PluginStrategySelectPanel extends JPanel {
 		this.context.getPlugins().forEach(a -> {
 			final var jb = new JCheckBox(a.getName(), true);
 			pluginPanel.add(jb);
+			jb.setEnabled(this.info.requiredPlugins().stream().filter(b -> b == a.getClass()).count() == 0);
 			this.plugins.add(jb);
 		});
 		final var pluginScrollPanel = new JScrollPane(pluginPanel);
@@ -44,9 +48,12 @@ final class PluginStrategySelectPanel extends JPanel {
 				return;
 			}
 			final var jb = new JCheckBox(a.getName(), true);
+			// If the strategy is required, set it to disabled
+			jb.setEnabled(this.info.requiredStrategyProviders().stream().filter(b -> b == a.getClass()).count() == 0);
 			strategiesPanel.add(jb);
 			this.strategies.add(jb);
 		});
+		this.add(strategiesPanel);
 	}
 
 	GlobalContext modifyContext() {

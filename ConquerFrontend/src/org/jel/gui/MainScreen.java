@@ -84,10 +84,10 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var play = new JButton(Messages.getString("MainScreen.play")); //$NON-NLS-1$
 		play.addActionListener(a -> {
 			MainScreen.forwarded = false;
+			this.player.abort();
 			final var lsf = new LevelSelectFrame();
 			lsf.init(this.getLocation());
 			this.dispose();
-			this.player.abort();
 		});
 		play.setAlignmentX(Component.CENTER_ALIGNMENT);
 		play.setFont(play.getFont().deriveFont(50.0f));
@@ -95,10 +95,10 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var credits = new JButton(Messages.getString("MainScreen.credits")); //$NON-NLS-1$
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;
+			this.player.abort();
 			final var cf = new CreditFrame();
 			cf.init(this.getLocation());
 			this.dispose();
-			this.player.abort();
 		});
 		credits.setFont(play.getFont());
 		credits.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -106,10 +106,10 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var tutorial = new JButton(Messages.getString("MainScreen.tutorial")); //$NON-NLS-1$
 		tutorial.addActionListener(a -> {
 			MainScreen.forwarded = false;
+			this.player.abort();
 			final var tutorialFrame = new TutorialFrame();
 			tutorialFrame.init(this.getLocation());
 			this.dispose();
-			this.player.abort();
 		});
 		tutorial.setFont(play.getFont());
 		tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
