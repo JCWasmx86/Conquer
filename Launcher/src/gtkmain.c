@@ -290,6 +290,7 @@ bigCleanup:
 	(*jvm)->DestroyJavaVM(jvm);
 cleanup:
 	free(jvmoptions[0].optionString);
+	free(jvmoptions[4].optionString);
 	free(jvmoptions);
 	freeConfiguration(configuration);
 }

@@ -139,6 +139,7 @@ char *generateClasspath(Configuration configuration) {
 }
 char *generateModulePath() {
 	char *ret = calloc(2500, 1);
+	assert(ret);
 	strcat(ret, "--module-path=");
 #ifndef _WIN32
 	strcat(ret,
