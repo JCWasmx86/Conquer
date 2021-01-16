@@ -624,7 +624,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public Version getVersion() {
-		return new Version(1, 3, 0);
+		return new Version(1, 4, 0);
 	}
 
 	private List<ICity> getWeakestCityInRatioToSurroundingEnemyCities(final List<ICity> reachableCities) {
