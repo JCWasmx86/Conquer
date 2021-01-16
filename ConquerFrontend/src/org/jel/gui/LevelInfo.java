@@ -29,7 +29,6 @@ import org.jel.gui.utils.ImageResource;
  * This class shows all clans in a scenario in a JList. Furthermore there is a
  * back- and forward-button.
  */
-//TODO: Settings button to allow changing the plugins and strategies (Just removing is allowed)
 final class LevelInfo extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 5849067897050863981L;
 	private boolean shouldExit = false;

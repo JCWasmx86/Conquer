@@ -11,7 +11,7 @@ public class ResourceUsage {
 		} else if (stats.length != Resource.values().length) {
 			throw new IllegalArgumentException("Wrong length, expected it to be equals to Resource.values().length");
 		}
-		isBad(coinsPerRoundPerPerson);
+		this.isBad(coinsPerRoundPerPerson);
 		this.personUsed = new double[Resource.values().length];
 		this.soldierUsed = new double[Resource.values().length];
 		for (var i = 0; i < stats.length; i++) {
@@ -21,15 +21,15 @@ public class ResourceUsage {
 				throw new IllegalArgumentException(
 						"Expected stats[i] to be of length 2: {resourceUsageOfPerson;resourceUsageOfSoldier}");
 			}
-			isBad(stats[i][0]);
-			isBad(stats[i][1]);
+			this.isBad(stats[i][0]);
+			this.isBad(stats[i][1]);
 			this.personUsed[i] = stats[i][0];
 			this.soldierUsed[i] = stats[i][1];
 		}
 		this.coinsPerRoundPerPerson = coinsPerRoundPerPerson;
 	}
 
-	private void isBad(double d) {
+	private void isBad(final double d) {
 		if (d < 0) {
 			throw new IllegalArgumentException("argument < 0");
 		} else if (Double.isNaN(d)) {
