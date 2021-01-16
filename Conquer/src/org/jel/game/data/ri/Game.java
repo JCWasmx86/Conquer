@@ -94,6 +94,7 @@ final class Game implements ConquerInfo {
 	private boolean resumed;
 	private File directory;
 	private Consumer<Throwable> throwableConsumer;
+	private GlobalContext context;
 
 	Game() {
 		this.data.setRecruitHooks(new ArrayList<>());
@@ -139,19 +140,7 @@ final class Game implements ConquerInfo {
 		this.throwIfNull(context.getStrategies(), "context.getStrategies()==null");
 		this.throwIfNull(context.getInstalledMaps(), "context.getInstalledMaps()==null");
 		this.data.setPlugins(context.getPlugins());
-		context.getStrategies().forEach(provider -> {
-			final var idx = provider.getId();
-			if (idx >= Game.MAX_STRATEGIES) {
-				Shared.LOGGER.error("idx >= " + Game.MAX_STRATEGIES);
-			} else if (idx < 0) {
-				Shared.LOGGER.error("idx < 0: " + provider.getClass().getCanonicalName());
-			} else if ((this.strategies[idx] != null)) {
-				Shared.LOGGER.error("Slot " + idx + " is already set!");
-			} else {
-				this.strategies[idx] = provider;
-				Shared.logLevel1(provider.getName() + " has index " + idx);
-			}
-		});
+		this.context = context;
 	}
 
 	@Override
@@ -700,6 +689,19 @@ final class Game implements ConquerInfo {
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
 				.collect(Collectors.toList()));
+		this.context.getStrategies().forEach(provider -> {
+			final var idx = provider.getId();
+			if (idx >= Game.MAX_STRATEGIES) {
+				Shared.LOGGER.error("idx >= " + Game.MAX_STRATEGIES);
+			} else if (idx < 0) {
+				Shared.LOGGER.error("idx < 0: " + provider.getClass().getCanonicalName());
+			} else if ((this.strategies[idx] != null)) {
+				Shared.LOGGER.error("Slot " + idx + " is already set!");
+			} else {
+				this.strategies[idx] = provider;
+				Shared.logLevel1(provider.getName() + " has index " + idx);
+			}
+		});
 		this.clans.forEach(a -> a.init(this.strategies, this.getVersion()));
 		if (this.data.getPlugins() != null) {
 			this.data.getPlugins().forEach(a -> a.init(this));

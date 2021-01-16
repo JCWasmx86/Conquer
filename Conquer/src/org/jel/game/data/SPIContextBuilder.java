@@ -28,8 +28,8 @@ public class SPIContextBuilder {
 		final var readers = ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(Provider::get)
 				.collect(Collectors.toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
-				plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toUnmodifiableList()),
-				strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toUnmodifiableList()),
-				readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toUnmodifiableList()));
+				plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+				strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+				readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
 	}
 }

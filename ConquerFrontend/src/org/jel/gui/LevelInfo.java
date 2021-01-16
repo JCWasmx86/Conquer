@@ -29,6 +29,7 @@ import org.jel.gui.utils.ImageResource;
  * This class shows all clans in a scenario in a JList. Furthermore there is a
  * back- and forward-button.
  */
+//TODO: Settings button to allow changing the plugins and strategies (Just removing is allowed)
 final class LevelInfo extends JFrame implements WindowListener {
 	private static final long serialVersionUID = 5849067897050863981L;
 	private boolean shouldExit = false;
@@ -82,10 +83,11 @@ final class LevelInfo extends JFrame implements WindowListener {
 			this.shouldExit = true;
 			this.dispose();
 		});
+		final var selectPanel = new PluginStrategySelectPanel(context);
 		final var forwardIcon = forwardButton.getIcon();
 		forwardButton.setSize(forwardIcon.getIconWidth(), forwardIcon.getIconHeight());
 		forwardButton.addActionListener(a -> {
-			game.addContext(context);
+			game.addContext(selectPanel.modifyContext());
 			game.init();
 			final var gf = new GameFrame(game);
 			gf.init();
@@ -98,6 +100,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		p.add(forwardButton);
 		this.add(p);
 		this.add(scrollPane);
+		this.add(selectPanel);
 		this.pack();
 		this.setLocation(location);
 	}
