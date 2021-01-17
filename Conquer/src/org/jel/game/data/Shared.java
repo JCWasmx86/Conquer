@@ -411,6 +411,9 @@ public final class Shared {
 		return Boolean.getBoolean("conquer.logging.level2");
 	}
 
+	public static Version getReferenceImplementationVersion() {
+		return new Version(1,4,0);
+	}
 	private Shared() {
 
 	}
