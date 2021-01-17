@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import org.jel.game.data.Shared;
+import org.jel.game.utils.Updater;
 import org.jel.gui.utils.LoopPlayer;
 
 /**
@@ -69,7 +70,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
 		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
-		updates.addActionListener(a -> System.out.println("TBD: Updates, current version: "+Shared.getReferenceImplementationVersion()));
+		updates.addActionListener(a -> Updater.update());
 		settings.add(updates);
 		final var furtherSettings = new JMenuItem(Messages.getString("MainScreen.furtherSettings"));
 		furtherSettings.addActionListener(a -> SettingsDialog.showWindow());
