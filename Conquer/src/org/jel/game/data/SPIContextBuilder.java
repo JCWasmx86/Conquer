@@ -8,7 +8,16 @@ import java.util.stream.Collectors;
 import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
 
+/**
+ * A context builder that uses SPI to discover plugins, strategies, readers and
+ * installed scenarios.
+ */
 public class SPIContextBuilder {
+	/**
+	 * Build the context.
+	 * 
+	 * @return The newly built context.
+	 */
 	public GlobalContext buildContext() {
 		final var installedScenarios = new ArrayList<InstalledScenario>();
 		final var providers = ServiceLoader.load(InstalledScenarioProvider.class);
