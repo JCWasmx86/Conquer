@@ -5,14 +5,14 @@ if [[ -z "${EXTENSION}" ]]; then
 	export EXTENSION="ogg"
 fi
 . "${JAVA_HOME}"/release
-major=$(echo $JAVA_VERSION | cut -d. -f1)
+major=$(echo "${JAVA_VERSION}" | cut -d. -f1)
 if [ "$major" == "15" ]; then
 	echo Found suitable java installation
 else
 	echo Didn\'t find java, version 15
 	exit 1
 fi
-if [[ `gcc -dumpversion` =~ "10.*" ]]; then
+if [[ $(gcc -dumpversion) =~ "10.*" ]]; then
 	echo Didn\'t find gcc-10
 	exit 1
 else
@@ -29,7 +29,7 @@ case "${unameOut}" in
 			echo JAVA_HOME is not set\!
 			exit 1
 		else
-			export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin:`cygpath "C:\\Program Files\\Musescore 3\\bin"`
+			export PATH=$PATH:$(cygpath "${JAVA_HOME}")/bin:$(cygpath "C:\\Program Files\\Musescore 3\\bin")
 		fi
 		export TARGET="all-win"
 		export IS_WIN="IS_WIN"
@@ -41,36 +41,36 @@ if ! command -v musescore3 &> /dev/null; then
 	exit 1
 else
 	echo Found musescore
-	export MUSESCORE=`type -p musescore3`
-	echo Musescore=$MUSESCORE
+	export MUSESCORE=$(type -p musescore3)
+	echo Musescore="$MUSESCORE"
 fi
 alias javac="javac -g -parameters --enable-preview --source 15"
 mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music}
-cd Conquer
+cd Conquer || exit
 shopt -s dotglob
-javac `find src -name "*.java"` -d ../conquer-dist/backend|| exit 1
+javac $(find src -name "*.java") -d ../conquer-dist/backend|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
-cd ../ConquerFrontend
+cd ../ConquerFrontend || exit
 cp -rv images ../conquer-dist/frontend
-javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
+javac $(find src -name "*.java") -d ../conquer-dist/frontend --enable-preview --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
 cp src/org/jel/gui/*.properties ../conquer-dist/frontend/org/jel/gui/
 cp -rv images ../conquer-dist/frontend
-cd ../ScenarioGenerator
-javac `find src -name "*.java"` -d bin|| exit 1
+cd ../ScenarioGenerator || exit
+javac $(find src -name "*.java") -d bin|| exit 1
 cp -r images bin
-cd bin
+cd bin || exit
 java --class-path=.:../images:.. org.jel.tool.Belenos|| exit 1
 java --class-path=.:../images:.. org.jel.tool.Etiona|| exit 1
 java --class-path=.:../images:.. org.jel.tool.Slaine|| exit 1
 java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
-cd ../../conquer-dist
+cd ../../conquer-dist || exit
 mkdir tmp
-cd backend
+cd backend || exit
 mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: $major >>META-INF/MANIFEST.MF
+echo Created-By: "$major" >>META-INF/MANIFEST.MF
 echo org.jel.game.plugins.builtins.ChangeCitiesMinds>META-INF/services/org.jel.game.plugins.Plugin
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/ChangeCitiesMinds.jar META-INF/MANIFEST.MF META-INF/services/org.jel.game.plugins.Plugin org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
@@ -100,7 +100,7 @@ echo org.jel.game.strategies.SortedStrategyProvider>META-INF/services/org.jel.ga
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/SortedStrategy.jar META-INF/MANIFEST.MF META-INF/services/org.jel.game.data.strategy.StrategyProvider org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
-cd ../tmp
+cd ../tmp || exit
 cp -v ../../ScenarioGenerator/bin/*.data ../../ScenarioGenerator/*.png .
 echo "<info>" >info.xml
 echo "	<scenarios>">>info.xml
@@ -127,11 +127,11 @@ echo "</info>">>info.xml
 mkdir -p .conquer/libs
 mv -v *.jar .conquer/libs
 mv -v *.data *.xml *.png .conquer
-cd .conquer
+cd .conquer || exit
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../../conquer.zip -r *
 cp ../../conquer.zip ../../backend/data
-cd ../../../music
+cd ../../../music || exit
 for f in *.mscz; do
 	if [[ "$f" -nt "../music_tmp/${f%.mscz}.$EXTENSION" ]]; then
 		"${MUSESCORE}" -o  "../music_tmp/${f%.mscz}.$EXTENSION" "$f" &
@@ -142,11 +142,11 @@ done
 wait
 mkdir ../conquer-dist/music
 cp -v ../music_tmp/* ../conquer-dist/music
-cd ../conquer-dist/backend
+cd ../conquer-dist/backend || exit
 rm -rf META-INF/
 mkdir -p META-INF/services
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: $major >>META-INF/MANIFEST.MF
+echo Created-By: "$major" >>META-INF/MANIFEST.MF
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_resources.jar META-INF images data
 rm -r images data
@@ -160,21 +160,21 @@ find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer.jar *
 cd ..
 mkdir -p frontend/music
-cd music
+cd music || exit
 cp Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION Victory.$EXTENSION ../frontend/music
 rm Credits.$EXTENSION Defeated.$EXTENSION Intro.$EXTENSION MainScreen.$EXTENSION Victory.$EXTENSION
 cd ..
 cp conquer.zip backend/data
-cd frontend
+cd frontend || exit
 rm -r META-INF
 mkdir META-INF
 echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: $major >>META-INF/MANIFEST.MF
+echo Created-By: "$major" >>META-INF/MANIFEST.MF
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_frontend_resources.jar images music META-INF
 rm -r images music
 zip -X -r ../Conquer_frontend.jar *
-cd ../../Launcher
+cd ../../Launcher || exit
 make clean
 make $TARGET|| exit 1
 if [[ -z "${IS_WIN}" ]]; then
@@ -182,8 +182,8 @@ if [[ -z "${IS_WIN}" ]]; then
 else
 	cp launcher.exe ../conquer-dist
 fi
-cd ../conquer-dist
-cd music
+cd ../conquer-dist || exit
+cd music || exit
 mkdir -p libs/sounds
 cp *.$EXTENSION libs/sounds
 find . -exec touch -t 201108231405.14 {} \;
@@ -239,11 +239,11 @@ if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer/usr/{bin,share/java,share/conquer}
 	mkdir -p conquer/DEBIAN
 	chmod 0755 conquer/DEBIAN/
-	cd conquer/DEBIAN
+	cd conquer/DEBIAN || exit
 	echo Package: conquer>control
 	echo Version: $VERSION>>control
 	echo Section: games>>control
-	echo Architecture: `dpkg --print-architecture` >>control
+	echo Architecture: $(dpkg --print-architecture) >>control
 	echo Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0>>control
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The GUI for the strategy game conquer >>control
@@ -252,7 +252,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
 	find . -exec touch -t 201108231405.14 {} \;
-	cd conquer/DEBIAN
+	cd conquer/DEBIAN || exit
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
 	cd ../..
 	dpkg-deb --build conquer
@@ -260,7 +260,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer-engine/usr/{bin,share/java,share/conquer-engine}
 	mkdir -p conquer-engine/DEBIAN
 	chmod 0755 conquer-engine/DEBIAN
-	cd conquer-engine/DEBIAN
+	cd conquer-engine/DEBIAN || exit
 	echo Package: conquer-engine>control
 	echo Version: $VERSION>>control
 	echo Section: games>>control
@@ -270,7 +270,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	cp Conquer.jar Conquer_resources.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
-	cd conquer-engine/DEBIAN
+	cd conquer-engine/DEBIAN || exit
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
 	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
@@ -279,7 +279,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer-gui/usr/{bin,share/java,share/conquer-gui,share/java/conquer}
 	mkdir -p conquer-gui/DEBIAN
 	chmod 0755 conquer-gui/DEBIAN
-	cd conquer-gui/DEBIAN
+	cd conquer-gui/DEBIAN || exit
 	echo Package: conquer-gui>control
 	echo Version: $VERSION>>control
 	echo Section: games>>control
@@ -297,14 +297,14 @@ if [[ -z "${IS_WIN}" ]]; then
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o conquer-gui/usr/share/java/conquer/tritonus.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o conquer-gui/usr/share/java/conquer/jorbis.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o conquer-gui/usr/share/java/conquer/vorbisspi.jar
-	cd conquer-gui/DEBIAN
+	cd conquer-gui/DEBIAN || exit
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
 	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 else
 	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar ../Installer
-	cd ../Installer
+	cd ../Installer || exit
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o tritonus.jar
@@ -313,7 +313,7 @@ else
 	make clean
 	make||exit
 	cp Installer.exe ../conquer-dist
-	cd ../conquer-dist
+	cd ../conquer-dist || exit
 fi
 java --version>versions
 gcc --version>>versions
@@ -322,16 +322,16 @@ if [[ -z "${IS_WIN}" ]]; then
 	dpkg-deb --version>>versions
 fi
 zip --version>>versions
-cd ../Launcher/cJSON
+cd ../Launcher/cJSON || exit
 git rev-parse HEAD>>../../conquer-dist/versions
-cd ../../Conquer
+cd ../../Conquer || exit
 mkdir -p tmp/data
-javac `find src test -name "*.java"` -d tmp|| exit 1
+javac $(find src test -name "*.java") -d tmp|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
 cp -rv ../conquer-dist/conquer.zip tmp/data
-cd tmp
+cd tmp || exit
 #First install everything
 java --enable-preview org.jel.game.testsuite.Testsuite1||exit
 #Run the tests for bad arguments
