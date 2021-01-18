@@ -1,5 +1,8 @@
 package org.jel.game.data;
 
+/**
+ * A data carrier describing all costs around soldiers.
+ */
 public final class SoldierCosts {
 	private final double coinsPerMovePerSoldier;
 	private final double coinsPerMoveOfSoldierBase;
@@ -47,6 +50,18 @@ public final class SoldierCosts {
 		}
 	}
 
+	/**
+	 * No value may be negative, NaN or infinite. Otherwise an
+	 * {@code IllegalArgumentException} will be thrown.
+	 * 
+	 * @param coinsPerMovePerSoldier
+	 * @param coinsPerMoveOfSoldierBase
+	 * @param coinsPerSoldierInitial
+	 * @param coinsPerSoldierPerRound
+	 * @param ironPerSoldierInitial
+	 * @param stonePerSoldierInitial
+	 * @param woodPerSoldierInitial
+	 */
 	public SoldierCosts(final double coinsPerMovePerSoldier, final double coinsPerMoveOfSoldierBase,
 			final double coinsPerSoldierInitial, final double coinsPerSoldierPerRound,
 			final double ironPerSoldierInitial, final double stonePerSoldierInitial,
