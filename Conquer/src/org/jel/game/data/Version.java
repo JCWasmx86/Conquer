@@ -1,5 +1,8 @@
 package org.jel.game.data;
 
+/**
+ * A record describing a version.
+ */
 public record Version(int major, int minor, int patch) implements Comparable<Version> {
 
 	@Override
