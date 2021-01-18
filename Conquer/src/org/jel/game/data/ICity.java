@@ -3,6 +3,9 @@ package org.jel.game.data;
 import java.awt.Image;
 import java.util.List;
 
+/**
+ * Models a city on the map.
+ */
 public interface ICity extends Comparable<ICity> {
 	/**
 	 * Called at the end of the round.
@@ -142,14 +145,46 @@ public interface ICity extends Comparable<ICity> {
 	 */
 	double productionPerRound(Resource resource);
 
+	/**
+	 * Change the clan of the city.
+	 * 
+	 * @param clan The new clan. May not be {@code null}, otherwise a
+	 *             {@link IllegalArgumentException} will be thrown.
+	 */
 	void setClan(IClan clan);
 
+	/**
+	 * Set the defense strength of the city.
+	 * 
+	 * @param newPowerOfUpdate The new strength. May not be negative, , otherwise a
+	 *                         {@link IllegalArgumentException} will be thrown.
+	 */
 	void setDefense(double newPowerOfUpdate);
 
+	/**
+	 * Set the growth factor of the city.
+	 * 
+	 * @param growth The new strength. May not be negative, , otherwise a
+	 *               {@link IllegalArgumentException} will be thrown.
+	 */
 	void setGrowth(double growth);
 
+	/**
+	 * Set the number of people in the city.
+	 * 
+	 * @param numberOfPeople The new number of people. May not be negative, ,
+	 *                       otherwise a {@link IllegalArgumentException} will be
+	 *                       thrown.
+	 */
 	void setNumberOfPeople(long numberOfPeople);
 
+	/**
+	 * Set the number of soldiers in the city.
+	 * 
+	 * @param numberOfPeople The new number of soldiers. May not be negative, ,
+	 *                       otherwise a {@link IllegalArgumentException} will be
+	 *                       thrown.
+	 */
 	void setNumberOfSoldiers(long numberOfSoldiers);
 
 }
