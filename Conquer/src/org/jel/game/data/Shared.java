@@ -18,13 +18,22 @@ public final class Shared {
 	 * Describes the directory with all data of the game. (E.g. configuration files,
 	 * plugins, strategies,...)
 	 */
-	public static final String BASE_DIRECTORY = System.getProperty("os.name").toLowerCase().contains("windows")
-			? System.getenv("APPDATA") + "\\.conquer\\"
+	public static final String BASE_DIRECTORY = Shared.isWindows() ? System.getenv("APPDATA") + "\\.conquer\\"
 			: System.getProperty("user.home") + "/.config/.conquer/";
 
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 
 	public static final String PROPERTIES_FILE = Shared.BASE_DIRECTORY + File.separatorChar + "game.properties";
+
+	public static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase().contains("windo");
+	}
+
+	public static boolean isLinux() {
+		final var str = System.getProperty("os.name").toLowerCase();
+		return str.contains("nux") || str.contains("linux") || str.contains("nix");
+	}
+
 	/**
 	 * The maximum level of defense, resource production,...
 	 */
@@ -412,8 +421,9 @@ public final class Shared {
 	}
 
 	public static Version getReferenceImplementationVersion() {
-		return new Version(1,4,0);
+		return new Version(1, 4, 0);
 	}
+
 	private Shared() {
 
 	}

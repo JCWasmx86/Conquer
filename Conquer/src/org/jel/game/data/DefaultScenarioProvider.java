@@ -19,37 +19,50 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 		try {
 			final var d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
 			final var infoNode = this.findNode(d.getChildNodes());
-			final var topNodes = infoNode.getChildNodes();
-			for (var i = 0; i < topNodes.getLength(); i++) {
-				final var node = topNodes.item(i);
-				if ((node != null) && (node.getNodeType() == Node.ELEMENT_NODE)) {
-					final var nodeName = node.getNodeName();
-					if (nodeName.equals("scenarios")) {
-						final var scenarioList = node.getChildNodes();
-						for (var j = 0; j < scenarioList.getLength(); j++) {
-							final var scenarioInformation = scenarioList.item(j);
-							if (this.goodNode(scenarioInformation)) {
-								final var attributes = scenarioInformation.getAttributes();
-								final var name = attributes.getNamedItem("name");
-								final var file = attributes.getNamedItem("file");
-								final var thumbnail = attributes.getNamedItem("thumbnail");
-								if (this.bad(name) || this.bad(file) || this.bad(thumbnail)) {
-									Shared.LOGGER.error(name + "//" + file + "//" + thumbnail);
-									continue;
-								}
-								ret.add(new InstalledScenario(name.getNodeValue(),
-										Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-										Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
-							}
-						}
-					}
-				}
+			if (infoNode == null) {
+				return ret;
 			}
+			final var topNodes = infoNode.getChildNodes();
+			parseNodes(ret, topNodes);
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
-			return List.of();
+			return ret;
 		}
 		return ret;
+	}
+
+	private void parseNodes(List<InstalledScenario> ret, NodeList topNodes) {
+		for (var i = 0; i < topNodes.getLength(); i++) {
+			parseNode(topNodes.item(i), ret);
+		}
+	}
+
+	private void parseNode(Node node, List<InstalledScenario> ret) {
+		if (node == null || node.getNodeType() != Node.ELEMENT_NODE || (!node.getNodeName().equals("scenarios"))) {
+			return;
+		}
+		final var scenarioList = node.getChildNodes();
+		for (var j = 0; j < scenarioList.getLength(); j++) {
+			final var scenarioInformation = scenarioList.item(j);
+			if (this.goodNode(scenarioInformation)) {
+				final var info = this.constructNode(scenarioInformation);
+				if (info != null)
+					ret.add(constructNode(scenarioInformation));
+			}
+		}
+	}
+
+	private InstalledScenario constructNode(Node scenarioInformation) {
+		final var attributes = scenarioInformation.getAttributes();
+		final var name = attributes.getNamedItem("name");
+		final var file = attributes.getNamedItem("file");
+		final var thumbnail = attributes.getNamedItem("thumbnail");
+		if (this.bad(name) || this.bad(file) || this.bad(thumbnail)) {
+			Shared.LOGGER.error(name + "//" + file + "//" + thumbnail);
+			return null;
+		}
+		return new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
+				Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue());
 	}
 
 	// A bit copied from XMLReader.java

@@ -15,13 +15,13 @@ import org.jel.game.plugins.Plugin;
  * Describes the whole info.xml file.
  */
 public final class GlobalContext {
-	private final List<InstalledScenario> installedMaps;
-	private final List<Plugin> plugins;
-	private final List<StrategyProvider> strategies;
-	private final List<String> pluginNames;
-	private final List<String> strategyNames;
-	private final List<ConquerInfoReaderFactory> readers;
-	private final List<String> readerNames;
+	private List<InstalledScenario> installedMaps;
+	private List<Plugin> plugins;
+	private List<StrategyProvider> strategies;
+	private List<String> pluginNames;
+	private List<String> strategyNames;
+	private List<ConquerInfoReaderFactory> readers;
+	private List<String> readerNames;
 
 	GlobalContext(final List<InstalledScenario> installedMaps, final List<Plugin> plugins,
 			final List<StrategyProvider> strategies, final List<ConquerInfoReaderFactory> readers,
@@ -61,6 +61,26 @@ public final class GlobalContext {
 
 	public List<String> getStrategyNames() {
 		return this.strategyNames;
+	}
+
+	public void mergeWith(final GlobalContext other) {
+		if (other == null) {
+			throw new IllegalArgumentException("other==null");
+		}
+		this.installedMaps.addAll(other.installedMaps);
+		this.installedMaps = this.installedMaps.stream().distinct().collect(Collectors.toList());
+		this.pluginNames.addAll(other.pluginNames);
+		this.pluginNames = this.pluginNames.stream().distinct().collect(Collectors.toList());
+		this.strategyNames.addAll(other.strategyNames);
+		this.strategyNames = this.strategyNames.stream().distinct().collect(Collectors.toList());
+		this.readerNames.addAll(other.readerNames);
+		this.readerNames = this.readerNames.stream().distinct().collect(Collectors.toList());
+		this.plugins.addAll(other.plugins);
+		this.plugins = this.plugins.stream().distinct().collect(Collectors.toList());
+		this.strategies.addAll(other.strategies);
+		this.strategies = this.strategies.stream().distinct().collect(Collectors.toList());
+		this.readers.addAll(other.readers);
+		this.readers = this.readers.stream().distinct().collect(Collectors.toList());
 	}
 
 	public ConquerInfo loadInfo(final InstalledScenario is) {
