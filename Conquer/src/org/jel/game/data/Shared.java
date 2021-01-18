@@ -21,26 +21,44 @@ public final class Shared {
 	public static final String BASE_DIRECTORY = Shared.isWindows() ? System.getenv("APPDATA") + "\\.conquer\\"
 			: System.getProperty("user.home") + "/.config/.conquer/";
 
+	/**
+	 * In this directory everything should be safed.
+	 */
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 
+	/**
+	 * In this file, all properties are listed.
+	 */
 	public static final String PROPERTIES_FILE = Shared.BASE_DIRECTORY + File.separatorChar + "game.properties";
 
+	/**
+	 * Returns true if the current OS is windows.
+	 * 
+	 * @return {@code true} if the current OS is windows.
+	 */
 	public static boolean isWindows() {
 		return System.getProperty("os.name").toLowerCase().contains("windo");
 	}
 
+	/**
+	 * Returns true if the current OS is linux.
+	 * 
+	 * @return {@code true} if the current OS is linux.
+	 */
 	public static boolean isLinux() {
 		final var str = System.getProperty("os.name").toLowerCase();
 		return str.contains("nux") || str.contains("linux") || str.contains("nix");
 	}
 
 	/**
-	 * The maximum level of defense, resource production,...
+	 * The maximum level of defense, resource production,... Replaced by
+	 * {@link ConquerInfo#getMaximumLevel()}
 	 */
 	@Deprecated
 	public static final int MAX_LEVEL = 1000;
 	/**
-	 * The id of the clan of the player.
+	 * The id of the clan of the player. Replaced by
+	 * {@link ConquerInfo#getPlayerClan()}
 	 */
 	@Deprecated
 	public static final int PLAYER_CLAN = 0;
@@ -74,103 +92,122 @@ public final class Shared {
 	}
 	/**
 	 * Describes the usage of coins for each soldier for each distance-unit at every
-	 * move. (Additional to {@link Shared#COINS_PER_MOVE_OF_SOLDIER_BASE})
+	 * move. (Additional to {@link Shared#COINS_PER_MOVE_OF_SOLDIER_BASE}) Replaced
+	 * by {@link SoldierCosts#coinsPerMovePerSoldier()}.
 	 */
 	@Deprecated
 	public static final double COINS_PER_MOVE_OF_SOLDIER = 1.8;
 	/**
 	 * For every soldier, exactly this amount of coins has to be spent per move as a
-	 * base.
+	 * base. Replaced by {@link SoldierCosts#coinsPerMoveOfSoldierBase()}.
 	 */
 	@Deprecated
 	public static final double COINS_PER_MOVE_OF_SOLDIER_BASE = 4.0;
 	/**
-	 * Describes how many coins a person produces per round.
+	 * Describes how many coins a person produces per round. Replaced by
+	 * {@link ResourceUsage#getCoinsPerRoundPerPerson()}.
 	 */
 	@Deprecated
 	public static final double COINS_PER_PERSON_PER_ROUND = 0.75;
 	/**
-	 * Initial costs for recruiting one soldier.
+	 * Initial costs for recruiting one soldier. Replaced by
+	 * {@link SoldierCosts#coinsPerSoldierInitial()}.
 	 */
 	@Deprecated
 	public static final double COINS_PER_SOLDIER_INITIAL = 150.0;
 	/**
-	 * The amount of coins a soldier uses every round.
+	 * The amount of coins a soldier uses every round. Replaced by
+	 * {@link SoldierCosts#coinsPerSoldierPerRound()}.
 	 */
 	@Deprecated
 	public static final double COINS_PER_SOLDIER_PER_ROUND = 6;
 	/**
-	 * The amount of food every person uses per round.
+	 * The amount of food every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double FOOD_PER_PERSON_PER_ROUND = 0.8;
 	/**
-	 * The amount of food every soldier uses per round.
+	 * The amount of food every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double FOOD_PER_SOLDIER_PER_ROUND = 2.2;
 	/**
-	 * Initial use of iron for recruiting one soldier.
+	 * Initial use of iron for recruiting one soldier. Replaced by
+	 * {@link SoldierCosts#ironPerSoldierInitial()}.
 	 */
 	@Deprecated
 	public static final double IRON_PER_SOLDIER_INITIAL = 5;
 	/**
-	 * The amount of iron every soldier uses per round.
+	 * The amount of iron every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double IRON_PER_SOLDIER_PER_ROUND = 4;
 	/**
-	 * The amount of leather every person uses per round.
+	 * The amount of leather every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double LEATHER_PER_PERSON_PER_ROUND = 0.4;
 	/**
-	 * The amount of leather every soldier uses per round.
+	 * The amount of leather every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double LEATHER_PER_SOLDIER_PER_ROUND = 4;
 	/**
-	 * The amount of stone every person uses per round.
+	 * The amount of stone every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double STONE_PER_PERSON_PER_ROUND = 0.1;
 	/**
-	 * Initial use of stone for recruiting one soldier.
+	 * Initial use of stone for recruiting one soldier. Replaced by
+	 * {@link SoldierCosts#stonePerSoldierInitial()}.
 	 */
 	@Deprecated
 	public static final double STONE_PER_SOLDIER_INITIAL = 14.8;
 	/**
-	 * The amount of stone every soldier uses per round.
+	 * The amount of stone every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double STONE_PER_SOLDIER_PER_ROUND = 2;
 	/**
-	 * The amount of textiles every person uses per round.
+	 * The amount of textiles every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double TEXTILES_PER_PERSON_PER_ROUND = 0.5;
 	/**
-	 * The amount of textiles every soldier uses per round.
+	 * The amount of textiles every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double TEXTILES_PER_SOLDIER_PER_ROUND = 2;
 	/**
-	 * The amount of wood every person uses per round.
+	 * The amount of wood every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double WOOD_PER_PERSON_PER_ROUND = 0.01;
 	/**
-	 * Initial use of wood for recruiting one soldier.
+	 * Initial use of wood for recruiting one soldier. Replaced by
+	 * {@link SoldierCosts#woodPerSoldierInitial()}.
 	 */
 	@Deprecated
 	public static final double WOOD_PER_SOLDIER_INITIAL = 41.2;
 	/**
-	 * The amount of wood every soldier uses per round.
+	 * The amount of wood every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double WOOD_PER_SOLDIER_PER_ROUND = 1.5;
 	/**
-	 * The amount of coal every person uses per round.
+	 * The amount of coal every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double COAL_PER_PERSON_PER_ROUND = 1;
@@ -180,12 +217,14 @@ public final class Shared {
 	@Deprecated
 	public static final double COAL_PER_SOLDIER_PER_ROUND = 1.5;
 	/**
-	 * The amount of wheat every soldier uses per round.
+	 * The amount of wheat every soldier uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double WHEAT_PER_SOLDIER_PER_ROUND = 1.5;
 	/**
-	 * The amount of wheat every person uses per round.
+	 * The amount of wheat every person uses per round. Replaced by
+	 * {@link ResourceUsage#get(int)}.
 	 */
 	@Deprecated
 	public static final double WHEAT_PER_PERSON_PER_ROUND = 0.94;
@@ -358,68 +397,150 @@ public final class Shared {
 		return Arrays.stream(saves.list()).collect(Collectors.toList()).toArray(new String[0]);
 	}
 
+	/**
+	 * Replaced by {@link IClan#costs(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double costs(final int level) {
 		throw new UnsupportedOperationException("Use IClan::costs instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#maxLevelsAddOffenseDefenseUpgrade(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double maxLevelsAddOffenseDefenseUpgrade(final int level) {
 		throw new UnsupportedOperationException("Use IClan::maxLevelsAddOffenseDefenseUpgrade instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#maxLevelsAddResourcesUpgrade(int, double)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static int maxLevelsAddResourcesUpgrade(final int currLevel, final double coins) {
 		throw new UnsupportedOperationException("Use IClan::maxLevelsAddResourcesUpgrade instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#maxLevelsAddSoldiersUpgrade(int, double)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static int maxLevelsAddSoldiersUpgrade(final int currLevel, final double coins) {
 		throw new UnsupportedOperationException("Use IClan::maxLevelsAddSoldiersUpgrade instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#newPowerForSoldiers(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double newPowerForSoldiers(final int level) {
 		throw new UnsupportedOperationException("Use IClan::newPowerForSoldiers instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#newPowerOfSoldiersForOffenseAndDefense(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double newPowerOfSoldiersForOffenseAndDefense(final int level) {
 		throw new UnsupportedOperationException("Use IClan::newPowerOfSoldiersForOffenseAndDefense instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#newPowerOfUpdate(int, double)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double newPowerOfUpdate(final int level, final double oldValue) {
 		throw new UnsupportedOperationException("Use IClan::newPowerOfUpdate instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#upgradeCostsForOffenseAndDefense(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double upgradeCostsForOffenseAndDefense(final int level) {
 		throw new UnsupportedOperationException("Use IClan::upgradeCostsForOffenseAndDefense instead");
 	}
 
+	/**
+	 * Replaced by {@link IClan#upgradeCostsForSoldiers(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@Deprecated
 	public static double upgradeCostsForSoldiers(final int level) {
 		throw new UnsupportedOperationException("Use IClan::upgradeCostsForSoldiers instead");
 	}
 
+	/**
+	 * Returns the network timeout in ms. Should be used for all network related
+	 * operations
+	 * 
+	 * @return Network timeout in ms.
+	 */
 	public static int getNetworktimeout() {
 		// Default timeout is 500ms
 		return Integer.getInteger("conquer.network.timeout", 500);
 	}
 
+	/**
+	 * Returns whether SPI should be used
+	 * 
+	 * @return {@code true}, if SPI should be used, {@code false} otherwise.
+	 */
 	public static boolean useSPI() {
 		return Boolean.getBoolean("conquer.usespi");
 	}
 
+	/**
+	 * Returns whether level1 logging should be used
+	 * 
+	 * @return {@code true}, if level1 logging should be used, {@code false}
+	 *         otherwise.
+	 */
 	public static boolean level1Logging() {
 		return Boolean.getBoolean("conquer.logging.level1");
 	}
 
+	/**
+	 * Returns whether level2 logging should be used
+	 * 
+	 * @return {@code true}, if level2 logging should be used, {@code false}
+	 *         otherwise.
+	 */
 	public static boolean level2Logging() {
 		return Boolean.getBoolean("conquer.logging.level2");
 	}
 
+	/**
+	 * Returns the current version of the reference implementation.
+	 * 
+	 * @return Current version of reference implementation.
+	 */
 	public static Version getReferenceImplementationVersion() {
 		return new Version(1, 4, 0);
 	}
