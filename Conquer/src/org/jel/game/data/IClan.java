@@ -167,20 +167,67 @@ public interface IClan {
 	 */
 	void setName(String name);
 
+	/**
+	 * Set all resources. May only be called while initializing the clan.
+	 * 
+	 * @param resources May not be {@code null} or have the wrong length, otherwise
+	 *                  an {@code IllegalArgumentException} shall be thrown.
+	 */
 	void setResources(List<Double> resources);
 
+	/**
+	 * Set all resource stats. May only be called by the corresponding
+	 * {@code ConquerInfo}-object
+	 * 
+	 * @param resources May not be {@code null} or have the wrong length, otherwise
+	 *                  an {@code IllegalArgumentException} shall be thrown.
+	 */
 	void setResourceStats(List<Double> resourceStats);
 
+	/**
+	 * Upgrade the defense strength of the soldiers.
+	 * 
+	 * @return {@code true}, if enough coins were available and the level wasn't
+	 *         equals to the maximum level, {@code false} otherwise.
+	 */
 	boolean upgradeSoldiersDefense();
 
+	/**
+	 * Upgrade the strength of the soldiers.
+	 * 
+	 * @return {@code true}, if enough coins were available and the level wasn't
+	 *         equals to the maximum level, {@code false} otherwise.
+	 */
 	boolean upgradeSoldiers();
 
+	/**
+	 * Upgrade the offensive strength of the soldiers.
+	 * 
+	 * @return {@code true}, if enough coins were available and the level wasn't
+	 *         equals to the maximum level, {@code false} otherwise.
+	 */
 	boolean upgradeSoldiersOffense();
 
+	/**
+	 * Set the strategy. May only be called once and shouldn't be treated as public.
+	 *
+	 * @param strategy May not be null
+	 */
 	void setStrategy(Strategy strategy);
 
+	/**
+	 * Set the strategy data. Shouldn't be treated as public.
+	 *
+	 * @param strategyData May be null
+	 */
 	void setStrategyData(StrategyData strategyData);
 
+	/**
+	 * Called every round. Should only be called by the corresponding
+	 * {@code ConquerInfo}-object
+	 * 
+	 * @param currentRound Current round.
+	 */
 	void update(int currentRound);
 
 	default void upgradeFully(final SoldierUpgrade upgradeType) {
@@ -223,6 +270,16 @@ public interface IClan {
 		}
 	}
 
+	/**
+	 * Get the costs for upgrading {@code upgrade} Replaces
+	 * {@link IClan#upgradeCostsForDefense(int)},{@link IClan#upgradeCostsForSoldiers(int)}
+	 * and {@link IClan#upgradeCostsForOffense(int)}
+	 * 
+	 * @param upgrade The upgrade. May not be {@code null}, otherwise an
+	 *                {@code IllegalArgumentException} will be thrown.
+	 * @param x       Current level.
+	 * @return The costs for upgrading {@code upgrade}.
+	 */
 	default double upgradeCosts(final SoldierUpgrade upgrade, final int x) {
 		switch (upgrade) {
 		case BOTH:
@@ -236,6 +293,13 @@ public interface IClan {
 		}
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param x Current level
+	 * @return Costs for upgrading the offense strength of the clan.
+	 */
 	@Deprecated
 	default double upgradeCostsForOffense(final int x) {
 		// Duplicated, as it would otherwise depend on another method.
@@ -245,6 +309,13 @@ public interface IClan {
 		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param x Current level
+	 * @return Costs for upgrading the defense strength of the clan.
+	 */
 	@Deprecated
 	default double upgradeCostsForDefense(final int x) {
 		if (x == 0) {
@@ -253,11 +324,40 @@ public interface IClan {
 		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param currLevel Current level
+	 * @param coins     Maximum coins to give.
+	 * @return Returns the maximum number of upgrades, until {@code coins} is not
+	 *         enough anymore.
+	 */
 	@Deprecated
-	default int maxLevelsAddOffenseDefenseUpgrade(final int x, final double coins) {
-		return this.maxLevelsAddDefenseUpgrade(x, coins);
+	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
+		// Copy pasted
+		var cnt = 0;
+		while (true) {
+			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+			if (costs > coins) {
+				break;
+			}
+			coins -= costs;
+			cnt++;
+			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
+				return cnt;
+			}
+		}
+		return cnt;
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param x Current level
+	 * @return Costs for upgrading the offense/defense strength of the clan.
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double upgradeCostsForOffenseAndDefense(final int x) {
@@ -267,12 +367,28 @@ public interface IClan {
 		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param x Current level
+	 * @return Costs for upgrading the soldiers strength of the clan.
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double upgradeCostsForSoldiers(final int x) {
 		return this.upgradeCostsForOffenseAndDefense(x) * 10;
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param currLevel Current level
+	 * @param coins     Maximum coins to give.
+	 * @return Returns the maximum number of upgrades, until {@code coins} is not
+	 *         enough anymore.
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
@@ -290,6 +406,16 @@ public interface IClan {
 		}
 		return cnt;
 	}
+
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param currLevel Current level
+	 * @param coins     Maximum coins to give.
+	 * @return Returns the maximum number of upgrades, until {@code coins} is not
+	 *         enough anymore.
+	 */
 
 	@InternalUseOnly
 	@Deprecated
@@ -325,6 +451,15 @@ public interface IClan {
 		return cnt;
 	}
 
+	/**
+	 * Deprecated. But should still be overridden in case an implementation wants to
+	 * provide another calculation.
+	 * 
+	 * @param currLevel Current level
+	 * @param coins     Maximum coins to give.
+	 * @return Returns the maximum number of upgrades, until {@code coins} is not
+	 *         enough anymore.
+	 */
 	@Deprecated
 	@InternalUseOnly
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
@@ -343,6 +478,16 @@ public interface IClan {
 		return cnt;
 	}
 
+	/**
+	 * Returns the new power for {@code upgrade} for level {@code x}. Replaces the
+	 * deprecated
+	 * {@link IClan#newPowerForSoldiers(int)},{@link IClan#newPowerOfSoldiersForDefense(int)}
+	 * and {@link IClan#newPowerOfSoldiersForOffense(int)}.
+	 * 
+	 * @param upgrade Which upgrade to make
+	 * @param x       Current level
+	 * @return New power.
+	 */
 	default double newPower(final SoldierUpgrade upgrade, final int x) {
 		switch (upgrade) {
 		case BOTH:
@@ -358,34 +503,75 @@ public interface IClan {
 
 	// All of those are repeated, so you can override only one without effecting
 	// (probably) others.
+	/**
+	 * Shouldn't be used directly, but can still be overwritten. Replacement for
+	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForDefense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
+	/**
+	 * Shouldn't be used directly, but can still be overwritten. Replacement for
+	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForOffense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
+	/**
+	 * Shouldn't be used directly, but can still be overwritten. Replacement for
+	 * {@link Shared#newPowerForSoldiers(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerForSoldiers(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
 	}
 
+	/**
+	 * Shouldn't be used directly, but can still be overwritten. Replacement for
+	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
+	 * 
+	 * @param level
+	 * @return
+	 */
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForOffenseAndDefense(final int level) {
 		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
 	}
 
+	/**
+	 * Replacement for {@link Shared#newPowerOfUpdate(int, double)}.
+	 * 
+	 * @param level    Current level
+	 * @param oldValue Old value of production.
+	 * @return New production rate.
+	 */
 	default double newPowerOfUpdate(final int level, final double oldValue) {
 		return (1.01 * oldValue) + (level / (double) this.getInfo().getMaximumLevel());
 	}
 
+	/**
+	 * Replacement for {@link Shared#costs(int)}.
+	 * 
+	 * @param level Current level.
+	 * @return Costs in coins for upgrading to next level.
+	 */
 	default double costs(final int level) {
 		var ret = Math.pow(level, Math.E);
 		if (level != 0) {
@@ -397,6 +583,17 @@ public interface IClan {
 		return ret;
 	}
 
+	/**
+	 * Returns the maximum number of levels to upgrade, until {@code coins} is not
+	 * enough, starting from {@code level} for the upgrade {@code upgrade}. Replaces
+	 * {@link IClan#maxLevelsAddSoldiersUpgrade(int, double)},{@link IClan#maxLevelsAddDefenseUpgrade}
+	 * and {@link IClan#maxLevelsAddOffenseUpgrade(int, double)}
+	 * 
+	 * @param upgrade The upgrade. May not be {@code null}.
+	 * @param level   Current level
+	 * @param coins   Maximum coins to give.
+	 * @return Number of levels.
+	 */
 	default int maxLevels(final SoldierUpgrade upgrade, final int level, final double coins) {
 		switch (upgrade) {
 		case BOTH:
@@ -410,6 +607,12 @@ public interface IClan {
 		}
 	}
 
+	/**
+	 * Return the corrseponding game state. The default implementation throws an
+	 * {@code UnsupportedOperationException}.
+	 * 
+	 * @return Corresponding game state.
+	 */
 	default ConquerInfo getInfo() {
 		throw new UnsupportedOperationException("Didn't have access to a matching ConquerInfo");
 	}
