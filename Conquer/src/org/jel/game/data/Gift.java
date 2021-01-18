@@ -21,6 +21,19 @@ public final class Gift {
 		}
 	}
 
+	/**
+	 * Creates an empty gift. An {@link IllegalArgumentException} is thrown if:<br>
+	 * <ul>
+	 * <li>{@code numberOfCoins} is negative</li>
+	 * <li>{@code resources} is {@code null}</li>
+	 * <li>{@code resources.size() != Resource.values().length}</li>
+	 * <li>Or one of the doubles in {@code resources} is either null, negative, NaN
+	 * or infinite.</li>
+	 * </ul>
+	 * 
+	 * @param resources     The amount of resources that are gifted.
+	 * @param numberOfCoins The amount of coins to gift.
+	 */
 	public Gift(final List<Double> resources, final double numberOfCoins) {
 		if (numberOfCoins < 0) {
 			throw new IllegalArgumentException("numberOfCoins < 0");
@@ -42,10 +55,21 @@ public final class Gift {
 		}
 	}
 
+	/**
+	 * Returns a copy of the map that provides a mapping between the resource and
+	 * the amount of it that should be gifted.
+	 * 
+	 * @return Map describing the amount of every resource.
+	 */
 	public Map<Resource, Double> getMap() {
 		return new EnumMap<>(this.map);
 	}
 
+	/**
+	 * Gives the number of coins
+	 * 
+	 * @return Number of coins.
+	 */
 	public double getNumberOfCoins() {
 		return this.numberOfCoins;
 	}
