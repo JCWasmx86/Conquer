@@ -12,7 +12,9 @@ import org.jel.game.data.strategy.StrategyProvider;
 import org.jel.game.plugins.Plugin;
 
 /**
- * Describes the whole info.xml file.
+ * Describes a whole context. A context is defined by the available scenarios,
+ * plugins, strategies and ConquerInfoReaderFactories. Every returned list is
+ * mutable.
  */
 public final class GlobalContext {
 	private List<InstalledScenario> installedMaps;
@@ -63,6 +65,13 @@ public final class GlobalContext {
 		return this.strategyNames;
 	}
 
+	/**
+	 * Merges {@code this} with {@code other}. There won't be any duplicate items in
+	 * any of the lists.
+	 * 
+	 * @param other The other context. May not be {@code null}, otherwise an
+	 *              {@code IllegalArgumentException} will be thrown.
+	 */
 	public void mergeWith(final GlobalContext other) {
 		if (other == null) {
 			throw new IllegalArgumentException("other==null");
@@ -83,6 +92,15 @@ public final class GlobalContext {
 		this.readers = this.readers.stream().distinct().collect(Collectors.toList());
 	}
 
+	/**
+	 * Create a game state from a given scenario.
+	 * 
+	 * @param is The scenario to instantiate.May not be {@code null}, otherwise an
+	 *           {@code IllegalArgumentException} will be thrown.
+	 * @return A game state.
+	 * @throws {@code UnsupportedOperationException} if no reader for the file
+	 *                format was found.
+	 */
 	public ConquerInfo loadInfo(final InstalledScenario is) {
 		if (is == null) {
 			throw new IllegalArgumentException("is==null");
