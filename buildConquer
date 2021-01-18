@@ -44,16 +44,17 @@ else
 	export MUSESCORE=`type -p musescore3`
 	echo Musescore=$MUSESCORE
 fi
+alias javac="javac -g -parameters --enable-preview --source 15"
 mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music}
 cd Conquer
 shopt -s dotglob
-javac `find src -name "*.java"` -d ../conquer-dist/backend --enable-preview --source 15|| exit 1
+javac `find src -name "*.java"` -d ../conquer-dist/backend|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend
 cp -rv images ../conquer-dist/frontend
-javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --source 15 --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
+javac `find src -name "*.java"` -d ../conquer-dist/frontend --enable-preview --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
 cp src/org/jel/gui/*.properties ../conquer-dist/frontend/org/jel/gui/
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator
@@ -100,8 +101,7 @@ find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/SortedStrategy.jar META-INF/MANIFEST.MF META-INF/services/org.jel.game.data.strategy.StrategyProvider org/jel/game/strategies/*.class
 rm -rf org/jel/game/strategies/
 cd ../tmp
-cp -v ../../ScenarioGenerator/bin/*.data .
-cp -v ../../ScenarioGenerator/*.png .
+cp -v ../../ScenarioGenerator/bin/*.data ../../ScenarioGenerator/*.png .
 echo "<info>" >info.xml
 echo "	<scenarios>">>info.xml
 echo "		<scenario name=\"Belenos\" file=\"Belenos.data\" thumbnail=\"Belenos.png\" />">>info.xml
@@ -124,12 +124,9 @@ echo "	<readers>">>info.xml
 echo "		<reader className=\"org.jel.game.data.ri.ScenarioFileReaderFactory\" />">>info.xml
 echo "	</readers>">>info.xml
 echo "</info>">>info.xml
-mkdir .conquer
-mkdir .conquer/libs
+mkdir -p .conquer/libs
 mv -v *.jar .conquer/libs
-mv -v *.data .conquer
-mv -v *.xml .conquer
-mv -v *.png .conquer
+mv -v *.data *.xml *.png .conquer
 cd .conquer
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../../conquer.zip -r *
@@ -271,8 +268,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The game engine for the strategy game conquer>>control
 	cd ../..
-	cp Conquer.jar conquer-engine/usr/share/java
-	cp Conquer_resources.jar conquer-engine/usr/share/java
+	cp Conquer.jar Conquer_resources.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	cd conquer-engine/DEBIAN
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
@@ -292,8 +288,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86>>control
 	echo Description: GUI for Conquer. \(Without launcher\)>>control
 	cd ../..
-	cp Conquer_frontend.jar conquer-gui/usr/share/java
-	cp Conquer_frontend_resources.jar conquer-gui/usr/share/java
+	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
 	#TODO: Replace with maven itself.
@@ -308,13 +303,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 else
-	cp launcher.exe ../Installer
-	cp Conquer.jar ../Installer
-	cp Conquer_frontend.jar ../Installer
-	cp Conquer.license ../Installer
-	cp LICENSE.txt ../Installer
-	cp Conquer_resources.jar ../Installer
-	cp Conquer_frontend_resources.jar ../Installer
+	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar ../Installer
 	cd ../Installer
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
@@ -337,7 +326,7 @@ cd ../Launcher/cJSON
 git rev-parse HEAD>>../../conquer-dist/versions
 cd ../../Conquer
 mkdir -p tmp/data
-javac `find src test -name "*.java"` -d tmp --enable-preview --source 15|| exit 1
+javac `find src test -name "*.java"` -d tmp|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
