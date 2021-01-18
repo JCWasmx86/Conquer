@@ -44,21 +44,20 @@ else
 	export MUSESCORE=$(type -p musescore3)
 	echo Musescore="$MUSESCORE"
 fi
-alias javac="javac -g -parameters --enable-preview --source 15"
 mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music}
 cd Conquer || exit
 shopt -s dotglob
-javac $(find src -name "*.java") -d ../conquer-dist/backend|| exit 1
+javac $(find src -name "*.java") -d ../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontend || exit
 cp -rv images ../conquer-dist/frontend
-javac $(find src -name "*.java") -d ../conquer-dist/frontend --enable-preview --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend|| exit 1
+javac $(find src -name "*.java") -d ../conquer-dist/frontend --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/gui/*.properties ../conquer-dist/frontend/org/jel/gui/
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator || exit
-javac $(find src -name "*.java") -d bin|| exit 1
+javac $(find src -name "*.java") -d bin -g -parameters|| exit 1
 cp -r images bin
 cd bin || exit
 java --class-path=.:../images:.. org.jel.tool.Belenos|| exit 1
@@ -326,7 +325,7 @@ cd ../Launcher/cJSON || exit
 git rev-parse HEAD>>../../conquer-dist/versions
 cd ../../Conquer || exit
 mkdir -p tmp/data
-javac $(find src test -name "*.java") -d tmp|| exit 1
+javac $(find src test -name "*.java") -d tmp -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
