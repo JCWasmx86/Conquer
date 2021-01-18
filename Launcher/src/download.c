@@ -82,8 +82,8 @@ void downloadJDK(void *data,
 	if (outputFile) {
 #ifdef _WIN32
 		MessageBox(NULL, "Downloading Java 15! Please wait!", "Please wait!",
-                           MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
-                                   MB_TOPMOST);
+				   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
+					   MB_TOPMOST);
 #endif
 		if (downloadFile(getURL(), outputFile, data, progressFunc)) {
 			fputs("Download of java 15 failed!", stderr);

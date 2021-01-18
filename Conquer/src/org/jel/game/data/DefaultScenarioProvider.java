@@ -1,5 +1,6 @@
 package org.jel.game.data;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +17,35 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	@Override
 	public List<InstalledScenario> getScenarios() {
 		final List<InstalledScenario> ret = new ArrayList<>();
+		initializeFromDefaultLocation(ret);
 		try {
 			final var d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
 			final var infoNode = this.findNode(d.getChildNodes());
 			if (infoNode == null) {
 				return ret;
 			}
-			final var topNodes = infoNode.getChildNodes();
-			parseNodes(ret, topNodes);
+			parseNodes(ret, infoNode.getChildNodes());
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
 			return ret;
 		}
 		return ret;
+	}
+
+	private void initializeFromDefaultLocation(List<InstalledScenario> ret) {
+		final var directoryName = Shared.isWindows() ? (System.getenv("ProgramFiles") + "\\Conquer\\scenarios")
+				: "/usr/share/conquer/scenarios";
+		final var directory = new File(directoryName);
+		if (!directory.exists()) {
+			return;
+		}
+		File[] files = directory.listFiles(File::isDirectory);
+		for (final var scenarioDirectory : files) {
+			final var name = scenarioDirectory.getName();
+			final var file = new File(scenarioDirectory, name + ".data").getAbsolutePath();
+			final var thumbnail = new File(scenarioDirectory, name + ".png").getAbsolutePath();
+			ret.add(new InstalledScenario(name, file, thumbnail));
+		}
 	}
 
 	private void parseNodes(List<InstalledScenario> ret, NodeList topNodes) {

@@ -8,9 +8,9 @@
 #ifdef _WIN32
 #include <shlobj.h>
 #include <windows.h>
-#else
-void appendAllJarsFromDir(const char *, char *);
 #endif
+static void appendAllJarsFromDir(const char *, char *);
+
 void runJVM(Configuration configuration) {
 	char *classpath = generateClasspath(configuration);
 	JavaVMOption *jvmoptions = calloc(
@@ -83,6 +83,20 @@ char *generateClasspath(Configuration configuration) {
 	strcat(ret, "\\Conquer\\tritonus.jar;");
 	strcat(ret, pf);
 	strcat(ret, "\\Conquer\\vorbisspi.jar;");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\music;");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\sounds;");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\images;");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\vorbisspi.jar;");
+	char *tmpPF = calloc(500, 1);
+	sprintf(tmpPF, "%s%s", pf, "\\plugins");
+	appendAllJarsFromDir(tmpPF, ret);
+	sprintf(tmpPF, "%s%s", pf, "\\strategies");
+	appendAllJarsFromDir(tmpPF, ret);
+	free(tmpPF);
 #endif
 	for (size_t i = 0; i < configuration->numClasspaths; i++) {
 		strcat(ret, configuration->classpaths[i]);
@@ -93,26 +107,7 @@ char *generateClasspath(Configuration configuration) {
 	char *libs = calloc(strlen(base) + 10, 1);
 	assert(libs);
 	sprintf(libs, "%s%s%s", base, "/libs", c);
-	DIR *dir = opendir(libs);
-	if (dir != NULL) {
-		struct dirent *ent;
-		while ((ent = readdir(dir)) != NULL) {
-#ifndef _WIN32
-			if (ent->d_type == DT_REG) {
-#endif
-				char *name = ent->d_name;
-				size_t ll = strlen(name);
-				if (ll >= 4 && memcmp(&name[ll - 4], ".jar", 4) == 0) {
-					strcat(ret, libs);
-					strcat(ret, name);
-					strcat(ret, SEP);
-				}
-#ifndef _WIN32
-			}
-#endif
-		}
-		closedir(dir);
-	}
+	appendAllJarsFromDir(libs, ret);
 #ifndef _WIN32
 	appendAllJarsFromDir("/usr/share/java/conquer/plugins", ret);
 	appendAllJarsFromDir("/usr/share/java/conquer/strategies", ret);
@@ -154,22 +149,26 @@ char *generateModulePath() {
 #endif
 	return ret;
 }
-#ifndef _WIN32
-void appendAllJarsFromDir(const char *path, char *to) {
+static void appendAllJarsFromDir(const char *path, char *to) {
 	DIR *dir = opendir(path);
-	if (dir != NULL) {
-		struct dirent *ent;
-		while ((ent = readdir(dir)) != NULL) {
-			if (ent->d_type == DT_REG) {
-				char *name = ent->d_name;
-				size_t ll = strlen(name);
-				if (ll >= 4 && memcmp(&name[ll - 4], ".jar", 4) == 0) {
-					strcat(to, path);
-					strcat(to, name);
-					strcat(to, SEP);
-				}
-			}
-		}
+	if (dir == NULL) {
+		return;
 	}
-}
+	struct dirent *ent;
+	while ((ent = readdir(dir)) != NULL) {
+#ifndef _WIN32
+		if (ent->d_type == DT_REG) {
 #endif
+			char *name = ent->d_name;
+			size_t ll = strlen(name);
+			if (ll >= 4 && memcmp(&name[ll - 4], ".jar", 4) == 0) {
+				strcat(to, path);
+				strcat(to, name);
+				strcat(to, SEP);
+			}
+#ifndef _WIN32
+		}
+#endif
+	}
+	closedir(dir);
+}
