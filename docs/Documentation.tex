@@ -173,6 +173,7 @@ This method may return \texttt{null}.
 \subsubsection{\texttt{IClan getClan(int)}}
 An \texttt{IllegalArgumentException} shall be thrown, if the given
 id is out of bounds.
+This id must be obtained by calling \texttt{IClan#getId}.
 
 \subsubsection{\texttt{List<String> getClanNames()}}
 This method should return an unmodifiable list of clan names, sorted by
@@ -215,14 +216,6 @@ Otherwise an \texttt{IllegalArgumentException} must be thrown.
 \subsubsection{\texttt{void upgradeResourceFully(Resource,ICity)}}
 The given city and the resource mustn't be \texttt{null}.
 Otherwise an \texttt{IllegalArgumentException} must be thrown.
-
-\subsubsection{\texttt{void upgradeSoldiersDefenseFully(IClan)}}
-The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void upgradeSoldiersFully(IClan)}}
-The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
-shall be thrown.
 
 \subsubsection{\texttt{void upgradeSoldiersOffenseFully(IClan)}}
 The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
@@ -450,6 +443,8 @@ This method should only be used to restore a clan after saving it, otherwise \te
 
 \subsubsection{\texttt{void update(int)}}
 The argument must be positive or zero. Otherwise an \texttt{IllegalArgumentException} will be thrown.
+
+
 
 \subsection{Strategy}
 

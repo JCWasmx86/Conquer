@@ -17,29 +17,28 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	@Override
 	public List<InstalledScenario> getScenarios() {
 		final List<InstalledScenario> ret = new ArrayList<>();
-		initializeFromDefaultLocation(ret);
+		this.initializeFromDefaultLocation(ret);
 		try {
 			final var d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
 			final var infoNode = this.findNode(d.getChildNodes());
 			if (infoNode == null) {
 				return ret;
 			}
-			parseNodes(ret, infoNode.getChildNodes());
+			this.parseNodes(ret, infoNode.getChildNodes());
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
-			return ret;
 		}
 		return ret;
 	}
 
-	private void initializeFromDefaultLocation(List<InstalledScenario> ret) {
+	private void initializeFromDefaultLocation(final List<InstalledScenario> ret) {
 		final var directoryName = Shared.isWindows() ? (System.getenv("ProgramFiles") + "\\Conquer\\scenarios")
 				: "/usr/share/conquer/scenarios";
 		final var directory = new File(directoryName);
 		if (!directory.exists()) {
 			return;
 		}
-		File[] files = directory.listFiles(File::isDirectory);
+		final var files = directory.listFiles(File::isDirectory);
 		for (final var scenarioDirectory : files) {
 			final var name = scenarioDirectory.getName();
 			final var file = new File(scenarioDirectory, name + ".data").getAbsolutePath();
@@ -48,14 +47,14 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 		}
 	}
 
-	private void parseNodes(List<InstalledScenario> ret, NodeList topNodes) {
+	private void parseNodes(final List<InstalledScenario> ret, final NodeList topNodes) {
 		for (var i = 0; i < topNodes.getLength(); i++) {
-			parseNode(topNodes.item(i), ret);
+			this.parseNode(topNodes.item(i), ret);
 		}
 	}
 
-	private void parseNode(Node node, List<InstalledScenario> ret) {
-		if (node == null || node.getNodeType() != Node.ELEMENT_NODE || (!node.getNodeName().equals("scenarios"))) {
+	private void parseNode(final Node node, final List<InstalledScenario> ret) {
+		if ((node == null) || (node.getNodeType() != Node.ELEMENT_NODE) || (!node.getNodeName().equals("scenarios"))) {
 			return;
 		}
 		final var scenarioList = node.getChildNodes();
@@ -63,13 +62,14 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			final var scenarioInformation = scenarioList.item(j);
 			if (this.goodNode(scenarioInformation)) {
 				final var info = this.constructNode(scenarioInformation);
-				if (info != null)
-					ret.add(constructNode(scenarioInformation));
+				if (info != null) {
+					ret.add(this.constructNode(scenarioInformation));
+				}
 			}
 		}
 	}
 
-	private InstalledScenario constructNode(Node scenarioInformation) {
+	private InstalledScenario constructNode(final Node scenarioInformation) {
 		final var attributes = scenarioInformation.getAttributes();
 		final var name = attributes.getNamedItem("name");
 		final var file = attributes.getNamedItem("file");
