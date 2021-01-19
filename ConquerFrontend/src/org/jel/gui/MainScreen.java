@@ -83,8 +83,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
 		menu.add(settings);
-		final var guiPlugins = ServiceLoader.load(GUIMenuPlugin.class);
-		guiPlugins.stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem).forEach(menu::add);
+		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem)
+				.forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -99,6 +99,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		play.setAlignmentX(Component.CENTER_ALIGNMENT);
 		play.setFont(play.getFont().deriveFont(50.0f));
 		panel.add(play);
+		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getButton)
+				.forEach(panel::add);
 		final var credits = new JButton(Messages.getString("MainScreen.credits")); //$NON-NLS-1$
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;
