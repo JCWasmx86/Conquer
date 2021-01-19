@@ -880,8 +880,8 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void recruitSoldiers(final double maxToPay, final ICity c, final boolean managed, final long count) {
-		final var clan = c.getClan();
 		this.throwIfNull(c, "c==null");
+		final var clan = c.getClan();
 		if ((!managed) && (maxToPay < 0)) {
 			throw new IllegalArgumentException("maxToPay < 0 :" + maxToPay);
 		} else if (managed && (count < 0)) {
@@ -1077,7 +1077,7 @@ final class Game implements ConquerInfo {
 		if (source == destination) {
 			throw new IllegalArgumentException("source==destination");
 		} else if (this.isDead(destination)) {
-			throw new IllegalArgumentException("Destination clan is extinct!");
+			throw new IllegalArgumentException("Destination clan is extincted!");
 		}
 		if ((gift.getNumberOfCoins() == 0)
 				&& (gift.getMap().entrySet().stream().filter(a -> a.getValue() != 0).count() == 0)) {
