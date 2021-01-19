@@ -122,13 +122,15 @@ else
 	export MUSESCORE
 	echo Musescore="$MUSESCORE"
 fi
-mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music,frontendSPI}
+mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music,frontendSPI,builtins}
 cd Conquer || exit
 shopt -s dotglob
 javac $(find src -name '*.java') -d ../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
-cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
+cd ../DefaultPlugins||exit
+javac $(find src -name '*.java') -d ../conquer-dist/builtins -g -parameters --enable-preview --source 15 --class-path=../conquer-dist/backend|| exit 1
+cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/builtins/org/jel/game/plugins/builtins
 cd ../ConquerFrontendSPI || exit
 javac $(find src -name '*.java') -d ../conquer-dist/frontendSPI --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cd ../ConquerFrontend || exit
@@ -146,7 +148,7 @@ java --class-path=.:../images:.. org.jel.tool.Slaine|| exit 1
 java --class-path=.:../images:.. org.jel.tool.Freedo|| exit 1
 cd ../../conquer-dist || exit
 mkdir tmp
-cd backend || exit
+cd builtins || exit
 mkdir -p META-INF/services
 makeManifest "$major"
 echo org.jel.game.plugins.builtins.ChangeCitiesMinds>META-INF/services/org.jel.game.plugins.Plugin
@@ -326,16 +328,16 @@ else
 fi
 writeVersionFile
 mkdir -p tmp/data
-javac $(find src test -name '*.java') -d tmp -g -parameters --enable-preview --source 15|| exit 1
+javac $(find src test ../DefaultPlugins/src -name '*.java') -d tmp -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
-cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
+cp ../../DefaultPlugins/src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
 cp -rv ../conquer-dist/conquer.zip tmp/data
 cd tmp || exit
 #First install everything except music
-java --enable-preview org.jel.game.testsuite.Testsuite1||exit
+java --enable-preview --class-path=.:../../conquer-dist/builtins org.jel.game.testsuite.Testsuite1||exit
 #Run the tests for bad arguments
-java --enable-preview org.jel.game.testsuite.Testsuite2||exit
+java --enable-preview --class-path=.:../../conquer-dist/builtins org.jel.game.testsuite.Testsuite2||exit
 #Run the tests for saving and restoring games
 #The check is there, as TestSuite3 somehow fails in the CI for windows. ("Access is denied")
 if [[ ! $NO_TESTS3 ]]; then java --enable-preview org.jel.game.testsuite.Testsuite3||exit; fi
