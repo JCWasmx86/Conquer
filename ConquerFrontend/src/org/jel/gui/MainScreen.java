@@ -21,6 +21,8 @@ import javax.swing.JPanel;
 import org.jel.game.data.Shared;
 import org.jel.gui.utils.LoopPlayer;
 
+import conquer.frontend.spi.GUIMenuPlugin;
+
 /**
  * The mainscreen that allows you to play, see the credits and the tutorial.
  * Furthermore it has a JMenu with the option to show a dialogue, that allows a
@@ -81,8 +83,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
 		menu.add(settings);
-		final var guiPlugins = ServiceLoader.load(GUIPlugin.class);
-		guiPlugins.stream().map(Provider::get).map(GUIPlugin::getMenuItem).forEach(menu::add);
+		final var guiPlugins = ServiceLoader.load(GUIMenuPlugin.class);
+		guiPlugins.stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem).forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

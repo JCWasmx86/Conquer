@@ -44,16 +44,18 @@ else
 	export MUSESCORE=$(type -p musescore3)
 	echo Musescore="$MUSESCORE"
 fi
-mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music}
+mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music,frontendSPI}
 cd Conquer || exit
 shopt -s dotglob
 javac $(find src -name "*.java") -d ../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
+cd ../ConquerFrontendSPI
+javac $(find src -name "*.java") -d ../conquer-dist/frontendSPI --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cd ../ConquerFrontend || exit
 cp -rv images ../conquer-dist/frontend
-javac $(find src -name "*.java") -d ../conquer-dist/frontend --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
+javac $(find src -name "*.java") -d ../conquer-dist/frontend --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend:../conquer-dist/frontendSPI -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/gui/*.properties ../conquer-dist/frontend/org/jel/gui/
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator || exit
@@ -173,6 +175,13 @@ find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_frontend_resources.jar images music META-INF
 rm -r images music
 zip -X -r ../Conquer_frontend.jar *
+cd ../frontendSPI
+rm -r META-INF
+mkdir META-INF
+echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
+echo Created-By: "$major" >>META-INF/MANIFEST.MF
+find . -exec touch -t 201108231405.14 {} \;
+zip -X -r ../ConquerFrontendSPI.jar *
 cd ../../Launcher || exit
 make clean
 make $TARGET|| exit 1
@@ -287,7 +296,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86>>control
 	echo Description: GUI for Conquer. \(Without launcher\)>>control
 	cd ../..
-	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
+	cp Conquer_frontend.jar Conquer_frontend_resources.jar ConquerFrontendSPI.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
 	#TODO: Replace with maven itself.
@@ -302,7 +311,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build conquer-gui
 else
-	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar ../Installer
+	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar  ConquerFrontendSPI.jar ../Installer
 	cd ../Installer || exit
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar

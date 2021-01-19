@@ -138,7 +138,7 @@ char *generateModulePath() {
 	strcat(ret, "--module-path=");
 #ifndef _WIN32
 	strcat(ret,
-		   "/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar");
+		   "/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:/usr/share/java/ConquerFrontendSPI.jar");
 #else
 	TCHAR pf[MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, pf, CSIDL_PROGRAM_FILES, FALSE);
@@ -146,6 +146,8 @@ char *generateModulePath() {
 	strcat(ret, "\\Conquer\\Conquer.jar;");
 	strcat(ret, pf);
 	strcat(ret, "\\Conquer\\Conquer_frontend.jar;");
+	strcat(ret, pf);
+	strcat(ret, "\\Conquer\\ConquerFrontendSPI.jar;");
 #endif
 	return ret;
 }
