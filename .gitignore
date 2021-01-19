@@ -1,8 +1,8 @@
 *.class
+*.exe
+*.jar
 *.ogg
 *.wav
-*.jar
-*.exe
 .classpath
 .project
 .settings/
@@ -17,6 +17,9 @@ ConquerFrontend/.project
 ConquerFrontend/.settings/
 ConquerFrontend/bin/
 ConquerFrontend/music/
+ConquerFrontendSPI/.classpath
+ConquerFrontendSPI/.project
+ConquerFrontendSPI/.settings
 ConquerTest/.*
 ConquerTest/.classpath
 ConquerTest/.project
@@ -45,6 +48,3 @@ docs/Documentation.out
 docs/Documentation.pdf
 docs/Documentation.toc
 docs/_minted-Documentation/
-ConquerFrontendSPI/.classpath
-ConquerFrontendSPI/.project
-ConquerFrontendSPI/.settings
