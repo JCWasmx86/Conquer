@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
+#TODO: Replace with maven itself.
+downloadJarFiles(){
+	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o tritonus.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o jorbis.jar
+	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o vorbisspi.jar
+}
+makeManifest(){
+	mkdir -p META-INF
+	{
+		echo Manifest-Version: 1.0
+		echo Created-By: "$1"
+	}>META-INF/MANIFEST.MF
+}
 export SOURCE_DATE_EPOCH=0
 export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
@@ -70,8 +85,7 @@ cd ../../conquer-dist || exit
 mkdir tmp
 cd backend || exit
 mkdir -p META-INF/services
-echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: "$major" >>META-INF/MANIFEST.MF
+makeManifest $major
 echo org.jel.game.plugins.builtins.ChangeCitiesMinds>META-INF/services/org.jel.game.plugins.Plugin
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/ChangeCitiesMinds.jar META-INF/MANIFEST.MF META-INF/services/org.jel.game.plugins.Plugin org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
@@ -146,8 +160,7 @@ cp -v ../music_tmp/* ../conquer-dist/music
 cd ../conquer-dist/backend || exit
 rm -rf META-INF/
 mkdir -p META-INF/services
-echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: "$major" >>META-INF/MANIFEST.MF
+makeManifest $major
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_resources.jar META-INF images data
 rm -r images data
@@ -169,17 +182,14 @@ cp conquer.zip backend/data
 cd frontend || exit
 rm -r META-INF
 mkdir META-INF
-echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: "$major" >>META-INF/MANIFEST.MF
+makeManifest $major
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_frontend_resources.jar images music META-INF
 rm -r images music
 zip -X -r ../Conquer_frontend.jar *
 cd ../frontendSPI
 rm -r META-INF
-mkdir META-INF
-echo Manifest-Version: 1.0 >META-INF/MANIFEST.MF
-echo Created-By: "$major" >>META-INF/MANIFEST.MF
+makeManifest $major
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../ConquerFrontendSPI.jar *
 cd ../../Launcher || exit
@@ -299,12 +309,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
-	#TODO: Replace with maven itself.
-	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o conquer-gui/usr/share/java/conquer/jlayer.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o conquer-gui/usr/share/java/conquer/mp3spi.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o conquer-gui/usr/share/java/conquer/tritonus.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o conquer-gui/usr/share/java/conquer/jorbis.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o conquer-gui/usr/share/java/conquer/vorbisspi.jar
+	downloadJarFiles
 	cd conquer-gui/DEBIAN || exit
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
 	cd ../..
@@ -313,11 +318,7 @@ if [[ -z "${IS_WIN}" ]]; then
 else
 	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar  ConquerFrontendSPI.jar ../Installer
 	cd ../Installer || exit
-	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o tritonus.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o jorbis.jar
-	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o vorbisspi.jar
+	downloadJarFiles
 	make clean
 	make||exit
 	cp Installer.exe ../conquer-dist
@@ -349,3 +350,4 @@ java --enable-preview org.jel.game.testsuite.Testsuite2||exit
 if [[ ! $NO_TESTS3 ]]; then java --enable-preview org.jel.game.testsuite.Testsuite3||exit; fi
 cd ..
 rm -rf tmp
+exit 0
