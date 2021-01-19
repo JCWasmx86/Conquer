@@ -20,41 +20,34 @@ makeManifest() {
 makeLicenseFileForExternal() {
 	{
 		curl https://raw.githubusercontent.com/curl/curl/master/COPYING
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/libarchive/libarchive/master/COPYING
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/DaveGamble/cJSON/master/LICENSE
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jlayer/LICENSE.txt
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jorbis/COPYING.LIB
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/mp3spi/LICENSE.txt
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/tritonus-cvs/LGPL
-		echo
-		echo
+		echo&&echo
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/vorbisspi/LICENSE.txt
 	}>LICENSE.txt
 }
 
 writeControlFile() {
-	writeControlFileNoDeps $1 $2 $3 "$5"
+	writeControlFileNoDeps "$1" "$2" "$3" "$5"
 	echo Depends: "$4">>control
 }
 
 writeControlFileNoDeps() {
 	{
-		echo Package: $1
-		echo Version: $2
+		echo Package: "$1"
+		echo Version: "$2"
 		echo Section: games
-		echo Architecture: $3
+		echo Architecture: "$3"
 		echo Maintainer: JCWasmx86
 		echo Description: "$4"
 	}>control
@@ -64,9 +57,21 @@ buildDeb() {
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
 	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
-	dpkg-deb --build $1
+	dpkg-deb --build "$1"
 }
 
+writeVersionFile() {
+	java --version>versions
+	gcc --version>>versions
+	musescore3 --version>>versions
+	if [[ -z "${IS_WIN}" ]]; then
+		dpkg-deb --version>>versions
+	fi
+	zip --version>>versions
+	cd ../Launcher/cJSON || exit
+	git rev-parse HEAD>>../../conquer-dist/versions
+	cd ../../Conquer || exit
+}
 export SOURCE_DATE_EPOCH=0
 export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
@@ -119,7 +124,7 @@ javac $(find src -name "*.java") -d ../conquer-dist/backend -g -parameters --ena
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
-cd ../ConquerFrontendSPI
+cd ../ConquerFrontendSPI || exit
 javac $(find src -name "*.java") -d ../conquer-dist/frontendSPI --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cd ../ConquerFrontend || exit
 cp -rv images ../conquer-dist/frontend
@@ -138,7 +143,7 @@ cd ../../conquer-dist || exit
 mkdir tmp
 cd backend || exit
 mkdir -p META-INF/services
-makeManifest $major
+makeManifest "$major"
 echo org.jel.game.plugins.builtins.ChangeCitiesMinds>META-INF/services/org.jel.game.plugins.Plugin
 find . -exec touch -t 201108231405.14 {} \;
 zip -X ../tmp/ChangeCitiesMinds.jar META-INF/MANIFEST.MF META-INF/services/org.jel.game.plugins.Plugin org/jel/game/plugins/builtins/ChangeCitiesMinds.class org/jel/game/plugins/builtins/ClanChangeMessage.class org/jel/game/plugins/builtins/ChangeCitiesMindsMessages.class org/jel/game/plugins/builtins/changeCitiesMinds*.properties
@@ -213,7 +218,7 @@ cp -v ../music_tmp/* ../conquer-dist/music
 cd ../conquer-dist/backend || exit
 rm -rf META-INF/
 mkdir -p META-INF/services
-makeManifest $major
+makeManifest "$major"
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_resources.jar META-INF images data
 rm -r images data
@@ -235,14 +240,14 @@ cp conquer.zip backend/data
 cd frontend || exit
 rm -r META-INF
 mkdir META-INF
-makeManifest $major
+makeManifest "$major"
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_frontend_resources.jar images music META-INF
 rm -r images music
 zip -X -r ../Conquer_frontend.jar *
-cd ../frontendSPI
+cd ../frontendSPI || exit
 rm -r META-INF
-makeManifest $major
+makeManifest "$major"
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../ConquerFrontendSPI.jar *
 cd ../../Launcher || exit
@@ -297,7 +302,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	cd ../..
 	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
 	cp Conquer.license LICENSE.txt conquer-gui/usr/share/conquer-gui
-	cd conquer-gui/usr/share/java/conquer
+	cd conquer-gui/usr/share/java/conquer || exit
 	downloadJarFiles
 	cd ../../../../DEBIAN || exit
 	buildDeb conquer-gui
@@ -310,16 +315,7 @@ else
 	cp Installer.exe ../conquer-dist
 	cd ../conquer-dist || exit
 fi
-java --version>versions
-gcc --version>>versions
-musescore3 --version>>versions
-if [[ -z "${IS_WIN}" ]]; then
-	dpkg-deb --version>>versions
-fi
-zip --version>>versions
-cd ../Launcher/cJSON || exit
-git rev-parse HEAD>>../../conquer-dist/versions
-cd ../../Conquer || exit
+writeVersionFile
 mkdir -p tmp/data
 javac $(find src test -name "*.java") -d tmp -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
@@ -327,7 +323,7 @@ cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/built
 cp -rv images tmp
 cp -rv ../conquer-dist/conquer.zip tmp/data
 cd tmp || exit
-#First install everything
+#First install everything except music
 java --enable-preview org.jel.game.testsuite.Testsuite1||exit
 #Run the tests for bad arguments
 java --enable-preview org.jel.game.testsuite.Testsuite2||exit
