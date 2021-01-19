@@ -17,6 +17,7 @@ jobs:
         run: |
           cd Conquer/src
           shopt -s dotglob
+          shopt -s globstar
           sudo apt-get install zip
           javadoc --source-path . --enable-preview --source 15 module-info.java $(find src -name "*.java") -d Javadocs -Xdoclint:all
           zip -r ../../javadocs.zip Javadocs
