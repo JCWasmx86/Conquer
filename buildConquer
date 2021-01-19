@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 export SOURCE_DATE_EPOCH=0
-export VERSION=1.4.0
+export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
 	export EXTENSION="ogg"
 fi

@@ -542,7 +542,7 @@ public final class Shared {
 	 * @return Current version of reference implementation.
 	 */
 	public static Version getReferenceImplementationVersion() {
-		return new Version(1, 4, 0);
+		return new Version(1, 5, 0);
 	}
 
 	private Shared() {

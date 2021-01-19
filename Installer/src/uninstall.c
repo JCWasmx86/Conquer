@@ -22,6 +22,7 @@ int main() {
 	deleteFile("vorbisspi.jar");
 	deleteFile("Conquer_resources.jar");
 	deleteFile("Conquer_frontend_resources.jar");
+	deleteFile("ConquerFrontendSPI.jar");
 	deleteFile("");
 	MessageBox(
 		NULL,
