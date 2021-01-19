@@ -54,7 +54,7 @@ writeControlFileNoDeps() {
 }
 
 buildDeb() {
-	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
+	echo Installed-Size: $(($(du -sb ../usr| cut -f -1) / 1024))>>control
 	cd ../..
 	find . -exec touch -t 201108231405.14 {} \;
 	dpkg-deb --build "$1"
@@ -77,6 +77,7 @@ export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
 	export EXTENSION="ogg"
 fi
+# shellcheck source=/dev/null
 . "${JAVA_HOME}"/release
 major=$(echo "${JAVA_VERSION}" | cut -d. -f1)
 if [ "$major" == "15" ]; then
@@ -85,7 +86,7 @@ else
 	echo Didn\'t find java, version 15
 	exit 1
 fi
-if [[ $(gcc -dumpversion) =~ "10.*" ]]; then
+if [[ $(gcc -dumpversion) =~ 10.* ]]; then
 	echo Didn\'t find gcc-10
 	exit 1
 else
@@ -102,7 +103,10 @@ case "${unameOut}" in
 			echo JAVA_HOME is not set\!
 			exit 1
 		else
-			export PATH=$PATH:$(cygpath "${JAVA_HOME}")/bin:$(cygpath "C:\\Program Files\\Musescore 3\\bin")
+			jpath=$(cygpath "${JAVA_HOME}")/bin
+			musescorePath=$(cygpath "C:\\Program Files\\Musescore 3\\bin")
+			PATH=$PATH:$jpath:$musescorePath
+			export PATH
 		fi
 		export TARGET="all-win"
 		export IS_WIN="IS_WIN"
@@ -114,25 +118,26 @@ if ! command -v musescore3 &> /dev/null; then
 	exit 1
 else
 	echo Found musescore
-	export MUSESCORE=$(type -p musescore3)
+	MUSESCORE=$(type -p musescore3)
+	export MUSESCORE
 	echo Musescore="$MUSESCORE"
 fi
 mkdir -p music_tmp conquer-dist/{backend/data,frontend,music,frontend/music,frontendSPI}
 cd Conquer || exit
 shopt -s dotglob
-javac $(find src -name "*.java") -d ../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
+javac "$(find src -name '*.java')" -d ../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties ../conquer-dist/backend/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties ../conquer-dist/backend/org/jel/game/plugins/builtins
 cp -rv images ../conquer-dist/backend
 cd ../ConquerFrontendSPI || exit
-javac $(find src -name "*.java") -d ../conquer-dist/frontendSPI --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
+javac "$(find src -name '*.java')" -d ../conquer-dist/frontendSPI --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend -g -parameters --enable-preview --source 15|| exit 1
 cd ../ConquerFrontend || exit
 cp -rv images ../conquer-dist/frontend
-javac $(find src -name "*.java") -d ../conquer-dist/frontend --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend:../conquer-dist/frontendSPI -g -parameters --enable-preview --source 15|| exit 1
+javac "$(find src -name '*.java')" -d ../conquer-dist/frontend --class-path=../conquer-dist/backend --module-path=../conquer-dist/backend:../conquer-dist/frontendSPI -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/gui/*.properties ../conquer-dist/frontend/org/jel/gui/
 cp -rv images ../conquer-dist/frontend
 cd ../ScenarioGenerator || exit
-javac $(find src -name "*.java") -d bin -g -parameters|| exit 1
+javac "$(find src -name '*.java')" -d bin -g -parameters|| exit 1
 cp -r images bin
 cd bin || exit
 java --class-path=.:../images:.. org.jel.tool.Belenos|| exit 1
@@ -175,34 +180,36 @@ zip -X ../tmp/SortedStrategy.jar META-INF/MANIFEST.MF META-INF/services/org.jel.
 rm -rf org/jel/game/strategies/
 cd ../tmp || exit
 cp -v ../../ScenarioGenerator/bin/*.data ../../ScenarioGenerator/*.png .
-echo "<info>" >info.xml
-echo "	<scenarios>">>info.xml
-echo "		<scenario name=\"Belenos\" file=\"Belenos.data\" thumbnail=\"Belenos.png\" />">>info.xml
-echo "		<scenario name=\"Etiona\" file=\"Etiona.data\" thumbnail=\"Etiona.png\" />">>info.xml
-echo "		<scenario name=\"Slaine\" file=\"Slaine.data\" thumbnail=\"Slaine.png\" />">>info.xml
-echo "		<scenario name=\"Freedo\" file=\"Freedo.data\" thumbnail=\"Freedo.png\" />">>info.xml
-echo "	</scenarios>">>info.xml
-echo "	<plugins>">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.ChangeCitiesMinds\" />">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.IncreaseGrowth\" />">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.MoneyAnalyzer\" />">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.ResourceAnalyzer\" />">>info.xml
-echo "		<!--<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />-->">>info.xml
-echo "		<plugin className=\"org.jel.game.plugins.builtins.PeriodicGrowthChange\" />">>info.xml
-echo "	</plugins>">>info.xml
-echo "	<strategies>">>info.xml
-echo "		<strategy className=\"org.jel.game.strategies.SortedStrategyProvider\" />">>info.xml
-echo "	</strategies>">>info.xml
-echo "	<readers>">>info.xml
-echo "		<reader className=\"org.jel.game.data.ri.ScenarioFileReaderFactory\" />">>info.xml
-echo "	</readers>">>info.xml
-echo "</info>">>info.xml
+{
+	echo "<info>"
+	echo "	<scenarios>"
+	echo "		<scenario name=\"Belenos\" file=\"Belenos.data\" thumbnail=\"Belenos.png\" />"
+	echo "		<scenario name=\"Etiona\" file=\"Etiona.data\" thumbnail=\"Etiona.png\" />"
+	echo "		<scenario name=\"Slaine\" file=\"Slaine.data\" thumbnail=\"Slaine.png\" />"
+	echo "		<scenario name=\"Freedo\" file=\"Freedo.data\" thumbnail=\"Freedo.png\" />"
+	echo "	</scenarios>"
+	echo "	<plugins>"
+	echo "		<plugin className=\"org.jel.game.plugins.builtins.ChangeCitiesMinds\" />"
+	echo "		<plugin className=\"org.jel.game.plugins.builtins.IncreaseGrowth\" />"
+	echo "		<plugin className=\"org.jel.game.plugins.builtins.MoneyAnalyzer\" />"
+	echo "		<plugin className=\"org.jel.game.plugins.builtins.ResourceAnalyzer\" />"
+	echo "		<!--<plugin className=\"org.jel.game.plugins.builtins.DefaultMusic\" />-->"
+	echo "		<plugin className=\"org.jel.game.plugins.builtins.PeriodicGrowthChange\" />"
+	echo "	</plugins>"
+	echo "	<strategies>"
+	echo "		<strategy className=\"org.jel.game.strategies.SortedStrategyProvider\" />"
+	echo "	</strategies>"
+	echo "	<readers>"
+	echo "		<reader className=\"org.jel.game.data.ri.ScenarioFileReaderFactory\" />"
+	echo "	</readers>"
+	echo "</info>"
+}>info.xml
 mkdir -p .conquer/libs
-mv -v *.jar .conquer/libs
-mv -v *.data *.xml *.png .conquer
+mv -v ./*.jar .conquer/libs
+mv -v ./*.data ./*.xml ./*.png .conquer
 cd .conquer || exit
 find . -exec touch -t 201108231405.14 {} \;
-zip -X ../../conquer.zip -r *
+zip -X ../../conquer.zip -r ./*
 cp ../../conquer.zip ../../backend/data
 cd ../../../music || exit
 for f in *.mscz; do
@@ -223,13 +230,15 @@ find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_resources.jar META-INF images data
 rm -r images data
 echo org.jel.game.data.ri.ScenarioFileReaderFactory>META-INF/services/org.jel.game.data.ConquerInfoReaderFactory
-echo org.jel.game.data.builtin.OffensiveStrategyProvider>META-INF/services/org.jel.game.data.strategy.StrategyProvider
-echo org.jel.game.data.builtin.DefensiveStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
-echo org.jel.game.data.builtin.ModerateStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
-echo org.jel.game.data.builtin.RandomStrategyProvider>>META-INF/services/org.jel.game.data.strategy.StrategyProvider
+{
+	echo org.jel.game.data.builtin.OffensiveStrategyProvider
+	echo org.jel.game.data.builtin.DefensiveStrategyProvider
+	echo org.jel.game.data.builtin.ModerateStrategyProvider
+	echo org.jel.game.data.builtin.RandomStrategyProvider
+}>META-INF/services/org.jel.game.data.strategy.StrategyProvider
 echo org.jel.game.data.DefaultScenarioProvider>META-INF/services/org.jel.game.data.InstalledScenarioProvider
 find . -exec touch -t 201108231405.14 {} \;
-zip -X -r ../Conquer.jar *
+zip -X -r ../Conquer.jar ./*
 cd ..
 mkdir -p frontend/music
 cd music || exit
@@ -244,12 +253,12 @@ makeManifest "$major"
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -r ../Conquer_frontend_resources.jar images music META-INF
 rm -r images music
-zip -X -r ../Conquer_frontend.jar *
+zip -X -r ../Conquer_frontend.jar ./*
 cd ../frontendSPI || exit
 rm -r META-INF
 makeManifest "$major"
 find . -exec touch -t 201108231405.14 {} \;
-zip -X -r ../ConquerFrontendSPI.jar *
+zip -X -r ../ConquerFrontendSPI.jar ./*
 cd ../../Launcher || exit
 make clean
 make $TARGET|| exit 1
@@ -261,7 +270,7 @@ fi
 cd ../conquer-dist || exit
 cd music || exit
 mkdir -p libs/sounds
-cp *.$EXTENSION libs/sounds
+cp ./*.$EXTENSION libs/sounds
 find . -exec touch -t 201108231405.14 {} \;
 zip -X -9 ../Music.zip libs/sounds/*.$EXTENSION
 wait
@@ -274,7 +283,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer/DEBIAN
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN || exit
-	writeControlFile conquer $VERSION $(dpkg --print-architecture) "conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0" "The GUI for the strategy game conquer"
+	writeControlFile conquer $VERSION "$(dpkg --print-architecture)" "conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0" "The GUI for the strategy game conquer"
 	cd ../..
 	mv launcher conquer_launcher conquer/usr/bin
 	cp LICENSE.txt conquer/usr/share/conquer
@@ -317,7 +326,7 @@ else
 fi
 writeVersionFile
 mkdir -p tmp/data
-javac $(find src test -name "*.java") -d tmp -g -parameters --enable-preview --source 15|| exit 1
+javac "$(find src test -name '*.java')" -d tmp -g -parameters --enable-preview --source 15|| exit 1
 cp src/org/jel/game/*properties tmp/org/jel/game/
 cp src/org/jel/game/plugins/builtins/*.properties tmp/org/jel/game/plugins/builtins
 cp -rv images tmp
