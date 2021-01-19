@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,7 +69,7 @@ public final class GlobalContext {
 	/**
 	 * Merges {@code this} with {@code other}. There won't be any duplicate items in
 	 * any of the lists.
-	 * 
+	 *
 	 * @param other The other context. May not be {@code null}, otherwise an
 	 *              {@code IllegalArgumentException} will be thrown.
 	 */
@@ -94,7 +95,7 @@ public final class GlobalContext {
 
 	/**
 	 * Create a game state from a given scenario.
-	 * 
+	 *
 	 * @param is The scenario to instantiate.May not be {@code null}, otherwise an
 	 *           {@code IllegalArgumentException} will be thrown.
 	 * @return A game state.
@@ -112,22 +113,34 @@ public final class GlobalContext {
 			throw new UnsupportedOperationException("No reader found");
 		}
 		final var maxLength = list.get(list.size() - 1).getMagicNumber().length;
-		try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
-			final var b = new byte[maxLength];
-			final var n = stream.read(b);
-			for (final var factory : list) {
-				final var magic = factory.getMagicNumber();
-				if (magic.length > n) {
-					continue;
-				}
-				if (Arrays.equals(b, 0, magic.length, magic, 0, magic.length)) {
-					final var reader = factory.getForFile(is.file());
-					return reader.build();
-				}
+		// Reverse to start with the longest first.
+		// So, if you have two readers: One with [aa,ee,ff] and one with [aa,ee,ff,11],
+		// this
+		// would match the first one first. This would be quite bad, as it might not
+		// support it entirely.
+		Collections.reverse(list);
+		final var bytes = this.obtainBytes(is, maxLength);
+		for (final var factory : list) {
+			final var magic = factory.getMagicNumber();
+			if (Arrays.equals(bytes, 0, magic.length, magic, 0, magic.length)) {
+				final var reader = factory.getForFile(is);
+				return reader.build();
 			}
-		} catch (final IOException e) {
-			throw new RuntimeException(e);
 		}
 		throw new UnsupportedOperationException("No supported file format");
+	}
+
+	private byte[] obtainBytes(final InstalledScenario is, final int maxLength) {
+		if (is.file() != null) {
+			try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
+				final var b = new byte[maxLength];
+				stream.read(b);
+				return b;
+			} catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			return is.in().getMagicNumber(maxLength);
+		}
 	}
 }

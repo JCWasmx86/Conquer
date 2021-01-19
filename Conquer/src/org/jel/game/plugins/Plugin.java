@@ -15,6 +15,12 @@ import org.jel.game.utils.Graph;
  * The interface every plugin has to implement.
  */
 public interface Plugin {
+	/**
+	 * Returns whether this plugin is compatible to the version of the engine.
+	 *
+	 * @param version May not be {@code null}. Version of the game engine
+	 * @return {@code true} if compatible, {@code false} otherwise.
+	 */
 	default boolean compatibleTo(final Version version) {
 		return true;
 	}

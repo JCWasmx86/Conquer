@@ -51,7 +51,7 @@ public class Installer implements Runnable {
 
 	/**
 	 * Constructs a new Installer
-	 * 
+	 *
 	 * @param chooser Returns the option to selected. May not be {@code null},
 	 *                otherwise an {@link IllegalArgumentException} will be thrown.
 	 * @param writeTo Outputstream for status messages. May be {@code null}.

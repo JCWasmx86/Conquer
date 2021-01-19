@@ -21,7 +21,7 @@ public interface StrategyObject {
 	 * <li>{@code source==target}</li>
 	 * <li>{@code isConnected(source,target)==false}</li>
 	 * <ul>
-	 * 
+	 *
 	 * @param source                          Source city. May not be {@code null},
 	 *                                        otherwise an
 	 *                                        {@code IllegalArgumentException} is
@@ -47,14 +47,14 @@ public interface StrategyObject {
 
 	/**
 	 * Return a graph of all cities.
-	 * 
+	 *
 	 * @return All cities as graph.
 	 */
 	Graph<ICity> getCities();
 
 	/**
 	 * Describes the relationship between the different clans.
-	 * 
+	 *
 	 * @return A graph describing the relationships between the clans.
 	 */
 	Graph<Integer> getRelations();
@@ -62,9 +62,9 @@ public interface StrategyObject {
 	/**
 	 * Return a value describing the relationship between {@code a} and {@code b}.
 	 * It should be in the range (inclusively) {@code [0;100]}.
-	 * 
+	 *
 	 * If the clans are equal, an {@code IllegalArgumentException} is thrown.
-	 * 
+	 *
 	 * @param a First clan. May not be {@code null}, otherwise an
 	 *          {@code IllegalArgumentException} is thrown.
 	 * @param b Second clan. May not be {@code null}, otherwise an
@@ -76,10 +76,10 @@ public interface StrategyObject {
 	/**
 	 * Get the relationship between the clan {@code clan} and the clan of the city
 	 * {@code city}.
-	 * 
+	 *
 	 * If {@code clan} and {@code city.getClan()} are equals, an
 	 * {@code IllegalArgumentException} will be thrown.
-	 * 
+	 *
 	 * @param clan Clan. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
 	 * @param city City. May not be {@code null}, otherwise an
@@ -102,13 +102,13 @@ public interface StrategyObject {
 	/**
 	 * Return the maximum number of soldiers to move from {@code first} to
 	 * {@code second}.
-	 * 
+	 *
 	 * An {@code IllegalArgumentException} is thrown if:
 	 * <ul>
 	 * <li>{@code first==second}</li>
 	 * <li>{@code first} is not connected with {@code second}</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param clan                    The clan determining the amount of coins. May
 	 *                                not be {@code null}, otherwise an
 	 *                                {@code IllegalArgumentException} is thrown.
@@ -145,7 +145,7 @@ public interface StrategyObject {
 	/**
 	 * Returns the maximum number of soldiers, that can be moved over the distance
 	 * {@code weight}, based on the amount of coins of {@code clan}.
-	 * 
+	 *
 	 * @param clan                    The clan determining the amount of coins. May
 	 *                                not be {@code null}, otherwise an
 	 *                                {@code IllegalArgumentException} is thrown.
@@ -159,11 +159,11 @@ public interface StrategyObject {
 
 	/**
 	 * Attempt to move soldiers from {@code source} to another city.
-	 * 
+	 *
 	 * An {@code IllegalArgumentException} is thrown, if
 	 * {@code source.getClan() != target.getClan()}, iff
 	 * {@code managedByExternalStrategy} is {@code true}.
-	 * 
+	 *
 	 * @param source                          Source city. May not be {@code null},
 	 *                                        otherwise an
 	 *                                        {@code IllegalArgumentException} is
@@ -200,7 +200,7 @@ public interface StrategyObject {
 
 	/**
 	 * Recruit soldiers.
-	 * 
+	 *
 	 * @param maxToPay         Maximum amount to pay. Only evaluated if
 	 *                         {@code managedByPlayer} is false. May not be negative
 	 *                         in this case, otherwise an
@@ -222,7 +222,7 @@ public interface StrategyObject {
 	 * {@code null}, the destination is extincted or the gift callback for the
 	 * player is null.
 	 * ({@link ConquerInfo#setPlayerGiftCallback(org.jel.game.data.PlayerGiftCallback)})
-	 * 
+	 *
 	 * @param source      Source clan. May not be {@code null}, otherwise an
 	 *                    {@code IllegalArgumentException} is thrown.
 	 * @param destination Destination clan. May not be {@code null}, otherwise an
@@ -235,7 +235,7 @@ public interface StrategyObject {
 
 	/**
 	 * Upgrade the defense of a city.
-	 * 
+	 *
 	 * @param city The city. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
 	 * @return {@code true} if successful, {@code false} otherwise.
@@ -244,7 +244,7 @@ public interface StrategyObject {
 
 	/**
 	 * Upgrade the resource production in a city.
-	 * 
+	 *
 	 * @param resc The resource to upgrade. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
 	 * @param city The city. May not be {@code null}, otherwise an

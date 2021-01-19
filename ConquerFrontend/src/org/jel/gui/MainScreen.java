@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -79,6 +81,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
 		menu.add(settings);
+		final var guiPlugins = ServiceLoader.load(GUIPlugin.class);
+		guiPlugins.stream().map(Provider::get).map(GUIPlugin::getMenuItem).forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));

@@ -10,14 +10,14 @@ import java.util.Optional;
 public interface Message {
 	/**
 	 * Return a human-readable text representation of the message.
-	 * 
+	 *
 	 * @return Message text.
 	 */
 	String getMessageText();
 
 	/**
 	 * Returns an optional icon path.
-	 * 
+	 *
 	 * @return Optional icon path.
 	 */
 	default Optional<String> getOptionalIconPath() {
@@ -26,7 +26,7 @@ public interface Message {
 
 	/**
 	 * Returns if the message is bad for the player or good.
-	 * 
+	 *
 	 * @return {@code true}, if it is bad for the player, e.g. a city was conquered.
 	 */
 	default boolean isBadForPlayer() {
@@ -36,7 +36,7 @@ public interface Message {
 	/**
 	 * Return whether the player was involved in this message. (E.g. as attacker or
 	 * defender).
-	 * 
+	 *
 	 * @return {@code true} if the player was involved.
 	 */
 	default boolean isPlayerInvolved() {
@@ -46,7 +46,7 @@ public interface Message {
 	/**
 	 * Useful for GUIs, that show messages. Messages that return {@code true}, can
 	 * be hidden, as they would for example give too much information.
-	 * 
+	 *
 	 * @return {@code true} if the message shouldn't be shown to the player.
 	 */
 	default boolean shouldBeShownToThePlayer() {

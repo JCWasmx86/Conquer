@@ -10,7 +10,7 @@ public class ResourceUsage {
 
 	/**
 	 * The {@code stats}-array has this layout:
-	 * 
+	 *
 	 * <pre>
 	 * [0][1]
 	 * [0][1]
@@ -22,15 +22,15 @@ public class ResourceUsage {
 	 * [0][1]
 	 * [0][1]
 	 * </pre>
-	 * 
+	 *
 	 * Every row in this array is for one resource. The index is obtained by calling
 	 * {@link Resource#getIndex()}. Each subarray has two entries.
 	 * {@code subarray[0]} is the use of the resource per person,
 	 * {@code subarray[1]} is the usage of the resource per soldier.
-	 * 
+	 *
 	 * No value may be negative, null, NaN or infinite, otherwise an
 	 * {@code IllegalArgumentException} will be thrown.
-	 * 
+	 *
 	 * @param stats                  Statistics, may not be {@code null}.
 	 * @param coinsPerRoundPerPerson
 	 */
@@ -71,7 +71,7 @@ public class ResourceUsage {
 	/**
 	 * Returns the amount of resources for every resource, that every person uses
 	 * per round.
-	 * 
+	 *
 	 * @return Amount of resources, used by every person.
 	 */
 	public double[] personUsage() {
@@ -81,7 +81,7 @@ public class ResourceUsage {
 	/**
 	 * Returns the amount of resources for every resource, that every soldier uses
 	 * per round.
-	 * 
+	 *
 	 * @return Amount of resources, used by every soldier.
 	 */
 	public double[] soldierUsage() {
@@ -91,7 +91,7 @@ public class ResourceUsage {
 	/**
 	 * Returns the subarray, as described at
 	 * {@link ResourceUsage#ResourceUsage(double[][], double)}.
-	 * 
+	 *
 	 * @param idx The index.
 	 * @return Subarray, but just a copy.
 	 */
@@ -101,7 +101,7 @@ public class ResourceUsage {
 
 	/**
 	 * Gives the number of coins every person produces in each round.
-	 * 
+	 *
 	 * @return Number of coins.
 	 */
 	public double getCoinsPerRoundPerPerson() {

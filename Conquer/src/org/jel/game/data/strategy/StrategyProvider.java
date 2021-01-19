@@ -8,7 +8,7 @@ import org.jel.game.data.Version;
 public interface StrategyProvider {
 	/**
 	 * Return a new implementation-defined strategy object.
-	 * 
+	 *
 	 * @return New strategy object.
 	 */
 	Strategy buildStrategy();
@@ -16,7 +16,7 @@ public interface StrategyProvider {
 	/**
 	 * Returns whether this strategy is compatible to the version of the game
 	 * engine.
-	 * 
+	 *
 	 * @param version Version of the game engine.
 	 * @return {@code true} if compatible, {@code false} otherwise.
 	 */
@@ -26,14 +26,14 @@ public interface StrategyProvider {
 
 	/**
 	 * Returns some unique identifier.
-	 * 
+	 *
 	 * @return Unique identifier.
 	 */
 	int getId();
 
 	/**
 	 * Returns a human readable name.
-	 * 
+	 *
 	 * @return Name.
 	 */
 	String getName();

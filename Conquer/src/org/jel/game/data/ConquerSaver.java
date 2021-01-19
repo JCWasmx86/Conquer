@@ -9,7 +9,7 @@ package org.jel.game.data;
 public interface ConquerSaver {
 	/**
 	 * Restore the game state.
-	 * 
+	 *
 	 * @return The restored game state.
 	 * @throws Exception If an undefined exception occurrs.
 	 */
@@ -17,7 +17,7 @@ public interface ConquerSaver {
 
 	/**
 	 * Save the game state.
-	 * 
+	 *
 	 * @param info Game state. May not be {@code null}.
 	 * @throws Exception If an undefined exception occurrs.
 	 */

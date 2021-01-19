@@ -43,7 +43,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			final var name = scenarioDirectory.getName();
 			final var file = new File(scenarioDirectory, name + ".data").getAbsolutePath();
 			final var thumbnail = new File(scenarioDirectory, name + ".png").getAbsolutePath();
-			ret.add(new InstalledScenario(name, file, thumbnail));
+			ret.add(new InstalledScenario(name, file, thumbnail, null));
 		}
 	}
 
@@ -79,7 +79,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			return null;
 		}
 		return new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-				Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue());
+				Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null);
 	}
 
 	// A bit copied from XMLReader.java

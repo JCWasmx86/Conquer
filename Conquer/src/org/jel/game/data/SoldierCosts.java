@@ -53,7 +53,7 @@ public final class SoldierCosts {
 	/**
 	 * No value may be negative, NaN or infinite. Otherwise an
 	 * {@code IllegalArgumentException} will be thrown.
-	 * 
+	 *
 	 * @param coinsPerMovePerSoldier
 	 * @param coinsPerMoveOfSoldierBase
 	 * @param coinsPerSoldierInitial

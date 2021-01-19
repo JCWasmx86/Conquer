@@ -17,7 +17,7 @@ public enum RandomEvent {
 
 	/**
 	 * Return a message id, that will be in messages.properties
-	 * 
+	 *
 	 * @return Message id.
 	 */
 	public String getMessage() {

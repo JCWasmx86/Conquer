@@ -45,7 +45,7 @@ public final class Context {
 
 	/**
 	 * Return a unmodifiable copy of the list of clannames.
-	 * 
+	 *
 	 * @return List of clan names.
 	 */
 	public List<String> getClanNames() {

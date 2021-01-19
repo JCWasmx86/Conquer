@@ -7,7 +7,7 @@ package org.jel.game.init;
 public interface OptionChooser {
 	/**
 	 * Returns the selected index.
-	 * 
+	 *
 	 * @param options All options. Will never be {@code null}.
 	 * @return Selected index.
 	 */

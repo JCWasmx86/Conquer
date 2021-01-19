@@ -33,7 +33,7 @@ public final class Shared {
 
 	/**
 	 * Returns true if the current OS is windows.
-	 * 
+	 *
 	 * @return {@code true} if the current OS is windows.
 	 */
 	public static boolean isWindows() {
@@ -42,7 +42,7 @@ public final class Shared {
 
 	/**
 	 * Returns true if the current OS is linux.
-	 * 
+	 *
 	 * @return {@code true} if the current OS is linux.
 	 */
 	public static boolean isLinux() {
@@ -399,7 +399,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#costs(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -410,7 +410,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#maxLevelsAddOffenseDefenseUpgrade(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -421,7 +421,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#maxLevelsAddResourcesUpgrade(int, double)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -432,7 +432,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#maxLevelsAddSoldiersUpgrade(int, double)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -443,7 +443,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#newPowerForSoldiers(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -454,7 +454,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#newPowerOfSoldiersForOffenseAndDefense(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -465,7 +465,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#newPowerOfUpdate(int, double)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -476,7 +476,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#upgradeCostsForOffenseAndDefense(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -487,7 +487,7 @@ public final class Shared {
 
 	/**
 	 * Replaced by {@link IClan#upgradeCostsForSoldiers(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -499,7 +499,7 @@ public final class Shared {
 	/**
 	 * Returns the network timeout in ms. Should be used for all network related
 	 * operations
-	 * 
+	 *
 	 * @return Network timeout in ms.
 	 */
 	public static int getNetworktimeout() {
@@ -509,7 +509,7 @@ public final class Shared {
 
 	/**
 	 * Returns whether SPI should be used
-	 * 
+	 *
 	 * @return {@code true}, if SPI should be used, {@code false} otherwise.
 	 */
 	public static boolean useSPI() {
@@ -518,7 +518,7 @@ public final class Shared {
 
 	/**
 	 * Returns whether level1 logging should be used
-	 * 
+	 *
 	 * @return {@code true}, if level1 logging should be used, {@code false}
 	 *         otherwise.
 	 */
@@ -528,7 +528,7 @@ public final class Shared {
 
 	/**
 	 * Returns whether level2 logging should be used
-	 * 
+	 *
 	 * @return {@code true}, if level2 logging should be used, {@code false}
 	 *         otherwise.
 	 */
@@ -538,7 +538,7 @@ public final class Shared {
 
 	/**
 	 * Returns the current version of the reference implementation.
-	 * 
+	 *
 	 * @return Current version of reference implementation.
 	 */
 	public static Version getReferenceImplementationVersion() {

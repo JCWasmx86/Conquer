@@ -15,7 +15,7 @@ import org.jel.game.plugins.Plugin;
 public class SPIContextBuilder {
 	/**
 	 * Build the context.
-	 * 
+	 *
 	 * @return The newly built context.
 	 */
 	public GlobalContext buildContext() {
@@ -25,7 +25,7 @@ public class SPIContextBuilder {
 			if (a.getScenarios() == null) {
 				return;
 			}
-			for (var b : a.getScenarios()) {
+			for (final var b : a.getScenarios()) {
 				if (b != null) {
 					installedScenarios.add(b);
 				}

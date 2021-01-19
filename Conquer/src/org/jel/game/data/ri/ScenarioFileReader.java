@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.ConquerInfoReader;
 import org.jel.game.data.ICity;
 import org.jel.game.data.IClan;
+import org.jel.game.data.InstalledScenario;
 import org.jel.game.data.Resource;
 import org.jel.game.data.Shared;
 import org.jel.game.utils.Graph;
@@ -25,18 +27,15 @@ import org.jel.game.utils.Graph;
  *
  */
 final class ScenarioFileReader implements ConquerInfoReader {
-	private final File file;
+	private final InstalledScenario scenario;
 
 	/**
 	 * Create a new Reader with the specified filename as input.
 	 *
-	 * @param fileName Input file
+	 * @param is Scenario
 	 */
-	public ScenarioFileReader(final String fileName) {
-		if (fileName == null) {
-			throw new IllegalArgumentException("fileName == null");
-		}
-		this.file = new File(fileName);
+	public ScenarioFileReader(final InstalledScenario is) {
+		this.scenario = is;
 	}
 
 	/**
@@ -47,9 +46,15 @@ final class ScenarioFileReader implements ConquerInfoReader {
 	@Override
 	public ConquerInfo build() {
 		final var game = new Game();
-		final var uri = this.file.toURI();
-		final var path = Paths.get(uri);
-		try (var dis = new DataInputStream(Files.newInputStream(path))) {
+		InputStream stream;
+		try {
+			stream = this.scenario.file() == null ? this.scenario.in()
+					: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
+		} catch (final IOException e) {
+			Shared.LOGGER.exception(e);
+			throw new RuntimeException(e);
+		}
+		try (var dis = new DataInputStream(stream)) {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
 			if ((mag1 != 0xAA) || (mag2 != 0x55)) {

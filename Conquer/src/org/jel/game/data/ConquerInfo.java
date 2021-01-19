@@ -20,7 +20,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Bind a context to this instance. This method may be called as often as you
 	 * want, until {@link #init()} was called. After calling {@link #init()}, the
 	 * behavior is undefined
-	 * 
+	 *
 	 * @param context The context to bind. May not be {@code null}
 	 * @throws IllegalArgumentException If the context is {@code null}
 	 */
@@ -29,7 +29,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Calculate the result of the game. If more than one clan is left (Check by
 	 * calling {@link #onlyOneClanAlive()} the behavior is undefined.
-	 * 
+	 *
 	 * @return The result, if only one clan is left. {@link Result#CPU_WON}, if the
 	 *         clan of the player is extincted, otherwise {@link Result#PLAYER_WON}.
 	 */
@@ -37,7 +37,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns the number of the current round. It is positive.
-	 * 
+	 *
 	 * @return The current round.
 	 */
 	int currentRound();
@@ -50,7 +50,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Exit this game with the specified result.
-	 * 
+	 *
 	 * @param calculateResult The result to exit with.
 	 * @deprecated Replaced by {@link #exit()}, to improve readability.
 	 */
@@ -66,7 +66,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Get the background image of the game.
-	 * 
+	 *
 	 * @return Background image. May be {@code null}.
 	 */
 	Image getBackground();
@@ -74,7 +74,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Get a clan, based on the id. This id is obtained by calling
 	 * {@link IClan#getId()}.
-	 * 
+	 *
 	 * @param index An unique id.
 	 * @return The clan
 	 * @throws {@link IllegalArgumentException} if the id has no matching clan.
@@ -83,7 +83,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Get a list of clan names. This list should be immutable.
-	 * 
+	 *
 	 * @return An immutable list of clannames. It should be sorted by the ascending
 	 *         id.
 	 */
@@ -91,14 +91,14 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * A list of all clans. This list should be immutable.
-	 * 
+	 *
 	 * @return An immutable list of clans. It should be sorted by the ascending id.
 	 */
 	List<IClan> getClans();
 
 	/**
 	 * A list of the amount of coins of all clans. This list should be immutable.
-	 * 
+	 *
 	 * @return An immutable list of coins of all clans. It should be sorted by the
 	 *         ascending id.
 	 */
@@ -106,7 +106,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * A list of the amount of colors of all clans. This list should be immutable.
-	 * 
+	 *
 	 * @return An immutable list of colors of all clans. It should be sorted by the
 	 *         ascending id.
 	 */
@@ -114,28 +114,28 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns a list of all extra music, that was e.g. added by plugins.
-	 * 
+	 *
 	 * @return A list of all music pieces that were registered by e.g. plugins.
 	 */
 	List<String> getExtraMusic();
 
 	/**
 	 * Returns the number of players (Human player+CPU players) in this scenario.
-	 * 
+	 *
 	 * @return Number of players/clans in this scenario
 	 */
 	int getNumPlayers();
 
 	/**
 	 * Returns all registered plugins.
-	 * 
+	 *
 	 * @return List of registered plugins
 	 */
 	List<Plugin> getPlugins();
 
 	/**
 	 * Returns a saver, that allows to save the game state with the specified name.
-	 * 
+	 *
 	 * @param name The name to use for saving this game state. May not be
 	 *             {@code null} or empty, otherwise an
 	 *             {@link IllegalArgumentException} shall be thrown.
@@ -145,7 +145,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns the version of the engine.
-	 * 
+	 *
 	 * @return Version of the engine.
 	 */
 	Version getVersion();
@@ -157,7 +157,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns whether a clan is extincted (==No cities left)
-	 * 
+	 *
 	 * @param clan The clan. May not be {@code null}, otherwise an
 	 *             {@link IllegalArgumentException} shall be thrown.
 	 * @return {@code true} if the clan is dead, {@code false} otherwise.
@@ -167,14 +167,14 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Returns whether the human player can play. This method can be quite redundant
 	 * in a single thread, but may be useful in multithreaded scenarios.
-	 * 
+	 *
 	 * @return {@code true} if it is the players' turn, {@code false} otherwise.
 	 */
 	boolean isPlayersTurn();
 
 	/**
 	 * Calculates the maximum number of soliders a clan could recruit.
-	 * 
+	 *
 	 * @param clan  The clan. May not be {@code null}, otherwise an
 	 *              {@link IllegalArgumentException} shall be thrown.
 	 * @param limit The absolute limit,may not be negative, otherwise an
@@ -185,7 +185,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns whether only one clan is alive,
-	 * 
+	 *
 	 * @return {@code true} if only one clan is left, otherwise {@code false}.
 	 */
 	default boolean onlyOneClanAlive() {
@@ -195,7 +195,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Sets an error handler that is called for every uncaught exception. May be
 	 * ignored.
-	 * 
+	 *
 	 * @param onError A consumer that will be applied to every uncaught exception.
 	 */
 	default void setErrorHandler(final Consumer<Throwable> onError) {
@@ -205,7 +205,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Set a callback function that is called as soon as the player is gifted by
 	 * another clan.
-	 * 
+	 *
 	 * @param giftCallback The callback. May not be {@code null}.
 	 */
 	void setPlayerGiftCallback(PlayerGiftCallback giftCallback);
@@ -216,7 +216,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Upgrade the defense of the given city, until the maximum level is reached or
 	 * not enough coins are available.
-	 * 
+	 *
 	 * @param city The city to upgrade. May not be {@code null}.
 	 */
 	void upgradeDefenseFully(final ICity city);
@@ -224,7 +224,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Upgrade the resource production of the given city, until the maximum level is
 	 * reached or not enough coins are available.
-	 * 
+	 *
 	 * @param resources The resource to upgrade. May not be {@code null}.
 	 * @param city      The city to upgrade. May not be {@code null}.
 	 */
@@ -232,7 +232,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns the clan of the player.
-	 * 
+	 *
 	 * @return Clan of the player.
 	 */
 	IClan getPlayerClan();
@@ -240,7 +240,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	/**
 	 * Return the usage and production of the resources. The default implementation
 	 * is here as a replacement for e.g. {@link Shared#STONE_PER_PERSON_PER_ROUND}.
-	 * 
+	 *
 	 * @return An object describing the production and usage of all resources.
 	 */
 	@SuppressWarnings("deprecation")
@@ -252,7 +252,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Return an object describing the costs for soldiers. The default
 	 * implementation is here as a replacement for e.g.
 	 * {@link Shared#COINS_PER_MOVE_OF_SOLDIER}.
-	 * 
+	 *
 	 * @return An object describing the costs for moving/recruiting soldiers.
 	 */
 	@SuppressWarnings("deprecation")
@@ -266,7 +266,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Gives the maximum level for resource production, soldier levels and so on.
 	 * The default implementation is here as a replacement for
 	 * {@link Shared#MAX_LEVEL}.
-	 * 
+	 *
 	 * @return Maximum level.
 	 */
 	@SuppressWarnings("deprecation")
@@ -276,7 +276,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns a list of required plugins to function.
-	 * 
+	 *
 	 * @return List of required plugins.
 	 */
 	default List<Class<Plugin>> requiredPlugins() {
@@ -285,7 +285,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns a list of required strategyproviders to function.
-	 * 
+	 *
 	 * @return List of required strategyproviders.
 	 */
 	default List<Class<StrategyProvider>> requiredStrategyProviders() {

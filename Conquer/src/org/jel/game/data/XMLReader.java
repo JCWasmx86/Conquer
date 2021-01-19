@@ -241,7 +241,7 @@ public final class XMLReader {
 				}
 				installedMaps.add(
 						new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-								Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue()));
+								Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null));
 			}
 		}
 	}

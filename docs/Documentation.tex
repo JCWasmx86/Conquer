@@ -20,6 +20,8 @@
 \begin{minted}{java}
 XMLReader xmlReader = XMLReader.getInstance();
 GlobalContext gc = xmlReader.readInfo();
+//OR: Use SPI instead of a XML File. This is the recommended way
+GlobalContext gc = new SPIContextBuilder().buildContext();
 List<InstalledScenario> scenarios = gc.getInstalledMaps();
 Initializer.INSTANCE().initialize(null);
 for (InstalledScenario scenario : scenarios) {
@@ -78,7 +80,7 @@ A plugin has a lifecycle consisting of four parts:
 	
 \end{itemize}
 \subsubsection{Callbacks}
-\paragraph{\texttt{AttackHook}s} are called when an attack is executed. The interface has two methods: \texttt{before(City,City,long)} and \texttt{after(City,City,long,AttackResult}). The first one will
+\paragraph{\texttt{AttackHook}s} are called when an attack is executed. The interface has two methods: \texttt{before(City, City, long)} and \texttt{after(City, City, long, AttackResult)}. The first one will
 be called as soon as the number of soldiers are determined. The latter one after the attack was executed, clan changes were made and soldiers killed. It contains the result as \texttt{AttackResult}.
 \paragraph{\texttt{MessageListener}s} are called as soon as a message was added to or removed from the EventList. It allows you to react to a huge number of different events like changed relationships, random events and anything else.
 \paragraph{\texttt{MoneyHook}s} will be called after every city generated the coins and all cities did generated them.
@@ -145,421 +147,70 @@ Allows to sort out the unrelated und for the player useless news.
 boolean shouldBeShownToThePlayer();
 \end{minted}
 Allows to sort out messages that are either debug messages or information that would give the player an unfair advantage.
-
 \newpage
 
-\section{Conquer - Interfaces}
 
-In order to make compatibility between different engines possible, a 
-set of interfaces with specified behavior is required.
+\subsection{Extending}
+\subsubsection{Note}
+This instructions will only cover the use with SPI, as using XMLReader is deprecated and not recommended anymore
+SPI is now the only supported way.
+\subsubsection{Adding plugins}
+Every plugin has to implement the interface \texttt{org.jel.game.plugins.Plugin}. The only required metho is \texttt{String getName()}.
+This method should return an unique identifier.
 
-\subsection{ConquerInfo}
-
-\subsubsection{\texttt{void addContext(GlobalContext)}}
-A conforming implementation shall throw an \texttt{IllegalArgumentException}, if the context is \texttt{null}.
-Furthermore an \texttt{IllegalArgumentException} shall be thrown if the list
-of plugins, strategies or installed maps is \texttt{null}.
-
-\subsubsection{\texttt{int currentRound()}}
-This method shall only return a non-negative integer.
-
-\subsubsection{\texttt{void exit(Result)}}
-A conforming implementation must throw an \texttt{IllegalArgumentException},
-if the result is \texttt{null}.
-
-\subsubsection{\texttt{Image getBackground()}}
-This method may return \texttt{null}.
-
-\subsubsection{\texttt{IClan getClan(int)}}
-An \texttt{IllegalArgumentException} shall be thrown, if the given
-id is out of bounds.
-This id must be obtained by calling \texttt{IClan#getId}.
-
-\subsubsection{\texttt{List<String> getClanNames()}}
-This method should return an unmodifiable list of clan names, sorted by
-ascending id.
-
-\subsubsection{\texttt{List<IClan> getClans()}}
-This method must return the original list of clans, so modifications are mirrored at the internal state.
-
-\subsubsection{\texttt{List<Double> getCoins()}}
-This method should return an unmodifiable list of coins every clan has, sorted by
-ascending id.
-
-\subsubsection{\texttt{List<Color> getColors()}}
-This method should return an unmodifiable list of color an clan is associated with, sorted by
-ascending id.
-
-\subsubsection{\texttt{List<Plugin> getPlugins()}}
-This method shall return the original non-null list of plugins in no specified order.
-
-\subsubsection{\texttt{ConquerSaver getSaver(String)}}
-
-An \texttt{IllegalArgumentException} shall be thrown, if the given
-string is either \texttt{null} or \texttt{string.isEmpty()} is true.
-
-\subsubsection{\texttt{boolean isDead(IClan)}}
-An \texttt{IllegalArgumentException} shall be thrown, if \texttt{null} is passed.
-
-\subsubsection{\texttt{long maximumNumberOfSoldiersToRecruit(IClan,long)}}
-Returns the maximum number of soldiers that could be recruited in a clan. This value may never be \texttt{null}.
-An \texttt{IllegalArgumentException} shall be thrown if the given clan is either \texttt{null} or the given long is negative.
-
-\subsubsection{\texttt{void setPlayerGiftCallback(PlayerGiftCallback)}}
-The argument shall never be \texttt{null}.
-If it is \texttt{null}, an \texttt{IllegalArgumentException} has to be thrown.
-
-\subsubsection{\texttt{void upgradeDefenseFully(ICity)}}
-The given city mustn't be \texttt{null}.
-Otherwise an \texttt{IllegalArgumentException} must be thrown.
-
-\subsubsection{\texttt{void upgradeResourceFully(Resource,ICity)}}
-The given city and the resource mustn't be \texttt{null}.
-Otherwise an \texttt{IllegalArgumentException} must be thrown.
-
-\subsubsection{\texttt{void upgradeSoldiersOffenseFully(IClan)}}
-The given clan may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsection{PluginInterface}
-
-\subsubsection{\texttt{void addAttackHook(AttackHook)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addCityKeyHandler(String,CityKeyHandler)}}
-The arguments may never be \texttt{null}. If one of them is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addKeyHandler(String,KeyHandler)}}
-The arguments may never be \texttt{null}. If one of them is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addMessageListener(MessageListener)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addMoneyHook(MoneyHook)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addMoveHook(MoveHook)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addMusic(String)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addRecruitHook(RecruitHook)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{void addResourceHook(ResourceHook)}}
-The argument may never be \texttt{null}. If it is \texttt{null}, an \texttt{IllegalArgumentException}
-shall be thrown.
-
-\subsubsection{\texttt{EventList getEventList()}}
-The valid, non-null \texttt{EventList} must be returned.
-
-\subsection{ConquerInfoReader}
-
-\subsubsection{\texttt{ConquerInfo build()}}
-
-Any exception may be thrown. 
-
-\subsection{ConquerInfoReaderFactory}
-
-\subsubsection{\texttt{ConquerInfoReader getForFile(String)}}
-
-The given String may not be \texttt{null}, otherwise an \texttt{IllegalArgumentException} shall be thrown.
-The returned object may never be \texttt{null}.
-
-\subsubsection{\texttt{byte[] getMagicNumber()}}
-The returned byte-array must be non-null.
-
-\subsection{ConquerSaver}
-
-Any class implementing this interface must have an accessible constructor taking a String parameter
-with the name of the saved name.
-
-\subsubsection{\texttt{ConquerInfo restore() throws Exception}}
-Any exception may be thrown. \texttt{null} may never be returned.
-
-\subsubsection{\texttt{void save(ConquerInfo) throws Exception}}
-The given object may not be \texttt{null}. Otherwise an \texttt{IllegalArgumentException} may be thrown.
-
-\subsection{PlayerGiftCallback}
-
-\subsubsection{\texttt{boolean acceptGift(IClan,IClan,Gift,double,...)}}
+After this, when packaging the plugin with a jar file, you have to add a file called \newline \texttt{org.jel.game.plugins.Plugin} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
-boolean acceptGift(IClan source, IClan destination, Gift gift,
-			double oldValue,
-			DoubleConsumer newValue,
-			StrategyObject strategyObject);
+	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
-You can make several assumptions:
-\begin{itemize}
-	\item None of this values may be \texttt{null}.
-	\item The clan \texttt{destination} is always the clan of the player.
-	\item \texttt{oldValue} is in range $]0;100[$
-\end{itemize}
 
-If the player accepted the gift, \texttt{newValue} has to consume the new relationship value and
-\texttt{true} has to be returned.
-If \texttt{false} is returned, \texttt{newValue} mustn't be called.
+The jar file has to be somewhere on the classpath. By default, using the builtin launcher, you can use these locations for plugins:\newline
 
-\subsection{ICity}
+\begin{tabular}{ll}
+\textbf{Linux}                  & \textbf{Windows}                                              \\
+.conquer/libs                   & .conquer \textbackslash libs                                   \\
+/usr/share/java/conquer/plugins & \%PROGRAMFILES\%\textbackslash Conquer\textbackslash plugins
+\end{tabular}
 
-\subsubsection{\texttt{double getBonus()}}
-The returned value must always be greater equals 1.
+\subsubsection{Adding strategies}
+Strategies are not obtained directly. They are obtained through \texttt{StrategyProvider} instances.
+This interface has to be implemented by the class.
+The method \texttt{Strategy buildStrategy()} will then provide an object implementing the interface \texttt{Strategy}.
 
-\subsubsection{\texttt{IClan getClan()}}
-The returned value mustn't be \texttt{null}
-
-\subsubsection{\texttt{int getClanId()}}
-The clan id must be non-negative.
-
-\subsubsection{\texttt{double getDefense()}}
-The base defense that is returned must be non-negative.
-
-\subsubsection{\texttt{double getDefenseStrength()}}
-The defense strength of a city is always positive or zero.
-
-\subsubsection{\texttt{double getGrowth()}}
-The returned value must be positive, and should be in the range $]0.75;1.25[$.
-
-\subsubsection{\texttt{Image getImage()}}
-The returned value may be \texttt{null}.
-
-\subsubsection{\texttt{ConquerInfo getInfo()}}
-The returnvalue must be non-null.
-
-\subsubsection{\texttt{List<Integer> getLevels()}}
-The list that was returned mustn't be \texttt{null}. Every element in it
-should be non-null, too and have a positive value.
-The length of the list should be equals to the number of resources plus one.
-(\texttt{Resource.values().length + 1}, the additional value is for the defense)
-
-\subsubsection{\texttt{long getNumberOfPeople()}}
-The return value must be positive or zero.
-
-\subsubsection{\texttt{long getNumberOfSoldiers()}}
-The return value must be positive or zero.
-
-\subsubsection{\texttt{List<Double> getProductions()}}
-The list that was returned must be non-null. Every element in it has to be non-null,
-too and have a positive value.
-The length of the list should be equals to the number of resources.
-
-\subsubsection{\texttt{int getX()}}
-The return value must be positive or zero.
-
-\subsubsection{\texttt{int getY()}}
-The return value must be positive or zero.
-
-\subsubsection{\texttt{double productionPerRound(Resource)}}
-The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} is thrown.
-The returned value must be positive or zero.
-
-\subsubsection{\texttt{void setClan(IClan)}}
-The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} is thrown.
-
-\subsubsection{\texttt{void setDefense(double)}}
-The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
-
-\subsubsection{\texttt{void setGrowth(double)}}
-The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
-
-\subsubsection{\texttt{void setNumberOfPeople(long)}}
-The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
-
-\subsubsection{\texttt{void setNumberOfSoldiers(long)}}
-The argument may never be negative, otherwise an \texttt{IllegalArgumentException} is thrown.
-
-\subsection{IClan}
-
-\subsubsection{\texttt{double getCoins()}}
-The returned value must be positive or zero.
-
-\subsubsection{\texttt{Color getColor()}}
-The returned value mustn't be \texttt{null}
-
-\subsubsection{\texttt{StrategyData getData()}}
-StrategyData is optional. This may result in the return value being \texttt{null}.
-
-\subsubsection{\texttt{int getId()}}
-The id of a clan is an unique, positive or zero identifier.
-
-\subsubsection{\texttt{String getName()}}
-The name may never be \texttt{null}.
-
-\subsubsection{\texttt{List<Double> getResources()}}
-The list mustn't be \texttt{null}. Every element must be positive or zero.
-The length of the list is equals to the number of resources. (\texttt{Resource.values().length})
-
-\subsubsection{\texttt{List<Double> getResourceState()}}
-The list mustn't be \texttt{null}. Every element must be positive or zero.
-The length of the list is equals to the number of resources. (\texttt{Resource.values().length})
-
-\subsubsection{\texttt{int getSoldiersXXXLevel()}}
-The returned value has to be greater equals zero.
-
-\subsubsection{\texttt{double getSoldiersXXXStrength()}}
-The returned value must be greater equals one.
-
-\subsubsection{\texttt{Strategy getStrategy()}}
-The returned strategy may never be \texttt{null}.
-
-\subsubsection{\texttt{void init(StrategyProvider[],Version)}}
-None of the arguments may be \texttt{null}. Otherwise an \texttt{IllegalArgumentException} will be thrown.
-
-\subsubsection{\texttt{void setColor(Color)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is \texttt{null}.
-After setting the color, calling this method again will result in an \texttt{UnsupportedOperationException}.
-
-\subsubsection{\texttt{void setId(int)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is negative.
-After setting the id, calling this method again will result in an \texttt{UnsupportedOperationException}.
-
-\subsubsection{\texttt{void setName(String)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is \texttt{null}.
-After setting the name, calling this method again will result in an \texttt{UnsupportedOperationException}.
-
-\subsubsection{\texttt{void setResources(List<Double>)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is either \texttt{null}
-or the length of the list is not equals to the number of resources.
-A second call to this method with valid arguments will result in an \texttt{UnsupportedOperationException}.
-
-\subsubsection{\texttt{void setResourceStats(List<Double>)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is either \texttt{null}
-or the length of the list is not equals to the number of resources.
-A second call to this method with valid arguments will result in an \texttt{UnsupportedOperationException}.
-
-\subsubsection{\texttt{void setStrategy(Strategy)}}
-An \texttt{IllegalArgumentException} will be thrown, if the argument is negative.
-After setting the strategy, calling this method again will result in an \texttt{UnsupportedOperationException}.
-This method should only be used to restore a clan after saving it, otherwise \texttt{init} should be used.
-
-\subsubsection{\texttt{void update(int)}}
-The argument must be positive or zero. Otherwise an \texttt{IllegalArgumentException} will be thrown.
-
-
-
-\subsection{Strategy}
-
-\subsubsection{\texttt{boolean acceptGift(IClan,IClan,Gift,double,...)}}
+After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{org.jel.game.strategy.StrategyProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
-boolean acceptGift(IClan sourceClan, IClan destinationClan, Gift gift,
-                        double oldValue,
-                        DoubleConsumer newValue,
-                        StrategyObject strategyObject);
+	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
-\texttt{destinationClan} is always the clan of this strategy. No argument may ever be \texttt{null}.
 
-\subsubsection{\texttt{void applyStrategy(IClan,Graph<ICity>,StrategyObject)}}
-No argument can be \texttt{null}. The given clan is the clan for this strategy.
+The jar file has to be somewhere on the classpath. By default, using the builtin launcher, you can use these locations for strategies:\newline
 
-\subsubsection{\texttt{StrategyData getData()}}
-\texttt{null} may be returned.
+\begin{tabular}{ll}
+\textbf{Linux}                  & \textbf{Windows}                                              \\
+.conquer/libs                   & .conquer \textbackslash libs                                   \\
+/usr/share/java/conquer/strategies & \%PROGRAMFILES\%\textbackslash Conquer\textbackslash strategies
+\end{tabular}
 
-\subsubsection{\texttt{StrategyData resume(StrategyObject,byte[],boolean,byte[])}}
+\subsubsection{Adding new scenarios}
+To add more ways of finding new scenarios, one can implement \texttt{InstalledScenarioProvider}.
+This interface has only one method:\newline
+\texttt{List<InstalledScenario> getScenarios()}\newline
+This will just return a list of scenarios that were found.
+
+When packaging this class in a jar file, add a file called \newline \texttt{org.jel.game.data.InstalledScenarioProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
-StrategyData resume(final StrategyObject strategyObject,
-			final byte[] bytes,
-			final boolean hasStrategyData,
-			final byte[] dataBytes)
+	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
-\texttt{strategyObject} and \texttt{bytes} may never be \texttt{null}.
-The value of \texttt{dataBytes} is undefined, if \texttt{hasStrategyData} equals \texttt{false}.
-Otherwise this array is non-null.
-If \texttt{hasStrategyData} is \texttt{true}, a non-null object has to be returned, \texttt{null} otherwise.
+After that, place the jar file somewhere on the classpath. Furthermore the scenarios that should be found must be somewhere, too.
 
-\subsubsection{\texttt{void save(OutputStream) throws IOException}}
-Only save the state of the strategy. The state of the StrategyData, if available, will be saved by itself.
-The stream is never \texttt{null} and may not be closed.
+\subsubsection{Adding new supported file formats}
+In order to support new file formats, you have to register a new \texttt{ConquerInfoReaderFactory}.
+You have to invent a magic number to identify files of your format.
+Furthermore you have to implement a \texttt{ConquerInfoReader}, that will read your file and return a \texttt{ConquerInfo} object.
 
-\subsection{StrategyData}
-
-\subsubsection{\texttt{void save(OutputStream) throws IOException}}
-The stream will never be \texttt{null}.
-
-\subsubsection{\texttt{void update(int)}}
-The argument will always be positive or zero.
-
-\subsection{StrategyProvider}
-
-\subsubsection{\texttt{Strategy buildStrategy()}}
-May never return \texttt{null}.
-
-\subsubsection{\texttt{boolean compatibleTo(Version)}}
-The argument is never \texttt{null}.
-
-\subsubsection{\texttt{String getName()}}
-Never returns \texttt{null}.
-
-\subsection{StrategyObject}
-
-\subsubsection{\texttt{void attack(ICity,ICity,boolean,long)}}
+After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{org.jel.game.strategy.ConquerInfoReaderFactory} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
-void attack(ICity source, ICity target,
-		boolean managedByExternalStrategy,
-		long numberOfSoldiersToMoveIfManaged);
+	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
-Neither source nor target may be \texttt{null}.
-If \texttt{managedByExternalStrategy} is \texttt{true}, the long parameter must be non-negative (An \texttt{IllegalArgumentException} shall be thrown if it is negative), otherwise it is ignored.
-If \texttt{managedByExternalStrategy} is \texttt{false}, a default, implementation-defined algorithm should be used for determining the number of soldiers.
-If one of the following assertions is true, an \texttt{IllegalArgumentException} will be thrown:
-\begin{itemize}
-	\item \texttt{source == target}
-	\item \texttt{source.getClan() == target.getClan()}
-	\item \texttt{not connected(source, target)}
-\end{itemize}
+After that, place the jar file somewhere on the classpath.
 
-\subsubsection{\texttt{Graph<ICity> getCities()}}
-The returnvalue may never be \texttt{null}.
 
-\subsubsection{\texttt{Graph<Integer> getRelations()}}
-The returnvalue may never be \texttt{null} and the number of nodes
-in this graph is equals to the number of clans.
-
-\subsubsection{\texttt{double getRelationship(IClan,IClan)}}
-If one of the clans is \texttt{null} or both clans are the same clan,
-an \texttt{IllegalArgumentException} has to be thrown.
-
-\subsubsection{\texttt{long maximumNumberToMove(IClan,double,long)}}
-The given clan may not be \texttt{null}. Neither the weight, nor the 
-maximum number of soldiers may be negative.
-Otherwise an \texttt{IllegalArgumentException} shall be thrown.
-The return value is always greater equals zero.
-
-\subsubsection{\texttt{void moveSoldiers(ICity,Stream<ICity>,boolean,ICity,long)}}
-\begin{minted}{java}
-void moveSoldiers(ICity source, Stream<ICity> reachableCities,
-	boolean managedByExternalStrategy, ICity target,
-	long numberOfSoldiersToMoveIfManaged);
-\end{minted}
-\texttt{source} may never be \texttt{null}. 
-If \texttt{managedByExternalStrategy} is \texttt{true}, \texttt{target} mustn't be \texttt{null} and
-\texttt{numberOfSoldiersToMoveIfManaged} mustn't be negative.
-Else, \texttt{reachableCities} mustn't be \texttt{null}.
-Furthermore if \texttt{managedByExternalStrategy} is \texttt{false}, a default, implementation-defined
-algorithm may be used for determining the number of soldiers that are moved.
-
-If any of these assertions fails, an \texttt{IllegalArgumentException} shall be thrown.
-
-\subsubsection{\texttt{void recruitSoldiers(double,ICity,boolean,long)}}
-\begin{minted}{java}
-void recruitSoldiers(double maxToPay, ICity city,
-		boolean managedByExternalStrategy, long numberOfSoldiers);
-\end{minted}
-\texttt{city} may never be \texttt{null}.
-If \texttt{managedByExternalStrategy} is \texttt{true}, \texttt{numberOfSoldiers} must be positive or zero.
-Else if \texttt{managedByExternalStrategy} is \texttt{false}, \texttt{maxToPay} must be positive or zero.
-
-\subsubsection{\texttt{boolean upgradeDefense(ICity)}}
-The argument may never be \texttt{null}, otherwise an \texttt{IllegalArgumentException} must be thrown.
-
-\subsubsection{\texttt{boolean upgradeResource(Resource,ICity}}
-No argument may be \texttt{null}, otherwise an \texttt{IllegalArgumentException} must be thrown.
 \end{document}

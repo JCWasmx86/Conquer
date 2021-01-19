@@ -147,7 +147,7 @@ public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Change the clan of the city.
-	 * 
+	 *
 	 * @param clan The new clan. May not be {@code null}, otherwise a
 	 *             {@link IllegalArgumentException} will be thrown.
 	 */
@@ -155,7 +155,7 @@ public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Set the defense strength of the city.
-	 * 
+	 *
 	 * @param newPowerOfUpdate The new strength. May not be negative, , otherwise a
 	 *                         {@link IllegalArgumentException} will be thrown.
 	 */
@@ -163,7 +163,7 @@ public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Set the growth factor of the city.
-	 * 
+	 *
 	 * @param growth The new strength. May not be negative, , otherwise a
 	 *               {@link IllegalArgumentException} will be thrown.
 	 */
@@ -171,7 +171,7 @@ public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Set the number of people in the city.
-	 * 
+	 *
 	 * @param numberOfPeople The new number of people. May not be negative, ,
 	 *                       otherwise a {@link IllegalArgumentException} will be
 	 *                       thrown.
@@ -180,7 +180,7 @@ public interface ICity extends Comparable<ICity> {
 
 	/**
 	 * Set the number of soldiers in the city.
-	 * 
+	 *
 	 * @param numberOfPeople The new number of soldiers. May not be negative, ,
 	 *                       otherwise a {@link IllegalArgumentException} will be
 	 *                       thrown.

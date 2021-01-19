@@ -19,7 +19,7 @@ public interface Strategy {
 	 * Called, if {@code sourceClan} is giving {@code destinationClan} a gift. If
 	 * the gift was accepted, {@code newValue} has to be applied with the new
 	 * relationship between those two clans and {@code true} has to be returned.
-	 * 
+	 *
 	 * @param sourceClan      Source clan.
 	 * @param destinationClan Destination clan.
 	 * @param gift            The gift to give.
@@ -34,7 +34,7 @@ public interface Strategy {
 	/**
 	 * Called every round. In this method the strategy should execute all actions,
 	 * like attacking, recruiting, upgrading,...
-	 * 
+	 *
 	 * @param clan   The clan.
 	 * @param cities All cities on the map.
 	 * @param obj    The object with methods that allow to recruit, upgrade, ...
@@ -43,14 +43,14 @@ public interface Strategy {
 
 	/**
 	 * Returns an optional Strategydata.
-	 * 
+	 *
 	 * @return Data or {@code null}.
 	 */
 	StrategyData getData();
 
 	/**
 	 * Resume after saving.
-	 * 
+	 *
 	 * @param strategyObject  Reference object, may be useful
 	 * @param bytes           Bytes of the internal state of the strategy.
 	 * @param hasStrategyData {@code true}, if {@link Strategy#getData()} returned a
@@ -67,7 +67,7 @@ public interface Strategy {
 	/**
 	 * Optionally save the internal data of the strategy. The corresponding
 	 * StrategyData shouldn't be saved by this method.
-	 * 
+	 *
 	 * @param out The outputstream to write to.
 	 * @throws IOException If some I/O error occurred.
 	 */

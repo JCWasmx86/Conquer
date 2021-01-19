@@ -169,7 +169,7 @@ public interface IClan {
 
 	/**
 	 * Set all resources. May only be called while initializing the clan.
-	 * 
+	 *
 	 * @param resources May not be {@code null} or have the wrong length, otherwise
 	 *                  an {@code IllegalArgumentException} shall be thrown.
 	 */
@@ -178,7 +178,7 @@ public interface IClan {
 	/**
 	 * Set all resource stats. May only be called by the corresponding
 	 * {@code ConquerInfo}-object
-	 * 
+	 *
 	 * @param resources May not be {@code null} or have the wrong length, otherwise
 	 *                  an {@code IllegalArgumentException} shall be thrown.
 	 */
@@ -186,7 +186,7 @@ public interface IClan {
 
 	/**
 	 * Upgrade the defense strength of the soldiers.
-	 * 
+	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
 	 *         equals to the maximum level, {@code false} otherwise.
 	 */
@@ -194,7 +194,7 @@ public interface IClan {
 
 	/**
 	 * Upgrade the strength of the soldiers.
-	 * 
+	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
 	 *         equals to the maximum level, {@code false} otherwise.
 	 */
@@ -202,7 +202,7 @@ public interface IClan {
 
 	/**
 	 * Upgrade the offensive strength of the soldiers.
-	 * 
+	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
 	 *         equals to the maximum level, {@code false} otherwise.
 	 */
@@ -225,7 +225,7 @@ public interface IClan {
 	/**
 	 * Called every round. Should only be called by the corresponding
 	 * {@code ConquerInfo}-object
-	 * 
+	 *
 	 * @param currentRound Current round.
 	 */
 	void update(int currentRound);
@@ -274,7 +274,7 @@ public interface IClan {
 	 * Get the costs for upgrading {@code upgrade} Replaces
 	 * {@link IClan#upgradeCostsForDefense(int)},{@link IClan#upgradeCostsForSoldiers(int)}
 	 * and {@link IClan#upgradeCostsForOffense(int)}
-	 * 
+	 *
 	 * @param upgrade The upgrade. May not be {@code null}, otherwise an
 	 *                {@code IllegalArgumentException} will be thrown.
 	 * @param x       Current level.
@@ -296,7 +296,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param x Current level
 	 * @return Costs for upgrading the offense strength of the clan.
 	 */
@@ -312,7 +312,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param x Current level
 	 * @return Costs for upgrading the defense strength of the clan.
 	 */
@@ -327,7 +327,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
@@ -354,7 +354,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param x Current level
 	 * @return Costs for upgrading the offense/defense strength of the clan.
 	 */
@@ -370,7 +370,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param x Current level
 	 * @return Costs for upgrading the soldiers strength of the clan.
 	 */
@@ -383,7 +383,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
@@ -410,7 +410,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
@@ -454,7 +454,7 @@ public interface IClan {
 	/**
 	 * Deprecated. But should still be overridden in case an implementation wants to
 	 * provide another calculation.
-	 * 
+	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
@@ -483,7 +483,7 @@ public interface IClan {
 	 * deprecated
 	 * {@link IClan#newPowerForSoldiers(int)},{@link IClan#newPowerOfSoldiersForDefense(int)}
 	 * and {@link IClan#newPowerOfSoldiersForOffense(int)}.
-	 * 
+	 *
 	 * @param upgrade Which upgrade to make
 	 * @param x       Current level
 	 * @return New power.
@@ -506,7 +506,7 @@ public interface IClan {
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -519,7 +519,7 @@ public interface IClan {
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -532,7 +532,7 @@ public interface IClan {
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerForSoldiers(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -545,7 +545,7 @@ public interface IClan {
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
-	 * 
+	 *
 	 * @param level
 	 * @return
 	 */
@@ -557,7 +557,7 @@ public interface IClan {
 
 	/**
 	 * Replacement for {@link Shared#newPowerOfUpdate(int, double)}.
-	 * 
+	 *
 	 * @param level    Current level
 	 * @param oldValue Old value of production.
 	 * @return New production rate.
@@ -568,7 +568,7 @@ public interface IClan {
 
 	/**
 	 * Replacement for {@link Shared#costs(int)}.
-	 * 
+	 *
 	 * @param level Current level.
 	 * @return Costs in coins for upgrading to next level.
 	 */
@@ -588,7 +588,7 @@ public interface IClan {
 	 * enough, starting from {@code level} for the upgrade {@code upgrade}. Replaces
 	 * {@link IClan#maxLevelsAddSoldiersUpgrade(int, double)},{@link IClan#maxLevelsAddDefenseUpgrade}
 	 * and {@link IClan#maxLevelsAddOffenseUpgrade(int, double)}
-	 * 
+	 *
 	 * @param upgrade The upgrade. May not be {@code null}.
 	 * @param level   Current level
 	 * @param coins   Maximum coins to give.
@@ -610,7 +610,7 @@ public interface IClan {
 	/**
 	 * Return the corrseponding game state. The default implementation throws an
 	 * {@code UnsupportedOperationException}.
-	 * 
+	 *
 	 * @return Corresponding game state.
 	 */
 	default ConquerInfo getInfo() {
