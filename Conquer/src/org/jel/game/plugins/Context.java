@@ -43,6 +43,11 @@ public final class Context {
 		return this.clans.get(index);
 	}
 
+	/**
+	 * Return a unmodifiable copy of the list of clannames.
+	 * 
+	 * @return List of clan names.
+	 */
 	public List<String> getClanNames() {
 		return Collections.unmodifiableList(this.clanNames);
 	}
