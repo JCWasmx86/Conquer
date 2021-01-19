@@ -276,7 +276,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86 >>control
 	echo Description: The game engine for the strategy game conquer>>control
 	cd ../..
-	cp Conquer.jar Conquer_resources.jar conquer-engine/usr/share/java
+	cp Conquer.jar Conquer_resources.jar ConquerFrontendSPI.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	cd conquer-engine/DEBIAN || exit
 	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
@@ -296,7 +296,7 @@ if [[ -z "${IS_WIN}" ]]; then
 	echo Maintainer: JCWasmx86>>control
 	echo Description: GUI for Conquer. \(Without launcher\)>>control
 	cd ../..
-	cp Conquer_frontend.jar Conquer_frontend_resources.jar ConquerFrontendSPI.jar conquer-gui/usr/share/java
+	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
 	cp Conquer.license conquer-gui/usr/share/conquer-gui
 	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
 	#TODO: Replace with maven itself.
