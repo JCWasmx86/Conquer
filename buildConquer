@@ -14,6 +14,32 @@ makeManifest(){
 		echo Created-By: "$1"
 	}>META-INF/MANIFEST.MF
 }
+makeLicenseFileForExternal(){
+	{
+		curl https://raw.githubusercontent.com/curl/curl/master/COPYING
+		echo
+		echo
+		curl https://raw.githubusercontent.com/libarchive/libarchive/master/COPYING
+		echo
+		echo
+		curl https://raw.githubusercontent.com/DaveGamble/cJSON/master/LICENSE
+		echo
+		echo
+		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jlayer/LICENSE.txt
+		echo
+		echo
+		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jorbis/COPYING.LIB
+		echo
+		echo
+		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/mp3spi/LICENSE.txt
+		echo
+		echo
+		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/tritonus-cvs/LGPL
+		echo
+		echo
+		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/vorbisspi/LICENSE.txt
+	}>LICENSE.txt
+}
 export SOURCE_DATE_EPOCH=0
 export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
@@ -208,28 +234,7 @@ find . -exec touch -t 201108231405.14 {} \;
 zip -X -9 ../Music.zip libs/sounds/*.$EXTENSION
 wait
 cd ..
-curl https://raw.githubusercontent.com/curl/curl/master/COPYING>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/libarchive/libarchive/master/COPYING >>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/DaveGamble/cJSON/master/LICENSE >>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jlayer/LICENSE.txt>>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/pdudits/soundlibs/master/jorbis/COPYING.LIB>>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/pdudits/soundlibs/master/mp3spi/LICENSE.txt>>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/pdudits/soundlibs/master/tritonus-cvs/LGPL>>LICENSE.txt
-echo >>LICENSE.txt
-echo >>LICENSE.txt
-curl https://raw.githubusercontent.com/pdudits/soundlibs/master/vorbisspi/LICENSE.txt>>LICENSE.txt
+makeLicenseFileForExternal
 echo MIT License >Conquer.license
 echo >>Conquer.license
 echo Copyright \(c\) 2020 JCWasmx86 >>Conquer.license
