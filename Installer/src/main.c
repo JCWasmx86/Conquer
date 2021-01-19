@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 	writeFile("vorbisspi.jar", &vorbisspiJar, vorbisspiJarSize);
 	writeFile("Conquer_resources.jar", &resourcesJar, resourcesJarSize);
 	writeFile("Conquer_frontend_resources.jar", &guiResourcesJar, guiResourcesJarSize);
-	writeFile("ConquerFrontendSPI.jar", &guiResourcesJar, guiResourcesJarSize);
+	writeFile("ConquerFrontendSPI.jar", &conquerFrontendSPIJar, conquerFrontendSPIJarSize);
 	createLinkToLauncher();
 	MessageBox(NULL, "Installed Conquer!", "Success",
 			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
