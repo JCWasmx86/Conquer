@@ -38,7 +38,9 @@ public interface Plugin {
 	 * An optional list of buttons/labels/... that can be registered
 	 *
 	 * @return A list of components.
+	 * @deprecated In the retrospective, it was a bad decision to mix UI and logic.
 	 */
+	@Deprecated(forRemoval = true)
 	default List<Component> getButtons() {
 		return List.of();
 	}
