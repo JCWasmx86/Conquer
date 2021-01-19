@@ -86,7 +86,7 @@ else
 	echo Didn\'t find java, version 15
 	exit 1
 fi
-if [[ $(gcc -dumpversion) =~ "10.*" ]]; then
+if [[ $(gcc -dumpversion) = *"10.*"* ]]; then
 	echo Didn\'t find gcc-10
 	exit 1
 else
