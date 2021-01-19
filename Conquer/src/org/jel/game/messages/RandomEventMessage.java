@@ -3,6 +3,11 @@ package org.jel.game.messages;
 import org.jel.game.Messages;
 import org.jel.game.data.ICity;
 
+/**
+ * Sent when a random event occurs. {@code factorOfPeople},
+ * {@code factorOfSoldiers} and {@code growthFactor} are the factors for
+ * calculating the new number of soldiers/people or growth.
+ */
 public record RandomEventMessage(RandomEvent randomEvent, double factorOfPeople, double factorOfSoldiers,
 		double growthFactor, ICity city) implements Message {
 	@Override

@@ -3,6 +3,9 @@ package org.jel.game.messages;
 import org.jel.game.Messages;
 import org.jel.game.data.IClan;
 
+/**
+ * A message that will be sent when the clan was extincted. (=No cities left).
+ */
 public record ExtinctionMessage(IClan clan) implements Message {
 
 	@Override

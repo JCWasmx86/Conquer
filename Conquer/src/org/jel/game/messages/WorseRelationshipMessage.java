@@ -3,6 +3,9 @@ package org.jel.game.messages;
 import org.jel.game.Messages;
 import org.jel.game.data.IClan;
 
+/**
+ * A message that is sent as soon as the relationship between two clans is worsened.
+ */
 public record WorseRelationshipMessage(IClan first, IClan second, double oldValue, double newValue) implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
