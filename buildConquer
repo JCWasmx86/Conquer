@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 #TODO: Replace with maven itself.
 downloadJarFiles() {
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
