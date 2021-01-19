@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 #TODO: Replace with maven itself.
-downloadJarFiles(){
+downloadJarFiles() {
 	curl https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar -o jlayer.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar -o mp3spi.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar -o tritonus.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar -o jorbis.jar
 	curl https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar -o vorbisspi.jar
 }
-makeManifest(){
+
+makeManifest() {
 	mkdir -p META-INF
 	{
 		echo Manifest-Version: 1.0
 		echo Created-By: "$1"
 	}>META-INF/MANIFEST.MF
 }
-makeLicenseFileForExternal(){
+
+makeLicenseFileForExternal() {
 	{
 		curl https://raw.githubusercontent.com/curl/curl/master/COPYING
 		echo
@@ -40,6 +42,30 @@ makeLicenseFileForExternal(){
 		curl https://raw.githubusercontent.com/pdudits/soundlibs/master/vorbisspi/LICENSE.txt
 	}>LICENSE.txt
 }
+
+writeControlFile() {
+	writeControlFileNoDeps $1 $2 $3 "$5"
+	echo Depends: "$4">>control
+}
+
+writeControlFileNoDeps() {
+	{
+		echo Package: $1
+		echo Version: $2
+		echo Section: games
+		echo Architecture: $3
+		echo Maintainer: JCWasmx86
+		echo Description: "$4"
+	}>control
+}
+
+buildDeb() {
+	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
+	cd ../..
+	find . -exec touch -t 201108231405.14 {} \;
+	dpkg-deb --build $1
+}
+
 export SOURCE_DATE_EPOCH=0
 export VERSION=1.5.0
 if [[ -z "${EXTENSION}" ]]; then
@@ -263,63 +289,38 @@ if [[ -z "${IS_WIN}" ]]; then
 	mkdir -p conquer/DEBIAN
 	chmod 0755 conquer/DEBIAN/
 	cd conquer/DEBIAN || exit
-	echo Package: conquer>control
-	echo Version: $VERSION>>control
-	echo Section: games>>control
-	echo Architecture: $(dpkg --print-architecture) >>control
-	echo Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0>>control
-	echo Maintainer: JCWasmx86 >>control
-	echo Description: The GUI for the strategy game conquer >>control
+	writeControlFile conquer $VERSION $(dpkg --print-architecture) "conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0" "The GUI for the strategy game conquer"
 	cd ../..
 	mv launcher conquer_launcher conquer/usr/bin
 	cp LICENSE.txt conquer/usr/share/conquer
 	cp Conquer.license conquer/usr/share/conquer
 	find . -exec touch -t 201108231405.14 {} \;
 	cd conquer/DEBIAN || exit
-	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
-	cd ../..
-	dpkg-deb --build conquer
+	buildDeb conquer
 	rm -r conquer-engine
 	mkdir -p conquer-engine/usr/{bin,share/java,share/conquer-engine}
 	mkdir -p conquer-engine/DEBIAN
 	chmod 0755 conquer-engine/DEBIAN
 	cd conquer-engine/DEBIAN || exit
-	echo Package: conquer-engine>control
-	echo Version: $VERSION>>control
-	echo Section: games>>control
-	echo Architecture: all >>control
-	echo Maintainer: JCWasmx86 >>control
-	echo Description: The game engine for the strategy game conquer>>control
+	writeControlFileNoDeps conquer-engine $VERSION all "The game engine for the strategy game conquer"
 	cd ../..
 	cp Conquer.jar Conquer_resources.jar ConquerFrontendSPI.jar conquer-engine/usr/share/java
 	cp LICENSE.txt conquer-engine/usr/share/conquer-engine
 	cd conquer-engine/DEBIAN || exit
-	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
-	cd ../..
-	find . -exec touch -t 201108231405.14 {} \;
-	dpkg-deb --build conquer-engine
+	buildDeb conquer-engine
 	rm -r conquer-gui
 	mkdir -p conquer-gui/usr/{bin,share/java,share/conquer-gui,share/java/conquer}
 	mkdir -p conquer-gui/DEBIAN
 	chmod 0755 conquer-gui/DEBIAN
 	cd conquer-gui/DEBIAN || exit
-	echo Package: conquer-gui>control
-	echo Version: $VERSION>>control
-	echo Section: games>>control
-	echo Architecture: all>>control
-	echo Depends: conquer-engine>>control
-	echo Maintainer: JCWasmx86>>control
-	echo Description: GUI for Conquer. \(Without launcher\)>>control
+	writeControlFile conquer-gui $VERSION all "conquer-engine" "GUI for Conquer. \(Without launcher\)"
 	cd ../..
 	cp Conquer_frontend.jar Conquer_frontend_resources.jar conquer-gui/usr/share/java
-	cp Conquer.license conquer-gui/usr/share/conquer-gui
-	cp LICENSE.txt conquer-gui/usr/share/conquer-gui
+	cp Conquer.license LICENSE.txt conquer-gui/usr/share/conquer-gui
+	cd conquer-gui/usr/share/java/conquer
 	downloadJarFiles
-	cd conquer-gui/DEBIAN || exit
-	echo Installed-Size: $(expr $(du -sb ../usr| cut -f -1) / 1024)>>control
-	cd ../..
-	find . -exec touch -t 201108231405.14 {} \;
-	dpkg-deb --build conquer-gui
+	cd ../../../../DEBIAN || exit
+	buildDeb conquer-gui
 else
 	cp launcher.exe Conquer.jar Conquer_frontend.jar Conquer.license LICENSE.txt Conquer_resources.jar Conquer_frontend_resources.jar  ConquerFrontendSPI.jar ../Installer
 	cd ../Installer || exit
