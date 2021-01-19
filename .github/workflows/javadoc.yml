@@ -1,4 +1,4 @@
-name: Linux
+name: Javadocs
 on:
     push:
         branches: [main]
@@ -16,6 +16,7 @@ jobs:
       - name: Build javadocs
         run: |
           cd Conquer/src
+          shopt -s dotglob
           sudo apt-get install zip
           javadoc --source-path . --enable-preview --source 15 module-info.java **/*.java -d Javadocs -Xdoclint:all
           zip -r ../../javadocs.zip Javadocs
