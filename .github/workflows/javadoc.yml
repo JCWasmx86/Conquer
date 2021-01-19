@@ -1,0 +1,25 @@
+name: Linux
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v1.4.3
+        with:
+            java-version: 15
+      - uses: actions/checkout@v2
+      - name: Build javadocs
+        run: |
+          cd Conquer/src
+          sudo apt-get install zip
+          javadoc --source-path . --enable-preview --source 15 module-info.java **/*.java -d Javadocs -Xdoclint:all
+          zip -r ../../javadocs.zip Javadocs
+      - uses: actions/upload-artifact@v2
+        with:
+            name: Javadocs
+            path: javadocs.zip
