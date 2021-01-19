@@ -1,4 +1,3 @@
-.macro  incfile symName filename
 .section rodata
 
 .global launcher
