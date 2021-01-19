@@ -1,6 +1,11 @@
 *.class
 *.ogg
 *.wav
+*.jar
+*.exe
+.classpath
+.project
+.settings/
 Conquer/.*
 Conquer/.classpath
 Conquer/.project
