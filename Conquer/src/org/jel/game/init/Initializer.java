@@ -28,7 +28,12 @@ public final class Initializer {
 	}
 
 	/**
-	 * Initialize the required things like properties.
+	 * Initialize the required things like properties. Throws
+	 * {@code IllegalArgumentException} if it is attempted to initialize it a second
+	 * time.
+	 * 
+	 * @param onError An optional consumer for thrown exceptions.
+	 * 
 	 */
 	public void initialize(final Consumer<Exception> onError) {
 		if (Initializer.initialized) {

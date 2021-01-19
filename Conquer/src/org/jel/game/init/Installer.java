@@ -50,7 +50,12 @@ public class Installer implements Runnable {
 	private final Consumer<Exception> onError;
 
 	/**
-	 * Checks whether the game is installed. If no, it is installed/repaired.
+	 * Constructs a new Installer
+	 * 
+	 * @param chooser Returns the option to selected. May not be {@code null},
+	 *                otherwise an {@link IllegalArgumentException} will be thrown.
+	 * @param writeTo Outputstream for status messages. May be {@code null}.
+	 * @param onError Consumer for occurring exceptions. May be {@code null}.
 	 */
 	public Installer(final OptionChooser chooser, final ExtendedOutputStream writeTo,
 			final Consumer<Exception> onError) {
