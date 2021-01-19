@@ -127,8 +127,6 @@ resourcesJarSize:
 .int resourcesJarSize - resourcesJar
 
 
-
-
 .global guiResourcesJar
 .align 8
 guiResourcesJar:
@@ -138,3 +136,14 @@ guiResourcesJar:
 .align 8
 guiResourcesJarSize:
 .int guiResourcesJarSize - guiResourcesJar
+
+
+.global conquerFrontendSPIJar
+.align 8
+conquerFrontendSPIJar:
+.incbin "ConquerFrontendSPI.jar"
+
+.global conquerFrontendSPIJarSize
+.align 8
+conquerFrontendSPIJarSize:
+.int conquerFrontendSPIJarSize - conquerFrontendSPIJar
