@@ -48,6 +48,17 @@ public interface Strategy {
 	 */
 	StrategyData getData();
 
+	/**
+	 * Resume after saving.
+	 * 
+	 * @param strategyObject  Reference object, may be useful
+	 * @param bytes           Bytes of the internal state of the strategy.
+	 * @param hasStrategyData {@code true}, if {@link Strategy#getData()} returned a
+	 *                        non-null value, {@code false} otherwise.
+	 * @param dataBytes       If {@code hasStrategyData} is true, then the bytes of
+	 *                        the StrategyData, otherwise the arrays is undefined.
+	 * @return Return the constructed strategydata or {@code null}.
+	 */
 	default StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
 			final byte[] dataBytes) {
 		return null;
