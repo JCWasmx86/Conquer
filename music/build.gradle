@@ -1,0 +1,38 @@
+import static groovy.io.FileType.FILES
+import java.util.stream.Collectors
+
+task buildMusic() {
+	outputs.dir("../music_tmp")
+	inputs.dir(".");
+	outputs.upToDateWhen { false }
+	doLast {
+		mkdir "music_tmp"
+		def dir = file(".");
+		def threads = [];
+		dir.eachFileRecurse (FILES) { file ->
+			if(!file.toString().endsWith(".mscz")){
+				return;
+			}
+			def t= Thread.start {
+				File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
+				File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
+				File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
+				if(f2.exists()&&file.lastModified() < f2.lastModified()){
+					return;
+				}
+				println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
+				ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
+				Process process = builder.inheritIO().directory(dir).start();
+				if(process.waitFor() != 0) {
+					throw new Error("Failed: "+file);
+				}
+			}
+			threads.add(t);
+		}
+		while(!threads.isEmpty()) {
+			threads = threads.stream().filter{a->a.isAlive()}.collect(Collectors.toList());
+			Thread.sleep(100);
+		}
+		threads.each {t->t.join()}
+	}
+}
