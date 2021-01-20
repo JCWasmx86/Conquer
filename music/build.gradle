@@ -1,14 +1,16 @@
 import static groovy.io.FileType.FILES
 import java.util.stream.Collectors
-
+import java.nio.file.Files
 task buildMusic() {
 	outputs.dir("../music_tmp")
 	inputs.dir(".");
 	outputs.upToDateWhen { false }
 	doLast {
 		mkdir "music_tmp"
+		mkdir "../ConquerFrontend/src/main/resources/music"
 		def dir = file(".");
 		def threads = [];
+		def otherMusic = []
 		dir.eachFileRecurse (FILES) { file ->
 			if(!file.toString().endsWith(".mscz")){
 				return;
@@ -17,7 +19,9 @@ task buildMusic() {
 				File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
 				File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
 				File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
-				if(f2.exists()&&file.lastModified() < f2.lastModified()){
+				if(!f2.getAbsolutePath().toString().matches(".*Battle.*.ogg")) {
+					otherMusic.add(f2);
+				}else if(f2.exists()&&file.lastModified() < f2.lastModified()){
 					return;
 				}
 				println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
@@ -34,5 +38,9 @@ task buildMusic() {
 			Thread.sleep(100);
 		}
 		threads.each {t->t.join()}
+		otherMusic.each { t ->
+			File dest = new File(t.getParentFile().getParentFile().toString()+"/ConquerFrontend/src/main/resources/music",t.getName());
+			Files.copy(t.toPath(), dest.toPath());
+		}
 	}
 }
