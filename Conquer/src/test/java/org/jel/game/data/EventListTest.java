@@ -1,24 +1,31 @@
 package org.jel.game.data;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 
 public class EventListTest {
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void addNull() {
-		final var el = new EventList();
-		el.add(null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			final var el = new EventList();
+			el.add(null);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void addNull2() {
-		final var el = new EventList();
-		el.add(0, null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			final var el = new EventList();
+			el.add(0, null);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void removeNull() {
-		final var el = new EventList();
-		el.remove(null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			final var el = new EventList();
+			el.remove(null);
+		});
 	}
 }

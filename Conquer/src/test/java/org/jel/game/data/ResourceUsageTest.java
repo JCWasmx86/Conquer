@@ -1,26 +1,35 @@
 package org.jel.game.data;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ResourceUsageTest {
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsIsNull() {
-		new ResourceUsage(null, 0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(null, 0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsIsTooShort() {
-		new ResourceUsage(new double[0][0], 0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[0][0], 0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsArrayHasBadValue() {
-		new ResourceUsage(new double[][] { null }, 0.0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { null }, 0.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsArrayHasBadValue2() {
-		new ResourceUsage(new double[][] { {}, {}, {}, {}, {}, {}, {}, {}, {} }, 0.0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { {}, {}, {}, {}, {}, {}, {}, {}, {} }, 0.0);
+		});
 	}
 
 	@Test
@@ -29,39 +38,51 @@ public class ResourceUsageTest {
 				{ 1, 0 }, { 1, 0 } }, 0.0);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsSubarrayContainsBadValue() {
-		new ResourceUsage(new double[][] { { -1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 } }, 0.0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { -1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 } }, 0.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsSubarrayContainsBadValue2() {
-		new ResourceUsage(new double[][] { { Double.NaN, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 }, { 1, 0 } }, 0.0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { Double.NaN, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 }, { 1, 0 } }, 0.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testStatsSubarrayContainsBadValue3() {
-		new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, 0.0);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, 0.0);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCoinsNegative() {
-		new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, -1);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, -1);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCoinsNan() {
-		new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, Double.NaN);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, Double.NaN);
+		});
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testCoinsInfinity() {
-		new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
-				{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, Double.POSITIVE_INFINITY);
+		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
+			new ResourceUsage(new double[][] { { Double.POSITIVE_INFINITY, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 },
+					{ 1, 0 }, { 1, 0 }, { 1, 0 }, { 1, 0 } }, Double.POSITIVE_INFINITY);
+		});
 	}
 }
