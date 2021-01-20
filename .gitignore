@@ -50,3 +50,4 @@ docs/Documentation.toc
 docs/_minted-Documentation/
 .gradle
 build
+auxiliary/conquer
