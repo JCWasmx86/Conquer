@@ -3,6 +3,7 @@
 *.jar
 *.ogg
 *.wav
+*.zip
 .classpath
 .project
 .settings/
@@ -40,6 +41,7 @@ ScenarioGenerator/.classpath
 ScenarioGenerator/.project
 ScenarioGenerator/.settings/
 ScenarioGenerator/bin/
+auxiliary/conquer
 conquer-dist/
 core
 docs/Documentation.aux
@@ -50,4 +52,3 @@ docs/Documentation.toc
 docs/_minted-Documentation/
 .gradle
 build
-auxiliary/conquer
