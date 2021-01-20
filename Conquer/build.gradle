@@ -28,6 +28,7 @@ test {
 jar {
 	exclude "services/**"
 	exclude "**/*.properties"
+	exclude "data"
 	exclude "images"
 }
 task conquerResources(type: Jar) {
@@ -36,3 +37,5 @@ task conquerResources(type: Jar) {
     baseName = 'Conquer_resources'
 }
 jar.dependsOn(conquerResources);
+
+assemble.dependsOn(test)

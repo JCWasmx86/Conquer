@@ -1,0 +1,42 @@
+dependencies {
+	implementation project(":DefaultPlugins")
+}
+assemble {
+	print("");
+}
+assemble.dependsOn("buildDataZip")
+task buildDataZip(type: Zip) {
+	archiveFileName = "conquer.zip"
+	destinationDirectory = file("../Conquer/src/main/resources/data")
+	from "conquer"
+}
+
+task initStructure {
+	mkdir "../Conquer/src/main/resources/data"
+	mkdir "conquer"
+	mkdir "conquer/libs"
+}
+task copyXMLFile(type: Copy) {
+	from(".") {
+		include "info.xml"
+	}
+	into "conquer"
+}
+task copyScenarios(type: Copy) {
+	from("../ScenarioGenerator") {
+		include "*.data"
+		include "*.png"
+	}
+	into "conquer"
+}
+task copyPlugins(type: Copy) {
+	from("../DefaultPlugins/build/libs") {
+		include "*.jar"
+	}
+	into "conquer/libs"
+}
+
+buildDataZip.dependsOn(initStructure) 
+buildDataZip.dependsOn(copyXMLFile)
+buildDataZip.dependsOn(copyScenarios)
+buildDataZip.dependsOn(copyPlugins)
