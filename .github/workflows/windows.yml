@@ -41,7 +41,6 @@ jobs:
           cd gradle/bin
           export PATH=`pwd`:$PATH:.
           cd ../..
-          mkdir appdata
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
@@ -53,7 +52,7 @@ jobs:
         run: |
           cd tmp/gradle/bin
           export PATH=`pwd`:$PATH:.
-          cd ../../appdata/App/Musescore/bin
+          cd ../../App/Musescore/bin
           export PATH=`pwd`:$PATH:.
           cd ../../../..
           export QT_QPA_PLATFORM=windows
