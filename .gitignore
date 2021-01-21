@@ -56,3 +56,5 @@ build
 debs/conquer
 debs/conquer-gui
 debs/conquer-engine
+Installer/LICENSE.txt
+Installer/Conquer.license
