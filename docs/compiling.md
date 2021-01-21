@@ -64,6 +64,7 @@ gradle assemble
 
 Only amd64 is supported.
 
+
 ## MacOS
 
 Not supported (Contributions are welcome)
@@ -71,3 +72,23 @@ Not supported (Contributions are welcome)
 ## Other linux distributions
 
 Semi-supported with a bit of manual work. (Contributions are welcome)
+
+
+
+# Using in eclipse or IntelliJ Idea
+
+## eclipse
+For generating the eclipse project files and importing them, type:
+```
+gradle eclipse
+#As a prerequisite, eclipse has to be on the path
+#otherwise you have to import this projects manually
+eclipse .
+```
+
+## IntelliJ Idea
+Use:
+```
+gradle idea
+gradle openIdea
+```
