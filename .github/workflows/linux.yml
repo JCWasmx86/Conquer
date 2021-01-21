@@ -21,7 +21,7 @@ jobs:
           sudo rm /usr/bin/gcc
           sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-      - name: Build conquer and run tests
+      - name: Build conquer
         run: |
           export QT_QPA_PLATFORM=offscreen
           mkdir tmp
@@ -33,6 +33,7 @@ jobs:
           export PATH=`pwd`:$PATH:.
           cd ../../..
           gradle assemble
+          gradle Conquer:runTestsuites
       - name: Test reproducible build
         run: |
           cd tmp/gradle/bin

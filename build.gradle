@@ -1,6 +1,5 @@
 allprojects {
-	apply plugin: 'java'
-	apply plugin: 'project-report'
+	apply plugin: "java"
 	tasks.withType(AbstractArchiveTask) {
 		preserveFileTimestamps = false
 		reproducibleFileOrder = true
@@ -12,18 +11,7 @@ allprojects {
 	}
 	assemble.dependsOn(configureEnvironment);
 }
-buildscript {
-	repositories {
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath "gradle.plugin.com.dorongold.plugins:task-tree:1.5"
-	}
-}
 
-apply plugin: "com.dorongold.task-tree"
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false
 	reproducibleFileOrder = true

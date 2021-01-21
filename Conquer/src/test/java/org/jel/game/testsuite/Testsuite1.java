@@ -22,54 +22,6 @@ public final class Testsuite1 extends Testsuite {
 		System.exit(numErrors == 0 ? 0 : 1);
 	}
 
-	private void checkContextWithInstantiation(final GlobalContext ctx) {
-		if (ctx == null) {
-			this.error("readInfo(true) returned null!");
-			return;
-		}
-		if (ctx.getPlugins() == null) {
-			this.error("readInfo(true).getPlugins() returned null!");
-			return;
-		}
-		if (ctx.getStrategies() == null) {
-			this.error("readInfo(true).getStrategies() returned null!");
-			return;
-		}
-		if (ctx.getInstalledMaps() == null) {
-			this.error("readInfo(true).getInstalledMaps() returned null!");
-			return;
-		}
-		if (ctx.getPluginNames() == null) {
-			this.error("readInfo(true).getPluginNames() returned null!");
-			return;
-		}
-		if (ctx.getStrategyNames() == null) {
-			this.error("readInfo(true).getStrategyNames() returned null!");
-			return;
-		}
-		ctx.getInstalledMaps().forEach(this::checkScenario);
-		ctx.getPluginNames().forEach(a -> {
-			if (a == null) {
-				this.error("Pluginname is null");
-			}
-		});
-		ctx.getStrategyNames().forEach(a -> {
-			if (a == null) {
-				this.error("Strategyname is null");
-			}
-		});
-		ctx.getPlugins().forEach(a -> {
-			if (a == null) {
-				this.error("Plugin is null");
-			}
-		});
-		ctx.getStrategies().forEach(a -> {
-			if (a == null) {
-				this.error("Strategy is null");
-			}
-		});
-	}
-
 	private void checkContextWithoutInstantiation(final GlobalContext ctx) {
 		if (ctx == null) {
 			this.error("readInfo(false) returned null!");
@@ -164,7 +116,6 @@ public final class Testsuite1 extends Testsuite {
 		final var xmlReader = XMLReader.getInstance();
 		XMLReader.setThrowableConsumer(this::throwable);
 		this.checkContextWithoutInstantiation(xmlReader.readInfo(false));
-		this.checkContextWithInstantiation(xmlReader.readInfo(true));
 		return this.numberOfErrors;
 	}
 

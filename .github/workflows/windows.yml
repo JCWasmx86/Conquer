@@ -48,3 +48,19 @@ jobs:
           cd ../../../..
           export QT_QPA_PLATFORM=windows
           gradle assemble
+          gradle Conquer:runTestsuites
+      - name: Test reproducible build
+        run: |
+          cd tmp/gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../appdata/App/Musescore/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../../..
+          export QT_QPA_PLATFORM=windows
+          gradle clean
+          gradle assemble
+          mkdir old
+          mv Installer/Installer.exe old
+          gradle clean
+          gradle assemble
+          sha256sum Installer/Installer.exe old/Installer.exe

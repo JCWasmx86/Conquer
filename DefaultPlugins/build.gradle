@@ -17,6 +17,7 @@ subprojects {
 }
 jar {
 	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"
+	include "org/jel/game/plugins/builtins/ClanChangeMessage**"
 	include "org/jel/game/plugins/builtins/changeCitiesMinds**"
 	exclude "services/**"
     baseName = 'ChangeCitiesMinds'
