@@ -1,5 +1,7 @@
 allprojects {
 	apply plugin: "java"
+	apply plugin: "eclipse"
+	apply plugin: "idea"
 	tasks.withType(AbstractArchiveTask) {
 		preserveFileTimestamps = false
 		reproducibleFileOrder = true
