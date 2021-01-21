@@ -32,4 +32,6 @@ task conquerResources(type: Jar) {
     exclude "**/*.class"
     baseName = 'Conquer_frontend_resources'
 }
+conquerResources.dependsOn(":music:buildMusic")
+conquerResources.mustRunAfter ":music:buildMusic"
 jar.dependsOn(conquerResources);

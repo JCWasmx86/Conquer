@@ -9,13 +9,14 @@ assemble {
 }
 assemble.dependsOn("buildDataZip")
 task buildDataZip(type: Zip) {
+	mkdir "../Conquer/src/main/resources/data"
 	archiveFileName = "conquer.zip"
-	destinationDirectory = file("../Conquer/src/main/resources/data")
+	destinationDirectory = file("../Conquer/build/resources/main/data")
 	from "conquer"
 }
 
 task initStructure {
-	mkdir "../Conquer/src/main/resources/data"
+	mkdir "../Conquer/build/resources/main/data"
 	mkdir "conquer"
 	mkdir "conquer/libs"
 }
@@ -38,13 +39,25 @@ task copyPlugins(type: Copy) {
 	}
 	into "conquer/libs"
 }
+copyPlugins.mustRunAfter(":DefaultPlugins:jar")
 buildDataZip.dependsOn(":ScenarioGenerator:build")
-buildDataZip.dependsOn(initStructure) 
+buildDataZip.mustRunAfter(":ScenarioGenerator:build")
+buildDataZip.dependsOn(":DefaultPlugins:jar")
+buildDataZip.dependsOn(initStructure)
 buildDataZip.dependsOn(copyXMLFile)
 buildDataZip.dependsOn(copyScenarios)
 buildDataZip.dependsOn(copyPlugins)
 
+copyXMLFile.mustRunAfter(initStructure)
+copyScenarios.mustRunAfter(copyXMLFile)
+copyPlugins.mustRunAfter(copyScenarios)
+
 task downloadJarFiles {
+	doLast {
+		println("Finished downloading jars");
+	}
+}
+task renameJarFiles() {
 	doLast {
 		file("original/jlayer-1.0.1.jar").renameTo(file("jars/jlayer.jar"))
 		file("original/mp3spi-1.9.5.4.jar").renameTo(file("jars/mp3spi.jar"))
@@ -67,3 +80,14 @@ task downloadJarFilesReal(type: Download) {
 	dest "original"
 }
 downloadJarFiles.dependsOn(downloadJarFilesReal)
+renameJarFiles.mustRunAfter(downloadJarFilesReal)
+downloadJarFiles.dependsOn(renameJarFiles)
+
+task deleteFiles(type: Delete){
+	delete "conquer"
+	delete "original"
+	delete "jars"
+}
+clean.dependsOn(deleteFiles)
+assemble.dependsOn(downloadJarFiles)
+assemble.dependsOn(renameJarFiles)

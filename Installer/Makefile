@@ -6,6 +6,9 @@ all-debug: setup
 	$(CC) -mwindows $(CFLAGS) bin/main.o bin/resource.o bin/inc.o -o Installer.exe
 clean:
 	rm -rf bin
+	rm -f uninstall.exe
+	rm -f Installer.exe
+	rm -f Launcher.exe
 setup:
 	mkdir -p bin
 	windres -I include -I src src/uninstallResource.rc bin/uninstallResource.o
