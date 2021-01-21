@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-cd docs
-pdflatex -shell-escape Documentation.tex
