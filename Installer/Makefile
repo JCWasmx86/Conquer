@@ -1,6 +1,6 @@
 all: setup
-	$(CC) -mwindows $(CFLAGS) -Wall -Wextra -pedantic -O3 src/main.c -c -o bin/main.o
-	$(CC) -mwindows $(CFLAGS) bin/main.o bin/resource.o bin/inc.o -o Installer.exe
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/main.c -c -o bin/main.o
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) bin/main.o bin/resource.o bin/inc.o -o Installer.exe
 all-debug: setup
 	$(CC) -mwindows $(CFLAGS) -Wall -Wextra -pedantic -Og -g3 src/main.c -c -o bin/main.o
 	$(CC) -mwindows $(CFLAGS) bin/main.o bin/resource.o bin/inc.o -o Installer.exe
