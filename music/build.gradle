@@ -6,7 +6,6 @@ task buildMusic() {
 	inputs.dir(".");
 	outputs.upToDateWhen { false }
 	doLast {
-		mkdir "music_tmp"
 		mkdir "../ConquerFrontend/src/main/resources/music"
 		def dir = file(".");
 		def threads = [];
@@ -50,3 +49,8 @@ task buildMusic() {
 	}
 }
 assemble.dependsOn(buildMusic)
+
+task deleteFiles(type: Delete){
+	delete "../music_tmp"
+}
+clean.dependsOn(deleteFiles)

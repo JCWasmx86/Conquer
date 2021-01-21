@@ -13,7 +13,7 @@ compileJava {
 	options.fork = true
 	options.incremental = true
 }
-compileJava.dependsOn(":auxiliary:buildDataZip")
+
 tasks.withType(JavaCompile).each {
 	it.options.compilerArgs.add("--enable-preview")
 	it.options.compilerArgs.add("--target")
@@ -38,6 +38,12 @@ task conquerResources(type: Jar) {
     baseName = 'Conquer_resources'
 }
 conquerResources.dependsOn(":auxiliary:buildDataZip")
-jar.dependsOn(conquerResources);
-
+conquerResources.dependsOn(":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":auxiliary:buildDataZip")
+assemble.dependsOn(conquerResources);
 assemble.dependsOn(test)
+
+clean {
+	delete "src/main/resources/data"
+}

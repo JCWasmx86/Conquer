@@ -1,9 +1,0 @@
-Package: conquer
-Version: 1.5.0
-Section: games
-Architecture: amd64
-Maintainer: JCWasmx86
-Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0
-Description: The native parts for conquer-gui
-Installed-Size: 136
-

@@ -7,3 +7,8 @@ task callMakefile(type: Exec) {
 	}
 }
 assemble.dependsOn(callMakefile)
+
+task cleanMake(type: Exec){
+	commandLine "make", "clean"
+}
+clean.dependsOn(cleanMake)

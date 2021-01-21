@@ -34,3 +34,15 @@ task copyFiles(type: Copy){
 	into "."
 	with contentSpec
 }
+
+task deleteFiles(type: Delete){
+	delete "Belenos.png"
+	delete "Belenos.data"
+	delete "Etiona.png"
+	delete "Etiona.data"
+	delete "Slaine.png"
+	delete "Slaine.data"
+	delete "Freedo.png"
+	delete "Freedo.data"
+}
+clean.dependsOn(deleteFiles)
