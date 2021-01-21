@@ -1,9 +1,9 @@
 name: Linux
 on:
     push:
-        branches: [main]
+        branches: [gradle]
     pull_request:
-        branches: [main]
+        branches: [gradle]
     workflow_dispatch:
 jobs:
   build:
@@ -24,29 +24,35 @@ jobs:
       - name: Build conquer and run tests
         run: |
           export QT_QPA_PLATFORM=offscreen
-          chmod +x buildConquer
-          time ./buildConquer
-      - name: Run performance tests
-        run: |
-          chmod +x testPerformance
-          ./testPerformance
+          mkdir tmp
+          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
+          cd tmp
+          unzip -d . gradle.zip
+          mv gradle-6.8 gradle
+          cd gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../..
+          gradle assemble
       - name: Test reproducible build
         run: |
+          cd tmp/gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../..
           export QT_QPA_PLATFORM=offscreen
-          rm -r conquer-dist music_tmp
-          ./buildConquer
-          rm -r music_tmp
+          gradle clean
+          gradle assemble
           mkdir oldFiles
-          mv conquer-dist oldFiles
-          ./buildConquer
+          mv debs/*.deb oldFiles
+          gradle clean
+          gradle assemble
           cd oldFiles
-          export CONQUER_DEB_OLD=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_DEB_OLD=$(sha256sum conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-engine.deb |tr ' ' '\n'|head -n 1)
           cd ..
-          export CONQUER_DEB=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_DEB=$(sha256sum debs/conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB=$(sha256sum debs/conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB=$(sha256sum debs/conquer-engine.deb |tr ' ' '\n'|head -n 1)
           if [ $CONQUER_DEB_OLD != $CONQUER_DEB ]; then
             echo conquer.deb differs:
             echo Old: $CONQUER_DEB_OLD

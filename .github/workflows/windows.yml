@@ -1,9 +1,9 @@
 name: Windows
 on:
     push:
-        branches: [ main ]
+        branches: [gradle]
     pull_request:
-        branches: [ main ]
+        branches: [gradle]
     workflow_dispatch:
 jobs:
   build:
@@ -30,23 +30,21 @@ jobs:
             zip
             unzip
             p7zip
-      - name: Build conquer and run tests
+      - name: Build conquer
         run: |
-          echo $JAVA_HOME
           mkdir tmp
           wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
           cd tmp
+          unzip -d . gradle.zip
+          mv gradle-6.8 gradle
+          cd gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../..
           mkdir appdata
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
           cd ../../../..
           export QT_QPA_PLATFORM=windows
-          #These are failing on windows CI, but work on my machine
-          export NO_TESTS3=notest
-          ./buildConquer
-      - name: Run performance tests
-        run: |
-          export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
-          chmod +x testPerformance
-          ./testPerformance
+          gradle assemble
