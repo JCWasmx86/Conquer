@@ -21,9 +21,11 @@ task buildMusic() {
 				File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
 				if(!f2.getAbsolutePath().toString().matches(".*Battle.*.ogg")) {
 					otherMusic.add(f2);
-				}else if(f2.exists()&&file.lastModified() < f2.lastModified()){
+				}
+				if(f2.exists()&&file.lastModified() < f2.lastModified()){
 					return;
 				}
+				println(file.lastModified() +"//"+f2.lastModified());
 				println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
 				ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
 				Process process = builder.inheritIO().directory(dir).start();
@@ -40,7 +42,12 @@ task buildMusic() {
 		threads.each {t->t.join()}
 		otherMusic.each { t ->
 			File dest = new File(t.getParentFile().getParentFile().toString()+"/ConquerFrontend/src/main/resources/music",t.getName());
-			Files.copy(t.toPath(), dest.toPath());
+			try {
+				Files.copy(t.toPath(), dest.toPath());
+			}catch(Exception e) {
+				//Ignore, file already exists
+			}
 		}
 	}
 }
+assemble.dependsOn(buildMusic)
