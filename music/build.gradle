@@ -25,7 +25,6 @@ task buildMusic() {
 				if(f2.exists()&&file.lastModified() < f2.lastModified()){
 					return;
 				}
-				println(file.lastModified() +"//"+f2.lastModified());
 				println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
 				ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
 				Process process = builder.inheritIO().directory(dir).start();

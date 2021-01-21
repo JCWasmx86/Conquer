@@ -1,0 +1,79 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+
+task buildDebs() {
+	doLast {
+		println("Built .deb files")
+	}
+}
+task buildConquerDeb() {
+	println("Building conquer.deb")
+}
+task buildConquerGuiDeb() {
+
+}
+task buildConquerEngineDeb() {
+
+}
+buildDebs.dependsOn(buildConquerDeb)
+buildDebs.dependsOn(buildConquerGuiDeb)
+buildDebs.dependsOn(buildConquerEngineDeb)
+
+task createConquerDebDirectoryStructure(type: Exec) {
+	mkdir "conquer/DEBIAN"
+	commandLine "chmod", "0755", "conquer/DEBIAN"
+	mkdir "conquer/usr/bin"
+	mkdir "conquer/usr/share/conquer"
+}
+task copyFilesConquerDeb {
+	println("Copying files")
+}
+
+task copyFilesConquerDebLauncher(type: Copy) {
+	from "../Launcher"
+	include "launcher"
+	include "conquer_launcher"
+	into file("conquer/usr/bin")
+}
+task copyFilesConquerDebLicenses(type: Copy) {
+	from "../auxiliary" 
+	include "LICENSE.txt"
+	include "Conquer.license"
+	into "conquer/usr/share/conquer"
+}
+copyFilesConquerDeb.dependsOn(":Launcher:callMakefile")
+copyFilesConquerDeb.dependsOn(createConquerDebDirectoryStructure)
+copyFilesConquerDeb.dependsOn(copyFilesConquerDebLauncher)
+copyFilesConquerDeb.dependsOn(copyFilesConquerDebLicenses)
+
+task writeManifestForConquerDeb {
+	def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+	long sizeInKb = size / 1024
+	def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
+	def s= "Package: conquer\n"
+	s += "Version: 1.5.0\n"
+	s += "Section: games\n"
+	s += "Architecture: "
+	s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
+	s += "\n"
+	s += "Maintainer: JCWasmx86\n"
+	s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
+	s += "Description: The native parts for conquer-gui\n"
+	s += "Installed-Size: "+sizeInKb+"\n\n"
+	fout.write(s.getBytes());
+	fout.close();
+}
+writeManifestForConquerDeb.dependsOn(copyFilesConquerDeb)
+task changeDatesConquerDeb(type: Exec) {
+	commandLine "find", file(".").getAbsolutePath()+"/conquer", "-exec", "touch", "-t", "201108231405.14", "{}", "\\;"
+}
+task buildConquerDebFile(type: Exec) {
+	commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
+}
+buildConquerDeb.dependsOn(createConquerDebDirectoryStructure)
+buildConquerDeb.dependsOn(copyFilesConquerDeb)
+buildConquerDeb.dependsOn(writeManifestForConquerDeb)
+buildConquerDeb.dependsOn(changeDatesConquerDeb)
+buildConquerDeb.dependsOn(buildConquerDebFile)
+assemble.dependsOn(buildDebs)

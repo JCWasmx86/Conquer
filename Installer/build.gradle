@@ -1,0 +1,48 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task buildInstaller(type: Exec) {
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "make"
+	}else {
+		commandLine "echo", "Skipping Installer"
+	}
+}
+task copyLicenses(type: Copy) {
+	from "../auxiliary/Conquer.license", "../auxiliary/LICENSE.txt"
+	into "."
+}
+task copyLauncher(type: Copy) {
+	from "../Launcher/launcher.exe"
+	into "."
+}
+task copyMusicJarFiles(type: Copy) {
+	from "../auxiliary/jars"
+	include "*.jar"
+	into "."
+}
+task copyConquerJars(type: Copy) {
+	from "../Conquer/build/libs"
+	include "*.jar"
+	into "."
+}
+task copyConquerFrontendJars(type: Copy) {
+	from "../ConquerFrontend/build/libs"
+	include "*.jar"
+	into "."
+}
+task copyConquerFrontendSPIJars(type: Copy) {
+	from "../ConquerFrontendSPI/build/libs"
+	include "*.jar"
+	into "."
+}
+buildInstaller.dependsOn(":Conquer:jar")
+buildInstaller.dependsOn(":ConquerFrontend:jar")
+buildInstaller.dependsOn(":Launcher:callMakefile")
+buildInstaller.dependsOn(copyLauncher)
+buildInstaller.dependsOn(copyLicenses)
+buildInstaller.dependsOn(":auxiliary:downloadJarFiles")
+buildInstaller.dependsOn(copyMusicJarFiles)
+buildInstaller.dependsOn(copyConquerJars)
+buildInstaller.dependsOn(copyConquerFrontendJars)
+buildInstaller.dependsOn(copyConquerFrontendSPIJars)
+assemble.dependsOn(buildInstaller)

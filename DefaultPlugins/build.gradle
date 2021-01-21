@@ -27,7 +27,7 @@ jar {
 }
 task sortedStrategyJar(type: Jar) {
     from sourceSets.main.output
-    exclude 'org/jel/game/strategies/**'
+    exclude 'org/jel/game/plugins/**'
     exclude "services/**"
     baseName = 'SortedStrategy'
     from('src/main/resources/services/SortedStrategy') { 

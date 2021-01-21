@@ -1,3 +1,6 @@
+plugins {
+    id "de.undercouch.download" version "4.1.1"
+}
 dependencies {
 	implementation project(":DefaultPlugins")
 }
@@ -35,8 +38,32 @@ task copyPlugins(type: Copy) {
 	}
 	into "conquer/libs"
 }
-
+buildDataZip.dependsOn(":ScenarioGenerator:build")
 buildDataZip.dependsOn(initStructure) 
 buildDataZip.dependsOn(copyXMLFile)
 buildDataZip.dependsOn(copyScenarios)
 buildDataZip.dependsOn(copyPlugins)
+
+task downloadJarFiles {
+	doLast {
+		file("original/jlayer-1.0.1.jar").renameTo(file("jars/jlayer.jar"))
+		file("original/mp3spi-1.9.5.4.jar").renameTo(file("jars/mp3spi.jar"))
+		file("original/tritonus-share-0.3.7.4.jar").renameTo(file("jars/tritonus.jar"))
+		file("original/jorbis-0.0.17.4.jar").renameTo(file("jars/jorbis.jar"))
+		file("original/vorbisspi-1.0.3.3.jar").renameTo(file("jars/vorbisspi.jar"))
+	}
+}
+task downloadJarFilesReal(type: Download) {
+	mkdir "jars"
+	mkdir "original"
+	src([
+		"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar"
+	])
+	onlyIfModified true
+	dest "original"
+}
+downloadJarFiles.dependsOn(downloadJarFilesReal)

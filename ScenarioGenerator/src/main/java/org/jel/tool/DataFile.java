@@ -149,7 +149,7 @@ public final class DataFile {
 	}
 
 	private byte[] readFile(final String s) throws IOException {
-		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+this.background)) {
+		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+s)) {
             return stream.readAllBytes();
         }
 	}

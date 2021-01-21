@@ -1,0 +1,9 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+task callMakefile(type: Exec) {
+	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "make", "all-win"
+	}else {
+		commandLine "make", "all-gtk"
+	}
+}
+assemble.dependsOn(callMakefile)
