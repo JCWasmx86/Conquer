@@ -1,16 +1,30 @@
 allprojects {
 	apply plugin: 'java'
 	apply plugin: 'project-report'
+	tasks.withType(AbstractArchiveTask) {
+		preserveFileTimestamps = false
+		reproducibleFileOrder = true
+	}
+	task configureEnvironment()  {
+		def envVars = [:]
+		envVars["SOURCE_DATE_EPOCH"]="0"
+		tasks.withType(Exec) { environment << envVars }
+	}
+	assemble.dependsOn(configureEnvironment);
 }
 buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
-    }
-  }
-  dependencies {
-    classpath "gradle.plugin.com.dorongold.plugins:task-tree:1.5"
-  }
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath "gradle.plugin.com.dorongold.plugins:task-tree:1.5"
+	}
 }
 
 apply plugin: "com.dorongold.task-tree"
+tasks.withType(AbstractArchiveTask) {
+	preserveFileTimestamps = false
+	reproducibleFileOrder = true
+}
