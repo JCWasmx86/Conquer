@@ -58,3 +58,5 @@ debs/conquer-gui
 debs/conquer-engine
 Installer/LICENSE.txt
 Installer/Conquer.license
+ScenarioGenerator/*.png
+*.deb
