@@ -15,20 +15,24 @@ task buildMusic() {
 				return;
 			}
 			def t= Thread.start {
-				File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
-				File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
-				File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
-				if(!f2.getAbsolutePath().toString().matches(".*Battle.*.ogg")) {
-					otherMusic.add(f2);
-				}
-				if(f2.exists()&&file.lastModified() < f2.lastModified()){
-					return;
-				}
-				println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
-				ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
-				Process process = builder.inheritIO().directory(dir).start();
-				if(process.waitFor() != 0) {
-					throw new Error("Failed: "+file);
+				for(def i = 0; i < 10; i++) {
+					File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
+					File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
+					File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
+					if(!f2.getAbsolutePath().toString().matches(".*Battle.*.ogg")) {
+						otherMusic.add(f2);
+					}
+					if(f2.exists()&&file.lastModified() < f2.lastModified()){
+						return;
+					}
+					println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
+					ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
+					Process process = builder.inheritIO().directory(dir).start();
+					if(process.waitFor() != 0) {
+						System.err.println("Failed: "+file+" ("+i+"/10)");
+					} else {
+						break;
+					}
 				}
 			}
 			threads.add(t);
