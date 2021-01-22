@@ -768,9 +768,7 @@ final class Game implements ConquerInfo {
 		return Math.min(numberOfSoldiers, maxPay);
 	}
 
-	@Override
-	public void moveSoldiers(final ICity src, final Stream<ICity> reachableCities, final boolean managed,
-			final ICity other, final long numberOfSoldiersToMove) {
+	private List<ICity> moveSoldiersCheck(final boolean managed,final ICity src, final Stream<ICity> reachableCities,final ICity other,final long numberOfSoldiersToMove){
 		this.throwIfNull(src, "src==null");
 		if (!managed && (reachableCities == null)) {
 			throw new IllegalArgumentException("Not managed, but reachableCities==null");
@@ -783,8 +781,30 @@ final class Game implements ConquerInfo {
 				throw new IllegalArgumentException("numberOfSoldiersToMove > src.numberOfSoldiers");
 			}
 		}
-		final var saved = reachableCities == null ? new ArrayList<ICity>()
+		return reachableCities == null ? new ArrayList<ICity>()
 				: reachableCities.collect(Collectors.toList());
+	}
+	private long calculateMoveAmount(final ICity src,final ICity destination) {
+		long moveAmount;
+		if (this.isInFriendlyCountry(src)) {
+			// This city has no connections to other clans==>Move all troops to the borders.
+			moveAmount = src.getNumberOfSoldiers();
+		} else {// Which city was attacked more often by the player?
+			boolean bool1=destination instanceof City;
+			boolean bool2=src instanceof City;
+			boolean bool3=(bool1&&bool2)?((City)src).getNumberAttacksOfPlayer()>((City)destination).getNumberAttacksOfPlayer():false;
+			if (bool3) {
+				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
+			} else {
+				moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
+			}
+		}
+		return moveAmount;
+	}
+	@Override
+	public void moveSoldiers(final ICity src, final Stream<ICity> reachableCities, final boolean managed,
+			final ICity other, final long numberOfSoldiersToMove) {
+		final var saved=moveSoldiersCheck(managed,src,reachableCities,other,numberOfSoldiersToMove);
 		ICity destination;
 		List<ICity> list = null;
 		if (!managed) {
@@ -802,16 +822,7 @@ final class Game implements ConquerInfo {
 		}
 		long moveAmount;
 		if (!managed) {
-			if (this.isInFriendlyCountry(src)) {
-				// This city has no connections to other clans==>Move all troops to the borders.
-				moveAmount = src.getNumberOfSoldiers();
-			} else // Which city was attacked more often by the player?
-			if ((destination instanceof City c) && (src instanceof City c1)
-					&& (c.getNumberAttacksOfPlayer() > c1.getNumberAttacksOfPlayer())) {
-				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
-			} else {
-				moveAmount = (int) (0.3 * src.getNumberOfSoldiers());
-			}
+			moveAmount=calculateMoveAmount(src,destination);
 			moveAmount = this.maximumNumberToMove(src.getClan(), src, destination, moveAmount);
 			if (moveAmount == 0) {
 				return;
