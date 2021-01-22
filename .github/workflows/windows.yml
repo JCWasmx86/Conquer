@@ -62,4 +62,12 @@ jobs:
           mv Installer/Installer.exe old
           gradle clean
           gradle assemble
-          sha256sum Installer/Installer.exe old/Installer.exe
+          export SHA_OLD=$(sha256sum old/Installer.exe |tr ' ' '\n'|head -n 1)
+          export SHA=$(sha256sum Installer/Installer.exe |tr ' ' '\n'|head -n 1)
+          if [ $SHA_OLD != $SHA ]; then
+             echo Installer.exe differs
+             echo Old: $SHA_OLD
+             echo New: $SHA
+          else
+             echo Installer.exe matches: $SHA
+          fi
