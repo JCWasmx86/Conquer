@@ -134,7 +134,7 @@ public final class GlobalContext {
 		if (is.file() != null) {
 			try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				final var b = new byte[maxLength];
-				int n = stream.read(b);
+				final var n = stream.read(b);
 				if (n != maxLength) {
 					throw new IllegalArgumentException("Not enough bytes could be read!");
 				}

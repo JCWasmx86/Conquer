@@ -26,7 +26,7 @@ debs/conquer-gui.deb
 sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
-gradle assemble
+gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
 ```
 
 ### Notes
@@ -57,7 +57,7 @@ This will need around 6-10 minutes, and will build `Installer/Installer.exe`.
 pacman -S --noconfirm git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-headers-git zip unzip
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
-gradle assemble
+gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
 ```
 
 ### Notes
@@ -78,13 +78,15 @@ Semi-supported with a bit of manual work. (Contributions are welcome)
 # Using in eclipse or IntelliJ Idea
 
 ## eclipse
-For generating the eclipse project files and importing them, type:
+For generating the eclipse project files, type:
 ```
 gradle eclipse
-#As a prerequisite, eclipse has to be on the path
-#otherwise you have to import this projects manually
-eclipse .
 ```
+After that, you must open eclipse and import a gradle project:
+
+File->Import...->Gradle->Existing Gradle Project
+
+Now you just have to follow the wizard.
 
 ## IntelliJ Idea
 Use:

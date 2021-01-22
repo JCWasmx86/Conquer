@@ -3,7 +3,6 @@ package org.jel.game.utils;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +10,9 @@ public class GraphTest {
 
 	private static final int N_VALUES = 10;
 
+	private void assertThat(final String msg,final boolean b) {
+		Assertions.assertTrue(b, msg);
+	}
 	@Test
 	public void testNegativeSize() {
 		Assertions.assertThrows(IllegalArgumentException.class, ()-> {
@@ -23,12 +25,12 @@ public class GraphTest {
 		final var graph = new Graph<Integer>(2);
 		graph.add(1);
 		graph.add(2);
-		MatcherAssert.assertThat("It is connected, although it shouldn't!", !graph.isConnected(1, 2));
+		this.assertThat("It is connected, although it shouldn't!", !graph.isConnected(1, 2));
 		graph.addDirectedEdge(0, 1, 2.0);
-		MatcherAssert.assertThat("It isn't connected, although it shouldn't!", graph.isConnected(1, 2));
-		MatcherAssert.assertThat("It is connected, although it shouldn't!", !graph.isConnected(2, 1));
+		this.assertThat("It isn't connected, although it shouldn't!", graph.isConnected(1, 2));
+		this.assertThat("It is connected, although it shouldn't!", !graph.isConnected(2, 1));
 		graph.addDirectedEdge(1, 0, 2.0);
-		MatcherAssert.assertThat("It isn't connected, although it shouldn!", graph.isConnected(2, 1));
+		this.assertThat("It isn't connected, although it shouldn!", graph.isConnected(2, 1));
 	}
 
 	@Test
@@ -77,7 +79,7 @@ public class GraphTest {
 		graph.add(1);
 		graph.add(2);
 		graph._set(1, null);
-		MatcherAssert.assertThat("Wrong value: " + graph.getValue(1) + " expected null", graph.getValue(1) == null);
+		this.assertThat("Wrong value: " + graph.getValue(1) + " expected null", graph.getValue(1) == null);
 	}
 
 	@Test
@@ -106,7 +108,7 @@ public class GraphTest {
 		final var graph = new Graph<Integer>(3);
 		graph.add(1);
 		graph.add(2);
-		MatcherAssert.assertThat("Bad value: " + graph.getValue(1) + " expected 2!", graph.getValue(1) == 2);
+		this.assertThat("Bad value: " + graph.getValue(1) + " expected 2!", graph.getValue(1) == 2);
 	}
 
 	@Test
@@ -148,7 +150,7 @@ public class GraphTest {
 		final var g = this.getTestGraph();
 		final var i = new AtomicInteger();
 		g.dfs(0, a -> i.incrementAndGet());
-		MatcherAssert.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
+		this.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
 			i.get() == GraphTest.N_VALUES);
 	}
 
@@ -177,7 +179,7 @@ public class GraphTest {
 	@Test
 	public void getWeight() {
 		final var g = this.getTestGraph();
-		MatcherAssert.assertThat("getWeight failed", g.getWeight(0, 1) == 2.3);
+		this.assertThat("getWeight failed", g.getWeight(0, 1) == 2.3);
 	}
 
 	@Test
@@ -185,15 +187,15 @@ public class GraphTest {
 		final var g = new Graph<Integer>(2);
 		g.add(1);
 		g.add(2);
-		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected());
-		MatcherAssert.assertThat("Should be connected", this.getTestGraph().isConnected());
+		this.assertThat("Shouldn't be connected", !g.isConnected());
+		this.assertThat("Should be connected", this.getTestGraph().isConnected());
 	}
 
 	@Test
 	public void testConnection() {
 		final var g = this.getTestGraph();
-		MatcherAssert.assertThat("Shouldn't be connected", !g.isConnected(0, 9));
-		MatcherAssert.assertThat("Should be connected", g.isConnected(4, 5));
+		this.assertThat("Shouldn't be connected", !g.isConnected(0, 9));
+		this.assertThat("Should be connected", g.isConnected(4, 5));
 	}
 
 	private Graph<Integer> getTestGraph() {

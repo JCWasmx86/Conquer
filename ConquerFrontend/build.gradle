@@ -1,5 +1,6 @@
 plugins {
 	 id "java"
+	 id 'application'
 }
 java {
     modularity.inferModulePath = true
@@ -11,6 +12,8 @@ dependencies {
 	implementation project(":Conquer")
 	implementation project(":ConquerFrontendSPI")
 	implementation project(":music")
+	runtimeOnly project(":DefaultPlugins");
+	runtimeOnly files("../music_tmp");
 }
 compileJava {
 	options.fork = true
@@ -26,12 +29,34 @@ jar {
 	exclude "music"
 	exclude "images"
 	jar.baseName = 'Conquer_frontend'
+	manifest {
+        attributes 'Main-Class': 'org.jel.gui.Intro'
+    }
 }
 task conquerResources(type: Jar) {
     from sourceSets.main.output
     exclude "**/*.class"
     baseName = 'Conquer_frontend_resources'
 }
+mainClassName="org.jel.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
 conquerResources.mustRunAfter ":music:buildMusic"
 jar.dependsOn(conquerResources);
+
+run {
+	jvmArgs=["--enable-preview"]
+	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar", 
+		"build/libs/jorbis.jar", "build/libs/mp3spi.jar", "build/libs/vorbisspi.jar", "../Conquer/build/libs/Conquer_resources.jar"
+}
+task copyLibs(type: Copy) {
+    from file("../auxiliary/jars");
+    include "*.jar"
+    into 'build/libs/'
+}
+run.dependsOn(copyLibs)
+run.mustRunAfter(copyLibs)
+run.dependsOn(conquerResources)
+run.dependsOn(":auxiliary:downloadJarFiles");
+run.dependsOn(":Conquer:conquerResources");
+run.mustRunAfter(":auxiliary:downloadJarFiles");
+run.mustRunAfter(":Conquer:conquerResources");

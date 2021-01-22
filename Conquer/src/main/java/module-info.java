@@ -13,6 +13,7 @@ import org.jel.game.data.strategy.StrategyProvider;
  */
 module org.jel.game {
 	requires transitive java.desktop;
+	requires static org.junit.jupiter.api;
 
 	exports org.jel.game.init;
 	exports org.jel.game.data;
