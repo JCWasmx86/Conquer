@@ -13,7 +13,7 @@ setup:
 	mkdir -p bin
 	windres -I include -I src src/uninstallResource.rc bin/uninstallResource.o
 	$(CC) -mwindows -O3 -Wall -Wextra -pedantic -c src/uninstall.c -o bin/uninstall.o
-	$(CC) -mwindows bin/uninstall.o bin/uninstallResource.o -o uninstall.exe
+	$(CC) -mwindows -Wl,--no-insert-timestamp bin/uninstall.o bin/uninstallResource.o -o uninstall.exe
 	$(CC) -mwindows src/inc.s -c -o bin/inc.o
 	windres -I include -I src src/resource.rc bin/resource.o
 format:
