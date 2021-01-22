@@ -1,9 +1,9 @@
 name: Linux
 on:
     push:
-        branches: [gradle]
+        branches: [main]
     pull_request:
-        branches: [gradle]
+        branches: [main]
     workflow_dispatch:
 jobs:
   build:
