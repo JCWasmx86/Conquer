@@ -7,10 +7,6 @@ task buildDebs() {
 		println("Built .deb files")
 	}
 }
-buildDebs.mustRunAfter(":Launcher:callMakefile")
-buildDebs.mustRunAfter(":auxiliary:buildDataZip")
-buildDebs.mustRunAfter(":Conquer:jar")
-buildDebs.mustRunAfter(":ConquerFrontend:jar")
 
 task buildConquerDeb() {
 	doLast {
@@ -160,14 +156,16 @@ if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildDebs.dependsOn(buildConquerDeb)
 	buildDebs.dependsOn(buildConquerEngineDeb)
 	buildDebs.dependsOn(buildConquerGuiDeb)
+	buildDebs.mustRunAfter(":Launcher:callMakefile")
+	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
+	buildDebs.mustRunAfter(":Conquer:jar")
+	buildDebs.mustRunAfter(":ConquerFrontend:jar")
 	buildConquerDeb.dependsOn(":Launcher:callMakefile")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar")
 	buildConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
 	buildConquerEngineDeb.dependsOn(":Conquer:conquerResources")
 	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar")
-	buildConquerGuiDeb.mustRunAfter ":ConquerFrontend:jar"
 	buildConquerGuiDeb.dependsOn(":auxiliary:downloadJarFiles")
-	buildConquerGuiDeb.mustRunAfter ":auxiliary:downloadJarFiles"
 }
 
 clean {
