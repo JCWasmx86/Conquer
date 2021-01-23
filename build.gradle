@@ -11,10 +11,12 @@ allprojects {
 		classpath {
 			file {
 				whenMerged {
-				entries.findAll {
-					(it.kind == "src" || it.kind == "lib")&&!it.toString().contains("DefaultPlugins")
-				}.each {it.entryAttributes["module"] = "true"}
-			}
+					//Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
+					//the same package
+					entries.findAll {
+						(it.kind == "src" || it.kind == "lib")&&!it.toString().contains("DefaultPlugins")
+					}.each {it.entryAttributes["module"] = "true"}
+				}
 			}
 		}
 	}

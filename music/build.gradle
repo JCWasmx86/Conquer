@@ -15,7 +15,7 @@ task buildMusic() {
 				return;
 			}
 			def t= Thread.start {
-				for(def i = 0; i < 10; i++) {
+				for(i in 0..10) {
 					File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
 					File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
 					File f2=new File(f1,file.getName().replace(".mscz",".ogg"))

@@ -12,9 +12,13 @@ dependencies {
 compileJava {
 	doFirst {
 		options.compilerArgs = [
-			"--module-path", classpath.asPath.replaceAll("DefaultPlugins",""), 
-			"--add-modules", "org.junit.jupiter.api",
-			"--enable-preview", "--source","15"
+			"--module-path",
+			classpath.asPath.replaceAll("DefaultPlugins",""),
+			"--add-modules",
+			"org.junit.jupiter.api",
+			"--enable-preview",
+			"--source",
+			"15"
 		]
 		classpath = files()
 	}

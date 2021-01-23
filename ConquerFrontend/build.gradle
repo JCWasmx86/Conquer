@@ -1,6 +1,6 @@
 plugins {
-	 id "java"
-	 id "application"
+	id "java"
+	id "application"
 }
 java {
 	modularity.inferModulePath = true
@@ -45,10 +45,10 @@ jar.dependsOn(conquerResources);
 
 run {
 	jvmArgs=["--enable-preview"]
-	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar", 
-		"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
-		"build/libs/vorbisspi.jar",
-		"../Conquer/build/libs/Conquer_resources.jar"
+	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
+			"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
+			"build/libs/vorbisspi.jar",
+			"../Conquer/build/libs/Conquer_resources.jar"
 }
 task copyLibs(type: Copy) {
 	from file("../auxiliary/jars");
