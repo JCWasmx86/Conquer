@@ -13,67 +13,57 @@ buildDebs.mustRunAfter(":Conquer:jar")
 buildDebs.mustRunAfter(":ConquerFrontend:jar")
 
 task buildConquerDeb() {
-	println("Building conquer.deb")
+	doLast {
+		exec {
+			mkdir "conquer/DEBIAN"
+			mkdir "conquer/usr/bin"
+			mkdir "conquer/usr/share/conquer"
+			commandLine "chmod", "0755", "conquer/DEBIAN"
+		}
+		copy {
+			from file("../Launcher")
+			include "launcher"
+			include "conquer_launcher"
+			into file("conquer/usr/bin")
+		}
+		copy {
+			from "../auxiliary"
+			include "LICENSE.txt"
+			include "Conquer.license"
+			into "conquer/usr/share/conquer"
+		}
+		def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
+		def s= "Package: conquer\n"
+		s += "Version: 1.5.0\n"
+		s += "Section: games\n"
+		s += "Architecture: "
+		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
+		s += "\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
+		s += "Description: The native parts for conquer-gui\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
+		}
+	}
 }
-buildConquerDeb.mustRunAfter(":Launcher:callMakefile")
 task buildConquerGuiDeb() {
 	println("Building conquer-gui.deb");
 }
 task buildConquerEngineDeb() {
 	println("Building conquer-engine.deb");
 }
-
-task createConquerDebDirectoryStructure(type: Exec) {
-	mkdir "conquer/DEBIAN"
-	mkdir "conquer/usr/bin"
-	mkdir "conquer/usr/share/conquer"
-	commandLine "chmod", "0755", "conquer/DEBIAN"
-}
-task copyFilesConquerDeb {
-	doLast {
-		println("Copying files")
-	}
-}
-
-task copyFilesConquerDebLauncher(type: Copy) {
-	inputs.files("../Launcher").withPropertyName("inputs").withPathSensitivity(PathSensitivity.RELATIVE)
-	outputs.dir("conquer/usr/bin").withPropertyName("outputDir")
-	from file("../Launcher")
-	include "launcher"
-	include "conquer_launcher"
-	into file("conquer/usr/bin")
-}
-task copyFilesConquerDebLicenses(type: Copy) {
-	from "../auxiliary"
-	include "LICENSE.txt"
-	include "Conquer.license"
-	into "conquer/usr/share/conquer"
-}
-task writeManifestForConquerDeb {
-	def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
-	long sizeInKb = size / 1024
-	def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
-	def s= "Package: conquer\n"
-	s += "Version: 1.5.0\n"
-	s += "Section: games\n"
-	s += "Architecture: "
-	s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
-	s += "\n"
-	s += "Maintainer: JCWasmx86\n"
-	s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
-	s += "Description: The native parts for conquer-gui\n"
-	s += "Installed-Size: "+sizeInKb+"\n\n"
-	fout.write(s.getBytes());
-	fout.close();
-}
-writeManifestForConquerDeb.dependsOn(copyFilesConquerDeb)
-task changeDatesConquerDeb(type: Exec) {
-	commandLine "find", file(".").getAbsolutePath()+"/conquer", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
-}
-task buildConquerDebFile(type: Exec) {
-	commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
-}
-
 task createConquerGuiDebDirectoryStructure(type: Exec) {
 	mkdir "conquer-gui/usr/share/java/conquer"
 	mkdir "conquer-gui/usr/share/conquer-gui"
@@ -177,12 +167,6 @@ task buildConquerEngineDebFile(type: Exec) {
 }
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
-	buildConquerDeb.dependsOn(buildConquerDebFile)
-	buildConquerDeb.dependsOn(changeDatesConquerDeb)
-	buildConquerDeb.dependsOn(copyFilesConquerDeb)
-	buildConquerDeb.dependsOn(createConquerDebDirectoryStructure)
-	buildConquerDeb.dependsOn(writeManifestForConquerDeb)
-	buildConquerDebFile.mustRunAfter changeDatesConquerDeb
 	buildConquerEngineDeb.dependsOn(copyFilesConquerEngineDeb)
 	buildConquerEngineDeb.dependsOn(createConquerEngineDebDirectoryStructure)
 	buildConquerEngineDeb.dependsOn(writeManifestForConquerEngineDeb)
@@ -197,13 +181,8 @@ if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildDebs.dependsOn(buildConquerDeb)
 	buildDebs.dependsOn(buildConquerEngineDeb)
 	buildDebs.dependsOn(buildConquerGuiDeb)
-	changeDatesConquerDeb.mustRunAfter writeManifestForConquerDeb
 	changeDatesConquerGuiDeb.mustRunAfter writeManifestForConquerGuiDeb
-	copyFilesConquerDeb.dependsOn(":Launcher:callMakefile")
-	copyFilesConquerDeb.dependsOn(copyFilesConquerDebLauncher)
-	copyFilesConquerDeb.dependsOn(copyFilesConquerDebLicenses)
-	copyFilesConquerDeb.dependsOn(createConquerDebDirectoryStructure)
-	copyFilesConquerDeb.mustRunAfter createConquerDebDirectoryStructure
+	buildConquerDeb.dependsOn(":Launcher:callMakefile")
 	copyFilesConquerEngineDeb.dependsOn(":Conquer:jar")
 	copyFilesConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
 	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebJars)
@@ -222,7 +201,6 @@ if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	copyFilesConquerGuiDeb.mustRunAfter createConquerGuiDebDirectoryStructure
 	copyFilesConquerGuiDebSoundJars.dependsOn(":auxiliary:downloadJarFiles")
 	copyFilesConquerGuiDebSoundJars.mustRunAfter ":auxiliary:downloadJarFiles"
-	writeManifestForConquerDeb.mustRunAfter copyFilesConquerDeb
 	writeManifestForConquerGuiDeb.mustRunAfter copyFilesConquerGuiDeb
 }
 

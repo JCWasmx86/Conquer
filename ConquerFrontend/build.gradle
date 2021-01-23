@@ -34,6 +34,11 @@ jar {
 	}
 }
 task conquerResources(type: Jar) {
+	copy {
+		from file("../auxiliary/jars");
+		include "*.jar"
+		into "build/libs/"
+	}
 	from sourceSets.main.output
 	exclude "**/*.class"
 	baseName = "Conquer_frontend_resources"
@@ -50,15 +55,6 @@ run {
 			"build/libs/vorbisspi.jar",
 			"../Conquer/build/libs/Conquer_resources.jar"
 }
-task copyLibs(type: Copy) {
-	from file("../auxiliary/jars");
-	include "*.jar"
-	into "build/libs/"
-}
-run.dependsOn(copyLibs)
-run.mustRunAfter(copyLibs)
-run.dependsOn(conquerResources)
 run.dependsOn(":auxiliary:downloadJarFiles");
+run.dependsOn(conquerResources)
 run.dependsOn(":Conquer:conquerResources");
-run.mustRunAfter(":auxiliary:downloadJarFiles");
-run.mustRunAfter(":Conquer:conquerResources");
