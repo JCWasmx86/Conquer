@@ -44,7 +44,7 @@ task copyFilesConquerDebLauncher(type: Copy) {
 	into file("conquer/usr/bin")
 }
 task copyFilesConquerDebLicenses(type: Copy) {
-	from "../auxiliary" 
+	from "../auxiliary"
 	include "LICENSE.txt"
 	include "Conquer.license"
 	into "conquer/usr/share/conquer"
@@ -89,10 +89,10 @@ task copyFilesConquerGuiDeb() {
 task copyFilesConquerGuiDebJars(type: Copy) {
 	from "../ConquerFrontend/build/libs/"
 	include "*.jar"
-	into "conquer-gui/usr/share/java" 
+	into "conquer-gui/usr/share/java"
 }
 task copyFilesConquerGuiDebLicenses(type: Copy) {
-	from "../auxiliary" 
+	from "../auxiliary"
 	include "LICENSE.txt"
 	include "Conquer.license"
 	into "conquer-gui/usr/share/conquer-gui"
@@ -143,7 +143,7 @@ task copyFilesConquerEngineDebJars(type: Copy) {
 }
 
 task copyFilesConquerEngineDebLicenses(type: Copy) {
-	from "../auxiliary" 
+	from "../auxiliary"
 	include "LICENSE.txt"
 	include "Conquer.license"
 	into "conquer-engine/usr/share/conquer-engine"
@@ -176,63 +176,54 @@ task buildConquerEngineDebFile(type: Exec) {
 	commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-engine"
 }
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
-	buildDebs.mustRunAfter(":Launcher:callMakefile")
-	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
-	buildDebs.mustRunAfter(":auxiliary:downloadJarFiles")
-	buildDebs.mustRunAfter(":Conquer:jar")
-	buildDebs.mustRunAfter(":ConquerFrontend:jar")
+	assemble.dependsOn(buildDebs)
+	buildConquerDeb.dependsOn(buildConquerDebFile)
+	buildConquerDeb.dependsOn(changeDatesConquerDeb)
+	buildConquerDeb.dependsOn(copyFilesConquerDeb)
+	buildConquerDeb.dependsOn(createConquerDebDirectoryStructure)
+	buildConquerDeb.dependsOn(writeManifestForConquerDeb)
+	buildConquerDebFile.mustRunAfter changeDatesConquerDeb
+	buildConquerEngineDeb.dependsOn(copyFilesConquerEngineDeb)
+	buildConquerEngineDeb.dependsOn(createConquerEngineDebDirectoryStructure)
+	buildConquerEngineDeb.dependsOn(writeManifestForConquerEngineDeb)
+	buildConquerGuiDeb.dependsOn(buildConquerEngineDebFile)
+	buildConquerGuiDeb.dependsOn(buildConquerGuiDebFile)
+	buildConquerGuiDeb.dependsOn(changeDatesConquerEngineDeb)
+	buildConquerGuiDeb.dependsOn(changeDatesConquerGuiDeb)
+	buildConquerGuiDeb.dependsOn(copyFilesConquerGuiDeb)
+	buildConquerGuiDeb.dependsOn(createConquerGuiDebDirectoryStructure)
+	buildConquerGuiDeb.dependsOn(writeManifestForConquerGuiDeb)
+	buildConquerGuiDebFile.mustRunAfter changeDatesConquerGuiDeb
 	buildDebs.dependsOn(buildConquerDeb)
-	buildDebs.dependsOn(buildConquerGuiDeb)
-	buildDebs.mustRunAfter(":auxiliary:downloadJarFiles")
 	buildDebs.dependsOn(buildConquerEngineDeb)
+	buildDebs.dependsOn(buildConquerGuiDeb)
+	changeDatesConquerDeb.mustRunAfter writeManifestForConquerDeb
+	changeDatesConquerGuiDeb.mustRunAfter writeManifestForConquerGuiDeb
 	copyFilesConquerDeb.dependsOn(":Launcher:callMakefile")
-	copyFilesConquerDeb.dependsOn(createConquerDebDirectoryStructure)
 	copyFilesConquerDeb.dependsOn(copyFilesConquerDebLauncher)
 	copyFilesConquerDeb.dependsOn(copyFilesConquerDebLicenses)
-	buildConquerDebFile.mustRunAfter changeDatesConquerDeb
-	changeDatesConquerDeb.mustRunAfter writeManifestForConquerDeb
-	writeManifestForConquerDeb.mustRunAfter copyFilesConquerDeb
+	copyFilesConquerDeb.dependsOn(createConquerDebDirectoryStructure)
 	copyFilesConquerDeb.mustRunAfter createConquerDebDirectoryStructure
-	buildConquerDeb.dependsOn(createConquerDebDirectoryStructure)
-	buildConquerDeb.dependsOn(copyFilesConquerDeb)
-	buildConquerDeb.dependsOn(writeManifestForConquerDeb)
-	buildConquerDeb.dependsOn(changeDatesConquerDeb)
-	buildConquerDeb.dependsOn(buildConquerDebFile)
-	copyFilesConquerGuiDebSoundJars.dependsOn(":auxiliary:downloadJarFiles")
-	copyFilesConquerGuiDebSoundJars.mustRunAfter ":auxiliary:downloadJarFiles"
-	copyFilesConquerGuiDeb.mustRunAfter createConquerGuiDebDirectoryStructure
+	copyFilesConquerEngineDeb.dependsOn(":Conquer:jar")
+	copyFilesConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
+	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebJars)
+	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebLicenses)
+	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebSPIJar)
+	copyFilesConquerEngineDebJars.dependsOn(":Conquer:conquerResources")
+	copyFilesConquerEngineDebJars.dependsOn(":Conquer:jar")
 	copyFilesConquerGuiDeb.dependsOn(":ConquerFrontend:jar")
-	copyFilesConquerGuiDeb.dependsOn(createConquerGuiDebDirectoryStructure)
 	copyFilesConquerGuiDeb.dependsOn(copyFilesConquerGuiDebJars)
 	copyFilesConquerGuiDeb.dependsOn(copyFilesConquerGuiDebLicenses)
 	copyFilesConquerGuiDeb.dependsOn(copyFilesConquerGuiDebSoundJars)
-	buildConquerGuiDebFile.mustRunAfter changeDatesConquerGuiDeb
-	changeDatesConquerGuiDeb.mustRunAfter writeManifestForConquerGuiDeb
-	writeManifestForConquerGuiDeb.mustRunAfter copyFilesConquerGuiDeb
-	copyFilesConquerGuiDeb.mustRunAfter createConquerGuiDebDirectoryStructure
+	copyFilesConquerGuiDeb.dependsOn(createConquerGuiDebDirectoryStructure)
 	copyFilesConquerGuiDeb.mustRunAfter ":ConquerFrontend:jar"
 	copyFilesConquerGuiDeb.mustRunAfter ":auxiliary:downloadJarFiles"
-	buildConquerGuiDeb.dependsOn(createConquerGuiDebDirectoryStructure)
-	buildConquerGuiDeb.dependsOn(copyFilesConquerGuiDeb)
-	buildConquerGuiDeb.dependsOn(writeManifestForConquerGuiDeb)
-	buildConquerGuiDeb.dependsOn(changeDatesConquerGuiDeb)
-	buildConquerGuiDeb.dependsOn(buildConquerGuiDebFile)
-	copyFilesConquerEngineDebJars.dependsOn(":Conquer:jar")
-	copyFilesConquerEngineDebJars.dependsOn(":Conquer:conquerResources")
-	copyFilesConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
-	copyFilesConquerEngineDeb.dependsOn(":Conquer:jar")
-	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebJars)
-	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebSPIJar)
-	copyFilesConquerEngineDeb.dependsOn(copyFilesConquerEngineDebLicenses)
-	buildConquerEngineDeb.dependsOn(createConquerEngineDebDirectoryStructure)
-	buildConquerEngineDeb.dependsOn(copyFilesConquerEngineDeb)
-	buildConquerEngineDeb.dependsOn(writeManifestForConquerEngineDeb)
-	buildConquerGuiDeb.dependsOn(changeDatesConquerEngineDeb)
-	buildConquerGuiDeb.dependsOn(buildConquerEngineDebFile)
-	assemble.dependsOn(copyFilesConquerDeb)
-	assemble.dependsOn(copyFilesConquerGuiDeb)
-	assemble.dependsOn(copyFilesConquerEngineDeb)
-	assemble.dependsOn(buildDebs)
+	copyFilesConquerGuiDeb.mustRunAfter createConquerGuiDebDirectoryStructure
+	copyFilesConquerGuiDeb.mustRunAfter createConquerGuiDebDirectoryStructure
+	copyFilesConquerGuiDebSoundJars.dependsOn(":auxiliary:downloadJarFiles")
+	copyFilesConquerGuiDebSoundJars.mustRunAfter ":auxiliary:downloadJarFiles"
+	writeManifestForConquerDeb.mustRunAfter copyFilesConquerDeb
+	writeManifestForConquerGuiDeb.mustRunAfter copyFilesConquerGuiDeb
 }
 
 clean {
