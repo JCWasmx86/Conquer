@@ -43,6 +43,7 @@ jar {
 task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
+	exclude "META-INF/services/**"
 	baseName = "Conquer_resources"
 }
 conquerResources.dependsOn(":auxiliary:buildDataZip")

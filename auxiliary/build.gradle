@@ -18,13 +18,10 @@ task buildDataZip(type: Zip) {
 	from "conquer"
 }
 
-task copyXMLFile(type: Copy) {
+task copyDataAndXMLFiles(type: Copy) {
 	from(".",) {
 		include "info.xml"
 	}
-	into "conquer"
-}
-task copyScenarios(type: Copy) {
 	from("../ScenarioGenerator") {
 		include "*.data"
 		include "*.png"
@@ -39,7 +36,7 @@ task copyPlugins(type: Copy) {
 }
 copyPlugins.mustRunAfter(":DefaultPlugins:jar")
 buildDataZip.mustRunAfter(":ScenarioGenerator:build")
-buildDataZip.dependsOn(copyXMLFile,copyScenarios,copyPlugins,":ScenarioGenerator:build")
+buildDataZip.dependsOn(copyDataAndXMLFiles,copyPlugins,":ScenarioGenerator:build")
 
 
 task downloadJarFiles {
