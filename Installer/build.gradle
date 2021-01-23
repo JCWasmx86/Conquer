@@ -50,12 +50,12 @@ if(Os.isFamily(Os.FAMILY_WINDOWS)) {
 }
 assemble.dependsOn(buildInstaller)
 task deleteFiles(type: Delete) {
-	delete fileTree('.') {
-        include '**/*.jar'
-        include '**/*.exe'
-    }
-    delete "LICENSE.txt"
-    delete "Conquer.license"
+	delete fileTree(".") {
+		include "**/*.jar"
+		include "**/*.exe"
+	}
+	delete "LICENSE.txt"
+	delete "Conquer.license"
 }
 task cleanMake(type: Exec){
 	commandLine "make", "clean"

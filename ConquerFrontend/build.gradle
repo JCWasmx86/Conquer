@@ -1,9 +1,9 @@
 plugins {
 	 id "java"
-	 id 'application'
+	 id "application"
 }
 java {
-    modularity.inferModulePath = true
+	modularity.inferModulePath = true
 }
 repositories {
 	mavenCentral()
@@ -28,15 +28,15 @@ jar {
 	exclude "**/*.properties"
 	exclude "music"
 	exclude "images"
-	jar.baseName = 'Conquer_frontend'
+	jar.baseName = "Conquer_frontend"
 	manifest {
-        attributes 'Main-Class': 'org.jel.gui.Intro'
-    }
+		attributes "Main-Class": "org.jel.gui.Intro"
+	}
 }
 task conquerResources(type: Jar) {
-    from sourceSets.main.output
-    exclude "**/*.class"
-    baseName = 'Conquer_frontend_resources'
+	from sourceSets.main.output
+	exclude "**/*.class"
+	baseName = "Conquer_frontend_resources"
 }
 mainClassName="org.jel.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
@@ -46,12 +46,14 @@ jar.dependsOn(conquerResources);
 run {
 	jvmArgs=["--enable-preview"]
 	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar", 
-		"build/libs/jorbis.jar", "build/libs/mp3spi.jar", "build/libs/vorbisspi.jar", "../Conquer/build/libs/Conquer_resources.jar"
+		"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
+		"build/libs/vorbisspi.jar",
+		"../Conquer/build/libs/Conquer_resources.jar"
 }
 task copyLibs(type: Copy) {
-    from file("../auxiliary/jars");
-    include "*.jar"
-    into 'build/libs/'
+	from file("../auxiliary/jars");
+	include "*.jar"
+	into "build/libs/"
 }
 run.dependsOn(copyLibs)
 run.mustRunAfter(copyLibs)

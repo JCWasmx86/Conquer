@@ -37,7 +37,7 @@ task copyFilesConquerDeb {
 
 task copyFilesConquerDebLauncher(type: Copy) {
 	inputs.files("../Launcher").withPropertyName("inputs").withPathSensitivity(PathSensitivity.RELATIVE)
-	outputs.dir('conquer/usr/bin').withPropertyName("outputDir")
+	outputs.dir("conquer/usr/bin").withPropertyName("outputDir")
 	from file("../Launcher")
 	include "launcher"
 	include "conquer_launcher"
@@ -234,10 +234,10 @@ if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 }
 
 clean {
-   delete "conquer"
-   delete "conquer-engine"
-   delete "conquer-gui"
-   delete "conquer.deb"
-   delete "conquer-engine.deb"
-   delete "conquer-gui.deb"
+	delete "conquer"
+	delete "conquer-engine"
+	delete "conquer-gui"
+	delete "conquer.deb"
+	delete "conquer-engine.deb"
+	delete "conquer-gui.deb"
 }

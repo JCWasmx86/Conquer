@@ -11,13 +11,13 @@ dependencies {
 }
 compileJava {
 	doFirst {
-        options.compilerArgs = [
-            '--module-path', classpath.asPath.replaceAll("DefaultPlugins",""), 
-            '--add-modules', 'org.junit.jupiter.api',
+		options.compilerArgs = [
+			"--module-path", classpath.asPath.replaceAll("DefaultPlugins",""), 
+			"--add-modules", "org.junit.jupiter.api",
 			"--enable-preview", "--source","15"
-        ]
-        classpath = files()
-    }
+		]
+		classpath = files()
+	}
 	options.fork = true
 	options.incremental = true
 }
@@ -41,9 +41,9 @@ jar {
 	exclude "images"
 }
 task conquerResources(type: Jar) {
-    from sourceSets.main.output
-    exclude "**/*.class"
-    baseName = 'Conquer_resources'
+	from sourceSets.main.output
+	exclude "**/*.class"
+	baseName = "Conquer_resources"
 }
 conquerResources.dependsOn(":auxiliary:buildDataZip")
 conquerResources.dependsOn(":DefaultPlugins:jar")
@@ -81,9 +81,7 @@ task runPerformanceTest(type:JavaExec) {
 	allJvmArgs = ["--enable-preview"]
 }
 task runTestsuites {
-	doLast {
-		println("Finished tests");
-	}
+	println("Finished tests");
 }
 runTestsuite2.mustRunAfter(runTestsuite1)
 runTestsuite3.mustRunAfter(runTestsuite2)
