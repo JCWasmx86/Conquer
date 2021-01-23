@@ -791,9 +791,10 @@ final class Game implements ConquerInfo {
 			// This city has no connections to other clans==>Move all troops to the borders.
 			moveAmount = src.getNumberOfSoldiers();
 		} else {// Which city was attacked more often by the player?
-			final var bool1 = destination instanceof City;
-			final var bool2 = src instanceof City;
-			final var bool3 = (bool1 && bool2)
+			final var destinationIsCity = destination instanceof City;
+			final var sourceIsCity = src instanceof City;
+			// Workaround to allow deterministic output
+			final var bool3 = (destinationIsCity && sourceIsCity)
 					? ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer()
 					: false;
 			if (bool3) {

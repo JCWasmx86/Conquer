@@ -39,34 +39,26 @@ buildDataZip.mustRunAfter(":ScenarioGenerator:build")
 buildDataZip.dependsOn(copyDataAndXMLFiles,copyPlugins,":ScenarioGenerator:build")
 
 
+ext.src = [
+	"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar":"jars/jlayer.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar":"jars/mp3spi.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar":"jars/tritonus.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar":"jars/jorbis.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar":"jars/vorbisspi.jar"
+]
+
 task downloadJarFiles {
-	doLast {
-		file("original/jlayer-1.0.1.jar").renameTo(file("jars/jlayer.jar"))
-		file("original/mp3spi-1.9.5.4.jar").renameTo(file("jars/mp3spi.jar"))
-		file("original/tritonus-share-0.3.7.4.jar").renameTo(file("jars/tritonus.jar"))
-		file("original/jorbis-0.0.17.4.jar").renameTo(file("jars/jorbis.jar"))
-		file("original/vorbisspi-1.0.3.3.jar").renameTo(file("jars/vorbisspi.jar"))
-		println("Finished downloading jars");
+	mkdir "jars"
+	for (s in src) {
+		download {
+			src s.key
+			dest new File("auxiliary",s.value)
+		}
 	}
 }
-task downloadJarFilesReal(type: Download) {
-	mkdir "jars"
-	mkdir "original"
-	src([
-		"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar",
-		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar",
-		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar",
-		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar",
-		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar"
-	])
-	onlyIfModified true
-	dest "original"
-}
-downloadJarFiles.dependsOn(downloadJarFilesReal)
 
 clean {
 	delete "conquer"
-	delete "original"
 	delete "jars"
 }
 assemble.dependsOn(downloadJarFiles,buildDataZip)

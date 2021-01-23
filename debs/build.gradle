@@ -178,10 +178,12 @@ task buildConquerEngineDebFile(type: Exec) {
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildDebs.mustRunAfter(":Launcher:callMakefile")
 	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
+	buildDebs.mustRunAfter(":auxiliary:downloadJarFiles")
 	buildDebs.mustRunAfter(":Conquer:jar")
 	buildDebs.mustRunAfter(":ConquerFrontend:jar")
 	buildDebs.dependsOn(buildConquerDeb)
 	buildDebs.dependsOn(buildConquerGuiDeb)
+	buildDebs.mustRunAfter(":auxiliary:downloadJarFiles")
 	buildDebs.dependsOn(buildConquerEngineDeb)
 	copyFilesConquerDeb.dependsOn(":Launcher:callMakefile")
 	copyFilesConquerDeb.dependsOn(createConquerDebDirectoryStructure)
