@@ -1,8 +1,20 @@
+plugins {
+	id "nebula.lint" version "16.17.0"
+}
 apply plugin: "application"
+apply plugin: 'nebula.lint'
 allprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
+	apply plugin: 'nebula.lint'
+	gradleLint.rules = [
+		"all-nebula-renames",
+		'archaic-wrapper',
+		"duplicate-dependency-class",
+		"minimum-dependency-version",
+		"overridden-dependency-version"
+	]
 	tasks.withType(AbstractArchiveTask) {
 		preserveFileTimestamps = false
 		reproducibleFileOrder = true
