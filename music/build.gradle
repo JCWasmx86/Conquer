@@ -2,11 +2,11 @@ import static groovy.io.FileType.FILES
 import java.util.stream.Collectors
 import java.nio.file.Files
 task buildMusic() {
-	outputs.dir("../music_tmp")
+	outputs.dir("${project.rootDir}/music_tmp")
 	inputs.dir(".");
 	outputs.upToDateWhen { false }
 	doLast {
-		mkdir "../ConquerFrontend/src/main/resources/music"
+		mkdir "${project.rootDir}/ConquerFrontend/src/main/resources/music"
 		def dir = file(".");
 		def threads = [];
 		def otherMusic = []
@@ -55,6 +55,6 @@ task buildMusic() {
 assemble.dependsOn(buildMusic)
 
 task deleteFiles(type: Delete){
-	delete "../music_tmp"
+	delete "${project.rootDir}/music_tmp"
 }
 clean.dependsOn(deleteFiles)

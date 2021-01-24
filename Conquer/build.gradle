@@ -7,7 +7,7 @@ repositories {
 dependencies {
 	compile 'org.junit.jupiter:junit-jupiter-api:5.6.0'
 	runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
-	compile fileTree(dir: "../DefaultPlugins/build/libs", include: ["*.jar"])
+	compile fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
 }
 compileJava {
 	doFirst {
@@ -86,7 +86,6 @@ task runPerformanceTest(type:JavaExec) {
 	allJvmArgs = ["--enable-preview"]
 }
 task runTestsuites {
-	println("Finished tests");
 }
 runTestsuite2.mustRunAfter(runTestsuite1)
 runTestsuite3.mustRunAfter(runTestsuite2)

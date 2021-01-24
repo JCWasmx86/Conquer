@@ -17,13 +17,13 @@ task buildConquerDeb() {
 			commandLine "chmod", "0755", "conquer/DEBIAN"
 		}
 		copy {
-			from file("../Launcher")
+			from file("${project.rootDir}/Launcher")
 			include "launcher"
 			include "conquer_launcher"
 			into file("conquer/usr/bin")
 		}
 		copy {
-			from "../auxiliary"
+			from "${project.rootDir}/auxiliary"
 			include "LICENSE.txt"
 			include "Conquer.license"
 			into "conquer/usr/share/conquer"
@@ -63,18 +63,18 @@ task buildConquerGuiDeb() {
 			commandLine "chmod", "0755", "conquer-gui/DEBIAN"
 		}
 		copy {
-			from "../ConquerFrontend/build/libs/"
+			from "${project.rootDir}/ConquerFrontend/build/libs/"
 			include "*.jar"
 			into "conquer-gui/usr/share/java"
 		}
 		copy {
-			from "../auxiliary"
+			from "${project.rootDir}/auxiliary"
 			include "LICENSE.txt"
 			include "Conquer.license"
 			into "conquer-gui/usr/share/conquer-gui"
 		}
 		copy {
-			from "../auxiliary/jars"
+			from "${project.rootDir}/auxiliary/jars"
 			include "*.jar"
 			into "conquer-gui/usr/share/java/conquer"
 		}
@@ -101,7 +101,6 @@ task buildConquerGuiDeb() {
 			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-gui"
 		}
 	}
-	println("Building conquer-gui.deb");
 }
 task buildConquerEngineDeb() {
 	doLast {
@@ -112,18 +111,18 @@ task buildConquerEngineDeb() {
 			commandLine "chmod", "0755", "conquer-engine/DEBIAN"
 		}
 		copy {
-			from "../Conquer/build/libs/"
+			from "${project.rootDir}/Conquer/build/libs/"
 			include "*.jar"
 			into "conquer-engine/usr/share/java"
 		}
 		copy {
-			from "../auxiliary"
+			from "${project.rootDir}/auxiliary"
 			include "LICENSE.txt"
 			include "Conquer.license"
 			into "conquer-engine/usr/share/conquer-engine"
 		}
 		copy {
-			from "../ConquerFrontendSPI/build/libs/"
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs/"
 			include "*.jar"
 			into "conquer-engine/usr/share/java"
 		}

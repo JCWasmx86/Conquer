@@ -3,31 +3,31 @@ import org.apache.tools.ant.taskdefs.condition.Os
 task buildInstaller() {
 	doLast {
 		copy {
-			from "../auxiliary/Conquer.license", "../auxiliary/LICENSE.txt"
+			from "${project.rootDir}/auxiliary/Conquer.license", "${project.rootDir}/auxiliary/LICENSE.txt"
 			into "."
 		}
 		copy {
-			from "../Launcher"
+			from "${project.rootDir}/Launcher"
 			include "launcher.exe"
 			into "."
 		}
 		copy {
-			from "../auxiliary/jars"
+			from "${project.rootDir}/auxiliary/jars"
 			include "*.jar"
 			into "."
 		}
 		copy {
-			from "../Conquer/build/libs"
+			from "${project.rootDir}/Conquer/build/libs"
 			include "*.jar"
 			into "."
 		}
 		copy {
-			from "../ConquerFrontend/build/libs"
+			from "${project.rootDir}/ConquerFrontend/build/libs"
 			include "*.jar"
 			into "."
 		}
 		copy {
-			from "../ConquerFrontendSPI/build/libs"
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs"
 			include "*.jar"
 			into "."
 		}

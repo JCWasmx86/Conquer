@@ -9,26 +9,26 @@ dependencies {
 
 task buildDataZip(type: Zip) {
 	archiveFileName = "conquer.zip"
-	destinationDirectory = file("../Conquer/build/resources/main/data")
+	destinationDirectory = file("${project.rootDir}/Conquer/build/resources/main/data")
 	from "conquer"
 }
 task setupFiles() {
 	doFirst{
-		mkdir "../Conquer/build/resources/main/data"
+		mkdir "${project.rootDir}/Conquer/build/resources/main/data"
 		mkdir "conquer"
 		mkdir "conquer/libs"
 		copy {
 			from(".",) {
 				include "info.xml"
 			}
-			from("../ScenarioGenerator") {
+			from("${project.rootDir}/ScenarioGenerator") {
 				include "*.data"
 				include "*.png"
 			}
 			into "conquer"
 		}
 		copy {
-			from("../DefaultPlugins/build/libs") {
+			from("${project.rootDir}/DefaultPlugins/build/libs") {
 				include "*.jar"
 			}
 			into "conquer/libs"
@@ -55,7 +55,7 @@ task downloadJarFiles {
 	for (s in src) {
 		download {
 			src s.key
-			dest new File("auxiliary",s.value)
+			dest new File("${project.rootDir}/auxiliary",s.value)
 		}
 	}
 }

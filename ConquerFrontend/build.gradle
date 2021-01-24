@@ -13,7 +13,7 @@ dependencies {
 	implementation project(":ConquerFrontendSPI")
 	implementation project(":music")
 	runtimeOnly project(":DefaultPlugins");
-	runtimeOnly files("../music_tmp");
+	runtimeOnly files("${project.rootDir}/music_tmp");
 }
 compileJava {
 	options.fork = true
@@ -35,7 +35,7 @@ jar {
 }
 task conquerResources(type: Jar) {
 	copy {
-		from file("../auxiliary/jars");
+		from file("${project.rootDir}/auxiliary/jars");
 		include "*.jar"
 		into "build/libs/"
 	}
@@ -53,7 +53,7 @@ run {
 	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
 			"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
 			"build/libs/vorbisspi.jar",
-			"../Conquer/build/libs/Conquer_resources.jar"
+			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles");
 run.mustRunAfter(":auxiliary:downloadJarFiles");
