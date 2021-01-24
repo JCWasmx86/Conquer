@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ServiceLoader;
 import java.util.function.Consumer;
 
 import org.jel.game.data.Shared;
@@ -53,5 +54,6 @@ public final class Initializer {
 				onError.accept(e);
 			}
 		}
+		ServiceLoader.load(InitTask.class).forEach(InitTask::initialize);
 	}
 }

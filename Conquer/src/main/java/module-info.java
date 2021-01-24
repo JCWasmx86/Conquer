@@ -26,6 +26,7 @@ module org.jel.game {
 	uses org.jel.game.data.strategy.StrategyProvider;
 	uses org.jel.game.plugins.Plugin;
 	uses org.jel.game.data.ConquerInfoReaderFactory;
+	uses org.jel.game.init.InitTask;
 
 	provides ConquerInfoReaderFactory with ScenarioFileReaderFactory;
 	provides StrategyProvider
