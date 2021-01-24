@@ -56,5 +56,7 @@ run {
 			"../Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles");
+run.mustRunAfter(":auxiliary:downloadJarFiles");
 run.dependsOn(conquerResources)
+run.mustRunAfter(conquerResources)
 run.dependsOn(":Conquer:conquerResources");

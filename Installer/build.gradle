@@ -1,6 +1,12 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 task buildInstaller(type: Exec) {
+	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+		commandLine "make"
+	}else {
+		commandLine "echo", "Skipping Installer"
+		return;
+	}
 	copy {
 		from "../auxiliary/Conquer.license", "../auxiliary/LICENSE.txt"
 		into "."
@@ -28,11 +34,6 @@ task buildInstaller(type: Exec) {
 		from "../ConquerFrontendSPI/build/libs"
 		include "*.jar"
 		into "."
-	}
-	if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-		commandLine "make"
-	}else {
-		commandLine "echo", "Skipping Installer"
 	}
 }
 if(Os.isFamily(Os.FAMILY_WINDOWS)) {
