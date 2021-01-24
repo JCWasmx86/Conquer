@@ -13,7 +13,7 @@ task buildDataZip(type: Zip) {
 	from "conquer"
 }
 task setupFiles() {
-	doFirst{
+	doLast{
 		mkdir "${project.rootDir}/Conquer/build/resources/main/data"
 		mkdir "conquer"
 		mkdir "conquer/libs"

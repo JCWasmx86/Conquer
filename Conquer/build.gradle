@@ -18,7 +18,8 @@ compileJava {
 			"org.junit.jupiter.api",
 			"--enable-preview",
 			"--source",
-			"15"
+			"15",
+			"-Xlint:all"
 		]
 		classpath = files()
 	}
@@ -30,6 +31,7 @@ tasks.withType(JavaCompile).each {
 	it.options.compilerArgs.add("--enable-preview")
 	it.options.compilerArgs.add("--target")
 	it.options.compilerArgs.add("15")
+	it.options.compilerArgs.add("-Xlint:all")
 }
 test {
 	testLogging {
