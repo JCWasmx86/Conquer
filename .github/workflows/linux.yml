@@ -82,4 +82,4 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: SDK
-          path: Conquer_SDK-1.5.0.zip
+          path: Conquer-SDK-1.5.0.zip
