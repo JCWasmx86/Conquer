@@ -12,9 +12,6 @@ tasks.withType(JavaCompile).each {
 	it.options.compilerArgs.add("--target")
 	it.options.compilerArgs.add("15")
 }
-subprojects {
-	apply plugin: "java"
-}
 jar {
 	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"
 	include "org/jel/game/plugins/builtins/ClanChangeMessage**"
