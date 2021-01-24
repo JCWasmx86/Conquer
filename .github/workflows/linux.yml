@@ -78,3 +78,8 @@ jobs:
           else
             echo conquer-engine.deb matches: $CONQUER_ENGINE_DEB
           fi
+          gradle createZipFileForDistribution
+      - uses: actions/upload-artifact@v2
+        with:
+          name: SDK
+          path: Conquer_SDK-1.5.0.zip
