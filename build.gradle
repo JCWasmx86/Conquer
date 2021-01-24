@@ -53,13 +53,45 @@ allprojects {
 	}
 }
 
+task createZipFileForDistribution(type:Zip){
+	archiveFileName = "dist.zip"
+	destinationDirectory = file(".")
+	from "dist"
+}
+task copyFiles() {
+	doLast{
+		mkdir "dist"
+		copy {
+			from("Conquer/build/libs",) {
+				include "*.jar"
+			}
+			from("ConquerFrontendSPI/build/libs") {
+				include "*.jar"
+			}
+			from ("auxiliary") {
+				include "*.pom"
+				include "install.sh"
+				include "install.bat"
+			}
+			into "dist"
+		}
+	}
+}
+copyFiles.dependsOn(":Conquer:jar")
+copyFiles.dependsOn(":ConquerFrontendSPI:jar")
+copyFiles.dependsOn(":Conquer:conquerResources")
+createZipFileForDistribution.dependsOn(copyFiles)
+clean {
+	delete "dist"
+	delete "dist.zip"
+}
 publishing {
-    repositories {
-        maven {
-            // change to point to your repo, e.g. http://my.org/repo
-            url = layout.buildDirectory.dir("repo")
-        }
-    }
+	repositories {
+		maven {
+			// change to point to your repo, e.g. http://my.org/repo
+			url = layout.buildDirectory.dir("repo")
+		}
+	}
 }
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false

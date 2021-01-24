@@ -55,6 +55,7 @@ core
 debs/conquer
 debs/conquer-engine
 debs/conquer-gui
+dist
 docs/Documentation.aux
 docs/Documentation.log
 docs/Documentation.out
