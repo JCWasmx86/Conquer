@@ -152,8 +152,8 @@ Allows to sort out messages that are either debug messages or information that w
 
 \subsection{Extending}
 \subsubsection{Note}
-This instructions will only cover the use with SPI, as using XMLReader is deprecated and not recommended anymore
-SPI is now the only supported way.
+This instructions will only cover the use with SPI, as using XMLReader is deprecated and is not recommended anymore.\newline
+SPI is now the only supported way of creating a \texttt{GlobalContext}.
 \subsubsection{Adding plugins}
 Every plugin has to implement the interface \texttt{org.jel.game.plugins.Plugin}. The only required metho is \texttt{String getName()}.
 This method should return an unique identifier.
@@ -211,6 +211,5 @@ After this, when packaging the strategy with a jar file, you have to add a file 
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
 After that, place the jar file somewhere on the classpath.
-
 
 \end{document}

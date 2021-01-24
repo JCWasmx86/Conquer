@@ -26,7 +26,7 @@ import org.jel.game.utils.Graph;
  * The class that builds a Game from a scenariofile.
  *
  */
-final class ScenarioFileReader implements ConquerInfoReader {
+public final class ScenarioFileReader implements ConquerInfoReader {
 	private final InstalledScenario scenario;
 
 	/**
@@ -38,6 +38,11 @@ final class ScenarioFileReader implements ConquerInfoReader {
 		this.scenario = is;
 	}
 
+	// Only used for Shared#loadReferenceImplementationfile
+	public ScenarioFileReader() {
+		this(null);
+	}
+
 	/**
 	 * Read the inputfile and build an uninitialized game.
 	 *
@@ -45,7 +50,6 @@ final class ScenarioFileReader implements ConquerInfoReader {
 	 */
 	@Override
 	public ConquerInfo build() {
-		final var game = new Game();
 		InputStream stream;
 		try {
 			stream = this.scenario.file() == null ? this.scenario.in()
@@ -54,6 +58,11 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			Shared.LOGGER.exception(e);
 			throw new RuntimeException(e);
 		}
+		return readFromStream(stream);
+	}
+
+	private ConquerInfo readFromStream(final InputStream stream) {
+		final var game = new Game();
 		try (var dis = new DataInputStream(stream)) {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
@@ -254,6 +263,13 @@ final class ScenarioFileReader implements ConquerInfoReader {
 			throw new RuntimeException("Disconnected graph!");
 		}
 		return game;
+	}
+
+	public ConquerInfo read(InputStream in) {
+		if (in == null) {
+			throw new IllegalArgumentException("in==null");
+		}
+		return this.readFromStream(in);
 	}
 
 }

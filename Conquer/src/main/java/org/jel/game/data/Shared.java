@@ -2,12 +2,14 @@ package org.jel.game.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import org.jel.game.data.ri.ScenarioFileReader;
 import org.jel.game.utils.Logger;
 
 /**
@@ -543,6 +545,16 @@ public final class Shared {
 	 */
 	public static Version getReferenceImplementationVersion() {
 		return new Version(1, 5, 0);
+	}
+
+	/**
+	 * Load a file of the file format from the RI from the input stream.
+	 * 
+	 * @param in Inputstream to read from. May not be {@code null}.
+	 * @return The new built {@link ConquerInfo} object.
+	 */
+	public static ConquerInfo loadReferenceImplementationfile(InputStream in) {
+		return new ScenarioFileReader().read(in);
 	}
 
 	private Shared() {
