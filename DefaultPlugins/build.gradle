@@ -1,0 +1,91 @@
+plugins {
+	id "java"
+}
+repositories {
+	mavenCentral()
+}
+dependencies {
+	compile project(":Conquer")
+}
+tasks.withType(JavaCompile).each {
+	it.options.compilerArgs.add("--enable-preview")
+	it.options.compilerArgs.add("--target")
+	it.options.compilerArgs.add("15")
+}
+jar {
+	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"
+	include "org/jel/game/plugins/builtins/ClanChangeMessage**"
+	include "org/jel/game/plugins/builtins/changeCitiesMinds**"
+	exclude "services/**"
+	baseName = "ChangeCitiesMinds"
+	from("src/main/resources/services/ChangeCitiesMinds") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+task sortedStrategyJar(type: Jar) {
+	from sourceSets.main.output
+	exclude "org/jel/game/plugins/**"
+	exclude "services/**"
+	baseName = "SortedStrategy"
+	from("src/main/resources/services/SortedStrategy") {
+		include "org.jel.game.data.strategy.StrategyProvider"
+		into("META-INF/services")
+	}
+}
+task defaultMusicJar(type: Jar) {
+	from sourceSets.main.output
+	include "org/jel/game/plugins/builtins/DefaultMusic**"
+	baseName = "DefaultMusic"
+	from("src/main/resources/services/DefaultMusic") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+task increaseGrowthJar(type: Jar) {
+	from sourceSets.main.output
+	include "org/jel/game/plugins/builtins/IncreaseGrowth**"
+	baseName = "IncreaseGrowth"
+	from("src/main/resources/services/IncreaseGrowth") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+task moneyAnalyzerJar(type: Jar) {
+	from sourceSets.main.output
+	include "org/jel/game/plugins/builtins/MoneyAnalyzer**"
+	include "org/jel/game/plugins/builtins/moneyAnalyzer**"
+	include "org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
+	baseName = "MoneyAnalyzer"
+	from("src/main/resources/services/MoneyAnalyzer") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+task resourceAnalyzerJar(type: Jar) {
+	from sourceSets.main.output
+	include "org/jel/game/plugins/builtins/ResourceAnalyze**"
+	include "org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
+	include "org/jel/game/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
+	include "org/jel/game/plugins/builtins/resourceAnalyze**"
+	baseName = "ResourceAnalyzer"
+	from("src/main/resources/services/ResourceAnalyzer") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+task periodicGrowthChangeJar(type: Jar) {
+	from sourceSets.main.output
+	include "org/jel/game/plugins/builtins/PeriodicGrowthChange**"
+	baseName = "PeriodicGrowthChange"
+	from("src/main/resources/services/PeriodicGrowthChange") {
+		include "org.jel.game.plugins.Plugin"
+		into("META-INF/services")
+	}
+}
+jar.dependsOn(sortedStrategyJar)
+jar.dependsOn(defaultMusicJar)
+jar.dependsOn(increaseGrowthJar)
+jar.dependsOn(moneyAnalyzerJar)
+jar.dependsOn(resourceAnalyzerJar)
+jar.dependsOn(periodicGrowthChangeJar)

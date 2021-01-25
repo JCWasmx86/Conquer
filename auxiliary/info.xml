@@ -1,0 +1,22 @@
+<info>
+	<scenarios>
+		<scenario name="Belenos" file="Belenos.data" thumbnail="Belenos.png" />
+		<scenario name="Etiona" file="Etiona.data" thumbnail="Etiona.png" />
+		<scenario name="Slaine" file="Slaine.data" thumbnail="Slaine.png" />
+		<scenario name="Freedo" file="Freedo.data" thumbnail="Freedo.png" />
+	</scenarios>
+	<plugins>
+		<plugin className="org.jel.game.plugins.builtins.ChangeCitiesMinds" />
+		<plugin className="org.jel.game.plugins.builtins.IncreaseGrowth" />
+		<plugin className="org.jel.game.plugins.builtins.MoneyAnalyzer" />
+		<plugin className="org.jel.game.plugins.builtins.ResourceAnalyzer" />
+		<!--<plugin className="org.jel.game.plugins.builtins.DefaultMusic" />-->
+		<plugin className="org.jel.game.plugins.builtins.PeriodicGrowthChange" />
+	</plugins>
+	<strategies>
+		<strategy className="org.jel.game.strategies.SortedStrategyProvider" />
+	</strategies>
+	<readers>
+		<reader className="org.jel.game.data.ri.ScenarioFileReaderFactory" />
+	</readers>
+</info>

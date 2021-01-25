@@ -1,0 +1,60 @@
+import static groovy.io.FileType.FILES
+import java.util.stream.Collectors
+import java.nio.file.Files
+task buildMusic() {
+	outputs.dir("${project.rootDir}/music_tmp")
+	inputs.dir(".");
+	outputs.upToDateWhen { false }
+	doLast {
+		mkdir "${project.rootDir}/ConquerFrontend/src/main/resources/music"
+		def dir = file(".");
+		def threads = [];
+		def otherMusic = []
+		dir.eachFileRecurse (FILES) { file ->
+			if(!file.toString().endsWith(".mscz")){
+				return;
+			}
+			def t= Thread.start {
+				for(i in 0..10) {
+					File outputFile=file.getAbsoluteFile().getParentFile().getParentFile();
+					File f1=new File(outputFile,"music_tmp").getAbsoluteFile()
+					File f2=new File(f1,file.getName().replace(".mscz",".ogg"))
+					if(!f2.getAbsolutePath().toString().matches(".*Battle.*.ogg")) {
+						otherMusic.add(f2);
+					}
+					if(f2.exists()&&file.lastModified() < f2.lastModified()){
+						return;
+					}
+					println("[Running]: musescore3 "+file.getAbsolutePath()+" -o "+f2.getAbsolutePath());
+					ProcessBuilder builder = new ProcessBuilder("musescore3", file.getAbsolutePath(),"-o",f2.getAbsolutePath());
+					Process process = builder.inheritIO().directory(dir).start();
+					if(process.waitFor() != 0) {
+						System.err.println("Failed: "+file+" ("+i+"/10)");
+					} else {
+						break;
+					}
+				}
+			}
+			threads.add(t);
+		}
+		while(!threads.isEmpty()) {
+			threads = threads.stream().filter{a->a.isAlive()}.collect(Collectors.toList());
+			Thread.sleep(100);
+		}
+		threads.each {t->t.join()}
+		otherMusic.each { t ->
+			File dest = new File(t.getParentFile().getParentFile().toString()+"/ConquerFrontend/src/main/resources/music",t.getName());
+			try {
+				Files.copy(t.toPath(), dest.toPath());
+			}catch(Exception e) {
+				//Ignore, file already exists
+			}
+		}
+	}
+}
+assemble.dependsOn(buildMusic)
+
+task deleteFiles(type: Delete){
+	delete "${project.rootDir}/music_tmp"
+}
+clean.dependsOn(deleteFiles)

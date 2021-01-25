@@ -14,7 +14,7 @@ buildCJSON:
 all-gtk: all
 	$(CC) $(INCLUDES) -o conquer_launcher $(FILES) src/gtkmain.c -O3 -fanalyzer -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux" -Wno-deprecated-declarations `pkg-config --cflags --libs gtk+-3.0`
 all-win: buildCJSON
-	cc -mwindows $(INCLUDES) -o launcher $(FILES) src/main.c -O3 -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
+	cc -mwindows $(INCLUDES) -Wl,--no-insert-timestamp -o launcher $(FILES) src/main.c -O3 -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
 all-win-debug: buildCJSON
 	cc -mwindows $(INCLUDES) -DDEBUG_BUILD -o launcher $(FILES) src/main.c -Og -g3 libcjson.a -static-libgcc -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
 format:

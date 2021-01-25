@@ -21,32 +21,39 @@ jobs:
           sudo rm /usr/bin/gcc
           sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-      - name: Build conquer and run tests
+      - name: Build conquer
         run: |
           export QT_QPA_PLATFORM=offscreen
-          chmod +x buildConquer
-          time ./buildConquer
-      - name: Run performance tests
-        run: |
-          chmod +x testPerformance
-          ./testPerformance
+          mkdir tmp
+          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
+          cd tmp
+          unzip -d . gradle.zip
+          mv gradle-6.8 gradle
+          cd gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../..
+          gradle assemble
+          gradle Conquer:runTestsuites
       - name: Test reproducible build
         run: |
+          cd tmp/gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../..
           export QT_QPA_PLATFORM=offscreen
-          rm -r conquer-dist music_tmp
-          ./buildConquer
-          rm -r music_tmp
+          gradle clean
+          gradle assemble
           mkdir oldFiles
-          mv conquer-dist oldFiles
-          ./buildConquer
+          mv debs/*.deb oldFiles
+          gradle clean
+          gradle assemble
           cd oldFiles
-          export CONQUER_DEB_OLD=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_DEB_OLD=$(sha256sum conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-engine.deb |tr ' ' '\n'|head -n 1)
           cd ..
-          export CONQUER_DEB=$(sha256sum conquer-dist/conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB=$(sha256sum conquer-dist/conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB=$(sha256sum conquer-dist/conquer-engine.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_DEB=$(sha256sum debs/conquer.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_GUI_DEB=$(sha256sum debs/conquer-gui.deb |tr ' ' '\n'|head -n 1)
+          export CONQUER_ENGINE_DEB=$(sha256sum debs/conquer-engine.deb |tr ' ' '\n'|head -n 1)
           if [ $CONQUER_DEB_OLD != $CONQUER_DEB ]; then
             echo conquer.deb differs:
             echo Old: $CONQUER_DEB_OLD
@@ -55,12 +62,11 @@ jobs:
           else
             echo conquer.deb matches: $CONQUER_DEB
           fi
-          #This will always fail, as the compression of .ogg is not deterministic.
           if [ $CONQUER_GUI_DEB_OLD != $CONQUER_GUI_DEB ]; then
             echo conquer-gui.deb differs:
             echo Old: $CONQUER_GUI_DEB_OLD
             echo New: $CONQUER_GUI_DEB
-            #exit 2 #Just skip, TODO
+            exit 2
           else
             echo conquer-gui.deb matches: $CONQUER_GUI_DEB
           fi
@@ -72,3 +78,8 @@ jobs:
           else
             echo conquer-engine.deb matches: $CONQUER_ENGINE_DEB
           fi
+          gradle createZipFileForDistribution
+      - uses: actions/upload-artifact@v2
+        with:
+          name: SDK
+          path: Conquer-SDK_1.5.0.zip

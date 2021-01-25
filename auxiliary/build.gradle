@@ -1,0 +1,67 @@
+plugins {
+	id "de.undercouch.download" version "4.1.1"
+}
+dependencies {
+	implementation project(":DefaultPlugins")
+	implementation project(":ScenarioGenerator")
+}
+
+
+task buildDataZip(type: Zip) {
+	archiveFileName = "conquer.zip"
+	destinationDirectory = file("${project.rootDir}/Conquer/build/resources/main/data")
+	from "conquer"
+}
+task setupFiles() {
+	doLast{
+		mkdir "${project.rootDir}/Conquer/build/resources/main/data"
+		mkdir "conquer"
+		mkdir "conquer/libs"
+		copy {
+			from(".",) {
+				include "info.xml"
+			}
+			from("${project.rootDir}/ScenarioGenerator") {
+				include "*.data"
+				include "*.png"
+			}
+			into "conquer"
+		}
+		copy {
+			from("${project.rootDir}/DefaultPlugins/build/libs") {
+				include "*.jar"
+			}
+			into "conquer/libs"
+		}
+	}
+}
+buildDataZip.dependsOn(setupFiles)
+buildDataZip.mustRunAfter(setupFiles)
+setupFiles.mustRunAfter(":DefaultPlugins:jar")
+setupFiles.mustRunAfter(":ScenarioGenerator:build")
+setupFiles.dependsOn(":ScenarioGenerator:build")
+
+
+ext.src = [
+	"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar":"jars/jlayer.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar":"jars/mp3spi.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar":"jars/tritonus.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar":"jars/jorbis.jar",
+	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar":"jars/vorbisspi.jar"
+]
+
+task downloadJarFiles {
+	mkdir "jars"
+	for (s in src) {
+		download {
+			src s.key
+			dest new File("${project.rootDir}/auxiliary",s.value)
+		}
+	}
+}
+
+clean {
+	delete "conquer"
+	delete "jars"
+}
+assemble.dependsOn(downloadJarFiles,buildDataZip)

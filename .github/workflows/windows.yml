@@ -1,9 +1,9 @@
 name: Windows
 on:
     push:
-        branches: [ main ]
+        branches: [main]
     pull_request:
-        branches: [ main ]
+        branches: [main]
     workflow_dispatch:
 jobs:
   build:
@@ -30,23 +30,44 @@ jobs:
             zip
             unzip
             p7zip
-      - name: Build conquer and run tests
+      - name: Build conquer
         run: |
-          echo $JAVA_HOME
           mkdir tmp
           wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
           cd tmp
-          mkdir appdata
+          unzip -d . gradle.zip
+          mv gradle-6.8 gradle
+          cd gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../..
           echo A|7z x MuseScore3.exe
           cd App/MuseScore/bin
           export PATH=`pwd`:$PATH:.
           cd ../../../..
           export QT_QPA_PLATFORM=windows
-          #These are failing on windows CI, but work on my machine
-          export NO_TESTS3=notest
-          ./buildConquer
-      - name: Run performance tests
+          gradle assemble
+          gradle Conquer:runTestsuites
+      - name: Test reproducible build
         run: |
-          export PATH=$PATH:`cygpath "${JAVA_HOME}"`/bin
-          chmod +x testPerformance
-          ./testPerformance
+          cd tmp/gradle/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../App/Musescore/bin
+          export PATH=`pwd`:$PATH:.
+          cd ../../../..
+          export QT_QPA_PLATFORM=windows
+          gradle clean
+          gradle assemble
+          mkdir old
+          mv Installer/Installer.exe old
+          gradle clean
+          gradle assemble
+          export SHA_OLD=$(sha256sum old/Installer.exe |tr ' ' '\n'|head -n 1)
+          export SHA=$(sha256sum Installer/Installer.exe |tr ' ' '\n'|head -n 1)
+          if [ $SHA_OLD != $SHA ]; then
+             echo Installer.exe differs
+             echo Old: $SHA_OLD
+             echo New: $SHA
+          else
+             echo Installer.exe matches: $SHA
+          fi

@@ -1,0 +1,98 @@
+plugins {
+	id "java"
+}
+repositories {
+	mavenCentral()
+}
+dependencies {
+	compile 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+	runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
+	compile fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
+}
+compileJava {
+	doFirst {
+		options.compilerArgs = [
+			"--module-path",
+			classpath.asPath.replaceAll("DefaultPlugins",""),
+			"--add-modules",
+			"org.junit.jupiter.api",
+			"--enable-preview",
+			"--source",
+			"15",
+			"-Xlint:all"
+		]
+		classpath = files()
+	}
+	options.fork = true
+	options.incremental = true
+}
+
+tasks.withType(JavaCompile).each {
+	it.options.compilerArgs.add("--enable-preview")
+	it.options.compilerArgs.add("--target")
+	it.options.compilerArgs.add("15")
+	it.options.compilerArgs.add("-Xlint:all")
+}
+test {
+	testLogging {
+		events "passed", "skipped", "failed", "standardOut", "standardError"
+	}
+	jvmArgs = List.of("--enable-preview")
+	useJUnitPlatform()
+}
+jar {
+	exclude "services/**"
+	exclude "**/*.properties"
+	exclude "data"
+	exclude "images"
+}
+task conquerResources(type: Jar) {
+	from sourceSets.main.output
+	exclude "**/*.class"
+	exclude "META-INF/services/**"
+	baseName = "Conquer_resources"
+}
+conquerResources.dependsOn(":auxiliary:buildDataZip")
+conquerResources.dependsOn(":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":auxiliary:buildDataZip")
+assemble.dependsOn(conquerResources);
+assemble.dependsOn(test)
+
+clean {
+	delete "src/main/resources/data"
+}
+
+task runTestsuite1(type:JavaExec) {
+	main = "org.jel.game.testsuite.Testsuite1"
+	classpath = sourceSets.main.runtimeClasspath
+	classpath += sourceSets.test.runtimeClasspath
+	allJvmArgs = ["--enable-preview"]
+}
+task runTestsuite2(type:JavaExec) {
+	main = "org.jel.game.testsuite.Testsuite2"
+	classpath = sourceSets.main.runtimeClasspath
+	classpath += sourceSets.test.runtimeClasspath
+	allJvmArgs = ["--enable-preview"]
+}
+task runTestsuite3(type:JavaExec) {
+	main = "org.jel.game.testsuite.Testsuite3"
+	classpath = sourceSets.main.runtimeClasspath
+	classpath += sourceSets.test.runtimeClasspath
+	allJvmArgs = ["--enable-preview"]
+}
+task runPerformanceTest(type:JavaExec) {
+	main = "org.jel.game.testsuite.PerformanceTest"
+	classpath = sourceSets.main.runtimeClasspath
+	classpath += sourceSets.test.runtimeClasspath
+	allJvmArgs = ["--enable-preview"]
+}
+task runTestsuites {
+}
+runTestsuite2.mustRunAfter(runTestsuite1)
+runTestsuite3.mustRunAfter(runTestsuite2)
+runPerformanceTest.mustRunAfter(runTestsuite3)
+runTestsuites.dependsOn(runTestsuite1)
+runTestsuites.dependsOn(runTestsuite2)
+runTestsuites.dependsOn(runTestsuite3)
+runTestsuites.dependsOn(runPerformanceTest)

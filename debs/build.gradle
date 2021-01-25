@@ -1,0 +1,177 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+import org.apache.tools.ant.taskdefs.condition.Os
+
+task buildDebs() {
+	doLast {
+		println("Built .deb files")
+	}
+}
+
+task buildConquerDeb() {
+	doLast {
+		exec {
+			mkdir "conquer/DEBIAN"
+			mkdir "conquer/usr/bin"
+			mkdir "conquer/usr/share/conquer"
+			commandLine "chmod", "0755", "conquer/DEBIAN"
+		}
+		copy {
+			from file("${project.rootDir}/Launcher")
+			include "launcher"
+			include "conquer_launcher"
+			into file("conquer/usr/bin")
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "LICENSE.txt"
+			include "Conquer.license"
+			into "conquer/usr/share/conquer"
+		}
+		def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
+		def s= "Package: conquer\n"
+		s += "Version: 1.5.0\n"
+		s += "Section: games\n"
+		s += "Architecture: "
+		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
+		s += "\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
+		s += "Description: The native parts for conquer-gui\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
+		}
+	}
+}
+task buildConquerGuiDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-gui/usr/share/java/conquer"
+			mkdir "conquer-gui/usr/share/conquer-gui"
+			mkdir "conquer-gui/DEBIAN"
+			commandLine "chmod", "0755", "conquer-gui/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontend/build/libs/"
+			include "*.jar"
+			into "conquer-gui/usr/share/java"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "LICENSE.txt"
+			include "Conquer.license"
+			into "conquer-gui/usr/share/conquer-gui"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary/jars"
+			include "*.jar"
+			into "conquer-gui/usr/share/java/conquer"
+		}
+		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-gui/DEBIAN/control"));
+		def s= "Package: conquer-gui\n"
+		s += "Version: 1.5.0\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine\n"
+		s += "Description: The GUI for the game engine conquer (Without Launcher)\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-gui", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-gui"
+		}
+	}
+}
+task buildConquerEngineDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-engine/usr/share/java"
+			mkdir "conquer-engine/usr/share/conquer-engine"
+			mkdir "conquer-engine/DEBIAN"
+			commandLine "chmod", "0755", "conquer-engine/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/Conquer/build/libs/"
+			include "*.jar"
+			into "conquer-engine/usr/share/java"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "LICENSE.txt"
+			include "Conquer.license"
+			into "conquer-engine/usr/share/conquer-engine"
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs/"
+			include "*.jar"
+			into "conquer-engine/usr/share/java"
+		}
+		def size = Files.walk(Paths.get(file("conquer-engine/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-engine/DEBIAN/control"));
+		def s= "Package: conquer-engine\n"
+		s += "Version: 1.5.0\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine\n"
+		s += "Description: The engine for the game conquer\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-engine", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-engine"
+		}
+	}
+}
+if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
+	assemble.dependsOn(buildDebs)
+	buildDebs.dependsOn(buildConquerDeb)
+	buildDebs.dependsOn(buildConquerEngineDeb)
+	buildDebs.dependsOn(buildConquerGuiDeb)
+	buildDebs.mustRunAfter(":Launcher:callMakefile")
+	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
+	buildDebs.mustRunAfter(":Conquer:jar")
+	buildDebs.mustRunAfter(":ConquerFrontend:jar")
+	buildConquerDeb.dependsOn(":Launcher:callMakefile")
+	buildConquerEngineDeb.dependsOn(":Conquer:jar")
+	buildConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
+	buildConquerEngineDeb.dependsOn(":Conquer:conquerResources")
+	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar")
+	buildConquerGuiDeb.dependsOn(":auxiliary:downloadJarFiles")
+}
+
+clean {
+	delete "conquer"
+	delete "conquer-engine"
+	delete "conquer-gui"
+	delete "conquer.deb"
+	delete "conquer-engine.deb"
+	delete "conquer-gui.deb"
+}

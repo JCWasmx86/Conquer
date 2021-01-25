@@ -1,2 +1,0 @@
-#/usr/bin/bash
-tar -czvf conquer_source.tar.gz Installer/include Installer/src Installer/Makefile Installer/.clang-format ConquerFrontend/src ConquerFrontend/images Launcher/src Launcher/include Launcher/Makefile Launcher/.clang-format Conquer/src Conquer/images ScenarioGenerator/src ScenarioGenerator/images ScenarioGenerator/*.png buildConquer music setupDevEnvironment
