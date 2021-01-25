@@ -1,17 +1,16 @@
 plugins {
 	id "nebula.lint" version "16.17.0"
-	id "maven-publish"
 }
 apply plugin: "application"
-apply plugin: 'nebula.lint'
+apply plugin: "nebula.lint"
 allprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
-	apply plugin: 'nebula.lint'
+	apply plugin: "nebula.lint"
 	gradleLint.rules = [
 		"all-nebula-renames",
-		'archaic-wrapper',
+		"archaic-wrapper",
 		"duplicate-dependency-class",
 		"minimum-dependency-version",
 		"overridden-dependency-version"
@@ -84,14 +83,6 @@ createZipFileForDistribution.dependsOn(copyFiles)
 clean {
 	delete "dist"
 	delete "Conquer-SDK-1.5.0.zip"
-}
-publishing {
-	repositories {
-		maven {
-			// change to point to your repo, e.g. http://my.org/repo
-			url = layout.buildDirectory.dir("repo")
-		}
-	}
 }
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false
