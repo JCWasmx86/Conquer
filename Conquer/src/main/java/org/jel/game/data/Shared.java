@@ -515,7 +515,7 @@ public final class Shared {
 	 * @return {@code true}, if SPI should be used, {@code false} otherwise.
 	 */
 	public static boolean useSPI() {
-		return Boolean.getBoolean("conquer.usespi");
+		return System.getProperty("conquer.usespi") == null ? true : Boolean.getBoolean("conquer.usespi");
 	}
 
 	/**
