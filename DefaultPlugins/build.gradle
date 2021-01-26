@@ -10,7 +10,7 @@ dependencies {
 tasks.withType(JavaCompile).each {
 	it.options.compilerArgs.add("--enable-preview")
 	it.options.compilerArgs.add("--target")
-	it.options.compilerArgs.add("15")
+	it.options.compilerArgs.add("${javaversion}")
 }
 jar {
 	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"

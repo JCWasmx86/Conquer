@@ -32,7 +32,7 @@ task buildConquerDeb() {
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
 		def s= "Package: conquer\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${version}\n"
 		s += "Section: games\n"
 		s += "Architecture: "
 		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
@@ -82,7 +82,7 @@ task buildConquerGuiDeb() {
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer-gui/DEBIAN/control"));
 		def s= "Package: conquer-gui\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${version}\n"
 		s += "Section: games\n"
 		s += "Architecture: all\n"
 		s += "Maintainer: JCWasmx86\n"
@@ -130,7 +130,7 @@ task buildConquerEngineDeb() {
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer-engine/DEBIAN/control"));
 		def s= "Package: conquer-engine\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${version}\n"
 		s += "Section: games\n"
 		s += "Architecture: all\n"
 		s += "Maintainer: JCWasmx86\n"
