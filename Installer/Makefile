@@ -1,6 +1,6 @@
 all: Installer.exe
 
-Installer.exe: setup main.o resource.o inc.o uinstall.exe
+Installer.exe: setup main.o resource.o inc.o uninstall.exe
 	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) bin/main.o bin/resource.o bin/inc.o -o Installer.exe
 main.o:
 	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/main.c -c -o bin/main.o
