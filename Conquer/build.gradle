@@ -26,7 +26,6 @@ test {
 	testLogging {
 		events "passed", "skipped", "failed", "standardOut", "standardError"
 	}
-	jvmArgs = List.of("--enable-preview")
 	useJUnitPlatform()
 }
 jar {
@@ -56,25 +55,21 @@ task runTestsuite1(type:JavaExec) {
 	main = "org.jel.game.testsuite.Testsuite1"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
-	allJvmArgs = ["--enable-preview"]
 }
 task runTestsuite2(type:JavaExec) {
 	main = "org.jel.game.testsuite.Testsuite2"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
-	allJvmArgs = ["--enable-preview"]
 }
 task runTestsuite3(type:JavaExec) {
 	main = "org.jel.game.testsuite.Testsuite3"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
-	allJvmArgs = ["--enable-preview"]
 }
 task runPerformanceTest(type:JavaExec) {
 	main = "org.jel.game.testsuite.PerformanceTest"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
-	allJvmArgs = ["--enable-preview"]
 }
 task runTestsuites {
 }

@@ -64,6 +64,9 @@ allprojects {
 		tasks.withType(JavaExec) {
 			jvmArgs += ["--enable-preview"]
 		}
+		tasks.withType(Test) {
+			jvmArgs += ["--enable-preview"]
+		}
 	}
 }
 
