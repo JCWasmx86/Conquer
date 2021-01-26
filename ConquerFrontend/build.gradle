@@ -15,15 +15,6 @@ dependencies {
 	runtimeOnly project(":DefaultPlugins");
 	runtimeOnly files("${project.rootDir}/music_tmp");
 }
-compileJava {
-	options.fork = true
-	options.incremental = true
-}
-tasks.withType(JavaCompile).each {
-	it.options.compilerArgs.add("--enable-preview")
-	it.options.compilerArgs.add("--target")
-	it.options.compilerArgs.add("${javaversion}")
-}
 jar {
 	exclude "**/*.properties"
 	exclude "music"

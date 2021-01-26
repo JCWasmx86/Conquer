@@ -11,28 +11,17 @@ dependencies {
 }
 compileJava {
 	doFirst {
-		options.compilerArgs = [
-			"--module-path",
-			classpath.asPath.replaceAll("DefaultPlugins",""),
-			"--add-modules",
-			"org.junit.jupiter.api",
-			"--enable-preview",
-			"--source",
-			"${javaversion}",
-			"-Xlint:all"
-		]
+		options.compilerArgs +=
+				[
+					"--module-path",
+					classpath.asPath.replaceAll("DefaultPlugins",""),
+					"--add-modules",
+					"org.junit.jupiter.api"
+				]
 		classpath = files()
 	}
-	options.fork = true
-	options.incremental = true
 }
 
-tasks.withType(JavaCompile).each {
-	it.options.compilerArgs.add("--enable-preview")
-	it.options.compilerArgs.add("--target")
-	it.options.compilerArgs.add("${javaversion}")
-	it.options.compilerArgs.add("-Xlint:all")
-}
 test {
 	testLogging {
 		events "passed", "skipped", "failed", "standardOut", "standardError"

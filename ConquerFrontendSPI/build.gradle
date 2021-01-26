@@ -10,16 +10,6 @@ dependencies {
 	testImplementation "org.hamcrest:hamcrest-library:1.3"
 	implementation project(":Conquer")
 }
-compileJava {
-	options.fork = true
-	options.incremental = true
-}
-tasks.withType(JavaCompile).each {
-	it.options.compilerArgs.add("--enable-preview")
-	it.options.compilerArgs.add("--target")
-	it.options.compilerArgs.add("${javaversion}")
-	it.options.compilerArgs.add("-Xlint:all")
-}
 jar {
 	jar.baseName = "ConquerFrontendSPI"
 }

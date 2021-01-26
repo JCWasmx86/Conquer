@@ -3,11 +3,16 @@ plugins {
 }
 apply plugin: "application"
 apply plugin: "nebula.lint"
+
 allprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "nebula.lint"
+	targetCompatibility = "15"
+	application {
+		applicationDefaultJvmArgs = ["--enable-preview"]
+	}
 	gradleLint.rules = [
 		"all-nebula-renames",
 		"archaic-wrapper",
@@ -49,6 +54,16 @@ allprojects {
 	assemble.dependsOn(configureEnvironment);
 	dependencies {
 		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
+	}
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}"
+			options.fork = true
+			options.incremental = true
+		}
+		tasks.withType(JavaExec) {
+			jvmArgs += ["--enable-preview"]
+		}
 	}
 }
 
