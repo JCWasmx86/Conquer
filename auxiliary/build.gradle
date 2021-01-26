@@ -37,9 +37,10 @@ task setupFiles() {
 }
 buildDataZip.dependsOn(setupFiles)
 buildDataZip.mustRunAfter(setupFiles)
-setupFiles.mustRunAfter(":DefaultPlugins:jar")
+setupFiles.mustRunAfter(":DefaultPlugins:assemble")
 setupFiles.mustRunAfter(":ScenarioGenerator:build")
 setupFiles.dependsOn(":ScenarioGenerator:build")
+setupFiles.dependsOn(":DefaultPlugins:assemble")
 
 
 ext.src = [
