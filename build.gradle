@@ -82,7 +82,7 @@ copyFiles.dependsOn(":Conquer:conquerResources")
 createZipFileForDistribution.dependsOn(copyFiles)
 clean {
 	delete "dist"
-	delete "Conquer-SDK-1.5.0.zip"
+	delete "Conquer-SDK_1.5.0.zip"
 }
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false
