@@ -89,6 +89,7 @@ task copyFiles() {
 				include "*.pom"
 				include "install.sh"
 				include "install.bat"
+				include "README.txt"
 			}
 			from("depreview") {
 				include "depreview.exe"
