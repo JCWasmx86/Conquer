@@ -25,3 +25,4 @@ clean:
 	rm -f libcjson.a
 	rm -rf cJSON
 	rm -f conquer_launcher
+	rm -f *.o
