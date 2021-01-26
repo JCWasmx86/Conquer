@@ -90,6 +90,10 @@ task copyFiles() {
 				include "install.sh"
 				include "install.bat"
 			}
+			from("depreview") {
+				include "depreview.exe"
+				include "depreview"
+			}
 			into "dist"
 		}
 	}
@@ -97,7 +101,10 @@ task copyFiles() {
 copyFiles.dependsOn(":Conquer:jar")
 copyFiles.dependsOn(":ConquerFrontendSPI:jar")
 copyFiles.dependsOn(":Conquer:conquerResources")
+copyFiles.dependsOn(":depreview:buildExecutable")
+
 createZipFileForDistribution.dependsOn(copyFiles)
+assemble.dependsOn(":depreview:buildExecutable")
 clean {
 	delete "dist"
 	delete "Conquer-SDK_${conquerVersion}.zip"
