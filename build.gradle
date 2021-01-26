@@ -71,7 +71,7 @@ allprojects {
 }
 
 task createZipFileForDistribution(type:Zip){
-	archiveFileName = "Conquer-SDK_${version}.zip"
+	archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
 	destinationDirectory = file(".")
 	from "dist"
 }
@@ -100,7 +100,7 @@ copyFiles.dependsOn(":Conquer:conquerResources")
 createZipFileForDistribution.dependsOn(copyFiles)
 clean {
 	delete "dist"
-	delete "Conquer-SDK_${version}.zip"
+	delete "Conquer-SDK_${conquerVersion}.zip"
 }
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false
