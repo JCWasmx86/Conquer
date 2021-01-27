@@ -2,12 +2,6 @@ plugins {
 	id "java"
 	id "application"
 }
-build.dependsOn.add("buildSlaine")
-build.dependsOn.add("buildBelenos")
-build.dependsOn.add("buildEtiona")
-build.dependsOn.add("buildFreedo")
-build.dependsOn.add("copyFiles")
-
 task buildSlaine(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
 	main = "org.jel.tool.Slaine"
@@ -45,3 +39,4 @@ task deleteFiles(type: Delete){
 	delete "Freedo.data"
 }
 clean.dependsOn(deleteFiles)
+build.dependsOn(buildSlaine,buildBelenos,buildEtiona,buildFreedo,copyFiles)

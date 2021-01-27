@@ -78,9 +78,4 @@ task periodicGrowthChangeJar(type: Jar) {
 		into("META-INF/services")
 	}
 }
-jar.dependsOn(sortedStrategyJar)
-jar.dependsOn(defaultMusicJar)
-jar.dependsOn(increaseGrowthJar)
-jar.dependsOn(moneyAnalyzerJar)
-jar.dependsOn(resourceAnalyzerJar)
-jar.dependsOn(periodicGrowthChangeJar)
+jar.dependsOn(sortedStrategyJar, defaultMusicJar,increaseGrowthJar,moneyAnalyzerJar,resourceAnalyzerJar,periodicGrowthChangeJar)

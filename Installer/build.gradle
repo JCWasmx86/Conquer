@@ -42,13 +42,10 @@ task buildInstaller() {
 	}
 }
 if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-	buildInstaller.dependsOn(":Conquer:jar")
-	buildInstaller.dependsOn(":ConquerFrontend:jar")
-	buildInstaller.dependsOn(":Launcher:callMakefile")
-	buildInstaller.mustRunAfter(":Launcher:callMakefile")
-	buildInstaller.dependsOn(":auxiliary:downloadJarFiles")
+	buildInstaller.dependsOn(":Conquer:jar",":ConquerFrontend:jar",":Launcher:assemble",":auxiliary:downloadJarFiles")
+	buildInstaller.mustRunAfter(":Launcher:assemble")
+	assemble.dependsOn(buildInstaller)
 }
-assemble.dependsOn(buildInstaller)
 
 clean {
 	delete fileTree(".") {

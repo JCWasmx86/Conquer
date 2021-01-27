@@ -42,7 +42,7 @@ gtk.o:
 launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
 gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
-	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
+	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
 
 
 format:

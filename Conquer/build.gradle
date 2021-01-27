@@ -40,12 +40,9 @@ task conquerResources(type: Jar) {
 	exclude "META-INF/services/**"
 	baseName = "Conquer_resources"
 }
-conquerResources.dependsOn(":auxiliary:buildDataZip")
-conquerResources.dependsOn(":DefaultPlugins:jar")
-conquerResources.mustRunAfter(":DefaultPlugins:jar")
-conquerResources.mustRunAfter(":auxiliary:buildDataZip")
-assemble.dependsOn(conquerResources);
-assemble.dependsOn(test)
+conquerResources.dependsOn(":auxiliary:buildDataZip",":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":DefaultPlugins:jar",":auxiliary:buildDataZip")
+assemble.dependsOn(conquerResources,test)
 
 clean {
 	delete "src/main/resources/data"
@@ -76,7 +73,4 @@ task runTestsuites {
 runTestsuite2.mustRunAfter(runTestsuite1)
 runTestsuite3.mustRunAfter(runTestsuite2)
 runPerformanceTest.mustRunAfter(runTestsuite3)
-runTestsuites.dependsOn(runTestsuite1)
-runTestsuites.dependsOn(runTestsuite2)
-runTestsuites.dependsOn(runTestsuite3)
-runTestsuites.dependsOn(runPerformanceTest)
+runTestsuites.dependsOn(runTestsuite1,runTestsuite2,runTestsuite3,runPerformanceTest)

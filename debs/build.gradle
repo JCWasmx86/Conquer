@@ -152,19 +152,12 @@ task buildConquerEngineDeb() {
 }
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
-	buildDebs.dependsOn(buildConquerDeb)
-	buildDebs.dependsOn(buildConquerEngineDeb)
-	buildDebs.dependsOn(buildConquerGuiDeb)
-	buildDebs.mustRunAfter(":Launcher:callMakefile")
-	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
-	buildDebs.mustRunAfter(":Conquer:jar")
-	buildDebs.mustRunAfter(":ConquerFrontend:jar")
-	buildConquerDeb.dependsOn(":Launcher:callMakefile")
-	buildConquerEngineDeb.dependsOn(":Conquer:jar")
-	buildConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
-	buildConquerEngineDeb.dependsOn(":Conquer:conquerResources")
-	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar")
-	buildConquerGuiDeb.dependsOn(":auxiliary:downloadJarFiles")
+	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb)
+	buildDebs.mustRunAfter(":Launcher:assemble",":auxiliary:buildDataZip",":Conquer:jar",":ConquerFrontend:jar")
+	buildConquerDeb.dependsOn(":Launcher:assemble")
+	buildConquerDeb.mustRunAfter(":Launcher:assemble")
+	buildConquerEngineDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources")
+	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar",":auxiliary:downloadJarFiles")
 }
 
 clean {

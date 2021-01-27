@@ -36,7 +36,7 @@ task conquerResources(type: Jar) {
 }
 mainClassName="org.jel.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
-conquerResources.mustRunAfter ":music:buildMusic"
+conquerResources.mustRunAfter(":music:buildMusic")
 jar.dependsOn(conquerResources);
 
 run {
@@ -46,8 +46,5 @@ run {
 			"build/libs/vorbisspi.jar",
 			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
-run.dependsOn(":auxiliary:downloadJarFiles");
-run.mustRunAfter(":auxiliary:downloadJarFiles");
-run.dependsOn(conquerResources)
-run.mustRunAfter(conquerResources)
-run.dependsOn(":Conquer:conquerResources");
+run.dependsOn(":auxiliary:downloadJarFiles",conquerResources,":Conquer:conquerResources")
+run.mustRunAfter(":auxiliary:downloadJarFiles",conquerResources)
