@@ -317,7 +317,13 @@ clean {
 	delete "conquer"
 	delete "conquer-engine"
 	delete "conquer-gui"
+	delete "conquer-default"
+	delete "conquer-default-music"
+	delete "conquer-default-scenarios"
 	delete "conquer.deb"
 	delete "conquer-engine.deb"
 	delete "conquer-gui.deb"
+	delete "conquer-default.deb"
+	delete "conquer-default-music.deb"
+	delete "conquer-default-scenarios.deb"
 }
