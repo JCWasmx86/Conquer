@@ -64,7 +64,8 @@ task buildConquerGuiDeb() {
 		}
 		copy {
 			from "${project.rootDir}/ConquerFrontend/build/libs/"
-			include "*.jar"
+			include "Conquer_frontend.jar"
+			include "Conquer_frontend_resources.jar"
 			into "conquer-gui/usr/share/java"
 		}
 		copy {
@@ -74,8 +75,12 @@ task buildConquerGuiDeb() {
 			into "conquer-gui/usr/share/conquer-gui"
 		}
 		copy {
-			from "${project.rootDir}/auxiliary/jars"
-			include "*.jar"
+			from "${project.rootDir}/ConquerFrontend/build/libs/"
+			include "jlayer.jar"
+			include "jorbis.jar"
+			include "mp3spi.jar"
+			include "tritonus.jar"
+			include "vorbisspi.jar"
 			into "conquer-gui/usr/share/java/conquer"
 		}
 		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
@@ -158,6 +163,7 @@ if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildConquerDeb.mustRunAfter(":Launcher:assemble")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources")
 	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar",":auxiliary:downloadJarFiles")
+	buildConquerGuiDeb.mustRunAfter(":ConquerFrontend:jar",":auxiliary:downloadJarFiles")
 }
 
 clean {
