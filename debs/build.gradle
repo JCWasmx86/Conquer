@@ -38,7 +38,7 @@ task buildConquerDeb() {
 		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
 		s += "\n"
 		s += "Maintainer: JCWasmx86\n"
-		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
+		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios\n"
 		s += "Description: The native parts for conquer-gui\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
 		fout.write(s.getBytes());
