@@ -4,4 +4,5 @@ module org.jel.frontend {
 	requires org.jel.game.frontend.spi;
 
 	uses conquer.frontend.spi.GUIMenuPlugin;
+	uses conquer.frontend.spi.SettingMenuPlugin;
 }

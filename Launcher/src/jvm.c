@@ -109,8 +109,8 @@ char *generateClasspath(Configuration configuration) {
 	sprintf(libs, "%s%s%s", base, "/libs", c);
 	appendAllJarsFromDir(libs, ret);
 #ifndef _WIN32
-	appendAllJarsFromDir("/usr/share/java/conquer/plugins", ret);
-	appendAllJarsFromDir("/usr/share/java/conquer/strategies", ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/plugins/", ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/strategies/", ret);
 	strcat(ret, "/usr/share/conquer/music:");
 	strcat(ret, "/usr/share/conquer/sounds:");
 	strcat(ret, "/usr/share/conquer/images:");
