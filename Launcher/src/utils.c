@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifndef _WIN32
+#include <pwd.h>
+#include <sys/types.h>
+#endif
 // Check whether a specified path contains a java installation. This is checked
 // by looking for bin/java(.exe)
 int checkForJava(const char *path) {
