@@ -42,6 +42,8 @@ Launcher/cJSON
 Launcher/conquer_launcher
 Launcher/launcher
 Launcher/libcjson.a
+Launcher/Conquer.license
+Launcher/LICENSE.txt
 ScenarioGenerator/*.png
 ScenarioGenerator/.*
 ScenarioGenerator/.classpath
