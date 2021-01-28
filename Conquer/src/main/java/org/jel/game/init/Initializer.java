@@ -54,6 +54,17 @@ public final class Initializer {
 				return;
 			}
 		}
+		if (!new File(Shared.PROPERTIES_FILE).exists()) {
+			try {
+				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
+						StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				if (onError != null) {
+					onError.accept(e);
+				}
+				return;
+			}
+		}
 		try {
 			Thread.sleep(500);
 			while (Initializer.installing) {
