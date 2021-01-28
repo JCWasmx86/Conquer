@@ -50,7 +50,7 @@ task buildConquerDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer"
 		}
 	}
 }
@@ -103,7 +103,7 @@ task buildConquerGuiDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-gui"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-gui"
 		}
 	}
 }
@@ -151,7 +151,7 @@ task buildConquerEngineDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-engine"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-engine"
 		}
 	}
 }
@@ -197,7 +197,7 @@ task buildDefaultDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-default"
 		}
 	}
 }
@@ -239,7 +239,7 @@ task buildDefaultMusicDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default-music"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-default-music"
 		}
 	}
 }

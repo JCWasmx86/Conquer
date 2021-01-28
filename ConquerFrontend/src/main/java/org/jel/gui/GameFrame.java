@@ -123,6 +123,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		});
 	}
 
+	@SuppressWarnings("deprecation")
 	private void cleanup() {
 		EventLog.clear();
 		this.loopPlayer.abort();
@@ -452,37 +453,42 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				return;
 			}
 		} else {
-			final var options = new String[] { Messages.getString("GameFrame.save"),
-					Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel") };
-			final var selected = JOptionPane.showOptionDialog(null, Messages.getString("GameFrame.doYouWantToSave"),
-					Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-					null, options, options[2]);
-			switch (selected) {
-			default:
-			case JOptionPane.CLOSED_OPTION:
-			case 2:
-				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				return;
-			case 0:
-				this.setSaveName();
-				if (this.saveName == null) {
-					this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-					return;
-				}
-				if (Arrays.binarySearch(Shared.savedGames(), this.saveName) >= 0) {
-					final var selectedValue = JOptionPane.showConfirmDialog(null,
-							Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
-					if (selectedValue != JOptionPane.YES_OPTION) {
-						return;
-					}
-				}
-				this.save();
-				break;
-			case 1:// Do nothing
-				break;
-			}
+			this.saveDialog();
 		}
 		this.cleanup();
+
+	}
+
+	private void saveDialog() {
+		final var options = new String[] { Messages.getString("GameFrame.save"),
+				Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel") };
+		final var selected = JOptionPane.showOptionDialog(null, Messages.getString("GameFrame.doYouWantToSave"),
+				Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+				options, options[2]);
+		switch (selected) {
+		default:
+		case JOptionPane.CLOSED_OPTION:
+		case 2:
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+			return;
+		case 0:
+			this.setSaveName();
+			if (this.saveName == null) {
+				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				return;
+			}
+			if (Arrays.binarySearch(Shared.savedGames(), this.saveName) >= 0) {
+				final var selectedValue = JOptionPane.showConfirmDialog(null,
+						Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
+				if (selectedValue != JOptionPane.YES_OPTION) {
+					return;
+				}
+			}
+			this.save();
+			break;
+		case 1:// Do nothing
+			break;
+		}
 	}
 
 	private void setSaveName() {
