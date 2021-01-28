@@ -515,7 +515,7 @@ public final class Shared {
 	 * @return {@code true}, if SPI should be used, {@code false} otherwise.
 	 */
 	public static boolean useSPI() {
-		return Boolean.getBoolean("conquer.usespi");
+		return System.getProperty("conquer.usespi") == null ? true : Boolean.getBoolean("conquer.usespi");
 	}
 
 	/**
@@ -544,7 +544,7 @@ public final class Shared {
 	 * @return Current version of reference implementation.
 	 */
 	public static Version getReferenceImplementationVersion() {
-		return new Version(1, 5, 0);
+		return new Version(1, 6, 0);
 	}
 
 	/**

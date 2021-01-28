@@ -32,13 +32,13 @@ task buildConquerDeb() {
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
 		def s= "Package: conquer\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: "
 		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
 		s += "\n"
 		s += "Maintainer: JCWasmx86\n"
-		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0\n"
+		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios\n"
 		s += "Description: The native parts for conquer-gui\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
 		fout.write(s.getBytes());
@@ -64,7 +64,8 @@ task buildConquerGuiDeb() {
 		}
 		copy {
 			from "${project.rootDir}/ConquerFrontend/build/libs/"
-			include "*.jar"
+			include "Conquer_frontend.jar"
+			include "Conquer_frontend_resources.jar"
 			into "conquer-gui/usr/share/java"
 		}
 		copy {
@@ -74,15 +75,19 @@ task buildConquerGuiDeb() {
 			into "conquer-gui/usr/share/conquer-gui"
 		}
 		copy {
-			from "${project.rootDir}/auxiliary/jars"
-			include "*.jar"
+			from "${project.rootDir}/ConquerFrontend/build/libs/"
+			include "jlayer.jar"
+			include "jorbis.jar"
+			include "mp3spi.jar"
+			include "tritonus.jar"
+			include "vorbisspi.jar"
 			into "conquer-gui/usr/share/java/conquer"
 		}
 		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer-gui/DEBIAN/control"));
 		def s= "Package: conquer-gui\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: all\n"
 		s += "Maintainer: JCWasmx86\n"
@@ -130,7 +135,7 @@ task buildConquerEngineDeb() {
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."),"conquer-engine/DEBIAN/control"));
 		def s= "Package: conquer-engine\n"
-		s += "Version: 1.5.0\n"
+		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: all\n"
 		s += "Maintainer: JCWasmx86\n"
@@ -150,28 +155,175 @@ task buildConquerEngineDeb() {
 		}
 	}
 }
+task buildDefaultDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-default/usr/share/java/conquer/plugins"
+			mkdir "conquer-default/usr/share/java/conquer/strategies"
+			mkdir "conquer-default/DEBIAN"
+			commandLine "chmod", "0755", "conquer-default/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/DefaultPlugins/build/libs/"
+			include "ChangeCitiesMinds.jar"
+			include "IncreaseGrowth.jar"
+			include "MoneyAnalyzer.jar"
+			include "PeriodicGrowthChange.jar"
+			include "ResourceAnalyzer.jar"
+			into "conquer-default/usr/share/java/conquer/plugins"
+		}
+		copy {
+			from "${project.rootDir}/DefaultPlugins/build/libs/"
+			include "SortedStrategy.jar"
+			into "conquer-default/usr/share/java/conquer/strategies"
+		}
+		def size = Files.walk(Paths.get(file("conquer-default/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-default/DEBIAN/control"));
+		def s= "Package: conquer-default\n"
+		s += "Version: ${conquerVersion}\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine\n"
+		s += "Description: The default plugins for the game conquer\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-default", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default"
+		}
+	}
+}
+task buildDefaultMusicDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-default-music/usr/share/conquer/music"
+			mkdir "conquer-default-music/usr/share/java/conquer/plugins"
+			mkdir "conquer-default-music/DEBIAN"
+			commandLine "chmod", "0755", "conquer-default-music/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/DefaultPlugins/build/libs/"
+			include "DefaultMusic.jar"
+			into "conquer-default-music/usr/share/java/conquer/plugins"
+		}
+		copy {
+			from "${project.rootDir}/music_tmp/"
+			include "Battle*.ogg"
+			into "conquer-default-music/usr/share/conquer/music"
+		}
+		def size = Files.walk(Paths.get(file("conquer-default-music/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-default-music/DEBIAN/control"));
+		def s= "Package: conquer-default-music\n"
+		s += "Version: ${conquerVersion}\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine\n"
+		s += "Description: The default music for the game conquer\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-default-music", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default-music"
+		}
+	}
+}
+task buildDefaultScenariosDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-default-scenarios/usr/share/conquer/scenarios/Belenos"
+			mkdir "conquer-default-scenarios/usr/share/conquer/scenarios/Etiona"
+			mkdir "conquer-default-scenarios/usr/share/conquer/scenarios/Freedo"
+			mkdir "conquer-default-scenarios/usr/share/conquer/scenarios/Slaine"
+			mkdir "conquer-default-scenarios/DEBIAN"
+			commandLine "chmod", "0755", "conquer-default-scenarios/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Belenos.**"
+			into "conquer-default-scenarios/usr/share/conquer/scenarios/Belenos"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Etiona.**"
+			into "conquer-default-scenarios/usr/share/conquer/scenarios/Etiona"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Freedo.**"
+			into "conquer-default-scenarios/usr/share/conquer/scenarios/Freedo"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Slaine.**"
+			into "conquer-default-scenarios/usr/share/conquer/scenarios/Slaine"
+		}
+		def size = Files.walk(Paths.get(file("conquer-default-scenarios/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-default-scenarios/DEBIAN/control"));
+		def s= "Package: conquer-default-scenarios\n"
+		s += "Version: ${conquerVersion}\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: conquer-engine\n"
+		s += "Description: The default scenarios for the game conquer\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-default-scenarios", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default-scenarios"
+		}
+	}
+}
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
-	buildDebs.dependsOn(buildConquerDeb)
-	buildDebs.dependsOn(buildConquerEngineDeb)
-	buildDebs.dependsOn(buildConquerGuiDeb)
-	buildDebs.mustRunAfter(":Launcher:callMakefile")
-	buildDebs.mustRunAfter(":auxiliary:buildDataZip")
-	buildDebs.mustRunAfter(":Conquer:jar")
-	buildDebs.mustRunAfter(":ConquerFrontend:jar")
-	buildConquerDeb.dependsOn(":Launcher:callMakefile")
-	buildConquerEngineDeb.dependsOn(":Conquer:jar")
-	buildConquerEngineDeb.dependsOn(":ConquerFrontendSPI:jar")
-	buildConquerEngineDeb.dependsOn(":Conquer:conquerResources")
-	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar")
-	buildConquerGuiDeb.dependsOn(":auxiliary:downloadJarFiles")
+	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb,buildDefaultDeb,buildDefaultMusicDeb,buildDefaultScenariosDeb)
+	buildDebs.mustRunAfter(":Launcher:assemble",":auxiliary:buildDataZip",":Conquer:jar",":ConquerFrontend:jar")
+	buildConquerDeb.dependsOn(":Launcher:assemble")
+	buildConquerDeb.mustRunAfter(":Launcher:assemble")
+	buildConquerEngineDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources")
+	buildConquerGuiDeb.dependsOn(":ConquerFrontend:jar",":auxiliary:downloadJarFiles")
+	buildConquerGuiDeb.mustRunAfter(":ConquerFrontend:jar",":auxiliary:downloadJarFiles")
+	buildDefaultDeb.dependsOn(":DefaultPlugins:jar")
+	buildDefaultDeb.mustRunAfter(":DefaultPlugins:jar")
+	buildDefaultMusicDeb.dependsOn(":music:buildMusic")
+	buildDefaultMusicDeb.mustRunAfter(":music:buildMusic")
+	buildDefaultScenariosDeb.dependsOn(":ScenarioGenerator:assemble")
 }
 
 clean {
 	delete "conquer"
 	delete "conquer-engine"
 	delete "conquer-gui"
+	delete "conquer-default"
+	delete "conquer-default-music"
+	delete "conquer-default-scenarios"
 	delete "conquer.deb"
 	delete "conquer-engine.deb"
 	delete "conquer-gui.deb"
+	delete "conquer-default.deb"
+	delete "conquer-default-music.deb"
+	delete "conquer-default-scenarios.deb"
 }

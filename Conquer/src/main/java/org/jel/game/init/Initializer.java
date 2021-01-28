@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ServiceLoader;
 import java.util.function.Consumer;
 
@@ -41,6 +42,29 @@ public final class Initializer {
 			throw new IllegalStateException("Can't initialize more than once!");
 		}
 		Initializer.initialized = true;
+		if (!new File(Shared.BASE_DIRECTORY).exists()) {
+			new File(Shared.BASE_DIRECTORY).mkdirs();
+			try {
+				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
+						StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				if (onError != null) {
+					onError.accept(e);
+				}
+				return;
+			}
+		}
+		if (!new File(Shared.PROPERTIES_FILE).exists()) {
+			try {
+				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
+						StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				if (onError != null) {
+					onError.accept(e);
+				}
+				return;
+			}
+		}
 		try {
 			Thread.sleep(500);
 			while (Initializer.installing) {

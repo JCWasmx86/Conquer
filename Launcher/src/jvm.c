@@ -109,8 +109,8 @@ char *generateClasspath(Configuration configuration) {
 	sprintf(libs, "%s%s%s", base, "/libs", c);
 	appendAllJarsFromDir(libs, ret);
 #ifndef _WIN32
-	appendAllJarsFromDir("/usr/share/java/conquer/plugins", ret);
-	appendAllJarsFromDir("/usr/share/java/conquer/strategies", ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/plugins/", ret);
+	appendAllJarsFromDir("/usr/share/java/conquer/strategies/", ret);
 	strcat(ret, "/usr/share/conquer/music:");
 	strcat(ret, "/usr/share/conquer/sounds:");
 	strcat(ret, "/usr/share/conquer/images:");
@@ -137,8 +137,8 @@ char *generateModulePath() {
 	assert(ret);
 	strcat(ret, "--module-path=");
 #ifndef _WIN32
-	strcat(ret,
-		   "/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:/usr/share/java/ConquerFrontendSPI.jar");
+	strcat(ret, "/usr/share/java/Conquer.jar:/usr/share/java/"
+				"Conquer_frontend.jar:/usr/share/java/ConquerFrontendSPI.jar");
 #else
 	TCHAR pf[MAX_PATH];
 	SHGetSpecialFolderPathA(NULL, pf, CSIDL_PROGRAM_FILES, FALSE);

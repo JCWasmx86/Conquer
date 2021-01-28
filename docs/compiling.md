@@ -7,6 +7,7 @@
 1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
 2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev, pkg-config
 3. Gradle is required. Conquer is only tested with 6.8
+
 ### Compiling
 
 Just type:

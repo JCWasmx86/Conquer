@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>conquer</groupId>
-    <artifactId>conquer</artifactId>
-    <version>1.5.0</version>
+    <artifactId>conquer_resources</artifactId>
+    <version>1.6.0</version>
     <packaging>jar</packaging>
 
-    <name>conquer</name>
+    <name>conquer_resources</name>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -16,16 +16,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 		<dependency>
             <groupId>conquer</groupId>
-            <artifactId>conquer_spi</artifactId>
-            <version>1.5.0</version>
+            <artifactId>conquer</artifactId>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>conquer</groupId>
-            <artifactId>conquer_resources</artifactId>
-            <version>1.5.0</version>
+            <artifactId>conquer_spi</artifactId>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 

@@ -33,7 +33,8 @@ void initDirectoryStructure(void);
 char *getBaseDirectory(void);
 Configuration getConfiguration(void);
 void freeConfiguration(Configuration);
-void extract(const char *, void (*)(void *, const char *, int, int), void *);
+void extract(const char *, char *, void (*)(void *, const char *, int, int),
+			 void *);
 int dirExists(const char *);
 int checkForJava(const char *);
 void *loadJavaLibrary(Configuration);

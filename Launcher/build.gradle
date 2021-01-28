@@ -1,14 +1,61 @@
 import org.apache.tools.ant.taskdefs.condition.Os
-task callMakefile(type: Exec) {
+task buildLauncher(type: Exec) {
 	if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 		commandLine "make", "all-win"
 	}else {
 		commandLine "make", "all-gtk"
 	}
 }
-assemble.dependsOn(callMakefile)
-
-task cleanMake(type: Exec){
-	commandLine "make", "clean"
+assemble.dependsOn(buildLauncher)
+task buildInstaller() {
+	doLast {
+		copy {
+			from "${project.rootDir}/auxiliary/Conquer.license", "${project.rootDir}/auxiliary/LICENSE.txt"
+			into "."
+		}
+		copy {
+			from "${project.rootDir}/auxiliary/jars"
+			include "*.jar"
+			into "."
+		}
+		copy {
+			from "${project.rootDir}/Conquer/build/libs"
+			include "*.jar"
+			into "."
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontend/build/libs"
+			include "*.jar"
+			into "."
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs"
+			include "*.jar"
+			into "."
+		}
+		exec {
+			if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+				commandLine "make", "Installer.exe"
+			}else {
+				commandLine "echo", "Skipping Installer"
+				return;
+			}
+		}
+	}
 }
-clean.dependsOn(cleanMake)
+if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+	buildInstaller.dependsOn(":Conquer:jar",":ConquerFrontend:jar",buildLauncher,":auxiliary:downloadJarFiles")
+	buildInstaller.mustRunAfter(buildLauncher)
+	assemble.dependsOn(buildInstaller)
+}
+clean {
+	delete fileTree(".") {
+		include "**/*.jar"
+		include "**/*.exe"
+	}
+	delete "LICENSE.txt"
+	delete "Conquer.license"
+	exec {
+		commandLine "make", "clean"
+	}
+}

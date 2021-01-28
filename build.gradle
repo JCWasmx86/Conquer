@@ -3,11 +3,16 @@ plugins {
 }
 apply plugin: "application"
 apply plugin: "nebula.lint"
+
 allprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "nebula.lint"
+	targetCompatibility = "15"
+	application {
+		applicationDefaultJvmArgs = ["--enable-preview"]
+	}
 	gradleLint.rules = [
 		"all-nebula-renames",
 		"archaic-wrapper",
@@ -27,7 +32,7 @@ allprojects {
 					//Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
 					//the same package
 					entries.findAll {
-						(it.kind == "src" || it.kind == "lib")&&(!it.toString().contains("DefaultPlugins"))
+						(it.kind == "src" || it.kind == "lib")&&(!it.toString().contains("DefaultPlugins"))&&(!it.toString().contains("ScenarioGenerator"))
 					}.each {it.entryAttributes["module"] = "true"}
 					entries.each{entry ->
 						if (entry.kind == "src" && entry.hasProperty("output")) {
@@ -50,10 +55,23 @@ allprojects {
 	dependencies {
 		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
 	}
+	gradle.projectsEvaluated {
+		tasks.withType(JavaCompile) {
+			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}"
+			options.fork = true
+			options.incremental = true
+		}
+		tasks.withType(JavaExec) {
+			jvmArgs += ["--enable-preview"]
+		}
+		tasks.withType(Test) {
+			jvmArgs += ["--enable-preview"]
+		}
+	}
 }
 
 task createZipFileForDistribution(type:Zip){
-	archiveFileName = "Conquer-SDK_1.5.0.zip"
+	archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
 	destinationDirectory = file(".")
 	from "dist"
 }
@@ -71,6 +89,11 @@ task copyFiles() {
 				include "*.pom"
 				include "install.sh"
 				include "install.bat"
+				include "README.txt"
+			}
+			from("depreview") {
+				include "depreview.exe"
+				include "depreview"
 			}
 			into "dist"
 		}
@@ -79,10 +102,13 @@ task copyFiles() {
 copyFiles.dependsOn(":Conquer:jar")
 copyFiles.dependsOn(":ConquerFrontendSPI:jar")
 copyFiles.dependsOn(":Conquer:conquerResources")
+copyFiles.dependsOn(":depreview:buildExecutable")
+
 createZipFileForDistribution.dependsOn(copyFiles)
+assemble.dependsOn(":depreview:buildExecutable")
 clean {
 	delete "dist"
-	delete "Conquer-SDK-1.5.0.zip"
+	delete "Conquer-SDK_${conquerVersion}.zip"
 }
 tasks.withType(AbstractArchiveTask) {
 	preserveFileTimestamps = false

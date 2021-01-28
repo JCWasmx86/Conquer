@@ -22,13 +22,18 @@ public class SPIContextBuilder {
 		final var installedScenarios = new ArrayList<InstalledScenario>();
 		final var providers = ServiceLoader.load(InstalledScenarioProvider.class);
 		providers.forEach(a -> {
-			if (a.getScenarios() == null) {
+			try {
+			final var scenarios = a.getScenarios();
+			if (scenarios == null) {
 				return;
 			}
-			for (final var b : a.getScenarios()) {
+			for (final var b : scenarios) {
 				if (b != null) {
 					installedScenarios.add(b);
 				}
+			}
+			}catch(Exception e) {
+				Shared.LOGGER.exception(e);
 			}
 		});
 		final var strategies = ServiceLoader.load(StrategyProvider.class).stream().map(Provider::get)

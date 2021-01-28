@@ -1,27 +1,74 @@
+CFLAGS2 = libcjson.a
+ifeq ($(OS),Windows_NT)
+	INCLUDES = -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32"
+	LDCFLAGS = -Wl,--no-insert-timestamp -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat
+	CFLAGS2 += -mwindows
+else
+	INCLUDES = -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux"
+	LDCFLAGS = -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive
+endif
+
+CFLAGS += -Wno-deprecated-declarations -Wno-incompatible-pointer-types
+
 INCLUDES += -I"include" -I"cJSON"
-FILES = src/config.c src/directoryStructure.c src/download.c src/extract.c src/load.c src/jvm.c src/utils.c
-all: buildCJSON
-	$(CC) $(INCLUDES) -o launcher $(FILES) src/main.c -O3 -fanalyzer -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux" -Wno-deprecated-declarations
-debug: buildCJSON
-	$(CC) $(INCLUDES) -DDEBUG_BUILD -o launcher $(FILES) src/main.c -Og -g3 -rdynamic -fanalyzer -static-libgcc libcjson.a -Wl,-Bstatic -lm -Wl,-Bdynamic -larchive -ldl -lcurl -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux" -Wno-deprecated-declarations
-	$(CC) $(INCLUDES) -o conquer_launcher $(FILES) src/gtkmain.c -O3 -fanalyzer -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux" -Wno-deprecated-declarations `pkg-config --cflags --libs gtk+-3.0`
+all: launcher
 buildCJSON:
 	if [ ! -d cJSON ]; then git clone https://github.com/DaveGamble/cJSON;cd cJSON; git config pull.rebase false;cd ..; else cd cJSON&&git pull origin master&&cd ..; fi
 	rm -f cJSON/*.so
 	rm -f cJSON/*.a
 	rm -f cJSON/*.dll
 	cd cJSON&&make CFLAGS="-O3 -s" &&mkdir -p cjson&&cp cJSON.h cjson&&cp libcjson.a ..&&cd ..
-all-gtk: all
-	$(CC) $(INCLUDES) -o conquer_launcher $(FILES) src/gtkmain.c -O3 -fanalyzer -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux" -Wno-deprecated-declarations `pkg-config --cflags --libs gtk+-3.0`
-all-win: buildCJSON
-	cc -mwindows $(INCLUDES) -Wl,--no-insert-timestamp -o launcher $(FILES) src/main.c -O3 -s -static-libgcc libcjson.a -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
-all-win-debug: buildCJSON
-	cc -mwindows $(INCLUDES) -DDEBUG_BUILD -o launcher $(FILES) src/main.c -Og -g3 libcjson.a -static-libgcc -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32" -Wno-deprecated-declarations -Wno-incompatible-pointer-types
+all-gtk: gtklauncher launcher
+all-win: launcher
+
+config.o: buildCJSON
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o config.o src/config.c
+directoryStructure.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o directoryStructure.o src/directoryStructure.c
+download.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o download.o src/download.c
+extract.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o extract.o src/extract.c
+load.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o load.o src/load.c
+utils.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o utils.o src/utils.c
+main.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o main.o src/main.c
+jvm.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
+gtk.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o gtk.o src/gtkmain.c `pkg-config --cflags-only-I --libs gtk+-3.0`
+launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o
+	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
+gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
+	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
+Installer.exe: setup install.o resource.o inc.o utils.o extract.o uninstall.exe
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o utils.o resource.o inc.o extract.o -o Installer.exe $(LDCFLAGS)
+install.o:
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/install.c -c -o install.o
+setup: makeDir uninstallResource.o uninstall.exe inc.o
+makeDir:
+	mkdir -p bin
+uninstallResource.o:
+	windres -I include -I src src/uninstallResource.rc uninstallResource.o
+uninstall.o:
+	$(CC) -mwindows -O3 -Wall -Wextra -pedantic -c src/uninstall.c -o uninstall.o
+uninstall.exe: uninstall.o
+	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
+inc.o:
+	$(CC) -mwindows src/inc.s -c -o inc.o
+resource.o:
+	windres -I include -I src src/resource.rc resource.o
 format:
-	clang-format --style=file -verbose -i $(FILES) src/main.c src/gtkmain.c include/launcher.h
+	clang-format --style=file -verbose -i src/*.c include/*.h
 clean:
 	rm -f launcher
 	rm -f launcher.exe
 	rm -f libcjson.a
 	rm -rf cJSON
+	rm -rf bin
 	rm -f conquer_launcher
+	rm -f uninstall.exe
+	rm -f Installer.exe
+	rm -f *.o

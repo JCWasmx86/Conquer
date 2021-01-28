@@ -9,7 +9,7 @@
 
 static int copyData(struct archive *, struct archive *);
 
-void extract(const char *filename,
+void extract(const char *filename, char *outputDirectory,
 			 void (*callback)(void *, const char *, int, int), void *someData) {
 	int flags = ARCHIVE_EXTRACT_TIME;
 	flags |= ARCHIVE_EXTRACT_PERM;
@@ -48,6 +48,7 @@ void extract(const char *filename,
 		sprintf(java15, "%s%s%s", baseName, c, "java-15");
 	}
 #endif
+	char *o = outputDirectory == NULL ? java15 : outputDirectory;
 	int cnt = 0;
 	for (;;) {
 		errno = 0;
@@ -55,10 +56,10 @@ void extract(const char *filename,
 		if (result == ARCHIVE_EOF) {
 			break;
 		}
-		char *cc = calloc(
-			strlen(java15) + strlen(archive_entry_pathname(entry)) + 1, 1);
+		char *cc =
+			calloc(strlen(o) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
-		sprintf(cc, "%s%s%s", java15, c, &archive_entry_pathname(entry)[6]);
+		sprintf(cc, "%s%s%s", o, c, &archive_entry_pathname(entry)[6]);
 		archive_entry_set_pathname(entry, cc);
 		result = archive_write_header(out, entry);
 		if (result != ARCHIVE_OK) {

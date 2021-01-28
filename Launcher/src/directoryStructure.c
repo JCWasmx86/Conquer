@@ -28,37 +28,6 @@ void initDirectoryStructure(void) {
 #endif
 	free(configDirectory);
 }
-static char *getHomeDirectory(void) {
-#ifndef _WIN32
-	char *homedir;
-	if ((homedir = getenv("HOME")) == NULL) {
-		homedir = getpwuid(getuid())->pw_dir;
-	}
-	return homedir;
-#else
-	return getenv("USERPROFILE");
-#endif
-}
-char *getBaseDirectory(void) {
-#ifndef _WIN32
-	char *home = getHomeDirectory();
-	assert(home);
-	size_t lenHome = strlen(home) + 1;
-	char *append = "/.config/.conquer";
-	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
-	assert(configDirectory);
-	sprintf(configDirectory, "%s%s", home, append);
-	return configDirectory;
-#else
-	char *home = strdup(getenv("APPDATA"));
-	size_t lenHome = strlen(home) + 1;
-	char *append = "\\.conquer";
-	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
-	assert(configDirectory);
-	sprintf(configDirectory, "%s%s", home, append);
-	return configDirectory;
-#endif
-}
 int dirExists(const char *name) {
 #ifndef _WIN32
 	DIR *dir = opendir(name);

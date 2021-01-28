@@ -30,6 +30,8 @@ import org.jel.game.data.XMLReader;
  * This is a singleton-dialog, that allows the player to add/remove plugins and
  * strategies.
  */
+//TODO: This is soon deprecated, as SPI is the new way.
+@Deprecated
 final class StrategiesAndPluginsDialog extends JFrame {
 	private static final long serialVersionUID = 1100425969083669130L;
 	private static final StrategiesAndPluginsDialog INSTANCE = new StrategiesAndPluginsDialog();

@@ -3,6 +3,7 @@
 *.deb
 *.exe
 *.jar
+*.o
 *.ogg
 *.wav
 *.zip
@@ -41,6 +42,8 @@ Launcher/cJSON
 Launcher/conquer_launcher
 Launcher/launcher
 Launcher/libcjson.a
+Launcher/Conquer.license
+Launcher/LICENSE.txt
 ScenarioGenerator/*.png
 ScenarioGenerator/.*
 ScenarioGenerator/.classpath
@@ -53,8 +56,12 @@ build
 conquer-dist/
 core
 debs/conquer
+debs/conquer-default-music/
+debs/conquer-default-scenarios/
+debs/conquer-default/
 debs/conquer-engine
 debs/conquer-gui
+depreview/depreview
 dist
 docs/Documentation.aux
 docs/Documentation.log

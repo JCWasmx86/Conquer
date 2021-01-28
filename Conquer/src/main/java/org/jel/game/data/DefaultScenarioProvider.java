@@ -27,6 +27,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			this.parseNodes(ret, infoNode.getChildNodes());
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
+			// Do nothing else, as it could always be possible that the file is missing.
 		}
 		return ret;
 	}
