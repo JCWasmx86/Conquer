@@ -23,3 +23,48 @@ int checkForJava(const char *path) {
 	free(p2);
 	return exists;
 }
+char *getURL(void) {
+#ifndef _WIN32
+#ifndef __aarch64__
+	return "https://mirrors.huaweicloud.com/openjdk/15/"
+		   "openjdk-15_linux-x64_bin.tar.gz";
+#else
+	return "https://mirrors.huaweicloud.com/openjdk/15/"
+		   "openjdk-15_linux-aarch64_bin.tar.gz";
+#endif
+#else
+	return "https://mirrors.huaweicloud.com/openjdk/15/"
+		   "openjdk-15_windows-x64_bin.zip";
+#endif
+}
+static char *getHomeDirectory(void) {
+#ifndef _WIN32
+	char *homedir;
+	if ((homedir = getenv("HOME")) == NULL) {
+		homedir = getpwuid(getuid())->pw_dir;
+	}
+	return homedir;
+#else
+	return getenv("USERPROFILE");
+#endif
+}
+char *getBaseDirectory(void) {
+#ifndef _WIN32
+	char *home = getHomeDirectory();
+	assert(home);
+	size_t lenHome = strlen(home) + 1;
+	char *append = "/.config/.conquer";
+	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
+	assert(configDirectory);
+	sprintf(configDirectory, "%s%s", home, append);
+	return configDirectory;
+#else
+	char *home = strdup(getenv("APPDATA"));
+	size_t lenHome = strlen(home) + 1;
+	char *append = "\\.conquer";
+	char *configDirectory = calloc(lenHome + strlen(append) + 1, 1);
+	assert(configDirectory);
+	sprintf(configDirectory, "%s%s", home, append);
+	return configDirectory;
+#endif
+}

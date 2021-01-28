@@ -43,8 +43,8 @@ launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
 gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
 	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
-Installer.exe: setup install.o resource.o inc.o uninstall.exe
-	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o resource.o inc.o -o Installer.exe
+Installer.exe: setup install.o resource.o inc.o utils.o extract.o uninstall.exe
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o utils.o resource.o inc.o extract.o -o Installer.exe $(LDCFLAGS)
 install.o:
 	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/install.c -c -o install.o
 setup: makeDir uninstallResource.o uninstall.exe inc.o

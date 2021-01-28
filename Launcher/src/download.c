@@ -20,14 +20,8 @@ static int downloadFile(const char *, const char *, void *,
 
 char *hasToDownloadJava(void) {
 #ifdef _WIN32
-	char *base = getBaseDirectory();
-	assert(base);
-	char *dirBase = calloc(strlen(base) + 20, 1);
-	assert(dirBase);
-	sprintf(dirBase, "%s%s", base, "/java-15");
-	char *outputFile = calloc(strlen(base) + 25, 1);
-	assert(outputFile);
-	sprintf(outputFile, "%s%s", base, "/java-15.tar.gz");
+	// Installed on installation!
+	return NULL;
 #else
 	char *dirBase;
 	char *outputFile;
@@ -46,11 +40,7 @@ char *hasToDownloadJava(void) {
 	outputFile = calloc(strlen(base) + 25, 1);
 	assert(outputFile);
 	sprintf(outputFile, "%s%s", base, "/java-15.tar.gz");
-#endif
-	int shouldDownload = !dirExists(dirBase);
-#ifndef _WIN32
-	shouldDownload &= !dirExists("/opt/java-15");
-#endif
+	int shouldDownload = !dirExists(dirBase) && !dirExists("/opt/java-15");
 	free(base);
 	free(dirBase);
 	if (shouldDownload) {
@@ -59,21 +49,9 @@ char *hasToDownloadJava(void) {
 		free(outputFile);
 		return NULL;
 	}
-}
-char *getURL() {
-#ifndef _WIN32
-#ifndef __aarch64__
-	return "https://mirrors.huaweicloud.com/openjdk/15/"
-		   "openjdk-15_linux-x64_bin.tar.gz";
-#else
-	return "https://mirrors.huaweicloud.com/openjdk/15/"
-		   "openjdk-15_linux-aarch64_bin.tar.gz";
-#endif
-#else
-	return "https://mirrors.huaweicloud.com/openjdk/15/"
-		   "openjdk-15_windows-x64_bin.zip";
 #endif
 }
+
 void downloadJDK(void *data,
 				 int (*progressFunc)(void *, curl_off_t, curl_off_t, curl_off_t,
 									 curl_off_t),
@@ -90,7 +68,7 @@ void downloadJDK(void *data,
 			fflush(stderr);
 			goto cleanup;
 		}
-		extract(outputFile, extractCallback, data);
+		extract(outputFile, NULL, extractCallback, data);
 		remove(outputFile);
 	}
 cleanup:

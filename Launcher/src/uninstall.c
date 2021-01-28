@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <shlobj.h>
-#include <shfolder.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>

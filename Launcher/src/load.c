@@ -4,6 +4,7 @@
 #ifndef _WIN32
 #include <dlfcn.h>
 #else
+#include <shlobj.h>
 #include <windows.h>
 #endif
 #include "launcher.h"
@@ -11,12 +12,16 @@ void *loadJavaLibrary(Configuration conf) {
 	char *directory;
 	if (conf->usedJVM == NULL) {
 #ifdef _WIN32
-		char *base = getBaseDirectory();
-		assert(base);
-		directory = calloc(strlen(base) + 20, 1);
-		assert(directory);
-		sprintf(directory, "%s%s", base, "/java-15/");
-		free(base);
+		char *name = calloc(MAX_PATH * 2, 1);
+		assert(name);
+		if (SHGetSpecialFolderPathA(NULL, name, CSIDL_PROGRAM_FILES, FALSE) ==
+			FALSE) {
+			fprintf(stderr, "SHGetSpecialFolderPathA failed!\n");
+			perror("SHGetSpecialFolderPathA");
+			exit(-1);
+		}
+		strcat(name, "\\Conquer\\jdk-15\\");
+		directory = name;
 #else
 		if (dirExists("/opt/java-15")) {
 			char *s = "/opt/java-15/";
@@ -54,6 +59,7 @@ void *loadJavaLibrary(Configuration conf) {
 	char *pathToDll = calloc(strlen(directory) + strlen(path) + 1, 1);
 	assert(pathToDll);
 	sprintf(pathToDll, "%s%s", directory, path);
+	fflush(stdout);
 	void *handle = LoadLibrary(pathToDll);
 	free(pathToDll);
 #endif
