@@ -43,14 +43,32 @@ launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
 gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
 	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
-
-
+Installer.exe: setup install.o resource.o inc.o uninstall.exe
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) bin/install.o bin/resource.o bin/inc.o -o Installer.exe
+install.o:
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/install.c -c -o bin/install.o
+setup: makeDir uninstallResource.o uninstall.exe inc.o
+makeDir:
+	mkdir -p bin
+uninstallResource.o:
+	windres -I include -I src src/uninstallResource.rc bin/uninstallResource.o
+uninstall.o:
+	$(CC) -mwindows -O3 -Wall -Wextra -pedantic -c src/uninstall.c -o bin/uninstall.o
+uninstall.exe: uninstall.o
+	$(CC) -mwindows -Wl,--no-insert-timestamp bin/uninstall.o bin/uninstallResource.o -o uninstall.exe
+inc.o:
+	$(CC) -mwindows src/inc.s -c -o bin/inc.o
+resource.o:
+	windres -I include -I src src/resource.rc bin/resource.o
 format:
-	clang-format --style=file -verbose -i src/*.c include/launcher.h
+	clang-format --style=file -verbose -i src/*.c include/*.h
 clean:
 	rm -f launcher
 	rm -f launcher.exe
 	rm -f libcjson.a
 	rm -rf cJSON
+	rm -rf bin
 	rm -f conquer_launcher
+	rm -f uninstall.exe
+	rm -f Installer.exe
 	rm -f *.o

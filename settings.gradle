@@ -1,2 +1,2 @@
 rootProject.name = "conquer-parent"
-include "Conquer", "ConquerFrontend", "ConquerFrontendSPI", "DefaultPlugins", "ScenarioGenerator", "music", "auxiliary", "Launcher", "Installer", "debs", "depreview"
+include "Conquer", "ConquerFrontend", "ConquerFrontendSPI", "DefaultPlugins", "ScenarioGenerator", "music", "auxiliary", "Launcher","debs", "depreview"

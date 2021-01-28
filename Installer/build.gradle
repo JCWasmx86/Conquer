@@ -1,46 +1,6 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
-task buildInstaller() {
-	doLast {
-		copy {
-			from "${project.rootDir}/auxiliary/Conquer.license", "${project.rootDir}/auxiliary/LICENSE.txt"
-			into "."
-		}
-		copy {
-			from "${project.rootDir}/Launcher"
-			include "launcher.exe"
-			into "."
-		}
-		copy {
-			from "${project.rootDir}/auxiliary/jars"
-			include "*.jar"
-			into "."
-		}
-		copy {
-			from "${project.rootDir}/Conquer/build/libs"
-			include "*.jar"
-			into "."
-		}
-		copy {
-			from "${project.rootDir}/ConquerFrontend/build/libs"
-			include "*.jar"
-			into "."
-		}
-		copy {
-			from "${project.rootDir}/ConquerFrontendSPI/build/libs"
-			include "*.jar"
-			into "."
-		}
-		exec {
-			if(Os.isFamily(Os.FAMILY_WINDOWS)) {
-				commandLine "make"
-			}else {
-				commandLine "echo", "Skipping Installer"
-				return;
-			}
-		}
-	}
-}
+
 if(Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildInstaller.dependsOn(":Conquer:jar",":ConquerFrontend:jar",":Launcher:assemble",":auxiliary:downloadJarFiles")
 	buildInstaller.mustRunAfter(":Launcher:assemble")

@@ -3,6 +3,7 @@
 *.deb
 *.exe
 *.jar
+*.o
 *.ogg
 *.wav
 *.zip
