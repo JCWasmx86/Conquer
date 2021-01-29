@@ -453,13 +453,15 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				return;
 			}
 		} else {
-			this.saveDialog();
+			if(this.saveDialog()) {
+				return;
+			}
 		}
 		this.cleanup();
 
 	}
 
-	private void saveDialog() {
+	private boolean saveDialog() {
 		final var options = new String[] { Messages.getString("GameFrame.save"),
 				Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel") };
 		final var selected = JOptionPane.showOptionDialog(null, Messages.getString("GameFrame.doYouWantToSave"),
@@ -470,18 +472,18 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		case JOptionPane.CLOSED_OPTION:
 		case 2:
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			return;
+			return true;
 		case 0:
 			this.setSaveName();
 			if (this.saveName == null) {
 				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				return;
+				return true;
 			}
 			if (Arrays.binarySearch(Shared.savedGames(), this.saveName) >= 0) {
 				final var selectedValue = JOptionPane.showConfirmDialog(null,
 						Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
 				if (selectedValue != JOptionPane.YES_OPTION) {
-					return;
+					return true;
 				}
 			}
 			this.save();
@@ -489,6 +491,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		case 1:// Do nothing
 			break;
 		}
+		return false;
 	}
 
 	private void setSaveName() {
