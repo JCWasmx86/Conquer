@@ -330,10 +330,16 @@ task buildSdkDeb() {
 			into "conquer-sdk/usr/bin"
 		}
 		copy {
-			from "${project.rootDir}/"
+			from "${project.rootDir}/auxiliary"
 			include "install-sdk.sh"
 			into "conquer-sdk/DEBIAN"
 			rename {a->a.replace("install-sdk.sh","postinst")}
+		}
+		exec {
+			commandLine "chmod","+x", "conquer-sdk/DEBIAN/postinst"
+		}
+		exec {
+			commandLine "chmod","+x", "conquer-sdk/usr/bin/install-sdk.sh"
 		}
 		def size = Files.walk(Paths.get(file("conquer-sdk/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
@@ -361,10 +367,10 @@ task buildSdkDeb() {
 }
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
-	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb,buildDefaultDeb,buildDefaultMusicDeb,buildDefaultScenariosDeb)
+	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb,buildDefaultDeb,buildDefaultMusicDeb,buildDefaultScenariosDeb,buildSdkDeb)
 	buildDebs.mustRunAfter(":Launcher:assemble",":auxiliary:buildDataZip",":Conquer:jar",":ConquerFrontend:jar")
-	buildSdkDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources","depreview:buildExecutable")
-	buildSdkDeb.mustRunAfter(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources","depreview:buildExecutable")
+	buildSdkDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources",":depreview:buildExecutable")
+	buildSdkDeb.mustRunAfter(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources",":depreview:buildExecutable")
 	buildConquerDeb.dependsOn(":Launcher:assemble")
 	buildConquerDeb.mustRunAfter(":Launcher:assemble")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources")
@@ -393,3 +399,4 @@ clean {
 	delete "conquer-default-scenarios.deb"
 	delete "conquer-sdk.deb"
 }
+
