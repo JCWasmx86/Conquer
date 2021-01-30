@@ -39,7 +39,7 @@ jvm.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
 gtk.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o gtk.o src/gtkmain.c `pkg-config --cflags-only-I --libs gtk+-3.0`
-launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o
+launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o utils.o
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
 gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
 	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread

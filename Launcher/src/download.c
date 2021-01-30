@@ -23,6 +23,11 @@ char *hasToDownloadJava(void) {
 	// Installed on installation!
 	return NULL;
 #else
+	char *otherJVM = findExistingJavaInstallWithMatchingVersion();
+	if (otherJVM) {
+		free(otherJVM);
+		return NULL;
+	}
 	char *dirBase;
 	char *outputFile;
 	char *base;
