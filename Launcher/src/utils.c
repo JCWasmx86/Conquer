@@ -10,6 +10,7 @@
 #include <sys/types.h>
 static const char *getLinuxJavaDirectory(void);
 #endif
+
 static int readReleaseFile(const char *directory);
 // Check whether a specified path contains a java installation. This is checked
 // by looking for bin/java(.exe)
@@ -40,9 +41,11 @@ char *getURL(void) {
 	return "https://mirrors.huaweicloud.com/openjdk/15/"
 		   "openjdk-15_linux-aarch64_bin.tar.gz";
 #endif
-#else
+#elif __defined(__x86_64__) &&__defined(_WIN32)
 	return "https://mirrors.huaweicloud.com/openjdk/15/"
 		   "openjdk-15_windows-x64_bin.zip";
+#else
+	abort();
 #endif
 }
 static char *getHomeDirectory(void) {
