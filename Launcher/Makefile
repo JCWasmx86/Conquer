@@ -21,23 +21,23 @@ buildCJSON:
 all-gtk: gtklauncher launcher
 all-win: launcher
 
-config.o: buildCJSON
+config.o: buildCJSON src/config.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o config.o src/config.c
-directoryStructure.o:
+directoryStructure.o: src/directoryStructure.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o directoryStructure.o src/directoryStructure.c
-download.o:
+download.o: src/download.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o download.o src/download.c
-extract.o:
+extract.o: src/extract.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o extract.o src/extract.c
-load.o:
+load.o: src/load.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o load.o src/load.c
-utils.o:
+utils.o: src/utils.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o utils.o src/utils.c
-main.o:
+main.o: src/main.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o main.o src/main.c
-jvm.o:
+jvm.o: src/jvm.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
-gtk.o:
+gtk.o: src/gtkmain.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o gtk.o src/gtkmain.c `pkg-config --cflags-only-I --libs gtk+-3.0`
 launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o utils.o
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
@@ -50,15 +50,15 @@ install.o:
 setup: makeDir uninstallResource.o uninstall.exe inc.o
 makeDir:
 	mkdir -p bin
-uninstallResource.o:
+uninstallResource.o: src/uninstallResource.rc
 	windres -I include -I src src/uninstallResource.rc uninstallResource.o
-uninstall.o:
+uninstall.o: src/uninstall.c
 	$(CC) -mwindows -O3 -Wall -Wextra -pedantic -c src/uninstall.c -o uninstall.o
 uninstall.exe: uninstall.o
 	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
-inc.o:
+inc.o: src/inc.s
 	$(CC) -mwindows src/inc.s -c -o inc.o
-resource.o:
+resource.o: src/resource.rc
 	windres -I include -I src src/resource.rc resource.o
 format:
 	clang-format --style=file -verbose -i src/*.c include/*.h
