@@ -102,6 +102,7 @@ char *findExistingJavaInstallWithMatchingVersion(void) {
 #endif
 }
 static int readReleaseFile(const char *directory) {
+#ifndef _WIN32
 	char *release = calloc(strlen(directory) + 20, 1);
 	assert(release);
 	sprintf(release, "%s/%s", directory, "release");
@@ -125,6 +126,7 @@ static int readReleaseFile(const char *directory) {
 	free(line);
 	fclose(fp);
 	free(release);
+#endif
 	return -1;
 }
 #ifndef _WIN32
