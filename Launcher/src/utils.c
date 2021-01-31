@@ -41,7 +41,7 @@ char *getURL(void) {
 	return "https://mirrors.huaweicloud.com/openjdk/15/"
 		   "openjdk-15_linux-aarch64_bin.tar.gz";
 #endif
-#elif __defined(__x86_64__) && __defined(_WIN32)
+#elif (defined(__x86_64__)) && (defined(_WIN32))
 	return "https://mirrors.huaweicloud.com/openjdk/15/"
 		   "openjdk-15_windows-x64_bin.zip";
 #else
