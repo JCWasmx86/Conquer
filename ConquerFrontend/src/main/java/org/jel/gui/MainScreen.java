@@ -78,15 +78,15 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 			final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
 			updates.addActionListener(a -> Updater.update((hasToUpdate) -> {
 				if (hasToUpdate) {
-					return JOptionPane.showConfirmDialog(this, "Update found. Would you like to update?", "Updates", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+					return JOptionPane.showConfirmDialog(this, Messages.getString("MainScreen.updateNotFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				}
-				JOptionPane.showMessageDialog(this, "No update found!", "Updates", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateNotFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
 				return false;
 			}, (success) -> {
 				if (success) {
-					JOptionPane.showMessageDialog(this, "Download finished! Update will be applied on next start.", "Updates", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateSuccess"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(this, "Update failed! Error when downloading files.", "Updates", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateFailed"), Messages.getString("MainScreen.updateTitle"), JOptionPane.ERROR_MESSAGE);
 				}
 			}));
 			settings.add(updates);
