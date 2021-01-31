@@ -67,7 +67,7 @@ public final class SortedStrategyImpl implements Strategy {
 		this.refreshList(clan, cities);
 		this.attack(cities, obj, clan);
 		this.upgradeCities(cities, clan, obj);
-		this.upgradeClan(clan, obj);
+		this.upgradeClan(clan);
 	}
 
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
@@ -155,7 +155,7 @@ public final class SortedStrategyImpl implements Strategy {
 		}
 	}
 
-	private void upgradeClan(final IClan clan, final StrategyObject obj) {
+	private void upgradeClan(final IClan clan) {
 		while (true) {
 			var flag = false;
 			flag |= clan.upgradeSoldiersDefense();
