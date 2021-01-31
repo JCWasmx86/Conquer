@@ -84,14 +84,15 @@ int removeDirectory(void) {
 	char *dir = "depreview_tmp_archive";
 	size_t len = strlen(dir) + 2;
 	char *tempdir = (char *)malloc(len);
-	assert(tempdir) memset(tempdir, 0, len);
+	assert(tempdir);
+	memset(tempdir, 0, len);
 	strcpy(tempdir, dir);
 	SHFILEOPSTRUCT file_op = {NULL,
 							  FO_DELETE,
 							  tempdir,
 							  NULL,
 							  FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT,
-							  false,
+							  0,
 							  0,
 							  ""};
 	int ret = SHFileOperation(&file_op);
