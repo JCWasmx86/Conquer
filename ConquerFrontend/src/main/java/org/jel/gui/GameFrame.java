@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -43,6 +44,8 @@ import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.gui.utils.ImageResource;
 import org.jel.gui.utils.LoopPlayer;
+
+import conquer.frontend.spi.InGameButton;
 
 /**
  * This class is the class that shows the entire map with all other components.
@@ -240,13 +243,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.buttonPanel.add(nextRound);
 		this.buttonPanel.add(openMessages);
 		this.buttonPanel.add(run);
-		final var plugins = this.game.getPlugins();
-		plugins.forEach(a -> {
-			final var listOfButtons = a.getButtons();
-			if (listOfButtons != null) {
-				listOfButtons.forEach(this.buttonPanel::add);
-			}
-		});
+		ServiceLoader.load(InGameButton.class).forEach(this.buttonPanel::add);
 		this.coinsLabelUpdateThread = new Thread(() -> {
 			var flag = false;
 			while (true) {
@@ -453,7 +450,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				return;
 			}
 		} else {
-			if(this.saveDialog()) {
+			if (this.saveDialog()) {
 				return;
 			}
 		}

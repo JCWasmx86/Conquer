@@ -11,5 +11,4 @@ public abstract class MagicNumberInputStream extends InputStream {
 	 * @return A byte array of size {@code maxLength}.
 	 */
 	public abstract byte[] getMagicNumber(int maxLength);
-
 }
