@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static int copyData(struct archive *, struct archive *);
-
 void extract(const char *filename, char *outputDirectory,
 			 void (*callback)(void *, const char *, int, int), void *someData) {
 	int flags = ARCHIVE_EXTRACT_TIME;
@@ -94,7 +92,7 @@ void extract(const char *filename, char *outputDirectory,
 	free(java15);
 }
 
-static int copyData(struct archive *in, struct archive *out) {
+int copyData(struct archive *in, struct archive *out) {
 	const void *buff;
 	size_t size;
 	la_int64_t offset;

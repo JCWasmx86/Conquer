@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.jel.game.data.Shared;
@@ -73,9 +74,23 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var strategiesAndPlugins = new JMenuItem(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
-		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
-		updates.addActionListener(a -> Updater.update());
-		settings.add(updates);
+		if (Shared.isWindows()) {
+			final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
+			updates.addActionListener(a -> Updater.update((hasToUpdate) -> {
+				if (hasToUpdate) {
+					return JOptionPane.showConfirmDialog(this, "Update found. Would you like to update?", "Updates", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+				}
+				JOptionPane.showMessageDialog(this, "No update found!", "Updates", JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}, (success) -> {
+				if (success) {
+					JOptionPane.showMessageDialog(this, "Download finished! Update will be applied on next start.", "Updates", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, "Update failed! Error when downloading files.", "Updates", JOptionPane.ERROR_MESSAGE);
+				}
+			}));
+			settings.add(updates);
+		}
 		final var furtherSettings = new JMenuItem(Messages.getString("MainScreen.furtherSettings"));
 		furtherSettings.addActionListener(a -> SettingsDialog.showWindow());
 		settings.add(furtherSettings);

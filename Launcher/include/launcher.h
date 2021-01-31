@@ -1,4 +1,5 @@
 #include <curl/curl.h>
+#include <archive.h>
 #include <jni.h>
 #include <stddef.h>
 #ifndef LAUNCHER_H_
@@ -31,10 +32,12 @@ void downloadJDK(void *,
 				 void (*)(void *, const char *, int, int));
 void initDirectoryStructure(void);
 char *getBaseDirectory(void);
+void update(void);
 Configuration getConfiguration(void);
 void freeConfiguration(Configuration);
 void extract(const char *, char *, void (*)(void *, const char *, int, int),
 			 void *);
+int copyData(struct archive *, struct archive *);
 int dirExists(const char *);
 int checkForJava(const char *);
 void *loadJavaLibrary(Configuration);

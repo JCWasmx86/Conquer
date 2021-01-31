@@ -5,6 +5,8 @@
 int main(int argc, char **argv) {
 	// First, initialize the directory structure that is later used by the game.
 	initDirectoryStructure();
+	// Try to update
+	update();
 	// Try to read the configuration file
 	Configuration config = getConfiguration();
 	if (config->usedJVM == NULL) {
