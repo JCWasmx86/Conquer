@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.5
+Terminal=false
+Name=Conquer
+GenericName=Roundbased strategy game
+Exec=/usr/bin/conquer_launcher

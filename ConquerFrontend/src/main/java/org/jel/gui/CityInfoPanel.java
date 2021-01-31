@@ -104,7 +104,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * This method has to be called in order to initialise the component.
+	 * This method has to be called in order to initialize the component.
 	 */
 	void init() {
 		this.setLayout(new FlowLayout());

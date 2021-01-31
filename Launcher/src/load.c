@@ -9,8 +9,8 @@
 #endif
 #include "launcher.h"
 void *loadJavaLibrary(Configuration conf) {
-	char *directory;
-	if (conf->usedJVM == NULL) {
+	char *directory = findExistingJavaInstallWithMatchingVersion();
+	if (directory == NULL && conf->usedJVM == NULL) {
 #ifdef _WIN32
 		char *name = calloc(MAX_PATH * 2, 1);
 		assert(name);
@@ -37,21 +37,21 @@ void *loadJavaLibrary(Configuration conf) {
 			free(base);
 		}
 #endif
-	} else {
+	} else if (directory == NULL) {
 		directory = strdup(conf->usedJVM);
 	}
 #ifdef _WIN32
-	char *binDir = calloc(strlen(directory) + 5, 1);
+	char *binDir = calloc(strlen(directory) + 10, 1);
 	assert(binDir);
-	sprintf(binDir, "%s%s", directory, "bin");
+	sprintf(binDir, "%s\\%s", directory, "bin");
 	SetDllDirectoryA(binDir);
 	free(binDir);
 #endif
 #ifndef _WIN32
 	char *path = "lib/server/libjvm.so";
-	char *pathToSo = calloc(strlen(directory) + strlen(path) + 1, 1);
+	char *pathToSo = calloc(strlen(directory) + strlen(path) + 3, 1);
 	assert(pathToSo);
-	sprintf(pathToSo, "%s%s", directory, path);
+	sprintf(pathToSo, "%s/%s", directory, path);
 	void *handle = dlopen(pathToSo, RTLD_LAZY);
 	free(pathToSo);
 #else

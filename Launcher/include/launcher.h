@@ -49,4 +49,7 @@ char *hasToDownloadJava(void);
 char *getURL(void);
 char *generateClasspath(Configuration);
 char *generateModulePath(void);
+// Returns root directory. In this directory are bin/, libs/, include/, ...
+// If NULL, it wasn't found.
+char *findExistingJavaInstallWithMatchingVersion(void);
 #endif

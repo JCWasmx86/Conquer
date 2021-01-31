@@ -61,6 +61,7 @@ debs/conquer-default-scenarios/
 debs/conquer-default/
 debs/conquer-engine
 debs/conquer-gui
+debs/conquer-sdk
 depreview/depreview
 dist
 docs/Documentation.aux

@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public final class Graph<T> implements Consumer<T> {
+public class Graph<T> implements Consumer<T> {
 	private final double[][] matrix;
 	private ArrayList<T> values = new ArrayList<>();
 	private final ArrayList<Boolean> visited = new ArrayList<>();
