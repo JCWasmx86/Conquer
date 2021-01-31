@@ -197,5 +197,5 @@ final class LevelInfo extends JFrame implements WindowListener {
 /**
  * This record just associates a clan with its corresponding color.
  */
-final record ClanColorAssociation(final String clanName, final Color color) {
+final record ClanColorAssociation(String clanName, Color color) {
 }
