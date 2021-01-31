@@ -1,30 +1,30 @@
+#include <archive.h>
+#include <archive_entry.h>
 #include <assert.h>
+#include <dirent.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <archive.h>
-#include <archive_entry.h>
-#include <errno.h>
 #include <sys/types.h>
-#include <dirent.h>
 
 #ifndef _WIN32
-#include <sys/stat.h>
 #include <fts.h>
+#include <sys/stat.h>
 #else
-#include  <shellapi.h>
 #include <direct.h>
+#include <shellapi.h>
 #endif
 
 #define BUFFER_SIZE 8192
-void depreview(char*);
-void depreviewJar(char*);
-static int copyData(struct archive*, struct archive*);
+void depreview(char *);
+void depreviewJar(char *);
+static int copyData(struct archive *, struct archive *);
 void extractJar(char *jar);
 void enumerateClassfiles(void);
-void enumerateDirectory(char*);
-void buildJar(char*);
-void addToArchive(struct archive*, char*);
+void enumerateDirectory(char *);
+void buildJar(char *);
+void addToArchive(struct archive *, char *);
 int removeDirectory(void);
 
 int main(int argc, char **argv) {
@@ -67,7 +67,8 @@ void depreview(char *file) {
 		assert(written == cnt);
 	} else {
 		printf("Skipping %s, as it wasn't compiled with preview features "
-				"enabled!\n", file);
+			   "enabled!\n",
+			   file);
 	}
 	free(buffer);
 	fclose(fp);
@@ -82,12 +83,17 @@ void depreviewJar(char *jar) {
 int removeDirectory(void) {
 	char *dir = "depreview_tmp_archive";
 	size_t len = strlen(dir) + 2;
-	char *tempdir = (char*) malloc(len);
-	assert (tempdir)
-	memset(tempdir, 0, len);
+	char *tempdir = (char *)malloc(len);
+	assert(tempdir) memset(tempdir, 0, len);
 	strcpy(tempdir, dir);
-	SHFILEOPSTRUCT file_op = { NULL, FO_DELETE, tempdir, NULL,
-			FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT, false, 0, "" };
+	SHFILEOPSTRUCT file_op = {NULL,
+							  FO_DELETE,
+							  tempdir,
+							  NULL,
+							  FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT,
+							  false,
+							  0,
+							  ""};
 	int ret = SHFileOperation(&file_op);
 	free(tempdir);
 	return ret;
@@ -98,7 +104,7 @@ int removeDirectory(void) {
 	FTS *ftsp = NULL;
 	FTSENT *curr;
 	char *dir = "/tmp/depreview_tmp_archive";
-	char *files[] = { dir, NULL };
+	char *files[] = {dir, NULL};
 	ftsp = fts_open(files, FTS_NOCHDIR | FTS_PHYSICAL | FTS_XDEV, NULL);
 	if (!ftsp) {
 		fprintf(stderr, "%s: fts_open failed: %s\n", dir, strerror(errno));
@@ -107,31 +113,32 @@ int removeDirectory(void) {
 	}
 	while ((curr = fts_read(ftsp))) {
 		switch (curr->fts_info) {
-		case FTS_NS:
-		case FTS_DNR:
-		case FTS_ERR:
-			fprintf(stderr, "%s: fts_read error: %s\n", curr->fts_accpath,
-					strerror(curr->fts_errno));
-			break;
-		case FTS_DC:
-		case FTS_DOT:
-		case FTS_NSOK:
-		case FTS_D:
-			break;
-		case FTS_DP:
-		case FTS_F:
-		case FTS_SL:
-		case FTS_SLNONE:
-		case FTS_DEFAULT:
-			if (remove(curr->fts_accpath) < 0) {
-				fprintf(stderr, "%s: Failed to remove: %s\n", curr->fts_path,
+			case FTS_NS:
+			case FTS_DNR:
+			case FTS_ERR:
+				fprintf(stderr, "%s: fts_read error: %s\n", curr->fts_accpath,
 						strerror(curr->fts_errno));
-				ret = -1;
-			}
-			break;
+				break;
+			case FTS_DC:
+			case FTS_DOT:
+			case FTS_NSOK:
+			case FTS_D:
+				break;
+			case FTS_DP:
+			case FTS_F:
+			case FTS_SL:
+			case FTS_SLNONE:
+			case FTS_DEFAULT:
+				if (remove(curr->fts_accpath) < 0) {
+					fprintf(stderr, "%s: Failed to remove: %s\n",
+							curr->fts_path, strerror(curr->fts_errno));
+					ret = -1;
+				}
+				break;
 		}
 	}
-	finish: if (ftsp) {
+finish:
+	if (ftsp) {
 		fts_close(ftsp);
 	}
 	return ret;
@@ -170,8 +177,8 @@ void extractJar(char *jar) {
 		if (result == ARCHIVE_EOF) {
 			break;
 		}
-		char *cc = calloc(
-				strlen(o) + strlen(archive_entry_pathname(entry)) + 20, 1);
+		char *cc =
+			calloc(strlen(o) + strlen(archive_entry_pathname(entry)) + 20, 1);
 		assert(cc);
 		sprintf(cc, "%s%s%s", o, c, archive_entry_pathname(entry));
 		printf("Extracting %s to %s!\n", archive_entry_pathname(entry), cc);
@@ -222,7 +229,7 @@ static int copyData(struct archive *in, struct archive *out) {
 
 void enumerateClassfiles(void) {
 #ifdef _WIN32
-	char* start = strdup("depreview_tmp_archive");
+	char *start = strdup("depreview_tmp_archive");
 #else
 	char *start = strdup("/tmp/depreview_tmp_archive");
 #endif
@@ -231,7 +238,7 @@ void enumerateClassfiles(void) {
 }
 void enumerateDirectory(char *start) {
 	DIR *dir = opendir(start);
-	if (!dir) { //File
+	if (!dir) { // File
 		size_t len = strlen(start);
 		if (strcmp(&start[len - 6], ".class") == 0) {
 			depreview(start);
@@ -274,7 +281,7 @@ void addToArchive(struct archive *a, char *start) {
 	char *input = "/tmp/depreview_tmp_archive";
 #endif
 	DIR *dir = opendir(start);
-	if (!dir) { //File
+	if (!dir) { // File
 		FILE *fp = fopen(start, "rb");
 		if (fp == NULL) {
 			return;
