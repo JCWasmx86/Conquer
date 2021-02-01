@@ -76,13 +76,13 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		settings.add(strategiesAndPlugins);
 		if (Shared.isWindows()) {
 			final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
-			updates.addActionListener(a -> Updater.update((hasToUpdate) -> {
+			updates.addActionListener(a -> Updater.update(hasToUpdate -> {
 				if (hasToUpdate) {
-					return JOptionPane.showConfirmDialog(this, Messages.getString("MainScreen.updateNotFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+					return JOptionPane.showConfirmDialog(this, Messages.getString("MainScreen.updateFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
 				}
 				JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateNotFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
 				return false;
-			}, (success) -> {
+			}, success -> {
 				if (success) {
 					JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateSuccess"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
 				} else {

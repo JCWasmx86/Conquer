@@ -8,12 +8,12 @@
 #include "launcher.h"
 
 int endsWith(const char *str, const char *end) {
-    size_t lenStr = strlen(str);
-    size_t lenEnd = strlen(end);
-    if (lenEnd >  lenStr) {
-        return 0;
+	size_t lenStr = strlen(str);
+	size_t lenEnd = strlen(end);
+	if (lenEnd >  lenStr) {
+		return 0;
 	}
-    return strncmp(str + lenStr - lenEnd, end, lenEnd) == 0;
+	return strncmp(str + lenStr - lenEnd, end, lenEnd) == 0;
 }
 
 void removeFiles(char *path) {
@@ -23,7 +23,7 @@ void removeFiles(char *path) {
 	if ((dir = opendir(path)) != NULL) {
 		while ((ent = readdir(dir)) != NULL) {
 			char *current = malloc(strlen(path) + sizeof(ent->d_name) + 3);
-            sprintf(current, "%s%s%s", path, DELIM, ent->d_name);
+			sprintf(current, "%s%s%s", path, DELIM, ent->d_name);
 			stat(current, &s);
 
 			if (strcmp(ent->d_name, ".") != 0 &&
@@ -31,13 +31,13 @@ void removeFiles(char *path) {
 				strcmp(ent->d_name, "saves") != 0 &&
 				strcmp(ent->d_name, "updates") != 0 &&
 				strcmp(ent->d_name, "sounds") != 0 &&
-                !endsWith(ent->d_name, ".log") &&
-                !endsWith(ent->d_name, ".properties")) {
-                if (S_ISDIR(s.st_mode)) {
+				!endsWith(ent->d_name, ".log") &&
+				!endsWith(ent->d_name, ".properties")) {
+				if (S_ISDIR(s.st_mode)) {
 					removeFiles(current);
 				} else {
-                    printf("Removing %s: %i\n", ent->d_name, remove(current));
-                }
+					printf("Removing %s: %i\n", ent->d_name, remove(current));
+				}
 			}
 		}
 		closedir(dir);
@@ -54,14 +54,14 @@ void update() {
 	assert(updateFile);
 	sprintf(updateFile, "%s%s%s", updateDir, DELIM, "data.zip");
 
-    struct stat s;
-    if (stat(updateFile, &s) != 0) {
-        printf("No update-file found in %s\n", updateDir);
+	struct stat s;
+	if (stat(updateFile, &s) != 0) {
+		printf("No update-file found in %s\n", updateDir);
 		free(baseDir);
 		free(updateDir);
 		free(updateFile);
 		return;
-    }
+	}
 	printf("Update found\n");
 
 	removeFiles(baseDir);
