@@ -39,6 +39,7 @@ conquer_launcher
 #### Windows
 Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
 
+A shortcut on your desktop will be created automatically. Start it to run Conquer.
 
 ### Contributing
 
