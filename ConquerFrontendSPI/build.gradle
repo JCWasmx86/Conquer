@@ -1,6 +1,9 @@
 plugins {
 	id "java"
 }
+java {
+	modularity.inferModulePath = true
+}
 repositories {
 	mavenCentral()
 }

@@ -7,7 +7,10 @@ import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
@@ -18,12 +21,15 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.ListCellRenderer;
 
 import org.jel.game.data.ConquerInfo;
 import org.jel.game.data.GlobalContext;
 import org.jel.game.data.InstalledScenario;
 import org.jel.gui.utils.ImageResource;
+
+import conquer.frontend.spi.ConfigurationPanelProvider;
 
 /**
  * This class shows all clans in a scenario in a JList. Furthermore there is a
@@ -100,8 +106,22 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.add(p);
 		this.add(scrollPane);
 		this.add(selectPanel);
+		final var allConfigurationPanels = ServiceLoader.load(ConfigurationPanelProvider.class).stream()
+				.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).collect(Collectors.toList());
+		if (!allConfigurationPanels.isEmpty()) {
+			this.add(this.buildConfigurationPanel(allConfigurationPanels, game.getClass()));
+		}
 		this.pack();
 		this.setLocation(location);
+	}
+
+	private Component buildConfigurationPanel(final List<ConfigurationPanelProvider> allConfigurationPanels,
+			final Class<? extends ConquerInfo> clazz) {
+		final var jtp = new JTabbedPane();
+		allConfigurationPanels.forEach(a -> {
+			jtp.addTab(a.getName(), a.forClass(clazz).get());
+		});
+		return jtp;
 	}
 
 	private int getComplementaryColor(final int color) {

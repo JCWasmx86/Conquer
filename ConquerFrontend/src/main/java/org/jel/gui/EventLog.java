@@ -59,12 +59,13 @@ final class EventLog extends JFrame implements MessageListener {
 					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$ //$NON-NLS-2$
 							: "")); //$NON-NLS-1$
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
+			final var color=clan.getColor();
 			jlabel.setOpaque(true);
-			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(clan.getColor().getRGB())));
-			jlabel.setForeground(clan.getColor());
+			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(color.getRGB())));
+			jlabel.setForeground(color);
 			jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
 			EventLog.log.base.add(jlabel);
-			EventLog.log.base.add(EventLog.log.generateEmptySpace(clan.getColor()));
+			EventLog.log.base.add(EventLog.log.generateEmptySpace(color));
 		}
 		final var jlabel = new JLabel(" "); //$NON-NLS-1$
 		jlabel.setForeground(new Color(21, 21, 21));

@@ -50,7 +50,7 @@ task buildConquerDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer"
 		}
 	}
 }
@@ -103,7 +103,7 @@ task buildConquerGuiDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-gui"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-gui"
 		}
 	}
 }
@@ -151,7 +151,7 @@ task buildConquerEngineDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-engine"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-engine"
 		}
 	}
 }
@@ -197,7 +197,7 @@ task buildDefaultDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-default"
 		}
 	}
 }
@@ -239,7 +239,7 @@ task buildDefaultMusicDeb() {
 			def envVars = [:]
 			envVars["SOURCE_DATE_EPOCH"]="0"
 			environment<<envVars
-			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-default-music"
+			commandLine "dpkg-deb", "-Sextreme", "-z9", "--build", file(".").getAbsolutePath()+"/conquer-default-music"
 		}
 	}
 }
@@ -297,10 +297,80 @@ task buildDefaultScenariosDeb() {
 		}
 	}
 }
+task buildSdkDeb() {
+	doLast {
+		exec {
+			mkdir "conquer-sdk/usr/share/conquer/m2"
+			mkdir "conquer-sdk/DEBIAN"
+			commandLine "chmod", "0755", "conquer-sdk/DEBIAN"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "*.pom"
+			into "conquer-sdk/usr/share/conquer/m2"
+		}
+		copy {
+			from "${project.rootDir}/Conquer/build/libs/"
+			include "*.jar"
+			into "conquer-sdk/usr/share/conquer/m2"
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs/"
+			include "*.jar"
+			into "conquer-sdk/usr/share/conquer/m2"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "install-sdk.sh"
+			into "conquer-sdk/usr/bin"
+		}
+		copy {
+			from "${project.rootDir}/depreview"
+			include "depreview"
+			into "conquer-sdk/usr/bin"
+		}
+		copy {
+			from "${project.rootDir}/auxiliary"
+			include "install-sdk.sh"
+			into "conquer-sdk/DEBIAN"
+			rename {a->a.replace("install-sdk.sh","postinst")}
+		}
+		exec {
+			commandLine "chmod","+x", "conquer-sdk/DEBIAN/postinst"
+		}
+		exec {
+			commandLine "chmod","+x", "conquer-sdk/usr/bin/install-sdk.sh"
+		}
+		def size = Files.walk(Paths.get(file("conquer-sdk/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
+		long sizeInKb = size / 1024
+		def fout = new FileOutputStream(new File(file("."),"conquer-sdk/DEBIAN/control"));
+		def s= "Package: conquer-sdk\n"
+		s += "Version: ${conquerVersion}\n"
+		s += "Section: games\n"
+		s += "Architecture: all\n"
+		s += "Maintainer: JCWasmx86\n"
+		s += "Depends: maven\n"
+		s += "Description: The SDK for the game engine conquer\n"
+		s += "Installed-Size: "+sizeInKb+"\n\n"
+		fout.write(s.getBytes());
+		fout.close();
+		exec {
+			commandLine "find", file(".").getAbsolutePath()+"/conquer-sdk", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
+		}
+		exec {
+			def envVars = [:]
+			envVars["SOURCE_DATE_EPOCH"]="0"
+			environment<<envVars
+			commandLine "dpkg-deb", "--build", file(".").getAbsolutePath()+"/conquer-sdk"
+		}
+	}
+}
 if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
-	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb,buildDefaultDeb,buildDefaultMusicDeb,buildDefaultScenariosDeb)
+	buildDebs.dependsOn(buildConquerDeb,buildConquerEngineDeb,buildConquerGuiDeb,buildDefaultDeb,buildDefaultMusicDeb,buildDefaultScenariosDeb,buildSdkDeb)
 	buildDebs.mustRunAfter(":Launcher:assemble",":auxiliary:buildDataZip",":Conquer:jar",":ConquerFrontend:jar")
+	buildSdkDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources",":depreview:buildExecutable")
+	buildSdkDeb.mustRunAfter(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources",":depreview:buildExecutable")
 	buildConquerDeb.dependsOn(":Launcher:assemble")
 	buildConquerDeb.mustRunAfter(":Launcher:assemble")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar",":ConquerFrontendSPI:jar",":Conquer:conquerResources")
@@ -320,10 +390,13 @@ clean {
 	delete "conquer-default"
 	delete "conquer-default-music"
 	delete "conquer-default-scenarios"
+	delete "conquer-sdk"
 	delete "conquer.deb"
 	delete "conquer-engine.deb"
 	delete "conquer-gui.deb"
 	delete "conquer-default.deb"
 	delete "conquer-default-music.deb"
 	delete "conquer-default-scenarios.deb"
+	delete "conquer-sdk.deb"
 }
+

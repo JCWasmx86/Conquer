@@ -82,7 +82,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Initialises this component.
+	 * Initializes this component.
 	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

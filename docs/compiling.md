@@ -19,6 +19,10 @@ This will need around 2-3 minutes, (Further builds are faster) and will build th
 debs/conquer.deb
 debs/conquer-engine.deb
 debs/conquer-gui.deb
+debs/conquer-default.deb
+debs/conquer-sdk.deb
+debs/conquer-default-scenarios.deb
+debs/conquer-default-music.deb
 ```
 
 ### TL;DR
@@ -50,7 +54,7 @@ Just type:
 ```
 gradle assemble
 ```
-This will need around 6-10 minutes, and will build `Installer/Installer.exe`.
+This will need around 6-10 minutes, and will build `Launcher/Installer.exe`.
 
 ### TL;DR
 
