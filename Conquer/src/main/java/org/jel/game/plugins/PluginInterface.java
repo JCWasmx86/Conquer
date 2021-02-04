@@ -61,6 +61,7 @@ public interface PluginInterface {
 	 *
 	 * @param fileName Filename, may not be null.
 	 */
+	@Deprecated(forRemoval = true)
 	void addMusic(String fileName);
 
 	/**
