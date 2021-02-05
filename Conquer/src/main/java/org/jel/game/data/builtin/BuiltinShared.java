@@ -38,7 +38,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(object != null, "object==null");
 		// Find all cities around the source of clans with a relationship < 75
 		final var citiesOfEnemies = StreamUtils
-				.getCitiesAroundCityNot(graph, source,
+				.getCitiesAroundCityNot(clan.getInfo(), graph, source,
 						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
 		if (citiesOfEnemies.isEmpty()) {
@@ -103,14 +103,14 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(clan != null, "clan==null");
 		BuiltinShared.assertThat(cityGraph != null, "cityGraph==null");
 		BuiltinShared.assertThat(object != null, "object==null");
-		final Predicate<ICity> inSafeCountry = city -> StreamUtils.getCitiesAroundCity(cityGraph, city, clan)
+		final Predicate<ICity> inSafeCountry = city -> StreamUtils.getCitiesAroundCity(object, cityGraph, city, clan)
 				.count() > 0;
 		final Predicate<ICity> isReachableCityOfTheEnemy = city -> (StreamUtils
-				.getCitiesAroundCity(cityGraph, city, clan).count() > 0) && (city.getClan() != clan);
-		StreamUtils.getCitiesAsStream(cityGraph, isReachableCityOfTheEnemy).distinct()
-				.forEach(enemyCity -> StreamUtils.getCitiesAroundCity(cityGraph, enemyCity, clan).sorted((a, b) -> {
-					final var cnt1 = StreamUtils.getCitiesAroundCity(cityGraph, a, inSafeCountry).count();
-					final var cnt2 = StreamUtils.getCitiesAroundCity(cityGraph, b, inSafeCountry).count();
+				.getCitiesAroundCity(object, cityGraph, city, clan).count() > 0) && (city.getClan() != clan);
+		StreamUtils.getCitiesAsStream(cityGraph, isReachableCityOfTheEnemy).distinct().forEach(
+				enemyCity -> StreamUtils.getCitiesAroundCity(object, cityGraph, enemyCity, clan).sorted((a, b) -> {
+					final var cnt1 = StreamUtils.getCitiesAroundCity(object, cityGraph, a, inSafeCountry).count();
+					final var cnt2 = StreamUtils.getCitiesAroundCity(objectcityGraph, b, inSafeCountry).count();
 					if (cnt1 == cnt2) {
 						final var compared = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
 						if ((compared == 0) && (a.getClan() != clan) && (b.getClan() != clan)) {
@@ -139,8 +139,8 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(graph != null, "graph==null");
 		BuiltinShared.assertThat(object != null, "object==null");
 		BuiltinShared.assertThat(clan != null, "clan==null");
-		StreamUtils.getCitiesAsStream(graph, clan, a -> StreamUtils.getCitiesAroundCityNot(graph, a, clan).count() > 0)
-				.sorted((a, b) -> {
+		StreamUtils.getCitiesAsStream(graph, clan,
+				a -> StreamUtils.getCitiesAroundCityNot(object, graph, a, clan).count() > 0).sorted((a, b) -> {
 					// Sort them using the defense strength
 					final var defenseStrengthA = a.getDefenseStrength();
 					final var defenseStrengthB = b.getDefenseStrength();
@@ -186,11 +186,11 @@ final class BuiltinShared {
 		// Now find the cities, that are at the border==> Make these cities stronger.
 		StreamUtils.getCitiesAsStream(graph, clan).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
-			final var neighbours = StreamUtils.getCitiesAroundCityNot(graph, a, a.getClan())
+			final var neighbours = StreamUtils.getCitiesAroundCityNot(object, graph, a, a.getClan())
 					.collect(Collectors.toList());
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = b.getDefenseStrength();
-			final var neighboursB = StreamUtils.getCitiesAroundCityNot(graph, b, b.getClan())
+			final var neighboursB = StreamUtils.getCitiesAroundCityNot(object, graph, b, b.getClan())
 					.collect(Collectors.toList());
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
