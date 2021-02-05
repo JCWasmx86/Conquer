@@ -29,8 +29,18 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream();
 	}
 
+	public static Stream<ICity> getCitiesAroundCity(final ConquerInfo info, final Graph<ICity> cities,
+			final ICity middle) {
+		return StreamUtils.getCitiesAsStream(cities).filter(a -> info.canMove(middle, a));
+	}
+
 	public static Stream<ICity> getCitiesAroundCity(final Graph<ICity> cities, final ICity middle, final IClan clan) {
 		return StreamUtils.getCitiesAroundCity(cities, middle, a -> a.getClan() == clan);
+	}
+
+	public static Stream<ICity> getCitiesAroundCity(final ConquerInfo info, final Graph<ICity> cities,
+			final ICity middle, final IClan clan) {
+		return StreamUtils.getCitiesAroundCity(info, cities, middle, a -> a.getClan() == clan);
 	}
 
 	public static Stream<ICity> getCitiesAroundCity(final Graph<ICity> cities, final ICity middle,
@@ -38,14 +48,29 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream().filter(predicate);
 	}
 
+	public static Stream<ICity> getCitiesAroundCity(final ConquerInfo info, final Graph<ICity> cities,
+			final ICity middle, final Predicate<ICity> predicate) {
+		return StreamUtils.getCitiesAroundCity(info, cities, middle).filter(predicate);
+	}
+
 	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> cities, final ICity middle,
 			final IClan clan) {
-		return StreamUtils.getCitiesAroundCity(cities, middle).filter(a -> a.getClan() != clan);
+		return StreamUtils.getCitiesAroundCity(cities, middle, a -> a.getClan() != clan);
+	}
+
+	public static Stream<ICity> getCitiesAroundCityNot(final ConquerInfo info, final Graph<ICity> cities,
+			final ICity middle, final IClan clan) {
+		return StreamUtils.getCitiesAroundCity(info, cities, middle, a -> a.getClan() != clan);
 	}
 
 	public static Stream<ICity> getCitiesAroundCityNot(final Graph<ICity> graph, final ICity source,
 			final Predicate<ICity> object) {
 		return StreamUtils.getCitiesAroundCityNot(graph, source, source.getClan()).filter(object);
+	}
+
+	public static Stream<ICity> getCitiesAroundCityNot(final ConquerInfo info, final Graph<ICity> graph,
+			final ICity source, final Predicate<ICity> object) {
+		return StreamUtils.getCitiesAroundCityNot(info, graph, source, source.getClan()).filter(object);
 	}
 
 	public static Stream<ICity> getCitiesAsStream(final Graph<ICity> cities) {
