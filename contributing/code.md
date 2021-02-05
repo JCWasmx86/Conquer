@@ -8,5 +8,6 @@ As a programmer, you can help *Conquer* a lot:
 4. Add more documentation
 5. Add [enhancements](https://github.com/JCWasmx86/Conquer/labels/enhancement)
 6. Continue working on [projects](https://github.com/JCWasmx86/Conquer/projects)
+
 If you are a newcomer or beginner, check out the [good first issue](https://github.com/JCWasmx86/Conquer/labels/good%20first%20issue) label.
 
