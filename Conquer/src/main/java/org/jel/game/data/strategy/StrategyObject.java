@@ -46,6 +46,24 @@ public interface StrategyObject {
 	void attack(ICity source, ICity target, boolean managedByPlayer, long numberOfSoldiersToMoveIfManaged);
 
 	/**
+	 * Returns whether troops can be moved from {@code source} to {@code target}.
+	 * 
+	 * @param source Source city. May not be {@code null}.
+	 * @param target Destination city. May not be {@code null}.
+	 * @return {@code true} if troops can be moved from {@code source} to
+	 *         {@code target}.
+	 */
+	default boolean canMove(ICity source, ICity target) {
+		if (source == null) {
+			throw new IllegalArgumentException("source == null");
+		}
+		if (target == null) {
+			throw new IllegalArgumentException("target == null");
+		}
+		return this.getCities().isConnected(source, target);
+	}
+
+	/**
 	 * Return a graph of all cities.
 	 *
 	 * @return All cities as graph.
