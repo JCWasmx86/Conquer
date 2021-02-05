@@ -6,6 +6,7 @@ repositories {
 }
 dependencies {
 	compile project(":Conquer")
+	compile project(":ConquerFrontendSPI")
 }
 jar {
 	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"
@@ -34,6 +35,7 @@ task defaultMusicJar(type: Jar) {
 	baseName = "DefaultMusic"
 	from("src/main/resources/services/DefaultMusic") {
 		include "org.jel.game.plugins.Plugin"
+		include "conquer.frontend.spi.MusicProvider"
 		into("META-INF/services")
 	}
 }

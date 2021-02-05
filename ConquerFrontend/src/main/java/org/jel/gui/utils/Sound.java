@@ -42,7 +42,6 @@ public class Sound implements LineListener, Serializable {
 	/**
 	 * Play the sound
 	 */
-	// TODO: Support ogg
 	public void play() {
 		try {
 			var url = this.locate(this.filename);
@@ -122,6 +121,20 @@ public class Sound implements LineListener, Serializable {
 			this.audioClip.close();
 			this.stop();
 			this.isPlaying = false;
+		}
+	}
+
+	@Override
+	public int hashCode() {
+		return this.filename.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Sound s) {
+			return s.filename.equals(this.filename);
+		} else {
+			return false;
 		}
 	}
 

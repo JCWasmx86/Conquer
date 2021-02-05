@@ -7,4 +7,5 @@ module org.jel.frontend {
 	uses conquer.frontend.spi.GUIMenuPlugin;
 	uses conquer.frontend.spi.SettingMenuPlugin;
 	uses conquer.frontend.spi.ConfigurationPanelProvider;
+	uses conquer.frontend.spi.MusicProvider;
 }

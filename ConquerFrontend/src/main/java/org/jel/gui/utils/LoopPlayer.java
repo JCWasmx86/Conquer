@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * A class that plays a list of sounds in a loop
@@ -11,7 +12,7 @@ import java.util.Random;
 public final class LoopPlayer extends Thread implements Serializable {
 	private static final long serialVersionUID = 2553365886138549665L;
 	private boolean aborted;
-	private final List<Sound> sounds;
+	private List<Sound> sounds;
 
 	/**
 	 * Construct new LoopPlayer
@@ -72,6 +73,7 @@ public final class LoopPlayer extends Thread implements Serializable {
 		if (this.sounds.isEmpty() || Boolean.getBoolean("conquer.nosound")) {
 			return;
 		}
+		this.sounds = this.sounds.stream().distinct().collect(Collectors.toList());
 		final var r = new Random(System.nanoTime());
 		try {
 			Thread.sleep(r.nextInt(500));

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.function.Supplier;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -46,6 +47,7 @@ import org.jel.gui.utils.ImageResource;
 import org.jel.gui.utils.LoopPlayer;
 
 import conquer.frontend.spi.InGameButton;
+import conquer.frontend.spi.MusicProvider;
 
 /**
  * This class is the class that shows the entire map with all other components.
@@ -405,6 +407,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.game.setPlayerGiftCallback(this.callback);
 		final var cities = this.game.getCities();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
+		ServiceLoader.load(MusicProvider.class).stream().map(Supplier::get).map(MusicProvider::getMusic)
+				.flatMap(List::stream).forEach(this.loopPlayer::addSong);
 		try {
 			this.loopPlayer.start();
 		} catch (final IllegalThreadStateException itse) {

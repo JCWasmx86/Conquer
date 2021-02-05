@@ -117,6 +117,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 *
 	 * @return A list of all music pieces that were registered by e.g. plugins.
 	 */
+	@Deprecated(forRemoval = true)
 	List<String> getExtraMusic();
 
 	/**
