@@ -23,8 +23,8 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
 	 * 
-	 * @param url The URL to read from. May not be {@code null}, otherwise an
-	 *            {@link IllegalArgumentException} will be thrown.
+	 * @param url The {@link URL} to read from. May not be {@code null}, otherwise
+	 *            an {@link IllegalArgumentException} will be thrown.
 	 */
 	public MagicNumberURLInputStream(final URL url) {
 		if (url == null) {
@@ -36,8 +36,8 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
 	 * 
-	 * @param file The file to read from. May not be {@code null}, otherwise an
-	 *             {@link IllegalArgumentException} will be thrown.
+	 * @param file The {@link File} to read from. May not be {@code null}, otherwise
+	 *             an {@link IllegalArgumentException} will be thrown.
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
 	 */
 	public MagicNumberURLInputStream(final File file) throws MalformedURLException {
@@ -50,8 +50,8 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
 	 * 
-	 * @param uri The URI to read from. May not be {@code null}, otherwise an
-	 *            {@link IllegalArgumentException} will be thrown.
+	 * @param uri The {@link URI} to read from. May not be {@code null}, otherwise
+	 *            an {@link IllegalArgumentException} will be thrown.
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
 	 */
 	public MagicNumberURLInputStream(final URI uri) throws MalformedURLException {
@@ -59,6 +59,20 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 			throw new IllegalArgumentException("uri==null");
 		}
 		this.url = uri.toURL();
+	}
+
+	/**
+	 * Construct a new {@code MagicNumberURLInputStream}.
+	 * 
+	 * @param in The {@link InputStream} to read from. May not be {@code null},
+	 *           otherwise an {@link IllegalArgumentException} will be thrown.
+	 * @throws MalformedURLException If {@link URI#toURL()} fails.
+	 */
+	public MagicNumberURLInputStream(final InputStream in) {
+		if (in == null) {
+			throw new IllegalArgumentException("in==null");
+		}
+		this.in = in;
 	}
 
 	@Override
