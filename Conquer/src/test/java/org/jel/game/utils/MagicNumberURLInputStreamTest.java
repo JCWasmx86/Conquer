@@ -1,6 +1,8 @@
 package org.jel.game.utils;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 
 import org.junit.jupiter.api.Assertions;
@@ -9,8 +11,10 @@ import org.junit.jupiter.api.Test;
 class MagicNumberURLInputStreamTest {
 
 	@Test
-	void testNullArgument() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new MagicNumberURLInputStream(null));
+	void testNullArguments() {
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new MagicNumberURLInputStream((URL) null));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new MagicNumberURLInputStream((URI) null));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new MagicNumberURLInputStream((File) null));
 	}
 
 	@Test
