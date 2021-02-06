@@ -66,7 +66,6 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	 * 
 	 * @param in The {@link InputStream} to read from. May not be {@code null},
 	 *           otherwise an {@link IllegalArgumentException} will be thrown.
-	 * @throws MalformedURLException If {@link URI#toURL()} fails.
 	 */
 	public MagicNumberURLInputStream(final InputStream in) {
 		if (in == null) {
