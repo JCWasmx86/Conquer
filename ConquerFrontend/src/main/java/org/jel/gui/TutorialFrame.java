@@ -28,7 +28,7 @@ final class TutorialFrame extends JFrame implements WindowListener, ActionListen
 	}
 
 	/**
-	 * Initialise and show this frame at the specified location
+	 * Initialize and show this frame at the specified location
 	 *
 	 * @param location The location, where the frame will appear
 	 */
