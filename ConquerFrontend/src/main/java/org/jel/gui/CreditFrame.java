@@ -24,6 +24,7 @@ import org.jel.gui.utils.LoopPlayer;
 /**
  * Shows credits and licensing information.
  */
+//TODO: Maybe extract html into html file?
 final class CreditFrame extends JFrame implements WindowListener, ActionListener {
 	private static final long serialVersionUID = -4549305902050012246L;
 	private final LoopPlayer player;

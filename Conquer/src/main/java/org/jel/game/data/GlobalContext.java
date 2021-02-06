@@ -125,6 +125,8 @@ public final class GlobalContext {
 			if (Arrays.equals(bytes, 0, magic.length, magic, 0, magic.length)) {
 				final var reader = factory.getForFile(is);
 				return reader.build();
+			} else if (magic.length > bytes.length) {
+				continue;
 			}
 		}
 		throw new UnsupportedOperationException("No supported file format");
@@ -134,10 +136,7 @@ public final class GlobalContext {
 		if (is.file() != null) {
 			try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				final var b = new byte[maxLength];
-				final var n = stream.read(b);
-				if (n != maxLength) {
-					throw new IllegalArgumentException("Not enough bytes could be read!");
-				}
+				stream.read(b);
 				return b;
 			} catch (final IOException e) {
 				throw new RuntimeException(e);
