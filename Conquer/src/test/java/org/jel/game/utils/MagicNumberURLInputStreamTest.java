@@ -48,7 +48,8 @@ class MagicNumberURLInputStreamTest {
 
 	@Test
 	void testRead() throws IOException {
-		final var input = new MagicNumberURLInputStream(new URL("https://www.example.com"));
-		System.out.println(new String(input.readAllBytes()));
+		try (final var input = new MagicNumberURLInputStream(new URL("https://www.example.com"))) {
+			System.out.println(new String(input.readAllBytes()));
+		}
 	}
 }

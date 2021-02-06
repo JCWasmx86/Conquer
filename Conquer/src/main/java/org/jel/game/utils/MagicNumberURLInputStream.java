@@ -105,4 +105,11 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 		}
 	}
 
+	@Override
+	public void close() throws IOException {
+		super.close();
+		if (this.in != null) {
+			this.in.close();
+		}
+	}
 }
