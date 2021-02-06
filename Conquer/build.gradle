@@ -25,7 +25,8 @@ compileJava {
 test {
 	testLogging {
 		events "passed", "skipped", "failed", "standardOut", "standardError"
-		exceptionFormat = "full"
+		showStackTraces = true
+		exceptionFormat = TestExceptionFormat.FULL
 	}
 	useJUnitPlatform()
 }
