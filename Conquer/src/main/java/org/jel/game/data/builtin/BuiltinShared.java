@@ -38,7 +38,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(object != null, "object==null");
 		// Find all cities around the source of clans with a relationship < 75
 		final var citiesOfEnemies = StreamUtils
-				.getCitiesAroundCityNot(clan.getInfo(), graph, source,
+				.getCitiesAroundCityNot(object, graph, source,
 						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
 		if (citiesOfEnemies.isEmpty()) {
@@ -110,7 +110,7 @@ final class BuiltinShared {
 		StreamUtils.getCitiesAsStream(cityGraph, isReachableCityOfTheEnemy).distinct().forEach(
 				enemyCity -> StreamUtils.getCitiesAroundCity(object, cityGraph, enemyCity, clan).sorted((a, b) -> {
 					final var cnt1 = StreamUtils.getCitiesAroundCity(object, cityGraph, a, inSafeCountry).count();
-					final var cnt2 = StreamUtils.getCitiesAroundCity(object,cityGraph, b, inSafeCountry).count();
+					final var cnt2 = StreamUtils.getCitiesAroundCity(object, cityGraph, b, inSafeCountry).count();
 					if (cnt1 == cnt2) {
 						final var compared = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
 						if ((compared == 0) && (a.getClan() != clan) && (b.getClan() != clan)) {

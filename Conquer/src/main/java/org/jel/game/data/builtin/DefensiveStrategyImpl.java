@@ -109,8 +109,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 		// upgrading the weakest cities.
 		StreamUtils.getCitiesAsStream(this.graph, clan, (a, b) -> {
 			final Predicate<ICity> predicate = c -> c.getClan() != clan;
-			final var cnt1 = StreamUtils.getCitiesAroundCity(clan.getInfo(), this.graph, a, predicate).count();
-			final var cnt2 = StreamUtils.getCitiesAroundCity(clan.getInfo(), this.graph, b, predicate).count();
+			final var cnt1 = StreamUtils.getCitiesAroundCity(this.object, this.graph, a, predicate).count();
+			final var cnt2 = StreamUtils.getCitiesAroundCity(this.object, this.graph, b, predicate).count();
 			if ((cnt1 == cnt2) || ((cnt1 == 0) && (cnt2 == 0))) {
 				return Double.compare(a.getDefense(), b.getDefense());
 			} else {
@@ -165,7 +165,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan,
-				ownCity -> StreamUtils.getCitiesAroundCityNot(clan.getInfo(), this.graph, ownCity, ownCity.getClan())
+				ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
 						.sorted().forEach(enemy -> {
 							// Strength of the own soldiers
 							final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()

@@ -85,7 +85,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		// by cities of the same clan), and have soldiers. (Set W in the following)
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
-				.filter(a -> StreamUtils.getCitiesAroundCityNot(clan.getInfo(), this.graph, a, clan).count() == 0)
+				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
 				.collect(Collectors.toList());
 		// All cities that are adjacent to another clan. (Set B in the following)
 		final var citiesOnBorder = StreamUtils
@@ -161,7 +161,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private void upgradeResourcesForClan(final IClan clan, final Resource resc) {
 		final var citiesWithoutBorders = StreamUtils
 				.getCitiesAsStream(this.graph, clan,
-						a -> StreamUtils.getCitiesAroundCityNot(clan.getInfo(), this.graph, a, clan).count() == 0)
+						a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
 				.collect(Collectors.toList());
 		final var cityStream = (citiesWithoutBorders.isEmpty() ? StreamUtils.getCitiesAsStream(this.graph, clan)
 				: citiesWithoutBorders.stream());
