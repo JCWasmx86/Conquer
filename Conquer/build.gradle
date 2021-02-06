@@ -26,7 +26,6 @@ test {
 	testLogging {
 		events "passed", "skipped", "failed", "standardOut", "standardError"
 		showStackTraces = true
-		exceptionFormat = TestExceptionFormat.FULL
 	}
 	useJUnitPlatform()
 }
