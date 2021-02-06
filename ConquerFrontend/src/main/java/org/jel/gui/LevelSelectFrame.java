@@ -69,14 +69,16 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 				if (!this.map.containsKey(value)) {
 					jl = new JLabel(value.name());
 					jl.setFont(jl.getFont().deriveFont(30.0f));
-					try {
-						final var url = new File(value.thumbnail()).toURI().toURL().toString().replace("file:/",
-								"file:///");
-						// A dirty hack...
-						jl.setToolTipText(
-								Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));//$NON-NLS-1$
-					} catch (final MalformedURLException e) {
-						Shared.LOGGER.exception(e);
+					if (value.thumbnail() != null) {
+						try {
+							final var url = new File(value.thumbnail()).toURI().toURL().toString().replace("file:/",
+									"file:///");
+							// A dirty hack...
+							jl.setToolTipText(
+									Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));//$NON-NLS-1$
+						} catch (final MalformedURLException e) {
+							Shared.LOGGER.exception(e);
+						}
 					}
 					this.map.put(value, jl);
 				} else {
