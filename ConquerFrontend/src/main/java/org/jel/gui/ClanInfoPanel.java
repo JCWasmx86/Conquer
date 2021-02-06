@@ -53,9 +53,9 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	}
 
 	private String coinsPerRound() {
-		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
-				.mapToDouble(c -> (c.getNumberOfPeople() * this.game.getResourceUsage().getCoinsPerRoundPerPerson())
-						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts().coinsPerSoldierPerRound()))
+		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(
+				c -> (c.getNumberOfPeople() * this.game.getResourceUsage(this.clan).getCoinsPerRoundPerPerson())
+						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound()))
 				.sum();
 		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				Messages.getString("ClanInfoPanel.coinsPerRound"), production); //$NON-NLS-1$
@@ -110,7 +110,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
 				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
 		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(c -> {
-			final var va = this.game.getResourceUsage().get(index);
+			final var va = this.game.getResourceUsage(this.clan).get(index);
 			return ((c.getNumberOfSoldiers() * va[1]) + (c.getNumberOfPeople() * va[0]));
 		}).sum();
 		final var balance = productions - usage;

@@ -150,8 +150,8 @@ class City implements ICity {
 	 */
 	@Override
 	public double getCoinDiff() {
-		return (this.numberOfPeople * this.game.getResourceUsage().getCoinsPerRoundPerPerson())
-				- (this.numberOfSoldiers * this.game.getSoldierCosts().coinsPerSoldierPerRound());
+		return (this.numberOfPeople * this.game.getResourceUsage(this.clan).getCoinsPerRoundPerPerson())
+				- (this.numberOfSoldiers * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound());
 	}
 
 	/**

@@ -27,7 +27,7 @@ import org.jel.gui.utils.Sound;
  * This class provides the introduction for the game. It is currently just a
  * black screen, anything else will be done soon.
  */
-public final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
+final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
 	private static final long serialVersionUID = 4354833119880282433L;
 
 	/**

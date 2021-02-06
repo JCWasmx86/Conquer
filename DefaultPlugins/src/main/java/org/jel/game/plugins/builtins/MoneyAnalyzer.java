@@ -47,7 +47,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 		if (clan.getCoins() > 0) {
 			return;
 		}
-		final var costs = clan.getInfo().getSoldierCosts().coinsPerSoldierPerRound();
+		final var costs = clan.getInfo().getSoldierCosts(clan).coinsPerSoldierPerRound();
 		final var soldiers = Math.abs(clan.getCoins()) / costs;
 		var num = 0L;
 		var cnter = 0;

@@ -250,6 +250,16 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	}
 
 	/**
+	 * Returns the usage and production of the resources for the given clan.
+	 * 
+	 * @param clan The clan.
+	 * @return ResourceUsage for the given clan.
+	 */
+	default ResourceUsage getResourceUsage(final IClan clan) {
+		return this.getResourceUsage();
+	}
+
+	/**
 	 * Return an object describing the costs for soldiers. The default
 	 * implementation is here as a replacement for e.g.
 	 * {@link Shared#COINS_PER_MOVE_OF_SOLDIER}.
@@ -261,6 +271,16 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 		return new SoldierCosts(Shared.COINS_PER_MOVE_OF_SOLDIER, Shared.COINS_PER_MOVE_OF_SOLDIER_BASE,
 				Shared.COINS_PER_SOLDIER_INITIAL, Shared.COINS_PER_SOLDIER_PER_ROUND, Shared.IRON_PER_SOLDIER_INITIAL,
 				Shared.STONE_PER_SOLDIER_INITIAL, Shared.WOOD_PER_SOLDIER_INITIAL);
+	}
+
+	/**
+	 * Return an object describing the costs for soldiers for this clan.
+	 * 
+	 * @param clan The costs for this clan.
+	 * @return SoldierCosts object
+	 */
+	default SoldierCosts getSoldierCosts(final IClan clan) {
+		return this.getSoldierCosts();
 	}
 
 	/**

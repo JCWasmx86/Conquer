@@ -35,7 +35,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 			this.collectStatistics(statistics, resources, clan, idx);
 			if (statistics.get(idx) < 0) {
 				final double d = statistics.get(idx);
-				final var numSoldiersToGetToZero = ((-d) / city.getInfo().getResourceUsage().soldierUsage()[idx]);
+				final var numSoldiersToGetToZero = ((-d) / city.getInfo().getResourceUsage(clan).soldierUsage()[idx]);
 				if (numSoldiersToGetToZero < city.getNumberOfSoldiers()) {
 					killedSoldiers.add(numSoldiersToGetToZero);
 					killedCivilians.add(0.0);

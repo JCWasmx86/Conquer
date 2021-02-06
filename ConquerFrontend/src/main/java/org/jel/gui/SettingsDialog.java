@@ -18,7 +18,7 @@ final class SettingsDialog extends JFrame {
 	}
 
 	private void update() {
-		panel.update();
+		this.panel.update();
 	}
 
 	private SettingsDialog() {
