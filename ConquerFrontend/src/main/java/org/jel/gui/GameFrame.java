@@ -181,7 +181,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	}
 
 	/**
-	 * Initialises this frame.
+	 * Initializes this frame.
 	 */
 	void init() {
 		EventLog.init(this.game);
@@ -209,7 +209,6 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			new Thread(() -> {
 				nextRound.setEnabled(false);
 				if (this.game.isPlayersTurn()) {
-					this.game.setPlayersTurn(false);
 					this.game.executeActions();
 				}
 				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());

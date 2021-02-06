@@ -45,11 +45,11 @@ Configuration getConfiguration(void) {
 			fputs(ptr, stderr);
 		}
 		Configuration c = emptyConfiguration();
+		assert(c);
 		free(buf);
 		fclose(fp);
 		free(jsonFile);
 		free(base);
-		assert(c);
 		return c;
 	}
 	free(buf);
@@ -90,7 +90,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	// Which JVM should be used.
 	cJSON *usedJVM = cJSON_GetObjectItem(cjson, "jvm");
 	if (usedJVM != NULL) {
-		ret->usedJVM = strdup(cJSON_GetStringValue(usedJVM));
+		s ret->usedJVM = strdup(cJSON_GetStringValue(usedJVM));
 	}
 	cJSON_Delete(cjson);
 	return ret;
