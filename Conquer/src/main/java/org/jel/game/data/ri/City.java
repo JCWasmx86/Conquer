@@ -38,7 +38,7 @@ class City implements ICity {
 	 *
 	 * @param game A handle to the game object
 	 */
-	public City(final ConquerInfo game) {
+	City(final ConquerInfo game) {
 		if (game == null) {
 			throw new IllegalArgumentException("game==null");
 		}
