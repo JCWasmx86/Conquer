@@ -90,7 +90,7 @@ Configuration buildConfiguration(cJSON *cjson) {
 	// Which JVM should be used.
 	cJSON *usedJVM = cJSON_GetObjectItem(cjson, "jvm");
 	if (usedJVM != NULL) {
-		s ret->usedJVM = strdup(cJSON_GetStringValue(usedJVM));
+		ret->usedJVM = strdup(cJSON_GetStringValue(usedJVM));
 	}
 	cJSON_Delete(cjson);
 	return ret;
