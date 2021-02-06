@@ -17,5 +17,9 @@ public interface ConfigurationPanelProvider {
 	 */
 	public Optional<JPanel> forClass(Class<? extends ConquerInfo> clazz);
 	
+	/**
+	 * Get an unique, localized name for this panel.
+	 * @return Name
+	 */
 	public String getName();
 }

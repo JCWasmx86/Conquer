@@ -23,8 +23,8 @@ import org.jel.game.data.ICity;
  */
 final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	/**
-	 * Specifies the height of the colored rectangle that shows the association
-	 * with a clan
+	 * Specifies the height of the colored rectangle that shows the association with
+	 * a clan
 	 */
 	static final int CLAN_COLOR_HEIGHT = 12;
 	private static final long serialVersionUID = -5091974547825438103L;
@@ -101,6 +101,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	}
 
 	private void mark(final ICity origin) {
+		if (!this.city.getInfo().canMove(origin, this.city)) {
+			this.unmark();
+			return;
+		}
 		this.marked = true;
 		this.origin = origin;
 	}
