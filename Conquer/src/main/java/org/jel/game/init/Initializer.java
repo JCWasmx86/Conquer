@@ -44,15 +44,6 @@ public final class Initializer {
 		Initializer.initialized = true;
 		if (!new File(Shared.BASE_DIRECTORY).exists()) {
 			new File(Shared.BASE_DIRECTORY).mkdirs();
-			try {
-				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
-						StandardOpenOption.CREATE);
-			} catch (IOException e) {
-				if (onError != null) {
-					onError.accept(e);
-				}
-				return;
-			}
 		}
 		if (!new File(Shared.PROPERTIES_FILE).exists()) {
 			try {
