@@ -5,3 +5,4 @@ Terminal=false
 Name=Conquer
 GenericName=Roundbased strategy game
 Exec=/usr/bin/conquer_launcher
+Icon=application-default-icon
