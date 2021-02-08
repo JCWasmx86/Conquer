@@ -37,7 +37,7 @@ main.o: src/main.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o main.o src/main.c
 jvm.o: src/jvm.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
-main.vala.o: src/gtkmain.c
+main.vala.o: src/main.vala
 	valac -c src/main.vala -X -O3 --pkg=gtk+-3.0
 launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o utils.o
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
