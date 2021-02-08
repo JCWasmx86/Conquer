@@ -8,7 +8,7 @@ class ConquerLauncher : Gtk.Application {
 		box.pack_start(new InputList("JVM Arguments","Add JVM argument"));
 		box.pack_start(new InputList("Classpaths","Add classpath"));
 		window.add(box);
-		window.set_title("Conquer launcher 2.0.0");
+		window.set_title("Conquer launcher 2.0.0);
 		window.show_all();
 	}
 }
@@ -70,14 +70,13 @@ class TreeViewWithPopup : TreeView {
 		var item = new Gtk.MenuItem.with_label("Remove");
 		item.activate.connect(()=>{
 			var selected = get_selection();
-			if(selected != null) {
-				TreeModel model;
-				TreeIter iter;
-				selected.get_selected(out model,out iter);
-				Gtk.ListStore listStore = (Gtk.ListStore)model;
-				listStore.remove(ref iter);
-			}
-		});
+			TreeModel model;
+			TreeIter iter;
+			selected.get_selected(out model,out iter);
+			stdout.printf("%d\n",(int)selected.iter_is_selected(iter));
+			Gtk.ListStore listStore = (Gtk.ListStore)model;
+			listStore.remove(ref iter);
+		});		
 		this.menu.append(item);
 		this.menu.show_all();
 		this.button_press_event.connect((event)=>{
