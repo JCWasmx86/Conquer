@@ -1,4 +1,5 @@
 using Gtk;
+using Cairo;
 
 class ConquerLauncher : Gtk.Application {
 	protected override void activate() {
@@ -23,12 +24,15 @@ class InputList : Box {
 	public InputList(string name,string label) {
 		this.set_orientation(Orientation.VERTICAL);
 		this.pack_start(new Label(name));
-		this.listStore = new Gtk.ListStore(1,typeof(ListElement));
+		this.listStore = new Gtk.ListStore(1,GLib.Type.STRING);
 		this.treeView = new TreeView.with_model(this.listStore);
 		this.pack_start(this.treeView);
-		this.pack_start(new InputBox(this,label,this.listStore));
+		this.pack_start(new InputBox(this,label, this.listStore));
 		var column = new TreeViewColumn();
 		column.set_title(label);
+		var renderer = new CellRendererText();
+		column.pack_start(renderer,true);
+		column.add_attribute(renderer,"text", 0);
 		this.treeView.append_column(column);
 		this.treeView.set_model(this.listStore);
 	}
@@ -47,16 +51,13 @@ class InputBox : Box {
 			if(text.length == 0) {
 				return;
 			}
-			entry.text = "";
 			TreeIter tp;
-			store.append(out tp);
-			store.set(tp, 0, new ListElement(text), -1);
-			this.show_all();
-			list.show_all();
+			store.insert_with_values(out tp, -1, 0, text, -1);
+			entry.text = "";
 		});
 	}
 }
-class ListElement : Label{
+class ListElement : Label {
 	private Gtk.Menu menu;
 	private string value;
 
