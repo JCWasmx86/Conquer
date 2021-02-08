@@ -19,13 +19,15 @@ public int main(string[] args) {
 
 class InputList : Box {
 	private Gtk.ListStore listStore;
-	private TreeView treeView;
+	private TreeViewWithPopup treeView;
 
 	public InputList(string name,string label) {
 		this.set_orientation(Orientation.VERTICAL);
 		this.pack_start(new Label(name));
 		this.listStore = new Gtk.ListStore(1,GLib.Type.STRING);
-		this.treeView = new TreeView.with_model(this.listStore);
+		this.treeView = new TreeViewWithPopup();
+		this.treeView.init();
+		this.treeView.set_model(this.listStore);
 		this.pack_start(this.treeView);
 		this.pack_start(new InputBox(this,label, this.listStore));
 		var column = new TreeViewColumn();
@@ -61,3 +63,28 @@ class InputBox : Box {
 	}
 }
 
+class TreeViewWithPopup : TreeView {
+	private Gtk.Menu menu;
+	public void init() {
+		this.menu = new Gtk.Menu();
+		var item = new Gtk.MenuItem.with_label("Remove");
+		item.activate.connect(()=>{
+			var selected = get_selection();
+			if(selected != null) {
+				TreeModel model;
+				TreeIter iter;
+				selected.get_selected(out model,out iter);
+				Gtk.ListStore listStore = (Gtk.ListStore)model;
+				listStore.remove(ref iter);
+			}
+		});
+		this.menu.append(item);
+		this.menu.show_all();
+		this.button_press_event.connect((event)=>{
+			if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3) {
+				this.menu.popup_at_pointer(event);
+			}
+			return true;
+		});
+	}
+}
