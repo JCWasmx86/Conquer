@@ -1,6 +1,5 @@
 using Gtk;
 
-
 class ConquerLauncher : Gtk.Application {
 	private InputList jvmOptions;
 	private InputList classpaths;
@@ -49,7 +48,7 @@ class InputBox : Box {
 		var entry = new Entry();
 		this.pack_start(entry);
 		var button = new Button.with_label(buttonLabel);
-		this.pack_start(this.button,false,false);
+		this.pack_start(button,false,false);
 		button.clicked.connect(() => {
 			var text = entry.text;
 			if(text.length == 0) {
@@ -76,13 +75,13 @@ class TreeViewWithPopup : TreeView {
 			selected.get_selected(out model,out iter);
 			((Gtk.ListStore)model).remove(ref iter);
 		});
-		this.menu.append(item);
-		this.menu.show_all();
-		this.button_press_event.connect((event) => {
+		menu.append(item);
+		menu.show_all();
+		button_press_event.connect((event) => {
 			if(event.type == Gdk.EventType.BUTTON_PRESS
 					&& event.button == 3
 					&& store.iter_n_children(null) > 0) {
-				this.menu.popup_at_pointer(event);
+				menu.popup_at_pointer(event);
 			}
 			return true;
 		});
