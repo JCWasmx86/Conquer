@@ -60,24 +60,4 @@ class InputBox : Box {
 		});
 	}
 }
-class ListElement : Label {
-	private Gtk.Menu menu;
-	private string value;
 
-	public ListElement(string value) {
-		this.value = value;
-		stdout.printf("%s\n",value);
-		this.set_label(value);
-		this.menu = new Gtk.Menu();
-		var menuItem = new Gtk.MenuItem.with_label("Remove");
-		this.menu.append(menuItem);
-		this.menu.show();
-		this.button_press_event.connect(() => {
-			return true;
-		});
-		stdout.printf("F:%s\n",this.get_text());
-		this.set_label(value);
-		this.set_text(value);
-		this.show_all();
-	}
-}
