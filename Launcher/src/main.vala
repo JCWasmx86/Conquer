@@ -2,10 +2,14 @@ using Gtk;
 
 
 class ConquerLauncher : Gtk.Application {
+	private InputList jvmOptions;
+	private InputList classpaths;
+
 	protected override void activate() {
 		var window = new ApplicationWindow(this);
 		var box = new Box(Orientation.VERTICAL, 10);
-		box.pack_start(new InputList("JVM Arguments","Add JVM argument"));
+		this.jvmOptions=new InputList("JVM Arguments","Add JVM argument");
+		box.pack_start(this.jvmOptions);
 		box.pack_start(new InputList("Classpaths","Add classpath"));
 		window.add(box);
 		window.set_title("Conquer launcher 2.0.0");
@@ -39,16 +43,15 @@ class InputList : Box {
 	}
 }
 class InputBox : Box {
-	private Entry entry;
-	private Button button;
+
 	public InputBox(InputList list, string buttonLabel, Gtk.ListStore store) {
 		this.set_orientation(Orientation.HORIZONTAL);
-		this.entry = new Entry();
-		this.pack_start(this.entry);
-		this.button = new Button.with_label(buttonLabel);
+		var entry = new Entry();
+		this.pack_start(entry);
+		var button = new Button.with_label(buttonLabel);
 		this.pack_start(this.button,false,false);
 		button.clicked.connect(() => {
-			var text = this.entry.text;
+			var text = entry.text;
 			if(text.length == 0) {
 				return;
 			}
@@ -60,14 +63,13 @@ class InputBox : Box {
 }
 
 class TreeViewWithPopup : TreeView {
-	private Gtk.Menu menu;
 	public void init(Gtk.ListStore store) {
 		this.get_selection().set_mode(SelectionMode.BROWSE);
 		this.set_model(store);
-		this.menu = new Gtk.Menu();
+		var menu = new Gtk.Menu();
 		var item = new Gtk.MenuItem.with_label("Remove");
 		this.hover_selection = true;
-		item.activate.connect(()=>{
+		item.activate.connect(() => {
 			var selected = get_selection();
 			TreeModel model;
 			TreeIter iter;
