@@ -1,5 +1,5 @@
 using Gtk;
-using Cairo;
+
 
 class ConquerLauncher : Gtk.Application {
 	protected override void activate() {
@@ -35,6 +35,9 @@ class InputList : Box {
 		column.add_attribute(renderer,"text", 0);
 		this.treeView.append_column(column);
 		this.treeView.set_model(this.listStore);
+		this.treeView.button_press_event.connect ((event) => {	
+			return true;
+		});
 	}
 }
 class InputBox : Box {
