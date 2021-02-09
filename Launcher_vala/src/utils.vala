@@ -54,7 +54,7 @@ namespace Launcher {
 				continue;
 			}
 			unowned uint8[] buffer = null;
-			Posix.off_t offset;
+			off_t offset;
 			func(entryName,cnt, archive.file_count());
 			while (archive.read_data_block(out buffer, out offset) == Archive.Result.OK) {
 				if (extractor.write_data_block(buffer, offset) != Archive.Result.OK) {
