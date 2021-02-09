@@ -47,6 +47,7 @@ namespace Launcher {
 				JVM jvm = new JVM(null);
 				jvm.addJVMArguments(jvmOptions.toArray());
 				jvm.addClasspaths(classpaths.toArray());
+				jvm.run();
 			});
 		}
 		bool updateDownloadProgressBar() {
