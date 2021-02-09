@@ -1,16 +1,16 @@
 using Posix;
 
 namespace Launcher {
-	string hasToDownloadJava() {
+	string? hasToDownloadJava() {
 		char* alreadyInstalledJava = findExistingJavaInstallWithMatchingVersion();
 		if(alreadyInstalledJava != null) {
-			return (string)null;
+			return null;
 		}
 		mkdir(getBaseDirectory(), S_IRWXU);
 		string baseDir = geteuid() == 0?"/opt":getBaseDirectory();
 		string java15Dir = baseDir + "/java-15";
 		string outputFile = baseDir +"/java-15.tar.gz";
-		return opendir(java15Dir)!=null||opendir("/opt/java-15")!=null? (string)null : outputFile;
+		return (opendir(java15Dir)!=null||opendir("/opt/java-15")!=null) ? null : outputFile;
 	}
 	delegate void progressFunc(void* unused,uint64 dltotal,uint64 dlnow,uint64 ultotal,uint64 ulnow);
 	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
@@ -27,13 +27,10 @@ namespace Launcher {
 	}
 	private string? findExistingJavaInstallWithMatchingVersion() {
 		string jvmDirectory = getLinuxJavaDirectory();
-		if(jvmDirectory != null) {
-			Posix.Dir dir = opendir(jvmDirectory);
-			if(dir != null) {
-				int version = readReleaseFile(jvmDirectory);
-				if(version == 15){
-					return jvmDirectory;
-				}
+		if(jvmDirectory != null&&opendir(jvmDirectory) != null) {
+			int version = readReleaseFile(jvmDirectory);
+			if(version == 15){
+				return jvmDirectory;
 			}
 		}
 		string javaHomeDirectory = Environment.get_variable("JAVA_HOME");
