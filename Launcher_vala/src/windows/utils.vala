@@ -1,6 +1,9 @@
 namespace Launcher {
-	bool hasToDownloadJava() {
+	string hasToDownloadJava() {
 		//Done on installation
-		return null;
+		return (string)null;
+	}
+	string getBaseDirectory() {
+		return Environment.get_variable("APPDATA"))+"\\.conquer";
 	}
 }
