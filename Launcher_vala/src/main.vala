@@ -1,4 +1,5 @@
 using Gtk;
+using Gee;
 namespace Launcher {
 	class ConquerLauncher : Gtk.Application {
 		private InputList jvmOptions;
@@ -11,7 +12,7 @@ namespace Launcher {
 			box.pack_start(this.jvmOptions);
 			this.classpaths = new InputList("Classpaths", "Add classpath");
 			box.pack_start(this.classpaths);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions);
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions,window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
@@ -26,7 +27,8 @@ namespace Launcher {
 	class StartButton : Box {
 		private ProgressBar progressBar;
 		private DownloadProgress progress;
-		public StartButton(InputList classpaths, InputList jvmOptions) {
+		private ExtractProgress extractProgress;
+		public StartButton(InputList classpaths, InputList jvmOptions, ApplicationWindow window) {
 			this.set_orientation(Orientation.VERTICAL);
 			var button = new Button.with_label("Start");
 			this.pack_start(button, false, false);
@@ -38,16 +40,31 @@ namespace Launcher {
 					this.progressBar.set_show_text(true);
 					this.pack_start(this.progressBar,false);
 					downloadJDK(downloadStatsReceiver);
+					this.progress = null;
+					extractJDK(extractReceiver);
 				}
-				this.progress = null;
+				window.close();
+				JVM jvm = new JVM(null);
+				jvm.addJVMArguments(jvmOptions.toArray());
+				jvm.addClasspaths(classpaths.toArray());
 			});
 		}
-		bool updateProgressBar() {
+		bool updateDownloadProgressBar() {
+			this.progressBar.set_text("Downloaded %PRIu64 bytes of %PRIu64 (%f %%)".printf(this.progress.dlnow,this.progress.dltotal,this.progress.getPercentage()));
+			this.progressBar.set_fraction(this.progress.getPercentage()/100);
 			return false;
 		}
 		void downloadStatsReceiver(void* ptr,uint64 dltotal,uint64 dlnow,uint64 ultotal,uint64 ulnow) {
 			this.progress = new DownloadProgress(dlnow,dltotal);
-			Gdk.threads_add_idle(updateProgressBar);
+			Gdk.threads_add_idle(updateDownloadProgressBar);
+		}
+		bool updateExtractProgressbar() {
+			this.progressBar.set_text("Extracting %s (%d/%d)".printf(this.extractProgress.filename,this.extractProgress.current,this.extractProgress.numberOfFiles));
+			return false;
+		}
+		void extractReceiver(string name, int current, int max) {
+			this.extractProgress = new ExtractProgress(name,current,max);
+			Gdk.threads_add_idle(updateExtractProgressbar);
 		}
 	}
 	class InputList : Box {
@@ -69,6 +86,20 @@ namespace Launcher {
 			column.add_attribute(renderer,"text", 0);
 			this.treeView.append_column(column);
 			this.treeView.set_model(this.listStore);
+		}
+
+		public Gee.List<string> toArray() {
+			var ret = new ArrayList<string>();
+			TreeIter iter;
+			if(this.listStore.get_iter_first(out iter)) {
+				do {
+					Value s;
+					this.listStore.get_value(iter,0, out s);
+					ret.add(s.get_string());
+					stdout.printf("%s\n",s.get_string());
+				}while(this.listStore.iter_next(ref iter));
+			}
+			return ret;
 		}
 	}
 
@@ -118,11 +149,25 @@ namespace Launcher {
 		}
 	}
 	class DownloadProgress {
-		uint64 dltotal {get; set;}
-		uint64 dlnow {get; set;}
+		public uint64 dltotal {get; set;}
+		public uint64 dlnow {get; set;}
 		public DownloadProgress(uint64 total,uint64 now) {
 			this.dltotal = total;
 			this.dlnow = now;
+		}
+		public double getPercentage() {
+			return (((double)dlnow)/dltotal)*100;
+		}
+	}
+	class ExtractProgress {
+		public int current {get; set;}
+		public int numberOfFiles {get; set;}
+		public string filename {get; set;}
+		
+		public ExtractProgress(string name, int current, int max) {
+			this.filename = name;
+			this.current = current;
+			this.numberOfFiles = max;
 		}
 	}
 }
