@@ -6,6 +6,7 @@ namespace Launcher {
 		if(alreadyInstalledJava != null) {
 			return (string)null;
 		}
+		mkdir(getBaseDirectory(), S_IRWXU);
 		string baseDir = geteuid() == 0?"/opt":getBaseDirectory();
 		string java15Dir = baseDir + "/java-15";
 		string outputFile = baseDir +"/java-15.tar.gz";
@@ -42,7 +43,11 @@ namespace Launcher {
 		return (string)null;
 	}
 	private string getBaseDirectory() {
-		return "";
+		string homedir;
+		if ((homedir = Environment.get_variable("HOME")) == null) {
+			homedir = getpwuid(getuid()).pw_dir;
+		}
+		return homedir+"/.config/.conquer";
 	}
 	private int readReleaseFile(string directory) {
 		var filePath = string.join("/",directory,"release");
