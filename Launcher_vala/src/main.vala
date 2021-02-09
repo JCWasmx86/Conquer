@@ -6,6 +6,7 @@ namespace Launcher {
 		private InputList classpaths;
 
 		protected override void activate() {
+			Configuration.readConfig();
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
 			this.jvmOptions=new InputList("JVM Arguments","Add JVM argument");
