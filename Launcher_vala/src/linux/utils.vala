@@ -12,7 +12,13 @@ namespace Launcher {
 		return opendir(java15Dir)!=null||opendir("/opt/java-15")!=null? (string)null : outputFile;
 	}
 	delegate void progressFunc(void* unused,uint64 dltotal,uint64 dlnow,uint64 ultotal,uint64 ulnow);
+	delegate void extractFunc(string name, int current, int max);
+	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
+	
 	void downloadJDK(progressFunc func) {
+		
+	}
+	void extractJDK(extractFunc func) {
 		
 	}
 	private string findExistingJavaInstallWithMatchingVersion() {
