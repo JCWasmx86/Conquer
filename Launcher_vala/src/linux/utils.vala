@@ -41,9 +41,6 @@ namespace Launcher {
 		}
 		return (string)null;
 	}
-	private string getLinuxJavaDirectory() {
-		return "";
-	}
 	private string getBaseDirectory() {
 		return "";
 	}
