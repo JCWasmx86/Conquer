@@ -1,4 +1,3 @@
-using Posix;
 using Gee;
 
 namespace Launcher {
@@ -13,7 +12,7 @@ namespace Launcher {
 				ret += i +"/:";
 			}
 			string baseDir = getBaseDirectory();
-			ret += appendAllJarsFromDir(baseDir,":");
+			ret += appendAllJarsFromDir(baseDir+"/libs/",":");
 			ret += appendAllJarsFromDir("/usr/share/java/conquer/plugins/",":");
 			ret += appendAllJarsFromDir("/usr/share/java/conquer/strategies/",":");
 			ret += "/usr/share/conquer/music:";
@@ -21,9 +20,9 @@ namespace Launcher {
 			ret += "/usr/share/conquer/images:";
 			ret += "/usr/share/java/conquer/jlayer.jar:/usr/share/java/conquer/jorbis.jar:/usr/share/java/conquer/mp3spi.jar:";
 			ret += "/usr/share/java/conquer/tritonus.jar:/usr/share/java/conquer/vorbisspi.jar:";
-			ret += (baseDir +"music/:");
-			ret += (baseDir +"sounds/:");
-			ret += (baseDir +"images/:");
+			ret += (baseDir + "/libs/music/:");
+			ret += (baseDir + "/libs/sounds/:");
+			ret += (baseDir + "/libs/images/:");
 			ret += ".";
 			return ret;
 		}

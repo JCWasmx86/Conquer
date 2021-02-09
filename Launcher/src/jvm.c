@@ -89,8 +89,6 @@ char *generateClasspath(Configuration configuration) {
 	strcat(ret, "\\Conquer\\sounds;");
 	strcat(ret, pf);
 	strcat(ret, "\\Conquer\\images;");
-	strcat(ret, pf);
-	strcat(ret, "\\Conquer\\vorbisspi.jar;");
 	char *tmpPF = calloc(500, 1);
 	sprintf(tmpPF, "%s%s", pf, "\\plugins");
 	appendAllJarsFromDir(tmpPF, ret);
