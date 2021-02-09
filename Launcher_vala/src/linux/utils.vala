@@ -25,7 +25,7 @@ namespace Launcher {
 	void downloadJDK(progressFunc func) {
 		
 	}
-	private string findExistingJavaInstallWithMatchingVersion() {
+	private string? findExistingJavaInstallWithMatchingVersion() {
 		string jvmDirectory = getLinuxJavaDirectory();
 		if(jvmDirectory != null) {
 			Posix.Dir dir = opendir(jvmDirectory);
@@ -43,14 +43,14 @@ namespace Launcher {
 				return javaHomeDirectory;
 			}
 		}
-		return (string)null;
+		return null;
 	}
 	private string getBaseDirectory() {
 		string homedir;
 		if ((homedir = Environment.get_variable("HOME")) == null) {
 			homedir = getpwuid(getuid()).pw_dir;
 		}
-		return homedir+"/.config/.conquer";
+		return homedir + "/.config/.conquer";
 	}
 	private int readReleaseFile(string directory) {
 		var filePath = string.join("/",directory,"release");
