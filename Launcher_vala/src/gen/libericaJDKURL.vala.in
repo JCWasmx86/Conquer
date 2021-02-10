@@ -51,7 +51,7 @@ namespace Launcher {
 		}
 
 		string getArch() {
-		#ifdef __aarch64__ || defined(arm)
+		#if defined __aarch64__ || defined __arm__ 
 			return "arm";
 		#else
 			return "x86";
