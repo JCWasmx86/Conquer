@@ -62,8 +62,8 @@ namespace Launcher {
 							JVM jvm = new JVM(null);
 							jvm.addJVMArguments(jvmOptions.toList());
 							jvm.addClasspaths(classpaths.toList());
-							jvm.run();
 							Configuration.dump(jvmOptions.toList(),classpaths.toList());
+							jvm.run();
 							Process.exit(0);
 						});
 					});
@@ -73,8 +73,8 @@ namespace Launcher {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
-						jvm.run();
 						Configuration.dump(jvmOptions.toList(),classpaths.toList());
+						jvm.run();
 						Process.exit(0);
 					});
 				}

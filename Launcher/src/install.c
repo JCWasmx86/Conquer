@@ -149,7 +149,7 @@ static void downloadJava(void) {
 				   MB_TOPMOST);
 	char *base = getBaseDirectory();
 	char *output = calloc(strlen(base) + 20, 1);
-	sprintf(output, "%s\\jdk-15.zip", base);
+	sprintf(output, "%s\\java-15.zip", base);
 	assert(URLDownloadToFile(NULL, getURL(), output, 0, NULL) == S_OK);
 	free(base);
 	free(output);
@@ -157,9 +157,9 @@ static void downloadJava(void) {
 static void extractJava(void) {
 	char *base = getBaseDirectory();
 	char *input = calloc(strlen(base) + 20, 1);
-	sprintf(input, "%s\\jdk-15.zip", base);
+	sprintf(input, "%s\\java-15.zip", base);
 	char *output = calloc(strlen(base) + 20, 1);
-	sprintf(output, "%s\\jdk-15", base);
+	sprintf(output, "%s\\java-15", base);
 	extract(input, output, NULL, NULL);
 	free(base);
 	free(output);
