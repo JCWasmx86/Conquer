@@ -1,0 +1,80 @@
+#!/usr/bin/sh
+cd data||exit
+cd ..
+if [! -d "Windows-10" ]; then
+	git clone https://github.com/B00merang-Project/Windows-10
+fi
+cp -r Windows-10/gtk-3.20 data/share/themes/Windows10/gtk-3.0
+wget -N https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
+tar -I zstd -xvf mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
+cp -r mingw64/share mingw64/lib data
+wget -N https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
+tar -I zstd -xvf mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
+cp -r mingw64/share data
+#Remove useless clutter
+rm .BUILDINFO .INSTALL .MTREE .PKGINFO
+rm -r mingw64
+cd data||exit
+
+#Found with trial and error
+cp ../conquer_launcher.exe .
+cp ../uninstall.exe .
+cp /mingw64/bin/libarchive-13.dll .
+cp /mingw64/bin/libatk-1.0-0.dll .
+cp /mingw64/bin/libbrotlicommon.dll .
+cp /mingw64/bin/libbrotlidec.dll .
+cp /mingw64/bin/libbz2-1.dll .
+cp /mingw64/bin/libcairo-2.dll .
+cp /mingw64/bin/libcairo-gobject-2.dll .
+cp /mingw64/bin/libcrypto-1_1-x64.dll .
+cp /mingw64/bin/libcurl-4.dll .
+cp /mingw64/bin/libdatrie-1.dll .
+cp /mingw64/bin/libepoxy-0.dll .
+cp /mingw64/bin/libexpat-1.dll .
+cp /mingw64/bin/libffi-7.dll .
+cp /mingw64/bin/libfontconfig-1.dll .
+cp /mingw64/bin/libfreetype-6.dll .
+cp /mingw64/bin/libfribidi-0.dll .
+cp /mingw64/bin/libgcc_s_seh-1.dll .
+cp /mingw64/bin/libgdk-3-0.dll .
+cp /mingw64/bin/libgdk_pixbuf-2.0-0.dll .
+cp /mingw64/bin/libgee-0.8-2.dll .
+cp /mingw64/bin/libgio-2.0-0.dll .
+cp /mingw64/bin/libglib-2.0-0.dll .
+cp /mingw64/bin/libgmodule-2.0-0.dll .
+cp /mingw64/bin/libgobject-2.0-0.dll .
+cp /mingw64/bin/libgraphite2.dll .
+cp /mingw64/bin/libgtk-3-0.dll .
+cp /mingw64/bin/libharfbuzz-0.dll .
+cp /mingw64/bin/libiconv-2.dll .
+cp /mingw64/bin/libidn2-0.dll .
+cp /mingw64/bin/libintl-8.dll .
+cp /mingw64/bin/libjson-glib-1.0-0.dll .
+cp /mingw64/bin/liblz4.dll .
+cp /mingw64/bin/liblzma-5.dll .
+cp /mingw64/bin/libnghttp2-14.dll .
+cp /mingw64/bin/libpango-1.0-0.dll .
+cp /mingw64/bin/libpangocairo-1.0-0.dll .
+cp /mingw64/bin/libpangoft2-1.0-0.dll .
+cp /mingw64/bin/libpangowin32-1.0-0.dll .
+cp /mingw64/bin/libpcre-1.dll .
+cp /mingw64/bin/libpixman-1-0.dll .
+cp /mingw64/bin/libpng16-16.dll .
+cp /mingw64/bin/libpsl-5.dll .
+cp /mingw64/bin/libssh2-1.dll .
+cp /mingw64/bin/libssl-1_1-x64.dll .
+cp /mingw64/bin/libstdc++-6.dll .
+cp /mingw64/bin/libthai-0.dll .
+cp /mingw64/bin/libunistring-2.dll .
+cp /mingw64/bin/libwinpthread-1.dll .
+cp /mingw64/bin/libzstd.dll .
+cp /mingw64/bin/zlib1.dll .
+#Required to show svg files and so on.
+mkdir -p lib/gdk-pixbuf-2.0/2.10.0/loaders/
+cp /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
+mkdir -p etc/gtk-3.0
+{
+	echo [Settings]
+	echo gtk-theme-name=Windows10
+	echo gtk-font-name=Segoe UI 9
+}>etc/gtk-3.0/settings.ini

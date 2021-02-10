@@ -1,0 +1,110 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+task buildLauncher(type: Exec) {
+	commandLine "make", "all"
+}
+assemble.dependsOn(buildLauncher)
+
+task buildInstaller() {
+	doLast {
+		mkdir "data"
+		mkdir "data/plugins"
+		mkdir "data/strategies"
+		mkdir "data/scenarios/Belenos"
+		mkdir "data/scenarios/Etiona"
+		mkdir "data/scenarios/Slaine"
+		mkdir "data/scenarios/Freedo"
+		mkdir "data/music"
+		mkdir "data/sounds"
+		mkdir "data/images"
+
+		copy {
+			from "${project.rootDir}/auxiliary/Conquer.license", "${project.rootDir}/auxiliary/LICENSE.txt"
+			into "."
+		}
+		copy {
+			from "${project.rootDir}/auxiliary/jars"
+			include "*.jar"
+			into "data"
+		}
+		copy {
+			from "${project.rootDir}/Conquer/build/libs"
+			include "*.jar"
+			into "data"
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontend/build/libs"
+			include "*.jar"
+			into "data"
+		}
+		copy {
+			from "${project.rootDir}/ConquerFrontendSPI/build/libs"
+			include "*.jar"
+			into "data"
+		}
+		copy {
+			from "."
+			include "uninstall.exe"
+			into "data"
+		}
+		copy {
+			from "${project.rootDir}/DefaultPlugins/build/libs/"
+			include "SortedStrategy.jar"
+			into "data/strategies"
+		}
+		copy {
+			from "${project.rootDir}/DefaultPlugins/build/libs/"
+			include "ChangeCitiesMinds.jar"
+			include "DefaultMusic.jar"
+			include "IncreaseGrowth.jar"
+			include "MoneyAnalyzer.jar"
+			include "PeriodicGrowthChange.jar"
+			include "ResourceAnalyzer.jar"
+			into "data/plugins"
+		}
+		copy {
+			from "${project.rootDir}/music_tmp"
+			include "Battle*.ogg"
+			into "data/music"
+		}
+		exec {
+			if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+				commandLine 'sh', './makeGTKDist'
+			}else {
+				commandLine "echo", "Skipping GTK-Build"
+				return;
+			}
+		}
+		exec {
+			if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+				commandLine "make", "uninstall.exe"
+			}else {
+				commandLine "echo", "Skipping Uninstaller"
+				return;
+			}
+		}
+		exec {
+			if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+				commandLine "make", "Installer.exe"
+			}else {
+				commandLine "echo", "Skipping Installer"
+				return;
+			}
+		}
+	}
+}
+if(Os.isFamily(Os.FAMILY_WINDOWS)) {
+	buildInstaller.dependsOn(":Conquer:jar",":ConquerFrontend:jar",buildLauncher,":auxiliary:downloadJarFiles",":Conquer:conquerResources")
+	buildInstaller.mustRunAfter(buildLauncher)
+	assemble.dependsOn(buildInstaller)
+}
+clean {
+	delete fileTree(".") {
+		include "**/*.jar"
+		include "**/*.exe"
+	}
+	delete "LICENSE.txt"
+	delete "Conquer.license"
+	exec {
+		commandLine "make", "clean"
+	}
+}
