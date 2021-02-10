@@ -71,10 +71,7 @@ namespace Launcher {
 			critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
 		}
 	}
-	string? obtainURL() {
-		//TODO:::
-		return "https://mirrors.huaweicloud.com/openjdk/15/openjdk-15_linux-x64_bin.tar.gz";
-	}
+
 	delegate void progressFunc(void* data,double dltotal,double dlnow,double ultotal,double ulnow);
 	
 	interface IDownloadProgress : GLib.Object{
