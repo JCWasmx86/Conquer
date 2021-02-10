@@ -15,7 +15,6 @@ cp -r mingw64/share data
 rm .BUILDINFO .INSTALL .MTREE .PKGINFO
 rm -r mingw64
 cd data||exit
-
 #Found with trial and error
 cp ../conquer_launcher.exe .
 cp ../uninstall.exe .
@@ -78,3 +77,5 @@ mkdir -p etc/gtk-3.0
 	echo gtk-theme-name=Windows10
 	echo gtk-font-name=Segoe UI 9
 }>etc/gtk-3.0/settings.ini
+export SOURCE_DATE_EPOCH=0
+zip -X -9 -r ../data.zip *
