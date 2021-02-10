@@ -37,11 +37,11 @@ main.o: src/main.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o main.o src/main.c
 jvm.o: src/jvm.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
-main.vala.o: src/main.vala
-	valac -c src/main.vala -X -O3 --pkg=gtk+-3.0
+gtk.o: src/gtkmain.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o gtk.o src/gtkmain.c `pkg-config --cflags-only-I --libs gtk+-3.0`
 launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o utils.o
 	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
-gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o main.vala.o
+gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
 	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
 Installer.exe: setup install.o resource.o inc.o utils.o extract.o uninstall.exe
 	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o utils.o resource.o inc.o extract.o -o Installer.exe $(LDCFLAGS)
