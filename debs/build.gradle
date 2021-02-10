@@ -18,7 +18,6 @@ task buildConquerDeb() {
 		}
 		copy {
 			from file("${project.rootDir}/Launcher")
-			include "launcher"
 			include "conquer_launcher"
 			into file("conquer/usr/bin")
 		}
@@ -35,10 +34,11 @@ task buildConquerDeb() {
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: "
-		s += System.getProperty("os.arch").equals("amd64")?"amd64":"arm64"
+		s += (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("arm64"):"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")));
 		s += "\n"
 		s += "Maintainer: JCWasmx86\n"
-		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios\n"
+		//TODO: Check whether some are redundant or missing
+		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios, libjson-glib-1.0-0, libgee-0.8-2, libjson-glib-1.0-0\n"
 		s += "Description: The native parts for conquer-gui\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
 		fout.write(s.getBytes());
@@ -347,7 +347,7 @@ task buildSdkDeb() {
 		def s= "Package: conquer-sdk\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
-		s += "Architecture: all\n"
+		s += "Architecture: " + (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("aarch64"):"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")))+"\n";
 		s += "Maintainer: JCWasmx86\n"
 		s += "Depends: maven\n"
 		s += "Description: The SDK for the game engine conquer\n"
