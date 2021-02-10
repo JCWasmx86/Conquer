@@ -180,7 +180,6 @@ namespace Launcher {
 			generator.set_root(node);
 			generator.set_pretty(true);
 			generator.set_indent_char('\t');
-			GLib.stdout.printf("%s\n",getBaseDirectory()+"/config.json");
 			try{
 				generator.to_file(getBaseDirectory()+"/config.json");
 			}catch(Error e) {
