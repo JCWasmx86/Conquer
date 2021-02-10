@@ -74,7 +74,6 @@ namespace Launcher {
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						jvm.run();
-						GLib.stdout.printf("HERE!");
 						Configuration.dump(jvmOptions.toList(),classpaths.toList());
 						Process.exit(0);
 					});
