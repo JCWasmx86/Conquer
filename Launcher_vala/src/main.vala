@@ -58,19 +58,23 @@ namespace Launcher {
 						downloadJDK(this);
 						extractJDK(extractReceiver);
 						window.close();
+						new Thread<void>("thread_b", () => {
+							JVM jvm = new JVM(null);
+							jvm.addJVMArguments(jvmOptions.toList());
+							jvm.addClasspaths(classpaths.toList());
+							jvm.run();
+							Configuration.dump(jvmOptions.toList(),classpaths.toList());
+						});
+					});
+				}else {
+					window.hide();
+					new Thread<void>("jvm", () => {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						jvm.run();
 						Configuration.dump(jvmOptions.toList(),classpaths.toList());
 					});
-				}else {
-					window.close();
-					JVM jvm = new JVM(null);
-					jvm.addJVMArguments(jvmOptions.toList());
-					jvm.addClasspaths(classpaths.toList());
-					jvm.run();
-					Configuration.dump(jvmOptions.toList(),classpaths.toList());
 				}
 			});
 		}

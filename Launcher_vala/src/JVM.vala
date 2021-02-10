@@ -27,9 +27,8 @@ namespace Launcher {
 			for(int i = 0; i < arguments.size; i++) {
 				options[6 + i] = arguments.get(i);
 			}
-			for(int i = 0; i<arguments.size + 6; i++) {
-				stdout.printf("%s\n",options[i]);
-			}
+			invokeJVM(options,arguments.size + 6, this.onErrorFunc);
 		}
 	}
+	extern void invokeJVM(char** options, int numOptions, onErrorFunc onErrorFunc);
 }
