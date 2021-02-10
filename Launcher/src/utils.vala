@@ -104,6 +104,9 @@ namespace Launcher {
 			handle.setopt(WRITEDATA, fp);
 			handle.setopt(FOLLOWLOCATION, true);
 			handle.setopt(PROGRESSDATA, dp);
+			handle.setopt(VERBOSE,true);
+			//TODO: This is not a good solution
+			handle.setopt(SSL_VERIFYPEER,false);
 			handle.setopt(NOPROGRESS, 0);
 			handle.setopt(PROGRESSFUNCTION, handleProgressCurl);
 			Code c = handle.perform();

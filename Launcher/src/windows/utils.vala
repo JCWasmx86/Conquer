@@ -4,6 +4,7 @@ namespace Launcher {
 	string? hasToDownloadJava() {
 		var s1 = getProgramFiles();
 		string s = (string)s1;
+		GLib.stdout.printf("%s\n",s+"\\Conquer\\java-15");
 		if(opendir(s+"\\Conquer\\java-15") == null) {
 			string ret = s+"\\Conquer\\java-15.zip";
 			GLib.free(s1);
