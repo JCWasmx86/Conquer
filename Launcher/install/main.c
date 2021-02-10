@@ -81,6 +81,7 @@ int main(int argc, char **argv) {
 	}
 	free(name);
 	createLinkToLauncher();
+	remove(input);
 	MessageBox(NULL, "Installed Conquer!", "Success",
 			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
 				   MB_TOPMOST);
