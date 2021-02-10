@@ -119,12 +119,13 @@ namespace Launcher {
 		dp.onProgress(dltotal,dlnow,ultotal,ulnow);
 		return 0;
 	}
+	extern void makeDirectory(string s);
 	class Configuration {
 		public Gee.List<string> classpaths;
 		public Gee.List<string> arguments;
 		
 		public static Configuration? readConfig() {
-			mkdir(getBaseDirectory(), S_IRWXU);
+			makeDirectory(getBaseDirectory());
 			string file = getBaseDirectory()+"/config.json";
 			Parser parser = new Parser();
 			try {

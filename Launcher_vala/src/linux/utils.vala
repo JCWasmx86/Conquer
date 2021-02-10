@@ -11,7 +11,6 @@ namespace Launcher {
 		string outputFile = baseDir +"/java-15.tar.gz";
 		return (opendir(java15Dir)!=null||opendir("/opt/java-15")!=null) ? null : outputFile;
 	}
-	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
 	
 	string getOutputDirectory() {
 		if(geteuid() != 0) {

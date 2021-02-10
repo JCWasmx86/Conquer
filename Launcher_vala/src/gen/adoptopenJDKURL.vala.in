@@ -1,0 +1,11 @@
+namespace Launcher {
+	class AdoptOpenJDK {
+		public string? obtain() {
+		#ifdef _WIN32
+			return null;
+		#else
+			return null;
+		#endif
+		}
+	}
+}
