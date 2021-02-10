@@ -1,0 +1,55 @@
+using Curl;
+using Json;
+namespace Launcher {
+ class LibericaJDK {
+  public string? obtain() {
+   string url = "https://api.bell-sw.com/v1/liberica/releases?version-feature=15&version-modifier=latest&bundle-type=jdk";
+   StringBuilder sb = new StringBuilder.sized(50000);
+   var handle = new EasyHandle();
+   if(handle != null) {
+    handle.setopt(URL,url);
+    handle.setopt(WRITEFUNCTION,appendJSON);
+    handle.setopt(WRITEDATA,sb);
+    Code c = handle.perform();
+    if(c != OK){
+     GLib.stderr.printf("%s\n",Global.strerror(c));
+    }
+   }
+   return parseJSON(sb.str);
+  }
+  string? parseJSON(string json) {
+   var parser = new Parser();
+   parser.load_from_data(json);
+   var node = parser.get_root();
+   var array = node.get_array();
+   for(var i = 0u; i < array.get_length(); i++) {
+    var object = array.get_object_element(i);
+    if(object.get_boolean_member("FX")) {
+     continue;
+    }
+    int bits = sizeof(void*) == 4? 32 : 64;
+    if(object.get_int_member("bitness") != bits) {
+     continue;
+    } else if(object.get_string_member("installationType") != "archive") {
+     continue;
+    } else if(object.get_string_member("os") != getOS()) {
+     continue;
+    } else if(object.get_string_member("architecture") != getArch()) {
+     continue;
+    }
+    return object.get_string_member("downloadUrl");
+   }
+   return null;
+  }
+  string getOS() {
+   return "windows";
+  }
+  string getArch() {
+   return "x86";
+  }
+  static size_t appendJSON(char* buffer, size_t size, size_t nitems, void* outstream) {
+   ((StringBuilder)outstream).append_len((string)buffer,(ssize_t)(size*nitems));
+   return size*nitems;
+  }
+ }
+}

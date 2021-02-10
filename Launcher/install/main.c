@@ -1,5 +1,6 @@
 #include <aclapi.h>
 #include <archive.h>
+#include <archive_entry.h>
 #include <assert.h>
 #include <shfolder.h>
 #include <shlobj.h>
@@ -22,7 +23,7 @@ int main(int argc, char **argv) {
 						   CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	SetSecurityInfo(h, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL,
 					NULL, NULL);
-	writeFile("launcher.exe", &zipfile, zipfileSize);
+	writeFile("data.zip", &zipfile, zipfileSize);
 	char *input = calloc(strlen(name) + 20, 1);
 	sprintf(input, "%s\\data.zip", name);
 	char *output = calloc(strlen(name) + 20, 1);
@@ -53,8 +54,10 @@ int main(int argc, char **argv) {
 		char *cc = calloc(
 			strlen(output) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
+		printf("%s ",archive_entry_pathname(entry));
 		sprintf(cc, "%s%s%s", output, "/", archive_entry_pathname(entry));
 		archive_entry_set_pathname(entry, cc);
+		printf(" -> %s\n",archive_entry_pathname(entry));
 		result = archive_write_header(out, entry);
 		if (result != ARCHIVE_OK) {
 			fprintf(stderr, "Error writing header: %s %d",

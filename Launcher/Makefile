@@ -1,74 +1,45 @@
-CFLAGS2 = libcjson.a
+ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include"
 ifeq ($(OS),Windows_NT)
-	INCLUDES = -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/win32"
-	LDCFLAGS = -Wl,--no-insert-timestamp -Wl,-Bstatic -lm -ldl -larchive -lurlmon -lz -lbz2 -llzma -lbcrypt -liconv -lzstd -llz4 -lexpat
-	CFLAGS2 += -mwindows
+	OS_TYPE = windows
+	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" -X -mwindows
 else
-	INCLUDES = -I"$(JAVA_HOME)/include" -I"$(JAVA_HOME)/include/linux"
-	LDCFLAGS = -Wl,-Bstatic -lm -Wl,-Bdynamic -ldl -lcurl -larchive
+	OS_TYPE = linux
+	ARGS += -X -I$(JAVA_HOME)/include/linux -X -ldl
 endif
 
-CFLAGS += -Wno-deprecated-declarations -Wno-incompatible-pointer-types
+FLAGS = --pkg=gtk+-3.0 --pkg=posix --pkg=gio-2.0 --pkg=gee-0.8 --pkg=json-glib-1.0 --pkg=libarchive --pkg=libcurl
 
-INCLUDES += -I"include" -I"cJSON"
-all: launcher
-buildCJSON:
-	if [ ! -d cJSON ]; then git clone https://github.com/DaveGamble/cJSON;cd cJSON; git config pull.rebase false;cd ..; else cd cJSON&&git pull origin master&&cd ..; fi
-	rm -f cJSON/*.so
-	rm -f cJSON/*.a
-	rm -f cJSON/*.dll
-	cd cJSON&&make CFLAGS="-O3 -s" &&mkdir -p cjson&&cp cJSON.h cjson&&cp libcjson.a ..&&cd ..
-all-gtk: gtklauncher launcher
-all-win: launcher
+all: generateFiles downloadVAPIFiles build
 
-config.o: buildCJSON src/config.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o config.o src/config.c
-directoryStructure.o: src/directoryStructure.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o directoryStructure.o src/directoryStructure.c
-download.o: src/download.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o download.o src/download.c
-extract.o: src/extract.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o extract.o src/extract.c
-load.o: src/load.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o load.o src/load.c
-utils.o: src/utils.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o utils.o src/utils.c
-main.o: src/main.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o main.o src/main.c
-jvm.o: src/jvm.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o jvm.o src/jvm.c
-gtk.o: src/gtkmain.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o gtk.o src/gtkmain.c `pkg-config --cflags-only-I --libs gtk+-3.0`
-launcher: config.o directoryStructure.o download.o extract.o load.o utils.o main.o jvm.o utils.o
-	$(CC) $^ -o launcher $(CFLAGS2) $(LDCFLAGS)
-gtklauncher: config.o directoryStructure.o download.o extract.o load.o utils.o jvm.o gtk.o
-	$(CC) $^ -o conquer_launcher $(CFLAGS2) $(LDCFLAGS) `pkg-config --libs gtk+-3.0` -pthread
-Installer.exe: setup install.o resource.o inc.o utils.o extract.o uninstall.exe
-	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o utils.o resource.o inc.o extract.o -o Installer.exe $(LDCFLAGS)
-install.o:
-	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) -Wall -Wextra -pedantic -O3 src/install.c -c -o install.o
-setup: makeDir uninstallResource.o uninstall.exe inc.o
-makeDir:
-	mkdir -p bin
-uninstallResource.o: src/uninstallResource.rc
-	windres -I include -I src src/uninstallResource.rc uninstallResource.o
-uninstall.o: src/uninstall.c
-	$(CC) -mwindows -O3 -Wall -Wextra -pedantic -c src/uninstall.c -o uninstall.o
-uninstall.exe: uninstall.o
-	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
-inc.o: src/inc.s
-	$(CC) -mwindows src/inc.s -c -o inc.o
-resource.o: src/resource.rc
-	windres -I include -I src src/resource.rc resource.o
-format:
-	clang-format --style=file -verbose -i src/*.c include/*.h
+generateFiles: src/gen/getLinuxJavaDirectory.vala.in
+	cpp -E -P src/gen/getLinuxJavaDirectory.vala.in >src/gen/getLinuxJavaDirectory.vala
+	cpp -E -P src/gen/adoptopenJDKURL.vala.in >src/gen/adoptopenJDKURL.vala
+	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
+build:
+	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher
+downloadVAPIFiles:
+	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
+	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
 clean:
-	rm -f launcher
-	rm -f launcher.exe
-	rm -f libcjson.a
-	rm -rf cJSON
-	rm -rf bin
-	rm -f conquer_launcher
-	rm -f uninstall.exe
-	rm -f Installer.exe
+	rm -f libcurl.deps libcurl.vapi
+	rm -f conquer_launcher conquer_launcher.exe
+	rm -f src/gen/*.vala
 	rm -f *.o
+	rm -f *.exe
+	rm -rf data
+	rm -f data.zip
+
+Installer.exe: buildInstallRC buildIncludeFile install.o
+	$(CC) -Wl,--no-insert-timestamp $(CFLAGS) install.o installResource.o inc.o -o Installer.exe --static -larchive -lz -llzma -lbcrypt -lbz2 -liconv -lzstd -lexpat -llz4 #-mwindows
+install.o: install/main.c
+	$(CC) $(CFLAGS) -c -o install.o install/main.c
+buildIncludeFile: install/inc.s
+	$(CC) -c -o inc.o install/inc.s
+buildInstallRC: install/resource.rc
+	windres -I include -I install install/resource.rc installResource.o
+uninstall.exe: buildUninstallRC uninstallObject
+	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
+buildUninstallRC: uninstall/resource.rc
+	windres -I include -I uninstall uninstall/resource.rc uninstallResource.o
+uninstallObject: uninstall/main.c
+	$(CC) $(CFLAGS) -O3 -Wall -Wextra -pedantic -c uninstall/main.c -o uninstall.o
