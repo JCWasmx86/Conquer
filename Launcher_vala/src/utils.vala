@@ -77,6 +77,19 @@ namespace Launcher {
 	interface IDownloadProgress : GLib.Object{
 		public abstract void onProgress(double dltotal,double dlnow,double ultotal,double ulnow);
 	}
+	
+	string obtainURL() {
+		var liberica = new LibericaJDK();
+		var url = liberica.obtain();
+		if(url == null) {
+			var adopt = new AdoptOpenJDK();
+			url = adopt.obtain();
+			if(url == null) {
+				critical("No JDK binary for your system found!");
+			}
+		}
+		return url;
+	}
 	void downloadJDK(IDownloadProgress dp) {
 		var handle = new EasyHandle();
 		if(handle != null) {
