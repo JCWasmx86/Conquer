@@ -1,4 +1,5 @@
 #include <jni.h>
+#include <shlobj.h>
 #include <windows.h>
 #include <assert.h>
 
@@ -21,7 +22,7 @@ void* loadJavaLibrary() {
 		perror("SHGetSpecialFolderPathA");
 		exit(-1);
 	}
-	strcat(directory, "\\Conquer\\jdk-15\\");
+	strcat(directory, "\\Conquer\\java-15\\");
 	char *binDir = calloc(strlen(directory) + 10, 1);
 	assert(binDir);
 	sprintf(binDir, "%s\\%s", directory, "bin");
@@ -36,7 +37,7 @@ void* loadJavaLibrary() {
 	free(pathToDll);
 	free(directory);
 	if (!handle) {
-		perror("dlopen");
+		perror("LoadLibrary");
 		fflush(stderr);
 	}
 	return handle;
