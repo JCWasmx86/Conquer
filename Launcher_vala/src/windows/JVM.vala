@@ -26,7 +26,7 @@ namespace Launcher {
 			foreach(var i in this.userDefined) {
 				ret += i +";";
 			}
-			string baseDir = getBaseDirectory();
+			string baseDir = getBaseDirectory()+"/libs/";
 			ret += appendAllJarsFromDir(baseDir,";");
 			ret += (baseDir +"/music/;");
 			ret += (baseDir +"/sounds/;");
