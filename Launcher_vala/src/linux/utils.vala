@@ -4,15 +4,13 @@ namespace Launcher {
 	string? hasToDownloadJava() {
 		char* alreadyInstalledJava = findExistingJavaInstallWithMatchingVersion();
 		if(alreadyInstalledJava != null) {
-			return null;
+			//return null;
 		}
-		mkdir(getBaseDirectory(), S_IRWXU);
 		string baseDir = geteuid() == 0?"/opt":getBaseDirectory();
 		string java15Dir = baseDir + "/java-15";
 		string outputFile = baseDir +"/java-15.tar.gz";
 		return (opendir(java15Dir)!=null||opendir("/opt/java-15")!=null) ? null : outputFile;
 	}
-	delegate void progressFunc(void* unused,uint64 dltotal,uint64 dlnow,uint64 ultotal,uint64 ulnow);
 	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
 	
 	string getOutputDirectory() {
@@ -21,9 +19,6 @@ namespace Launcher {
 		}else {
 			return "/opt/java-15";
 		}
-	}
-	void downloadJDK(progressFunc func) {
-		
 	}
 	private string? findExistingJavaInstallWithMatchingVersion() {
 		string jvmDirectory = getLinuxJavaDirectory();
