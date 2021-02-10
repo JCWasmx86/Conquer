@@ -43,7 +43,7 @@ void* loadJavaLibrary() {
 extern void closeLibrary(void* handle) {
 	dlclose(handle);
 }
-extern createJVM findFunctionvoid *file) {
+extern createJVM findFunction(void *file) {
 	return (createJVM)dlsym(file, "JNI_CreateJavaVM");
 }
 static int dirExists(const char *name) {

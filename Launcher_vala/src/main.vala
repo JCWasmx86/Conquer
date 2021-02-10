@@ -57,7 +57,7 @@ namespace Launcher {
 					new Thread<void> ("thread_a", ()=>{
 						downloadJDK(this);
 						extractJDK(extractReceiver);
-						window.close();
+						window.hide();
 						new Thread<void>("thread_b", () => {
 							JVM jvm = new JVM(null);
 							jvm.addJVMArguments(jvmOptions.toList());
