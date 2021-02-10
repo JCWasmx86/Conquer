@@ -1,9 +1,12 @@
+using Posix;
+
 namespace Launcher {
 	string? hasToDownloadJava() {
-		string s = getProgramFiles();
+		var s1 = getProgramFiles();
+		string s = (string)s1;
 		if(opendir(s+"\\Conquer\\java-15") == null) {
 			string ret = s+"\\Conquer\\java-15.zip";
-			free(s);
+			GLib.free(s1);
 			return ret;
 		}
 		return null;
