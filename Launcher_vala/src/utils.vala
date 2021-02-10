@@ -93,7 +93,6 @@ namespace Launcher {
 	void downloadJDK(IDownloadProgress dp) {
 		var handle = new EasyHandle();
 		if(handle != null) {
-			printf("%s\n",hasToDownloadJava());
 			FILE fp = Posix.FILE.open(hasToDownloadJava(), "wb");
 			if(fp == null) {
 				perror("fopen");
@@ -102,6 +101,7 @@ namespace Launcher {
 			handle.setopt(URL, obtainURL());
 			handle.setopt(WRITEFUNCTION, writeData);
 			handle.setopt(WRITEDATA, fp);
+			handle.setopt(FOLLOWLOCATION, true);
 			handle.setopt(PROGRESSDATA, dp);
 			handle.setopt(NOPROGRESS, 0);
 			handle.setopt(PROGRESSFUNCTION, handleProgressCurl);
