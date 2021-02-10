@@ -1,10 +1,12 @@
 *.class
 *.data
 *.deb
+*.deps
 *.exe
 *.jar
 *.o
 *.ogg
+*.vapi
 *.wav
 *.zip
 .classpath
@@ -38,12 +40,13 @@ Installer/uninstall.exe
 Launcher/.cproject
 Launcher/.project
 Launcher/.settings/
+Launcher/Conquer.license
+Launcher/LICENSE.txt
 Launcher/cJSON
 Launcher/conquer_launcher
 Launcher/launcher
 Launcher/libcjson.a
-Launcher/Conquer.license
-Launcher/LICENSE.txt
+Launcher_vala/src/gen/*.vala
 ScenarioGenerator/*.png
 ScenarioGenerator/.*
 ScenarioGenerator/.classpath
@@ -70,6 +73,3 @@ docs/Documentation.out
 docs/Documentation.pdf
 docs/Documentation.toc
 docs/_minted-Documentation/
-Launcher_vala/src/gen/*.vala
-*.deps
-*.vapi
