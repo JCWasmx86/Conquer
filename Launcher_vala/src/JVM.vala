@@ -1,6 +1,7 @@
 using Gee;
 
 namespace Launcher {
+	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
 	class JVM {
 		onErrorFunc onErrorFunc;
 		Gee.List<string> arguments;

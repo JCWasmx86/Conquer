@@ -4,6 +4,6 @@ namespace Launcher {
 		return (string)null;
 	}
 	string getBaseDirectory() {
-		return Environment.get_variable("APPDATA"))+"\\.conquer";
+		return Environment.get_variable("APPDATA")+"\\.conquer";
 	}
 }

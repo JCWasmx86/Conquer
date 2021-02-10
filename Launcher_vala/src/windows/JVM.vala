@@ -8,8 +8,8 @@ namespace Launcher {
 		}
 
 		public string collectClasspath() {
-			string ret = "-Djava.class.path=";
-			string programFiles = getProgramFiles();
+			var ret = "-Djava.class.path=";
+			var programFiles = (string)getProgramFiles();
 			ret += (programFiles + "\\Conquer\\Conquer_resources.jar;");
 			ret += (programFiles + "\\Conquer\\Conquer_frontend_resources.jar;");
 			ret += (programFiles + "\\Conquer\\jlayer.jar;");
@@ -19,8 +19,8 @@ namespace Launcher {
 			ret += (programFiles + "\\Conquer\\music;");
 			ret += (programFiles + "\\Conquer\\sounds;");
 			ret += (programFiles + "\\Conquer\\images;");
-			ret += (appendAllJarsFromDir + "\\plugins");
-			ret += (appendAllJarsFromDir + "\\strategies");
+			ret += appendAllJarsFromDir(programFiles + "\\plugins", ";");
+			ret += appendAllJarsFromDir(programFiles + "\\strategies",";");
 			foreach(var i in this.userDefined) {
 				ret += i +"/;";
 			}
@@ -34,15 +34,23 @@ namespace Launcher {
 			return ret;
 		}
 	}
-	extern string getProgramFiles();
+	
 	class ModulePathCreator {
 		public string create() {
-			string pf = getProgramFiles();
+			var pf = (string)getProgramFiles();
 			string ret = "--module-path="+pf+"\\Conquer\\Conquer.jar;";
 			ret += pf+"\\Conquer\\Conquer_frontend.jar;";
 			ret += pf+"\\Conquer\\ConquerFrontendSPI.jar;";
 			free(pf);
 			return ret;
 		}
+	}
+	extern char* getProgramFiles();
+	
+	string getOutputDirectory() {
+		var s = (string)getProgramFiles();
+		var ret = s+"\\java-15\\";
+		free(s);
+		return ret;
 	}
 }
