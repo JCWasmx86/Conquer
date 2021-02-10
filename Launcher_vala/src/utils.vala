@@ -88,6 +88,7 @@ namespace Launcher {
 				critical("No JDK binary for your system found!");
 			}
 		}
+		GLib.stdout.printf("Using URL: %s\n",url);
 		return url;
 	}
 	void downloadJDK(IDownloadProgress dp) {
