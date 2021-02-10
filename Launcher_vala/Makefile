@@ -1,7 +1,7 @@
 ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include"
 ifeq ($(OS),Windows_NT)
 	OS_TYPE = windows
-	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" -X -mwindows
+	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" #-X -mwindows
 else
 	OS_TYPE = linux
 	ARGS += -X -I$(JAVA_HOME)/include/linux -X -ldl
