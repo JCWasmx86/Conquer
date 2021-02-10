@@ -19,12 +19,36 @@ task buildInstaller() {
 
 		copy {
 			from "${project.rootDir}/auxiliary/Conquer.license", "${project.rootDir}/auxiliary/LICENSE.txt"
-			into "."
+			into "data"
 		}
 		copy {
 			from "${project.rootDir}/auxiliary/jars"
 			include "*.jar"
 			into "data"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Belenos.data"
+			include "Belenos.png"
+			into "data/scenarios/Belenos"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Slaine.data"
+			include "Slaine.png"
+			into "data/scenarios/Slaine"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Etiona.data"
+			include "Etiona.png"
+			into "data/scenarios/Etiona"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator"
+			include "Freedo.data"
+			include "Freedo.png"
+			into "data/scenarios/Freedo"
 		}
 		copy {
 			from "${project.rootDir}/Conquer/build/libs"
