@@ -10,6 +10,8 @@ namespace Launcher {
 			if(handle != null) {
 				handle.setopt(URL,url);
 				handle.setopt(WRITEFUNCTION,appendJSON);
+				handle.setopt(VERBOSE,true);
+				handle.setopt(SSL_VERIFYPEER,false);
 				handle.setopt(WRITEDATA,sb);
 				Code c = handle.perform();
 				if(c != OK){
