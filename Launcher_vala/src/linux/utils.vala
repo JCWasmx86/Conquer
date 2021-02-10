@@ -4,7 +4,7 @@ namespace Launcher {
 	string? hasToDownloadJava() {
 		char* alreadyInstalledJava = findExistingJavaInstallWithMatchingVersion();
 		if(alreadyInstalledJava != null) {
-			//return null;
+			return null;
 		}
 		string baseDir = geteuid() == 0?"/opt":getBaseDirectory();
 		string java15Dir = baseDir + "/java-15";
@@ -19,7 +19,7 @@ namespace Launcher {
 			return "/opt/java-15";
 		}
 	}
-	private string? findExistingJavaInstallWithMatchingVersion() {
+	string? findExistingJavaInstallWithMatchingVersion() {
 		string jvmDirectory = getLinuxJavaDirectory();
 		if(jvmDirectory != null&&opendir(jvmDirectory) != null) {
 			int version = readReleaseFile(jvmDirectory);
