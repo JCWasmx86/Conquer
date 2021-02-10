@@ -22,7 +22,7 @@ namespace Launcher {
 			ret += appendAllJarsFromDir(programFiles + "\\plugins", ";");
 			ret += appendAllJarsFromDir(programFiles + "\\strategies",";");
 			foreach(var i in this.userDefined) {
-				ret += i +"/;";
+				ret += i +";";
 			}
 			string baseDir = getBaseDirectory();
 			ret += appendAllJarsFromDir(baseDir,";");
