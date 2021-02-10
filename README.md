@@ -31,9 +31,7 @@ echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master
 wget https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/jcwasmx86.pgp&&sudo apt-key add jcwasmx86.pgp&&rm jcwasmx86.pgp
 # Install conquer
 sudo apt update&&sudo apt install conquer
-# Run conquer (CLI only)
-launcher
-# Run conquer (GTK frontend)
+# Run conquer
 conquer_launcher
 ```
 #### Windows

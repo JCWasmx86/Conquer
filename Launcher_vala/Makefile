@@ -1,7 +1,7 @@
 ARGS = --disable-version-header -X -O2 --vapidir=.
 ifeq ($(OS),Windows_NT)
 	OS_TYPE = windows
-	ARGS += -X -Wl,--no-insert-timestamp -X -mwindows
+	ARGS += -X -Wl,--no-insert-timestamp -X -mwindows src/windows/*.c
 else
 	OS_TYPE = linux
 endif
@@ -15,7 +15,7 @@ generateFiles: src/gen/getLinuxJavaDirectory.vala.in
 	cpp -E -P src/gen/adoptopenJDKURL.vala.in >src/gen/adoptopenJDKURL.vala
 	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
 build:
-	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher
+	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/*.c -o conquer_launcher
 downloadVAPIFiles:
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
