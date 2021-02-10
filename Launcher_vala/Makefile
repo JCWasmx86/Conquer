@@ -24,3 +24,22 @@ clean:
 	rm -f libcurl.deps libcurl.vapi
 	rm -f conquer_launcher conquer_launcher.exe
 	rm -f src/gen/*.vala
+	rm -f *.o
+	rm -f *.exe
+	rm -rf data
+	rm data.zip
+
+Installer.exe: install.o buildInstallRC buildIncludeFile
+	$(CC) -mwindows -Wl,--no-insert-timestamp $(CFLAGS) install.o installResource.o inc.o -o Installer.exe $(LDCFLAGS)
+install.o: install/main.c
+	$(CC) $(CFLAGS) -o install.o install/main.c
+buildIncludeFile: install/inc.s
+	$(CC) -c -o inc.o install/inc.s
+buildInstallRC: install/resource.rc
+	windres -I include -I install install/resource.rc installResource.o
+uninstall.exe: buildUninstallRC uninstallObject
+	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
+buildUninstallRC: uninstall/resource.rc
+	windres -I include -I uninstall uninstall/resource.rc uninstallResource.o
+uninstallObject: uninstall/main.c
+	$(CC) $(CFLAGS) -O3 -Wall -Wextra -pedantic -c src/main.c -o uninstall.o
