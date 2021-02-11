@@ -49,14 +49,15 @@ namespace Launcher {
 			button.clicked.connect(() => {
 				this.remove(button);
 				button.destroy();
+				this.progressBar = new ProgressBar();
+				this.progressBar.set_show_text(true);
+				this.pack_start(this.progressBar,false);
+				window.show_all();
 				if(hasToDownloadJava() != null) {
-					this.progressBar = new ProgressBar();
-					this.progressBar.set_show_text(true);
-					this.pack_start(this.progressBar,false);
-					window.show_all();
 					new Thread<void> ("thread_a", ()=>{
 						downloadJDK(this);
 						extractJDK(extractReceiver);
+						tryUpdating();
 						window.hide();
 						new Thread<void>("thread_b", () => {
 							JVM jvm = new JVM(null);
@@ -70,6 +71,7 @@ namespace Launcher {
 				}else {
 					window.hide();
 					new Thread<void>("jvm", () => {
+						tryUpdating();
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
