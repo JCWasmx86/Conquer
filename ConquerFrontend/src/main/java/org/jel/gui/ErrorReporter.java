@@ -43,7 +43,6 @@ public class ErrorReporter {
 				}
 			});
 			bw.write("Services\n\n");
-			bw.write("ConquerFrontend\n");
 			ErrorReporter.class.getModule().getDescriptor().uses().forEach(a -> {
 				try{
 					var clazz = Class.forName(a);
@@ -59,23 +58,7 @@ public class ErrorReporter {
 					Shared.LOGGER.exception(cnfe);
 				}
 			});
-			bw.write("Conquer\n");
-			Shared.class.getModule().getDescriptor().uses().forEach(a -> {
-				try{
-					var clazz = Class.forName(a);
-					ServiceLoader.load(clazz).stream().map(Provider::get)
-					.map(Object::getClass).forEach(b -> {
-						try{
-							bw.write(clazz.toString()+" is provided by "+b.toString());
-						}catch(IOException e) {
-							Shared.LOGGER.exception(e);
-						}
-					});
-				}catch(ClassNotFoundException cnfe) {
-					Shared.LOGGER.exception(cnfe);
-				}
-			});
-		}catch(final IOException e) {
+		} catch(final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
 		return logfile.getAbsolutePath();
