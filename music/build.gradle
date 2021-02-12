@@ -30,6 +30,7 @@ task buildMusic() {
 					Process process = builder.inheritIO().directory(dir).start();
 					if(process.waitFor() != 0) {
 						System.err.println("Failed: "+file+" ("+i+"/10)");
+						f2.delete();//Otherwise, it will just skip
 					} else {
 						break;
 					}
