@@ -54,10 +54,10 @@ int main(int argc, char **argv) {
 		char *cc = calloc(
 			strlen(output) + strlen(archive_entry_pathname(entry)) + 1, 1);
 		assert(cc);
-		printf("%s ",archive_entry_pathname(entry));
+		printf("%s ", archive_entry_pathname(entry));
 		sprintf(cc, "%s%s%s", output, "/", archive_entry_pathname(entry));
 		archive_entry_set_pathname(entry, cc);
-		printf(" -> %s\n",archive_entry_pathname(entry));
+		printf(" -> %s\n", archive_entry_pathname(entry));
 		result = archive_write_header(out, entry);
 		if (result != ARCHIVE_OK) {
 			fprintf(stderr, "Error writing header: %s %d",
