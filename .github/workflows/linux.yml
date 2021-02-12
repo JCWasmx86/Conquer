@@ -1,9 +1,9 @@
 name: Linux
 on:
     push:
-        branches: [main]
+        branches: [launcher-rewrite]
     pull_request:
-        branches: [main]
+        branches: [launcher-rewrite]
     workflow_dispatch:
 jobs:
   build:
@@ -41,43 +41,6 @@ jobs:
           cd ../../..
           export QT_QPA_PLATFORM=offscreen
           gradle clean
-          gradle assemble
-          mkdir oldFiles
-          mv debs/*.deb oldFiles
-          gradle clean
-          gradle assemble
-          cd oldFiles
-          export CONQUER_DEB_OLD=$(sha256sum conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB_OLD=$(sha256sum conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB_OLD=$(sha256sum conquer-engine.deb |tr ' ' '\n'|head -n 1)
-          cd ..
-          export CONQUER_DEB=$(sha256sum debs/conquer.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_GUI_DEB=$(sha256sum debs/conquer-gui.deb |tr ' ' '\n'|head -n 1)
-          export CONQUER_ENGINE_DEB=$(sha256sum debs/conquer-engine.deb |tr ' ' '\n'|head -n 1)
-          if [ $CONQUER_DEB_OLD != $CONQUER_DEB ]; then
-            echo conquer.deb differs:
-            echo Old: $CONQUER_DEB_OLD
-            echo New: $CONQUER_DEB
-            exit 1
-          else
-            echo conquer.deb matches: $CONQUER_DEB
-          fi
-          if [ $CONQUER_GUI_DEB_OLD != $CONQUER_GUI_DEB ]; then
-            echo conquer-gui.deb differs:
-            echo Old: $CONQUER_GUI_DEB_OLD
-            echo New: $CONQUER_GUI_DEB
-            exit 2
-          else
-            echo conquer-gui.deb matches: $CONQUER_GUI_DEB
-          fi
-          if [ $CONQUER_ENGINE_DEB_OLD != $CONQUER_ENGINE_DEB ]; then
-            echo conquer-engine.deb differs:
-            echo Old: $CONQUER_ENGINE_DEB_OLD
-            echo New: $CONQUER_ENGINE_DEB
-            exit 3
-          else
-            echo conquer-engine.deb matches: $CONQUER_ENGINE_DEB
-          fi
           gradle createZipFileForDistribution
       - uses: actions/upload-artifact@v2
         with:
