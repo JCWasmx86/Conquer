@@ -29,6 +29,8 @@ jobs:
             mingw-w64-x86_64-headers-git
             mingw-w64-x86_64-gtk3
             mingw-w64-x86_64-vala
+            mingw-w64-x86_64-libgee
+            mingw-w64-x86_64-json-glib
             zip
             unzip
             p7zip
