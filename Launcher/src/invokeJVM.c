@@ -50,10 +50,9 @@ void launcher_invokeJVM(char **options, int numOptions, onErrorFunc func) {
 		char *reportLocation =
 			(char *)(*env)->GetStringUTFChars(env, string, NULL);
 		printf("%s\n%s\n",reportLocation,stacktrace);
-		func(g_string_new(stacktrace)->str, g_string_new(reportLocation)->str);
-		jclass cls =(*env)->FindClass(env,"java/lang/System");
-		jmethodID exitM = (*env)->GetStaticMethodID(env,cls,"exit","(I)V");
-		(*env)->CallStaticVoidMethod(env,cls,exitM,-1);
+		if(func) {
+			func(stacktrace, reportLocation);
+		}
 		while(1) {};
 	}
 	(*jvm)->DestroyJavaVM(jvm);
