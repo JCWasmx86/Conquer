@@ -25,10 +25,10 @@ namespace Launcher {
 			options[4] = new ModulePathCreator().create();
 			options[5] = "--add-modules=org.jel.game,org.jel.frontend";
 			options[6] = "-Dsun.java2d.opengl=True";
-			options[7] = "-m";
-			options[8] = "org.jel.frontend/org.jel.gui.Intro";
+			options[7 + arguments.size] = "-m";
+			options[8 + arguments.size] = "org.jel.frontend/org.jel.gui.Intro";
 			for(int i = 0; i < arguments.size; i++) {
-				options[9 + i] = arguments.get(i);
+				options[7 + i] = arguments.get(i);
 			}
 			invokeJVM(options,arguments.size + 9, this.onErrorFunc);
 		}
