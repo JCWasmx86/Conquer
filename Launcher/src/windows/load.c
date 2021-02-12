@@ -1,19 +1,16 @@
+#include <assert.h>
 #include <jni.h>
 #include <shlobj.h>
 #include <windows.h>
-#include <assert.h>
 
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 
-
-void closeLibrary(void* handle) {
-	FreeLibrary(handle);
-}
+void closeLibrary(void *handle) { FreeLibrary(handle); }
 createJVM findFunction(void *file) {
 	return (createJVM)GetProcAddress(file, "JNI_CreateJavaVM");
 }
 
-void* loadJavaLibrary() {
+void *loadJavaLibrary() {
 	char *directory = calloc(MAX_PATH * 2, 1);
 	assert(directory);
 	if (SHGetSpecialFolderPathA(NULL, directory, CSIDL_PROGRAM_FILES, FALSE) ==

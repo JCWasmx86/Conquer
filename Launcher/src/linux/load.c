@@ -1,21 +1,21 @@
+#include <assert.h>
+#include <dirent.h>
 #include <dlfcn.h>
+#include <errno.h>
+#include <jni.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <string.h>
-#include <errno.h>
-#include <dirent.h>
-#include <jni.h>
 
-static int dirExists(const char* name);
-char* launcher_getBaseDirectory(void);
+static int dirExists(const char *name);
+char *launcher_getBaseDirectory(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
-extern char* launcher_findExistingJavaInstallWithMatchingVersion();
+extern char *launcher_findExistingJavaInstallWithMatchingVersion();
 
-void* loadJavaLibrary() {
+void *loadJavaLibrary() {
 	char *directory = launcher_findExistingJavaInstallWithMatchingVersion();
-	if(directory == NULL) {
+	if (directory == NULL) {
 		if (dirExists("/opt/java-15")) {
 			char *s = "/opt/java-15/";
 			directory = calloc(strlen(s) + 1, 1);
@@ -37,15 +37,13 @@ void* loadJavaLibrary() {
 	void *handle = dlopen(pathToSo, RTLD_LAZY);
 	free(pathToSo);
 	free(directory);
-	if(!handle) {
+	if (!handle) {
 		perror("dlopen");
 		return NULL;
 	}
 	return handle;
 }
-void closeLibrary(void* handle) {
-	dlclose(handle);
-}
+void closeLibrary(void *handle) { dlclose(handle); }
 createJVM findFunction(void *file) {
 	return (createJVM)dlsym(file, "JNI_CreateJavaVM");
 }

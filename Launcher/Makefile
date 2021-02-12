@@ -44,3 +44,5 @@ buildUninstallRC: uninstall/resource.rc
 	windres -I include -I uninstall uninstall/resource.rc uninstallResource.o
 uninstallObject: uninstall/main.c
 	$(CC) $(CFLAGS) -O3 -Wall -Wextra -pedantic -c uninstall/main.c -o uninstall.o
+format:
+	clang-format --style=file -verbose -i src/*.c include/*.h src/**/*.c uninstall/*.c install/*.c

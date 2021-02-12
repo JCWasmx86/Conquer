@@ -1,26 +1,26 @@
-#include <jni.h>
-#include <stdlib.h>
 #include <assert.h>
 #include <gmodule.h>
+#include <jni.h>
+#include <stdlib.h>
 
-extern void* loadJavaLibrary(void);
+extern void *loadJavaLibrary(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
-typedef void (*onErrorFunc)(char* stacktrace, char* reportLocation);
+typedef void (*onErrorFunc)(char *stacktrace, char *reportLocation);
 
-extern createJVM findFunction(void*);
-extern void closeLibrary(void*);
+extern createJVM findFunction(void *);
+extern void closeLibrary(void *);
 
-static char* getStacktrace(JNIEnv *env, jthrowable throwable);
+static char *getStacktrace(JNIEnv *env, jthrowable throwable);
 
-void launcher_invokeJVM(char**options, int numOptions,onErrorFunc func) {
-	void* handle = loadJavaLibrary();
+void launcher_invokeJVM(char **options, int numOptions, onErrorFunc func) {
+	void *handle = loadJavaLibrary();
 	assert(handle);
 	createJVM create = findFunction(handle);
 	JavaVMOption *jvmoptions = calloc(numOptions, sizeof(JavaVMOption));
-	for(int i = 0; i < numOptions; i++) {
+	for (int i = 0; i < numOptions; i++) {
 		jvmoptions[i].optionString = options[i];
 	}
-	JavaVMInitArgs vmArgs = {JNI_VERSION_10,numOptions,jvmoptions, 1};
+	JavaVMInitArgs vmArgs = {JNI_VERSION_10, numOptions, jvmoptions, 1};
 	JavaVM *jvm;
 	JNIEnv *env = NULL;
 	jint status = create(&jvm, (void **)&env, &vmArgs);
@@ -32,27 +32,32 @@ void launcher_invokeJVM(char**options, int numOptions,onErrorFunc func) {
 	assert(introClass);
 	jclass stringClass = (*env)->FindClass(env, "java/lang/String");
 	assert(stringClass);
-	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main", "([Ljava/lang/String;)V");
+	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main",
+													 "([Ljava/lang/String;)V");
 	jobjectArray arr = (*env)->NewObjectArray(env, 0, stringClass, NULL);
 	(*env)->CallStaticVoidMethod(env, introClass, mainMethod, arr);
 	jthrowable thrown = (*env)->ExceptionOccurred(env);
 	if (thrown) {
 		(*env)->ExceptionClear(env);
-		char* stacktrace = getStacktrace(env, thrown);
-		jclass reporter = (*env)->FindClass(env,"org/jel/gui/ErrorReporter");
+		char *stacktrace = getStacktrace(env, thrown);
+		jclass reporter = (*env)->FindClass(env, "org/jel/gui/ErrorReporter");
 		assert(reporter);
-		jmethodID report = (*env)->GetStaticMethodID(env, reporter, "writeErrorLog", "(Ljava/lang/Throwable;)Ljava/lang/String;");
-		jobject string = (*env)->CallStaticObjectMethod(env,reporter,report,thrown);
-		char* reportLocation = (char*)(*env)->GetStringUTFChars(env,string,NULL);
-		func(strdup(stacktrace),strdup(reportLocation));
+		jmethodID report = (*env)->GetStaticMethodID(
+			env, reporter, "writeErrorLog",
+			"(Ljava/lang/Throwable;)Ljava/lang/String;");
+		jobject string =
+			(*env)->CallStaticObjectMethod(env, reporter, report, thrown);
+		char *reportLocation =
+			(char *)(*env)->GetStringUTFChars(env, string, NULL);
+		func(strdup(stacktrace), strdup(reportLocation));
 		return;
 	}
 	(*jvm)->DestroyJavaVM(jvm);
-	cleanup:
-		free(jvmoptions);
-		closeLibrary(handle);
+cleanup:
+	free(jvmoptions);
+	closeLibrary(handle);
 }
-static char* getStacktrace(JNIEnv* env, jthrowable throwable) {
+static char *getStacktrace(JNIEnv *env, jthrowable throwable) {
 	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
 	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
 	jmethodID noArgsConstructor =
@@ -70,5 +75,5 @@ static char* getStacktrace(JNIEnv* env, jthrowable throwable) {
 										"()Ljava/lang/String;");
 	assert(mid);
 	jstring string = (*env)->CallObjectMethod(env, sw, mid);
-	return (char*)(*env)->GetStringUTFChars(env, string, NULL);
+	return (char *)(*env)->GetStringUTFChars(env, string, NULL);
 }
