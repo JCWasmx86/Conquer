@@ -123,11 +123,6 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		tutorial.setFont(play.getFont());
 		tutorial.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panel.add(tutorial);
-		final var crash = new JButton("Crash");
-		crash.addActionListener(a->{
-			ErrorReporter.writeErrorLog(new RuntimeException());
-		});
-		panel.add(crash);
 		this.add(panel);
 	}
 

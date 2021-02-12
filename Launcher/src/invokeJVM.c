@@ -5,7 +5,7 @@
 
 extern void *loadJavaLibrary(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
-typedef void (*onErrorFunc)(char *stacktrace, char *reportLocation);
+typedef void (*onErrorFunc)(gchar* stacktrace, gchar *reportLocation);
 
 extern createJVM findFunction(void *);
 extern void closeLibrary(void *);
@@ -49,8 +49,12 @@ void launcher_invokeJVM(char **options, int numOptions, onErrorFunc func) {
 			(*env)->CallStaticObjectMethod(env, reporter, report, thrown);
 		char *reportLocation =
 			(char *)(*env)->GetStringUTFChars(env, string, NULL);
-		func(strdup(stacktrace), strdup(reportLocation));
-		return;
+		printf("%s\n%s\n",reportLocation,stacktrace);
+		func(g_string_new(stacktrace)->str, g_string_new(reportLocation)->str);
+		jclass cls =(*env)->FindClass(env,"java/lang/System");
+		jmethodID exitM = (*env)->GetStaticMethodID(env,cls,"exit","(I)V");
+		(*env)->CallStaticVoidMethod(env,cls,exitM,-1);
+		while(1) {};
 	}
 	(*jvm)->DestroyJavaVM(jvm);
 cleanup:
