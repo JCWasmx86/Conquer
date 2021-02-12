@@ -50,7 +50,7 @@ jobs:
           export QT_QPA_PLATFORM=windows
           gradle assemble
           gradle Conquer:runTestsuites
-      - name: Test reproducible build
+      - name: Build and upload SDK
         run: |
           cd tmp/gradle/bin
           export PATH=`pwd`:$PATH:.
