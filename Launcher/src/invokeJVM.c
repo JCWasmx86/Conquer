@@ -1,15 +1,18 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <gmodule.h>
 
 extern void* loadJavaLibrary(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
-typedef void (*onErrorFunc)(char* stacktrace, char* systemProperties, char* environmentVariables);
+typedef void (*onErrorFunc)(char* stacktrace, char* reportLocation);
 
 extern createJVM findFunction(void*);
 extern void closeLibrary(void*);
 
-void launcher_invokeJVM(char**options, int numOptions) {
+static char* getStacktrace(JNIEnv *env, jthrowable throwable);
+
+void launcher_invokeJVM(char**options, int numOptions,onErrorFunc func) {
 	void* handle = loadJavaLibrary();
 	assert(handle);
 	createJVM create = findFunction(handle);
@@ -32,11 +35,40 @@ void launcher_invokeJVM(char**options, int numOptions) {
 	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main", "([Ljava/lang/String;)V");
 	jobjectArray arr = (*env)->NewObjectArray(env, 0, stringClass, NULL);
 	(*env)->CallStaticVoidMethod(env, introClass, mainMethod, arr);
-	if ((*env)->ExceptionOccurred(env)) {
-		(*env)->ExceptionDescribe(env);
+	jthrowable thrown = (*env)->ExceptionOccurred(env);
+	if (thrown) {
+		(*env)->ExceptionClear(env);
+		char* stacktrace = getStacktrace(env, thrown);
+		jclass reporter = (*env)->FindClass(env,"org/jel/gui/ErrorReporter");
+		assert(reporter);
+		jmethodID report = (*env)->GetStaticMethodID(env, reporter, "writeErrorLog", "(Ljava/lang/Throwable;)Ljava/lang/String;");
+		jobject string = (*env)->CallStaticObjectMethod(env,reporter,report,thrown);
+		char* reportLocation = (char*)(*env)->GetStringUTFChars(env,string,NULL);
+		func(strdup(stacktrace),strdup(reportLocation));
+		return;
 	}
 	(*jvm)->DestroyJavaVM(jvm);
 	cleanup:
 		free(jvmoptions);
 		closeLibrary(handle);
+}
+static char* getStacktrace(JNIEnv* env, jthrowable throwable) {
+	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
+	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
+	jmethodID noArgsConstructor =
+		(*env)->GetMethodID(env, stringWriter, "<init>", "()V");
+	jmethodID printWriterConstructor =
+		(*env)->GetMethodID(env, printWriter, "<init>", "(Ljava/io/Writer;)V");
+	jobject sw = (*env)->NewObject(env, stringWriter, noArgsConstructor);
+	jobject pw =
+		(*env)->NewObject(env, printWriter, printWriterConstructor, sw);
+	jmethodID printStackTrace =
+		(*env)->GetMethodID(env, (*env)->GetObjectClass(env, throwable),
+							"printStackTrace", "(Ljava/io/PrintWriter;)V");
+	(*env)->CallVoidMethod(env, throwable, printStackTrace, pw);
+	jmethodID mid = (*env)->GetMethodID(env, stringWriter, "toString",
+										"()Ljava/lang/String;");
+	assert(mid);
+	jstring string = (*env)->CallObjectMethod(env, sw, mid);
+	return (char*)(*env)->GetStringUTFChars(env, string, NULL);
 }

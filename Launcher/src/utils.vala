@@ -2,6 +2,7 @@ using Posix;
 using Gee;
 using Json;
 using Curl;
+using Gtk;
 
 namespace Launcher {
 	string appendAllJarsFromDir(string directory, string separator) {
@@ -191,6 +192,32 @@ namespace Launcher {
 			}catch(Error e) {
 				GLib.stderr.printf("%s\n",e.message);
 			}
+		}
+	}
+	void showErrorScreen(owned char* stacktrace, owned char* reportLocation) {
+		new CrashReporter((string)stacktrace,(string)reportLocation).doIt();
+	}
+	class CrashReporter : GLib.Object {
+		string stacktrace;
+		string reportLocation;
+		public CrashReporter(string st,string rl) {
+			this.stacktrace=st;
+			this.reportLocation=rl;
+		}
+		bool showWindow() {
+			var window = new Window();
+			window.title = "Conquer crashed";
+			window.window_position = WindowPosition.CENTER;
+			var buffer = new TextBuffer(null);
+			buffer.text= "Full report at: %s\n\n%s\n\n".printf(this.reportLocation, this.stacktrace);
+			var textView = new TextView.with_buffer(buffer);
+			window.add(textView);
+			window.show_all();
+			Gtk.main();
+			return true;
+		}
+		public void doIt() {
+			Gdk.threads_add_idle(showWindow);
 		}
 	}
 }
