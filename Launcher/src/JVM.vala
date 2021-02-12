@@ -1,13 +1,13 @@
 using Gee;
 
 namespace Launcher {
-	delegate void onErrorFunc(string stacktrace,string systemProperties, string environmentVariables);
+	delegate void onErrorFunc(char* stacktrace,char* reportLocation);
 	class JVM {
 		onErrorFunc onErrorFunc;
 		Gee.List<string> arguments;
 		Gee.List<string> classpaths;
 
-		public JVM(onErrorFunc? func) {
+		public JVM(onErrorFunc func) {
 			this.onErrorFunc = func;
 		}
 		public void addJVMArguments(Gee.List<string> arguments) {
