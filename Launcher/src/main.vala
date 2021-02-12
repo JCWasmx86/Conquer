@@ -60,7 +60,7 @@ namespace Launcher {
 						tryUpdating();
 						window.hide();
 						new Thread<void>("thread_b", () => {
-							JVM jvm = new JVM(showErrorScreen);
+							JVM jvm = new JVM(null);
 							jvm.addJVMArguments(jvmOptions.toList());
 							jvm.addClasspaths(classpaths.toList());
 							Configuration.dump(jvmOptions.toList(),classpaths.toList());
@@ -72,7 +72,7 @@ namespace Launcher {
 					window.hide();
 					new Thread<void>("jvm", () => {
 						tryUpdating();
-						JVM jvm = new JVM(showErrorScreen);
+						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(),classpaths.toList());
