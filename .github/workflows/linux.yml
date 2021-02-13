@@ -36,14 +36,7 @@ jobs:
           mv gradle-6.8 gradle
           cd gradle/bin
           export PATH=`pwd`:$PATH:.
-          cd ../../../Launcher
-          #Hack
-          #wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.deps
-          #wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.vapi
-          #sudo mv libarchive.deps /usr/share/vala-0.40/vapi
-          #sudo mv libarchive.vapi /usr/share/vala-0.40/vapi
-          #End hack
-          cd ..
+          cd ../../..
           gradle assemble
           gradle Conquer:runTestsuites
       - name: Build and upload SDK
