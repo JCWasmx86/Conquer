@@ -24,16 +24,18 @@ namespace Launcher {
 		}
 		void initConfig() {
 			Configuration config = Configuration.readConfig();
-			if(config == null)
+			if(config == null) {
 				return;
+			}
 			foreach(var i in config.classpaths) {
 				this.classpaths.addElement(i);
 			}
 			foreach(var i in config.arguments) {
 				this.jvmOptions.addElement(i);
 			}
-			if(config.javaFolder != null)
+			if(config.javaFolder != null) {
 				selectJava.configure(config.javaFolder);
+			}
 		}
 	}
 
@@ -162,8 +164,9 @@ namespace Launcher {
 			this.pack_start(button, false, false);
 			button.clicked.connect(() => {
 				var text = entry.text;
-				if(text.strip().length == 0)
+				if(text.strip().length == 0) {
 					return;
+				}
 				list.addElement(text.strip());
 				entry.text = "";
 			});
@@ -194,11 +197,13 @@ namespace Launcher {
 			this.fileChooserButton.hide();
 		}
 		public string? getFolder() {
-			if(check.get_active())
+			if(check.get_active()) {
 				return null;
+			}
 			var ret = this.fileChooserButton.get_filename();
-			if(ret != null && ret.has_suffix("bin"))
+			if(ret != null && ret.has_suffix("bin")) {
 				ret += "/../";
+			}
 			return ret;
 		}
 		public void configure(string s) {
@@ -225,8 +230,9 @@ namespace Launcher {
 			menu.append(item);
 			menu.show_all();
 			button_press_event.connect(event => {
-				if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3 && store.iter_n_children(null) > 0)
+				if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3 && store.iter_n_children(null) > 0) {
 					menu.popup_at_pointer(event);
+				}
 				return true;
 			});
 		}
