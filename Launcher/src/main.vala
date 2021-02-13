@@ -8,19 +8,19 @@ namespace Launcher {
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
-			this.jvmOptions=new InputList("JVM Arguments","Add JVM argument");
+			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument");
 			box.pack_start(this.jvmOptions);
 			this.classpaths = new InputList("Classpaths", "Add classpath");
 			box.pack_start(this.classpaths);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions,this.selectJava, window);
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava, window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
 			window.show_all();
 			selectJava.change();
-			initConfig();
+			this.initConfig();
 		}
 		void initConfig() {
 			Configuration config = Configuration.readConfig();
