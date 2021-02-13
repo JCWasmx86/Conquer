@@ -38,10 +38,10 @@ jobs:
           export PATH=`pwd`:$PATH:.
           cd ../../../Launcher
           #Hack
-          wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.deps
-          wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.vapi
-          sudo mv libarchive.deps /usr/share/vala-0.40/vapi
-          sudo mv libarchive.vapi /usr/share/vala-0.40/vapi
+          #wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.deps
+          #wget https://gitlab.gnome.org/GNOME/vala/-/raw/master/vapi/libarchive.vapi
+          #sudo mv libarchive.deps /usr/share/vala-0.40/vapi
+          #sudo mv libarchive.vapi /usr/share/vala-0.40/vapi
           #End hack
           cd ..
           gradle assemble
