@@ -78,7 +78,7 @@ namespace Launcher {
 							Process.exit(0);
 						});
 					});
-				}else {
+				} else {
 					window.hide();
 					new Thread<void>("jvm", () => {
 						tryUpdating();
@@ -186,7 +186,7 @@ namespace Launcher {
 				if(this.check.get_active()) {
 					this.check.set_label("Find Java 15 automatically");
 					this.fileChooserButton.hide();
-				}else {
+				} else {
 					this.check.set_label("Use local Java 15 installation: ");
 					this.show_all();
 				}
