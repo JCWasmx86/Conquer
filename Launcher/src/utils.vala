@@ -131,7 +131,7 @@ namespace Launcher {
 	class Configuration {
 		public Gee.List<string> classpaths;
 		public Gee.List<string> arguments;
-		
+		public string? javaFolder;
 		public static Configuration? readConfig() {
 			makeDirectory(getBaseDirectory());
 			string file = getBaseDirectory()+"/config.json";
@@ -161,10 +161,13 @@ namespace Launcher {
 						ret.arguments.add(node.get_string());
 					});
 				}
+				if(object.has_member("java")) {
+					ret.javaFolder = object.get_string_member("java");
+				}
 			}
 			return ret;
 		}
-		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths) {
+		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths, string? javaFolder) {
 			try{
 				GLib.File.new_for_path(getBaseDirectory()+"/config.json").@delete();
 			}catch(Error e) {
@@ -181,6 +184,11 @@ namespace Launcher {
 			var object = new Json.Object();
 			object.set_array_member("classpaths",jsonClasspaths);
 			object.set_array_member("options",jsonArguments);
+			if(javaFolder == null) {
+				object.set_null_member("java");
+			}else {
+				object.set_string_member("java",javaFolder);
+			}
 			var generator = new Json.Generator();
 			var node = new Json.Node(NodeType.OBJECT);
 			node.init_object(object);
