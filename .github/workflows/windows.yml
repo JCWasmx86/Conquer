@@ -55,6 +55,7 @@ jobs:
           gradle Conquer:runTestsuites
       - name: Build and upload SDK
         run: |
+          pkgfile --update
           cd tmp/gradle/bin
           export PATH=`pwd`:$PATH:.
           cd ../../App/Musescore/bin
