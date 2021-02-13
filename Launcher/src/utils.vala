@@ -186,8 +186,7 @@ namespace Launcher {
 			object.set_array_member("options", jsonArguments);
 			if(javaFolder == null) {
 				object.set_null_member("java");
-			}
-			else{
+			} else {
 				object.set_string_member("java", javaFolder);
 			}
 			var generator = new Json.Generator();

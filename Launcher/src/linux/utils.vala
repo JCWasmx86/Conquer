@@ -15,8 +15,7 @@ namespace Launcher {
 	string getOutputDirectory() {
 		if(geteuid() != 0) {
 			return getBaseDirectory() + "/java-15/";
-		}
-		else{
+		} else {
 			return "/opt/java-15";
 		}
 	}
