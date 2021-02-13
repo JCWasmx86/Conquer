@@ -3,7 +3,7 @@
 #include <jni.h>
 #include <stdlib.h>
 
-extern void *loadJavaLibrary(char* directory);
+extern void *loadJavaLibrary(char *directory);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 typedef void (*onErrorFunc)(gchar *stacktrace, gchar *reportLocation);
 
@@ -12,7 +12,8 @@ extern void closeLibrary(void *);
 
 static char *getStacktrace(JNIEnv *env, jthrowable throwable);
 
-void launcher_invokeJVM(char **options, int numOptions, char* directory, onErrorFunc func) {
+void launcher_invokeJVM(char **options, int numOptions, char *directory,
+						onErrorFunc func) {
 	void *handle = loadJavaLibrary(directory);
 	assert(handle);
 	createJVM create = findFunction(handle);
