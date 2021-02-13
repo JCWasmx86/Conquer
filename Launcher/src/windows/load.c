@@ -6,7 +6,7 @@
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 
 void closeLibrary(void *handle) {
-	assert(file);
+	assert(handle);
 	FreeLibrary(handle);
 }
 createJVM findFunction(void *file) {
