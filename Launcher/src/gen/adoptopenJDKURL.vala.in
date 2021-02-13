@@ -22,9 +22,13 @@ namespace Launcher {
 		}
 		string? parseJSON(string json) {
 			var parser = new Parser();
-			parser.load_from_data(json);
+			try{
+				parser.load_from_data(json);
+			}catch(Error e) {
+				critical(e.message);
+				return null;
+			}
 			var node = parser.get_root();
-			//TODO: Error checking?
 			var array = node.get_array();
 			for(var i = 0u; i < array.get_length(); i++) {
 				var object = array.get_object_element(i);

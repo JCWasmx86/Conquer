@@ -51,14 +51,15 @@ namespace Launcher {
 			this.pack_start(button, false, false);
 			button.clicked.connect(() => {
 				var javaFolder = selectJava.getFolder();
-				GLib.stdout.printf("%s\n",javaFolder);
+				var givenVersion = javaFolder == null ? -1 : readReleaseFile(javaFolder);
+				var isMatching = javaFolder == null ? false : givenVersion == 15;
 				this.remove(button);
 				button.destroy();
 				this.progressBar = new ProgressBar();
 				this.progressBar.set_show_text(true);
 				this.pack_start(this.progressBar,false);
 				window.show_all();
-				if(hasToDownloadJava() != null) {
+				if((!isMatching) && hasToDownloadJava() != null) {
 					new Thread<void> ("thread_a", ()=>{
 						downloadJDK(this);
 						extractJDK(extractReceiver);
@@ -69,7 +70,7 @@ namespace Launcher {
 							jvm.addJVMArguments(jvmOptions.toList());
 							jvm.addClasspaths(classpaths.toList());
 							Configuration.dump(jvmOptions.toList(),classpaths.toList());
-							jvm.run();
+							jvm.run(null);
 							Process.exit(0);
 						});
 					});
@@ -81,7 +82,7 @@ namespace Launcher {
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(),classpaths.toList());
-						jvm.run();
+						jvm.run(isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
 				}
@@ -173,16 +174,16 @@ namespace Launcher {
 		private CheckButton check;
 		public SelectJavaBox() {
 			this.set_orientation(Orientation.HORIZONTAL);
-			this.check = new CheckButton.with_label("Download Java");
+			this.check = new CheckButton.with_label("Find Java 15 automatically");
 			this.check.set_active(true);
 			this.pack_start(this.check);
-			this.fileChooserButton = new FileChooserButton("Select Java installation", FileChooserAction.SELECT_FOLDER);
+			this.fileChooserButton = new FileChooserButton("Select Java 15 installation", FileChooserAction.SELECT_FOLDER);
 			this.check.toggled.connect(()=>{
 				if(this.check.get_active()) {
-					this.check.set_label("Download Java");
+					this.check.set_label("Find Java 15 automatically");
 					this.fileChooserButton.hide();
 				}else {
-					this.check.set_label("Use local Java installation: ");
+					this.check.set_label("Use local Java 15 installation: ");
 					this.show_all();
 				}
 			});
@@ -192,7 +193,14 @@ namespace Launcher {
 			this.fileChooserButton.hide();
 		}
 		public string? getFolder() {
-			return this.check.get_active() ? this.fileChooserButton.get_current_folder() : null;
+			if(check.get_active()) {
+				return null;
+			}
+			var ret = this.fileChooserButton.get_filename();
+			if(ret.has_suffix("bin")) {
+				ret += "/../";
+			}
+			return ret;
 		}
 	}
 	class TreeViewWithPopup : TreeView {

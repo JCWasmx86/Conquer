@@ -43,28 +43,4 @@ namespace Launcher {
 		}
 		return homedir + "/.config/.conquer";
 	}
-	private int readReleaseFile(string directory) {
-		var filePath = string.join("/",directory,"release");
-		var file = File.new_for_path(filePath);
-		if (!file.query_exists()) {
-			return -1;
-		}
-		try {
-			var dis = new DataInputStream(file.read());
-			string line;
-			while((line = dis.read_line(null)) != null) {
-				line = line.strip();
-				if(line.contains("JAVA_VERSION=")) {
-					line = line.replace("JAVA_VERSION=","");
-					line = line.replace("\"","");
-					if(line[0]=='1'&&line[1]=='5') {
-						return 15;
-					}
-				}
-			}
-		}catch(Error e) {
-			error("%s",e.message);
-		}
-		return 0;
-	}
 }

@@ -13,22 +13,27 @@ char *launcher_getBaseDirectory(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 extern char *launcher_findExistingJavaInstallWithMatchingVersion();
 
-void *loadJavaLibrary() {
-	char *directory = launcher_findExistingJavaInstallWithMatchingVersion();
-	if (directory == NULL) {
-		if (dirExists("/opt/java-15")) {
-			char *s = "/opt/java-15/";
-			directory = calloc(strlen(s) + 1, 1);
-			assert(directory);
-			memcpy(directory, s, strlen(s));
-		} else {
-			char *base = launcher_getBaseDirectory();
-			assert(base);
-			directory = calloc(strlen(base) + 20, 1);
-			assert(directory);
-			sprintf(directory, "%s%s", base, "/java-15/");
-			free(base);
+void *loadJavaLibrary(char* givenDirectory) {
+	char* directory = NULL;
+	if(!givenDirectory) {
+		directory = launcher_findExistingJavaInstallWithMatchingVersion();
+		if (directory == NULL) {
+			if (dirExists("/opt/java-15")) {
+				char *s = "/opt/java-15/";
+				directory = calloc(strlen(s) + 1, 1);
+				assert(directory);
+				memcpy(directory, s, strlen(s));
+			} else {
+				char *base = launcher_getBaseDirectory();
+				assert(base);
+				directory = calloc(strlen(base) + 20, 1);
+				assert(directory);
+				sprintf(directory, "%s%s", base, "/java-15/");
+				free(base);
+			}
 		}
+	} else {
+		directory = strdup(givenDirectory);
 	}
 	char *path = "lib/server/libjvm.so";
 	char *pathToSo = calloc(strlen(directory) + strlen(path) + 3, 1);
@@ -45,6 +50,7 @@ void *loadJavaLibrary() {
 }
 void closeLibrary(void *handle) { dlclose(handle); }
 createJVM findFunction(void *file) {
+	assert(file);
 	return (createJVM)dlsym(file, "JNI_CreateJavaVM");
 }
 static int dirExists(const char *name) {
