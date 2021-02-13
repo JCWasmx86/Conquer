@@ -1,9 +1,9 @@
 name: Windows
 on:
     push:
-        branches: [launcher-rewrite]
+        branches: [main]
     pull_request:
-        branches: [launcher-rewrite]
+        branches: [main]
     workflow_dispatch:
 jobs:
   build:
