@@ -24,6 +24,7 @@ jobs:
           sudo apt update
           sudo apt install valac
           sudo ln /usr/bin/gcc-10 /usr/bin/gcc
+          valac --version
       - name: Build conquer
         run: |
           export QT_QPA_PLATFORM=offscreen
