@@ -16,7 +16,7 @@ generateFiles: src/gen/getLinuxJavaDirectory.vala.in
 	cpp -E -P src/gen/adoptopenJDKURL.vala.in >src/gen/adoptopenJDKURL.vala
 	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
 build: src/*.vala src/$(OS_TYPE)/*.vala src/*.c src/$(OS_TYPE)/*.c
-	PKG_CONFIG_DEBUG_SPEW=all valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher
+	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher
 downloadVAPIFiles:
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
