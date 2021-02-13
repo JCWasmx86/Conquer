@@ -10,7 +10,7 @@ namespace Launcher {
 		public string collectClasspath() {
 			var ret = "-Djava.class.path=";
 			var programFiles1 = getProgramFiles();
-			var programFiles = (string)programFiles1;
+			var programFiles = (string) programFiles1;
 			ret += (programFiles + "\\Conquer\\Conquer_resources.jar;");
 			ret += (programFiles + "\\Conquer\\Conquer_frontend_resources.jar;");
 			ret += (programFiles + "\\Conquer\\jlayer.jar;");
@@ -22,36 +22,36 @@ namespace Launcher {
 			ret += (programFiles + "\\Conquer\\sounds;");
 			ret += (programFiles + "\\Conquer\\images;");
 			ret += appendAllJarsFromDir(programFiles + "\\plugins", ";");
-			ret += appendAllJarsFromDir(programFiles + "\\strategies",";");
+			ret += appendAllJarsFromDir(programFiles + "\\strategies", ";");
 			foreach(var i in this.userDefined) {
-				ret += i +";";
+				ret += i + ";";
 			}
-			string baseDir = getBaseDirectory()+"/libs/";
-			ret += appendAllJarsFromDir(baseDir,";");
-			ret += (baseDir +"/music/;");
-			ret += (baseDir +"/sounds/;");
-			ret += (baseDir +"/images/;");
+			string baseDir = getBaseDirectory() + "/libs/";
+			ret += appendAllJarsFromDir(baseDir, ";");
+			ret += (baseDir + "/music/;");
+			ret += (baseDir + "/sounds/;");
+			ret += (baseDir + "/images/;");
 			ret += ".";
 			free(programFiles1);
 			return ret;
 		}
 	}
-	
+
 	class ModulePathCreator {
 		public string create() {
 			var pf = getProgramFiles();
-			string ret = "--module-path="+((string)pf)+"\\Conquer\\Conquer.jar;";
-			ret += ((string)pf) + "\\Conquer\\Conquer_frontend.jar;";
-			ret += ((string)pf) + "\\Conquer\\ConquerFrontendSPI.jar;";
+			string ret = "--module-path=" + ((string) pf) + "\\Conquer\\Conquer.jar;";
+			ret += ((string) pf) + "\\Conquer\\Conquer_frontend.jar;";
+			ret += ((string) pf) + "\\Conquer\\ConquerFrontendSPI.jar;";
 			free(pf);
 			return ret;
 		}
 	}
 	extern char* getProgramFiles();
-	
+
 	string getOutputDirectory() {
 		var s = getProgramFiles();
-		var ret = ((string)s)+"\\Conquer\\java-15\\";
+		var ret = ((string) s) + "\\Conquer\\java-15\\";
 		free(s);
 		return ret;
 	}

@@ -1,22 +1,20 @@
-using Posix;
-using Gee;
-using Json;
 using Curl;
+using Gee;
 using Gtk;
+using Json;
+using Posix;
 
 namespace Launcher {
 	string appendAllJarsFromDir(string directory, string separator) {
 		Posix.Dir dir = opendir(directory);
-		if(dir == null){
+		if(dir == null)
 			return "";
-		}
 		unowned DirEnt entry;
-		string ret="";
+		string ret = "";
 		while((entry = readdir(dir)) != null) {
-			var name = (string)entry.d_name;
-			if(name != "." && name != ".." && name.has_suffix(".jar")) {
-				ret += (directory+"/"+name +separator);
-			}
+			var name = (string) entry.d_name;
+			if(name != "." && name != ".." && name.has_suffix(".jar"))
+				ret += (directory + "/" + name + separator);
 		}
 		return ret;
 	}
@@ -34,9 +32,8 @@ namespace Launcher {
 		extractor.set_options(flags);
 		extractor.set_standard_lookup();
 		string outputFile = hasToDownloadJava();
-		if(outputFile == null) {
+		if(outputFile == null)
 			return;
-		}
 		if (archive.open_filename(outputFile, 10240) != Archive.Result.OK) {
 			critical("Error opening %s: %s (%d)", outputFile, archive.error_string (), archive.errno ());
 			return;
@@ -49,50 +46,46 @@ namespace Launcher {
 			cnt++;
 			string entryName = entry.pathname();
 			int firstSlash = entry.pathname().index_of("/");
-			string toReplace = entry.pathname().slice(0,firstSlash+1);
-			entry.set_pathname(entry.pathname().replace(toReplace,outputDirectory));
-			if (extractor.write_header (entry) != Archive.Result.OK) {
+			string toReplace = entry.pathname().slice(0, firstSlash + 1);
+			entry.set_pathname(entry.pathname().replace(toReplace, outputDirectory));
+			if (extractor.write_header (entry) != Archive.Result.OK)
 				continue;
-			}
 			unowned uint8[] buffer = null;
 			off_t offset;
-			func(entryName,cnt, archive.file_count());
+			func(entryName, cnt, archive.file_count());
 			while (archive.read_data_block(out buffer, out offset) == Archive.Result.OK) {
-				if (extractor.write_data_block(buffer, offset) != Archive.Result.OK) {
+				if (extractor.write_data_block(buffer, offset) != Archive.Result.OK)
 					break;
-				}
 			}
 		}
 		try{
 			GLib.File.new_for_path(outputFile).@delete();
 		}catch(Error e) {
-			GLib.stderr.printf("%s\n",e.message);
+			GLib.stderr.printf("%s\n", e.message);
 		}
-		if (last_result != Archive.Result.EOF) {
+		if (last_result != Archive.Result.EOF)
 			critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
-		}
 	}
 
 	void tryUpdating() {
 		//TODO
 	}
-	delegate void progressFunc(void* data,double dltotal,double dlnow,double ultotal,double ulnow);
-	
-	interface IDownloadProgress : GLib.Object{
-		public abstract void onProgress(double dltotal,double dlnow,double ultotal,double ulnow);
+	delegate void progressFunc(void* data, double dltotal, double dlnow, double ultotal, double ulnow);
+
+	interface IDownloadProgress : GLib.Object {
+		public abstract void onProgress(double dltotal, double dlnow, double ultotal, double ulnow);
 	}
-	
+
 	string obtainURL() {
 		var liberica = new LibericaJDK();
 		var url = liberica.obtain();
 		if(url == null) {
 			var adopt = new AdoptOpenJDK();
 			url = adopt.obtain();
-			if(url == null) {
+			if(url == null)
 				critical("No JDK binary for your system found!");
-			}
 		}
-		GLib.stdout.printf("Using URL: %s\n",url);
+		GLib.stdout.printf("Using URL: %s\n", url);
 		return url;
 	}
 	void downloadJDK(IDownloadProgress dp) {
@@ -108,23 +101,22 @@ namespace Launcher {
 			handle.setopt(WRITEDATA, fp);
 			handle.setopt(FOLLOWLOCATION, true);
 			handle.setopt(PROGRESSDATA, dp);
-			handle.setopt(VERBOSE,true);
+			handle.setopt(VERBOSE, true);
 			//TODO: This is not a good solution
-			handle.setopt(SSL_VERIFYPEER,false);
+			handle.setopt(SSL_VERIFYPEER, false);
 			handle.setopt(NOPROGRESS, 0);
 			handle.setopt(PROGRESSFUNCTION, handleProgressCurl);
 			Code c = handle.perform();
-			if(c != OK){
-				GLib.stderr.printf("%s\n",Global.strerror(c));
-			}
+			if(c != OK)
+				GLib.stderr.printf("%s\n", Global.strerror(c));
 		}
 	}
 	size_t writeData(void* ptr, size_t size, size_t nmemb, FILE stream) {
-		return stream.write(ptr,size,nmemb);
+		return stream.write(ptr, size, nmemb);
 	}
 	int handleProgressCurl(void *clientp, double dltotal, double dlnow, double ultotal, double ulnow) {
 		IDownloadProgress dp = (IDownloadProgress) clientp;
-		dp.onProgress(dltotal,dlnow,ultotal,ulnow);
+		dp.onProgress(dltotal, dlnow, ultotal, ulnow);
 		return 0;
 	}
 	extern void makeDirectory(string s);
@@ -134,44 +126,40 @@ namespace Launcher {
 		public string? javaFolder;
 		public static Configuration? readConfig() {
 			makeDirectory(getBaseDirectory());
-			string file = getBaseDirectory()+"/config.json";
+			string file = getBaseDirectory() + "/config.json";
 			Parser parser = new Parser();
 			try {
 				parser.load_from_file(file);
 			}catch(Error e) {
-				print("Error while loading config.json: %s\n",e.message);
+				print("Error while loading config.json: %s\n", e.message);
 				return null;
 			}
 			var ret = new Configuration();
 			ret.classpaths = new ArrayList<string>();
 			ret.arguments = new ArrayList<string>();
 			var parent = parser.get_root();
-			if(parent == null) {
+			if(parent == null)
 				return null;
-			}
 			var object = parent.get_object();
 			if(object != null) {
-				if(object.has_member("classpaths")) {
-					object.get_array_member("classpaths").foreach_element((array, index, node) =>{
+				if(object.has_member("classpaths"))
+					object.get_array_member("classpaths").foreach_element((array, index, node) => {
 						ret.classpaths.add(node.get_string());
 					});
-				}
-				if(object.has_member("options")) {
-					object.get_array_member("options").foreach_element((array, index, node) =>{
+				if(object.has_member("options"))
+					object.get_array_member("options").foreach_element((array, index, node) => {
 						ret.arguments.add(node.get_string());
 					});
-				}
-				if(object.has_member("java")) {
+				if(object.has_member("java"))
 					ret.javaFolder = object.get_string_member("java");
-				}
 			}
 			return ret;
 		}
 		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths, string? javaFolder) {
 			try{
-				GLib.File.new_for_path(getBaseDirectory()+"/config.json").@delete();
+				GLib.File.new_for_path(getBaseDirectory() + "/config.json").@delete();
 			}catch(Error e) {
-				GLib.stderr.printf("%s\n",e.message);
+				GLib.stderr.printf("%s\n", e.message);
 			}
 			var jsonClasspaths = new Json.Array();
 			foreach(var cp in classpaths) {
@@ -182,13 +170,12 @@ namespace Launcher {
 				jsonArguments.add_string_element(arg);
 			}
 			var object = new Json.Object();
-			object.set_array_member("classpaths",jsonClasspaths);
-			object.set_array_member("options",jsonArguments);
-			if(javaFolder == null) {
+			object.set_array_member("classpaths", jsonClasspaths);
+			object.set_array_member("options", jsonArguments);
+			if(javaFolder == null)
 				object.set_null_member("java");
-			}else {
-				object.set_string_member("java",javaFolder);
-			}
+			else
+				object.set_string_member("java", javaFolder);
 			var generator = new Json.Generator();
 			var node = new Json.Node(NodeType.OBJECT);
 			node.init_object(object);
@@ -196,34 +183,32 @@ namespace Launcher {
 			generator.set_pretty(true);
 			generator.set_indent_char('\t');
 			try{
-				generator.to_file(getBaseDirectory()+"/config.json");
+				generator.to_file(getBaseDirectory() + "/config.json");
 			}catch(Error e) {
-				GLib.stderr.printf("%s\n",e.message);
+				GLib.stderr.printf("%s\n", e.message);
 			}
 		}
 	}
 
 	private int readReleaseFile(string directory) {
-		var filePath = string.join("/",directory,"release");
+		var filePath = string.join("/", directory, "release");
 		var file = File.new_for_path(filePath);
-		if (!file.query_exists()) {
+		if (!file.query_exists())
 			return -1;
-		}
 		try {
 			var dis = new DataInputStream(file.read());
 			string line;
 			while((line = dis.read_line(null)) != null) {
 				line = line.strip();
 				if(line.contains("JAVA_VERSION=")) {
-					line = line.replace("JAVA_VERSION=","");
-					line = line.replace("\"","");
-					if(line[0]=='1'&&line[1]=='5') {
+					line = line.replace("JAVA_VERSION=", "");
+					line = line.replace("\"", "");
+					if(line[0] == '1' && line[1] == '5')
 						return 15;
-					}
 				}
 			}
 		}catch(Error e) {
-			error("%s",e.message);
+			error("%s", e.message);
 		}
 		return 0;
 	}
