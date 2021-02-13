@@ -13,9 +13,9 @@ char *launcher_getBaseDirectory(void);
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 extern char *launcher_findExistingJavaInstallWithMatchingVersion();
 
-void *loadJavaLibrary(char* givenDirectory) {
-	char* directory = NULL;
-	if(!givenDirectory) {
+void *loadJavaLibrary(char *givenDirectory) {
+	char *directory = NULL;
+	if (!givenDirectory) {
 		directory = launcher_findExistingJavaInstallWithMatchingVersion();
 		if (directory == NULL) {
 			if (dirExists("/opt/java-15")) {

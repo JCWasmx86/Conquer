@@ -5,25 +5,28 @@
 
 typedef jint (*createJVM)(JavaVM **, void **, void *);
 
-void closeLibrary(void *handle) { assert(file);FreeLibrary(handle); }
+void closeLibrary(void *handle) {
+	assert(file);
+	FreeLibrary(handle);
+}
 createJVM findFunction(void *file) {
 	assert(file);
 	return (createJVM)GetProcAddress(file, "JNI_CreateJavaVM");
 }
 
-void *loadJavaLibrary(char* givenDirectory) {
+void *loadJavaLibrary(char *givenDirectory) {
 	char *directory = calloc(MAX_PATH * 2, 1);
 	assert(directory);
-	if(!givenDirectory) {
-		if (SHGetSpecialFolderPathA(NULL, directory, CSIDL_PROGRAM_FILES, FALSE) ==
-			FALSE) {
+	if (!givenDirectory) {
+		if (SHGetSpecialFolderPathA(NULL, directory, CSIDL_PROGRAM_FILES,
+									FALSE) == FALSE) {
 			fprintf(stderr, "SHGetSpecialFolderPathA failed!\n");
 			perror("SHGetSpecialFolderPathA");
 			exit(-1);
 		}
 		strcat(directory, "\\Conquer\\java-15\\");
-	}else {
-		strcat(directory,givenDirectory);
+	} else {
+		strcat(directory, givenDirectory);
 	}
 	char *binDir = calloc(strlen(directory) + 10, 1);
 	assert(binDir);
