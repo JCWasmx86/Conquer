@@ -31,6 +31,7 @@ jobs:
             mingw-w64-x86_64-vala
             mingw-w64-x86_64-libgee
             mingw-w64-x86_64-json-glib
+            mingw-w64-x86_64-pkg-config
             zip
             unzip
             p7zip
