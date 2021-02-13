@@ -47,6 +47,7 @@ namespace Launcher {
 		private ProgressBar progressBar;
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
+
 		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
@@ -60,10 +61,10 @@ namespace Launcher {
 				button.destroy();
 				this.progressBar = new ProgressBar();
 				this.progressBar.set_show_text(true);
-				this.pack_start(this.progressBar,false);
+				this.pack_start(this.progressBar, false);
 				window.show_all();
 				if((!isMatching) && hasToDownloadJava() != null) {
-					new Thread<void> ("thread_a", ()=>{
+					new Thread<void>("thread_a", () => {
 						downloadJDK(this);
 						extractJDK(extractReceiver);
 						tryUpdating();
@@ -72,7 +73,7 @@ namespace Launcher {
 							JVM jvm = new JVM(null);
 							jvm.addJVMArguments(jvmOptions.toList());
 							jvm.addClasspaths(classpaths.toList());
-							Configuration.dump(jvmOptions.toList(),classpaths.toList(), javaFolder);
+							Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
 							jvm.run(null);
 							Process.exit(0);
 						});
@@ -84,7 +85,7 @@ namespace Launcher {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
-						Configuration.dump(jvmOptions.toList(),classpaths.toList(), javaFolder);
+						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
 						jvm.run(isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
@@ -97,8 +98,8 @@ namespace Launcher {
 				this.progressBar.set_text("Starting download...");
 				return false;
 			}
-			this.progressBar.set_text("Downloaded %.0lf of %.0lf bytes (%.2lf %%)".printf(data.dlnow,data.dltotal,data.getPercentage()));
-			this.progressBar.set_fraction(data.getPercentage()/100);
+			this.progressBar.set_text("Downloaded %.0lf of %.0lf bytes (%.2lf %%)".printf(data.dlnow, data.dltotal, data.getPercentage()));
+			this.progressBar.set_fraction(data.getPercentage() / 100);
 			return false;
 		}
 		public void onProgress(double dltotal,double dlnow,double ultotal,double ulnow) {
@@ -107,7 +108,7 @@ namespace Launcher {
 			Gdk.threads_add_idle(updateDownloadProgressBar);
 		}
 		bool updateExtractProgressbar() {
-			this.progressBar.set_text("Extracting %s (%d/%d)".printf(this.extractProgress.filename,this.extractProgress.current,this.extractProgress.numberOfFiles));
+			this.progressBar.set_text("Extracting %s (%d/%d)".printf(this.extractProgress.filename, this.extractProgress.current, this.extractProgress.numberOfFiles));
 			return false;
 		}
 		void extractReceiver(string name, int current, int max) {
@@ -119,19 +120,19 @@ namespace Launcher {
 		private Gtk.ListStore listStore;
 		private TreeViewWithPopup treeView;
 
-		public InputList(string name,string label) {
+		public InputList(string name, string label) {
 			this.set_orientation(Orientation.VERTICAL);
-			this.listStore = new Gtk.ListStore(1,GLib.Type.STRING);
+			this.listStore = new Gtk.ListStore(1, GLib.Type.STRING);
 			this.treeView = new TreeViewWithPopup();
 			this.treeView.init(this.listStore);
 			this.treeView.set_model(this.listStore);
 			this.pack_start(this.treeView);
-			this.pack_start(new InputBox(this,label, this.listStore),false,false);
+			this.pack_start(new InputBox(this,label, this.listStore), false, false);
 			var column = new TreeViewColumn();
 			column.set_title(name);
 			var renderer = new CellRendererText();
 			column.pack_start(renderer,true);
-			column.add_attribute(renderer,"text", 0);
+			column.add_attribute(renderer, "text", 0);
 			this.treeView.append_column(column);
 			this.treeView.set_model(this.listStore);
 		}
@@ -142,7 +143,7 @@ namespace Launcher {
 			if(this.listStore.get_iter_first(out iter)) {
 				do {
 					Value s;
-					this.listStore.get_value(iter,0, out s);
+					this.listStore.get_value(iter, 0, out s);
 					ret.add(s.get_string());
 				}while(this.listStore.iter_next(ref iter));
 			}
@@ -181,7 +182,7 @@ namespace Launcher {
 			this.check.set_active(true);
 			this.pack_start(this.check);
 			this.fileChooserButton = new FileChooserButton("Select Java 15 installation", FileChooserAction.SELECT_FOLDER);
-			this.check.toggled.connect(()=>{
+			this.check.toggled.connect(() => {
 				if(this.check.get_active()) {
 					this.check.set_label("Find Java 15 automatically");
 					this.fileChooserButton.hide();
@@ -223,12 +224,12 @@ namespace Launcher {
 				var selected = get_selection();
 				TreeModel model;
 				TreeIter iter;
-				selected.get_selected(out model,out iter);
+				selected.get_selected(out model, out iter);
 				((Gtk.ListStore)model).remove(ref iter);
 			});
 			menu.append(item);
 			menu.show_all();
-			button_press_event.connect((event) => {
+			button_press_event.connect(event => {
 				if(event.type == Gdk.EventType.BUTTON_PRESS
 						&& event.button == 3
 						&& store.iter_n_children(null) > 0) {
@@ -241,19 +242,20 @@ namespace Launcher {
 	class DownloadProgress {
 		public double dltotal {get; set;}
 		public double dlnow {get; set;}
-		public DownloadProgress(double total,double now) {
+
+		public DownloadProgress(double total, double now) {
 			this.dltotal = total;
 			this.dlnow = now;
 		}
 		public double getPercentage() {
-			return (dlnow/dltotal)*100;
+			return (dlnow / dltotal) * 100;
 		}
 	}
 	class ExtractProgress {
 		public int current {get; set;}
 		public int numberOfFiles {get; set;}
 		public string filename {get; set;}
-		
+
 		public ExtractProgress(string name, int current, int max) {
 			this.filename = name;
 			this.current = current;
