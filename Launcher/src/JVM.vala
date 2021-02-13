@@ -24,7 +24,7 @@ namespace Launcher {
 			options[3] = "-Xms1G";
 			options[4] = new ModulePathCreator().create();
 			options[5] = "--add-modules=org.jel.game,org.jel.frontend";
-			options[6] = "-Dsun.java2d.opengl=True";
+			options[6] = "-Dsun.java2d.opengl=true";
 			options[7 + arguments.size] = "-m";
 			options[8 + arguments.size] = "org.jel.frontend/org.jel.gui.Intro";
 			for(int i = 0; i < arguments.size; i++) {
