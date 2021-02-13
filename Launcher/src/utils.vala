@@ -7,14 +7,16 @@ using Posix;
 namespace Launcher {
 	string appendAllJarsFromDir(string directory, string separator) {
 		Posix.Dir dir = opendir(directory);
-		if(dir == null)
+		if(dir == null) {
 			return "";
+		}
 		unowned DirEnt entry;
 		string ret = "";
 		while((entry = readdir(dir)) != null) {
 			var name = (string) entry.d_name;
-			if(name != "." && name != ".." && name.has_suffix(".jar"))
+			if(name != "." && name != ".." && name.has_suffix(".jar")) {
 				ret += (directory + "/" + name + separator);
+			}
 		}
 		return ret;
 	}
@@ -32,8 +34,9 @@ namespace Launcher {
 		extractor.set_options(flags);
 		extractor.set_standard_lookup();
 		string outputFile = hasToDownloadJava();
-		if(outputFile == null)
+		if(outputFile == null) {
 			return;
+		}
 		if (archive.open_filename(outputFile, 10240) != Archive.Result.OK) {
 			critical("Error opening %s: %s (%d)", outputFile, archive.error_string (), archive.errno ());
 			return;
@@ -48,14 +51,16 @@ namespace Launcher {
 			int firstSlash = entry.pathname().index_of("/");
 			string toReplace = entry.pathname().slice(0, firstSlash + 1);
 			entry.set_pathname(entry.pathname().replace(toReplace, outputDirectory));
-			if (extractor.write_header (entry) != Archive.Result.OK)
+			if (extractor.write_header (entry) != Archive.Result.OK) {
 				continue;
+			}
 			unowned uint8[] buffer = null;
 			off_t offset;
 			func(entryName, cnt, archive.file_count());
 			while (archive.read_data_block(out buffer, out offset) == Archive.Result.OK) {
-				if (extractor.write_data_block(buffer, offset) != Archive.Result.OK)
+				if (extractor.write_data_block(buffer, offset) != Archive.Result.OK) {
 					break;
+				}
 			}
 		}
 		try{
@@ -63,8 +68,9 @@ namespace Launcher {
 		}catch(Error e) {
 			GLib.stderr.printf("%s\n", e.message);
 		}
-		if (last_result != Archive.Result.EOF)
+		if (last_result != Archive.Result.EOF) {
 			critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
+		}
 	}
 
 	void tryUpdating() {
@@ -82,8 +88,9 @@ namespace Launcher {
 		if(url == null) {
 			var adopt = new AdoptOpenJDK();
 			url = adopt.obtain();
-			if(url == null)
+			if(url == null) {
 				critical("No JDK binary for your system found!");
+			}
 		}
 		GLib.stdout.printf("Using URL: %s\n", url);
 		return url;
@@ -107,8 +114,9 @@ namespace Launcher {
 			handle.setopt(NOPROGRESS, 0);
 			handle.setopt(PROGRESSFUNCTION, handleProgressCurl);
 			Code c = handle.perform();
-			if(c != OK)
+			if(c != OK) {
 				GLib.stderr.printf("%s\n", Global.strerror(c));
+			}
 		}
 	}
 	size_t writeData(void* ptr, size_t size, size_t nmemb, FILE stream) {
@@ -138,20 +146,24 @@ namespace Launcher {
 			ret.classpaths = new ArrayList<string>();
 			ret.arguments = new ArrayList<string>();
 			var parent = parser.get_root();
-			if(parent == null)
+			if(parent == null) {
 				return null;
+			}
 			var object = parent.get_object();
 			if(object != null) {
-				if(object.has_member("classpaths"))
+				if(object.has_member("classpaths")) {
 					object.get_array_member("classpaths").foreach_element((array, index, node) => {
 						ret.classpaths.add(node.get_string());
 					});
-				if(object.has_member("options"))
+				}
+				if(object.has_member("options")) {
 					object.get_array_member("options").foreach_element((array, index, node) => {
 						ret.arguments.add(node.get_string());
 					});
-				if(object.has_member("java"))
+				}
+				if(object.has_member("java")) {
 					ret.javaFolder = object.get_string_member("java");
+				}
 			}
 			return ret;
 		}
@@ -172,10 +184,12 @@ namespace Launcher {
 			var object = new Json.Object();
 			object.set_array_member("classpaths", jsonClasspaths);
 			object.set_array_member("options", jsonArguments);
-			if(javaFolder == null)
+			if(javaFolder == null) {
 				object.set_null_member("java");
-			else
+			}
+			else{
 				object.set_string_member("java", javaFolder);
+			}
 			var generator = new Json.Generator();
 			var node = new Json.Node(NodeType.OBJECT);
 			node.init_object(object);
@@ -193,8 +207,9 @@ namespace Launcher {
 	private int readReleaseFile(string directory) {
 		var filePath = string.join("/", directory, "release");
 		var file = File.new_for_path(filePath);
-		if (!file.query_exists())
+		if (!file.query_exists()) {
 			return -1;
+		}
 		try {
 			var dis = new DataInputStream(file.read());
 			string line;
@@ -203,8 +218,9 @@ namespace Launcher {
 				if(line.contains("JAVA_VERSION=")) {
 					line = line.replace("JAVA_VERSION=", "");
 					line = line.replace("\"", "");
-					if(line[0] == '1' && line[1] == '5')
+					if(line[0] == '1' && line[1] == '5') {
 						return 15;
+					}
 				}
 			}
 		}catch(Error e) {
