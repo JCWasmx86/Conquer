@@ -4,7 +4,7 @@ namespace Launcher {
 	class ConquerLauncher : Gtk.Application {
 		private InputList jvmOptions;
 		private InputList classpaths;
-
+		private SelectJavaBox selectJava;
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
@@ -13,11 +13,14 @@ namespace Launcher {
 			this.classpaths = new InputList("Classpaths", "Add classpath");
 			initConfig();
 			box.pack_start(this.classpaths);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions,window);
+			this.selectJava = new SelectJavaBox();
+			box.pack_start(this.selectJava);
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions,this.selectJava, window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
 			window.show_all();
+			selectJava.change();
 		}
 		void initConfig() {
 			Configuration config = Configuration.readConfig();
@@ -41,12 +44,14 @@ namespace Launcher {
 		private ProgressBar progressBar;
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
-		public StartButton(InputList classpaths, InputList jvmOptions, ApplicationWindow window) {
+		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
 			var button = new Button.with_label("Start");
 			this.pack_start(button, false, false);
 			button.clicked.connect(() => {
+				var javaFolder = selectJava.getFolder();
+				GLib.stdout.printf("%s\n",javaFolder);
 				this.remove(button);
 				button.destroy();
 				this.progressBar = new ProgressBar();
@@ -163,6 +168,33 @@ namespace Launcher {
 		}
 	}
 
+	class SelectJavaBox : Box {
+		private FileChooserButton fileChooserButton;
+		private CheckButton check;
+		public SelectJavaBox() {
+			this.set_orientation(Orientation.HORIZONTAL);
+			this.check = new CheckButton.with_label("Download Java");
+			this.check.set_active(true);
+			this.pack_start(this.check);
+			this.fileChooserButton = new FileChooserButton("Select Java installation", FileChooserAction.SELECT_FOLDER);
+			this.check.toggled.connect(()=>{
+				if(this.check.get_active()) {
+					this.check.set_label("Download Java");
+					this.fileChooserButton.hide();
+				}else {
+					this.check.set_label("Use local Java installation: ");
+					this.show_all();
+				}
+			});
+			this.pack_start(this.fileChooserButton);
+		}
+		public void change() {
+			this.fileChooserButton.hide();
+		}
+		public string? getFolder() {
+			return this.check.get_active() ? this.fileChooserButton.get_current_folder() : null;
+		}
+	}
 	class TreeViewWithPopup : TreeView {
 		public void init(Gtk.ListStore store) {
 			this.get_selection().set_mode(SelectionMode.BROWSE);
