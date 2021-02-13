@@ -1,5 +1,5 @@
-using Gtk;
 using Gee;
+using Gtk;
 namespace Launcher {
 	class ConquerLauncher : Gtk.Application {
 		private InputList jvmOptions;
@@ -24,18 +24,16 @@ namespace Launcher {
 		}
 		void initConfig() {
 			Configuration config = Configuration.readConfig();
-			if(config == null) {
+			if(config == null)
 				return;
-			}
 			foreach(var i in config.classpaths) {
 				this.classpaths.addElement(i);
 			}
 			foreach(var i in config.arguments) {
 				this.jvmOptions.addElement(i);
 			}
-			if(config.javaFolder != null) {
+			if(config.javaFolder != null)
 				selectJava.configure(config.javaFolder);
-			}
 		}
 	}
 
@@ -43,7 +41,7 @@ namespace Launcher {
 		return new ConquerLauncher().run(args);
 	}
 
-	class StartButton : Box,IDownloadProgress {
+	class StartButton : Box, IDownloadProgress {
 		private ProgressBar progressBar;
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
@@ -102,8 +100,8 @@ namespace Launcher {
 			this.progressBar.set_fraction(data.getPercentage() / 100);
 			return false;
 		}
-		public void onProgress(double dltotal,double dlnow,double ultotal,double ulnow) {
-			var progress = new DownloadProgress(dltotal,dlnow);
+		public void onProgress(double dltotal, double dlnow, double ultotal, double ulnow) {
+			var progress = new DownloadProgress(dltotal, dlnow);
 			asyncQueue.push(progress);
 			Gdk.threads_add_idle(updateDownloadProgressBar);
 		}
@@ -112,7 +110,7 @@ namespace Launcher {
 			return false;
 		}
 		void extractReceiver(string name, int current, int max) {
-			this.extractProgress = new ExtractProgress(name,current,max);
+			this.extractProgress = new ExtractProgress(name, current, max);
 			Gdk.threads_add_idle(updateExtractProgressbar);
 		}
 	}
@@ -127,11 +125,11 @@ namespace Launcher {
 			this.treeView.init(this.listStore);
 			this.treeView.set_model(this.listStore);
 			this.pack_start(this.treeView);
-			this.pack_start(new InputBox(this,label, this.listStore), false, false);
+			this.pack_start(new InputBox(this, label, this.listStore), false, false);
 			var column = new TreeViewColumn();
 			column.set_title(name);
 			var renderer = new CellRendererText();
-			column.pack_start(renderer,true);
+			column.pack_start(renderer, true);
 			column.add_attribute(renderer, "text", 0);
 			this.treeView.append_column(column);
 			this.treeView.set_model(this.listStore);
@@ -161,12 +159,11 @@ namespace Launcher {
 			var entry = new Entry();
 			this.pack_start(entry);
 			var button = new Button.with_label(buttonLabel);
-			this.pack_start(button,false,false);
+			this.pack_start(button, false, false);
 			button.clicked.connect(() => {
 				var text = entry.text;
-				if(text.strip().length == 0) {
+				if(text.strip().length == 0)
 					return;
-				}
 				list.addElement(text.strip());
 				entry.text = "";
 			});
@@ -197,13 +194,11 @@ namespace Launcher {
 			this.fileChooserButton.hide();
 		}
 		public string? getFolder() {
-			if(check.get_active()) {
+			if(check.get_active())
 				return null;
-			}
 			var ret = this.fileChooserButton.get_filename();
-			if(ret!= null && ret.has_suffix("bin")) {
+			if(ret != null && ret.has_suffix("bin"))
 				ret += "/../";
-			}
 			return ret;
 		}
 		public void configure(string s) {
@@ -230,11 +225,8 @@ namespace Launcher {
 			menu.append(item);
 			menu.show_all();
 			button_press_event.connect(event => {
-				if(event.type == Gdk.EventType.BUTTON_PRESS
-						&& event.button == 3
-						&& store.iter_n_children(null) > 0) {
+				if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3 && store.iter_n_children(null) > 0)
 					menu.popup_at_pointer(event);
-				}
 				return true;
 			});
 		}

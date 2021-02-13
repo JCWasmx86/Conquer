@@ -1,7 +1,7 @@
 using Gee;
 
 namespace Launcher {
-	delegate void onErrorFunc(string stacktrace,string reportLocation);
+	delegate void onErrorFunc(string stacktrace, string reportLocation);
 	class JVM {
 		onErrorFunc onErrorFunc;
 		Gee.List<string> arguments;
@@ -30,7 +30,7 @@ namespace Launcher {
 			for(int i = 0; i < arguments.size; i++) {
 				options[7 + i] = arguments.get(i);
 			}
-			invokeJVM(options,arguments.size + 9, (char*)directory, this.onErrorFunc);
+			invokeJVM(options, arguments.size + 9, (char*) directory, this.onErrorFunc);
 		}
 	}
 	extern void invokeJVM(char** options, int numOptions, char* directory, onErrorFunc onErrorFunc);

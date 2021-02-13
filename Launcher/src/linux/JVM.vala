@@ -9,12 +9,12 @@ namespace Launcher {
 		public string collectClasspath() {
 			string ret = "-Djava.class.path=/usr/share/java/Conquer_resources.jar:/usr/share/java/Conquer_frontend_resources.jar:";
 			foreach(var i in this.userDefined) {
-				ret += i +":";
+				ret += i + ":";
 			}
 			string baseDir = getBaseDirectory();
-			ret += appendAllJarsFromDir(baseDir+"/libs/",":");
-			ret += appendAllJarsFromDir("/usr/share/java/conquer/plugins/",":");
-			ret += appendAllJarsFromDir("/usr/share/java/conquer/strategies/",":");
+			ret += appendAllJarsFromDir(baseDir + "/libs/", ":");
+			ret += appendAllJarsFromDir("/usr/share/java/conquer/plugins/", ":");
+			ret += appendAllJarsFromDir("/usr/share/java/conquer/strategies/", ":");
 			ret += "/usr/share/conquer/music:";
 			ret += "/usr/share/conquer/sounds:";
 			ret += "/usr/share/conquer/images:";

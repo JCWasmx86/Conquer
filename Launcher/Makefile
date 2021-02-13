@@ -46,3 +46,4 @@ uninstallObject: uninstall/main.c
 	$(CC) $(CFLAGS) -O3 -Wall -Wextra -pedantic -c uninstall/main.c -o uninstall.o
 format:
 	clang-format --style=file -verbose -i src/*.c include/*.h src/**/*.c uninstall/*.c install/*.c
+	uncrustify -c format.cfg src/*.vala src/windows/*.vala src/linux/*.vala --no-backup
