@@ -11,7 +11,6 @@ namespace Launcher {
 			this.jvmOptions=new InputList("JVM Arguments","Add JVM argument");
 			box.pack_start(this.jvmOptions);
 			this.classpaths = new InputList("Classpaths", "Add classpath");
-			initConfig();
 			box.pack_start(this.classpaths);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava);
@@ -21,6 +20,7 @@ namespace Launcher {
 			window.set_title("Conquer launcher 2.0.0");
 			window.show_all();
 			selectJava.change();
+			initConfig();
 		}
 		void initConfig() {
 			Configuration config = Configuration.readConfig();
@@ -32,6 +32,9 @@ namespace Launcher {
 			}
 			foreach(var i in config.arguments) {
 				this.jvmOptions.addElement(i);
+			}
+			if(config.javaFolder != null) {
+				selectJava.configure(config.javaFolder);
 			}
 		}
 	}
@@ -69,7 +72,7 @@ namespace Launcher {
 							JVM jvm = new JVM(null);
 							jvm.addJVMArguments(jvmOptions.toList());
 							jvm.addClasspaths(classpaths.toList());
-							Configuration.dump(jvmOptions.toList(),classpaths.toList());
+							Configuration.dump(jvmOptions.toList(),classpaths.toList(), javaFolder);
 							jvm.run(null);
 							Process.exit(0);
 						});
@@ -81,7 +84,7 @@ namespace Launcher {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
-						Configuration.dump(jvmOptions.toList(),classpaths.toList());
+						Configuration.dump(jvmOptions.toList(),classpaths.toList(), javaFolder);
 						jvm.run(isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
@@ -197,10 +200,16 @@ namespace Launcher {
 				return null;
 			}
 			var ret = this.fileChooserButton.get_filename();
-			if(ret.has_suffix("bin")) {
+			if(ret!= null && ret.has_suffix("bin")) {
 				ret += "/../";
 			}
 			return ret;
+		}
+		public void configure(string s) {
+			check.set_active(false);
+			this.check.set_label("Use local Java 15 installation: ");
+			this.fileChooserButton.set_filename(s);
+			this.show_all();
 		}
 	}
 	class TreeViewWithPopup : TreeView {
