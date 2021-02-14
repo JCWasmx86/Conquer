@@ -110,7 +110,7 @@ public final class Shared {
 	 * {@link ResourceUsage#getCoinsPerRoundPerPerson()}.
 	 */
 	@Deprecated
-	public static final double COINS_PER_PERSON_PER_ROUND = 0.75;
+	public static final double COINS_PER_PERSON_PER_ROUND = 0.65;
 	/**
 	 * Initial costs for recruiting one soldier. Replaced by
 	 * {@link SoldierCosts#coinsPerSoldierInitial()}.

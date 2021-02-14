@@ -64,8 +64,8 @@ final class Game implements ConquerInfo {
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
 	private static final double GROWTH_LIMIT = 1.05;
 	private static final double WEAK_GROWTH_REDUCE_FACTOR = 0.9;
-	private static final double ALTERNATIVE_GROWTH_LIMIT = 1.075;
-	private static final int SOFT_POPULATION_LIMIT = 1_000_000;
+	private static final double ALTERNATIVE_GROWTH_LIMIT = 1.055;
+	private static final int SOFT_POPULATION_LIMIT = 500_000;
 	private static final int MAX_SELECTOR_VALUE = 5000;
 	private static final int RETAINED_PEOPLE = 5;
 	private static final int FALLBACK_POPULATION = 15;
@@ -1036,8 +1036,8 @@ final class Game implements ConquerInfo {
 			while (a.getGrowth() > Game.ALTERNATIVE_GROWTH_LIMIT) {
 				a.setGrowth(a.getGrowth() * Game.WEAK_GROWTH_REDUCE_FACTOR);
 			}
-			if ((a.getNumberOfPeople() > Game.SOFT_POPULATION_LIMIT) && (a.getGrowth() > 1)) {
-				a.setGrowth(1.001);
+			if ((a.getNumberOfPeople() > Game.SOFT_POPULATION_LIMIT) && (a.getGrowth() > 0.8)) {
+				a.setGrowth(a.getGrowth() * 0.6);
 			}
 		});
 	}
