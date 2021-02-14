@@ -65,6 +65,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		sb.append("</ul>These are not compiled directly, but are downloaded at the build process from the <a href=\"https://www.msys2.org/\">MSYS2</a> project: <br><ul>");
 		sb.append("<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst\">Adwaita icon theme</a></li>");
 		sb.append("<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg.tar.zst\">Hicolor icon theme</a></li>");
+		//TODO: Check whether a license for every distributed DLL has to be added.
 		sb.append("</ul><h3>Notable links</h3>");
 		sb.append(
 				"<i><a href=\"https://github.com/musescore/MuseScore\">Musescore</a></i> was used to generate the music for the <i>DefaultMusic</i> plugin.<br>");
