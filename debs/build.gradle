@@ -24,6 +24,7 @@ task buildConquerDeb() {
 		copy {
 			from "${project.rootDir}/auxiliary"
 			include "Conquer.license"
+			include "LICENSE.txt"
 			into "conquer/usr/share/conquer"
 		}
 		def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
@@ -304,6 +305,8 @@ task buildSdkDeb() {
 		copy {
 			from "${project.rootDir}/auxiliary"
 			include "*.pom"
+			include "Conquer.license"
+			include "LICENSE.txt"
 			into "conquer-sdk/usr/share/conquer/m2"
 		}
 		copy {
