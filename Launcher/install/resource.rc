@@ -14,7 +14,7 @@ BEGIN
 			VALUE "FileDescription", "The game Conquer"
 			VALUE "FileVersion", "1.6.0"
 			VALUE "InternalName", "Installer.exe"
-			VALUE "LegalCopyright", "MIT-License"
+			VALUE "LegalCopyright", "GPLv3"
 			VALUE "OriginalFilename", "Installer.exe"
 			VALUE "ProductName", "Conquer"
 			VALUE "ProductVersion", "1.6.0"

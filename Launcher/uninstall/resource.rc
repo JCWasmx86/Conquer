@@ -14,7 +14,7 @@ BEGIN
 			VALUE "FileDescription", "Uninstaller for Conquer"
 			VALUE "FileVersion", "1.6.0"
 			VALUE "InternalName", "uninstall.exe"
-			VALUE "LegalCopyright", "MIT-License"
+			VALUE "LegalCopyright", "GPLv3"
 			VALUE "OriginalFilename", "uninstall.exe"
 			VALUE "ProductName", "Conquer"
 			VALUE "ProductVersion", "1.6.0"
