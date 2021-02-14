@@ -29,6 +29,6 @@ normal classfiles.
 
 Usage:
 
-depreview some/path/to/your/Class.class ...
+depreview some/path/to/your/Class.class some/path/someJar.jar ...
 
 
