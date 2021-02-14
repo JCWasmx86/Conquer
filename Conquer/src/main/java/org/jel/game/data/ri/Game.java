@@ -30,7 +30,6 @@ import org.jel.game.data.Result;
 import org.jel.game.data.Shared;
 import org.jel.game.data.StreamUtils;
 import org.jel.game.data.Version;
-import org.jel.game.data.XMLReader;
 import org.jel.game.data.builtin.DefensiveStrategyProvider;
 import org.jel.game.data.builtin.ModerateStrategyProvider;
 import org.jel.game.data.builtin.OffensiveStrategyProvider;
@@ -56,10 +55,6 @@ import org.jel.game.plugins.RecruitHook;
 import org.jel.game.plugins.ResourceHook;
 import org.jel.game.utils.Graph;
 
-/**
- * One of the most important classes as it combines everything. It is a
- * reference-implementation of {@link ConquerInfo}.
- */
 final class Game implements ConquerInfo {
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;
 	private static final double GROWTH_LIMIT = 1.05;
@@ -128,11 +123,6 @@ final class Game implements ConquerInfo {
 		this.data.getCityKeyHandlers().put(key, ckh);
 	}
 
-	/**
-	 * Add a context in order to initialise strategies and other things.
-	 *
-	 * @param context The context obtained by {@link XMLReader#readInfo()}
-	 */
 	@Override
 	public void addContext(final GlobalContext context) {
 		this.throwIfNull(context, "context==null");
@@ -292,11 +282,6 @@ final class Game implements ConquerInfo {
 				* clan.getSoldiersStrength());
 	}
 
-	/**
-	 * Calculate whether the player won or lost.
-	 *
-	 * @return
-	 */
 	@Override
 	public Result calculateResult() {
 		return StreamUtils.getCitiesAsStream(this.getCities(), this.getPlayerClan()).count() == 0 ? Result.CPU_WON
@@ -333,11 +318,6 @@ final class Game implements ConquerInfo {
 		this.isPlayersTurn = true;
 	}
 
-	/**
-	 * Returns the current round.
-	 *
-	 * @return Current round.
-	 */
 	@Override
 	public int currentRound() {
 		return this.currentRound;
@@ -438,9 +418,6 @@ final class Game implements ConquerInfo {
 		});
 	}
 
-	/**
-	 * Plays one round. Should be called after the player played.
-	 */
 	@Override
 	public void executeActions() {
 		final var start = System.nanoTime();
@@ -484,11 +461,6 @@ final class Game implements ConquerInfo {
 		clan.update(this.currentRound);
 	}
 
-	/**
-	 * Should be called when only one clan is left.
-	 *
-	 * @param result
-	 */
 	@Override
 	public void exit(final Result result) {
 		this.throwIfNull(result, "result==null");
@@ -505,11 +477,6 @@ final class Game implements ConquerInfo {
 		}
 	}
 
-	/**
-	 * Get the background picture of the scenario
-	 *
-	 * @return Background picture
-	 */
 	@Override
 	public Image getBackground() {
 		return this.background;
@@ -520,11 +487,6 @@ final class Game implements ConquerInfo {
 		return this.cities;
 	}
 
-	/**
-	 * Get all registered CityKeyHandlers
-	 *
-	 * @return Registered {@link CityKeyHandler}s
-	 */
 	public Map<String, CityKeyHandler> getCityKeyHandlers() {
 		return this.data.getCityKeyHandlers();
 	}
@@ -533,12 +495,6 @@ final class Game implements ConquerInfo {
 		return city.getClan();
 	}
 
-	/**
-	 * Get reference to clan based on id
-	 *
-	 * @param clanId The clan id
-	 * @return A reference to the clan with the id {@code clanID}
-	 */
 	@Override
 	public IClan getClan(final int clanId) {
 		if ((clanId < 0) || (clanId >= this.numPlayers)) {
@@ -547,33 +503,21 @@ final class Game implements ConquerInfo {
 		return this.clans.get(clanId);
 	}
 
-	/**
-	 * @return All clannames.
-	 */
 	@Override
 	public List<String> getClanNames() {
 		return this.clans.stream().map(IClan::getName).collect(Collectors.toUnmodifiableList());
 	}
 
-	/**
-	 * @return All clans
-	 */
 	@Override
 	public List<IClan> getClans() {
 		return this.clans;
 	}
 
-	/**
-	 * @return The coins of every clan.
-	 */
 	@Override
 	public List<Double> getCoins() {
 		return this.clans.stream().map(IClan::getCoins).collect(Collectors.toUnmodifiableList());
 	}
 
-	/**
-	 * @return The colors of every clan.
-	 */
 	@Override
 	public List<Color> getColors() {
 		return this.clans.stream().map(IClan::getColor).collect(Collectors.toUnmodifiableList());
@@ -584,17 +528,11 @@ final class Game implements ConquerInfo {
 		return this.events;
 	}
 
-	/**
-	 * @return Every registered music.
-	 */
 	@Override
 	public List<String> getExtraMusic() {
 		return this.data.getExtraMusic();
 	}
 
-	/**
-	 * @return All registered Keybindings.
-	 */
 	public Map<String, KeyHandler> getKeybindings() {
 		return this.data.getKeybindings();
 	}
@@ -604,9 +542,6 @@ final class Game implements ConquerInfo {
 		return this.numPlayers;
 	}
 
-	/**
-	 * @return All plugins
-	 */
 	@Override
 	public List<Plugin> getPlugins() {
 		return this.data.getPlugins();
@@ -658,9 +593,6 @@ final class Game implements ConquerInfo {
 		});
 	}
 
-	/**
-	 * @return Returns {@code true} if only the player is left.
-	 */
 	public boolean hasResult() {
 		final var others = StreamUtils.getCitiesAsStreamNot(this.getCities(), this.getPlayerClan()).count();
 		final var player = StreamUtils.getCitiesAsStream(this.getCities(), this.getPlayerClan()).count();
@@ -682,9 +614,6 @@ final class Game implements ConquerInfo {
 				new BetterRelationshipMessage(this.clans.get(clanOne), this.clans.get(clanTwo), oldValue, newValue));
 	}
 
-	/**
-	 * Initialises everything. Has to be called.
-	 */
 	@Override
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
@@ -709,11 +638,6 @@ final class Game implements ConquerInfo {
 		this.cities.initCache();
 	}
 
-	/**
-	 * Returns whether a clan is dead.
-	 *
-	 * @param clan
-	 */
 	@Override
 	public boolean isDead(final IClan clan) {
 		if (clan == null) {
@@ -726,9 +650,6 @@ final class Game implements ConquerInfo {
 		return this.cities.getConnected(c).stream().filter(a -> a.getClan() != c.getClan()).count() == 0;
 	}
 
-	/**
-	 * Returns whether it is the players' turn.
-	 */
 	@Override
 	public boolean isPlayersTurn() {
 		return this.isPlayersTurn;
@@ -851,11 +772,6 @@ final class Game implements ConquerInfo {
 		return (long) Math.abs(remainingSoldiersDefender);
 	}
 
-	/**
-	 * Returns whether only one clan is alive.
-	 *
-	 * @return
-	 */
 	@Override
 	public boolean onlyOneClanAlive() {
 		return StreamUtils.getCitiesAsStream(this.cities).map(ICity::getClan).distinct().count() == 1;
