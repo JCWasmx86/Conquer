@@ -1,4 +1,4 @@
-LIBARCHIVE: 
+libarchive: (https://github.com/libarchive/libarchive) 
 
 The libarchive distribution as a whole is Copyright by Tim Kientzle
 and is subject to the copyright notice reproduced at the bottom of
@@ -68,7 +68,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-LibCURL:
+LibCURL: (https://curl.se/libcurl/)
 COPYRIGHT AND PERMISSION NOTICE
 
 Copyright (c) 1996 - 2021, Daniel Stenberg, daniel@haxx.se, and many contributors, see the THANKS file.
@@ -82,7 +82,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 Except as contained in this notice, the name of a copyright holder shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization of the copyright holder.
 
 
-GTK3:
+GTK3: (https://gitlab.gnome.org/GNOME/gtk)
                   GNU LIBRARY GENERAL PUBLIC LICENSE
                        Version 2, June 1991
 
@@ -567,7 +567,7 @@ That's all there is to it!
 
 
 
-LibGIO and GLib:
+LibGIO and GLib: (https://gitlab.gnome.org/GNOME/glib and https://gitlab.gnome.org/GNOME/glib/-/tree/master/gio)
                   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
 
@@ -1073,7 +1073,7 @@ That's all there is to it!
 
 
 
-Libgee:
+Libgee: (https://gitlab.gnome.org/GNOME/libgee/)
 		  GNU LESSER GENERAL PUBLIC LICENSE
 		       Version 2.1, February 1999
 
@@ -1579,7 +1579,7 @@ That's all there is to it!
 
 
 
-json-glib:
+json-glib: (https://gitlab.gnome.org/GNOME/json-glib/)
 
 		  GNU LESSER GENERAL PUBLIC LICENSE
 		       Version 2.1, February 1999
