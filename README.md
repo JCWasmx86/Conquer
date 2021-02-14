@@ -65,4 +65,3 @@ the code structure and made some changes. Around 70% are unchanged and are the o
 2. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
 3. [libcurl](https://curl.se/libcurl/) to download java.
 4. [Musescore](https://musescore.org/en) that made it possible to provide music.
-5. [flaticon.com](https://www.flaticon.com/) for the huge majority of images
