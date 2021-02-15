@@ -787,6 +787,7 @@ final class Game implements ConquerInfo {
 				numSoldiers * (costs.coinsPerMoveOfSoldierBase() + (costs.coinsPerMovePerSoldier() * weight)));
 	}
 
+	
 	private void payMoney() {
 		StreamUtils.forEach(this.cities, city -> {
 			final var clan = this.getClan(city);
