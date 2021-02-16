@@ -50,6 +50,7 @@ public final class Initializer {
 				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
 						StandardOpenOption.CREATE);
 			} catch (IOException e) {
+				Shared.LOGGER.exception(e);
 				if (onError != null) {
 					onError.accept(e);
 				}

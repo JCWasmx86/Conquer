@@ -20,12 +20,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.jel.game.data.Shared;
 import org.jel.game.init.Initializer;
-import org.jel.game.init.Installer;
 import org.jel.gui.utils.Sound;
 
 /**
- * This class provides the introduction for the game. It is currently just a
- * black screen, anything else will be done soon.
+ * This class provides the introduction for the game.
  */
 final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
 	private static final long serialVersionUID = 4354833119880282433L;
@@ -39,33 +37,18 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {// Just use the Default LaF
+				| UnsupportedLookAndFeelException e) { // Just use the Default LaF
 			// Just print the stack trace. It is no critical thing, so you shouldn't have to
 			// fear anything, if an exception is thrown.
-			e.printStackTrace();
+			e.printStackTrace();// The logger is not setup currently.
 		}
-		new Thread(() -> {
-			if (Shared.isWindows()) {
-				final var installerWindow = new InstallerWindow();
-				new Installer(
-						options -> JOptionPane.showOptionDialog(null,
-								Messages.getString("Intro.selectTypeOfInstallation"), //$NON-NLS-1$
-								Messages.getString("Intro.installation"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-								JOptionPane.QUESTION_MESSAGE, null, options, options[1]),
-						installerWindow, exception -> {
-						}).run();
-				installerWindow.dispose();
-			}
-			Initializer.INSTANCE().initialize(a -> {
-				JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), //$NON-NLS-1$
-						Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
-				System.exit(-127);
-			});
-		}).start();
+		new Thread(() -> Initializer.INSTANCE().initialize(a -> {
+			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), //$NON-NLS-1$
+					Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+			System.exit(-127);
+		})).start();
 		final var main = new Intro();
-		main.setLocationByPlatform(true);
 		main.setVisible(true);
-		main.createBufferStrategy(4);
 	}
 
 	private final Sound sound;
@@ -82,6 +65,8 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		this.addKeyListener(this);
 		this.timer.start();
 		this.setTitle(Messages.getString("Intro.title"));
+		this.setLocationByPlatform(true);
+		this.createBufferStrategy(4);
 	}
 
 	@Override
