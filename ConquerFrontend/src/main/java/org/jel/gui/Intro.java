@@ -49,6 +49,7 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		})).start();
 		final var main = new Intro();
 		main.setVisible(true);
+		main.createBufferStrategy(4);
 	}
 
 	private final Sound sound;
@@ -66,7 +67,6 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		this.timer.start();
 		this.setTitle(Messages.getString("Intro.title"));
 		this.setLocationByPlatform(true);
-		this.createBufferStrategy(4);
 	}
 
 	@Override
