@@ -43,7 +43,7 @@ final class GiftPanel extends JPanel {
 	}
 
 	/**
-	 * Initialises the panel.
+	 * Initializes the panel.
 	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
