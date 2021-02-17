@@ -40,7 +40,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.Y_AXIS));
 		this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
 		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		if (gift.getNumberOfCoins() != 0) {
+		if (gift.getNumberOfCoins() <= 0.005) {
 			final var jlabel = new JLabel(
 					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
 			this.jframe.add(jlabel);
@@ -48,7 +48,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		for (final var v : gift.getMap().entrySet()) {
 			final double value = v.getValue();
 			final var resource = v.getKey();
-			if (value == 0) {
+			if (value <= 0.005) {
 				continue;
 			}
 			final var jlabel = new JLabel(String.format("%.2f", value) + " " + resource.getName(),
