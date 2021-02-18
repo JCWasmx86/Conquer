@@ -29,7 +29,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory,
 		fprintf(stderr, "Couldn't create JVM: %d\n", status);
 		goto cleanup;
 	}
-	jclass introClass = (*env)->FindClass(env, "org/jel/gui/Intro");
+	jclass introClass = (*env)->FindClass(env, "conquer/gui/Intro");
 	assert(introClass);
 	jclass stringClass = (*env)->FindClass(env, "java/lang/String");
 	assert(stringClass);
@@ -41,7 +41,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory,
 	if (thrown) {
 		(*env)->ExceptionClear(env);
 		char *stacktrace = getStacktrace(env, thrown);
-		jclass reporter = (*env)->FindClass(env, "org/jel/gui/ErrorReporter");
+		jclass reporter = (*env)->FindClass(env, "conquer/gui/ErrorReporter");
 		assert(reporter);
 		jmethodID report = (*env)->GetStaticMethodID(
 			env, reporter, "writeErrorLog",

@@ -155,10 +155,10 @@ Allows to sort out messages that are either debug messages or information that w
 This instructions will only cover the use with SPI, as using XMLReader is deprecated and is not recommended anymore.\newline
 SPI is now the only supported way of creating a \texttt{GlobalContext}.
 \subsubsection{Adding plugins}
-Every plugin has to implement the interface \texttt{org.jel.game.plugins.Plugin}. The only required metho is \texttt{String getName()}.
+Every plugin has to implement the interface \texttt{conquer.plugins.Plugin}. The only required metho is \texttt{String getName()}.
 This method should return an unique identifier.
 
-After this, when packaging the plugin with a jar file, you have to add a file called \newline \texttt{org.jel.game.plugins.Plugin} to the \texttt{\textit{META-INF/services}} directory with this content:
+After this, when packaging the plugin with a jar file, you have to add a file called \newline \texttt{conquer.plugins.Plugin} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
@@ -176,7 +176,7 @@ Strategies are not obtained directly. They are obtained through \texttt{Strategy
 This interface has to be implemented by the class.
 The method \texttt{Strategy buildStrategy()} will then provide an object implementing the interface \texttt{Strategy}.
 
-After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{org.jel.game.strategy.StrategyProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
+After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{conquer.data.strategy.StrategyProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
@@ -195,7 +195,7 @@ This interface has only one method:\newline
 \texttt{List<InstalledScenario> getScenarios()}\newline
 This will just return a list of scenarios that were found.
 
-When packaging this class in a jar file, add a file called \newline \texttt{org.jel.game.data.InstalledScenarioProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
+When packaging this class in a jar file, add a file called \newline \texttt{conquer.data.InstalledScenarioProvider} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
@@ -206,7 +206,7 @@ In order to support new file formats, you have to register a new \texttt{Conquer
 You have to invent a magic number to identify files of your format.
 Furthermore you have to implement a \texttt{ConquerInfoReader}, that will read your file and return a \texttt{ConquerInfo} object.
 
-After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{org.jel.game.strategy.ConquerInfoReaderFactory} to the \texttt{\textit{META-INF/services}} directory with this content:
+After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{conquer.data.strategy.ConquerInfoReaderFactory} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}

@@ -26,7 +26,7 @@ namespace Launcher {
 			options[5] = "--add-modules=org.jel.game,org.jel.frontend";
 			options[6] = "-Dsun.java2d.opengl=true";
 			options[7 + arguments.size] = "-m";
-			options[8 + arguments.size] = "org.jel.frontend/org.jel.gui.Intro";
+			options[8 + arguments.size] = "org.jel.frontend/conquer.gui.Intro";
 			for(int i = 0; i < arguments.size; i++) {
 				options[7 + i] = arguments.get(i);
 			}

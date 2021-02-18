@@ -21,7 +21,7 @@ jar {
 	exclude "images"
 	jar.baseName = "Conquer_frontend"
 	manifest {
-		attributes "Main-Class": "org.jel.gui.Intro"
+		attributes "Main-Class": "conquer.gui.Intro"
 	}
 }
 task conquerResources(type: Jar) {
@@ -34,7 +34,7 @@ task conquerResources(type: Jar) {
 	exclude "**/*.class"
 	baseName = "Conquer_frontend_resources"
 }
-mainClassName="org.jel.gui.Intro"
+mainClassName="conquer.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
 conquerResources.mustRunAfter(":music:buildMusic")
 jar.dependsOn(conquerResources);
