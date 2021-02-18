@@ -47,13 +47,13 @@ public interface StrategyObject {
 
 	/**
 	 * Returns whether troops can be moved from {@code source} to {@code target}.
-	 * 
+	 *
 	 * @param source Source city. May not be {@code null}.
 	 * @param target Destination city. May not be {@code null}.
 	 * @return {@code true} if troops can be moved from {@code source} to
 	 *         {@code target}.
 	 */
-	default boolean canMove(ICity source, ICity target) {
+	default boolean canMove(final ICity source, final ICity target) {
 		if (source == null) {
 			throw new IllegalArgumentException("source == null");
 		}

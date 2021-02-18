@@ -49,7 +49,7 @@ public final class Initializer {
 			try {
 				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
 						StandardOpenOption.CREATE);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				Shared.LOGGER.exception(e);
 				if (onError != null) {
 					onError.accept(e);

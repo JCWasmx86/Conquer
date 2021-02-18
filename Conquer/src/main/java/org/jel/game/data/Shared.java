@@ -549,11 +549,11 @@ public final class Shared {
 
 	/**
 	 * Load a file of the file format from the RI from the input stream.
-	 * 
+	 *
 	 * @param in Inputstream to read from. May not be {@code null}.
 	 * @return The new built {@link ConquerInfo} object.
 	 */
-	public static ConquerInfo loadReferenceImplementationfile(InputStream in) {
+	public static ConquerInfo loadReferenceImplementationfile(final InputStream in) {
 		return new ScenarioFileReader().read(in);
 	}
 

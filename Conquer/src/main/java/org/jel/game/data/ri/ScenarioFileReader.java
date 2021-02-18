@@ -58,7 +58,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			Shared.LOGGER.exception(e);
 			throw new RuntimeException(e);
 		}
-		return readFromStream(stream);
+		return this.readFromStream(stream);
 	}
 
 	private ConquerInfo readFromStream(final InputStream stream) {
@@ -265,7 +265,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		return game;
 	}
 
-	public ConquerInfo read(InputStream in) {
+	public ConquerInfo read(final InputStream in) {
 		if (in == null) {
 			throw new IllegalArgumentException("in==null");
 		}

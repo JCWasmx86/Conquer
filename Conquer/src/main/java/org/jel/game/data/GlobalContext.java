@@ -122,7 +122,7 @@ public final class GlobalContext {
 		final var bytes = this.obtainBytes(is, maxLength);
 		for (final var factory : list) {
 			final var magic = factory.getMagicNumber();
-			if (magic.length <= bytes.length && Arrays.equals(bytes, 0, magic.length, magic, 0, magic.length)) {
+			if ((magic.length <= bytes.length) && Arrays.equals(bytes, 0, magic.length, magic, 0, magic.length)) {
 				final var reader = factory.getForFile(is);
 				return reader.build();
 			}

@@ -22,7 +22,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
-	 * 
+	 *
 	 * @param url The {@link URL} to read from. May not be {@code null}, otherwise
 	 *            an {@link IllegalArgumentException} will be thrown.
 	 */
@@ -35,7 +35,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
-	 * 
+	 *
 	 * @param file The {@link File} to read from. May not be {@code null}, otherwise
 	 *             an {@link IllegalArgumentException} will be thrown.
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
@@ -49,7 +49,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
-	 * 
+	 *
 	 * @param uri The {@link URI} to read from. May not be {@code null}, otherwise
 	 *            an {@link IllegalArgumentException} will be thrown.
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
@@ -63,7 +63,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.
-	 * 
+	 *
 	 * @param in The {@link InputStream} to read from. May not be {@code null},
 	 *           otherwise an {@link IllegalArgumentException} will be thrown.
 	 */
@@ -75,12 +75,12 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	}
 
 	@Override
-	public byte[] getMagicNumber(int maxLength) {
+	public byte[] getMagicNumber(final int maxLength) {
 		try {
 			this.tryOpen();
 			this.bytes = this.in.readNBytes(maxLength);
 			return this.bytes;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new UnsupportedOperationException(e);
 		}
 	}
@@ -94,10 +94,10 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	@Override
 	public int read() throws IOException {
 		if (this.bytes != null) {
-			if (cnter < bytes.length) {
-				return this.bytes[cnter++];
+			if (this.cnter < this.bytes.length) {
+				return this.bytes[this.cnter++];
 			} else {
-				return in.read();
+				return this.in.read();
 			}
 		} else {
 			this.tryOpen();
