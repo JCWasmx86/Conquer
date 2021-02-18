@@ -1,10 +1,7 @@
 package conquer.data;
 
-import org.junit.jupiter.api.Test;
-
-import conquer.data.EventList;
-
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 class EventListTest {
 

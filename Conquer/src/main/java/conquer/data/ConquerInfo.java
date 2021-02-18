@@ -251,7 +251,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Returns the usage and production of the resources for the given clan.
-	 * 
+	 *
 	 * @param clan The clan.
 	 * @return ResourceUsage for the given clan.
 	 */
@@ -275,7 +275,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Return an object describing the costs for soldiers for this clan.
-	 * 
+	 *
 	 * @param clan The costs for this clan.
 	 * @return SoldierCosts object
 	 */

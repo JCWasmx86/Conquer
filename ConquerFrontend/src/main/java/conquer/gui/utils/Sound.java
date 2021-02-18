@@ -130,7 +130,7 @@ public class Sound implements LineListener, Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof Sound s) {
 			return s.filename.equals(this.filename);
 		} else {

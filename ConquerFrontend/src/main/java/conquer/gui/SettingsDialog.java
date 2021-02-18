@@ -23,7 +23,7 @@ final class SettingsDialog extends JFrame {
 
 	private SettingsDialog() {
 		this.setTitle("Settings");
-		JTabbedPane pane = new JTabbedPane();
+		final var pane = new JTabbedPane();
 		pane.addTab("Default", this.panel);
 		ServiceLoader.load(SettingMenuPlugin.class).forEach(a -> {
 			final var icon = a.getIcon();

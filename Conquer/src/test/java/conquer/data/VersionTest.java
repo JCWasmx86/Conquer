@@ -2,8 +2,6 @@ package conquer.data;
 
 import org.junit.jupiter.api.Test;
 
-import conquer.data.Version;
-
 class VersionTest {
 	@Test
 	void testComparisonEq() {

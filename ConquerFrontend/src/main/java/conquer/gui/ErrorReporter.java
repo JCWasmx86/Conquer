@@ -12,15 +12,15 @@ import java.util.ServiceLoader.Provider;
 import conquer.data.Shared;
 
 public class ErrorReporter {
-	//Returns the errorlog filename.
-	public static String writeErrorLog(Throwable t) {
+	// Returns the errorlog filename.
+	public static String writeErrorLog(final Throwable t) {
 		final var reportsDir = new File(Shared.BASE_DIRECTORY, "reports");
 		reportsDir.mkdirs();
 		final var logfileName = "log_" + Long.toHexString(System.nanoTime()) + ".report";
 		final var logfile = new File(reportsDir, logfileName);
-		try(final var bw = new BufferedWriter(new FileWriter(logfile));
-			final var sw = new StringWriter();
-			final var pw = new PrintWriter(sw)) {
+		try (final var bw = new BufferedWriter(new FileWriter(logfile));
+				final var sw = new StringWriter();
+				final var pw = new PrintWriter(sw)) {
 			bw.write("Crash log\n");
 			t.printStackTrace(pw);
 			bw.write("Stacktrace\n");
@@ -30,7 +30,7 @@ public class ErrorReporter {
 			System.getProperties().entrySet().forEach(a -> {
 				try {
 					bw.write(a.getKey() + "=" + a.getValue() + "\n");
-				}catch(final IOException e) {
+				} catch (final IOException e) {
 					Shared.LOGGER.exception(e);
 				}
 			});
@@ -38,27 +38,26 @@ public class ErrorReporter {
 			System.getenv().entrySet().forEach(a -> {
 				try {
 					bw.write(a.getKey() + "=" + a.getValue() + "\n");
-				}catch(final IOException e) {
+				} catch (final IOException e) {
 					Shared.LOGGER.exception(e);
 				}
 			});
 			bw.write("Services\n\n");
 			ErrorReporter.class.getModule().getDescriptor().uses().forEach(a -> {
-				try{
-					var clazz = Class.forName(a);
-					ServiceLoader.load(clazz).stream().map(Provider::get)
-					.map(Object::getClass).forEach(b -> {
-						try{
-							bw.write(clazz.toString()+" is provided by "+b.toString());
-						}catch(IOException e) {
+				try {
+					final var clazz = Class.forName(a);
+					ServiceLoader.load(clazz).stream().map(Provider::get).map(Object::getClass).forEach(b -> {
+						try {
+							bw.write(clazz.toString() + " is provided by " + b.toString());
+						} catch (final IOException e) {
 							Shared.LOGGER.exception(e);
 						}
 					});
-				}catch(ClassNotFoundException cnfe) {
+				} catch (final ClassNotFoundException cnfe) {
 					Shared.LOGGER.exception(cnfe);
 				}
 			});
-		} catch(final IOException e) {
+		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
 		return logfile.getAbsolutePath();
