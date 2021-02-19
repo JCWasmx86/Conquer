@@ -103,7 +103,7 @@ namespace Launcher {
 			handle.setopt(VERBOSE, true);
 			//TODO: This is not a good solution
 			handle.setopt(SSL_VERIFYPEER, false);
-			Code c = handle.perform();
+			var c = handle.perform();
 			return c == OK;
 		}
 		return false;
@@ -111,7 +111,7 @@ namespace Launcher {
 	void downloadJDK(IDownloadProgress dp) {
 		var handle = new EasyHandle();
 		if(handle != null) {
-			FILE fp = Posix.FILE.open(hasToDownloadJava(), "wb");
+			var fp = Posix.FILE.open(hasToDownloadJava(), "wb");
 			if(fp == null) {
 				perror("fopen");
 				return;
@@ -147,7 +147,7 @@ namespace Launcher {
 		public string? javaFolder;
 		public static Configuration? readConfig() {
 			makeDirectory(getBaseDirectory());
-			string file = getBaseDirectory() + "/config.json";
+			var file = getBaseDirectory() + "/config.json";
 			Parser parser = new Parser();
 			try {
 				parser.load_from_file(file);

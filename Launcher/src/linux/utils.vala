@@ -6,9 +6,9 @@ namespace Launcher {
 		if(alreadyInstalledJava != null) {
 			return null;
 		}
-		string baseDir = geteuid() == 0?"/opt":getBaseDirectory();
-		string java15Dir = baseDir + "/java-15";
-		string outputFile = baseDir + "/java-15.tar.gz";
+		var baseDir = geteuid() == 0?"/opt":getBaseDirectory();
+		var java15Dir = baseDir + "/java-15";
+		var outputFile = baseDir + "/java-15.tar.gz";
 		return (opendir(java15Dir) != null || opendir("/opt/java-15") != null) ? null : outputFile;
 	}
 
