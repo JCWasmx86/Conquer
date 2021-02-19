@@ -2,9 +2,10 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include <assert.h>
-#include <shellapi.h>
 #include <stdint.h>
 #include <winbase.h>
+#include <shellapi.h>
+#include <shlobj.h>
 
 #define BUFFER_SIZE (1000 * 1000 * 8)
 extern uint8_t zipfile;

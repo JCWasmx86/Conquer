@@ -1,10 +1,9 @@
 #include <assert.h>
-#include <shellapi.h>
-#include <shlobj.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
-
+#include <shellapi.h>
+#include <shlobj.h>
 char *getBaseDirectory(void);
 void deleteFile(const char *fileName);
 int deleteDirectory(char *lpszDir);
