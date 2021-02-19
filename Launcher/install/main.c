@@ -2,8 +2,7 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include <assert.h>
-#include <shfolder.h>
-#include <shlobj.h>
+#include <shellapi.h>
 #include <stdint.h>
 #include <winbase.h>
 
