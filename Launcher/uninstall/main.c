@@ -1,29 +1,29 @@
 #include <assert.h>
+#include <shellapi.h>
 #include <shlobj.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
-#include <shellapi.h>
 
-char* getBaseDirectory(void);
+char *getBaseDirectory(void);
 void deleteFile(const char *fileName);
 int deleteDirectory(char *lpszDir);
 
 int main() {
 	deleteFile("uninstall.exe");
 	deleteFile("");
-	MessageBox(NULL,
-			"Uninstalled Conquer! To finish the removal, please restart sometime.",
-			"Success",
-			MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL
-					| MB_TOPMOST);
+	MessageBox(
+		NULL,
+		"Uninstalled Conquer! To finish the removal, please restart sometime.",
+		"Success",
+		MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL | MB_TOPMOST);
 	return EXIT_SUCCESS;
 }
-char* getBaseDirectory(void) {
+char *getBaseDirectory(void) {
 	char *name = calloc(MAX_PATH * 2, 1);
 	assert(name);
-	if (SHGetSpecialFolderPathA(NULL, name, CSIDL_PROGRAM_FILES, FALSE)
-			== FALSE) {
+	if (SHGetSpecialFolderPathA(NULL, name, CSIDL_PROGRAM_FILES, FALSE) ==
+		FALSE) {
 		fprintf(stderr, "SHGetSpecialFolderPathA failed!\n");
 		exit(-1);
 	}
@@ -41,10 +41,10 @@ void deleteFile(const char *fileName) {
 			DWORD error = GetLastError();
 			char *s = NULL;
 			FormatMessageA(
-					FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM
-							| FORMAT_MESSAGE_IGNORE_INSERTS, NULL, error,
-					MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR) & s, 0,
-					NULL);
+				FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM |
+					FORMAT_MESSAGE_IGNORE_INSERTS,
+				NULL, error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+				(LPSTR)&s, 0, NULL);
 			fprintf(stderr, "Error: %s\n", s);
 			LocalFree(s);
 		}
@@ -54,7 +54,7 @@ void deleteFile(const char *fileName) {
 }
 int deleteDirectory(char *lpszDir) {
 	int len = strlen(lpszDir);
-	char *pszFrom = calloc(len + 2,1);
+	char *pszFrom = calloc(len + 2, 1);
 	assert(pszFrom);
 	strcpy(pszFrom, lpszDir);
 	pszFrom[len] = 0;
