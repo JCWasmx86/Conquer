@@ -64,24 +64,30 @@ namespace Launcher {
 				this.pack_start(this.progressBar, false);
 				window.show_all();
 				if((!isMatching) && hasToDownloadJava() != null) {
-					new Thread<void>("thread_a", () => {
-						downloadJDK(this);
-						extractJDK(extractReceiver);
-						tryUpdating();
-						window.hide();
-						new Thread<void>("thread_b", () => {
-							JVM jvm = new JVM(null);
-							jvm.addJVMArguments(jvmOptions.toList());
-							jvm.addClasspaths(classpaths.toList());
-							Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
-							jvm.run(null);
-							Process.exit(0);
-						});
+					new Thread<void>("downloadAndExtractThread", () => {
+						if(hasInternetConnection()) {
+							downloadJDK(this);
+							extractJDK(extractReceiver);
+							tryUpdating();
+							window.hide();
+							new Thread<void>("runJVM", () => {
+								JVM jvm = new JVM(null);
+								jvm.addJVMArguments(jvmOptions.toList());
+								jvm.addClasspaths(classpaths.toList());
+								Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
+								jvm.run(null);
+								Process.exit(0);
+							});
+						} else {
+							var dialog = new MessageDialog(null,DESTROY_WITH_PARENT|MODAL,ERROR,OK, "No internet connection!");
+							dialog.run();
+							Process.exit(-1);
+						}
 					});
 				} else {
+					tryUpdating();
 					window.hide();
-					new Thread<void>("jvm", () => {
-						tryUpdating();
+					new Thread<void>("runJVM", () => {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());

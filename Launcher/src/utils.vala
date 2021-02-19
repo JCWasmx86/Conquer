@@ -95,6 +95,19 @@ namespace Launcher {
 		GLib.stdout.printf("Using URL: %s\n", url);
 		return url;
 	}
+	
+	bool hasInternetConnection() {
+		var handle = new EasyHandle();
+		if(handle != null) {
+			handle.setopt(URL, "http://example.com/");
+			handle.setopt(VERBOSE, true);
+			//TODO: This is not a good solution
+			handle.setopt(SSL_VERIFYPEER, false);
+			Code c = handle.perform();
+			return c==OK;
+		}
+		return false;
+	}
 	void downloadJDK(IDownloadProgress dp) {
 		var handle = new EasyHandle();
 		if(handle != null) {
