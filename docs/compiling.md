@@ -4,6 +4,7 @@
 
 1. 8GB RAM (4GB could work, but at least 8GB are recommended)
 2. 250MB disk space + space for all dependencies.
+3. An internet connection for every build.
 
 ## Debian and its descendents
 

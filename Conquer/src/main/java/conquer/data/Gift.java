@@ -44,14 +44,15 @@ public final class Gift {
 		}
 		this.numberOfCoins = numberOfCoins;
 		for (var i = 0; i < resources.size(); i++) {
-			if (resources.get(i) < 0) {
+			final var res = resources.get(i);
+			if (res < 0) {
 				throw new IllegalArgumentException("resources.get(i) < 0, i=" + i);
-			} else if (Double.isNaN(resources.get(i))) {
+			} else if (Double.isNaN(res)) {
 				throw new IllegalArgumentException("resources.get(i) isNaN" + i);
-			} else if (Double.isInfinite(resources.get(i))) {
+			} else if (Double.isInfinite(res)) {
 				throw new IllegalArgumentException("resources.get(i) isInfinite" + i);
 			}
-			this.map.put(Resource.values()[i], resources.get(i));
+			this.map.put(Resource.values()[i], res);
 		}
 	}
 

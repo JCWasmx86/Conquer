@@ -61,7 +61,6 @@ the code structure and made some changes. Around 70% are unchanged and are the o
 
 ### Credits
 
-1. [cJSON](https://github.com/DaveGamble/cJSON) for the JSON-Parser
-2. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
-3. [libcurl](https://curl.se/libcurl/) to download java.
-4. [Musescore](https://musescore.org/en) that made it possible to provide music.
+1. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
+2. [libcurl](https://curl.se/libcurl/) to download java.
+3. [Musescore](https://musescore.org/en) that made it possible to provide music.

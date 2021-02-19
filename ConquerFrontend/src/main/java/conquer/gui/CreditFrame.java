@@ -70,7 +70,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 		// TODO: Check whether a license for every distributed DLL has to be added.
 		sb.append("</ul><h3>Notable links</h3>");
 		sb.append(
-				"<i><a href=\"https://github.com/musescore/MuseScore\">Musescore</a></i> was used to generate the music for the <i>DefaultMusic</i> plugin.<br>");
+				"<i><a href=\"https://github.com/musescore/MuseScore\">Musescore</a></i> was used to generate the music for the <i>DefaultMusic</i> plugin and the GUI.<br>");
 		sb.append(
 				"The names \"Belenos\", \"Etiona\" and \"Slaine\" are from <i><a href=\"https://trisquel.info/en\">Trisquel Linux</a></i>.<br>");
 		sb.append(
