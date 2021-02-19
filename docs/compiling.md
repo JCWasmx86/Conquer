@@ -11,8 +11,9 @@
 ### Prerequisites
 
 1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
-2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev, pkg-config, valac, libgee-0.8-dev, libjson-glib-dev
+2. This packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev, pkg-config, valac, libgee-0.8-dev, libjson-glib-dev, make
 3. Gradle is required. Conquer is only tested with 6.8
+4. `JAVA_HOME` has to be set.
 
 ### Compiling
 
@@ -34,7 +35,7 @@ debs/conquer-default-music.deb
 ### TL;DR
 
 ```
-sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev
+sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev make
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
@@ -49,7 +50,7 @@ Only arm64 and amd64 are supported.
 ### Prerequisites
 
 1. MSYS2
-2. Use the MINGW64 shell and install this packages:
+2. Use the MINGW64 shell and install these packages:
 	git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-headers-git zip unzip mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libgee
 	mingw-w64-x86_64-json-glib
 3. Install musescore3: You have to download the installer and run it.
@@ -113,3 +114,7 @@ gradle openIdea
 
 ## The gradle daemon is crashing!
 This means you don't have enough RAM available. Try closing programs that use too much (E.g. MS Teams, Skype, Chrome, ...)
+## The build is failing while building the music!
+Try again. Sometimes the conversion fails, but that's quite rare.
+## On linux the conversion is failing on headless systems
+Set `QT_QPA_PLATFORM` to `offscreen`. (`export QT_QPA_PLATFORM=offscreen`), otherwise Qt will look for a running X server.
