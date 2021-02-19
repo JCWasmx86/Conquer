@@ -95,7 +95,7 @@ namespace Launcher {
 		GLib.stdout.printf("Using URL: %s\n", url);
 		return url;
 	}
-	
+
 	bool hasInternetConnection() {
 		var handle = new EasyHandle();
 		if(handle != null) {
@@ -104,7 +104,7 @@ namespace Launcher {
 			//TODO: This is not a good solution
 			handle.setopt(SSL_VERIFYPEER, false);
 			Code c = handle.perform();
-			return c==OK;
+			return c == OK;
 		}
 		return false;
 	}

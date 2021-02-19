@@ -79,7 +79,7 @@ namespace Launcher {
 								Process.exit(0);
 							});
 						} else {
-							var dialog = new MessageDialog(null,DESTROY_WITH_PARENT|MODAL,ERROR,OK, "No internet connection!");
+							var dialog = new MessageDialog(null, DESTROY_WITH_PARENT | MODAL, ERROR, OK, "No internet connection!");
 							dialog.run();
 							Process.exit(-1);
 						}
