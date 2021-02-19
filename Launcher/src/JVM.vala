@@ -23,10 +23,10 @@ namespace Launcher {
 			options[2] = "--enable-preview";
 			options[3] = "-Xms1G";
 			options[4] = new ModulePathCreator().create();
-			options[5] = "--add-modules=org.jel.game,org.jel.frontend";
+			options[5] = "--add-modules=conquer,conquer.frontend";
 			options[6] = "-Dsun.java2d.opengl=true";
 			options[7 + arguments.size] = "-m";
-			options[8 + arguments.size] = "org.jel.frontend/conquer.gui.Intro";
+			options[8 + arguments.size] = "conquer.frontend/conquer.gui.Intro";
 			for(int i = 0; i < arguments.size; i++) {
 				options[7 + i] = arguments.get(i);
 			}

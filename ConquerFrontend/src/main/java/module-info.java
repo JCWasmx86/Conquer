@@ -1,7 +1,7 @@
-module org.jel.frontend {
+module conquer.frontend {
 	requires java.desktop;
-	requires org.jel.game;
-	requires org.jel.game.frontend.spi;
+	requires conquer;
+	requires conquer.frontend.spi;
 
 	uses conquer.frontend.spi.InGameButton;
 	uses conquer.frontend.spi.GUIMenuPlugin;

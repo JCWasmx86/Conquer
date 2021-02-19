@@ -11,7 +11,7 @@ import conquer.data.strategy.StrategyProvider;
 /**
  * The module exporting all required packages.
  */
-module org.jel.game {
+module conquer {
 	requires transitive java.desktop;
 	requires static org.junit.jupiter.api;
 

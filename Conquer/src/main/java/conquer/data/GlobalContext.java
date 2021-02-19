@@ -132,9 +132,9 @@ public final class GlobalContext {
 
 	@Override
 	public String toString() {
-		return "GlobalContext [installedMaps=" + installedMaps + ", plugins=" + plugins + ", strategies=" + strategies
-				+ ", pluginNames=" + pluginNames + ", strategyNames=" + strategyNames + ", readers=" + readers
-				+ ", readerNames=" + readerNames + "]";
+		return "GlobalContext [installedMaps=" + this.installedMaps + ", plugins=" + this.plugins + ", strategies="
+				+ this.strategies + ", pluginNames=" + this.pluginNames + ", strategyNames=" + this.strategyNames
+				+ ", readers=" + this.readers + ", readerNames=" + this.readerNames + "]";
 	}
 
 	private byte[] obtainBytes(final InstalledScenario is, final int maxLength) {
