@@ -7,7 +7,8 @@ namespace Launcher {
 			this.userDefined = classpaths;
 		}
 		public string collectClasspath() {
-			string ret = "-Djava.class.path=/usr/share/java/Conquer_resources.jar:/usr/share/java/Conquer_frontend_resources.jar:";
+			string ret =
+			 "-Djava.class.path=/usr/share/java/Conquer_resources.jar:/usr/share/java/Conquer_frontend_resources.jar:";
 			foreach(var i in this.userDefined) {
 				ret += i + ":";
 			}
@@ -18,7 +19,8 @@ namespace Launcher {
 			ret += "/usr/share/conquer/music:";
 			ret += "/usr/share/conquer/sounds:";
 			ret += "/usr/share/conquer/images:";
-			ret += "/usr/share/java/conquer/jlayer.jar:/usr/share/java/conquer/jorbis.jar:/usr/share/java/conquer/mp3spi.jar:";
+			ret +=
+			 "/usr/share/java/conquer/jlayer.jar:/usr/share/java/conquer/jorbis.jar:/usr/share/java/conquer/mp3spi.jar:";
 			ret += "/usr/share/java/conquer/tritonus.jar:/usr/share/java/conquer/vorbisspi.jar:";
 			ret += (baseDir + "/libs/music/:");
 			ret += (baseDir + "/libs/sounds/:");
@@ -29,7 +31,8 @@ namespace Launcher {
 	}
 	class ModulePathCreator {
 		public string create() {
-			return "--module-path=/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:/usr/share/java/ConquerFrontendSPI.jar";
+			return
+				"--module-path=/usr/share/java/Conquer.jar:/usr/share/java/Conquer_frontend.jar:/usr/share/java/ConquerFrontendSPI.jar";
 		}
 	}
 }

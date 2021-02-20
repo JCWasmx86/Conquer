@@ -14,7 +14,8 @@ namespace Launcher {
 			box.pack_start(this.classpaths);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava, window);
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
+			  window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
@@ -48,7 +49,8 @@ namespace Launcher {
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
 
-		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, ApplicationWindow window) {
+		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava,
+		 ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
 			var button = new Button.with_label("Start");
@@ -74,12 +76,14 @@ namespace Launcher {
 								JVM jvm = new JVM(null);
 								jvm.addJVMArguments(jvmOptions.toList());
 								jvm.addClasspaths(classpaths.toList());
-								Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
+								Configuration.dump(jvmOptions.toList(),
+								classpaths.toList(), javaFolder);
 								jvm.run(null);
 								Process.exit(0);
 							});
 						} else {
-							var dialog = new MessageDialog(null, DESTROY_WITH_PARENT | MODAL, ERROR, OK, "No internet connection!");
+							var dialog = new MessageDialog(null, DESTROY_WITH_PARENT |
+							MODAL, ERROR, OK, "No internet connection!");
 							dialog.run();
 							Process.exit(-1);
 						}
@@ -91,7 +95,8 @@ namespace Launcher {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
-						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder);
+						Configuration.dump(jvmOptions.toList(), classpaths.toList(),
+						javaFolder);
 						jvm.run(isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
@@ -104,7 +109,8 @@ namespace Launcher {
 				this.progressBar.set_text("Starting download...");
 				return false;
 			}
-			this.progressBar.set_text("Downloaded %.0lf of %.0lf bytes (%.2lf %%)".printf(data.dlnow, data.dltotal, data.getPercentage()));
+			this.progressBar.set_text("Downloaded %.0lf of %.0lf bytes (%.2lf %%)".printf(data.dlnow,
+			 data.dltotal, data.getPercentage()));
 			this.progressBar.set_fraction(data.getPercentage() / 100);
 			return false;
 		}
@@ -114,7 +120,8 @@ namespace Launcher {
 			Gdk.threads_add_idle(updateDownloadProgressBar);
 		}
 		bool updateExtractProgressbar() {
-			this.progressBar.set_text("Extracting %s (%d/%d)".printf(this.extractProgress.filename, this.extractProgress.current, this.extractProgress.numberOfFiles));
+			this.progressBar.set_text("Extracting %s (%d/%d)".printf(this.extractProgress.filename,
+			 this.extractProgress.current, this.extractProgress.numberOfFiles));
 			return false;
 		}
 		void extractReceiver(string name, int current, int max) {
@@ -187,7 +194,8 @@ namespace Launcher {
 			this.check = new CheckButton.with_label("Find Java 15 automatically");
 			this.check.set_active(true);
 			this.pack_start(this.check);
-			this.fileChooserButton = new FileChooserButton("Select Java 15 installation", FileChooserAction.SELECT_FOLDER);
+			this.fileChooserButton = new FileChooserButton("Select Java 15 installation",
+			  FileChooserAction.SELECT_FOLDER);
 			this.check.toggled.connect(() => {
 				if(this.check.get_active()) {
 					this.check.set_label("Find Java 15 automatically");
@@ -238,7 +246,8 @@ namespace Launcher {
 			menu.append(item);
 			menu.show_all();
 			button_press_event.connect(event => {
-				if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3 && store.iter_n_children(null) > 0) {
+				if(event.type == Gdk.EventType.BUTTON_PRESS && event.button == 3 &&
+				store.iter_n_children(null) > 0) {
 					menu.popup_at_pointer(event);
 				}
 				return true;
