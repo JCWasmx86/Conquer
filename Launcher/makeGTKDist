@@ -68,9 +68,14 @@ cp /mingw64/bin/libunistring-2.dll .
 cp /mingw64/bin/libwinpthread-1.dll .
 cp /mingw64/bin/libzstd.dll .
 cp /mingw64/bin/zlib1.dll .
-#Required to show svg files and so on.
+#Required to show svg,png files and so on.
 mkdir -p lib/gdk-pixbuf-2.0/2.10.0/loaders/
+gdk-pixbuf-query-loaders >lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 cp /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
+cp /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
+#Some needed schemas
+mkdir -p share/glib-2.0/schemas
+cp -r /mingw64/share/glib-2.0/schemas/ share/glib-2.0/
 mkdir -p etc/gtk-3.0
 {
 	echo [Settings]

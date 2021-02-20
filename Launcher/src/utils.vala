@@ -82,7 +82,12 @@ namespace Launcher {
 		public abstract void onProgress(double dltotal, double dlnow, double ultotal, double ulnow);
 	}
 
+	string? cachedURL = null;
+	
 	string obtainURL() {
+		if(cachedURL != null) {
+			return cachedURL;
+		}
 		var liberica = new LibericaJDK();
 		var url = liberica.obtain();
 		if(url == null) {
@@ -92,6 +97,7 @@ namespace Launcher {
 				critical("No JDK binary for your system found!");
 			}
 		}
+		cachedURL = url;
 		GLib.stdout.printf("Using URL: %s\n", url);
 		return url;
 	}
