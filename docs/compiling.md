@@ -116,5 +116,9 @@ gradle openIdea
 This means you don't have enough RAM available. Try closing programs that use too much (E.g. MS Teams, Skype, Chrome, ...)
 ## The build is failing while building the music!
 Try again. Sometimes the conversion fails, but that's quite rare.
-## On linux the conversion is failing on headless systems
+## On linux the conversion is failing on headless systems!
 Set `QT_QPA_PLATFORM` to `offscreen`. (`export QT_QPA_PLATFORM=offscreen`), otherwise Qt will look for a running X server.
+## Some music doesn't seem to be generated/included in jar files.
+The build system is currently quite instable. Because of this, it is possible, that `Conquer_frontend_resources.jar` will be packaged
+before the music is copied. A bugfix would be appreciated.
+The workaround would be to build again.
