@@ -63,13 +63,14 @@ namespace Launcher {
 				}
 			}
 		}
+		if (last_result != Archive.Result.EOF) {
+			critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
+		}
 		try{
+			//Fails with "Invalid argument" on windows. TODO
 			GLib.File.new_for_path(outputFile).@delete();
 		}catch(Error e) {
 			GLib.stderr.printf("%s\n", e.message);
-		}
-		if (last_result != Archive.Result.EOF) {
-			critical ("Error: %s (%d)", archive.error_string (), archive.errno ());
 		}
 	}
 
