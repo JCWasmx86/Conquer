@@ -13,7 +13,6 @@
 .gradle
 .project
 .settings/
-/docs/
 Conquer/.*
 Conquer/.classpath
 Conquer/.project
