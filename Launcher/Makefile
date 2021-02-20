@@ -31,7 +31,7 @@ clean:
 	rm -rf Windows-10
 	rm -f *.zst
 Installer.exe: all buildInstallRC buildIncludeFile install.o
-	$(CC) -Wl,--no-insert-timestamp $(CFLAGS) install.o installResource.o inc.o -o Installer.exe --static -larchive -lz -llzma -lbcrypt -lbz2 -liconv -lzstd -lexpat -llz4
+	$(CC) -Wl,--no-insert-timestamp $(CFLAGS) install.o installResource.o inc.o -o Installer.exe --static -larchive -lz -llzma -lbcrypt -lbz2 -liconv -lzstd -lexpat -llz4 -mwindows
 install.o: install/main.c
 	$(CC) $(CFLAGS) -c -o install.o install/main.c
 buildIncludeFile: install/inc.s
