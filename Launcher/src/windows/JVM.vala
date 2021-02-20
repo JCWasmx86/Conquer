@@ -21,8 +21,8 @@ namespace Launcher {
 			ret += (programFiles + "\\Conquer\\music;");
 			ret += (programFiles + "\\Conquer\\sounds;");
 			ret += (programFiles + "\\Conquer\\images;");
-			ret += appendAllJarsFromDir(programFiles + "\\plugins", ";");
-			ret += appendAllJarsFromDir(programFiles + "\\strategies", ";");
+			ret += appendAllJarsFromDir(programFiles + "\\Conquer\\plugins", ";");
+			ret += appendAllJarsFromDir(programFiles + "\\Conquer\\strategies", ";");
 			foreach(var i in this.userDefined) {
 				ret += i + ";";
 			}
