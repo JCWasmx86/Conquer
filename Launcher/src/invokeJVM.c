@@ -54,8 +54,6 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory,
 		if (func) {
 			func(stacktrace, reportLocation);
 		}
-		while (1) {
-		};
 	}
 	(*jvm)->DestroyJavaVM(jvm);
 cleanup:
