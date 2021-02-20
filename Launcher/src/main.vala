@@ -207,8 +207,10 @@ namespace Launcher {
 				return null;
 			}
 			var ret = this.fileChooserButton.get_filename();
-			if(ret != null && ret.has_suffix("bin")) {
-				ret += "/../";
+			if(ret != null) {
+				if(ret.has_suffix("bin") || ret.has_suffix("bin\\") || ret.has_suffix("bin/")) {
+					ret += "/../";
+				}
 			}
 			return ret;
 		}
