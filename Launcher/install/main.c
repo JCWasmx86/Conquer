@@ -80,8 +80,10 @@ int main(int argc, char **argv) {
 		cnt++;
 	}
 	free(name);
+	archive_read_free(in);
 	createLinkToLauncher();
 	remove(input);
+	perror("remove");
 	MessageBox(NULL, "Installed Conquer!", "Success",
 			   MB_OK | MB_ICONINFORMATION | MB_DEFBUTTON1 | MB_APPLMODAL |
 				   MB_TOPMOST);
@@ -131,6 +133,7 @@ void writeFile(const char *fileName, void *buf, uint64_t size) {
 				size, name, count);
 		perror("fwrite");
 		free(name);
+		fclose(fp);
 		return;
 	}
 	fclose(fp);
