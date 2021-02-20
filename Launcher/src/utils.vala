@@ -83,7 +83,7 @@ namespace Launcher {
 	}
 
 	string? cachedURL = null;
-	
+
 	string obtainURL() {
 		if(cachedURL != null) {
 			return cachedURL;
