@@ -20,7 +20,7 @@ namespace Launcher {
 			box.pack_start(this.selectJava);
 			this.memorySettings = new MemorySettings();
 			box.pack_start(this.memorySettings);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava, this.memorySettings, 
 			  window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
@@ -55,7 +55,7 @@ namespace Launcher {
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
 
-		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava,
+		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, MemorySettings memorySettings, 
 		 ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
@@ -83,8 +83,8 @@ namespace Launcher {
 								jvm.addJVMArguments(jvmOptions.toList());
 								jvm.addClasspaths(classpaths.toList());
 								Configuration.dump(jvmOptions.toList(),
-								classpaths.toList(), javaFolder);
-								jvm.run(null);
+								classpaths.toList(), javaFolder, memorySettings.toMap());
+								jvm.run(memorySettings.getOptions(), null);
 								Process.exit(0);
 							});
 						} else {
@@ -102,8 +102,8 @@ namespace Launcher {
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(), classpaths.toList(),
-						javaFolder);
-						jvm.run(isMatching ? javaFolder : null);
+						javaFolder, memorySettings.toMap());
+						jvm.run(memorySettings.getOptions(), isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
 				}
@@ -382,6 +382,40 @@ namespace Launcher {
 			box.pack_start(this.xmx);
 			this.add(box);
 		}
+		
+		public Gee.List<string> getOptions() {
+			var ret = new Gee.ArrayList<string>();
+			if(xss.getOptionText() != null){
+				ret.add(xss.getOptionText());
+			}
+			if(xmn.getOptionText() != null){
+				ret.add(xmn.getOptionText());
+			}
+			if(xms.getOptionText() != null){
+				ret.add(xms.getOptionText());
+			}
+			if(xmx.getOptionText() != null){
+				ret.add(xmx.getOptionText());
+			}
+			return ret;
+		}
+		
+		public Gee.Map<string, string> toMap() {
+			var ret = new Gee.HashMap<string, string>();
+			if(xss.getOptionText() != null){
+				ret.@set("xss", xss.getOptionText());
+			}
+			if(xmn.getOptionText() != null){
+				ret.@set("xmn", xmn.getOptionText());
+			}
+			if(xms.getOptionText() != null){
+				ret.@set("xms", xms.getOptionText());
+			}
+			if(xmx.getOptionText() != null){
+				ret.@set("xmx", xmx.getOptionText());
+			}
+			return ret;
+		}
 	}
 	class InputSpinner : Box {
 		ComboBox box;
@@ -399,6 +433,7 @@ namespace Launcher {
 			store.insert_with_values(out tp, -1, 0, "MB", -1);
 			store.insert_with_values(out tp, -1, 0, "KB", -1);
 			this.box = new ComboBox.with_model(store);
+			this.box.id_column = 0;
 			var renderer = new CellRendererText();
 			this.box.pack_start(renderer, true);
 			this.box.add_attribute(renderer, "text", 0);
@@ -408,7 +443,10 @@ namespace Launcher {
 		}
 
 		public string? getOptionText() {
-			return this.internalOption + "=" + this.text.text + this.box.active_id.substring(0, 1);
+			if(this.box.active_id == null) {
+				return null;
+			}
+			return this.text.text.strip() == "" ? null : this.internalOption + this.text.text.strip() + this.box.active_id.substring(0, 1);
 		}
 	}
 }

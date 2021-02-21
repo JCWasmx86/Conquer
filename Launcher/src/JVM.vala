@@ -16,21 +16,25 @@ namespace Launcher {
 		public void addClasspaths(Gee.List<string> classpaths) {
 			this.classpaths = classpaths;
 		}
-		public void run(string? directory) {
+		public void run(Gee.List<string> memorySettings, string? directory) {
 			var size = arguments.size;
-			string[] options = new string[size + 8];
+			var memSize = memorySettings.size;
+			string[] options = new string[memSize + size + 8];
 			options[0] = "-XX:+ShowCodeDetailsInExceptionMessages";
 			options[1] = new ClasspathCollector(classpaths).collectClasspath();
 			options[2] = "--enable-preview";
 			options[3] = new ModulePathCreator().create();
 			options[4] = "--add-modules=conquer,conquer.frontend";
 			options[5] = "-Dsun.java2d.opengl=true";
-			options[6 + size] = "-m";
-			options[7 + size] = "conquer.frontend/conquer.gui.Intro";
+			options[6 + size + memSize] = "-m";
+			options[7 + size + memSize] = "conquer.frontend/conquer.gui.Intro";
 			for(int i = 0; i < size; i++) {
 				options[6 + i] = arguments.get(i);
 			}
-			invokeJVM(options, size + 8, (char*) directory, this.onErrorFunc);
+			for(int i = 0; i < memSize; i++) {
+				options[6 + size + i] = memorySettings.get(i);
+			}
+			invokeJVM(options, memSize + size + 8, (char*) directory, this.onErrorFunc);
 		}
 	}
 	extern void invokeJVM(char** options, int numOptions, char* directory, onErrorFunc onErrorFunc);
