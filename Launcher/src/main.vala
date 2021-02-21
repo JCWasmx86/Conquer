@@ -8,9 +8,9 @@ namespace Launcher {
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
-			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument");
+			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument", new JVMOptionsCompletion());
 			box.pack_start(this.jvmOptions);
-			this.classpaths = new InputList("Classpaths", "Add classpath");
+			this.classpaths = new InputList("Classpaths", "Add classpath", null);
 			box.pack_start(this.classpaths);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava);
@@ -133,14 +133,14 @@ namespace Launcher {
 		private Gtk.ListStore listStore;
 		private TreeViewWithPopup treeView;
 
-		public InputList(string name, string label) {
+		public InputList(string name, string label, EntryCompletion? completion) {
 			this.set_orientation(Orientation.VERTICAL);
 			this.listStore = new Gtk.ListStore(1, GLib.Type.STRING);
 			this.treeView = new TreeViewWithPopup();
 			this.treeView.init(this.listStore);
 			this.treeView.set_model(this.listStore);
 			this.pack_start(this.treeView);
-			this.pack_start(new InputBox(this, label, this.listStore), false, false);
+			this.pack_start(new InputBox(this, label, this.listStore, completion), false, false);
 			var column = new TreeViewColumn();
 			column.set_title(name);
 			var renderer = new CellRendererText();
@@ -169,9 +169,12 @@ namespace Launcher {
 	}
 
 	class InputBox : Box {
-		public InputBox(InputList list, string buttonLabel, Gtk.ListStore store) {
+		public InputBox(InputList list, string buttonLabel, Gtk.ListStore store, EntryCompletion? completion) {
 			this.set_orientation(Orientation.HORIZONTAL);
 			var entry = new Entry();
+			if(completion != null) {
+				entry.set_completion(completion);
+			}
 			this.pack_start(entry);
 			var button = new Button.with_label(buttonLabel);
 			this.pack_start(button, false, false);
@@ -275,6 +278,47 @@ namespace Launcher {
 			this.filename = name;
 			this.current = current;
 			this.numberOfFiles = max;
+		}
+	}
+	class JVMOptionsCompletion : EntryCompletion {
+		public JVMOptionsCompletion() {
+			this.set_text_column(0);
+			var store = new Gtk.ListStore(1, GLib.Type.STRING);
+			TreeIter tp;
+			store.insert_with_values(out tp, -1, 0, "-zero", -1);
+			store.insert_with_values(out tp, -1, 0, "-dcevm", -1);
+			store.insert_with_values(out tp, -1, 0, "-verbose:class", -1);
+			store.insert_with_values(out tp, -1, 0, "-verbose:module", -1);
+			store.insert_with_values(out tp, -1, 0, "-verbose:gc", -1);
+			store.insert_with_values(out tp, -1, 0, "-verbose:jni", -1);
+			store.insert_with_values(out tp, -1, 0, "-showversion", -1);
+			store.insert_with_values(out tp, -1, 0, "--show-version", -1);
+			store.insert_with_values(out tp, -1, 0, "-ea", -1);
+			store.insert_with_values(out tp, -1, 0, "-esa", -1);
+			store.insert_with_values(out tp, -1, 0, "-enablesystemassertions", -1);
+			store.insert_with_values(out tp, -1, 0, "-da", -1);
+			store.insert_with_values(out tp, -1, 0, "-dsa", -1);
+			store.insert_with_values(out tp, -1, 0, "-disablesystemassertions", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xbatch", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xcheck:jni", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xcomp", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xdiag", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xint", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xrs", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xshare:auto", -1);
+			store.insert_with_values(out tp, -1, 0, "-Xshare:off", -1);
+			store.insert_with_values(out tp, -1, 0, "-XshowSettings", -1);
+			store.insert_with_values(out tp, -1, 0, "-XshowSettings:all", -1);
+			store.insert_with_values(out tp, -1, 0, "-XshowSettings:locale", -1);
+			store.insert_with_values(out tp, -1, 0, "-XshowSettings:properties", -1);
+			store.insert_with_values(out tp, -1, 0, "-XshowSettings:vm", -1);
+			store.insert_with_values(out tp, -1, 0, "--illegal-access=deny", -1);
+			store.insert_with_values(out tp, -1, 0, "--illegal-access=warn", -1);
+			store.insert_with_values(out tp, -1, 0, "--illegal-access=permit", -1);
+			store.insert_with_values(out tp, -1, 0, "--illegal-access=debug", -1);
+			store.insert_with_values(out tp, -1, 0, "-client", -1);
+			store.insert_with_values(out tp, -1, 0, "-server", -1);
+			this.set_model(store);
 		}
 	}
 }
