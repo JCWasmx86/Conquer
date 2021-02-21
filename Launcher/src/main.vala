@@ -10,7 +10,8 @@ namespace Launcher {
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
-			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument", new JVMOptionsCompletion());
+			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument",
+			  new JVMOptionsCompletion());
 			box.pack_start(this.jvmOptions);
 			this.classpaths = new InputList("Classpaths", "Add classpath", new ClasspathCompletion());
 			box.pack_start(this.classpaths);
@@ -335,7 +336,7 @@ namespace Launcher {
 				foreach (var str in paths) {
 					pathSet.add(str);
 				}
-				foreach(var path in pathSet){
+				foreach(var path in pathSet) {
 					store.insert_with_values(out tp, -1, 0, path, -1);
 					if(!path.has_suffix(".jar")) {
 						Posix.Dir dir = opendir(path);
@@ -343,10 +344,13 @@ namespace Launcher {
 							unowned DirEnt entry;
 							while((entry = readdir(dir)) != null) {
 								var name = (string) entry.d_name;
-								if(name != "." && name != ".." && name.has_suffix(".jar")) {
+								if(name != "." && name != ".." && name.has_suffix(
+									 ".jar")) {
 									//Avoid paths like /foo/bar//foo.jar
-									var sep = path.has_suffix(getPathSeparator())? "" : getPathSeparator();
-									store.insert_with_values(out tp, -1, 0, path + sep + name, -1);
+									var sep = path.has_suffix(getPathSeparator())?
+									 "" : getPathSeparator();
+									store.insert_with_values(out tp, -1, 0, path +
+									 sep + name, -1);
 								}
 							}
 						}

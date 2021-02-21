@@ -1,6 +1,6 @@
 #include <string.h>
 
-char* launcher_getSeparator(void) {
+char *launcher_getSeparator(void) {
 #ifdef _WIN32
 	return strdup(";");
 #else
@@ -8,7 +8,7 @@ char* launcher_getSeparator(void) {
 #endif
 }
 
-char* launcher_getPathSeparator(void) {
+char *launcher_getPathSeparator(void) {
 #ifdef _WIN32
 	return strdup("\\");
 #else

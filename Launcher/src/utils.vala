@@ -247,7 +247,7 @@ namespace Launcher {
 		}
 		return 0;
 	}
-	
+
 	extern string getSeparator();
 	extern string getPathSeparator();
 }
