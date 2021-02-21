@@ -7,6 +7,7 @@ namespace Launcher {
 		private InputList jvmOptions;
 		private InputList classpaths;
 		private SelectJavaBox selectJava;
+		private MemorySettings memorySettings;
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 2);
@@ -17,6 +18,8 @@ namespace Launcher {
 			box.pack_start(this.classpaths);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava);
+			this.memorySettings = new MemorySettings();
+			box.pack_start(this.memorySettings);
 			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
 			  window);
 			box.pack_start(startButtonPanel);
@@ -358,6 +361,54 @@ namespace Launcher {
 				}
 			}
 			this.set_model(store);
+		}
+	}
+
+	class MemorySettings : Expander {
+		InputSpinner xss;
+		InputSpinner xmn;
+		InputSpinner xms;
+		InputSpinner xmx;
+		public MemorySettings() {
+			this.set_label("Advanced");
+			var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+			this.xss = new InputSpinner("-Xss", "Thread stack size (-Xss): ");
+			this.xmn = new InputSpinner("-Xmn", "Initial and maximum size of the heap (-Xmn): ");
+			this.xms = new InputSpinner("-Xms", "Initial and minimum size of the heap (-Xms): ");
+			this.xmx = new InputSpinner("-Xmx", "Maximum size of the heap (-Xmx): ");
+			box.pack_start(this.xss);
+			box.pack_start(this.xmn);
+			box.pack_start(this.xms);
+			box.pack_start(this.xmx);
+			this.add(box);
+		}
+	}
+	class InputSpinner : Box {
+		ComboBox box;
+		string internalOption;
+		string displayOption;
+		Entry text;
+		public InputSpinner(string internalOption, string displayOption) {
+			this.set_orientation(Orientation.HORIZONTAL);
+			this.text = new Entry();
+			this.internalOption = internalOption;
+			this.displayOption = displayOption;
+			var store = new Gtk.ListStore(1, GLib.Type.STRING);
+			TreeIter tp;
+			store.insert_with_values(out tp, -1, 0, "GB", -1);
+			store.insert_with_values(out tp, -1, 0, "MB", -1);
+			store.insert_with_values(out tp, -1, 0, "KB", -1);
+			this.box = new ComboBox.with_model(store);
+			var renderer = new CellRendererText();
+			this.box.pack_start(renderer, true);
+			this.box.add_attribute(renderer, "text", 0);
+			this.pack_start(new Label(displayOption));
+			this.pack_start(this.text);
+			this.pack_start(this.box);
+		}
+
+		public string? getOptionText() {
+			return this.internalOption + "=" + this.text.text + this.box.active_id.substring(0, 1);
 		}
 	}
 }
