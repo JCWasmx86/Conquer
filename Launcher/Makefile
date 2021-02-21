@@ -11,7 +11,7 @@ FLAGS = --pkg=gtk+-3.0 --pkg=posix --pkg=gio-2.0 --pkg=gee-0.8 --pkg=json-glib-1
 
 all: generateFiles downloadVAPIFiles build
 
-generateFiles: src/gen/getLinuxJavaDirectory.vala.in
+generateFiles: src/gen/getLinuxJavaDirectory.vala.in src/gen/adoptopenJDKURL.vala.in src/gen/libericaJDKURL.vala.in
 	cpp -E -P src/gen/getLinuxJavaDirectory.vala.in >src/gen/getLinuxJavaDirectory.vala
 	cpp -E -P src/gen/adoptopenJDKURL.vala.in >src/gen/adoptopenJDKURL.vala
 	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
