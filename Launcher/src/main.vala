@@ -10,7 +10,7 @@ namespace Launcher {
 		private MemorySettings memorySettings;
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
-			var box = new Box(Orientation.VERTICAL, 2);
+			var box = new Box(Orientation.VERTICAL, 0);
 			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument",
 			  new JVMOptionsCompletion());
 			box.pack_start(this.jvmOptions);
@@ -20,8 +20,8 @@ namespace Launcher {
 			box.pack_start(this.selectJava);
 			this.memorySettings = new MemorySettings();
 			box.pack_start(this.memorySettings);
-			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava, this.memorySettings, 
-			  window);
+			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
+			  this.memorySettings, window);
 			box.pack_start(startButtonPanel);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
@@ -41,8 +41,9 @@ namespace Launcher {
 				this.jvmOptions.addElement(i);
 			}
 			if(config.javaFolder != null) {
-				selectJava.configure(config.javaFolder);
+				this.selectJava.configure(config.javaFolder);
 			}
+			this.memorySettings.configure(config);
 		}
 	}
 
@@ -55,8 +56,8 @@ namespace Launcher {
 		private ExtractProgress extractProgress;
 		private AsyncQueue<DownloadProgress> asyncQueue;
 
-		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, MemorySettings memorySettings, 
-		 ApplicationWindow window) {
+		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, MemorySettings
+		 memorySettings, ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
 			var button = new Button.with_label("Start");
@@ -83,7 +84,8 @@ namespace Launcher {
 								jvm.addJVMArguments(jvmOptions.toList());
 								jvm.addClasspaths(classpaths.toList());
 								Configuration.dump(jvmOptions.toList(),
-								classpaths.toList(), javaFolder, memorySettings.toMap());
+								classpaths.toList(), javaFolder,
+								memorySettings.toMap());
 								jvm.run(memorySettings.getOptions(), null);
 								Process.exit(0);
 							});
@@ -101,8 +103,8 @@ namespace Launcher {
 						JVM jvm = new JVM(null);
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
-						Configuration.dump(jvmOptions.toList(), classpaths.toList(),
-						javaFolder, memorySettings.toMap());
+						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder,
+						memorySettings.toMap());
 						jvm.run(memorySettings.getOptions(), isMatching ? javaFolder : null);
 						Process.exit(0);
 					});
@@ -146,7 +148,7 @@ namespace Launcher {
 			this.treeView.init(this.listStore);
 			this.treeView.set_model(this.listStore);
 			this.pack_start(this.treeView);
-			this.pack_start(new InputBox(this, label, this.listStore, completion), false, false);
+			this.pack_start(new InputBox(this, label, this.listStore, completion));
 			var column = new TreeViewColumn();
 			column.set_title(name);
 			var renderer = new CellRendererText();
@@ -372,46 +374,64 @@ namespace Launcher {
 		public MemorySettings() {
 			this.set_label("Advanced");
 			var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
+			var label = new Gtk.Label("");
+			label.set_markup(
+				"<b><i><span background=\'#ff0000\' foreground=\'#ffffff\'>Only change anything here, if you know what you do!\nA wrong setting may crash Conquer!</span></i></b>");
 			this.xss = new InputSpinner("-Xss", "Thread stack size (-Xss): ");
 			this.xmn = new InputSpinner("-Xmn", "Initial and maximum size of the heap (-Xmn): ");
 			this.xms = new InputSpinner("-Xms", "Initial and minimum size of the heap (-Xms): ");
 			this.xmx = new InputSpinner("-Xmx", "Maximum size of the heap (-Xmx): ");
+			box.pack_start(label);
 			box.pack_start(this.xss);
 			box.pack_start(this.xmn);
 			box.pack_start(this.xms);
 			box.pack_start(this.xmx);
 			this.add(box);
 		}
-		
+
+		public void configure(Configuration config) {
+			if(config.xss != null) {
+				this.xss.init(config.xss);
+			}
+			if(config.xmn != null) {
+				this.xmn.init(config.xmn);
+			}
+			if(config.xms != null) {
+				this.xms.init(config.xms);
+			}
+			if(config.xmx != null) {
+				this.xmx.init(config.xmx);
+			}
+		}
 		public Gee.List<string> getOptions() {
 			var ret = new Gee.ArrayList<string>();
-			if(xss.getOptionText() != null){
+			if(xss.getOptionText() != null) {
 				ret.add(xss.getOptionText());
 			}
-			if(xmn.getOptionText() != null){
+			if(xmn.getOptionText() != null) {
 				ret.add(xmn.getOptionText());
 			}
-			if(xms.getOptionText() != null){
+			if(xms.getOptionText() != null) {
 				ret.add(xms.getOptionText());
 			}
-			if(xmx.getOptionText() != null){
+			if(xmx.getOptionText() != null) {
 				ret.add(xmx.getOptionText());
 			}
 			return ret;
 		}
-		
+
 		public Gee.Map<string, string> toMap() {
 			var ret = new Gee.HashMap<string, string>();
-			if(xss.getOptionText() != null){
+			if(xss.getOptionText() != null) {
 				ret.@set("xss", xss.getOptionText());
 			}
-			if(xmn.getOptionText() != null){
+			if(xmn.getOptionText() != null) {
 				ret.@set("xmn", xmn.getOptionText());
 			}
-			if(xms.getOptionText() != null){
+			if(xms.getOptionText() != null) {
 				ret.@set("xms", xms.getOptionText());
 			}
-			if(xmx.getOptionText() != null){
+			if(xmx.getOptionText() != null) {
 				ret.@set("xmx", xmx.getOptionText());
 			}
 			return ret;
@@ -429,9 +449,9 @@ namespace Launcher {
 			this.displayOption = displayOption;
 			var store = new Gtk.ListStore(1, GLib.Type.STRING);
 			TreeIter tp;
-			store.insert_with_values(out tp, -1, 0, "GB", -1);
-			store.insert_with_values(out tp, -1, 0, "MB", -1);
 			store.insert_with_values(out tp, -1, 0, "KB", -1);
+			store.insert_with_values(out tp, -1, 0, "MB", -1);
+			store.insert_with_values(out tp, -1, 0, "GB", -1);
 			this.box = new ComboBox.with_model(store);
 			this.box.id_column = 0;
 			var renderer = new CellRendererText();
@@ -442,11 +462,31 @@ namespace Launcher {
 			this.pack_start(this.box);
 		}
 
+		public void init(string config) {
+			string str = config.replace(this.internalOption, "");
+			char unit = str.@get(str.length - 1);
+			switch(unit) {
+			case 'K':
+				this.box.active = 0;
+				this.box.active_id = "KB";
+			break;
+			case 'M':
+				this.box.active = 0;
+				this.box.active_id = "MB";
+			break;
+			case 'G':
+				this.box.active = 0;
+				this.box.active_id = "GB";
+			break;
+			}
+			this.text.text = str.substring(0, str.length - 1);
+		}
 		public string? getOptionText() {
 			if(this.box.active_id == null) {
 				return null;
 			}
-			return this.text.text.strip() == "" ? null : this.internalOption + this.text.text.strip() + this.box.active_id.substring(0, 1);
+			return this.text.text.strip() == "" ? null : this.internalOption + this.text.text.strip() +
+			       this.box.active_id.substring(0, 1);
 		}
 	}
 }

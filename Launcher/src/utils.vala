@@ -200,7 +200,8 @@ namespace Launcher {
 			}
 			return ret;
 		}
-		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths, string? javaFolder, Gee.Map<string, string> memorySettings) {
+		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths, string? javaFolder,
+		 Gee.Map<string, string> memorySettings) {
 			try{
 				GLib.File.new_for_path(getBaseDirectory() + "/config.json").@delete();
 			}catch(Error e) {
