@@ -293,8 +293,6 @@ namespace Launcher {
 			this.set_text_column(0);
 			var store = new Gtk.ListStore(1, GLib.Type.STRING);
 			TreeIter tp;
-			store.insert_with_values(out tp, -1, 0, "-zero", -1);
-			store.insert_with_values(out tp, -1, 0, "-dcevm", -1);
 			store.insert_with_values(out tp, -1, 0, "-verbose:class", -1);
 			store.insert_with_values(out tp, -1, 0, "-verbose:module", -1);
 			store.insert_with_values(out tp, -1, 0, "-verbose:gc", -1);
@@ -324,8 +322,6 @@ namespace Launcher {
 			store.insert_with_values(out tp, -1, 0, "--illegal-access=warn", -1);
 			store.insert_with_values(out tp, -1, 0, "--illegal-access=permit", -1);
 			store.insert_with_values(out tp, -1, 0, "--illegal-access=debug", -1);
-			store.insert_with_values(out tp, -1, 0, "-client", -1);
-			store.insert_with_values(out tp, -1, 0, "-server", -1);
 			this.set_model(store);
 		}
 	}
