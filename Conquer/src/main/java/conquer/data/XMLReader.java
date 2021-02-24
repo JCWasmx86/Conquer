@@ -21,6 +21,7 @@ import conquer.plugins.Plugin;
 /**
  * A class that reads the configuration file and returns a {@link GlobalContext}
  */
+@Deprecated(forRemoval = true)
 public final class XMLReader {
 	private static final XMLReader INSTANCE = new XMLReader();
 	static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
