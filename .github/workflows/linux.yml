@@ -1,53 +1,53 @@
 name: Linux
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-java@v1.4.3
-        with:
-          java-version: 15
-      - uses: actions/checkout@v2
-      - name: Setup environment
-        run: |
-          sudo apt update
-          sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
-          sudo apt-get update
-          sudo rm /usr/bin/gcc
-          sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev libgee-0.8-dev libjson-glib-dev software-properties-common
-          sudo add-apt-repository ppa:vala-team
-          sudo add-apt-repository ppa:vala-team/next
-          sudo apt update
-          sudo apt install valac
-          sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-          valac --version
-      - name: Build conquer
-        run: |
-          export QT_QPA_PLATFORM=offscreen
-          mkdir tmp
-          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
-          cd tmp
-          unzip -d . gradle.zip
-          mv gradle-6.8 gradle
-          cd gradle/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../../..
-          gradle assemble
-          gradle Conquer:runTestsuites
-      - name: Build and upload SDK
-        run: |
-          cd tmp/gradle/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../../..
-          export QT_QPA_PLATFORM=offscreen
-          gradle clean
-          gradle createZipFileForDistribution
-      - uses: actions/upload-artifact@v2
-        with:
-          name: SDK
-          path: Conquer-SDK_1.6.0.zip
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/setup-java@v1.4.3
+                with:
+                    java-version: 15
+            -   uses: actions/checkout@v2
+            -   name: Setup environment
+                run: |
+                    sudo apt update
+                    sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
+                    sudo apt-get update
+                    sudo rm /usr/bin/gcc
+                    sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev libgee-0.8-dev libjson-glib-dev software-properties-common
+                    sudo add-apt-repository ppa:vala-team
+                    sudo add-apt-repository ppa:vala-team/next
+                    sudo apt update
+                    sudo apt install valac
+                    sudo ln /usr/bin/gcc-10 /usr/bin/gcc
+                    valac --version
+            -   name: Build conquer
+                run: |
+                    export QT_QPA_PLATFORM=offscreen
+                    mkdir tmp
+                    wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
+                    cd tmp
+                    unzip -d . gradle.zip
+                    mv gradle-6.8 gradle
+                    cd gradle/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../..
+                    gradle assemble
+                    gradle Conquer:runTestsuites
+            -   name: Build and upload SDK
+                run: |
+                    cd tmp/gradle/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../..
+                    export QT_QPA_PLATFORM=offscreen
+                    gradle clean
+                    gradle createZipFileForDistribution
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: SDK
+                    path: Conquer-SDK_1.6.0.zip
