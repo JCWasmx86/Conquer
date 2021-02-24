@@ -279,7 +279,6 @@ public interface IClan {
 			case BOTH -> this.upgradeCostsForSoldiers(x);
 			case DEFENSE -> this.upgradeCostsForDefense(x);
 			case OFFENSE -> this.upgradeCostsForOffense(x);
-			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		};
 	}
 
@@ -477,7 +476,6 @@ public interface IClan {
 			case BOTH -> this.newPowerForSoldiers(x);
 			case DEFENSE -> this.newPowerOfSoldiersForDefense(x);
 			case OFFENSE -> this.newPowerOfSoldiersForOffense(x);
-			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		};
 	}
 
@@ -587,7 +585,6 @@ public interface IClan {
 			case BOTH -> this.maxLevelsAddSoldiersUpgrade(level, coins);
 			case DEFENSE -> this.maxLevelsAddDefenseUpgrade(level, coins);
 			case OFFENSE -> this.maxLevelsAddOffenseUpgrade(level, coins);
-			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
 		};
 	}
 
