@@ -18,7 +18,7 @@ final class PluginStrategySelectPanel extends JPanel {
 	private transient GlobalContext context;
 	private final List<JCheckBox> plugins = new ArrayList<>();
 	private final List<JCheckBox> strategies = new ArrayList<>();
-	private final ConquerInfo info;
+	private final transient ConquerInfo info;
 
 	PluginStrategySelectPanel(final GlobalContext context, final ConquerInfo info) {
 		this.context = context;
@@ -33,7 +33,8 @@ final class PluginStrategySelectPanel extends JPanel {
 		this.context.getPlugins().forEach(a -> {
 			final var jb = new JCheckBox(a.getName(), true);
 			pluginPanel.add(jb);
-			jb.setEnabled(this.info.requiredPlugins().stream().filter(b -> b == a.getClass()).count() == 0);
+			final var required = this.info.requiredPlugins().stream().filter(b -> b == a.getClass()).count() == 0;
+			jb.setEnabled(required);
 			this.plugins.add(jb);
 		});
 		final var pluginScrollPanel = new JScrollPane(pluginPanel);
