@@ -56,7 +56,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"<li><a href=\"https://wiki.gnome.org/Projects/JsonGlib\">JSON-GLib (GNU Lesser General Public License v2.1)</a></li>");
 		sb.append("</ul><h3>Used libraries for sound</h3>");
 		sb.append(
-				"All of these were repackaged and published on maven. (<a href=\"https://github.com/pdudits/soundlibs\">Github repo</a><br>");
+				"All of these were repackaged and published on maven. (<a href=\"https://github.com/pdudits/soundlibs\">Github repo</a>)<br>");
 		sb.append("<ul>");
 		sb.append(
 				"<li> <a href=\"https://mvnrepository.com/artifact/com.googlecode.soundlibs/tritonus-share/0.3.7.4\">tritonus-share (GNU Lesser General Public License v2.1)</a>");
@@ -113,6 +113,8 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				} catch (IOException | URISyntaxException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", ImageObserver.ERROR);
 				}
+			} else if (a.getEventType() == EventType.ENTERED) {
+				this.setTitle(a.getURL().toString());
 			}
 		});
 		jep.setEditable(false);
