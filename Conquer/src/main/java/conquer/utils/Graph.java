@@ -383,7 +383,7 @@ public class Graph<T> implements Consumer<T> {
 	}
 
 	/**
-	 * Initialises a cache. This may provide faster lookup times.
+	 * Initializes a cache. This may provide faster lookup times.
 	 */
 	public void initCache() {
 		this.map.clear();

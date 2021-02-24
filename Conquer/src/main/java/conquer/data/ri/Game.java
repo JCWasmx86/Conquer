@@ -397,7 +397,7 @@ final class Game implements ConquerInfo {
 			} else if (this.isBetween(number, 1_000_000, 5_000_000)) {// accident
 				final var numberOfPeople = a.getNumberOfPeople() - (this.random.nextInt(12) + 1);
 				a.setNumberOfPeople(numberOfPeople < 0 ? 0 : numberOfPeople);
-			} else if (this.isBetween(number, 5_100_100, 5_100_200)) {// alchemic accident
+			} else if (this.isBetween(number, 5_100_100, 5_100_200)) {//another accident
 				factorOfPeople = Shared.randomPercentage(92, 99);
 				factorOfSoldiers = Shared.randomPercentage(92, 99);
 				growthFactor = Shared.randomPercentage(98, 99);
