@@ -4,7 +4,7 @@ public record ClanChangeMessage(ICity city, IClan oldClan, IClan newClan) implem
 	@Override
 	public String getMessageText() {
 		return MessageFormat.format(ChangeCitiesMindsMessages.getString("ClanChangeMessage.message"), //$NON-NLS-1$
-				this.city.getName(), this.newClan.getName());
+			this.city.getName(), this.newClan.getName());
 	}
 
 	@Override

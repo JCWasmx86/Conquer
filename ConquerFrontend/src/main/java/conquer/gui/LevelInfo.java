@@ -51,19 +51,19 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<ClanColorAssociation>();
 		assocs.addAll(game.getClans().stream().map(a -> new ClanColorAssociation(a.getName(), a.getColor()))
-				.collect(Collectors.toList()));
+			.collect(Collectors.toList()));
 		final var jlist = new JList<>(assocs);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
 			private final Map<ClanColorAssociation, JLabel> map = new HashMap<>();
 
 			@Override
 			public Component getListCellRendererComponent(final JList<? extends ClanColorAssociation> list,
-					final ClanColorAssociation value, final int index, final boolean isSelected,
-					final boolean cellHasFocus) {
+														  final ClanColorAssociation value, final int index, final boolean isSelected,
+														  final boolean cellHasFocus) {
 				JLabel jl;
 				if (!this.map.containsKey(value)) {
 					jl = new JLabel(value.clanName()
-							+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					jl.setForeground(value.color());
 					jl.setFont(jl.getFont().deriveFont(35F));
 					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));
@@ -106,7 +106,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.add(scrollPane);
 		this.add(selectPanel);
 		final var allConfigurationPanels = ServiceLoader.load(ConfigurationPanelProvider.class).stream()
-				.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).collect(Collectors.toList());
+			.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).collect(Collectors.toList());
 		if (!allConfigurationPanels.isEmpty()) {
 			this.add(this.buildConfigurationPanel(allConfigurationPanels, game.getClass()));
 		}
@@ -115,7 +115,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	}
 
 	private Component buildConfigurationPanel(final List<ConfigurationPanelProvider> allConfigurationPanels,
-			final Class<? extends ConquerInfo> clazz) {
+											  final Class<? extends ConquerInfo> clazz) {
 		final var jtp = new JTabbedPane();
 		allConfigurationPanels.forEach(a -> jtp.addTab(a.getName(), a.forClass(clazz).get()));
 		return jtp;

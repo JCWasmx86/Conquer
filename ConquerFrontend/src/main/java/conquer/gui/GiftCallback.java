@@ -35,14 +35,14 @@ final class GiftCallback implements PlayerGiftCallback {
 	 */
 	@Override
 	public boolean acceptGift(final IClan source, final IClan destination, final Gift gift, final double oldValue,
-			final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		this.jframe = new JFrame();
 		this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.Y_AXIS));
 		this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
 		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() <= 0.005) {
 			final var jlabel = new JLabel(
-					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
+				String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
 			this.jframe.add(jlabel);
 		}
 		for (final var v : gift.getMap().entrySet()) {
@@ -52,7 +52,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				continue;
 			}
 			final var jlabel = new JLabel(String.format("%.2f", value) + " " + resource.getName(),
-					new ImageResource(resource.getImage()), SwingConstants.LEFT);
+				new ImageResource(resource.getImage()), SwingConstants.LEFT);
 			this.jframe.add(jlabel);
 		}
 		final var buttonPanel = new JPanel();

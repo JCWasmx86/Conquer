@@ -59,12 +59,12 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 
 	private String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersDefense.soldiersPower", //$NON-NLS-1$
-				Utils.format(this.clan.getSoldiersDefenseStrength()), this.clan.getSoldiersDefenseLevel());
+			Utils.format(this.clan.getSoldiersDefenseStrength()), this.clan.getSoldiersDefenseLevel());
 	}
 
 	private String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersDefenseLevel() + 1),
-				Utils.format(this.clan.upgradeCosts(SoldierUpgrade.DEFENSE, this.clan.getSoldiersDefenseLevel() + 1)));
+			Utils.format(this.clan.upgradeCosts(SoldierUpgrade.DEFENSE, this.clan.getSoldiersDefenseLevel() + 1)));
 	}
 
 	private void initUpgradeMax() {
@@ -74,7 +74,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.DEFENSE, this.clan.getSoldiersDefenseLevel() + 1,
-				this.clan.getCoins());
+			this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			private static final long serialVersionUID = -8569686717119904143L;
 
@@ -86,7 +86,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
 			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel", //$NON-NLS-1$
-					this.clan.getSoldiersDefenseLevel() + count));
+				this.clan.getSoldiersDefenseLevel() + count));
 		} else {
 			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); //$NON-NLS-1$
 		}

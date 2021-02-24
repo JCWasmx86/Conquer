@@ -34,7 +34,7 @@ public final class SortedStrategyImpl implements Strategy {
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		if ((this.gifts.contains(sourceClan) && (Math.random() < 0.8)) || (Math.random() < 0.1)) {
 			return false;
 		}
@@ -73,8 +73,8 @@ public final class SortedStrategyImpl implements Strategy {
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
 		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
-					.sorted(java.util.Comparator.comparingLong(conquer.data.ICity::getNumberOfSoldiers))
-					.collect(Collectors.toList());
+				.sorted(java.util.Comparator.comparingLong(conquer.data.ICity::getNumberOfSoldiers))
+				.collect(Collectors.toList());
 			own.forEach(ownCity -> {
 				final var pair = this.values.get(target);
 				final var second = pair.second();
@@ -104,27 +104,27 @@ public final class SortedStrategyImpl implements Strategy {
 		StreamUtils.getCitiesAsStreamNot(cities2, clan).forEach(a -> {
 			// Make the strategy a bit wrong to make it possible for the player to win.
 			final var soldiersA = a.getNumberOfSoldiers() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
-					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
-					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
+				? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+				: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
 			final var peopleA = a.getNumberOfPeople() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
-					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
-					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
+				? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+				: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
 			this.values.put(a, new Pair<>(peopleA, soldiersA));
 		});
 		this.cities = StreamUtils
-				.getCitiesAsStreamNot(cities2, clan,
-						a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
-				.sorted((a, b) -> {
-					final var pA = this.values.get(a);
-					final var pB = this.values.get(b);
-					final var ratioA = pA.first() / (pA.second() == 0 ? 1 : pA.second());
-					final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
-					return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
-				}).collect(Collectors.toList());
+			.getCitiesAsStreamNot(cities2, clan,
+				a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
+			.sorted((a, b) -> {
+				final var pA = this.values.get(a);
+				final var pB = this.values.get(b);
+				final var ratioA = pA.first() / (pA.second() == 0 ? 1 : pA.second());
+				final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
+				return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
+			}).collect(Collectors.toList());
 	}
 
 	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
-			final long ownCitySoldiers, final StrategyObject obj) {
+								  final long ownCitySoldiers, final StrategyObject obj) {
 		if (second > (ownCitySoldiers * factor)) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, ownCity, true, ownCity.getNumberOfPeople());
 			return second > (ownCitySoldiers * factor);

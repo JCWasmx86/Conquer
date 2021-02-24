@@ -39,7 +39,7 @@ final class RecruitButton extends JPanel {
 			cip.doUpdate();
 		});
 		this.js.addChangeListener(e -> RecruitButton.this.jbutton
-				.setText(Messages.getMessage("RecruitButton.recruitNSoldiers", RecruitButton.this.js.getValue()))); //$NON-NLS-1$
+			.setText(Messages.getMessage("RecruitButton.recruitNSoldiers", RecruitButton.this.js.getValue()))); //$NON-NLS-1$
 		this.add(this.js);
 		this.add(this.jbutton);
 	}
@@ -60,7 +60,7 @@ final class RecruitButton extends JPanel {
 			this.js.setEnabled(true);
 			this.sharp = true;
 			this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit(this.city.getClan(),
-					this.city.getNumberOfPeople()));
+				this.city.getNumberOfPeople()));
 			this.sharp = false;
 		} else {
 			this.jbutton.setEnabled(false);

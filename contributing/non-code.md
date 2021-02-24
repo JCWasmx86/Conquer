@@ -2,7 +2,8 @@
 
 ### Artists
 
-Replacements for all images in `Conquer/images`, `ConquerFrontend/images` and `ScenarioGenerator/images/CityIcons`  are needed, as the icons from flaticon.com don't match to 100%.
+Replacements for all images in `Conquer/images`, `ConquerFrontend/images` and `ScenarioGenerator/images/CityIcons`  are
+needed, as the icons from flaticon.com don't match to 100%.
 
 ### UI/UX Designers
 

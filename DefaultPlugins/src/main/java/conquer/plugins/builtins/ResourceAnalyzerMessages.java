@@ -7,7 +7,7 @@ public class ResourceAnalyzerMessages {
 	private static final String BUNDLE_NAME = "conquer.plugins.builtins.resourceAnalyzer"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(ResourceAnalyzerMessages.BUNDLE_NAME);
+		.getBundle(ResourceAnalyzerMessages.BUNDLE_NAME);
 
 	public static String getString(final String key) {
 		try {

@@ -7,7 +7,7 @@ public class ChangeCitiesMindsMessages {
 	private static final String BUNDLE_NAME = "conquer.plugins.builtins.changeCitiesMinds"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
+		.getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
 
 	public static String getString(final String key) {
 		try {

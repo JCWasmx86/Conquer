@@ -1,17 +1,17 @@
 name: Linux
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-java@v1.4.3
         with:
-            java-version: 15
+          java-version: 15
       - uses: actions/checkout@v2
       - name: Setup environment
         run: |

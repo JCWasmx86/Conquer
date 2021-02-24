@@ -1,42 +1,42 @@
 plugins {
-	id "java"
-	id "application"
+    id "java"
+    id "application"
 }
 task buildSlaine(type: JavaExec) {
-	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Slaine"
+    classpath = files("build/libs/ScenarioGenerator.jar")
+    main = "org.jel.tool.Slaine"
 }
 task buildBelenos(type: JavaExec) {
-	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Belenos"
+    classpath = files("build/libs/ScenarioGenerator.jar")
+    main = "org.jel.tool.Belenos"
 }
 task buildEtiona(type: JavaExec) {
-	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Etiona"
+    classpath = files("build/libs/ScenarioGenerator.jar")
+    main = "org.jel.tool.Etiona"
 }
 task buildFreedo(type: JavaExec) {
-	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Freedo"
+    classpath = files("build/libs/ScenarioGenerator.jar")
+    main = "org.jel.tool.Freedo"
 }
 def contentSpec = copySpec {
-	from("src/main/resources") {
-		include "*.png"
-	}
+    from("src/main/resources") {
+        include "*.png"
+    }
 }
-task copyFiles(type: Copy){
-	into "."
-	with contentSpec
+task copyFiles(type: Copy) {
+    into "."
+    with contentSpec
 }
 
-task deleteFiles(type: Delete){
-	delete "Belenos.png"
-	delete "Belenos.data"
-	delete "Etiona.png"
-	delete "Etiona.data"
-	delete "Slaine.png"
-	delete "Slaine.data"
-	delete "Freedo.png"
-	delete "Freedo.data"
+task deleteFiles(type: Delete) {
+    delete "Belenos.png"
+    delete "Belenos.data"
+    delete "Etiona.png"
+    delete "Etiona.data"
+    delete "Slaine.png"
+    delete "Slaine.data"
+    delete "Freedo.png"
+    delete "Freedo.data"
 }
 clean.dependsOn(deleteFiles)
-build.dependsOn(buildSlaine,buildBelenos,buildEtiona,buildFreedo,copyFiles)
+build.dependsOn(buildSlaine, buildBelenos, buildEtiona, buildFreedo, copyFiles)

@@ -1,7 +1,7 @@
 package conquer.plugins.builtins;
 
 public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCiviliansDied, ICity city, IClan clan)
-		implements Message {
+	implements Message {
 	@Override
 	public boolean isPlayerInvolved() {
 		return this.clan.isPlayerClan();
@@ -15,6 +15,6 @@ public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCivilia
 	@Override
 	public String getMessageText() {
 		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.civilians"), //$NON-NLS-1$
-				this.numberOfCiviliansDied, this.city.getName());
+			this.numberOfCiviliansDied, this.city.getName());
 	}
 }

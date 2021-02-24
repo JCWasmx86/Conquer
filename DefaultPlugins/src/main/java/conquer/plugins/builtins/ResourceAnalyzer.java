@@ -56,7 +56,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	}
 
 	private void collectStatistics(final List<Double> statistics, final List<Double> resources, final IClan clan,
-			final int idx) {
+								   final int idx) {
 		if (statistics.get(idx) < 0) {
 			double saved = clan.getResources().get(idx);
 			saved += statistics.get(idx);
@@ -100,7 +100,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 	}
 
 	private void killedCiviliansUpdate(final ICity city, final int idx, final List<Double> killedSoldiers,
-			final List<Double> killedCivilians, final double d) {
+									   final List<Double> killedCivilians, final double d) {
 		final var d1 = d + (city.getNumberOfSoldiers() + city.getInfo().getResourceUsage().soldierUsage()[idx]);
 		final var numCiviliansToGetToZero = (-d1) / city.getInfo().getResourceUsage().personUsage()[idx];
 		killedSoldiers.add((double) city.getNumberOfSoldiers());

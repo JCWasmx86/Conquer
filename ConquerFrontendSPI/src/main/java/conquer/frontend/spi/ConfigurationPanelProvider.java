@@ -14,8 +14,9 @@ public interface ConfigurationPanelProvider {
 	 * Builds an configuration panel for configuring the info by the player.
 	 *
 	 * @param clazz Class of the instance.
+	 *
 	 * @return {@link Optional#empty()} if this provider can't provide an JPanel for
-	 *         this class, otherwise an optional containing the JPanel.
+	 * this class, otherwise an optional containing the JPanel.
 	 */
 	Optional<JPanel> forClass(Class<? extends ConquerInfo> clazz);
 

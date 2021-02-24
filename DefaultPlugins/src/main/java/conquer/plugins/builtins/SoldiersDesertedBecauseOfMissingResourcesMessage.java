@@ -1,7 +1,7 @@
 package conquer.plugins.builtins;
 
 public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSoldiersDeserted, ICity city, IClan clan)
-		implements Message {
+	implements Message {
 	@Override
 	public boolean isBadForPlayer() {
 		return this.clan.isPlayerClan();
@@ -15,6 +15,6 @@ public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSold
 	@Override
 	public String getMessageText() {
 		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.soldiers"), //$NON-NLS-1$
-				this.numberOfSoldiersDeserted, this.city.getName());
+			this.numberOfSoldiersDeserted, this.city.getName());
 	}
 }

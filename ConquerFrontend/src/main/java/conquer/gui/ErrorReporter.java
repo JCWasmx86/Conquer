@@ -19,8 +19,8 @@ public class ErrorReporter {
 		final var logfileName = "log_" + Long.toHexString(System.nanoTime()) + ".report";
 		final var logfile = new File(reportsDir, logfileName);
 		try (final var bw = new BufferedWriter(new FileWriter(logfile));
-				final var sw = new StringWriter();
-				final var pw = new PrintWriter(sw)) {
+			 final var sw = new StringWriter();
+			 final var pw = new PrintWriter(sw)) {
 			bw.write("Crash log\n");
 			t.printStackTrace(pw);
 			bw.write("Stacktrace\n");

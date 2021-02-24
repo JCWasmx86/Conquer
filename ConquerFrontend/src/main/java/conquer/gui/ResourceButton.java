@@ -39,7 +39,7 @@ final class ResourceButton extends JPanel {
 		this.info = city.getInfo();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.infoLabel = new JLabel(this.getInfoLabelText(),
-				new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT); //$NON-NLS-1$
+			new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT); //$NON-NLS-1$
 		this.add(this.infoLabel);
 		this.upgradeThisResource = new JButton();
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
@@ -94,7 +94,7 @@ final class ResourceButton extends JPanel {
 	private String getInfoLabelText() {
 		final var level = this.city.getLevels().get(this.getIndex());
 		return (this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) + " " //$NON-NLS-1$
-				+ Messages.getString("ResourceButton.level") + " " + level; //$NON-NLS-1$
+			+ Messages.getString("ResourceButton.level") + " " + level; //$NON-NLS-1$
 	}
 
 	private String getMaxUpgradeText() {
@@ -111,13 +111,13 @@ final class ResourceButton extends JPanel {
 			currentLevel++;
 		}
 		return Messages.getMessage("ResourceButton.maxUpgrade", currentLevel, //$NON-NLS-1$
-				Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
+			Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
 	}
 
 	private String getUpgradeThisResourceText() {
 		final var level = this.city.getLevels().get(this.getIndex());
 		final var costsForUpgrade = Utils
-				.format(this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
+			.format(this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
 		return Messages.getMessage("Shared.upgradeToLevel", level + 1, costsForUpgrade);//$NON-NLS-1$
 	}
 
@@ -130,8 +130,8 @@ final class ResourceButton extends JPanel {
 			}
 		} else {
 			this.infoLabel
-					.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) //$NON-NLS-1$
-							+ " " + Messages.getString("ResourceButton.level") + " ???"); //$NON-NLS-1$
+				.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) //$NON-NLS-1$
+					+ " " + Messages.getString("ResourceButton.level") + " ???"); //$NON-NLS-1$
 		}
 	}
 

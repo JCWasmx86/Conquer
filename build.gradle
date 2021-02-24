@@ -1,104 +1,104 @@
 plugins {
-	id "nebula.lint" version "16.17.0"
+    id "nebula.lint" version "16.17.0"
 }
 apply plugin: "application"
 apply plugin: "nebula.lint"
 
 allprojects {
-	apply plugin: "java"
-	apply plugin: "eclipse"
-	apply plugin: "idea"
-	apply plugin: "nebula.lint"
-	targetCompatibility = "15"
-	application {
-		applicationDefaultJvmArgs = ["--enable-preview"]
-	}
-	gradleLint.rules = [
-		"all-nebula-renames",
-		"archaic-wrapper",
-		"duplicate-dependency-class",
-		"minimum-dependency-version",
-		"overridden-dependency-version"
-	]
-	tasks.withType(AbstractArchiveTask) {
-		preserveFileTimestamps = false
-		reproducibleFileOrder = true
-	}
-	eclipse {
-		classpath {
-			defaultOutputDir = file("build")
-			file {
-				whenMerged {
-					//Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
-					//the same package
-					//TODO: Doesn't work!
-					entries.findAll {
-						(it.kind == "src" || it.kind == "lib")&&(!it.toString().contains("DefaultPlugins"))&&(!it.toString().contains("ScenarioGenerator"))
-					}.each {it.entryAttributes["module"] = "true"}
-					entries.each{entry ->
-						if (entry.kind == "src" && entry.hasProperty("output")) {
-							entry.output = entry.output.replace("bin/", "build/")
-						}
-					}
-				}
-			}
-		}
-	}
-	repositories {
-		mavenCentral()
-	}
-	task configureEnvironment() {
-		def envVars = [:]
-		envVars["SOURCE_DATE_EPOCH"]="0"
-		tasks.withType(Exec) { environment << envVars }
-	}
-	assemble.dependsOn(configureEnvironment)
-	dependencies {
-		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
-	}
-	gradle.projectsEvaluated {
-		tasks.withType(JavaCompile) {
-			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}"
-			options.fork = true
-			options.incremental = true
-		}
-		tasks.withType(JavaExec) {
-			jvmArgs += ["--enable-preview"]
-		}
-		tasks.withType(Test) {
-			jvmArgs += ["--enable-preview"]
-		}
-	}
+    apply plugin: "java"
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "nebula.lint"
+    targetCompatibility = "15"
+    application {
+        applicationDefaultJvmArgs = ["--enable-preview"]
+    }
+    gradleLint.rules = [
+            "all-nebula-renames",
+            "archaic-wrapper",
+            "duplicate-dependency-class",
+            "minimum-dependency-version",
+            "overridden-dependency-version"
+    ]
+    tasks.withType(AbstractArchiveTask) {
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+    }
+    eclipse {
+        classpath {
+            defaultOutputDir = file("build")
+            file {
+                whenMerged {
+                    //Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
+                    //the same package
+                    //TODO: Doesn't work!
+                    entries.findAll {
+                        (it.kind == "src" || it.kind == "lib") && (!it.toString().contains("DefaultPlugins")) && (!it.toString().contains("ScenarioGenerator"))
+                    }.each { it.entryAttributes["module"] = "true" }
+                    entries.each { entry ->
+                        if (entry.kind == "src" && entry.hasProperty("output")) {
+                            entry.output = entry.output.replace("bin/", "build/")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        mavenCentral()
+    }
+    task configureEnvironment() {
+        def envVars = [:]
+        envVars["SOURCE_DATE_EPOCH"] = "0"
+        tasks.withType(Exec) { environment << envVars }
+    }
+    assemble.dependsOn(configureEnvironment)
+    dependencies {
+        testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
+    }
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}"
+            options.fork = true
+            options.incremental = true
+        }
+        tasks.withType(JavaExec) {
+            jvmArgs += ["--enable-preview"]
+        }
+        tasks.withType(Test) {
+            jvmArgs += ["--enable-preview"]
+        }
+    }
 }
 
-task createZipFileForDistribution(type:Zip){
-	archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
-	destinationDirectory = file(".")
-	from "dist"
+task createZipFileForDistribution(type: Zip) {
+    archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
+    destinationDirectory = file(".")
+    from "dist"
 }
 task copyFiles() {
-	doLast{
-		mkdir "dist"
-		copy {
-			from("Conquer/build/libs",) {
-				include "*.jar"
-			}
-			from("ConquerFrontendSPI/build/libs") {
-				include "*.jar"
-			}
-			from ("auxiliary") {
-				include "*.pom"
-				include "install-sdk.sh"
-				include "install.bat"
-				include "README.txt"
-			}
-			from("depreview") {
-				include "depreview.exe"
-				include "depreview"
-			}
-			into "dist"
-		}
-	}
+    doLast {
+        mkdir "dist"
+        copy {
+            from("Conquer/build/libs",) {
+                include "*.jar"
+            }
+            from("ConquerFrontendSPI/build/libs") {
+                include "*.jar"
+            }
+            from("auxiliary") {
+                include "*.pom"
+                include "install-sdk.sh"
+                include "install.bat"
+                include "README.txt"
+            }
+            from("depreview") {
+                include "depreview.exe"
+                include "depreview"
+            }
+            into "dist"
+        }
+    }
 }
 copyFiles.dependsOn(":Conquer:jar")
 copyFiles.dependsOn(":ConquerFrontendSPI:jar")
@@ -108,10 +108,10 @@ copyFiles.dependsOn(":depreview:buildExecutable")
 createZipFileForDistribution.dependsOn(copyFiles)
 assemble.dependsOn(":depreview:buildExecutable")
 clean {
-	delete "dist"
-	delete "Conquer-SDK_${conquerVersion}.zip"
+    delete "dist"
+    delete "Conquer-SDK_${conquerVersion}.zip"
 }
 tasks.withType(AbstractArchiveTask) {
-	preserveFileTimestamps = false
-	reproducibleFileOrder = true
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
 }

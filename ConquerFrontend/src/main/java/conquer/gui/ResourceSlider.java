@@ -30,7 +30,7 @@ final class ResourceSlider extends JPanel {
 
 	private String getText() {
 		return this.resource.getName() + ": " + String.format("%.2f", (0.01 * this.slider.getValue())
-				* this.game.getPlayerClan().getResources().get(this.resource.getIndex()));
+			* this.game.getPlayerClan().getResources().get(this.resource.getIndex()));
 	}
 
 	/**

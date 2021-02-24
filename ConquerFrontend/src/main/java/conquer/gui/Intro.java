@@ -37,14 +37,14 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) { // Just use the Default LaF
+			| UnsupportedLookAndFeelException e) { // Just use the Default LaF
 			// Just print the stack trace. It is no critical thing, so you shouldn't have to
 			// fear anything, if an exception is thrown.
 			e.printStackTrace();// The logger is not setup currently.
 		}
 		new Thread(() -> Initializer.INSTANCE().initialize(a -> {
 			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), //$NON-NLS-1$
-					Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
+				Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$
 			System.exit(-127);
 		})).start();
 		final var main = new Intro();

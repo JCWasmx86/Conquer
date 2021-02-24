@@ -141,15 +141,15 @@ public final class DataFile {
 	}
 
 	private byte[] readBackground() throws Exception {
-		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+this.background)) {
+		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + this.background)) {
 			return stream.readAllBytes();
 		}
 	}
 
 	private byte[] readFile(final String s) throws IOException {
-		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+s)) {
-            return stream.readAllBytes();
-        }
+		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + s)) {
+			return stream.readAllBytes();
+		}
 	}
 
 	public DataFile setBackground(final String file) {

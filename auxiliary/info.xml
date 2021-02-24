@@ -1,22 +1,22 @@
 <info>
-	<scenarios>
-		<scenario name="Belenos" file="Belenos.data" thumbnail="Belenos.png" />
-		<scenario name="Etiona" file="Etiona.data" thumbnail="Etiona.png" />
-		<scenario name="Slaine" file="Slaine.data" thumbnail="Slaine.png" />
-		<scenario name="Freedo" file="Freedo.data" thumbnail="Freedo.png" />
-	</scenarios>
-	<plugins>
-		<plugin className="conquer.plugins.builtins.ChangeCitiesMinds" />
-		<plugin className="conquer.plugins.builtins.IncreaseGrowth" />
-		<plugin className="conquer.plugins.builtins.MoneyAnalyzer" />
-		<plugin className="conquer.plugins.builtins.ResourceAnalyzer" />
-		<!--<plugin className="conquer.plugins.builtins.DefaultMusic" />-->
-		<plugin className="conquer.plugins.builtins.PeriodicGrowthChange" />
-	</plugins>
-	<strategies>
-		<strategy className="conquer.strategies.SortedStrategyProvider" />
-	</strategies>
-	<readers>
-		<reader className="conquer.data.ri.ScenarioFileReaderFactory" />
-	</readers>
+    <scenarios>
+        <scenario name="Belenos" file="Belenos.data" thumbnail="Belenos.png"/>
+        <scenario name="Etiona" file="Etiona.data" thumbnail="Etiona.png"/>
+        <scenario name="Slaine" file="Slaine.data" thumbnail="Slaine.png"/>
+        <scenario name="Freedo" file="Freedo.data" thumbnail="Freedo.png"/>
+    </scenarios>
+    <plugins>
+        <plugin className="conquer.plugins.builtins.ChangeCitiesMinds"/>
+        <plugin className="conquer.plugins.builtins.IncreaseGrowth"/>
+        <plugin className="conquer.plugins.builtins.MoneyAnalyzer"/>
+        <plugin className="conquer.plugins.builtins.ResourceAnalyzer"/>
+        <!--<plugin className="conquer.plugins.builtins.DefaultMusic" />-->
+        <plugin className="conquer.plugins.builtins.PeriodicGrowthChange"/>
+    </plugins>
+    <strategies>
+        <strategy className="conquer.strategies.SortedStrategyProvider"/>
+    </strategies>
+    <readers>
+        <reader className="conquer.data.ri.ScenarioFileReaderFactory"/>
+    </readers>
 </info>

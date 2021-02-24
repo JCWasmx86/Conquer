@@ -22,7 +22,7 @@
     </dependencyManagement>
 
     <dependencies>
-		<dependency>
+        <dependency>
             <groupId>conquer</groupId>
             <artifactId>conquer</artifactId>
             <version>1.6.0</version>

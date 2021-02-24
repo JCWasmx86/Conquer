@@ -47,7 +47,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.city = city;
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
-				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
+			image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 		this.timer = new ExtendedTimer(17, this);
 		this.timer.start();
 		this.labels = labels;
@@ -65,11 +65,11 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName())); //$NON-NLS-1$ //$NON-NLS-2$
 		if (this.city.isPlayerCity()) {
 			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
-					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), //$NON-NLS-1$
-					this.city.getNumberOfSoldiers()));
+				this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), //$NON-NLS-1$
+				this.city.getNumberOfSoldiers()));
 		} else {
 			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
-					Messages.getString("Shared.soldiers"))); //$NON-NLS-1$
+				Messages.getString("Shared.soldiers"))); //$NON-NLS-1$
 		}
 		this.setToolTipText(s.toString());
 	}
@@ -118,7 +118,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			if (!this.marked && (this.city.isPlayerCity())) {
 				this.labels.values().forEach(CityLabel::unmark);
 				this.city.getInfo().getCities().getConnected(this.city)
-						.forEach(a -> this.labels.get(a).mark(this.city));
+					.forEach(a -> this.labels.get(a).mark(this.city));
 			} else if (this.marked) {
 				this.proceed();
 				this.labels.values().forEach(CityLabel::unmark);
@@ -201,14 +201,14 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var game = this.city.getInfo();
 		final var weight = game.getCities().getWeight(this.city, this.origin);
 		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove(game.getPlayerClan(), weight,
-				this.origin.getNumberOfSoldiers());
+			this.origin.getNumberOfSoldiers());
 		String prompt;
 		if (this.city.isPlayerCity()) {
 			prompt = Messages.getMessage("CityLabel.moveLabel", //$NON-NLS-1$
-					this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
+				this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
 		} else {
 			prompt = Messages.getMessage("CityLabel.attackLabel", //$NON-NLS-1$
-					this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
+				this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
 		}
 		long numberOfSelectedSoldiers = -1;
 		while (numberOfSelectedSoldiers == -1) {

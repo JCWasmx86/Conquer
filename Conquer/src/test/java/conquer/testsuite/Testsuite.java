@@ -1,7 +1,6 @@
 package conquer.testsuite;
 
 public sealed
-
 class Testsuite permits Testsuite1, Testsuite2, Testsuite3 {
 	protected int numberOfErrors;
 

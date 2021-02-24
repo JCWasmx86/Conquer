@@ -21,9 +21,9 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	private final JCheckBox useSPI = new JCheckBox(Messages.getString("Settings.useSPI"), Shared.useSPI());
 	private final JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
 	private final JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"),
-			Shared.level1Logging());
+		Shared.level1Logging());
 	private final JCheckBox level2Logging = new JCheckBox(Messages.getString("Settings.level2"),
-			Shared.level2Logging());
+		Shared.level2Logging());
 
 	void update() {
 		this.useSPI.setSelected(Shared.useSPI());
