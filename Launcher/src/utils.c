@@ -1,5 +1,7 @@
 #include <string.h>
 
+//A duplicated string is returned, as otherwise
+//vala tries to free it and it will crash.
 char *launcher_getSeparator(void) {
 #ifdef _WIN32
 	return strdup(";");

@@ -15,7 +15,7 @@ static char *getStacktrace(JNIEnv *env, jthrowable throwable);
 void launcher_invokeJVM(char **options, int numOptions, char *directory,
 						onErrorFunc func) {
 	void *handle = loadJavaLibrary(directory);
-	assert(handle);
+	assert(handle && "Couldn't load Java library! Is the path correct?");
 	createJVM create = findFunction(handle);
 	JavaVMOption *jvmoptions = calloc(numOptions, sizeof(JavaVMOption));
 	for (int i = 0; i < numOptions; i++) {
