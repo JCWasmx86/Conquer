@@ -9,10 +9,13 @@
 *.vapi
 *.wav
 *.zip
+*.iml
+*.ipr
 .classpath
 .gradle
 .project
 .settings/
+.idea/
 Conquer/.*
 Conquer/.classpath
 Conquer/.project
