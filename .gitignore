@@ -75,3 +75,4 @@ docs/Documentation.toc
 docs/_minted-Documentation/
 gradlew
 gradlew.bat
+*.iws
