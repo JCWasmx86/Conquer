@@ -1,5 +1,7 @@
 package conquer.data.strategy;
 
+import java.util.List;
+
 import conquer.data.Version;
 
 /**
@@ -22,6 +24,24 @@ public interface StrategyProvider {
 	 */
 	default boolean compatibleTo(final Version version) {
 		return true;
+	}
+
+	/**
+	 * Returns all strategyproviders that conflict with this.
+	 *
+	 * @return Conflicting strategyproviders.
+	 */
+	default List<Class<? extends StrategyProvider>> getConflictingPlugins() {
+		return List.of();
+	}
+
+	/**
+	 * Get all dependencies of this strategyprovider.
+	 *
+	 * @return All dependencies of this strategyprovider.
+	 */
+	default List<Class<? extends StrategyProvider>> getDependencies() {
+		return List.of();
 	}
 
 	/**
