@@ -8,7 +8,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -228,7 +227,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			}
 		}
 		if (this.city.isPlayerCity()) {
-			game.moveSoldiers(this.origin, (Stream<ICity>) null, true, this.city, numberOfSelectedSoldiers);
+			game.moveSoldiers(this.origin, null, true, this.city, numberOfSelectedSoldiers);
 		} else {
 			game.attack(this.origin, this.city, true, numberOfSelectedSoldiers);
 		}

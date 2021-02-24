@@ -1,10 +1,5 @@
 package conquer.plugins.builtins;
 
-import java.text.MessageFormat;
-
-import conquer.data.IClan;
-import conquer.messages.Message;
-
 public record SoldiersDesertedBecauseOfMissingMoneyMessage(IClan clan, long numberOfDesertedSoldiers)
 		implements Message {
 	@Override

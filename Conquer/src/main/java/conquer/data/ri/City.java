@@ -1,15 +1,15 @@
 package conquer.data.ri;
 
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.data.Shared;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 class City implements ICity {
 	private static final int MAX_VARIANCE = 101;
@@ -68,7 +68,7 @@ class City implements ICity {
 			throw new IllegalArgumentException("other==null");
 		}
 		return Double.compare((this.getNumberOfSoldiers() * this.getBonus()) + this.getDefense(),
-				(other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
+			(other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
 	}
 
 	@Override
@@ -151,7 +151,7 @@ class City implements ICity {
 	@Override
 	public double getCoinDiff() {
 		return (this.numberOfPeople * this.game.getResourceUsage(this.clan).getCoinsPerRoundPerPerson())
-				- (this.numberOfSoldiers * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound());
+			- (this.numberOfSoldiers * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound());
 	}
 
 	/**
@@ -173,7 +173,7 @@ class City implements ICity {
 	@Override
 	public double getDefenseStrength() {
 		return this.getDefense() + (this.getNumberOfSoldiers() * this.getBonus() * this.clan.getSoldiersStrength()
-				* this.clan.getSoldiersDefenseStrength());
+			* this.clan.getSoldiersDefenseStrength());
 	}
 
 	/**
@@ -334,6 +334,7 @@ class City implements ICity {
 	 * Get the production of a resource per round
 	 *
 	 * @param resource Resource - May not be null
+	 *
 	 * @return The production of a resource per round.
 	 */
 	@Override
@@ -352,7 +353,7 @@ class City implements ICity {
 	public void setAttacksOfPlayer(final long num) {
 		if (this.numAttacksOfPlayer != -1) {
 			throw new UnsupportedOperationException(
-					"Can't change the number of attacks of the player after it was set!");
+				"Can't change the number of attacks of the player after it was set!");
 		}
 		this.numAttacksOfPlayer = num;
 	}
@@ -513,7 +514,7 @@ class City implements ICity {
 			throw new IllegalArgumentException("productions == null");
 		} else if (productions.size() != Resource.values().length) {
 			throw new IllegalArgumentException(
-					"Wrong length, expected " + Resource.values().length + ", got " + productions.size());
+				"Wrong length, expected " + Resource.values().length + ", got " + productions.size());
 		}
 		this.productions = new GoodDoubleList(productions);
 	}
@@ -549,7 +550,7 @@ class City implements ICity {
 	@Override
 	public String toString() {
 		return "City [image=" + this.image + ", clan=" + this.clanId + ", numberOfPeople=" + this.numberOfPeople
-				+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
-				+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
+			+ ", numberOfSoldiers=" + this.numberOfSoldiers + ", y=" + this.y + ", x=" + this.x + ", defense="
+			+ this.defense + ", bonus=" + this.bonus + ", name=" + this.name + ", growth=" + this.growth + "]";
 	}
 }

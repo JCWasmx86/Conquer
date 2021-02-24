@@ -1,6 +1,6 @@
 package conquer.data;
 
-import java.awt.Image;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -141,6 +141,7 @@ public interface ICity extends Comparable<ICity> {
 	 * Get the production of a resource per round
 	 *
 	 * @param resource Resource - May not be null
+	 *
 	 * @return The production of a resource per round.
 	 */
 	double productionPerRound(Resource resource);

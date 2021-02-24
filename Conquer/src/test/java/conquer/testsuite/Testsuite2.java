@@ -1,7 +1,5 @@
 package conquer.testsuite;
 
-import java.io.File;
-
 import conquer.data.ConquerInfo;
 import conquer.data.Gift;
 import conquer.data.GlobalContext;
@@ -9,6 +7,8 @@ import conquer.data.IClan;
 import conquer.data.InstalledScenario;
 import conquer.data.PlayerGiftCallback;
 import conquer.data.XMLReader;
+
+import java.io.File;
 
 /**
  * Passes bad arguments to functions.
@@ -30,12 +30,12 @@ public final class Testsuite2 extends Testsuite {
 		}
 		final var file = new File(scenario.file());
 		if (!file.exists()) {
-			this.error(file + " doesn\'t exist!");
+			this.error(file + " doesn't exist!");
 			return;
 		}
 		final var thumbnail = new File(scenario.thumbnail());
 		if (!thumbnail.exists()) {
-			this.error(thumbnail + " doesn\'t exist!");
+			this.error(thumbnail + " doesn't exist!");
 			return;
 		}
 		if (scenario.name() == null) {
@@ -153,8 +153,8 @@ public final class Testsuite2 extends Testsuite {
 		this.expect(() -> info.getClanNames().add(""), UnsupportedOperationException.class);
 		this.expect(() -> info.getCoins().add(0.0), UnsupportedOperationException.class);
 		this.expect(() -> info.getColors().add(null), UnsupportedOperationException.class);
-		this.expect(() -> info.getRelationship((IClan) null, (IClan) null), IllegalArgumentException.class);
-		this.expect(() -> info.getRelationship((IClan) null, a), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship(null, (IClan) null), IllegalArgumentException.class);
+		this.expect(() -> info.getRelationship(null, a), IllegalArgumentException.class);
 		this.expect(() -> info.isDead(null), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(null, 5), IllegalArgumentException.class);
 		this.expect(() -> info.maximumNumberOfSoldiersToRecruit(c, -5), IllegalArgumentException.class);

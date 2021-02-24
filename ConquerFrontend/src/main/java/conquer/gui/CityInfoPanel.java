@@ -28,7 +28,6 @@ import conquer.data.Resource;
 class CityInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2409517597504961241L;
 	private final transient ICity city;
-	private final Timer timer;
 	private JEditorPane statsViewer;
 	private final List<ResourceButton> resourceButtons;
 	private RecruitButton recruitButton;
@@ -40,8 +39,8 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 */
 	CityInfoPanel(final ICity city) {
 		this.city = city;
-		this.timer = new ExtendedTimer(17, this);
-		this.timer.start();
+		javax.swing.Timer timer = new ExtendedTimer(17, this);
+		timer.start();
 		this.resourceButtons = new ArrayList<>();
 	}
 

@@ -1,13 +1,13 @@
 package conquer.data.strategy;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.function.DoubleConsumer;
-
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.utils.Graph;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.function.DoubleConsumer;
 
 /**
  * A strategy are the instructions for each clan. In every round
@@ -26,10 +26,11 @@ public interface Strategy {
 	 * @param oldValue        Old relationship value
 	 * @param newValue        Can be applied to the new relationship value.
 	 * @param strategyObject  An object giving more information.
+	 *
 	 * @return {@code true} if the gift was accepted, false otherwise.
 	 */
 	boolean acceptGift(IClan sourceClan, IClan destinationClan, Gift gift, double oldValue, DoubleConsumer newValue,
-			StrategyObject strategyObject);
+					   StrategyObject strategyObject);
 
 	/**
 	 * Called every round. In this method the strategy should execute all actions,
@@ -57,10 +58,11 @@ public interface Strategy {
 	 *                        non-null value, {@code false} otherwise.
 	 * @param dataBytes       If {@code hasStrategyData} is true, then the bytes of
 	 *                        the StrategyData, otherwise the arrays is undefined.
+	 *
 	 * @return Return the constructed strategydata or {@code null}.
 	 */
 	default StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
-			final byte[] dataBytes) {
+								final byte[] dataBytes) {
 		return null;
 	}
 
@@ -69,6 +71,7 @@ public interface Strategy {
 	 * StrategyData shouldn't be saved by this method.
 	 *
 	 * @param out The outputstream to write to.
+	 *
 	 * @throws IOException If some I/O error occurred.
 	 */
 	default void save(final OutputStream out) throws IOException {

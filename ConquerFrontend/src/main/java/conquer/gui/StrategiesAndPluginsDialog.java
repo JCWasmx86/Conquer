@@ -70,7 +70,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					itemRemove.addActionListener(a -> {
 						ref.pluginNamesListCopy.remove(ref.plugins.getSelectedValue());
 						ref.plugins.setListData(
-								ref.pluginNamesListCopy.toArray(new String[ref.pluginNamesListCopy.size()]));
+								ref.pluginNamesListCopy.toArray(new String[0]));
 						ref.pack();
 					});
 					menu.add(itemRemove);
@@ -82,7 +82,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				Messages.getString("StrategiesAndPluginsDialog.pluginClassname"), a -> { //$NON-NLS-1$
 					this.pluginNamesListCopy.add(a);
 					this.plugins
-							.setListData(this.pluginNamesListCopy.toArray(new String[this.pluginNamesListCopy.size()]));
+							.setListData(this.pluginNamesListCopy.toArray(new String[0]));
 				});
 		this.strategyNamesListCopy = new ArrayList<>(this.context.getStrategyNames());
 		this.strategies = new JList<>(this.context.getStrategyNames().toArray(new String[0]));
@@ -97,7 +97,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					itemRemove.addActionListener(a -> {
 						ref.strategyNamesListCopy.remove(ref.strategies.getSelectedValue());
 						ref.strategies.setListData(
-								ref.strategyNamesListCopy.toArray(new String[ref.strategyNamesListCopy.size()]));
+								ref.strategyNamesListCopy.toArray(new String[0]));
 						ref.pack();
 					});
 					menu.add(itemRemove);
@@ -109,7 +109,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> { //$NON-NLS-1$
 					this.strategyNamesListCopy.add(a);
 					this.strategies.setListData(
-							this.strategyNamesListCopy.toArray(new String[this.strategyNamesListCopy.size()]));
+							this.strategyNamesListCopy.toArray(new String[0]));
 				});
 		final var contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));

@@ -20,7 +20,6 @@ import conquer.gui.utils.ImageResource;
 final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -7456324799677381608L;
 	private final transient IClan clan;
-	private final Timer timer;
 	private final JLabel infoLabel;
 	private final JButton upgradeOnce;
 	private final JButton upgradeMax;
@@ -43,8 +42,8 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		this.upgradeMax = new JButton(new ImageResource("max.png")); //$NON-NLS-1$
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
-		this.timer = new ExtendedTimer(17, this);
-		this.timer.start();
+		javax.swing.Timer timer = new ExtendedTimer(17, this);
+		timer.start();
 	}
 
 	/**

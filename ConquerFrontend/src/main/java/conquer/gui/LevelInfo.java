@@ -117,9 +117,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 	private Component buildConfigurationPanel(final List<ConfigurationPanelProvider> allConfigurationPanels,
 			final Class<? extends ConquerInfo> clazz) {
 		final var jtp = new JTabbedPane();
-		allConfigurationPanels.forEach(a -> {
-			jtp.addTab(a.getName(), a.forClass(clazz).get());
-		});
+		allConfigurationPanels.forEach(a -> jtp.addTab(a.getName(), a.forClass(clazz).get()));
 		return jtp;
 	}
 

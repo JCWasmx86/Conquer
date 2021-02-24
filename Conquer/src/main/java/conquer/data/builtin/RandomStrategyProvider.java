@@ -9,13 +9,13 @@ public final class RandomStrategyProvider implements StrategyProvider {
 	@Override
 	public Strategy buildStrategy() {
 		return switch (Shared.getRandomNumber(3)) {
-		case 0:
-			yield new DefensiveStrategyImpl();
-		case 2:
-			yield new OffensiveStrategyImpl();
-		case 1:
-		default:
-			yield new ModerateStrategyImpl();
+			case 0:
+				yield new DefensiveStrategyImpl();
+			case 2:
+				yield new OffensiveStrategyImpl();
+			case 1:
+			default:
+				yield new ModerateStrategyImpl();
 		};
 	}
 

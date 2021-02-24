@@ -95,7 +95,7 @@ task buildInstaller() {
 				commandLine "make", "uninstall.exe"
 			}else {
 				commandLine "echo", "Skipping Uninstaller"
-				return;
+				return
 			}
 		}
 		exec {
@@ -103,7 +103,7 @@ task buildInstaller() {
 				commandLine 'sh', './makeGTKDist'
 			}else {
 				commandLine "echo", "Skipping GTK-Build"
-				return;
+				return
 			}
 		}
 		exec {
@@ -111,7 +111,7 @@ task buildInstaller() {
 				commandLine "make", "Installer.exe"
 			}else {
 				commandLine "echo", "Skipping Installer"
-				return;
+				return
 			}
 		}
 	}

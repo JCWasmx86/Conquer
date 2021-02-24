@@ -27,19 +27,19 @@ public class ErrorReporter {
 			bw.write(sw.toString());
 			bw.write("\n");
 			bw.write("System properties\n");
-			System.getProperties().entrySet().forEach(a -> {
+			System.getProperties().forEach((key, value) -> {
 				try {
-					bw.write(a.getKey() + "=" + a.getValue() + "\n");
-				} catch (final IOException e) {
-					Shared.LOGGER.exception(e);
+					bw.write(key + "=" + value + "\n");
+				} catch (final java.io.IOException e) {
+					conquer.data.Shared.LOGGER.exception(e);
 				}
 			});
 			bw.write("Environment variables\n");
-			System.getenv().entrySet().forEach(a -> {
+			System.getenv().forEach((key, value) -> {
 				try {
-					bw.write(a.getKey() + "=" + a.getValue() + "\n");
-				} catch (final IOException e) {
-					Shared.LOGGER.exception(e);
+					bw.write(key + "=" + value + "\n");
+				} catch (final java.io.IOException e) {
+					conquer.data.Shared.LOGGER.exception(e);
 				}
 			});
 			bw.write("Services\n\n");

@@ -1,11 +1,5 @@
 package conquer.data.builtin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
-
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -15,13 +9,19 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.DoubleConsumer;
+import java.util.stream.Collectors;
+
 public final class ModerateStrategyImpl implements Strategy {
 	private static final double BIG_RELATIONSHIP_INCREASE_FACTOR = 7.3;
 	private static final int SMALL_RELATIONSHIP_INCREASE_FACTOR = 5;
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
 		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
 		BuiltinShared.assertThat(gift != null, "gift==null");
@@ -61,9 +61,9 @@ public final class ModerateStrategyImpl implements Strategy {
 			}
 		});
 		final var clansSortedByDescendingSize = map.entrySet().stream().filter(a -> a.getKey() != clan)
-				.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
-				.filter(otherClan -> object.getRelationship(clan, otherClan.getKey()) < 65).map(Map.Entry::getKey)
-				.collect(Collectors.toList());
+			.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+			.filter(otherClan -> object.getRelationship(clan, otherClan.getKey()) < 65).map(Map.Entry::getKey)
+			.collect(Collectors.toList());
 		// Try to get relationships with the strongest clans.
 		for (final var otherClan : clansSortedByDescendingSize) {
 			final var resourcesToGive = new ArrayList<Double>();
@@ -77,7 +77,7 @@ public final class ModerateStrategyImpl implements Strategy {
 					final var numRoundsOfResourceStored = clan.getResources().get(i) / ownValue;
 					final var roundsToGive = Math.random() * 0.5 * numRoundsOfResourceStored;
 					resourcesToGive.add(Double.isNaN(roundsToGive) || Double.isInfinite(roundsToGive) ? 0
-							: roundsToGive * ownValue);
+						: roundsToGive * ownValue);
 				}
 			}
 			final var ownCoins = clan.getCoins();

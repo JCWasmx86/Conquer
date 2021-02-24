@@ -52,7 +52,7 @@ allprojects {
 		envVars["SOURCE_DATE_EPOCH"]="0"
 		tasks.withType(Exec) { environment << envVars }
 	}
-	assemble.dependsOn(configureEnvironment);
+	assemble.dependsOn(configureEnvironment)
 	dependencies {
 		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
 	}

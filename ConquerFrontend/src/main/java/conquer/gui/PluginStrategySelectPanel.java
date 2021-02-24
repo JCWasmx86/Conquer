@@ -15,7 +15,7 @@ import conquer.data.strategy.StrategyProvider;
 import conquer.plugins.Plugin;
 
 final class PluginStrategySelectPanel extends JPanel {
-	private transient GlobalContext context;
+	private final transient GlobalContext context;
 	private final List<JCheckBox> plugins = new ArrayList<>();
 	private final List<JCheckBox> strategies = new ArrayList<>();
 	private final transient ConquerInfo info;
@@ -33,7 +33,7 @@ final class PluginStrategySelectPanel extends JPanel {
 		this.context.getPlugins().forEach(a -> {
 			final var jb = new JCheckBox(a.getName(), true);
 			pluginPanel.add(jb);
-			final var required = this.info.requiredPlugins().stream().filter(b -> b == a.getClass()).count() == 0;
+			final var required = this.info.requiredPlugins().stream().noneMatch(b -> b == a.getClass());
 			jb.setEnabled(required);
 			this.plugins.add(jb);
 		});
@@ -50,7 +50,7 @@ final class PluginStrategySelectPanel extends JPanel {
 			}
 			final var jb = new JCheckBox(a.getName(), true);
 			// If the strategy is required, set it to disabled
-			jb.setEnabled(this.info.requiredStrategyProviders().stream().filter(b -> b == a.getClass()).count() == 0);
+			jb.setEnabled(this.info.requiredStrategyProviders().stream().noneMatch(b -> b == a.getClass()));
 			strategiesPanel.add(jb);
 			this.strategies.add(jb);
 		});

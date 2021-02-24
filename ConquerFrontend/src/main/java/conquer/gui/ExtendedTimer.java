@@ -12,7 +12,7 @@ import javax.swing.Timer;
  */
 final class ExtendedTimer extends Timer {
 	private static final long serialVersionUID = -6167424556364793575L;
-	private static List<Timer> registeredTimers = new ArrayList<>();
+	private static final List<Timer> registeredTimers = new ArrayList<>();
 
 	/**
 	 * Stop all registered timers and clear the list of timers.

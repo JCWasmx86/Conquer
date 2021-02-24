@@ -1,11 +1,11 @@
 package conquer.plugins;
 
-import java.util.Collections;
-import java.util.List;
-
 import conquer.data.EventList;
 import conquer.data.IClan;
 import conquer.messages.Message;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A collection of data passed to plugins.
@@ -37,6 +37,7 @@ public final class Context {
 	 * Get a reference to a clan
 	 *
 	 * @param index The index
+	 *
 	 * @return The clan at the specified index.
 	 */
 	public IClan getClan(final int index) {

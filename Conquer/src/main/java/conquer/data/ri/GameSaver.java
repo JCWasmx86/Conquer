@@ -1,7 +1,18 @@
 package conquer.data.ri;
 
-import java.awt.Color;
-import java.awt.Image;
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerSaver;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Shared;
+import conquer.data.StreamUtils;
+import conquer.data.strategy.Strategy;
+import conquer.plugins.Plugin;
+import conquer.utils.Graph;
+import conquer.utils.Triple;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,19 +32,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
-
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerSaver;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.Shared;
-import conquer.data.StreamUtils;
-import conquer.data.strategy.Strategy;
-import conquer.plugins.Plugin;
-import conquer.utils.Graph;
-import conquer.utils.Triple;
 
 public final class GameSaver implements ConquerSaver {
 	private final String name;
@@ -112,7 +110,7 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
-			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+		IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 		try (var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.readInt());
@@ -156,22 +154,22 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException, InstantiationException,
-			IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+		IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
 		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
+			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
 		for (final var file : files) {
 			ret.add(this.readClan(file, game));
 		}
-		return ret.stream().sorted((a, b) -> Integer.compare(a.getId(), b.getId())).collect(Collectors.toList());
+		return ret.stream().sorted(java.util.Comparator.comparingInt(conquer.data.IClan::getId)).collect(Collectors.toList());
 	}
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
-			throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-			ClassNotFoundException, IOException {
+		throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+		ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
+			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
 		for (final var file : files) {
 			final var pluginName = file.getName().replaceAll("\\.plugin\\.save$", "");
 			final var plugin = (Plugin) Class.forName(pluginName).getConstructor().newInstance();
@@ -312,7 +310,7 @@ public final class GameSaver implements ConquerSaver {
 			throw new RuntimeException(e);
 		}
 		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
-				this.getClass().getCanonicalName().getBytes());
+			this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
 		try (var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);

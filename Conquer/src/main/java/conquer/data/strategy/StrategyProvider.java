@@ -1,8 +1,8 @@
 package conquer.data.strategy;
 
-import java.util.List;
-
 import conquer.data.Version;
+
+import java.util.List;
 
 /**
  * This is a SPI interface for providing a new Strategy.
@@ -20,6 +20,7 @@ public interface StrategyProvider {
 	 * engine.
 	 *
 	 * @param version Version of the game engine.
+	 *
 	 * @return {@code true} if compatible, {@code false} otherwise.
 	 */
 	default boolean compatibleTo(final Version version) {

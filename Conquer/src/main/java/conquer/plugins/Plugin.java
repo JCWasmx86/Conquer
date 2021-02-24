@@ -1,15 +1,15 @@
 package conquer.plugins;
 
-import java.awt.Component;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-
 import conquer.data.ICity;
 import conquer.data.Result;
 import conquer.data.Version;
 import conquer.utils.Graph;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * The interface every plugin has to implement.
@@ -19,6 +19,7 @@ public interface Plugin {
 	 * Returns whether this plugin is compatible to the version of the engine.
 	 *
 	 * @param version May not be {@code null}. Version of the game engine
+	 *
 	 * @return {@code true} if compatible, {@code false} otherwise.
 	 */
 	default boolean compatibleTo(final Version version) {
@@ -56,6 +57,7 @@ public interface Plugin {
 	 * An optional list of buttons/labels/... that can be registered
 	 *
 	 * @return A list of components.
+	 *
 	 * @deprecated In the retrospective, it was a bad decision to mix UI and logic.
 	 */
 	@Deprecated(forRemoval = true)
@@ -92,6 +94,7 @@ public interface Plugin {
 	 *
 	 * @param game
 	 * @param bytes The written bytes
+	 *
 	 * @throws IOException In case of an IO-Error
 	 */
 	default void resume(final PluginInterface game, final InputStream bytes) throws IOException {
@@ -101,6 +104,7 @@ public interface Plugin {
 	 * In case the game is stored, any data may be written to the outputstream.
 	 *
 	 * @param outputStream Target stream.
+	 *
 	 * @throws IOException
 	 */
 	default void save(final OutputStream outputStream) throws IOException {

@@ -1,8 +1,5 @@
 package conquer.data.ri;
 
-import java.awt.Color;
-import java.util.List;
-
 import conquer.data.ConquerInfo;
 import conquer.data.IClan;
 import conquer.data.Resource;
@@ -12,6 +9,9 @@ import conquer.data.Version;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
+
+import java.awt.*;
+import java.util.List;
 
 /**
  * A clan represents a group of cities.
@@ -325,7 +325,7 @@ final class Clan implements IClan {
 			throw new IllegalArgumentException("resourceStats==null");
 		} else if (resourceStats.size() != Resource.values().length) {
 			throw new IllegalArgumentException(
-					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
+				"resourceStats.size() != Resource.values.length: " + resourceStats.size());
 		}
 		this.resourceStats = new GoodDoubleList(resourceStats, true);
 	}

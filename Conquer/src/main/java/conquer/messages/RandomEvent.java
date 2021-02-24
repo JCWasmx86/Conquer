@@ -9,7 +9,7 @@ public enum RandomEvent {
 	MIGRATION("RandomEvent.migration"), ECONOMIC_GROWTH("RandomEvent.economic_growth"),
 	PANDEMIC("RandomEvent.pandemic"), ACCIDENT("RandomEvent.accident"), SABOTAGE("RandomEvent.sabotage");
 
-	private String propertyName;
+	private final String propertyName;
 
 	RandomEvent(final String propertyName) {
 		this.propertyName = propertyName;

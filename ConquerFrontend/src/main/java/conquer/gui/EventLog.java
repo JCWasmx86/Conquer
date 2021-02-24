@@ -84,7 +84,6 @@ final class EventLog extends JFrame implements MessageListener {
 
 	private float currFontSize = EventLog.FONT_SIZE;
 	private final JPanel base;
-	private final JScrollPane contentPane;
 	private final Timer timer;
 	private JCheckBoxMenuItem showGood;
 	private JCheckBoxMenuItem showBad;
@@ -94,13 +93,13 @@ final class EventLog extends JFrame implements MessageListener {
 	private EventLog() {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.Y_AXIS));
-		this.contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		this.contentPane.setIgnoreRepaint(true);
-		this.contentPane.getVerticalScrollBar().setUnitIncrement(16);
+		javax.swing.JScrollPane contentPane = new javax.swing.JScrollPane(this.base, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+			javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		contentPane.setIgnoreRepaint(true);
+		contentPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.timer = new Timer(17, a -> this.repaint());
 		this.timer.start();
-		this.add(this.contentPane);
+		this.add(contentPane);
 		final var menubar = new JMenuBar();
 		final var menu = new JMenu(Messages.getString("EventLog.settings")); //$NON-NLS-1$
 		final var increaseFontSize = new JMenuItem();
@@ -158,9 +157,7 @@ final class EventLog extends JFrame implements MessageListener {
 		}
 		final var jl = new JLabel(message.getMessageText());
 		final var optional = message.getOptionalIconPath();
-		if (!optional.isEmpty()) {
-			jl.setIcon(new ImageResource(optional.get()));
-		}
+		optional.ifPresent(s -> jl.setIcon(new conquer.gui.utils.ImageResource(s)));
 		var c = jl.getForeground();
 		this.defaultColor = new Color(c.getRGB());
 		if (message.isPlayerInvolved()) {

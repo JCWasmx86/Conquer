@@ -52,7 +52,7 @@ See [docs/compiling.md](docs/compiling.md)
 ### History
 
 *Conquer* first was a project for school. Because I already planned writing a separate frontend, I decoupled the logic/the game engine (In the subdirectory Conquer) from the GUI (Originally written with greenfoot), as
-greenfoot had a lot of limitations and a lot of ugly and spooky code (Like reflection) was required to remove this restrictions.
+greenfoot had a lot of limitations and a lot of ugly and spooky code (Like reflection) was required to remove these restrictions.
 Another reason were the missing capabilites for managing a huge project (E.g. no package support, the IDE was lacking a lot of features, ...)
 
 After I gave my project to the teacher, I started to remove some little greenfoot-specific code in the game-engine and started to write a far, far superior GUI using Java Swing. I improved

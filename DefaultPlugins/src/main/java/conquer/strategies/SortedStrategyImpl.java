@@ -73,7 +73,7 @@ public final class SortedStrategyImpl implements Strategy {
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
 		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
-					.sorted((a, b) -> Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers()))
+					.sorted(java.util.Comparator.comparingLong(conquer.data.ICity::getNumberOfSoldiers))
 					.collect(Collectors.toList());
 			own.forEach(ownCity -> {
 				final var pair = this.values.get(target);
@@ -113,7 +113,7 @@ public final class SortedStrategyImpl implements Strategy {
 		});
 		this.cities = StreamUtils
 				.getCitiesAsStreamNot(cities2, clan,
-						a -> cities2.getConnected(a).stream().filter(b -> b.getClan() == clan).count() > 0)
+						a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
 				.sorted((a, b) -> {
 					final var pA = this.values.get(a);
 					final var pB = this.values.get(b);
@@ -127,9 +127,7 @@ public final class SortedStrategyImpl implements Strategy {
 			final long ownCitySoldiers, final StrategyObject obj) {
 		if (second > (ownCitySoldiers * factor)) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, ownCity, true, ownCity.getNumberOfPeople());
-			if (second > (ownCitySoldiers * factor)) {
-				return true;
-			}
+			return second > (ownCitySoldiers * factor);
 		}
 		return false;
 	}

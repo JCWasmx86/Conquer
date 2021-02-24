@@ -12,7 +12,7 @@ public final class ScenarioFileReaderFactory implements ConquerInfoReaderFactory
 
 	@Override
 	public byte[] getMagicNumber() {
-		return new byte[] { (byte) 0xaa, 0x55 };
+		return new byte[] {(byte) 0xaa, 0x55};
 	}
 
 }

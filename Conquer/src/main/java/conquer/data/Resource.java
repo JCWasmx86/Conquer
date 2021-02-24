@@ -15,9 +15,9 @@ public enum Resource {
 	LEATHER(7, "leather.png", Messages.getString("Resource.leather")), //$NON-NLS-1$ //$NON-NLS-2$
 	STONE(8, "stone.png", Messages.getString("Resource.stone")); //$NON-NLS-1$ //$NON-NLS-2$
 
-	private String image;
-	private int index;
-	private String name;
+	private final String image;
+	private final int index;
+	private final String name;
 
 	Resource(final int index, final String image, final String name) {
 		this.index = index;

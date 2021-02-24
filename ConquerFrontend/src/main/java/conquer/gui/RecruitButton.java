@@ -12,8 +12,8 @@ import conquer.data.ICity;
  */
 final class RecruitButton extends JPanel {
 	private static final long serialVersionUID = 4846741301367606008L;
-	private JSlider js;
-	private JButton jbutton;
+	private final JSlider js;
+	private final JButton jbutton;
 	private final transient ICity city;
 	private boolean sharp = false;
 

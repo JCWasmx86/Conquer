@@ -1,14 +1,13 @@
 package conquer.data;
 
-import java.awt.Color;
-import java.awt.Image;
-import java.util.List;
-import java.util.function.Consumer;
-
 import conquer.data.strategy.StrategyObject;
 import conquer.data.strategy.StrategyProvider;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
+
+import java.awt.*;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * This interface is the interface to the entire engine. It provides everything
@@ -22,6 +21,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * behavior is undefined
 	 *
 	 * @param context The context to bind. May not be {@code null}
+	 *
 	 * @throws IllegalArgumentException If the context is {@code null}
 	 */
 	void addContext(final GlobalContext context);
@@ -31,7 +31,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * calling {@link #onlyOneClanAlive()} the behavior is undefined.
 	 *
 	 * @return The result, if only one clan is left. {@link Result#CPU_WON}, if the
-	 *         clan of the player is extincted, otherwise {@link Result#PLAYER_WON}.
+	 * clan of the player is extincted, otherwise {@link Result#PLAYER_WON}.
 	 */
 	Result calculateResult();
 
@@ -52,6 +52,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Exit this game with the specified result.
 	 *
 	 * @param calculateResult The result to exit with.
+	 *
 	 * @deprecated Replaced by {@link #exit()}, to improve readability.
 	 */
 	@Deprecated
@@ -76,7 +77,9 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * {@link IClan#getId()}.
 	 *
 	 * @param index An unique id.
+	 *
 	 * @return The clan
+	 *
 	 * @throws {@link IllegalArgumentException} if the id has no matching clan.
 	 */
 	IClan getClan(final int index);
@@ -85,7 +88,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Get a list of clan names. This list should be immutable.
 	 *
 	 * @return An immutable list of clannames. It should be sorted by the ascending
-	 *         id.
+	 * id.
 	 */
 	List<String> getClanNames();
 
@@ -100,7 +103,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * A list of the amount of coins of all clans. This list should be immutable.
 	 *
 	 * @return An immutable list of coins of all clans. It should be sorted by the
-	 *         ascending id.
+	 * ascending id.
 	 */
 	List<Double> getCoins();
 
@@ -108,7 +111,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * A list of the amount of colors of all clans. This list should be immutable.
 	 *
 	 * @return An immutable list of colors of all clans. It should be sorted by the
-	 *         ascending id.
+	 * ascending id.
 	 */
 	List<Color> getColors();
 
@@ -140,6 +143,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * @param name The name to use for saving this game state. May not be
 	 *             {@code null} or empty, otherwise an
 	 *             {@link IllegalArgumentException} shall be thrown.
+	 *
 	 * @return A {@link ConquerSaver} that allows saving the game state.
 	 */
 	ConquerSaver getSaver(final String name);
@@ -161,6 +165,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 *
 	 * @param clan The clan. May not be {@code null}, otherwise an
 	 *             {@link IllegalArgumentException} shall be thrown.
+	 *
 	 * @return {@code true} if the clan is dead, {@code false} otherwise.
 	 */
 	boolean isDead(final IClan clan);
@@ -180,6 +185,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 *              {@link IllegalArgumentException} shall be thrown.
 	 * @param limit The absolute limit,may not be negative, otherwise an
 	 *              {@link IllegalArgumentException} shall be thrown.
+	 *
 	 * @return
 	 */
 	long maximumNumberOfSoldiersToRecruit(final IClan clan, final long limit);
@@ -253,6 +259,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * Returns the usage and production of the resources for the given clan.
 	 *
 	 * @param clan The clan.
+	 *
 	 * @return ResourceUsage for the given clan.
 	 */
 	default ResourceUsage getResourceUsage(final IClan clan) {
@@ -269,14 +276,15 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	@SuppressWarnings("deprecation")
 	default SoldierCosts getSoldierCosts() {
 		return new SoldierCosts(Shared.COINS_PER_MOVE_OF_SOLDIER, Shared.COINS_PER_MOVE_OF_SOLDIER_BASE,
-				Shared.COINS_PER_SOLDIER_INITIAL, Shared.COINS_PER_SOLDIER_PER_ROUND, Shared.IRON_PER_SOLDIER_INITIAL,
-				Shared.STONE_PER_SOLDIER_INITIAL, Shared.WOOD_PER_SOLDIER_INITIAL);
+			Shared.COINS_PER_SOLDIER_INITIAL, Shared.COINS_PER_SOLDIER_PER_ROUND, Shared.IRON_PER_SOLDIER_INITIAL,
+			Shared.STONE_PER_SOLDIER_INITIAL, Shared.WOOD_PER_SOLDIER_INITIAL);
 	}
 
 	/**
 	 * Return an object describing the costs for soldiers for this clan.
 	 *
 	 * @param clan The costs for this clan.
+	 *
 	 * @return SoldierCosts object
 	 */
 	default SoldierCosts getSoldierCosts(final IClan clan) {

@@ -23,7 +23,6 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	private final JLabel infoLabel;
 	private final JButton upgradeOnce;
 	private final JButton upgradeMax;
-	private final Timer timer;
 
 	/**
 	 * Create a new UpgradeSoldiersOffense
@@ -44,8 +43,8 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
 		this.repaint();
-		this.timer = new ExtendedTimer(17, this);
-		this.timer.start();
+		javax.swing.Timer timer = new ExtendedTimer(17, this);
+		timer.start();
 	}
 
 	/**

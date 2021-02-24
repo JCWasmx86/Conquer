@@ -12,8 +12,8 @@ dependencies {
 	implementation project(":Conquer")
 	implementation project(":ConquerFrontendSPI")
 	implementation project(":music")
-	runtimeOnly project(":DefaultPlugins");
-	runtimeOnly files("${project.rootDir}/music_tmp");
+	runtimeOnly project(":DefaultPlugins")
+	runtimeOnly files("${project.rootDir}/music_tmp")
 }
 jar {
 	exclude "**/*.properties"
@@ -26,7 +26,7 @@ jar {
 }
 task conquerResources(type: Jar) {
 	copy {
-		from file("${project.rootDir}/auxiliary/jars");
+		from file("${project.rootDir}/auxiliary/jars")
 		include "*.jar"
 		into "build/libs/"
 	}
@@ -37,7 +37,7 @@ task conquerResources(type: Jar) {
 mainClassName="conquer.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
 conquerResources.mustRunAfter(":music:buildMusic")
-jar.dependsOn(conquerResources);
+jar.dependsOn(conquerResources)
 
 run {
 	jvmArgs=["--enable-preview"]

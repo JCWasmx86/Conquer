@@ -10,8 +10,9 @@ public interface ConquerInfoReaderFactory {
 	 * Build a {@link ConquerInfoReader} for a given file.
 	 *
 	 * @param file The file. May not be {@code null}.
+	 *
 	 * @return A reader that is able to construct a {@link ConquerInfo} from
-	 *         {@code file}.
+	 * {@code file}.
 	 */
 	ConquerInfoReader getForFile(InstalledScenario is);
 

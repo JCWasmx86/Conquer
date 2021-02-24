@@ -22,12 +22,12 @@ public class ResourceUsage {
 	 * [0][1]
 	 * [0][1]
 	 * </pre>
-	 *
+	 * <p>
 	 * Every row in this array is for one resource. The index is obtained by calling
 	 * {@link Resource#getIndex()}. Each subarray has two entries.
 	 * {@code subarray[0]} is the use of the resource per person,
 	 * {@code subarray[1]} is the usage of the resource per soldier.
-	 *
+	 * <p>
 	 * No value may be negative, null, NaN or infinite, otherwise an
 	 * {@code IllegalArgumentException} will be thrown.
 	 *
@@ -48,7 +48,7 @@ public class ResourceUsage {
 				throw new IllegalArgumentException("stats[i] is null");
 			} else if (stats[i].length != 2) {
 				throw new IllegalArgumentException(
-						"Expected stats[i] to be of length 2: {resourceUsageOfPerson;resourceUsageOfSoldier}");
+					"Expected stats[i] to be of length 2: {resourceUsageOfPerson;resourceUsageOfSoldier}");
 			}
 			this.isBad(stats[i][0]);
 			this.isBad(stats[i][1]);
@@ -93,10 +93,11 @@ public class ResourceUsage {
 	 * {@link ResourceUsage#ResourceUsage(double[][], double)}.
 	 *
 	 * @param idx The index.
+	 *
 	 * @return Subarray, but just a copy.
 	 */
 	public double[] get(final int idx) {
-		return new double[] { this.personUsed[idx], this.soldierUsed[idx] };
+		return new double[] {this.personUsed[idx], this.soldierUsed[idx]};
 	}
 
 	/**

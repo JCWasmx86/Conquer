@@ -1,11 +1,5 @@
 package conquer.data.builtin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.function.DoubleConsumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -15,6 +9,12 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.function.DoubleConsumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 public final class DefensiveStrategyImpl implements Strategy {
 	private static final int MAX_ITERATIONS = 100;
 	private Graph<ICity> graph;
@@ -22,7 +22,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
 		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
 		BuiltinShared.assertThat(gift != null, "gift==null");
@@ -90,9 +90,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 		final var totalCoins = clan.getCoins() * Math.random() * 0.33;
 		final var gift = new Gift(giftedResources, totalCoins);
 		final var clans = StreamUtils.getCitiesAsStream(this.graph).map(ICity::getClan).distinct()
-				.filter(a -> a != clan).sorted((a, b) -> Double.compare(this.object.getRelationship(a, clan),
-						this.object.getRelationship(b, clan)))
-				.collect(Collectors.toList());
+			.filter(a -> a != clan).sorted(java.util.Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
+			.collect(Collectors.toList());
 		// Improve relationship, start from the one with the worst relationship.
 		for (final var otherClan : clans) {
 			if (Math.random() < 0.75) {
@@ -154,7 +153,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	@Override
 	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
-			final byte[] dataBytes) {
+							   final byte[] dataBytes) {
 		this.object = strategyObject;
 		if (hasStrategyData) {
 			return new DefensiveStrategyData(dataBytes);
@@ -165,17 +164,17 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan,
-				ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
-						.sorted().forEach(enemy -> {
-							// Strength of the own soldiers
-							final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
-									* clan.getSoldiersStrength();
-							// Estimated strength of the enemy
-							final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
-							// Only attack, if a victory is very probable.
-							if (dOwn > (dTwo * 1.1)) {
-								this.object.attack(ownCity, enemy, false, 0);
-							}
-						}));
+			ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
+				.sorted().forEach(enemy -> {
+					// Strength of the own soldiers
+					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
+						* clan.getSoldiersStrength();
+					// Estimated strength of the enemy
+					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
+					// Only attack, if a victory is very probable.
+					if (dOwn > (dTwo * 1.1)) {
+						this.object.attack(ownCity, enemy, false, 0);
+					}
+				}));
 	}
 }

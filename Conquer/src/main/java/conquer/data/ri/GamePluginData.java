@@ -1,8 +1,5 @@
 package conquer.data.ri;
 
-import java.util.List;
-import java.util.Map;
-
 import conquer.plugins.AttackHook;
 import conquer.plugins.CityKeyHandler;
 import conquer.plugins.KeyHandler;
@@ -11,6 +8,9 @@ import conquer.plugins.MoveHook;
 import conquer.plugins.Plugin;
 import conquer.plugins.RecruitHook;
 import conquer.plugins.ResourceHook;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * A container for the callbacks registered by the plugins.

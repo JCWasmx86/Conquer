@@ -1,12 +1,12 @@
 package conquer.data;
 
-import java.awt.Color;
-import java.util.List;
-
 import conquer.InternalUseOnly;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
+
+import java.awt.*;
+import java.util.List;
 
 public interface IClan {
 
@@ -188,7 +188,7 @@ public interface IClan {
 	 * Upgrade the defense strength of the soldiers.
 	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
-	 *         equals to the maximum level, {@code false} otherwise.
+	 * equals to the maximum level, {@code false} otherwise.
 	 */
 	boolean upgradeSoldiersDefense();
 
@@ -196,7 +196,7 @@ public interface IClan {
 	 * Upgrade the strength of the soldiers.
 	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
-	 *         equals to the maximum level, {@code false} otherwise.
+	 * equals to the maximum level, {@code false} otherwise.
 	 */
 	boolean upgradeSoldiers();
 
@@ -204,7 +204,7 @@ public interface IClan {
 	 * Upgrade the offensive strength of the soldiers.
 	 *
 	 * @return {@code true}, if enough coins were available and the level wasn't
-	 *         equals to the maximum level, {@code false} otherwise.
+	 * equals to the maximum level, {@code false} otherwise.
 	 */
 	boolean upgradeSoldiersOffense();
 
@@ -232,17 +232,10 @@ public interface IClan {
 
 	default void upgradeFully(final SoldierUpgrade upgradeType) {
 		switch (upgradeType) {
-		case BOTH:
-			this.upgradeSoldiersFully();
-			break;
-		case DEFENSE:
-			this.upgradeSoldiersDefenseFully();
-			break;
-		case OFFENSE:
-			this.upgradeSoldiersOffenseFully();
-			break;
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + upgradeType);
+			case BOTH -> this.upgradeSoldiersFully();
+			case DEFENSE -> this.upgradeSoldiersDefenseFully();
+			case OFFENSE -> this.upgradeSoldiersOffenseFully();
+			default -> throw new IllegalArgumentException("Unexpected value: " + upgradeType);
 		}
 	}
 
@@ -278,19 +271,16 @@ public interface IClan {
 	 * @param upgrade The upgrade. May not be {@code null}, otherwise an
 	 *                {@code IllegalArgumentException} will be thrown.
 	 * @param x       Current level.
+	 *
 	 * @return The costs for upgrading {@code upgrade}.
 	 */
 	default double upgradeCosts(final SoldierUpgrade upgrade, final int x) {
-		switch (upgrade) {
-		case BOTH:
-			return this.upgradeCostsForSoldiers(x);
-		case DEFENSE:
-			return this.upgradeCostsForDefense(x);
-		case OFFENSE:
-			return this.upgradeCostsForOffense(x);
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + upgrade);
-		}
+		return switch (upgrade) {
+			case BOTH -> this.upgradeCostsForSoldiers(x);
+			case DEFENSE -> this.upgradeCostsForDefense(x);
+			case OFFENSE -> this.upgradeCostsForOffense(x);
+			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		};
 	}
 
 	/**
@@ -298,6 +288,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the offense strength of the clan.
 	 */
 	@Deprecated
@@ -314,6 +305,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the defense strength of the clan.
 	 */
 	@Deprecated
@@ -330,24 +322,22 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
-	 *         enough anymore.
+	 * enough anymore.
 	 */
 	@Deprecated
 	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
 		// Copy pasted
 		var cnt = 0;
-		while (true) {
-			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+		do {
+			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.DEFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
+		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -356,6 +346,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the offense/defense strength of the clan.
 	 */
 	@InternalUseOnly
@@ -372,6 +363,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the soldiers strength of the clan.
 	 */
 	@InternalUseOnly
@@ -386,24 +378,22 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
-	 *         enough anymore.
+	 * enough anymore.
 	 */
 	@InternalUseOnly
 	@Deprecated
 	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
-		while (true) {
-			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+		do {
+			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.DEFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
+		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -413,41 +403,36 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
-	 *         enough anymore.
+	 * enough anymore.
 	 */
 
 	@InternalUseOnly
 	@Deprecated
 	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
-		while (true) {
-			final var costs = this.upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
+		do {
+			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.OFFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
+		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
 		return cnt;
 	}
 
 	default int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
-		while (true) {
+		do {
 			final var costs = this.costs(currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == this.getInfo().getMaximumLevel()) {
-				return cnt;
-			}
-		}
+		} while ((cnt + currLevel) != this.getInfo().getMaximumLevel());
 		return cnt;
 	}
 
@@ -457,24 +442,22 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
-	 *         enough anymore.
+	 * enough anymore.
 	 */
 	@Deprecated
 	@InternalUseOnly
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
-		while (true) {
-			final var costs = this.upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
+		do {
+			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.BOTH, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-			if ((cnt + currLevel) == Shared.MAX_LEVEL) {
-				return cnt;
-			}
-		}
+		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -486,28 +469,27 @@ public interface IClan {
 	 *
 	 * @param upgrade Which upgrade to make
 	 * @param x       Current level
+	 *
 	 * @return New power.
 	 */
 	default double newPower(final SoldierUpgrade upgrade, final int x) {
-		switch (upgrade) {
-		case BOTH:
-			return this.newPowerForSoldiers(x);
-		case DEFENSE:
-			return this.newPowerOfSoldiersForDefense(x);
-		case OFFENSE:
-			return this.newPowerOfSoldiersForOffense(x);
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + upgrade);
-		}
+		return switch (upgrade) {
+			case BOTH -> this.newPowerForSoldiers(x);
+			case DEFENSE -> this.newPowerOfSoldiersForDefense(x);
+			case OFFENSE -> this.newPowerOfSoldiersForOffense(x);
+			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		};
 	}
 
 	// All of those are repeated, so you can override only one without effecting
 	// (probably) others.
+
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -521,6 +503,7 @@ public interface IClan {
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -534,6 +517,7 @@ public interface IClan {
 	 * {@link Shared#newPowerForSoldiers(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -547,6 +531,7 @@ public interface IClan {
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -560,6 +545,7 @@ public interface IClan {
 	 *
 	 * @param level    Current level
 	 * @param oldValue Old value of production.
+	 *
 	 * @return New production rate.
 	 */
 	default double newPowerOfUpdate(final int level, final double oldValue) {
@@ -570,6 +556,7 @@ public interface IClan {
 	 * Replacement for {@link Shared#costs(int)}.
 	 *
 	 * @param level Current level.
+	 *
 	 * @return Costs in coins for upgrading to next level.
 	 */
 	default double costs(final int level) {
@@ -592,19 +579,16 @@ public interface IClan {
 	 * @param upgrade The upgrade. May not be {@code null}.
 	 * @param level   Current level
 	 * @param coins   Maximum coins to give.
+	 *
 	 * @return Number of levels.
 	 */
 	default int maxLevels(final SoldierUpgrade upgrade, final int level, final double coins) {
-		switch (upgrade) {
-		case BOTH:
-			return this.maxLevelsAddSoldiersUpgrade(level, coins);
-		case DEFENSE:
-			return this.maxLevelsAddDefenseUpgrade(level, coins);
-		case OFFENSE:
-			return this.maxLevelsAddOffenseUpgrade(level, coins);
-		default:
-			throw new IllegalArgumentException("Unexpected value: " + upgrade);
-		}
+		return switch (upgrade) {
+			case BOTH -> this.maxLevelsAddSoldiersUpgrade(level, coins);
+			case DEFENSE -> this.maxLevelsAddDefenseUpgrade(level, coins);
+			case OFFENSE -> this.maxLevelsAddOffenseUpgrade(level, coins);
+			default -> throw new IllegalArgumentException("Unexpected value: " + upgrade);
+		};
 	}
 
 	/**

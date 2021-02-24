@@ -15,5 +15,5 @@ public enum AttackResult {
 	/**
 	 * All soldiers on both sides are dead.
 	 */
-	ALL_SOLDIERS_DEAD;
+	ALL_SOLDIERS_DEAD
 }

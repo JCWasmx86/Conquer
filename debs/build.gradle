@@ -29,20 +29,20 @@ task buildConquerDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer/DEBIAN/control"))
 		def s= "Package: conquer\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: "
-		s += (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("aarch64")?"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")));
+		s += (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("aarch64")?"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")))
 		s += "\n"
 		s += "Maintainer: JCWasmx86\n"
 		//TODO: Check whether some are redundant or missing
 		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios, libjson-glib-1.0-0, libgee-0.8-2, libjson-glib-1.0-0\n"
 		s += "Description: The native parts for conquer-gui\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -84,7 +84,7 @@ task buildConquerGuiDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-gui/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-gui/DEBIAN/control"))
 		def s= "Package: conquer-gui\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
@@ -93,8 +93,8 @@ task buildConquerGuiDeb() {
 		s += "Depends: conquer-engine\n"
 		s += "Description: The GUI for the game engine conquer (Without Launcher)\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-gui", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -131,7 +131,7 @@ task buildConquerEngineDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-engine/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-engine/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-engine/DEBIAN/control"))
 		def s= "Package: conquer-engine\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
@@ -140,8 +140,8 @@ task buildConquerEngineDeb() {
 		s += "Depends: conquer-engine\n"
 		s += "Description: The engine for the game conquer\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-engine", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -177,7 +177,7 @@ task buildDefaultDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-default/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-default/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-default/DEBIAN/control"))
 		def s= "Package: conquer-default\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
@@ -186,8 +186,8 @@ task buildDefaultDeb() {
 		s += "Depends: conquer-engine\n"
 		s += "Description: The default plugins for the game conquer\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-default", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -219,7 +219,7 @@ task buildDefaultMusicDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-default-music/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-default-music/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-default-music/DEBIAN/control"))
 		def s= "Package: conquer-default-music\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
@@ -228,8 +228,8 @@ task buildDefaultMusicDeb() {
 		s += "Depends: conquer-engine\n"
 		s += "Description: The default music for the game conquer\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-default-music", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -273,7 +273,7 @@ task buildDefaultScenariosDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-default-scenarios/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-default-scenarios/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-default-scenarios/DEBIAN/control"))
 		def s= "Package: conquer-default-scenarios\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
@@ -282,8 +282,8 @@ task buildDefaultScenariosDeb() {
 		s += "Depends: conquer-engine\n"
 		s += "Description: The default scenarios for the game conquer\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-default-scenarios", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -343,17 +343,17 @@ task buildSdkDeb() {
 		}
 		def size = Files.walk(Paths.get(file("conquer-sdk/usr").toURL().toURI())).mapToLong( { p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
-		def fout = new FileOutputStream(new File(file("."),"conquer-sdk/DEBIAN/control"));
+		def fout = new FileOutputStream(new File(file("."),"conquer-sdk/DEBIAN/control"))
 		def s= "Package: conquer-sdk\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
-		s += "Architecture: " + (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("aarch64")?"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")))+"\n";
+		s += "Architecture: " + (System.getProperty("os.arch").equals("amd64")?"amd64":(System.getProperty("os.arch").equals("aarch64")?"arm64":(System.getProperty("os.arch").equals("arm")?"arm":"i386")))+"\n"
 		s += "Maintainer: JCWasmx86\n"
 		s += "Depends: maven\n"
 		s += "Description: The SDK for the game engine conquer\n"
 		s += "Installed-Size: "+sizeInKb+"\n\n"
-		fout.write(s.getBytes());
-		fout.close();
+		fout.write(s.getBytes())
+		fout.close()
 		exec {
 			commandLine "find", file(".").getAbsolutePath()+"/conquer-sdk", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}

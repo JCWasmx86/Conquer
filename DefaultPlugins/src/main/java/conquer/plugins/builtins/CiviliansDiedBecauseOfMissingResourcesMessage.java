@@ -1,11 +1,5 @@
 package conquer.plugins.builtins;
 
-import java.text.MessageFormat;
-
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.messages.Message;
-
 public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCiviliansDied, ICity city, IClan clan)
 		implements Message {
 	@Override

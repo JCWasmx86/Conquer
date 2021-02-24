@@ -1,8 +1,5 @@
 package conquer.data.builtin;
 
-import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
-
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -13,6 +10,9 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 
+import java.util.function.DoubleConsumer;
+import java.util.stream.Collectors;
+
 public final class OffensiveStrategyImpl implements Strategy {
 	private static final double OFFENSIVE_UPGRADE_PROBABILITY = 0.15;
 	private static final double DECLINE_GIFT_PROBABILITY = 0.875;
@@ -22,7 +22,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-			final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
 		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
 		BuiltinShared.assertThat(gift != null, "gift==null");
@@ -84,30 +84,30 @@ public final class OffensiveStrategyImpl implements Strategy {
 		// All cities, of the own clan, that are not at the border (=Are only surrounded
 		// by cities of the same clan), and have soldiers. (Set W in the following)
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
-				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
-				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
-				.collect(Collectors.toList());
+			.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
+			.filter(a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
+			.collect(Collectors.toList());
 		// All cities that are adjacent to another clan. (Set B in the following)
 		final var citiesOnBorder = StreamUtils
-				.getCitiesAsStream(this.graph, clan, a -> !citiesWithoutBordersWithSoldiers.contains(a))
-				.collect(Collectors.toList());
+			.getCitiesAsStream(this.graph, clan, a -> !citiesWithoutBordersWithSoldiers.contains(a))
+			.collect(Collectors.toList());
 		// For each city in W, now all adjacent cities from B are sorted, first by the
 		// number of soldiers, then by
 		// the distance (A city with less soldiers will be supported earlier)
 		citiesWithoutBordersWithSoldiers
-				.forEach(city -> citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
-					final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
-					if (i != 0) {
-						return i;
-					} else {
-						return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
-					}
-				}).forEach(a -> {
-					// And then move the maximum amount of soldiers to every city.
-					final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
-							city.getNumberOfSoldiers());
-					this.object.moveSoldiers(city, null, true, a, numberOfSoldiersToMove);
-				}));
+			.forEach(city -> citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
+				final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
+				if (i != 0) {
+					return i;
+				} else {
+					return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
+				}
+			}).forEach(a -> {
+				// And then move the maximum amount of soldiers to every city.
+				final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
+					city.getNumberOfSoldiers());
+				this.object.moveSoldiers(city, null, true, a, numberOfSoldiersToMove);
+			}));
 	}
 
 	// Only upgrade the essential resources that are needed for recruiting soldiers
@@ -146,7 +146,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 
 	@Override
 	public StrategyData resume(final StrategyObject strategyObject, final byte[] bytes, final boolean hasStrategyData,
-			final byte[] dataBytes) {
+							   final byte[] dataBytes) {
 		this.object = strategyObject;
 		if (hasStrategyData) {
 			return new OffensiveStrategyData(dataBytes);
@@ -160,11 +160,11 @@ public final class OffensiveStrategyImpl implements Strategy {
 	// The cities are upgraded in ascending order.
 	private void upgradeResourcesForClan(final IClan clan, final Resource resc) {
 		final var citiesWithoutBorders = StreamUtils
-				.getCitiesAsStream(this.graph, clan,
-						a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
-				.collect(Collectors.toList());
+			.getCitiesAsStream(this.graph, clan,
+				a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
+			.collect(Collectors.toList());
 		final var cityStream = (citiesWithoutBorders.isEmpty() ? StreamUtils.getCitiesAsStream(this.graph, clan)
-				: citiesWithoutBorders.stream());
+			: citiesWithoutBorders.stream());
 		cityStream.sorted((a, b) -> {
 			final var index = resc.getIndex();
 			final double resA = a.getProductions().get(index);

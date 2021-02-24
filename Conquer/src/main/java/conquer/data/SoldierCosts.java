@@ -63,9 +63,9 @@ public final class SoldierCosts {
 	 * @param woodPerSoldierInitial
 	 */
 	public SoldierCosts(final double coinsPerMovePerSoldier, final double coinsPerMoveOfSoldierBase,
-			final double coinsPerSoldierInitial, final double coinsPerSoldierPerRound,
-			final double ironPerSoldierInitial, final double stonePerSoldierInitial,
-			final double woodPerSoldierInitial) {
+						final double coinsPerSoldierInitial, final double coinsPerSoldierPerRound,
+						final double ironPerSoldierInitial, final double stonePerSoldierInitial,
+						final double woodPerSoldierInitial) {
 		this.isBad(coinsPerMovePerSoldier);
 		this.isBad(coinsPerMoveOfSoldierBase);
 		this.isBad(coinsPerSoldierPerRound);

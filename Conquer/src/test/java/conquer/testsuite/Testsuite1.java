@@ -1,13 +1,13 @@
 package conquer.testsuite;
 
-import java.io.IOException;
-
 import conquer.data.GlobalContext;
 import conquer.data.InstalledScenario;
 import conquer.data.XMLReader;
 import conquer.init.ExtendedOutputStream;
 import conquer.init.Initializer;
 import conquer.init.Installer;
+
+import java.io.IOException;
 
 /**
  * This will run as first test in github actions. It will just install the game

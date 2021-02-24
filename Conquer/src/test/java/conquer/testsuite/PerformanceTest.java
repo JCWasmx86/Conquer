@@ -1,13 +1,13 @@
 package conquer.testsuite;
 
+import conquer.data.Shared;
+import conquer.data.XMLReader;
+import conquer.init.Initializer;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import conquer.data.Shared;
-import conquer.data.XMLReader;
-import conquer.init.Initializer;
 
 public final class PerformanceTest {
 	public static void main(final String[] args) {
@@ -62,9 +62,9 @@ public final class PerformanceTest {
 			final var adjustedNsPerRound = total / MAX_ROUNDS;
 			final var adjustedRoundsPerSecond = 1_000_000_000 / adjustedNsPerRound;
 			System.out.println(
-					"ns/round (Without loading of the scenarios): " + String.format("%.2f", adjustedNsPerRound));
+				"ns/round (Without loading of the scenarios): " + String.format("%.2f", adjustedNsPerRound));
 			System.out.println(
-					"rounds/s (Without loading of the scenarios): " + String.format("%.2f", adjustedRoundsPerSecond));
+				"rounds/s (Without loading of the scenarios): " + String.format("%.2f", adjustedRoundsPerSecond));
 			System.out.println("Maximum length of one round in ns: " + String.format("%.2f", max));
 			System.out.println("Minimum length of one round in ns: " + String.format("%.2f", min));
 			if (max > 150_000) {

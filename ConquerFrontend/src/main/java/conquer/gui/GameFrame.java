@@ -67,7 +67,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private JScrollPane gameStageScrollPane;
 	private JTabbedPane sideBarPane;
 	private JPanel buttonPanel;
-	private transient List<DashedLine> lines = new ArrayList<>();
+	private final transient List<DashedLine> lines = new ArrayList<>();
 	private transient Thread coinsLabelUpdateThread;
 	private String saveName;
 	private final JPanel basePanel;
@@ -204,16 +204,14 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.buttonPanel.setLayout(new FlowLayout());
 		final var nextRound = new JButton(new ImageResource("hourglass.png")); //$NON-NLS-1$
 		nextRound.setToolTipText(Messages.getString("GameFrame.nextRound")); //$NON-NLS-1$
-		nextRound.addActionListener(a -> {
-			new Thread(() -> {
-				nextRound.setEnabled(false);
-				if (this.game.isPlayersTurn()) {
-					this.game.executeActions();
-				}
-				this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
-				nextRound.setEnabled(true);
-			}).start();
-		});
+		nextRound.addActionListener(a -> new Thread(() -> {
+			nextRound.setEnabled(false);
+			if (this.game.isPlayersTurn()) {
+				this.game.executeActions();
+			}
+			this.setTitle(this.game.getVersion() + " - " + conquer.gui.GameFrame.TITLE_PART + this.game.currentRound());
+			nextRound.setEnabled(true);
+		}).start());
 		final var openMessages = new JButton(new ImageResource("messagebox.png")); //$NON-NLS-1$
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
 		openMessages.addActionListener(a -> EventLog.showWindow());
@@ -419,8 +417,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		connections.forEach(triple -> {
 			final var first = triple.first();
 			final var second = triple.second();
-			if ((drawnLines.containsKey(first) && (drawnLines.get(first).indexOf(second) != -1))
-					|| (drawnLines.containsKey(second) && (drawnLines.get(second).indexOf(first) != -1))) {
+			if ((drawnLines.containsKey(first) && (drawnLines.get(first).contains(second)))
+					|| (drawnLines.containsKey(second) && (drawnLines.get(second).contains(first)))) {
 				return;
 			}
 			this.lines.add(

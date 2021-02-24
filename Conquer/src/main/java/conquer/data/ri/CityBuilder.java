@@ -1,10 +1,10 @@
 package conquer.data.ri;
 
-import java.awt.Image;
-import java.util.List;
-
 import conquer.data.ConquerInfo;
 import conquer.data.IClan;
+
+import java.awt.*;
+import java.util.List;
 
 class CityBuilder {
 	private final City tmp;

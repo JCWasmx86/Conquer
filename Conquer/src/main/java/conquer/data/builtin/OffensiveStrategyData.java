@@ -1,13 +1,13 @@
 package conquer.data.builtin;
 
+import conquer.data.Shared;
+import conquer.data.strategy.StrategyData;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Random;
-
-import conquer.data.Shared;
-import conquer.data.strategy.StrategyData;
 
 public final class OffensiveStrategyData implements StrategyData {
 	private static final int MAX_ROUND_NUMBER = 20;
@@ -45,13 +45,13 @@ public final class OffensiveStrategyData implements StrategyData {
 				this.action = OffensiveStrategy.UPGRADE;
 				this.counter = Math.abs(this.random.nextInt(OffensiveStrategyData.MAX_ROUND_NUMBER)) + 1;
 				Shared.logLevel1(
-						"Offensive-strategy: " + OffensiveStrategy.UPGRADE + " for " + this.counter + " rounds");
+					"Offensive-strategy: " + OffensiveStrategy.UPGRADE + " for " + this.counter + " rounds");
 
 			} else {
 				this.action = OffensiveStrategy.EXPAND;
 				this.counter = Math.abs(this.random.nextInt(OffensiveStrategyData.MAX_ROUND_NUMBER)) + 1;
 				Shared.logLevel1(
-						"Offensive-strategy: " + OffensiveStrategy.EXPAND + " for " + this.counter + " rounds");
+					"Offensive-strategy: " + OffensiveStrategy.EXPAND + " for " + this.counter + " rounds");
 			}
 		}
 	}

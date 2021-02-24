@@ -51,13 +51,13 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
-		for (var i = 0; i < clans.size(); i++) {
-			if (clans.get(i).isPlayerClan()) {
+		for (conquer.data.IClan iClan : clans) {
+			if (iClan.isPlayerClan()) {
 				continue;
 			}
-			final var clan = clans.get(i);
+			final var clan = iClan;
 			final var text = clan.getName();
-			final var clanLabel = new JLabel(text);
+			final var clanLabel = new javax.swing.JLabel(text);
 			clanLabel.setOpaque(true);
 			clanLabel.setForeground(clan.getColor());
 			clanLabel.setFont(clanLabel.getFont().deriveFont(22.0f));

@@ -6,7 +6,7 @@ Replacements for all images in `Conquer/images`, `ConquerFrontend/images` and `S
 
 ### UI/UX Designers
 
-Currently the GUI is quite messy and sometimes a bit difficult to use. Improvements and ideas are quite appreciated.
+Currently, the GUI is quite messy and sometimes a bit difficult to use. Improvements and ideas are quite appreciated.
 
 ### Anyone else
 

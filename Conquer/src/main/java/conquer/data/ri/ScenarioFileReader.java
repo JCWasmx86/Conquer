@@ -1,6 +1,16 @@
 package conquer.data.ri;
 
-import java.awt.Color;
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerInfoReader;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.InstalledScenario;
+import conquer.data.Resource;
+import conquer.data.Shared;
+import conquer.utils.Graph;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -11,20 +21,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerInfoReader;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.InstalledScenario;
-import conquer.data.Resource;
-import conquer.data.Shared;
-import conquer.utils.Graph;
-
 /**
  * The class that builds a Game from a scenariofile.
- *
  */
 public final class ScenarioFileReader implements ConquerInfoReader {
 	private final InstalledScenario scenario;
@@ -53,7 +51,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		InputStream stream;
 		try {
 			stream = this.scenario.file() == null ? this.scenario.in()
-					: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
+				: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
 		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 			throw new RuntimeException(e);
@@ -72,13 +70,13 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			final var numBytesOfBackgroundImage = dis.readInt();
 			if (numBytesOfBackgroundImage < 0) {
 				throw new RuntimeException(
-						"Expected a non negative number of bytes in background, got " + numBytesOfBackgroundImage);
+					"Expected a non negative number of bytes in background, got " + numBytesOfBackgroundImage);
 			}
 			final var data = new byte[numBytesOfBackgroundImage];
 			var bytesRead = dis.read(data);
 			if (bytesRead != numBytesOfBackgroundImage) {
 				throw new RuntimeException(
-						"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
+					"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
 			}
 			final var gi = ImageIO.read(new ByteArrayInputStream(data));
 			game.setBackground(gi);
@@ -170,7 +168,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 				final var bytesOfPicture = dis.readInt();
 				if (bytesOfPicture < 0) {
 					throw new RuntimeException(
-							"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
+						"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
 				}
 				final var pic = new byte[bytesOfPicture];
 				bytesRead = dis.read(pic);
@@ -232,7 +230,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 					if (otherCityIndex < 0) {
 						throw new RuntimeException("otherCityIndex < 0: " + otherCityIndex);
 					} else if (otherCityIndex == i) {
-						throw new RuntimeException("Can\'t have a connection to itself!");
+						throw new RuntimeException("Can't have a connection to itself!");
 
 					} else if (otherCityIndex > numCities) {
 						throw new RuntimeException("Index out of range: " + otherCityIndex);

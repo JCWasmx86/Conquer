@@ -1,12 +1,12 @@
 package conquer.data;
 
+import conquer.data.strategy.StrategyProvider;
+import conquer.plugins.Plugin;
+
 import java.util.ArrayList;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
-
-import conquer.data.strategy.StrategyProvider;
-import conquer.plugins.Plugin;
 
 /**
  * A context builder that uses SPI to discover plugins, strategies, readers and
@@ -37,13 +37,13 @@ public class SPIContextBuilder {
 			}
 		});
 		final var strategies = ServiceLoader.load(StrategyProvider.class).stream().map(Provider::get)
-				.collect(Collectors.toList());
+			.collect(Collectors.toList());
 		final var plugins = ServiceLoader.load(Plugin.class).stream().map(Provider::get).collect(Collectors.toList());
 		final var readers = ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(Provider::get)
-				.collect(Collectors.toList());
+			.collect(Collectors.toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
-				plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
-				strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
-				readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
+			plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+			strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+			readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
 	}
 }
