@@ -26,6 +26,24 @@ public interface Plugin {
 	}
 
 	/**
+	 * Returns all plugins that conflict with this plugin.
+	 *
+	 * @return Conflicting plugins.
+	 */
+	default List<Class<? extends Plugin>> getConflictingPlugins() {
+		return List.of();
+	}
+
+	/**
+	 * Get all dependencies of this plugin.
+	 *
+	 * @return All dependencies of this plugin.
+	 */
+	default List<Class<? extends Plugin>> getDependencies() {
+		return List.of();
+	}
+
+	/**
 	 * Called when the game ended
 	 *
 	 * @param result The result
