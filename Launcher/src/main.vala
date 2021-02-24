@@ -465,15 +465,15 @@ namespace Launcher {
 			case 'K':
 				this.box.active = 0;
 				this.box.active_id = "KB";
-				break;
+			break;
 			case 'M':
 				this.box.active = 0;
 				this.box.active_id = "MB";
-				break;
+			break;
 			case 'G':
 				this.box.active = 0;
 				this.box.active_id = "GB";
-				break;
+			break;
 			}
 			this.text.text = str.substring(0, str.length - 1);
 		}
