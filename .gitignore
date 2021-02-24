@@ -15,6 +15,7 @@
 .gradle
 .project
 .settings/
+.gradle/
 .idea/
 Conquer/.*
 Conquer/.classpath
@@ -72,3 +73,5 @@ docs/Documentation.out
 docs/Documentation.pdf
 docs/Documentation.toc
 docs/_minted-Documentation/
+gradlew
+gradlew.bat
