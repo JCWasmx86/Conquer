@@ -1,9 +1,8 @@
 package conquer.gui;
 
+import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import javax.swing.JTextField;
 
 /**
  * A HintTextField based on <a href=

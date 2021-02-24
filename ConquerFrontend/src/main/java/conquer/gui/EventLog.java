@@ -1,31 +1,15 @@
 package conquer.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.Timer;
-
 import conquer.data.ConquerInfo;
 import conquer.gui.utils.ImageResource;
 import conquer.messages.Message;
 import conquer.plugins.MessageListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
 
 /**
  * Shows all events of the game. Only one instance is available.
@@ -95,8 +79,8 @@ final class EventLog extends JFrame implements MessageListener {
 	private EventLog() {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.Y_AXIS));
-		javax.swing.JScrollPane contentPane = new javax.swing.JScrollPane(this.base, javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-			javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.timer = new Timer(17, a -> this.repaint());
@@ -159,7 +143,7 @@ final class EventLog extends JFrame implements MessageListener {
 		}
 		final var jl = new JLabel(message.getMessageText());
 		final var optional = message.getOptionalIconPath();
-		optional.ifPresent(s -> jl.setIcon(new conquer.gui.utils.ImageResource(s)));
+		optional.ifPresent(s -> jl.setIcon(new ImageResource(s)));
 		var c = jl.getForeground();
 		this.defaultColor = new Color(c.getRGB());
 		if (message.isPlayerInvolved()) {

@@ -168,10 +168,10 @@ public class Installer implements Runnable {
 				if (n == 2) {
 					this.installMusic();
 				}
-				final var props = new java.io.File(conquer.init.Installer.BASE_FILE, "game.properties"); //$NON-NLS-1$
+				final var props = new File(Installer.BASE_FILE, "game.properties"); //$NON-NLS-1$
 				if (!props.exists()) {
-					java.nio.file.Files.write(java.nio.file.Paths.get(props.toURI()), conquer.init.Installer.DEFAULT_PROPERTIES.getBytes(),
-						java.nio.file.StandardOpenOption.CREATE);
+					Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
+						StandardOpenOption.CREATE);
 				}
 			}
 		}

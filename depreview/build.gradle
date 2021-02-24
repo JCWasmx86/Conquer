@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 task buildExecutable(type: Exec) {
     commandLine "make"
 }

@@ -1,7 +1,11 @@
 package conquer.gui;
 
-import java.awt.Desktop;
-import java.awt.Point;
+import conquer.gui.utils.ImageResource;
+import conquer.gui.utils.LoopPlayer;
+
+import javax.swing.*;
+import javax.swing.event.HyperlinkEvent.EventType;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -9,17 +13,6 @@ import java.awt.event.WindowListener;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.event.HyperlinkEvent.EventType;
-
-import conquer.gui.utils.ImageResource;
-import conquer.gui.utils.LoopPlayer;
 
 /**
  * Shows credits and licensing information.

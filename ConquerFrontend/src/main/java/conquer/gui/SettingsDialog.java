@@ -1,11 +1,9 @@
 package conquer.gui;
 
-import java.util.ServiceLoader;
-
-import javax.swing.JFrame;
-import javax.swing.JTabbedPane;
-
 import conquer.frontend.spi.SettingMenuPlugin;
+
+import javax.swing.*;
+import java.util.ServiceLoader;
 
 final class SettingsDialog extends JFrame {
 	private static final long serialVersionUID = -2372114950563857591L;

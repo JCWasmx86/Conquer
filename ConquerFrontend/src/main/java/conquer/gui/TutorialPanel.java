@@ -1,14 +1,8 @@
 package conquer.gui;
 
-import java.awt.FlowLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 final class TutorialPanel extends JPanel {
 	private static final class ButtonClass extends JButton {

@@ -1,5 +1,8 @@
 package conquer.messages;
 
+import conquer.Messages;
+import conquer.data.IClan;
+
 /**
  * A message that will be sent when the clan was extincted. (=No cities left).
  */

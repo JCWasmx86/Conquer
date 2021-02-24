@@ -1,21 +1,15 @@
 package conquer.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import conquer.data.ConquerInfo;
 import conquer.data.Gift;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.data.Shared;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Enables the player to give gifts to other clans. It consists of several
@@ -57,7 +51,7 @@ final class GiftPanel extends JPanel {
 		ms.init();
 		this.add(ms);
 		this.box = new JComboBox<>(this.game.getClans().stream().filter(a -> !a.isPlayerClan() && !this.game.isDead(a))
-			.map(conquer.data.IClan::getName).toArray(String[]::new));
+			.map(IClan::getName).toArray(String[]::new));
 		final var button = new JButton(Messages.getString("GiftPanel.giveGift")); //$NON-NLS-1$
 		button.addActionListener(a -> {
 			final var gift = new Gift(this.sliders.stream().map(ResourceSlider::getValue).collect(Collectors.toList()),

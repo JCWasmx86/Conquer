@@ -1,6 +1,6 @@
 package conquer.gui;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /**
  * Small wrapper around a line

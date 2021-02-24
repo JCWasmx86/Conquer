@@ -1,12 +1,8 @@
 package conquer.gui;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.function.Consumer;
-
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
 /**
  * A panel with a textfield and a button. A button press clears the textfield

@@ -1,11 +1,8 @@
 package conquer.gui.utils;
 
-import java.awt.Component;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 /**
  * Represents any image.

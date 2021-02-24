@@ -1,8 +1,8 @@
 package conquer.frontend.spi;
 
-import javax.swing.JButton;
-
 import conquer.data.ConquerInfo;
+
+import javax.swing.*;
 
 /**
  * A button shown while playing, e.g. for opening a chat or something else.

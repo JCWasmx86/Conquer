@@ -404,7 +404,7 @@ public final class Shared {
 		if (!saves.exists()) {
 			return new String[0];
 		}
-		return java.util.Arrays.stream(saves.list()).toArray(String[]::new);
+		return Arrays.stream(saves.list()).toArray(String[]::new);
 	}
 
 	/**

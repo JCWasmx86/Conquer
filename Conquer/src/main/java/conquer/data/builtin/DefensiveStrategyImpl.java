@@ -11,6 +11,7 @@ import conquer.utils.Graph;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.function.DoubleConsumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -90,7 +91,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		final var totalCoins = clan.getCoins() * Math.random() * 0.33;
 		final var gift = new Gift(giftedResources, totalCoins);
 		final var clans = StreamUtils.getCitiesAsStream(this.graph).map(ICity::getClan).distinct()
-			.filter(a -> a != clan).sorted(java.util.Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
+			.filter(a -> a != clan).sorted(Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
 			.collect(Collectors.toList());
 		// Improve relationship, start from the one with the worst relationship.
 		for (final var otherClan : clans) {

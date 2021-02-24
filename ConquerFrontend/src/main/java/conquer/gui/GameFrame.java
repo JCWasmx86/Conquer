@@ -1,12 +1,16 @@
 package conquer.gui;
 
-import java.awt.BasicStroke;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Toolkit;
+import conquer.data.ConquerInfo;
+import conquer.data.ICity;
+import conquer.data.Shared;
+import conquer.data.StreamUtils;
+import conquer.frontend.spi.InGameButton;
+import conquer.frontend.spi.MusicProvider;
+import conquer.gui.utils.ImageResource;
+import conquer.gui.utils.LoopPlayer;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -21,32 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.function.Supplier;
-
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.WindowConstants;
-
-import conquer.data.ConquerInfo;
-import conquer.data.ICity;
-import conquer.data.Shared;
-import conquer.data.StreamUtils;
-import conquer.frontend.spi.InGameButton;
-import conquer.frontend.spi.MusicProvider;
-import conquer.gui.utils.ImageResource;
-import conquer.gui.utils.LoopPlayer;
 
 /**
  * This class is the class that shows the entire map with all other components.
@@ -209,7 +187,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			if (this.game.isPlayersTurn()) {
 				this.game.executeActions();
 			}
-			this.setTitle(this.game.getVersion() + " - " + conquer.gui.GameFrame.TITLE_PART + this.game.currentRound());
+			this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
 			nextRound.setEnabled(true);
 		}).start());
 		final var openMessages = new JButton(new ImageResource("messagebox.png")); //$NON-NLS-1$

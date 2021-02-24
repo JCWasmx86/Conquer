@@ -1,22 +1,14 @@
 package conquer.gui;
 
-import java.awt.event.ActionEvent;
-import java.util.function.DoubleConsumer;
-
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-
 import conquer.data.Gift;
 import conquer.data.IClan;
 import conquer.data.PlayerGiftCallback;
 import conquer.data.strategy.StrategyObject;
 import conquer.gui.utils.ImageResource;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.function.DoubleConsumer;
 
 /**
  * A hook to allow the player to receive gifts.

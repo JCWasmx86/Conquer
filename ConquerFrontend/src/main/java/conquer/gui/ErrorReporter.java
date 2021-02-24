@@ -1,5 +1,7 @@
 package conquer.gui;
 
+import conquer.data.Shared;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,8 +10,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
-
-import conquer.data.Shared;
 
 public class ErrorReporter {
 	// Returns the errorlog filename.
@@ -30,16 +30,16 @@ public class ErrorReporter {
 			System.getProperties().forEach((key, value) -> {
 				try {
 					bw.write(key + "=" + value + "\n");
-				} catch (final java.io.IOException e) {
-					conquer.data.Shared.LOGGER.exception(e);
+				} catch (final IOException e) {
+					Shared.LOGGER.exception(e);
 				}
 			});
 			bw.write("Environment variables\n");
 			System.getenv().forEach((key, value) -> {
 				try {
 					bw.write(key + "=" + value + "\n");
-				} catch (final java.io.IOException e) {
-					conquer.data.Shared.LOGGER.exception(e);
+				} catch (final IOException e) {
+					Shared.LOGGER.exception(e);
 				}
 			});
 			bw.write("Services\n\n");

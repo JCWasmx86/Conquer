@@ -1,11 +1,8 @@
 package conquer.gui;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-
 import conquer.data.ICity;
+
+import javax.swing.*;
 
 /**
  * Allows the player to recruit soldiers

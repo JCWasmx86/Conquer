@@ -331,13 +331,13 @@ public interface IClan {
 		// Copy pasted
 		var cnt = 0;
 		do {
-			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.DEFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
+		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -387,13 +387,13 @@ public interface IClan {
 	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		do {
-			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.DEFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
+		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -413,13 +413,13 @@ public interface IClan {
 	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		do {
-			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.OFFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
+		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
 		return cnt;
 	}
 
@@ -451,13 +451,13 @@ public interface IClan {
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
 		var cnt = 0;
 		do {
-			final var costs = this.upgradeCosts(conquer.data.SoldierUpgrade.BOTH, currLevel + cnt);
+			final var costs = this.upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-		} while ((cnt + currLevel) != conquer.data.Shared.MAX_LEVEL);
+		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
 		return cnt;
 	}
 

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,7 +110,7 @@ public final class GlobalContext {
 			throw new IllegalArgumentException("is==null");
 		}
 		final var list = this.readers.stream()
-			.sorted(java.util.Comparator.comparingInt(a -> a.getMagicNumber().length))
+			.sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
 			.collect(Collectors.toList());
 		if (list.isEmpty()) {
 			throw new UnsupportedOperationException("No reader found");

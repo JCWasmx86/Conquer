@@ -1,12 +1,5 @@
 package conquer.strategies;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
-
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -18,6 +11,14 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 import conquer.utils.Pair;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleConsumer;
+import java.util.stream.Collectors;
 
 public final class SortedStrategyImpl implements Strategy {
 	private static final double MAXIMUM_VARIANCE = 0.3;
@@ -73,7 +74,7 @@ public final class SortedStrategyImpl implements Strategy {
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
 		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
-				.sorted(java.util.Comparator.comparingLong(conquer.data.ICity::getNumberOfSoldiers))
+				.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
 				.collect(Collectors.toList());
 			own.forEach(ownCity -> {
 				final var pair = this.values.get(target);

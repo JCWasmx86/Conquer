@@ -16,7 +16,7 @@ class GraphTest {
 
 	@Test
 	void testNegativeSize() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new conquer.utils.Graph<>(-1));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Graph<>(-1));
 	}
 
 	@Test
@@ -112,12 +112,12 @@ class GraphTest {
 
 	@Test
 	void testAllConnectionsNegativeGraph() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new conquer.utils.Graph<Integer>(3).allConnections(-1));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Graph<Integer>(3).allConnections(-1));
 	}
 
 	@Test
 	void testAllConnectionsargTooBigGraph() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new conquer.utils.Graph<Integer>(3).allConnections(1));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Graph<Integer>(3).allConnections(1));
 
 	}
 

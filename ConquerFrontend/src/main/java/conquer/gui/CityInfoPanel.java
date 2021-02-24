@@ -1,21 +1,15 @@
 package conquer.gui;
 
-import java.awt.FlowLayout;
+import conquer.data.ICity;
+import conquer.data.Resource;
+
+import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JEditorPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.Timer;
-import javax.swing.text.DefaultCaret;
-
-import conquer.data.ICity;
-import conquer.data.Resource;
 
 /**
  * This panel shows information about a selected city. At the top it is showing
@@ -39,7 +33,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 */
 	CityInfoPanel(final ICity city) {
 		this.city = city;
-		javax.swing.Timer timer = new ExtendedTimer(17, this);
+		Timer timer = new ExtendedTimer(17, this);
 		timer.start();
 		this.resourceButtons = new ArrayList<>();
 	}

@@ -1,15 +1,13 @@
 package conquer.gui;
 
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import conquer.data.ConquerInfo;
 
 /**
  * One of the panels in the JTabbedPane of {@link GameFrame}. It allows to see
@@ -51,13 +49,13 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		final var clans = this.game.getClans();
-		for (conquer.data.IClan iClan : clans) {
+		for (IClan iClan : clans) {
 			if (iClan.isPlayerClan()) {
 				continue;
 			}
 			final var clan = iClan;
 			final var text = clan.getName();
-			final var clanLabel = new javax.swing.JLabel(text);
+			final var clanLabel = new JLabel(text);
 			clanLabel.setOpaque(true);
 			clanLabel.setForeground(clan.getColor());
 			clanLabel.setFont(clanLabel.getFont().deriveFont(22.0f));

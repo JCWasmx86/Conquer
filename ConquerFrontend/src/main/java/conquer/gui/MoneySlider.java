@@ -1,11 +1,8 @@
 package conquer.gui;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-
 import conquer.data.ConquerInfo;
+
+import javax.swing.*;
 
 /**
  * Shows a slider that determines the amount of coins to be send as a gift

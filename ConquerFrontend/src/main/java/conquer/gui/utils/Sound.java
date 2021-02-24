@@ -1,16 +1,15 @@
 package conquer.gui.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.net.URL;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Serializable;
+import java.net.URL;
 
 /**
  * A class wrapping the Sound API.

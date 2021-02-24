@@ -1,5 +1,8 @@
 package conquer.messages;
 
+import conquer.Messages;
+import conquer.data.ICity;
+
 /**
  * A message that is sent as soon as an attack occurs and at the end all
  * soldiers on both sides are dead.

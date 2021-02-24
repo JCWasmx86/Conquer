@@ -1,6 +1,6 @@
 package org.jel.tool;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

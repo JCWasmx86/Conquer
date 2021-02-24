@@ -1,5 +1,8 @@
 package conquer.messages;
 
+import conquer.Messages;
+import conquer.data.IClan;
+
 /**
  * A message that is sent as soon as the relationship between two clans is improved.
  */

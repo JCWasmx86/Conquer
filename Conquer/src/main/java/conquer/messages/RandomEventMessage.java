@@ -1,5 +1,8 @@
 package conquer.messages;
 
+import conquer.Messages;
+import conquer.data.ICity;
+
 /**
  * Sent when a random event occurs. {@code factorOfPeople},
  * {@code factorOfSoldiers} and {@code growthFactor} are the factors for

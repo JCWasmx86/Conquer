@@ -1,20 +1,16 @@
 package conquer.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.function.ToLongFunction;
-
-import javax.swing.BoxLayout;
-import javax.swing.JEditorPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.text.DefaultCaret;
-
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.data.StreamUtils;
+
+import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.function.ToLongFunction;
 
 /**
  * Shows information about the clan itself. This panel is divided into 4

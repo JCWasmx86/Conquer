@@ -30,6 +30,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -161,7 +162,7 @@ public final class GameSaver implements ConquerSaver {
 		for (final var file : files) {
 			ret.add(this.readClan(file, game));
 		}
-		return ret.stream().sorted(java.util.Comparator.comparingInt(conquer.data.IClan::getId)).collect(Collectors.toList());
+		return ret.stream().sorted(Comparator.comparingInt(IClan::getId)).collect(Collectors.toList());
 	}
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
