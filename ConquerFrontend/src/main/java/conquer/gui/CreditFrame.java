@@ -115,6 +115,8 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				}
 			} else if (a.getEventType() == EventType.ENTERED) {
 				this.setTitle(a.getURL().toString());
+			} else if (a.getEventType() == EventType.EXITED) {
+				this.setTitle("");
 			}
 		});
 		jep.setEditable(false);
