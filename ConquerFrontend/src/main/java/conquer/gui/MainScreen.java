@@ -1,17 +1,25 @@
 package conquer.gui;
 
-import conquer.data.Shared;
-import conquer.frontend.spi.GUIMenuPlugin;
-import conquer.gui.utils.LoopPlayer;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+import conquer.data.Shared;
+import conquer.frontend.spi.GUIMenuPlugin;
+import conquer.gui.utils.LoopPlayer;
 
 /**
  * The mainscreen that allows you to play, see the credits and the tutorial.

@@ -1,14 +1,17 @@
 package conquer.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import conquer.data.ConquerInfo;
 import conquer.data.GlobalContext;
 import conquer.data.strategy.StrategyProvider;
 import conquer.plugins.Plugin;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 final class PluginStrategySelectPanel extends JPanel {
 	private final transient GlobalContext context;

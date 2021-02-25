@@ -1,13 +1,15 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.IClan;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
 
 /**
  * One of the panels in the JTabbedPane of {@link GameFrame}. It allows to see

@@ -1,38 +1,38 @@
 plugins {
-    id "java"
-    id "application"
+	id "java"
+	id "application"
 }
 java {
-    modularity.inferModulePath = true
+	modularity.inferModulePath = true
 }
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 dependencies {
-    implementation project(":Conquer")
-    implementation project(":ConquerFrontendSPI")
-    implementation project(":music")
-    runtimeOnly project(":DefaultPlugins")
-    runtimeOnly files("${project.rootDir}/music_tmp")
+	implementation project(":Conquer")
+	implementation project(":ConquerFrontendSPI")
+	implementation project(":music")
+	runtimeOnly project(":DefaultPlugins")
+	runtimeOnly files("${project.rootDir}/music_tmp")
 }
 jar {
-    exclude "**/*.properties"
-    exclude "music"
-    exclude "images"
-    jar.baseName = "Conquer_frontend"
-    manifest {
-        attributes "Main-Class": "conquer.gui.Intro"
-    }
+	exclude "**/*.properties"
+	exclude "music"
+	exclude "images"
+	jar.baseName = "Conquer_frontend"
+	manifest {
+		attributes "Main-Class": "conquer.gui.Intro"
+	}
 }
 task conquerResources(type: Jar) {
-    copy {
-        from file("${project.rootDir}/auxiliary/jars")
-        include "*.jar"
-        into "build/libs/"
-    }
-    from sourceSets.main.output
-    exclude "**/*.class"
-    baseName = "Conquer_frontend_resources"
+	copy {
+		from file("${project.rootDir}/auxiliary/jars")
+		include "*.jar"
+		into "build/libs/"
+	}
+	from sourceSets.main.output
+	exclude "**/*.class"
+	baseName = "Conquer_frontend_resources"
 }
 mainClassName = "conquer.gui.Intro"
 conquerResources.dependsOn(":music:buildMusic")
@@ -40,11 +40,11 @@ conquerResources.mustRunAfter(":music:buildMusic")
 jar.dependsOn(conquerResources)
 
 run {
-    jvmArgs = ["--enable-preview"]
-    classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
-            "build/libs/jorbis.jar", "build/libs/mp3spi.jar",
-            "build/libs/vorbisspi.jar",
-            "${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
+	jvmArgs = ["--enable-preview"]
+	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
+			"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
+			"build/libs/vorbisspi.jar",
+			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
 run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources)

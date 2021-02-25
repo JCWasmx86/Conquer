@@ -1,6 +1,7 @@
 package conquer.gui;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 final class InGameTutorial extends JFrame {
 	private static final long serialVersionUID = -7560355564072744176L;

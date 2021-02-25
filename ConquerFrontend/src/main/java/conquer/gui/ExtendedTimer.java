@@ -1,9 +1,9 @@
 package conquer.gui;
 
-import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
 
 /**
  * This class wraps {@code javax.swing.Timer} and adds it to a list which can be

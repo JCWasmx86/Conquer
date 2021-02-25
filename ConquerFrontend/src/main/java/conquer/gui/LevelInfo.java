@@ -1,13 +1,9 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.GlobalContext;
-import conquer.data.InstalledScenario;
-import conquer.frontend.spi.ConfigurationPanelProvider;
-import conquer.gui.utils.ImageResource;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.HashMap;
@@ -16,6 +12,22 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.ListCellRenderer;
+
+import conquer.data.ConquerInfo;
+import conquer.data.GlobalContext;
+import conquer.data.InstalledScenario;
+import conquer.frontend.spi.ConfigurationPanelProvider;
+import conquer.gui.utils.ImageResource;
 
 /**
  * This class shows all clans in a scenario in a JList. Furthermore there is a

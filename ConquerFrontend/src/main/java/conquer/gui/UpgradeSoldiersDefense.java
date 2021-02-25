@@ -1,12 +1,17 @@
 package conquer.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
 import conquer.data.IClan;
 import conquer.data.SoldierUpgrade;
 import conquer.gui.utils.ImageResource;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Allows the player to upgrade the defense strength of the soldiers

@@ -1,13 +1,19 @@
 package conquer.gui;
 
-import conquer.data.Shared;
-
-import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import conquer.data.Shared;
 
 public class DefaultSettingsDialogPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
