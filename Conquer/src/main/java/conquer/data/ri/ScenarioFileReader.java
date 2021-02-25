@@ -1,6 +1,6 @@
 package conquer.data.ri;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;

@@ -1,6 +1,7 @@
 package conquer.data.ri;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
