@@ -182,7 +182,7 @@ public interface ICity extends Comparable<ICity> {
 	/**
 	 * Set the number of soldiers in the city.
 	 *
-	 * @param numberOfPeople The new number of soldiers. May not be negative, ,
+	 * @param numberOfSoldiers The new number of soldiers. May not be negative, ,
 	 *                       otherwise a {@link IllegalArgumentException} will be
 	 *                       thrown.
 	 */

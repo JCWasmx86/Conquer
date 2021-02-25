@@ -179,7 +179,7 @@ public interface IClan {
 	 * Set all resource stats. May only be called by the corresponding
 	 * {@code ConquerInfo}-object
 	 *
-	 * @param resources May not be {@code null} or have the wrong length, otherwise
+	 * @param resourceStats May not be {@code null} or have the wrong length, otherwise
 	 *                  an {@code IllegalArgumentException} shall be thrown.
 	 */
 	void setResourceStats(List<Double> resourceStats);

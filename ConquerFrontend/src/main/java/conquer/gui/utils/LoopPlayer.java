@@ -31,7 +31,7 @@ public final class LoopPlayer extends Thread implements Serializable {
 	/**
 	 * Add a new song
 	 *
-	 * @param name The sound to add
+	 * @param sound The sound to add
 	 *
 	 * @return {@code this}
 	 */

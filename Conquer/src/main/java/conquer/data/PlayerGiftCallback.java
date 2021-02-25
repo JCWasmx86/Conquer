@@ -17,7 +17,7 @@ public interface PlayerGiftCallback {
 	 * @param gift           The gift object
 	 * @param oldValue       The old relationship value.
 	 * @param newValue       Call the consumer with the new relationship value.
-	 * @param strategyObject A handle to a strategyobject, e.g. {@link Game}.
+	 * @param strategyObject A handle to a strategyobject.
 	 *
 	 * @return True if the gift has been accepted, false otherwise.
 	 */

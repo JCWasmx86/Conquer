@@ -420,7 +420,7 @@ public final class Shared {
 	}
 
 	/**
-	 * Replaced by {@link IClan#maxLevelsAddOffenseDefenseUpgrade(int)}
+	 * Replaced by {@link IClan#maxLevels(SoldierUpgrade, int, double)}
 	 *
 	 * @param level
 	 *
@@ -434,7 +434,8 @@ public final class Shared {
 	/**
 	 * Replaced by {@link IClan#maxLevelsAddResourcesUpgrade(int, double)}
 	 *
-	 * @param level
+	 * @param currLevel
+	 * @param coins
 	 *
 	 * @return
 	 */
@@ -446,7 +447,8 @@ public final class Shared {
 	/**
 	 * Replaced by {@link IClan#maxLevelsAddSoldiersUpgrade(int, double)}
 	 *
-	 * @param level
+	 * @param currLevel
+	 * @param coins
 	 *
 	 * @return
 	 */

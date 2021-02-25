@@ -27,7 +27,6 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	 * Create a new UpgradeSoldiersOffense
 	 *
 	 * @param clan For which clan to upgrade the soldiers
-	 * @param game A reference to the game.
 	 */
 	UpgradeSoldiersOffense(final IClan clan) {
 		this.clan = clan;
