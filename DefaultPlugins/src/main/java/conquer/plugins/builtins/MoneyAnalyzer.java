@@ -1,5 +1,13 @@
 package conquer.plugins.builtins;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Random;
+
 import conquer.data.EventList;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,14 +16,6 @@ import conquer.plugins.MoneyHook;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
 import conquer.utils.Graph;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Random;
 
 public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	private static final int MAX_ITERATIONS = 12000;

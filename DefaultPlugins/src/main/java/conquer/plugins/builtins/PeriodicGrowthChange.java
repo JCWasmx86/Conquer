@@ -1,14 +1,14 @@
 package conquer.plugins.builtins;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import conquer.data.ICity;
 import conquer.plugins.Context;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
 import conquer.utils.Graph;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public final class PeriodicGrowthChange implements Plugin {
 	private static final Random RANDOM = new Random(System.nanoTime());

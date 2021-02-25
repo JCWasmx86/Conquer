@@ -1,83 +1,83 @@
 plugins {
-    id "java"
+	id "java"
 }
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 dependencies {
-    compile project(":Conquer")
-    compile project(":ConquerFrontendSPI")
+	compile project(":Conquer")
+	compile project(":ConquerFrontendSPI")
 }
 jar {
-    include "conquer/plugins/builtins/ChangeCitiesMinds**"
-    include "conquer/plugins/builtins/ClanChangeMessage**"
-    include "conquer/plugins/builtins/changeCitiesMinds**"
-    exclude "services/**"
-    baseName = "ChangeCitiesMinds"
-    from("src/main/resources/services/ChangeCitiesMinds") {
-        include "conquer.plugins.Plugin"
-        into("META-INF/services")
-    }
+	include "conquer/plugins/builtins/ChangeCitiesMinds**"
+	include "conquer/plugins/builtins/ClanChangeMessage**"
+	include "conquer/plugins/builtins/changeCitiesMinds**"
+	exclude "services/**"
+	baseName = "ChangeCitiesMinds"
+	from("src/main/resources/services/ChangeCitiesMinds") {
+		include "conquer.plugins.Plugin"
+		into("META-INF/services")
+	}
 }
 task sortedStrategyJar(type: Jar) {
-    from sourceSets.main.output
-    exclude "conquer/plugins/**"
-    exclude "services/**"
-    baseName = "SortedStrategy"
-    from("src/main/resources/services/SortedStrategy") {
-        include "conquer.data.strategy.StrategyProvider"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	exclude "conquer/plugins/**"
+	exclude "services/**"
+	baseName = "SortedStrategy"
+	from("src/main/resources/services/SortedStrategy") {
+		include "conquer.data.strategy.StrategyProvider"
+		into("META-INF/services")
+	}
 }
 task defaultMusicJar(type: Jar) {
-    from sourceSets.main.output
-    include "conquer/plugins/builtins/DefaultMusic**"
-    baseName = "DefaultMusic"
-    from("src/main/resources/services/DefaultMusic") {
-        include "conquer.plugins.Plugin"
-        include "conquer.frontend.spi.MusicProvider"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	include "conquer/plugins/builtins/DefaultMusic**"
+	baseName = "DefaultMusic"
+	from("src/main/resources/services/DefaultMusic") {
+		include "conquer.plugins.Plugin"
+		include "conquer.frontend.spi.MusicProvider"
+		into("META-INF/services")
+	}
 }
 task increaseGrowthJar(type: Jar) {
-    from sourceSets.main.output
-    include "conquer/plugins/builtins/IncreaseGrowth**"
-    baseName = "IncreaseGrowth"
-    from("src/main/resources/services/IncreaseGrowth") {
-        include "conquer.plugins.Plugin"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	include "conquer/plugins/builtins/IncreaseGrowth**"
+	baseName = "IncreaseGrowth"
+	from("src/main/resources/services/IncreaseGrowth") {
+		include "conquer.plugins.Plugin"
+		into("META-INF/services")
+	}
 }
 task moneyAnalyzerJar(type: Jar) {
-    from sourceSets.main.output
-    include "conquer/plugins/builtins/MoneyAnalyzer**"
-    include "conquer/plugins/builtins/moneyAnalyzer**"
-    include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
-    baseName = "MoneyAnalyzer"
-    from("src/main/resources/services/MoneyAnalyzer") {
-        include "conquer.plugins.Plugin"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	include "conquer/plugins/builtins/MoneyAnalyzer**"
+	include "conquer/plugins/builtins/moneyAnalyzer**"
+	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
+	baseName = "MoneyAnalyzer"
+	from("src/main/resources/services/MoneyAnalyzer") {
+		include "conquer.plugins.Plugin"
+		into("META-INF/services")
+	}
 }
 task resourceAnalyzerJar(type: Jar) {
-    from sourceSets.main.output
-    include "conquer/plugins/builtins/ResourceAnalyze**"
-    include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
-    include "conquer/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
-    include "conquer/plugins/builtins/resourceAnalyze**"
-    baseName = "ResourceAnalyzer"
-    from("src/main/resources/services/ResourceAnalyzer") {
-        include "conquer.plugins.Plugin"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	include "conquer/plugins/builtins/ResourceAnalyze**"
+	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
+	include "conquer/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
+	include "conquer/plugins/builtins/resourceAnalyze**"
+	baseName = "ResourceAnalyzer"
+	from("src/main/resources/services/ResourceAnalyzer") {
+		include "conquer.plugins.Plugin"
+		into("META-INF/services")
+	}
 }
 task periodicGrowthChangeJar(type: Jar) {
-    from sourceSets.main.output
-    include "conquer/plugins/builtins/PeriodicGrowthChange**"
-    baseName = "PeriodicGrowthChange"
-    from("src/main/resources/services/PeriodicGrowthChange") {
-        include "conquer.plugins.Plugin"
-        into("META-INF/services")
-    }
+	from sourceSets.main.output
+	include "conquer/plugins/builtins/PeriodicGrowthChange**"
+	baseName = "PeriodicGrowthChange"
+	from("src/main/resources/services/PeriodicGrowthChange") {
+		include "conquer.plugins.Plugin"
+		into("META-INF/services")
+	}
 }
 jar.dependsOn(sortedStrategyJar, defaultMusicJar, increaseGrowthJar, moneyAnalyzerJar, resourceAnalyzerJar, periodicGrowthChangeJar)

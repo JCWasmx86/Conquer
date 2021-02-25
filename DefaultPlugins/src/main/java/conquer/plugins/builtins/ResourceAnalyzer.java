@@ -1,14 +1,5 @@
 package conquer.plugins.builtins;
 
-import conquer.data.EventList;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.plugins.Context;
-import conquer.plugins.Plugin;
-import conquer.plugins.PluginInterface;
-import conquer.plugins.ResourceHook;
-import conquer.utils.Graph;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -17,6 +8,15 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import conquer.data.EventList;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.plugins.Context;
+import conquer.plugins.Plugin;
+import conquer.plugins.PluginInterface;
+import conquer.plugins.ResourceHook;
+import conquer.utils.Graph;
 
 public final class ResourceAnalyzer implements Plugin, ResourceHook {
 

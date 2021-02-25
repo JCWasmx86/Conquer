@@ -1,10 +1,10 @@
 package conquer.plugins.builtins;
 
+import java.text.MessageFormat;
+
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.messages.Message;
-
-import java.text.MessageFormat;
 
 public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCiviliansDied, ICity city, IClan clan)
 	implements Message {

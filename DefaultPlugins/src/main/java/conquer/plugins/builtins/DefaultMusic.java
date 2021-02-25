@@ -1,16 +1,16 @@
 package conquer.plugins.builtins;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import conquer.data.ICity;
 import conquer.frontend.spi.MusicProvider;
 import conquer.plugins.Context;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
 import conquer.utils.Graph;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class DefaultMusic implements Plugin, MusicProvider {
 

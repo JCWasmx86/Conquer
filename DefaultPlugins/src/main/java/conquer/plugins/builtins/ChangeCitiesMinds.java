@@ -1,5 +1,8 @@
 package conquer.plugins.builtins;
 
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Shared;
@@ -7,9 +10,6 @@ import conquer.data.StreamUtils;
 import conquer.plugins.Context;
 import conquer.plugins.Plugin;
 import conquer.utils.Graph;
-
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public final class ChangeCitiesMinds implements Plugin {
 	private static final double INSTANT_CLAN_CHANGE = 0.05;
