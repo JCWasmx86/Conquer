@@ -1,13 +1,13 @@
 package conquer.data;
 
+import java.awt.*;
+import java.util.List;
+import java.util.function.Consumer;
+
 import conquer.data.strategy.StrategyObject;
 import conquer.data.strategy.StrategyProvider;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
-
-import java.awt.*;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * This interface is the interface to the entire engine. It provides everything

@@ -1,8 +1,5 @@
 package conquer.init;
 
-import conquer.Messages;
-import conquer.data.Shared;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,6 +13,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import conquer.Messages;
+import conquer.data.Shared;
 
 /**
  * Automatically restores missing files, but ignores all other files. It may be

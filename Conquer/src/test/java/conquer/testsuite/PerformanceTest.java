@@ -1,13 +1,13 @@
 package conquer.testsuite;
 
-import conquer.data.Shared;
-import conquer.data.XMLReader;
-import conquer.init.Initializer;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import conquer.data.Shared;
+import conquer.data.XMLReader;
+import conquer.init.Initializer;
 
 public final class PerformanceTest {
 	public static void main(final String[] args) {

@@ -1,8 +1,8 @@
 package conquer.data.strategy;
 
-import conquer.data.Version;
-
 import java.util.List;
+
+import conquer.data.Version;
 
 /**
  * This is a SPI interface for providing a new Strategy.

@@ -1,5 +1,8 @@
 package conquer.testsuite;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,9 +11,6 @@ import conquer.data.Shared;
 import conquer.data.StreamUtils;
 import conquer.data.XMLReader;
 import conquer.utils.Graph;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This class saves and restores Game-objects and compares them.

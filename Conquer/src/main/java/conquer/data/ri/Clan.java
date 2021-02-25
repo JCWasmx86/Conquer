@@ -1,5 +1,8 @@
 package conquer.data.ri;
 
+import java.awt.*;
+import java.util.List;
+
 import conquer.data.ConquerInfo;
 import conquer.data.IClan;
 import conquer.data.Resource;
@@ -9,9 +12,6 @@ import conquer.data.Version;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
-
-import java.awt.*;
-import java.util.List;
 
 /**
  * A clan represents a group of cities.

@@ -1,15 +1,5 @@
 package conquer.data.ri;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerInfoReader;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.InstalledScenario;
-import conquer.data.Resource;
-import conquer.data.Shared;
-import conquer.utils.Graph;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -20,6 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerInfoReader;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.InstalledScenario;
+import conquer.data.Resource;
+import conquer.data.Shared;
+import conquer.utils.Graph;
 
 /**
  * The class that builds a Game from a scenariofile.

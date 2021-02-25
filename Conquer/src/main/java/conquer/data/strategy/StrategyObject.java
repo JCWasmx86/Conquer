@@ -1,13 +1,13 @@
 package conquer.data.strategy;
 
+import java.util.stream.Stream;
+
 import conquer.data.ConquerInfo;
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.utils.Graph;
-
-import java.util.stream.Stream;
 
 /**
  * An interface providing everything that is needed for strategies.

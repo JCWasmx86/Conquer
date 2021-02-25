@@ -1,17 +1,5 @@
 package conquer.data.ri;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerSaver;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.Shared;
-import conquer.data.StreamUtils;
-import conquer.data.strategy.Strategy;
-import conquer.plugins.Plugin;
-import conquer.utils.Graph;
-import conquer.utils.Triple;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -33,6 +21,18 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerSaver;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Shared;
+import conquer.data.StreamUtils;
+import conquer.data.strategy.Strategy;
+import conquer.plugins.Plugin;
+import conquer.utils.Graph;
+import conquer.utils.Triple;
 
 public final class GameSaver implements ConquerSaver {
 	private final String name;

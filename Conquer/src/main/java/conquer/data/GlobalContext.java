@@ -1,8 +1,5 @@
 package conquer.data;
 
-import conquer.data.strategy.StrategyProvider;
-import conquer.plugins.Plugin;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +9,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import conquer.data.strategy.StrategyProvider;
+import conquer.plugins.Plugin;
 
 /**
  * Describes a whole context. A context is defined by the available scenarios,

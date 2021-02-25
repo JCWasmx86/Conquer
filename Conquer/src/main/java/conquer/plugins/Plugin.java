@@ -1,15 +1,15 @@
 package conquer.plugins;
 
-import conquer.data.ICity;
-import conquer.data.Result;
-import conquer.data.Version;
-import conquer.utils.Graph;
-
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+
+import conquer.data.ICity;
+import conquer.data.Result;
+import conquer.data.Version;
+import conquer.utils.Graph;
 
 /**
  * The interface every plugin has to implement.

@@ -1,8 +1,8 @@
 package conquer.data;
 
-import conquer.data.strategy.StrategyObject;
-
 import java.util.function.DoubleConsumer;
+
+import conquer.data.strategy.StrategyObject;
 
 /**
  * A callback that is executed as soon as the player gets a gift.

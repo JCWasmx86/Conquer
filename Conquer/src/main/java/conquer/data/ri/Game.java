@@ -1,5 +1,20 @@
 package conquer.data.ri;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.DoubleConsumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import conquer.data.AttackResult;
 import conquer.data.ConquerInfo;
 import conquer.data.ConquerSaver;
@@ -38,21 +53,6 @@ import conquer.plugins.Plugin;
 import conquer.plugins.RecruitHook;
 import conquer.plugins.ResourceHook;
 import conquer.utils.Graph;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.function.Consumer;
-import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 final class Game implements ConquerInfo {
 	private static final double GROWTH_REDUCE_FACTOR = 0.95;

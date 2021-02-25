@@ -1,13 +1,13 @@
 package conquer.data.builtin;
 
-import conquer.data.Shared;
-import conquer.data.strategy.StrategyData;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Random;
+
+import conquer.data.Shared;
+import conquer.data.strategy.StrategyData;
 
 public final class DefensiveStrategyData implements StrategyData {
 	private int counter;

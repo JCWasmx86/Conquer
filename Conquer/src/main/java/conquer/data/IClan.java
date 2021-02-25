@@ -1,12 +1,12 @@
 package conquer.data;
 
+import java.awt.*;
+import java.util.List;
+
 import conquer.InternalUseOnly;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
-
-import java.awt.*;
-import java.util.List;
 
 public interface IClan {
 

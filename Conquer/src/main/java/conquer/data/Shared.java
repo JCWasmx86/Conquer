@@ -1,8 +1,5 @@
 package conquer.data;
 
-import conquer.data.ri.ScenarioFileReader;
-import conquer.utils.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
+
+import conquer.data.ri.ScenarioFileReader;
+import conquer.utils.Logger;
 
 /**
  * A class with some shared utility methods.

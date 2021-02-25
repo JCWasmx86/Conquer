@@ -1,10 +1,10 @@
 package conquer.data;
 
-import conquer.messages.Message;
-import conquer.plugins.MessageListener;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import conquer.messages.Message;
+import conquer.plugins.MessageListener;
 
 /**
  * A list that allows adding listeners that will be called as soon as an element

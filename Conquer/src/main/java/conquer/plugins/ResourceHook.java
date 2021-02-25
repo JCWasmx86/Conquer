@@ -1,9 +1,9 @@
 package conquer.plugins;
 
+import java.util.List;
+
 import conquer.data.ICity;
 import conquer.data.IClan;
-
-import java.util.List;
 
 /**
  * Called after resources were produced in a city.

@@ -1,15 +1,15 @@
 package conquer.data.ri;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.data.Shared;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 class City implements ICity {
 	private static final int MAX_VARIANCE = 101;

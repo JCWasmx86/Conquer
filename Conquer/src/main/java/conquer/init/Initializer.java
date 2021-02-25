@@ -1,7 +1,5 @@
 package conquer.init;
 
-import conquer.data.Shared;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +7,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ServiceLoader;
 import java.util.function.Consumer;
+
+import conquer.data.Shared;
 
 /**
  * Loads the properties from .conquer/game.properties

@@ -1,12 +1,12 @@
 package conquer.data;
 
-import conquer.data.strategy.StrategyProvider;
-import conquer.plugins.Plugin;
-
 import java.util.ArrayList;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
+
+import conquer.data.strategy.StrategyProvider;
+import conquer.plugins.Plugin;
 
 /**
  * A context builder that uses SPI to discover plugins, strategies, readers and

@@ -1,13 +1,13 @@
 package conquer.data.strategy;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.function.DoubleConsumer;
+
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.utils.Graph;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.function.DoubleConsumer;
 
 /**
  * A strategy are the instructions for each clan. In every round

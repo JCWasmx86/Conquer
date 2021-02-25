@@ -1,5 +1,12 @@
 package conquer.data.builtin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.DoubleConsumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,13 +15,6 @@ import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.function.DoubleConsumer;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public final class DefensiveStrategyImpl implements Strategy {
 	private static final int MAX_ITERATIONS = 100;
