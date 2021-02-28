@@ -217,7 +217,7 @@ final class Game implements ConquerInfo {
 		this.checkExtinction(result, destinationClan);
 	}
 
-	private boolean bad(final double d) {
+	private boolean isBad(final double d) {
 		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
 	}
 
@@ -843,7 +843,7 @@ final class Game implements ConquerInfo {
 			if (city == null) {
 				throw new InternalError("null value in city graph!");
 			}
-			if (this.bad(city.getBonus())) {
+			if (this.isBad(city.getBonus())) {
 				throw new InternalError(city.getName() + " has a bonus lower equals zero!");
 			}
 			if (city.getClan() == null) {
@@ -852,10 +852,10 @@ final class Game implements ConquerInfo {
 			if (city.getClanId() < 0) {
 				throw new InternalError(city.getName() + " has clanId < 0");
 			}
-			if (this.bad(city.getDefense())) {
+			if (this.isBad(city.getDefense())) {
 				throw new InternalError(city.getName() + " has defense < 0 or is NaN or infinite!");
 			}
-			if (this.bad(city.getGrowth())) {
+			if (this.isBad(city.getGrowth())) {
 				throw new InternalError(city.getName() + " has a negative growth");
 			}
 			if (city.getImage() == null) {
@@ -889,7 +889,7 @@ final class Game implements ConquerInfo {
 			if (clan == null) {
 				throw new InternalError("null value in clans");
 			}
-			if (this.bad(clan.getCoins())) {
+			if (this.isBad(clan.getCoins())) {
 				throw new InternalError(clan.getName() + " has a bad number of coins: " + clan.getCoins());
 			}
 			if (clan.getId() < 0) {
@@ -935,7 +935,7 @@ final class Game implements ConquerInfo {
 		productions.forEach(a -> {
 			if (a == null) {
 				throw new InternalError(city.getName() + " has null value in productions");
-			} else if (this.bad(a)) {
+			} else if (this.isBad(a)) {
 				throw new InternalError(city.getName() + " has a bad value in productions: " + a);
 			}
 		});
@@ -946,7 +946,7 @@ final class Game implements ConquerInfo {
 			if (value == null) {
 				throw new InternalError(clan.getName() + " has a null value in resources");
 			}
-			if (this.bad(value)) {
+			if (this.isBad(value)) {
 				throw new InternalError(clan.getName() + "has a bad value in resources: " + value);
 			}
 		});
