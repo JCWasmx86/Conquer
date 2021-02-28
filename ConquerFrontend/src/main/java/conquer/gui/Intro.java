@@ -53,7 +53,7 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 
 	private final Sound sound;
 	private boolean needed = true;
-	private final Timer timer = new Timer(17, this);
+	private final Timer timer = new Timer(Utils.getRefreshRate(), this);
 
 	private final Random r = new Random(System.nanoTime());
 

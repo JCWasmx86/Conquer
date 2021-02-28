@@ -98,7 +98,7 @@ final class EventLog extends JFrame implements MessageListener {
 			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.getVerticalScrollBar().setUnitIncrement(16);
-		this.timer = new Timer(17, a -> this.repaint());
+		this.timer = new Timer(Utils.getRefreshRate(), a -> this.repaint());
 		this.timer.start();
 		this.add(contentPane);
 		final var menubar = new JMenuBar();

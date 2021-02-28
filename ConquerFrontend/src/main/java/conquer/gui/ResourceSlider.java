@@ -53,6 +53,6 @@ final class ResourceSlider extends JPanel {
 		this.slider.addChangeListener(a -> textfield.setText(this.getText()));
 		this.add(this.slider);
 		this.add(textfield);
-		new ExtendedTimer(17, a -> textfield.setText(this.getText())).start();
+		new ExtendedTimer(Utils.getRefreshRate(), a -> textfield.setText(this.getText())).start();
 	}
 }

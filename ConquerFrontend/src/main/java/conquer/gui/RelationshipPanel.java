@@ -66,7 +66,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 		final var giftPanel = new GiftPanel(this.game);
 		giftPanel.init();
 		this.add(giftPanel);
-		final var timer = new ExtendedTimer(17, this);
+		final var timer = new ExtendedTimer(Utils.getRefreshRate(), this);
 		timer.start();
 	}
 }

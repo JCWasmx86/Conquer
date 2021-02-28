@@ -40,7 +40,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		this.upgradeMax = new JButton(new ImageResource("max.png")); //$NON-NLS-1$
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
-		Timer timer = new ExtendedTimer(17, this);
+		Timer timer = new ExtendedTimer(Utils.getRefreshRate(), this);
 		timer.start();
 	}
 

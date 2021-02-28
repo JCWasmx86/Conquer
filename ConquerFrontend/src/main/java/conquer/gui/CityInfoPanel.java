@@ -38,7 +38,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 */
 	CityInfoPanel(final ICity city) {
 		this.city = city;
-		Timer timer = new ExtendedTimer(17, this);
+		Timer timer = new ExtendedTimer(Utils.getRefreshRate(), this);
 		timer.start();
 		this.resourceButtons = new ArrayList<>();
 	}

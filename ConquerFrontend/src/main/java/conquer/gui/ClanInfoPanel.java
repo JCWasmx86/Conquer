@@ -98,7 +98,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var jsp = new JScrollPane(jps);
 		jsp.setIgnoreRepaint(true);
 		this.add(jsp);
-		final var timer = new ExtendedTimer(17, this);
+		final var timer = new ExtendedTimer(Utils.getRefreshRate(), this);
 		timer.start();
 	}
 
