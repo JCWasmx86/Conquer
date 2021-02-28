@@ -1,11 +1,11 @@
 task buildExecutable(type: Exec) {
-    commandLine "make"
+	commandLine "make"
 }
 
 clean {
-    delete "depreview"
-    delete "depreview.exe"
-    exec {
-        commandLine "make", "clean"
-    }
+	delete "depreview"
+	delete "depreview.exe"
+	exec {
+		commandLine "make", "clean"
+	}
 }

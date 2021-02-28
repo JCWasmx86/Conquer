@@ -32,12 +32,14 @@ public interface SettingMenuPlugin {
 
 	/**
 	 * Save the state of the settings in the properties
+	 *
 	 * @param properties Storage for your settings
 	 */
 	void save(Properties properties);
 
 	/**
 	 * Restore the state of the settings from the properties.
+	 *
 	 * @param properties State of properties.
 	 */
 	void restore(Properties properties);

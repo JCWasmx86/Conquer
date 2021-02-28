@@ -180,7 +180,7 @@ public interface IClan {
 	 * {@code ConquerInfo}-object
 	 *
 	 * @param resourceStats May not be {@code null} or have the wrong length, otherwise
-	 *                  an {@code IllegalArgumentException} shall be thrown.
+	 *                      an {@code IllegalArgumentException} shall be thrown.
 	 */
 	void setResourceStats(List<Double> resourceStats);
 
