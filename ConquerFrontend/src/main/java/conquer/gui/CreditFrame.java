@@ -42,7 +42,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 	}
 
 	private String generateHtml() {
-		String sb = "<html>" + "<h3>Used libraries</h3><ul>" +
+		return "<html>" + "<h3>Used libraries</h3><ul>" +
 			"<li><a href=\"https://wiki.gnome.org/Projects/Vala\">Vala (GNU Lesser General Public License v2.1)</a></li>" +
 			"<li><a href=\"https://www.gtk.org/\">GTK (GNU Lesser General Public License v2)</a></li>" +
 			"<li><a href=\"https://libarchive.org/\">Libarchive (New BSD License)</a></li>" +
@@ -70,7 +70,6 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 			"The names \"Belenos\", \"Etiona\" and \"Slaine\" are from <i><a href=\"https://trisquel.info/en\">Trisquel Linux</a></i>.<br>" +
 			"The name \"Freedo\" is from the <i><a href=\"https://directory.fsf.org/wiki/Linux-libre\">Linux-libre project</a></i><br>" +
 			"</html>";
-		return sb;
 	}
 
 	/**

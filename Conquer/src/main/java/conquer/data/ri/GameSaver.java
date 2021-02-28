@@ -273,10 +273,9 @@ public final class GameSaver implements ConquerSaver {
 
 	@Override
 	public void save(final ConquerInfo info) throws Exception {
-		if (!(info instanceof Game)) {
+		if (!(info instanceof conquer.data.ri.Game game)) {
 			throw new UnsupportedOperationException("Can't save instanceof " + info.getClass().getCanonicalName());
 		}
-		final var game = (Game) info;
 		final var saveDirectory = new File(Shared.SAVE_DIRECTORY, this.name);
 		try {
 			Shared.deleteDirectory(saveDirectory);

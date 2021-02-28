@@ -44,7 +44,7 @@ installed plugins and strategies).
 \begin{minted}{java}
 Initializer.INSTANCE().initialize(null);
 \end{minted}
-This line initializes the engine. It may for example update the system properties with properties from a file. \texttt{null} can be a \texttt{Consumer<Exception>} that will be called if an exception 
+This line initializes the engine. It may for example update the system properties with properties from a file. \texttt{null} can be a \texttt{Consumer<Exception>} that will be called if an exception
 occurs.
 \begin{minted}{java}
 ConquerInfo conquerInstance = ctx.loadInfo(scenario);
@@ -74,9 +74,9 @@ If you want to write an own implementation for the engine of Conquer, you just h
 A plugin has a lifecycle consisting of four parts:
 \begin{itemize}
 	\item \textbf{Instantiation} Every plugin should have a default constructor (No arguments). It is instantiated with reflection. If you want to do something only one time, write it into a static initializer. \textbf{Will only be called once while the JVM is running!}
-	\item \textbf{Initialization} In this part, \texttt{init(PluginInterface)} will be called. In this method it is allowed to register callback functions. 
+	\item \textbf{Initialization} In this part, \texttt{init(PluginInterface)} will be called. In this method it is allowed to register callback functions.
 	\item \textbf{Round} Every round, the method \texttt{handle(Graph<City>,Context)} will be called. It is undefined, when it is invoked (Before anything else or at the end of the round).
-	\item \textbf{Exit} In this part, \texttt{exit(Result)} will be called. Use this method for cleanup (Closing file descriptors, streams, write data,...).
+	\item \textbf{Exit} In this part, \texttt{exit(Result)} will be called. Use this method for cleanup (Closing file descriptors, streams, write data,\ldots).
 	
 \end{itemize}
 \subsubsection{Callbacks}
@@ -134,11 +134,11 @@ Messages can be seen like an event. You can add a \texttt{MessageListener} and g
 \begin{minted}{java}
 String getMessageText();
 \end{minted}
-This should return a (preferably localized) string with the formatted text. This text may be used for showing it in e.g. an event log.
+This should return a (preferably localized) string with the formatted text. This text may be used for showing it in e.g.\ an event log.
 \begin{minted}{java}
 boolean isBadForPlayer();
 \end{minted}
-Only used for showing, e.g. a bad message for the player is in red, while a good one is in green.
+Only used for showing, e.g.\ a bad message for the player is in red, while a good one is in green.
 \begin{minted}{java}
 boolean isPlayerInvolved();
 \end{minted}

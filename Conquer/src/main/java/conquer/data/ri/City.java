@@ -104,10 +104,9 @@ class City implements ICity {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof City)) {
+		if (!(obj instanceof conquer.data.ri.City other)) {
 			return false;
 		}
-		final var other = (City) obj;
 		return other.name.equals(this.name) && (other.x == this.x) && (other.y == this.y);
 	}
 

@@ -55,11 +55,10 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 			if (iClan.isPlayerClan()) {
 				continue;
 			}
-			final var clan = iClan;
-			final var text = clan.getName();
+			final var text = iClan.getName();
 			final var clanLabel = new JLabel(text);
 			clanLabel.setOpaque(true);
-			clanLabel.setForeground(clan.getColor());
+			clanLabel.setForeground(iClan.getColor());
 			clanLabel.setFont(clanLabel.getFont().deriveFont(22.0f));
 			this.add(clanLabel);
 			this.labels.add(clanLabel);

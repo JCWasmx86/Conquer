@@ -1,4 +1,4 @@
-ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include" -X -D__FILE__=\"redactedForPrivacy\" -X -Wno-builtin-macro-redefined
+ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include" -X -D__FILE__=\"redactedForPrivacy\" -X -Wno-builtin-macro-redefined -X -flto
 ifeq ($(OS),Windows_NT)
 	OS_TYPE = windows
 	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" -X -mwindows

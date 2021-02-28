@@ -80,11 +80,10 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof Plugin)) {
+				if (!(rawObject instanceof conquer.plugins.Plugin plugin)) {
 					Shared.LOGGER.error("Couldn't load " + clazz.getName() + " as it doesn't implement Plugin!");
 					continue;
 				}
-				final var plugin = (Plugin) rawObject;
 				ret.add(plugin);
 				Shared.LOGGER.message("Loaded plugin: " + plugin.getName());
 			} catch (final Exception e) {
@@ -103,12 +102,11 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof ConquerInfoReaderFactory)) {
+				if (!(rawObject instanceof conquer.data.ConquerInfoReaderFactory plugin)) {
 					Shared.LOGGER.error(
 						"Couldn't load " + clazz.getName() + " as it doesn't implement ConquerInfoReaderFactory!");
 					continue;
 				}
-				final var plugin = (ConquerInfoReaderFactory) rawObject;
 				ret.add(plugin);
 				Shared.LOGGER.message("Loaded reader: " + s);
 			} catch (final Exception e) {
@@ -127,12 +125,11 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof StrategyProvider)) {
+				if (!(rawObject instanceof conquer.data.strategy.StrategyProvider strategy)) {
 					Shared.LOGGER
 						.error("Couldn't load " + clazz.getName() + " as it doesn't implement StrategyProvider!");
 					continue;
 				}
-				final var strategy = (StrategyProvider) rawObject;
 				ret.add(strategy);
 				Shared.LOGGER.message("Loaded StrategyProvider: " + strategy.getName());
 			} catch (final Exception e) {
