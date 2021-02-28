@@ -3,6 +3,6 @@ Encoding=UTF-8
 Version=1.5
 Terminal=false
 Name=Conquer
-GenericName=Roundbased strategy game
+GenericName=Round-based strategy game
 Exec=/usr/bin/conquer_launcher
 Icon=application-default-icon

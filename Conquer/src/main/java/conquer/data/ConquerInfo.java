@@ -180,7 +180,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	boolean isPlayersTurn();
 
 	/**
-	 * Calculates the maximum number of soliders a clan could recruit.
+	 * Calculates the maximum number of soldiers a clan could recruit.
 	 *
 	 * @param clan  The clan. May not be {@code null}, otherwise an
 	 *              {@link IllegalArgumentException} shall be thrown.

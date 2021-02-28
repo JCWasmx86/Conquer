@@ -36,7 +36,7 @@ Until Java 17, the use of preview features is allowed (`--enable-preview`), afte
 features should be used.
 
 Add as many testcases as needed, if you add a new method. Write Javadoc for every new public class/method/constant.
-Always qualify field- and method accesses with `this`:
+Always qualify a field-access or method-access with `this`:
 
 ```
 public class Foo {
