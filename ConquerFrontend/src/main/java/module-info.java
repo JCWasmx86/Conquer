@@ -1,11 +1,11 @@
 module conquer.frontend {
-	requires java.desktop;
-	requires conquer;
-	requires conquer.frontend.spi;
+    requires java.desktop;
+    requires conquer;
+    requires conquer.frontend.spi;
 
-	uses conquer.frontend.spi.InGameButton;
-	uses conquer.frontend.spi.GUIMenuPlugin;
-	uses conquer.frontend.spi.SettingMenuPlugin;
-	uses conquer.frontend.spi.ConfigurationPanelProvider;
-	uses conquer.frontend.spi.MusicProvider;
+    uses conquer.frontend.spi.InGameButton;
+    uses conquer.frontend.spi.GUIMenuPlugin;
+    uses conquer.frontend.spi.SettingMenuPlugin;
+    uses conquer.frontend.spi.ConfigurationPanelProvider;
+    uses conquer.frontend.spi.MusicProvider;
 }

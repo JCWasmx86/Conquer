@@ -1,6 +1,6 @@
 module conquer.frontend.spi {
-	requires transitive java.desktop;
-	requires transitive conquer;
+    requires transitive java.desktop;
+    requires transitive conquer;
 
-	exports conquer.frontend.spi;
+    exports conquer.frontend.spi;
 }
