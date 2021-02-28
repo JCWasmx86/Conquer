@@ -80,7 +80,7 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof conquer.plugins.Plugin plugin)) {
+				if (!(rawObject instanceof Plugin plugin)) {
 					Shared.LOGGER.error("Couldn't load " + clazz.getName() + " as it doesn't implement Plugin!");
 					continue;
 				}
@@ -102,7 +102,7 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof conquer.data.ConquerInfoReaderFactory plugin)) {
+				if (!(rawObject instanceof ConquerInfoReaderFactory plugin)) {
 					Shared.LOGGER.error(
 						"Couldn't load " + clazz.getName() + " as it doesn't implement ConquerInfoReaderFactory!");
 					continue;
@@ -125,7 +125,7 @@ public final class XMLReader {
 			try {
 				final var clazz = this.checkedLoading(s);
 				final var rawObject = clazz.getConstructor().newInstance();
-				if (!(rawObject instanceof conquer.data.strategy.StrategyProvider strategy)) {
+				if (!(rawObject instanceof StrategyProvider strategy)) {
 					Shared.LOGGER
 						.error("Couldn't load " + clazz.getName() + " as it doesn't implement StrategyProvider!");
 					continue;
