@@ -83,15 +83,15 @@ A plugin has a lifecycle consisting of four parts:
 \paragraph{\texttt{AttackHook}s} are called when an attack is executed. The interface has two methods: \texttt{before(City, City, long)} and \texttt{after(City, City, long, AttackResult)}. The first one will
 be called as soon as the number of soldiers are determined. The latter one after the attack was executed, clan changes were made and soldiers killed. It contains the result as \texttt{AttackResult}.
 \paragraph{\texttt{MessageListener}s} are called as soon as a message was added to or removed from the EventList. It allows you to react to a huge number of different events like changed relationships, random events and anything else.
-\paragraph{\texttt{MoneyHook}s} will be called after every city generated the coins and all cities did generated them.
+\paragraph{\texttt{MoneyHook}s} will be called after every city generated the coins and all cities did generate them.
 \paragraph{\texttt{MoveHook}s} are executed when soldiers are moved. (Between cities of the same clan).  
 \paragraph{\texttt{RecruitHook}s} allow you to get notified when soldiers are recruited.
 \paragraph{\texttt{ResourceHook}s} are executed for each city after resources were produced.\newline
 
-If you combine this callbacks, you are able to access the state of the game nearly every time it changes.
+If you combine these callbacks, you are able to access the state of the game nearly every time it changes.
 \subsection{Strategy API}
 \subsubsection{\texttt{StrategyProvider}}
-Only an instance of \texttt{StrategyProvider} is instantiated initially. It must have a default constructor, otherwise it instantiation may fail. \texttt{StrategyProvider} has two important methods:
+Only an instance of \texttt{StrategyProvider} is instantiated initially. It must have a default constructor, otherwise its instantiation may fail. \texttt{StrategyProvider} has two important methods:
 \begin{minted}{java}
 Strategy buildStrategy();
 \end{minted}
@@ -99,7 +99,7 @@ This method returns a new \texttt{Strategy} object that will be used by a clan. 
 \begin{minted}{java}
 byte getId();
 \end{minted}
-This returns an unique, non-negative identifier for this strategy. If two StrategyProviders return the same identifier, the used strategy is undefined.
+This returns a unique, non-negative identifier for this strategy. If two StrategyProviders return the same identifier, the used strategy is undefined.
 \subsubsection{\texttt{Strategy}}
 \texttt{Strategy} has three important methods:
 \begin{minted}{java}
@@ -142,21 +142,21 @@ Only used for showing, e.g.\ a bad message for the player is in red, while a goo
 \begin{minted}{java}
 boolean isPlayerInvolved();
 \end{minted}
-Allows to sort out the unrelated und for the player useless news.
+Allows sorting out the unrelated und for the player useless news.
 \begin{minted}{java}
 boolean shouldBeShownToThePlayer();
 \end{minted}
-Allows to sort out messages that are either debug messages or information that would give the player an unfair advantage.
+Allows sorting out messages that are either debug messages or information that would give the player an unfair advantage.
 \newpage
 
 
 \subsection{Extending}
 \subsubsection{Note}
-This instructions will only cover the use with SPI, as using XMLReader is deprecated and is not recommended anymore.\newline
+These instructions will only cover the use with SPI, as using XMLReader is deprecated and is not recommended anymore.\newline
 SPI is now the only supported way of creating a \texttt{GlobalContext}.
 \subsubsection{Adding plugins}
-Every plugin has to implement the interface \texttt{conquer.plugins.Plugin}. The only required metho is \texttt{String getName()}.
-This method should return an unique identifier.
+Every plugin has to implement the interface \texttt{conquer.plugins.Plugin}. The only required method is \texttt{String getName()}.
+This method should return a unique identifier.
 
 After this, when packaging the plugin with a jar file, you have to add a file called \newline \texttt{conquer.plugins.Plugin} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
@@ -199,12 +199,12 @@ When packaging this class in a jar file, add a file called \newline \texttt{conq
 \begin{minted}{java}
 	your.fully.qualified.name.of.the.implementing.Class
 \end{minted}
-After that, place the jar file somewhere on the classpath. Furthermore the scenarios that should be found must be somewhere, too.
+After that, place the jar file somewhere on the classpath. Furthermore, the scenarios that should be found must be somewhere, too.
 
 \subsubsection{Adding new supported file formats}
 In order to support new file formats, you have to register a new \texttt{ConquerInfoReaderFactory}.
 You have to invent a magic number to identify files of your format.
-Furthermore you have to implement a \texttt{ConquerInfoReader}, that will read your file and return a \texttt{ConquerInfo} object.
+Furthermore, you have to implement a \texttt{ConquerInfoReader}, that will read your file and return a \texttt{ConquerInfo} object.
 
 After this, when packaging the strategy with a jar file, you have to add a file called \newline \texttt{conquer.data.strategy.ConquerInfoReaderFactory} to the \texttt{\textit{META-INF/services}} directory with this content:
 \begin{minted}{java}
