@@ -5,11 +5,11 @@ package conquer.init;
  */
 @FunctionalInterface
 public interface OptionChooser {
-    /**
-     * Returns the selected index.
-     *
-     * @param options All options. Will never be {@code null}.
-     * @return Selected index.
-     */
-    int choose(String[] options);
+	/**
+	 * Returns the selected index.
+	 *
+	 * @param options All options. Will never be {@code null}.
+	 * @return Selected index.
+	 */
+	int choose(String[] options);
 }

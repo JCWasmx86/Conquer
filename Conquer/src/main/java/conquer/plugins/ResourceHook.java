@@ -11,11 +11,11 @@ import java.util.List;
 @FunctionalInterface
 public interface ResourceHook {
 
-    /**
-     * @param city       The city
-     * @param statistics The statistics: &gt; 0 means more was produced
-     * @param clan       The clan of the city.
-     */
-    void analyzeStats(final ICity city, final List<Double> statistics, IClan clan);
+	/**
+	 * @param city       The city
+	 * @param statistics The statistics: &gt; 0 means more was produced
+	 * @param clan       The clan of the city.
+	 */
+	void analyzeStats(final ICity city, final List<Double> statistics, IClan clan);
 
 }
