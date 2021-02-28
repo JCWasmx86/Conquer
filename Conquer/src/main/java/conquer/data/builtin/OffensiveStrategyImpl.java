@@ -97,10 +97,10 @@ public final class OffensiveStrategyImpl implements Strategy {
 		citiesWithoutBordersWithSoldiers
 			.forEach(city -> citiesOnBorder.stream().filter(a -> this.graph.isConnected(a, city)).sorted((a, b) -> {
 				final var i = Long.compare(a.getNumberOfSoldiers(), b.getNumberOfSoldiers());
-				if (i != 0) {
-					return i;
-				} else {
+				if (i == 0) {
 					return Double.compare(this.graph.getWeight(city, a), this.graph.getWeight(city, b));
+				} else {
+					return i;
 				}
 			}).forEach(a -> {
 				// And then move the maximum amount of soldiers to every city.

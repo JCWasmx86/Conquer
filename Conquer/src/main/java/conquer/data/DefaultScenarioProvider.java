@@ -24,7 +24,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 				return ret;
 			}
 			this.parseNodes(ret, infoNode.getChildNodes());
-		} catch (SAXException | IOException | ParserConfigurationException e) {
+		} catch (final SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
 			// Do nothing else, as it could always be possible that the file is missing.
 		}
@@ -54,7 +54,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	}
 
 	private void parseNode(final Node node, final List<InstalledScenario> ret) {
-		if ((node == null) || (node.getNodeType() != Node.ELEMENT_NODE) || (!node.getNodeName().equals("scenarios"))) {
+		if ((node == null) || (node.getNodeType() != Node.ELEMENT_NODE) || (!"scenarios".equals(node.getNodeName()))) {
 			return;
 		}
 		final var scenarioList = node.getChildNodes();
@@ -86,7 +86,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	private Node findNode(final NodeList childs) {
 		for (var i = 0; i < childs.getLength(); i++) {
 			final var child = childs.item(i);
-			if (child.getNodeName().equals("info")) {
+			if ("info".equals(child.getNodeName())) {
 				return child;
 			}
 		}
@@ -98,7 +98,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	}
 
 	private boolean goodNode(final Node n) {
-		return (n != null) && !n.getNodeName().equals("#text") && !n.getNodeName().equals("#comment")
+		return (n != null) && !"#text".equals(n.getNodeName()) && !"#comment".equals(n.getNodeName())
 			&& n.hasAttributes();
 	}
 }

@@ -22,7 +22,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		Shared.level2Logging());
 	private final JSlider maximumFPS = new JSlider(5, this.getMaxRefreshRate(), Math.min(this.getMaxRefreshRate(), this.timeToFPS(Utils.getRefreshRate())));
 
-	private int timeToFPS(double refreshRate) {
+	private int timeToFPS(final double refreshRate) {
 		final var max = 1000.0;//One second
 		final var fps = (int) (max / refreshRate);
 		return Math.min(this.getMaxRefreshRate(), fps);
@@ -43,7 +43,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		this.level1Logging.setSelected(Shared.level1Logging());
 		this.level2Logging.setSelected(Shared.level2Logging());
 		this.jtextfield.setText(Shared.getNetworktimeout() + "");
-		this.maximumFPS.setValue(timeToFPS(Utils.getRefreshRate()));
+		this.maximumFPS.setValue(this.timeToFPS(Utils.getRefreshRate()));
 	}
 
 	DefaultSettingsDialogPanel() {
@@ -59,21 +59,21 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		this.add(networkTimeOutPanel);
 		final var fpsSelectionPanel = new JPanel();
 		fpsSelectionPanel.setLayout(new javax.swing.BoxLayout(fpsSelectionPanel, javax.swing.BoxLayout.X_AXIS));
-		final var fpsTextLabel = new JLabel(Messages.getMessage("Settings.fps", timeToFPS(Utils.getRefreshRate())));
+		final var fpsTextLabel = new JLabel(Messages.getMessage("Settings.fps", this.timeToFPS(Utils.getRefreshRate())));
 		fpsSelectionPanel.add(fpsTextLabel);
-		maximumFPS.addChangeListener(a ->
-			fpsTextLabel.setText(Messages.getMessage("Settings.fps", timeToFPS(normalize(maximumFPS.getValue()))))
+		this.maximumFPS.addChangeListener(a ->
+			fpsTextLabel.setText(Messages.getMessage("Settings.fps", this.timeToFPS(this.normalize(this.maximumFPS.getValue()))))
 		);
 		fpsSelectionPanel.add(this.maximumFPS);
 		this.add(fpsSelectionPanel);
 	}
 
-	private int normalize(int value) {
-		double refreshRate = 1000.0 / value;
+	private int normalize(final int value) {
+		final double refreshRate = 1000.0 / value;
 		return (int) refreshRate;
 	}
 
-	void dump(Properties properties) {
+	void dump(final Properties properties) {
 		try {
 			final var i = Integer.parseInt(this.jtextfield.getText());
 			if (i < 0) {
@@ -91,7 +91,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		properties.put("conquer.frontend.rate", this.normalize(this.maximumFPS.getValue()) + "");
 	}
 
-	public void restore(Properties properties) {
+	public void restore(final Properties properties) {
 		System.getProperties().putAll(properties);
 		this.reset();
 	}

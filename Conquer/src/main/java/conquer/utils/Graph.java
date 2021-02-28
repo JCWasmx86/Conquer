@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class Graph<T> implements Consumer<T> {
 	private final double[][] matrix;
-	private ArrayList<T> values = new ArrayList<>();
+	private ArrayList<T> values;
 	private final ArrayList<Boolean> visited = new ArrayList<>();
 
 	private int cnt = 0;
@@ -404,7 +404,7 @@ public class Graph<T> implements Consumer<T> {
 		this.map.clear();
 		for (final var a : this.values) {
 			for (final var b : this.values) {
-				Map<T, Boolean> c;
+				final Map<T, Boolean> c;
 				if (this.map.containsKey(a)) {
 					c = this.map.get(a);
 				} else {
@@ -441,14 +441,14 @@ public class Graph<T> implements Consumer<T> {
 		if (c == a) {
 			return false;
 		}
-		if (!this.cached) {
+		if (this.cached) {
+			return this.map.get(c).get(a);
+		} else {
 			final var i1 = this.values.indexOf(c);
 			final var i2 = this.values.indexOf(a);
 			this.checkIndex(i1);
 			this.checkIndex(i2);
 			return (this.matrix[i1][i2] != -1) && (this.matrix[i1][i2] != -2);
-		} else {
-			return this.map.get(c).get(a);
 		}
 	}
 }

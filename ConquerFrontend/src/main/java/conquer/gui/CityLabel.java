@@ -201,7 +201,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var weight = game.getCities().getWeight(this.city, this.origin);
 		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove(game.getPlayerClan(), weight,
 			this.origin.getNumberOfSoldiers());
-		String prompt;
+		final String prompt;
 		if (this.city.isPlayerCity()) {
 			prompt = Messages.getMessage("CityLabel.moveLabel", //$NON-NLS-1$
 				this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);

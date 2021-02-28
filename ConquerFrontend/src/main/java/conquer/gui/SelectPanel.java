@@ -31,7 +31,7 @@ final class SelectPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				if (!hintTextField.getText().equals("")) {
+				if (!"".equals(hintTextField.getText())) {
 					consumer.accept(hintTextField.getText());
 					hintTextField.setText("");
 					hintTextField.focusLost(null);

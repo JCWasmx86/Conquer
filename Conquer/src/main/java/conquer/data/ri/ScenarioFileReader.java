@@ -48,7 +48,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 	 */
 	@Override
 	public ConquerInfo build() {
-		InputStream stream;
+		final InputStream stream;
 		try {
 			stream = this.scenario.file() == null ? this.scenario.in()
 				: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
@@ -61,7 +61,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 
 	private ConquerInfo readFromStream(final InputStream stream) {
 		final var game = new Game();
-		try (var dis = new DataInputStream(stream)) {
+		try (final var dis = new DataInputStream(stream)) {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
 			if ((mag1 != 0xAA) || (mag2 != 0x55)) {
@@ -139,10 +139,10 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			}
 			for (var i = 0; i < numPlayers; i++) {
 				for (var j = 0; j < numPlayers; j++) {
-					if (i != j) {
-						relations.addDirectedEdge(i, j, 50, 50);
-					} else {
+					if (i == j) {
 						relations.addDirectedEdge(i, j, Double.MAX_VALUE, Double.MAX_VALUE);
+					} else {
+						relations.addDirectedEdge(i, j, 50, 50);
 					}
 				}
 			}

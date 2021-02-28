@@ -94,7 +94,7 @@ final class EventLog extends JFrame implements MessageListener {
 	private EventLog() {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.Y_AXIS));
-		JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		final JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -213,7 +213,7 @@ final class EventLog extends JFrame implements MessageListener {
 			public void actionPerformed(final ActionEvent e) {
 				final var components = EventLog.this.base.getComponents();
 				for (final var c : components) {
-					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
+					if ((c instanceof JLabel jl) && (!jl.getText().trim().isEmpty())) {
 						final var font = jl.getFont();
 						final var pts = font.getSize2D();
 						jl.setFont(font.deriveFont(pts - 1));
@@ -238,7 +238,7 @@ final class EventLog extends JFrame implements MessageListener {
 			public void actionPerformed(final ActionEvent e) {
 				final var components = EventLog.this.base.getComponents();
 				for (final var c : components) {
-					if ((c instanceof JLabel jl) && (jl.getText().trim().length() > 0)) {
+					if ((c instanceof JLabel jl) && (!jl.getText().trim().isEmpty())) {
 						final var font = jl.getFont();
 						jl.setFont(font.deriveFont(font.getSize2D() + 1));
 						jl.repaint();

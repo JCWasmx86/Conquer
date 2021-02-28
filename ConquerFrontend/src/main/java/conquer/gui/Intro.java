@@ -35,7 +35,7 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 	public static void main(final String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+		} catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
 			| UnsupportedLookAndFeelException e) { // Just use the Default LaF
 			// Just print the stack trace. It is no critical thing, so you shouldn't have to
 			// fear anything, if an exception is thrown.

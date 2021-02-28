@@ -92,8 +92,8 @@ class CityBuilder {
 		return this;
 	}
 
-	public CityBuilder setY(final int x) {
-		this.tmp.setY(x);
+	public CityBuilder setY(final int y) {
+		this.tmp.setY(y);
 		return this;
 	}
 }

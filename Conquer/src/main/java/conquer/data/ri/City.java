@@ -381,12 +381,12 @@ class City implements ICity {
 		if (base < 0) {
 			throw new IllegalArgumentException("argument < 0");
 		}
-		if (this.defense != 0) {
+		if (this.defense == 0) {
+			this.defense = base;
+		} else {
 			this.defense /= this.oldOne;
 			this.defense *= (base < 1 ? 1 / base : base);
 			this.oldOne = base;
-		} else {
-			this.defense = base;
 		}
 		this.defense = base;
 	}

@@ -68,7 +68,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 
 	@Override
 	public void resume(final PluginInterface game, final InputStream bytes) throws IOException {
-		try (var dis = new DataInputStream(bytes)) {
+		try (final var dis = new DataInputStream(bytes)) {
 			this.currentRound = dis.readInt();
 		}
 		this.events = game.getEventList();
@@ -76,7 +76,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 
 	@Override
 	public void save(final OutputStream outputStream) throws IOException {
-		try (var dos = new DataOutputStream(outputStream)) {
+		try (final var dos = new DataOutputStream(outputStream)) {
 			dos.writeInt(this.currentRound);
 		}
 	}

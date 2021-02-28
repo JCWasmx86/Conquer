@@ -13,13 +13,13 @@ class Testsuite permits Testsuite1, Testsuite2, Testsuite3 {
 		try {
 			runnable.run();
 		} catch (final Throwable throwable) {
-			if (!expectedClass.isAssignableFrom(throwable.getClass())) {
+			if (expectedClass.isAssignableFrom(throwable.getClass())) {
+				this.success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
+					+ throwable.getMessage());
+			} else {
 				this.error("Expected an instanceof " + expectedClass.getCanonicalName() + " but got an instanceof "
 					+ throwable.getClass().getCanonicalName() + "!");
 				throwable.printStackTrace();
-			} else {
-				this.success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
-					+ throwable.getMessage());
 			}
 			return;
 		}

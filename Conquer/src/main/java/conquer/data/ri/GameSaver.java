@@ -49,7 +49,7 @@ public final class GameSaver implements ConquerSaver {
 
 	private byte[] createSha(final File file) throws NoSuchAlgorithmException, IOException {
 		final var digest = MessageDigest.getInstance("SHA-512");
-		try (InputStream fis = new FileInputStream(file)) {
+		try (final InputStream fis = new FileInputStream(file)) {
 			var n = 0;
 			final var buffer = new byte[8192];
 			while (n != -1) {
@@ -63,7 +63,7 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private byte[] extractBytes(final Image image) throws IOException {
-		try (var baos = new ByteArrayOutputStream(4096 * 4096)) {
+		try (final var baos = new ByteArrayOutputStream(4096 * 4096)) {
 			ImageIO.write(this.toBufferedImage(image), "png", baos);
 			return baos.toByteArray();
 		}
@@ -113,7 +113,7 @@ public final class GameSaver implements ConquerSaver {
 
 	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
 		IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
-		try (var dis = new DataInputStream(new FileInputStream(file))) {
+		try (final var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.readInt());
 			clan.setName(dis.readUTF());
@@ -198,7 +198,7 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private void restore(final Game game, final File saveDirectory) throws IOException {
-		try (var dis = new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
+		try (final var dis = new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
 			final var imageLen = dis.readInt();
 			final var bytes = dis.readNBytes(imageLen);
 			final var image = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -219,7 +219,7 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private void save(final IClan clan, final OutputStream outputStream) throws IOException {
-		try (var dos = new DataOutputStream(outputStream)) {
+		try (final var dos = new DataOutputStream(outputStream)) {
 			dos.writeInt(clan.getId());
 			dos.writeUTF(clan.getName());
 			dos.writeDouble(clan.getCoins());
@@ -313,7 +313,7 @@ public final class GameSaver implements ConquerSaver {
 		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
 			this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
-		try (var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
+		try (final var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);
 			for (final var file : files) {
 				dos.writeUTF(file.getAbsolutePath());
@@ -326,7 +326,7 @@ public final class GameSaver implements ConquerSaver {
 
 	private void save(final Game game, final File saveDirectory) throws IOException {
 		final var gameFile = new File(saveDirectory, this.name + ".game.save");
-		try (var dos = new DataOutputStream(Files.newOutputStream(Paths.get(gameFile.toURI())))) {
+		try (final var dos = new DataOutputStream(Files.newOutputStream(Paths.get(gameFile.toURI())))) {
 			final var imageData = this.extractBytes(game.getBackground());
 			dos.writeInt(imageData.length);
 			dos.write(imageData);

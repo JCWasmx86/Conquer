@@ -31,18 +31,18 @@ final class SettingsDialog extends JFrame {
 	}
 
 	private void update() {
-		this.properties = getProperties();
+		this.properties = this.getProperties();
 		//Reset
-		plugins.forEach(SettingMenuPlugin::reset);
+		this.plugins.forEach(SettingMenuPlugin::reset);
 		this.panel.reset();
 	}
 
 	private Properties getProperties() {
 		try (final var in = Files.newInputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()), StandardOpenOption.CREATE)) {
-			var p = new Properties();
+			final var p = new Properties();
 			p.load(in);
 			return p;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
 		return new Properties();
@@ -50,11 +50,11 @@ final class SettingsDialog extends JFrame {
 
 	private SettingsDialog() {
 		this.setTitle("Settings");
-		this.properties = getProperties();
+		this.properties = this.getProperties();
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 		final var pane = new JTabbedPane();
 		pane.addTab("Default", this.panel);
-		panel.restore(this.properties);
+		this.panel.restore(this.properties);
 		ServiceLoader.load(SettingMenuPlugin.class).forEach(a -> {
 			this.plugins.add(a);
 			a.restore(this.properties);
@@ -74,7 +74,7 @@ final class SettingsDialog extends JFrame {
 		buttonPanel.add(save);
 		buttonPanel.add(reset);
 		reset.addActionListener(a -> {
-			plugins.forEach(SettingMenuPlugin::reset);
+			this.plugins.forEach(SettingMenuPlugin::reset);
 			this.panel.reset();
 		});
 		save.addActionListener(a -> this.dump());
@@ -84,12 +84,12 @@ final class SettingsDialog extends JFrame {
 	}
 
 	private void dump() {
-		this.panel.dump(properties);
-		this.plugins.forEach(a -> a.save(properties));
-		System.getProperties().putAll(properties);
+		this.panel.dump(this.properties);
+		this.plugins.forEach(a -> a.save(this.properties));
+		System.getProperties().putAll(this.properties);
 		try (final var out = Files.newOutputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()), StandardOpenOption.WRITE)) {
 			this.properties.store(out, "Properties for conquer");
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 		}
 		this.properties = this.getProperties();

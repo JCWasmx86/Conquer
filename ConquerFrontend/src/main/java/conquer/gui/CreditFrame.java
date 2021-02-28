@@ -90,7 +90,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 			if (a.getEventType() == EventType.ACTIVATED) {
 				try {
 					Desktop.getDesktop().browse(a.getURL().toURI());
-				} catch (IOException | URISyntaxException e) {
+				} catch (final IOException | URISyntaxException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", ImageObserver.ERROR);
 				}
 			} else if (a.getEventType() == EventType.ENTERED) {

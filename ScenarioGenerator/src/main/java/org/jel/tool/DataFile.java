@@ -51,7 +51,7 @@ public final class DataFile {
 	}
 
 	public void dump(final String out) {
-		try (var dos = new DataOutputStream((new FileOutputStream(out)))) {
+		try (final var dos = new DataOutputStream((new FileOutputStream(out)))) {
 			dos.write(0xAA);
 			dos.write(0x55);
 			final var back = this.readBackground();

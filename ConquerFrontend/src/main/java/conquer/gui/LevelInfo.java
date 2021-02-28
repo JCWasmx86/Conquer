@@ -59,8 +59,10 @@ final class LevelInfo extends JFrame implements WindowListener {
 			public Component getListCellRendererComponent(final JList<? extends ClanColorAssociation> list,
 														  final ClanColorAssociation value, final int index, final boolean isSelected,
 														  final boolean cellHasFocus) {
-				JLabel jl;
-				if (!this.map.containsKey(value)) {
+				final JLabel jl;
+				if (this.map.containsKey(value)) {
+					jl = this.map.get(value);
+				} else {
 					jl = new JLabel(value.clanName()
 						+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared.player") : "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					jl.setForeground(value.color());
@@ -68,8 +70,6 @@ final class LevelInfo extends JFrame implements WindowListener {
 					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));
 					jl.setOpaque(true);
 					this.map.put(value, jl);
-				} else {
-					jl = this.map.get(value);
 				}
 				return jl;
 			}

@@ -142,7 +142,7 @@ public final class GlobalContext {
 
 	private byte[] obtainBytes(final InstalledScenario is, final int maxLength) {
 		if (is.file() != null) {
-			try (var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
+			try (final var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				final var b = new byte[maxLength];
 				stream.read(b);
 				return b;

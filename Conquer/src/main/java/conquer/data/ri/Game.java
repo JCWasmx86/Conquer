@@ -202,10 +202,10 @@ final class Game implements ConquerInfo {
 		src.setNumberOfSoldiers(src.getNumberOfSoldiers() - powerOfAttacker);
 		this.data.getAttackHooks().forEach(a -> a.before(src, destination, powerOfAttacker));
 		var relationshipValue = this.getRelationship(src.getClan(), destination.getClan());
-		double numberOfSurvivingPeople;
+		final double numberOfSurvivingPeople;
 		final var destinationClan = destination.getClan();
-		long survivingSoldiers;
-		AttackResult result;
+		final long survivingSoldiers;
+		final AttackResult result;
 		if (diff > 0) {// Attack was defeated
 			final var destinationClanObj = this.getClan(destination);
 			var surviving = this.numberOfSurvivingDefenders(diff, destination,
@@ -265,13 +265,13 @@ final class Game implements ConquerInfo {
 
 	private long calculatePowerOfAttacker(final ICity src, final ICity destination, final boolean managed,
 										  final long numberOfSoldiers) {
-		if (!managed) {
-			return this.aiCalculateNumberOfTroopsToAttackWith(src, destination);
-		} else {
+		if (managed) {
 			if (destination.isPlayerCity() && (destination instanceof City c)) {
 				c.attackByPlayer();
 			}
 			return numberOfSoldiers;
+		} else {
+			return this.aiCalculateNumberOfTroopsToAttackWith(src, destination);
 		}
 	}
 
@@ -706,7 +706,7 @@ final class Game implements ConquerInfo {
 	}
 
 	private long calculateMoveAmount(final ICity src, final ICity destination) {
-		long moveAmount;
+		final long moveAmount;
 		if (this.isInFriendlyCountry(src)) {
 			// This city has no connections to other clans==>Move all troops to the borders.
 			moveAmount = src.getNumberOfSoldiers();
@@ -728,30 +728,30 @@ final class Game implements ConquerInfo {
 	public void moveSoldiers(final ICity src, final Stream<ICity> reachableCities, final boolean managed,
 							 final ICity other, final long numberOfSoldiersToMove) {
 		final var saved = this.moveSoldiersCheck(managed, src, reachableCities, other, numberOfSoldiersToMove);
-		ICity destination;
-		List<ICity> list = null;
-		if (!managed) {
+		final ICity destination;
+		List<ICity> list;
+		if (managed) {
+			destination = other;
+		} else {
 			list = this.getWeakestCityInRatioToSurroundingEnemyCities(saved).stream()
 				.filter(a -> a.getClan() == src.getClan()).collect(Collectors.toList());
 			if (list.isEmpty()) {
 				return;
 			}
 			destination = list.get(list.size() - 1);
-		} else {
-			destination = other;
 		}
 		if (src == destination) {// This should theoretically be a critical error,....
 			return;
 		}
 		long moveAmount;
-		if (!managed) {
+		if (managed) {
+			moveAmount = numberOfSoldiersToMove;
+		} else {
 			moveAmount = this.calculateMoveAmount(src, destination);
 			moveAmount = this.maximumNumberToMove(src.getClan(), src, destination, moveAmount);
 			if (moveAmount == 0) {
 				return;
 			}
-		} else {
-			moveAmount = numberOfSoldiersToMove;
 		}
 		destination.setNumberOfSoldiers(destination.getNumberOfSoldiers() + moveAmount);
 		this.payForMove(src.getClan(), moveAmount, this.getCities().getWeight(src, destination));
@@ -819,7 +819,9 @@ final class Game implements ConquerInfo {
 		final var costs = this.getSoldierCosts();
 		var numberToRecruit = 0L;
 		// Default algorithm used, if the strategy didn't provide one itself.
-		if (!managed) {
+		if (managed) {
+			numberToRecruit = Math.min(this.maximumNumberOfSoldiersToRecruit(clan, count), count);
+		} else {
 			if ((maxToPay < 0) || (c.getNumberOfPeople() < Game.RETAINED_PEOPLE)) {
 				return;
 			}
@@ -829,8 +831,6 @@ final class Game implements ConquerInfo {
 			if (numberToRecruit == 0) {
 				return;
 			}
-		} else {
-			numberToRecruit = Math.min(this.maximumNumberOfSoldiersToRecruit(clan, count), count);
 		}
 		c.setNumberOfPeople(c.getNumberOfPeople() - numberToRecruit);
 		c.setNumberOfSoldiers(c.getNumberOfSoldiers() + numberToRecruit);
@@ -1012,16 +1012,16 @@ final class Game implements ConquerInfo {
 			&& (gift.getMap().entrySet().stream().noneMatch(a -> a.getValue() != 0))) {
 			return false;
 		}
-		boolean acceptedGift;
+		final boolean acceptedGift;
 		final DoubleConsumer dc = newValue -> {
 			final var d = newValue < 0 ? 0 : (newValue > 100 ? 100 : newValue);
 			this.relations.addUndirectedEdge(source.getId(), destination.getId(), d);
 		};
 		final var relationship = this.getRelationship(source, destination);
-		if (!destination.isPlayerClan()) {
-			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift, relationship, dc, this);
-		} else {
+		if (destination.isPlayerClan()) {
 			acceptedGift = this.playerGiftCallback.acceptGift(source, destination, gift, relationship, dc, this);
+		} else {
+			acceptedGift = destination.getStrategy().acceptGift(source, destination, gift, relationship, dc, this);
 		}
 		if (acceptedGift) {
 			this.calculateChanges(source, destination, gift);

@@ -62,7 +62,7 @@ public final class XMLReader {
 	private Node findNode(final NodeList childs) {
 		for (var i = 0; i < childs.getLength(); i++) {
 			final var child = childs.item(i);
-			if (child.getNodeName().equals("info")) {
+			if ("info".equals(child.getNodeName())) {
 				return child;
 			}
 		}
@@ -70,7 +70,7 @@ public final class XMLReader {
 	}
 
 	private boolean goodNode(final Node n) {
-		return (n != null) && !n.getNodeName().equals("#text") && !n.getNodeName().equals("#comment")
+		return (n != null) && !"#text".equals(n.getNodeName()) && !"#comment".equals(n.getNodeName())
 			&& n.hasAttributes();
 	}
 
@@ -160,10 +160,10 @@ public final class XMLReader {
 	 * @return The context that was read. On error, an empty context is returned.
 	 */
 	public GlobalContext readInfo(final boolean instantiate) {
-		Document d;
+		final Document d;
 		try {
 			d = DocumentBuilderFactory.newDefaultInstance().newDocumentBuilder().parse(XMLReader.XMLFILE);
-		} catch (SAXException | IOException | ParserConfigurationException e) {
+		} catch (final SAXException | IOException | ParserConfigurationException e) {
 			Shared.LOGGER.exception(e);
 			if (XMLReader.throwableConsumer != null) {
 				XMLReader.throwableConsumer.accept(e);

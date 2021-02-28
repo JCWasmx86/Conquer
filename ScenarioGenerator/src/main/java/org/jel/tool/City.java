@@ -1,6 +1,5 @@
 package org.jel.tool;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class City {
@@ -12,7 +11,7 @@ public final class City {
 
 	private double defenseBonus;
 
-	private List<Double> productions = new ArrayList<>();
+	private List<Double> productions;
 
 	public City(final double growth, final String cityIcon, final String name, final int clanId,
 				final int numberOfPeople, final int numberOfSoldiers, final int x, final int y, final int defense,

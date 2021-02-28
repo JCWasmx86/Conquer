@@ -64,8 +64,10 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 			public Component getListCellRendererComponent(final JList<? extends InstalledScenario> list,
 														  final InstalledScenario value, final int index, final boolean isSelected,
 														  final boolean cellHasFocus) {
-				JLabel jl;
-				if (!this.map.containsKey(value)) {
+				final JLabel jl;
+				if (this.map.containsKey(value)) {
+					jl = this.map.get(value);
+				} else {
 					jl = new JLabel(value.name());
 					jl.setFont(jl.getFont().deriveFont(30.0f));
 					if (value.thumbnail() != null) {
@@ -80,8 +82,6 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 						}
 					}
 					this.map.put(value, jl);
-				} else {
-					jl = this.map.get(value);
 				}
 				return jl;
 			}

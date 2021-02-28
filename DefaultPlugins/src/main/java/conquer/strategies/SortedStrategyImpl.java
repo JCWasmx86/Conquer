@@ -84,7 +84,7 @@ public final class SortedStrategyImpl implements Strategy {
 				if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
 					return;// We are too weak to attack.
 				}
-				long numberOfSoldiersUsed;
+				final long numberOfSoldiersUsed;
 				if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
 					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
 				} else {

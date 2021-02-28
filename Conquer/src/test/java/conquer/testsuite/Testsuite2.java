@@ -80,17 +80,17 @@ public final class Testsuite2 extends Testsuite {
 			this.error("context==null");
 			return;
 		}
-		if (context.getPluginNames().size() != context.getPlugins().size()) {
+		if (context.getPluginNames().size() == context.getPlugins().size()) {
+			this.success("context.getPluginNames().size()==context.getPlugins().size()");
+		} else {
 			this.error("context.getPluginNames().size()!=context.getPlugins().size()");
 			return;
-		} else {
-			this.success("context.getPluginNames().size()==context.getPlugins().size()");
 		}
-		if (context.getStrategyNames().size() != context.getStrategies().size()) {
+		if (context.getStrategyNames().size() == context.getStrategies().size()) {
+			this.success("context.getStrategyNames().size()==context.getStrategies().size()");
+		} else {
 			this.error("context.getStrategyNames().size()!=context.getStrategies().size()");
 			return;
-		} else {
-			this.success("context.getStrategyNames().size()==context.getStrategies().size()");
 		}
 		for (var i = 0; i < context.getPlugins().size(); i++) {
 			final var plugin = context.getPlugins().get(i);
@@ -103,10 +103,10 @@ public final class Testsuite2 extends Testsuite {
 				this.error("name==null");
 				continue;
 			}
-			if (!plugin.getClass().getCanonicalName().equals(name)) {
-				this.error("plugin.getClass().getCanonicalName()!=name");
-			} else {
+			if (plugin.getClass().getCanonicalName().equals(name)) {
 				this.success("plugin.getClass().getCanonicalName()==name");
+			} else {
+				this.error("plugin.getClass().getCanonicalName()!=name");
 			}
 		}
 		for (var i = 0; i < context.getStrategies().size(); i++) {
@@ -120,10 +120,10 @@ public final class Testsuite2 extends Testsuite {
 				this.error("name==null");
 				continue;
 			}
-			if (!strategy.getClass().getCanonicalName().equals(name)) {
-				this.error("strategy.getClass().getCanonicalName()!=name");
-			} else {
+			if (strategy.getClass().getCanonicalName().equals(name)) {
 				this.success("strategy.getClass().getCanonicalName()==name");
+			} else {
+				this.error("strategy.getClass().getCanonicalName()!=name");
 			}
 		}
 	}

@@ -88,7 +88,7 @@ public class Installer implements Runnable {
 	}
 
 	private boolean connected() {
-		try (var testStream = new URL("https://www.example.com").openStream()) { //$NON-NLS-1$
+		try (final var testStream = new URL("https://www.example.com").openStream()) { //$NON-NLS-1$
 			return true;
 		} catch (final IOException e) {
 			return false;
@@ -119,14 +119,14 @@ public class Installer implements Runnable {
 			"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip"); //$NON-NLS-1$
 		final var messageString = Messages.getMessage("Installer.downloading", url.toString()); //$NON-NLS-1$
 		this.write(messageString); // $NON-NLS-1$
-		try (var urlStream = url.openStream()) {
+		try (final var urlStream = url.openStream()) {
 			this.unzipFile(urlStream);
 		} catch (final IOException ioe) {
 			this.writeError(Messages.getString("Installer.downloadFailed") + url); //$NON-NLS-1$
 		}
 		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile(); //$NON-NLS-1$
-		String newContents = null;
-		try (var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
+		String newContents;
+		try (final var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
 			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->", //$NON-NLS-1$
 				"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />"); //$NON-NLS-1$
@@ -178,8 +178,8 @@ public class Installer implements Runnable {
 	}
 
 	private void unzipFile(final InputStream zipStream) {
-		try (var zin = new ZipInputStream(zipStream)) {
-			ZipEntry ze = null;
+		try (final var zin = new ZipInputStream(zipStream)) {
+			ZipEntry ze;
 			while ((ze = zin.getNextEntry()) != null) {
 				this.write(Messages.getString("Installer.unzipping") + ze.getName()); //$NON-NLS-1$
 				if (ze.isDirectory()) {
@@ -211,7 +211,7 @@ public class Installer implements Runnable {
 		if (ze.getName().contains("/")) {
 			new File(Installer.BASE_FILE, ze.getName()).getParentFile().mkdirs();
 		}
-		try (var fos = new FileOutputStream(new File(Installer.BASE_FILE, ze.getName()))) {
+		try (final var fos = new FileOutputStream(new File(Installer.BASE_FILE, ze.getName()))) {
 			int read;
 			final var bytes = new byte[1024];
 			while ((read = zin.read(bytes)) != -1) {

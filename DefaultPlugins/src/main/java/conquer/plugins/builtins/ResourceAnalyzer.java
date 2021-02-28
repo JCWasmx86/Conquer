@@ -104,10 +104,10 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 		final var d1 = d + (city.getNumberOfSoldiers() + city.getInfo().getResourceUsage().soldierUsage()[idx]);
 		final var numCiviliansToGetToZero = (-d1) / city.getInfo().getResourceUsage().personUsage()[idx];
 		killedSoldiers.add((double) city.getNumberOfSoldiers());
-		if (!Double.isNaN(numCiviliansToGetToZero)) {
-			killedCivilians.add(Math.min(city.getNumberOfPeople(), numCiviliansToGetToZero));
-		} else {
+		if (Double.isNaN(numCiviliansToGetToZero)) {
 			killedCivilians.add(0.0);
+		} else {
+			killedCivilians.add(Math.min(city.getNumberOfPeople(), numCiviliansToGetToZero));
 		}
 	}
 
@@ -125,7 +125,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 
 	@Override
 	public void resume(final PluginInterface game, final InputStream bytes) throws IOException {
-		try (var dis = new DataInputStream(bytes)) {
+		try (final var dis = new DataInputStream(bytes)) {
 			this.currentRound = dis.readInt();
 		}
 		this.events = game.getEventList();
@@ -133,7 +133,7 @@ public final class ResourceAnalyzer implements Plugin, ResourceHook {
 
 	@Override
 	public void save(final OutputStream outputStream) throws IOException {
-		try (var dos = new DataOutputStream(outputStream)) {
+		try (final var dos = new DataOutputStream(outputStream)) {
 			dos.writeInt(this.currentRound);
 		}
 	}

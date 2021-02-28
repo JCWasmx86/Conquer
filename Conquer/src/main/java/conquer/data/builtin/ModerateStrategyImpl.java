@@ -54,10 +54,10 @@ public final class ModerateStrategyImpl implements Strategy {
 		final var map = new HashMap<IClan, Integer>();
 		StreamUtils.forEach(cities, a -> {
 			final var clanObject = a.getClan();
-			if (!map.containsKey(clanObject)) {
-				map.put(clanObject, 1);
-			} else {
+			if (map.containsKey(clanObject)) {
 				map.put(clanObject, map.get(clanObject) + 1);
+			} else {
+				map.put(clanObject, 1);
 			}
 		});
 		final var clansSortedByDescendingSize = map.entrySet().stream().filter(a -> a.getKey() != clan)
