@@ -20,7 +20,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		Shared.level1Logging());
 	private final JCheckBox level2Logging = new JCheckBox(Messages.getString("Settings.level2"),
 		Shared.level2Logging());
-	private final JSlider maximumFPS = new JSlider(5, getMaxRefreshRate(), timeToFPS(Utils.getRefreshRate()));
+	private final JSlider maximumFPS = new JSlider(5, this.getMaxRefreshRate(), Math.min(this.getMaxRefreshRate(), this.timeToFPS(Utils.getRefreshRate())));
 
 	private int timeToFPS(double refreshRate) {
 		final var max = 1000.0;//One second
