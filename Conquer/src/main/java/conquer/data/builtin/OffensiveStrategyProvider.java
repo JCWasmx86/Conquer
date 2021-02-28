@@ -5,19 +5,19 @@ import conquer.data.strategy.StrategyProvider;
 
 public final class OffensiveStrategyProvider implements StrategyProvider {
 
-	@Override
-	public Strategy buildStrategy() {
-		return new OffensiveStrategyImpl();
-	}
+    @Override
+    public Strategy buildStrategy() {
+        return new OffensiveStrategyImpl();
+    }
 
-	@Override
-	public int getId() {
-		return 2;
-	}
+    @Override
+    public int getId() {
+        return 2;
+    }
 
-	@Override
-	public String getName() {
-		return "offensive";
-	}
+    @Override
+    public String getName() {
+        return "offensive";
+    }
 
 }

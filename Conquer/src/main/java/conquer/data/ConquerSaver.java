@@ -7,21 +7,19 @@ package conquer.data;
  * a {@link String} as argument.
  */
 public interface ConquerSaver {
-	/**
-	 * Restore the game state.
-	 *
-	 * @return The restored game state.
-	 *
-	 * @throws Exception If an undefined exception occurs.
-	 */
-	ConquerInfo restore() throws Exception;
+    /**
+     * Restore the game state.
+     *
+     * @return The restored game state.
+     * @throws Exception If an undefined exception occurs.
+     */
+    ConquerInfo restore() throws Exception;
 
-	/**
-	 * Save the game state.
-	 *
-	 * @param info Game state. May not be {@code null}.
-	 *
-	 * @throws Exception If an undefined exception occurs.
-	 */
-	void save(ConquerInfo info) throws Exception;
+    /**
+     * Save the game state.
+     *
+     * @param info Game state. May not be {@code null}.
+     * @throws Exception If an undefined exception occurs.
+     */
+    void save(ConquerInfo info) throws Exception;
 }

@@ -8,19 +8,19 @@ import conquer.data.ICity;
  * defeated.
  */
 public record AttackLostMessage(ICity src, ICity destination, long numberOfAttackers) implements Message {
-	@Override
-	public boolean isPlayerInvolved() {
-		return this.src.isPlayerCity() || this.destination.isPlayerCity();
-	}
+    @Override
+    public boolean isPlayerInvolved() {
+        return this.src.isPlayerCity() || this.destination.isPlayerCity();
+    }
 
-	@Override
-	public boolean isBadForPlayer() {
-		return this.isPlayerInvolved() && this.src.getClan().isPlayerClan();
-	}
+    @Override
+    public boolean isBadForPlayer() {
+        return this.isPlayerInvolved() && this.src.getClan().isPlayerClan();
+    }
 
-	@Override
-	public String getMessageText() {
-		return Messages.getMessage("Message.attackLost", this.src.getName(), this.destination.getName(),
-			this.numberOfAttackers);
-	}
+    @Override
+    public String getMessageText() {
+        return Messages.getMessage("Message.attackLost", this.src.getName(), this.destination.getName(),
+                this.numberOfAttackers);
+    }
 }

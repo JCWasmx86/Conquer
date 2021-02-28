@@ -6,20 +6,19 @@ package conquer.data;
  */
 public interface ConquerInfoReaderFactory {
 
-	/**
-	 * Build a {@link ConquerInfoReader} for a given file.
-	 *
-	 * @param is The scenario. May not be {@code null}.
-	 *
-	 * @return A reader that is able to construct a {@link ConquerInfo} from
-	 * {@code is}.
-	 */
-	ConquerInfoReader getForFile(InstalledScenario is);
+    /**
+     * Build a {@link ConquerInfoReader} for a given file.
+     *
+     * @param is The scenario. May not be {@code null}.
+     * @return A reader that is able to construct a {@link ConquerInfo} from
+     * {@code is}.
+     */
+    ConquerInfoReader getForFile(InstalledScenario is);
 
-	/**
-	 * Gives the magic number for the file it is able to read.
-	 *
-	 * @return Magic number. May not be null.
-	 */
-	byte[] getMagicNumber();
+    /**
+     * Gives the magic number for the file it is able to read.
+     *
+     * @return Magic number. May not be null.
+     */
+    byte[] getMagicNumber();
 }
