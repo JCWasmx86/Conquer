@@ -24,7 +24,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 
 	private int timeToFPS(double refreshRate) {
 		final var max = 1000.0;//One second
-		return (int) Math.floor(max / refreshRate);
+		return (int) (max / refreshRate);
 	}
 
 	private int getMaxRefreshRate() {
@@ -69,7 +69,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 
 	private int normalize(int value) {
 		double refreshRate = 1000.0 / value;
-		return (int) Math.floor(refreshRate);
+		return (int) refreshRate;
 	}
 
 	void dump(Properties properties) {
