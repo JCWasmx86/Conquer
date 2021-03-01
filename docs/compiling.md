@@ -13,8 +13,7 @@
 1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
 2. These packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev,
    pkg-config, valac, libgee-0.8-dev, libjson-glib-dev, make
-3. Gradle is required. Conquer is only tested with 6.8
-4. `JAVA_HOME` has to be set.
+3. `JAVA_HOME` has to be set.
 
 ### Compiling
 
