@@ -1,6 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 task buildLauncher(type: Exec) {
+	environment["JAVA_HOME"] = "/usr/lib/jvm/java-15-openjdk-amd64"
 	commandLine "make", "all"
 }
 assemble.dependsOn(buildLauncher)
