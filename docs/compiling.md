@@ -39,9 +39,10 @@ debs/conquer-default-music.deb
 ### TL;DR
 
 ```
-sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev make
+sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev make wget
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
+#You can replace gradle with ./gradlew
 gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
 ```
 
@@ -75,8 +76,7 @@ This will need around 6-10 minutes, and will build `Launcher/Installer.exe`.
 
 ```
 pacman -S --noconfirm git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-headers-git zip unzip 
-pacman -S --noconfirm mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee
-mingw-w64-x86_64-gtk3
+pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee mingw-w64-x86_64-gtk3
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
