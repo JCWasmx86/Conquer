@@ -47,7 +47,7 @@ gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
 
 ### Notes
 
-Only arm64, arm, i386 and amd64 are supported.
+Only arm64, arm (Although a bit untested), i386 and amd64 are supported.
 
 ## Windows
 
