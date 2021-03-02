@@ -1,6 +1,3 @@
-#ifndef JAVA_HOME1
-#JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
-#endif
 ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include" -X -D__FILE__=\"redactedForPrivacy\" -X -Wno-builtin-macro-redefined -X -flto
 ifeq ($(OS),Windows_NT)
 	OS_TYPE = windows
@@ -11,15 +8,15 @@ else
 endif
 
 FLAGS = --pkg=gtk+-3.0 --pkg=posix --pkg=gio-2.0 --pkg=gee-0.8 --pkg=json-glib-1.0 --pkg=libarchive --pkg=libcurl
-
+JENV = `readlink -f /usr/bin/java|sed "s:bin/java::"`
 all: generateFiles downloadVAPIFiles build
-	echo $(JAVA_HOME)
+	echo $(JENV)
 generateFiles: src/gen/getLinuxJavaDirectory.vala.in src/gen/adoptopenJDKURL.vala.in src/gen/libericaJDKURL.vala.in
 	cpp -E -P src/gen/getLinuxJavaDirectory.vala.in >src/gen/getLinuxJavaDirectory.vala
 	cpp -E -P src/gen/adoptopenJDKURL.vala.in >src/gen/adoptopenJDKURL.vala
 	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
 build: src/*.vala src/$(OS_TYPE)/*.vala src/*.c src/$(OS_TYPE)/*.c
-	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher
+	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) src/$(OS_TYPE)/*.c src/*.c -o conquer_launcher -X -I$(JENV)/include -X -I$(JENV)/include/linux -X -I$(JENV)/include/win32
 downloadVAPIFiles:
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
