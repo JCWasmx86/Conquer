@@ -30,7 +30,7 @@ if(foo)
 }
 ```
 
-You can always assume the latest java version, so you can use every feature of the language without hesitations.
+You can always assume the latest java version, so you can use every feature of the language without any hesitations.
 
 Until Java 17, the use of preview features is allowed (`--enable-preview`), after that, only normal, non-preview
 features should be used.
@@ -55,6 +55,7 @@ public class Foo {
 Encapsulate as much as possible and prefer the usage of Streams and Lambda-expressions over loops. Make sure that each
 method only has one responsibility.
 
+The codestyle is currently quite ambiguous, but will be improved in the next weeks/months.
 ### Property files for translations
 
 These should be sorted alphabetically (`sort -o foo.properties foo.properties`)
