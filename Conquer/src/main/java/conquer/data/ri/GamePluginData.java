@@ -1,6 +1,13 @@
 package conquer.data.ri;
 
-import conquer.plugins.*;
+import conquer.plugins.AttackHook;
+import conquer.plugins.CityKeyHandler;
+import conquer.plugins.KeyHandler;
+import conquer.plugins.MoneyHook;
+import conquer.plugins.MoveHook;
+import conquer.plugins.Plugin;
+import conquer.plugins.RecruitHook;
+import conquer.plugins.ResourceHook;
 
 import java.util.List;
 import java.util.Map;

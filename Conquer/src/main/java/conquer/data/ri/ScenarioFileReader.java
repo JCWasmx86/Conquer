@@ -1,10 +1,20 @@
 package conquer.data.ri;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerInfoReader;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.InstalledScenario;
+import conquer.data.Resource;
+import conquer.data.Shared;
 import conquer.utils.Graph;
 
 import java.awt.Color;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;

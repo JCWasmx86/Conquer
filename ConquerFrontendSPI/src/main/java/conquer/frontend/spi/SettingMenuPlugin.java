@@ -1,9 +1,9 @@
 package conquer.frontend.spi;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
 import java.util.Optional;
 import java.util.Properties;
+import javax.swing.Icon;
 
 /**
  * An interface providing everything needed for settings.

@@ -5,8 +5,12 @@ import conquer.data.ICity;
 import conquer.data.Resource;
 import conquer.gui.utils.ImageResource;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * Allows the player to see some information about a resource and upgrade it.

@@ -1,6 +1,6 @@
 package org.jel.tool;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 
 public class Belenos {

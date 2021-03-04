@@ -1,16 +1,36 @@
 package conquer.gui;
 
-import conquer.data.*;
+import conquer.data.GlobalContext;
+import conquer.data.InstalledScenario;
+import conquer.data.SPIContextBuilder;
+import conquer.data.Shared;
+import conquer.data.XMLReader;
 import conquer.gui.utils.ImageResource;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Component;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 
 /**
  * This frame shows all installed scenarios in a JList.

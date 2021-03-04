@@ -1,6 +1,12 @@
 package conquer.testsuite;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.Gift;
+import conquer.data.GlobalContext;
+import conquer.data.IClan;
+import conquer.data.InstalledScenario;
+import conquer.data.PlayerGiftCallback;
+import conquer.data.XMLReader;
 
 import java.io.File;
 

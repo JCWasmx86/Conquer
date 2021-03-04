@@ -1,6 +1,7 @@
 package conquer.frontend.spi;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JMenuItem;
 
 public interface GUIMenuPlugin {
     /**

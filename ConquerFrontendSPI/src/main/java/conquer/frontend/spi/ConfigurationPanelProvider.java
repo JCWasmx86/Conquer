@@ -2,8 +2,8 @@ package conquer.frontend.spi;
 
 import conquer.data.ConquerInfo;
 
-import javax.swing.*;
 import java.util.Optional;
+import javax.swing.JPanel;
 
 /**
  * A provider for giving a configuration panel for undefined configuration.

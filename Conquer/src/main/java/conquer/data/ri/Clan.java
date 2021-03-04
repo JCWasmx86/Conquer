@@ -1,6 +1,11 @@
 package conquer.data.ri;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
+import conquer.data.Resource;
+import conquer.data.Shared;
+import conquer.data.SoldierUpgrade;
+import conquer.data.Version;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;

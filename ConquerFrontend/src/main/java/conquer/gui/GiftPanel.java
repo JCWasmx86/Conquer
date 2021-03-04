@@ -1,11 +1,20 @@
 package conquer.gui;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.Gift;
+import conquer.data.IClan;
+import conquer.data.Resource;
+import conquer.data.Shared;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Enables the player to give gifts to other clans. It consists of several

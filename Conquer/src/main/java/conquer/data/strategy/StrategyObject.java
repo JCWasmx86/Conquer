@@ -1,6 +1,10 @@
 package conquer.data.strategy;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.Gift;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Resource;
 import conquer.utils.Graph;
 
 import java.util.stream.Stream;

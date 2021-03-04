@@ -1,6 +1,10 @@
 package conquer.data.ri;
 
-import conquer.data.*;
+import conquer.data.ConquerInfo;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Resource;
+import conquer.data.Shared;
 
 import java.awt.Image;
 import java.util.ArrayList;

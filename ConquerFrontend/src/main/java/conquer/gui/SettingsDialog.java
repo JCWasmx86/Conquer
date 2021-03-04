@@ -3,7 +3,6 @@ package conquer.gui;
 import conquer.data.Shared;
 import conquer.frontend.spi.SettingMenuPlugin;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ServiceLoader;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 final class SettingsDialog extends JFrame {
     private static final long serialVersionUID = -2372114950563857591L;

@@ -1,6 +1,10 @@
 package conquer.data.builtin;
 
-import conquer.data.*;
+import conquer.data.Gift;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Resource;
+import conquer.data.StreamUtils;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;

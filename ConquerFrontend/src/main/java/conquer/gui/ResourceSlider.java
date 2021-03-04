@@ -3,7 +3,10 @@ package conquer.gui;
 import conquer.data.ConquerInfo;
 import conquer.data.Resource;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 
 /**
  * Shows a slider that determines the amount of a resource to be send as a gift
