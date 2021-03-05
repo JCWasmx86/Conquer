@@ -27,6 +27,7 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 
 #### Linux
 
+Only apt based distributions are supported. Only debian is tested.
 ```
 # Add repo to the package manager sources (apt)
 echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/  main extras" | sudo tee -a /etc/apt/sources.list
