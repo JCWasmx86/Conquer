@@ -83,9 +83,9 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 	}
 
 	// A bit copied from XMLReader.java
-	private Node findNode(final NodeList childs) {
-		for (var i = 0; i < childs.getLength(); i++) {
-			final var child = childs.item(i);
+	private Node findNode(final NodeList children) {
+		for (var i = 0; i < children.getLength(); i++) {
+			final var child = children.item(i);
 			if ("info".equals(child.getNodeName())) {
 				return child;
 			}

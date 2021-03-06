@@ -23,7 +23,7 @@ public final class Shared {
 			: System.getProperty("user.home") + "/.config/.conquer/";
 
 	/**
-	 * In this directory everything should be safed.
+	 * In this directory everything should be saved.
 	 */
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
 
