@@ -79,7 +79,7 @@ final class GiftPanel extends JPanel {
         p.add(button);
         this.box.setIgnoreRepaint(true);
         new ExtendedTimer(Utils.getRefreshRate(), e -> {
-            if (this.game.onlyOneClanAlive() && !this.game.isDead(this.game.getPlayerClan())) {
+            if (this.game.onlyOneClanAlive() || this.game.isDead(this.game.getPlayerClan())) {
                 button.setEnabled(false);
                 return;
             }
