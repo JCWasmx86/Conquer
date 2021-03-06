@@ -125,7 +125,7 @@ public class Installer implements Runnable {
 			this.writeError(Messages.getString("Installer.downloadFailed") + url); //$NON-NLS-1$
 		}
 		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile(); //$NON-NLS-1$
-		String newContents;
+		final String newContents;
 		try (final var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
 			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->", //$NON-NLS-1$

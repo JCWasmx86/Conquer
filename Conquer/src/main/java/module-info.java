@@ -13,7 +13,6 @@ import conquer.data.strategy.StrategyProvider;
  */
 module conquer {
 	requires transitive java.desktop;
-	requires static org.junit.jupiter.api;
 
 	exports conquer.init;
 	exports conquer.data;

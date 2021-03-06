@@ -729,7 +729,7 @@ final class Game implements ConquerInfo {
 							 final ICity other, final long numberOfSoldiersToMove) {
 		final var saved = this.moveSoldiersCheck(managed, src, reachableCities, other, numberOfSoldiersToMove);
 		final ICity destination;
-		List<ICity> list;
+		final List<ICity> list;
 		if (managed) {
 			destination = other;
 		} else {

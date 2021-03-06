@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class Graph<T> implements Consumer<T> {
 	private final double[][] matrix;
-	private ArrayList<T> values;
+	private final ArrayList<T> values;
 	private final ArrayList<Boolean> visited = new ArrayList<>();
 
 	private int cnt = 0;
