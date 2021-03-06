@@ -36,7 +36,7 @@ final class ResourceButton extends JPanel {
         this.city = city;
         this.resource = resource;
         this.info = city.getInfo();
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.infoLabel = new JLabel(this.getInfoLabelText(),
                 new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT); //$NON-NLS-1$
         this.add(this.infoLabel);

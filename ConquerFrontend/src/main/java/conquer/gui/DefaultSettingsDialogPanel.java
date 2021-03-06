@@ -47,18 +47,18 @@ public class DefaultSettingsDialogPanel extends JPanel {
     }
 
     DefaultSettingsDialogPanel() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(this.useSPI);
         this.add(this.level1Logging);
         this.add(this.level2Logging);
         final var networkTimeOutPanel = new JPanel();
-        networkTimeOutPanel.setLayout(new BoxLayout(networkTimeOutPanel, BoxLayout.X_AXIS));
+        networkTimeOutPanel.setLayout(new BoxLayout(networkTimeOutPanel, BoxLayout.LINE_AXIS));
         networkTimeOutPanel.add(new JLabel(Messages.getString("Settings.timeout")));
         networkTimeOutPanel.add(this.jtextfield);
         networkTimeOutPanel.add(new JLabel("ms"));
         this.add(networkTimeOutPanel);
         final var fpsSelectionPanel = new JPanel();
-        fpsSelectionPanel.setLayout(new javax.swing.BoxLayout(fpsSelectionPanel, javax.swing.BoxLayout.X_AXIS));
+        fpsSelectionPanel.setLayout(new javax.swing.BoxLayout(fpsSelectionPanel, BoxLayout.LINE_AXIS));
         final var fpsTextLabel = new JLabel(Messages.getMessage("Settings.fps", this.timeToFPS(Utils.getRefreshRate())));
         fpsSelectionPanel.add(fpsTextLabel);
         this.maximumFPS.addChangeListener(a ->

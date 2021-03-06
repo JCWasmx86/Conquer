@@ -25,7 +25,7 @@ final class SelectPanel extends JPanel {
     SelectPanel(final String buttonText, final String jtextfieldHint, final Consumer<String> consumer) {
         final var hintTextField = new HintTextField(jtextfieldHint);
         final var jbutton = new JButton();
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         jbutton.setAction(new AbstractAction() {
             private static final long serialVersionUID = 1969775571560431511L;
 

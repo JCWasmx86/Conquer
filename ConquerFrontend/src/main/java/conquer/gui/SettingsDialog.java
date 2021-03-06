@@ -51,7 +51,7 @@ final class SettingsDialog extends JFrame {
     private SettingsDialog() {
         this.setTitle("Settings");
         this.properties = this.getProperties();
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         final var pane = new JTabbedPane();
         pane.addTab("Default", this.panel);
         this.panel.restore(this.properties);
@@ -68,7 +68,7 @@ final class SettingsDialog extends JFrame {
         });
         this.add(pane);
         final var buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         final var save = new JButton(Messages.getString("Settings.save"));
         final var reset = new JButton(Messages.getString("Settings.reset"));
         buttonPanel.add(save);

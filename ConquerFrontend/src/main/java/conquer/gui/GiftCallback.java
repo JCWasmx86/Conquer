@@ -36,7 +36,7 @@ final class GiftCallback implements PlayerGiftCallback {
     public boolean acceptGift(final IClan source, final IClan destination, final Gift gift, final double oldValue,
                               final DoubleConsumer newValue, final StrategyObject strategyObject) {
         this.jframe = new JFrame();
-        this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.Y_AXIS));
+        this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.PAGE_AXIS));
         this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
         this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         if (gift.getNumberOfCoins() <= 0.005) {
@@ -55,7 +55,7 @@ final class GiftCallback implements PlayerGiftCallback {
             this.jframe.add(jlabel);
         }
         final var buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         // Accept, decline
         final var accept = new JButton(new AbstractAction() {
             private static final long serialVersionUID = -1684485024318434611L;

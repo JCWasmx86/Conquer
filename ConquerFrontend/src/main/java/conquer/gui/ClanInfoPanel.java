@@ -84,13 +84,13 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
      * Initializes this component.
      */
     void init() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.jep = new JEditorPane("text/html", this.generateText()); //$NON-NLS-1$
         this.jep.setEditable(false);
         this.jep.setIgnoreRepaint(true);
         ((DefaultCaret) this.jep.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         final var jps = new JPanel();
-        jps.setLayout(new BoxLayout(jps, BoxLayout.Y_AXIS));
+        jps.setLayout(new BoxLayout(jps, BoxLayout.PAGE_AXIS));
         jps.add(this.jep);
         jps.add(new UpgradeSoldiersPanel(this.clan));
         jps.add(new UpgradeSoldiersDefense(this.clan));

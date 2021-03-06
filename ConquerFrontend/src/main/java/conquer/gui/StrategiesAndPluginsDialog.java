@@ -55,7 +55,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 
     private void init() {
         this.setTitle(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.context = XMLReader.getInstance().readInfo(false);
         this.pluginNamesListCopy = new ArrayList<>(this.context.getPluginNames());
         this.plugins = new JList<>(this.context.getPluginNames().toArray(new String[0]));
@@ -112,13 +112,13 @@ final class StrategiesAndPluginsDialog extends JFrame {
                     this.strategyNamesListCopy.toArray(new String[0]));
         });
         final var contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
         contentPanel.add(this.plugins);
         contentPanel.add(addPlugin);
         contentPanel.add(this.strategies);
         contentPanel.add(addStrategy);
         final var buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         final var clearChanges = new JButton();
         clearChanges.setAction(new AbstractAction() {
             private static final long serialVersionUID = -6317479161221320082L;

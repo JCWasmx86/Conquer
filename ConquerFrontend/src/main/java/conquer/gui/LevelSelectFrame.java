@@ -46,7 +46,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
      * @param location The location of the created frame.
      */
     void init(final Point location) {
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.context = Shared.useSPI() ? new SPIContextBuilder().buildContext() : XMLReader.getInstance().readInfo();
         final var newScenarios = new DefaultListModel<InstalledScenario>();
         newScenarios.addAll(this.context.getInstalledMaps());

@@ -81,6 +81,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 		Collections.sort(list);
 		if (list.get(0) < 1500) {
 			// Don't waste resources, we may need them.
+			return;
 		}
 		final var giftedResources = new ArrayList<Double>();
 		for (final var totalResource : clan.getResources()) {

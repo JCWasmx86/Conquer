@@ -46,7 +46,7 @@ final class LevelInfo extends JFrame implements WindowListener {
      * @param context  The whole context
      */
     LevelInfo(final ConquerInfo game, final InstalledScenario is, final Point location, final GlobalContext context) {
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.addWindowListener(this);
         final var assocs = new DefaultListModel<ClanColorAssociation>();
         assocs.addAll(game.getClans().stream().map(a -> new ClanColorAssociation(a.getName(), a.getColor()))

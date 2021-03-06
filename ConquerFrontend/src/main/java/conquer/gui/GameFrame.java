@@ -80,9 +80,9 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
         this.game = game;
         this.addComponentListener(this);
         this.addWindowListener(this);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.basePanel = new JPanel();
-        this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.X_AXIS));
+        this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.LINE_AXIS));
     }
 
     GameFrame(final String saveName, final ConquerInfo game) {
@@ -391,7 +391,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
         final var buttonPanelScrollPane = new JScrollPane(this.buttonPanel);
         buttonPanelScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         final var panel1 = new JPanel();
-        panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.PAGE_AXIS));
         panel1.add(this.gameStageScrollPane);
         panel1.add(buttonPanelScrollPane);
         this.basePanel.add(panel1);

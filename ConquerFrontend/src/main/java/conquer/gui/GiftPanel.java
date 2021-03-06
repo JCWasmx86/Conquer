@@ -45,7 +45,7 @@ final class GiftPanel extends JPanel {
      * Initializes the panel.
      */
     void init() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         for (final var r : Resource.values()) {
             final var rs = new ResourceSlider(r, this.game);
             rs.init();
@@ -74,7 +74,7 @@ final class GiftPanel extends JPanel {
             }
         });
         final var p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.setLayout(new BoxLayout(p, BoxLayout.LINE_AXIS));
         p.add(this.box);
         p.add(button);
         this.box.setIgnoreRepaint(true);

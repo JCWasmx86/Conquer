@@ -30,7 +30,7 @@ final class UpgradeSoldiersDefense extends JPanel implements ActionListener {
      */
     UpgradeSoldiersDefense(final IClan clan) {
         this.clan = clan;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.infoLabel = new JLabel();
         this.infoLabel.setText(this.getInfoText());
         this.add(this.infoLabel);

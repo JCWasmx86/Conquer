@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import javax.swing.BoxLayout;
@@ -79,7 +78,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
      */
     void init(final Point location) {
         this.setLocation(location);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.addWindowListener(this);
         final JButton button = new RoundButton(new ImageResource("back.png"));
         this.add(button);
@@ -91,7 +90,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
                 try {
                     Desktop.getDesktop().browse(a.getURL().toURI());
                 } catch (final IOException | URISyntaxException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Error", ImageObserver.ERROR);
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else if (a.getEventType() == EventType.ENTERED) {
                 this.setTitle(a.getURL().toString());

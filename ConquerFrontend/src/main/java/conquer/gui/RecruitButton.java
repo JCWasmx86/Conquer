@@ -25,7 +25,7 @@ final class RecruitButton extends JPanel {
      */
     RecruitButton(final ICity city, final CityInfoPanel cip) {
         this.city = city;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         final var max = city.getInfo().maximumNumberOfSoldiersToRecruit(city.getClan(), city.getNumberOfPeople());
         this.js = new JSlider(0, (int) max);
         this.js.setValue((int) (max / 2));

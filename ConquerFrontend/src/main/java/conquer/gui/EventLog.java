@@ -93,7 +93,7 @@ final class EventLog extends JFrame implements MessageListener {
 
     private EventLog() {
         this.base = new JPanel();
-        this.base.setLayout(new BoxLayout(this.base, BoxLayout.Y_AXIS));
+        this.base.setLayout(new BoxLayout(this.base, BoxLayout.PAGE_AXIS));
         final JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         contentPane.setIgnoreRepaint(true);

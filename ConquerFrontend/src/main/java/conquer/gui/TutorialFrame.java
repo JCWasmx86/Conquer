@@ -33,7 +33,7 @@ final class TutorialFrame extends JFrame implements WindowListener, ActionListen
      */
     void init(final Point location) {
         this.setLocation(location);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         this.addWindowListener(this);
         final JButton button = new RoundButton(new ImageResource("back.png"));
         this.add(button);

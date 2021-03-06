@@ -62,7 +62,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
     }
 
     private void init() {
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
         final var menu = new JMenuBar();
         menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
         menu.setMaximumSize(new Dimension(100, 25));
@@ -85,7 +85,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
                 .forEach(menu::add);
         this.add(menu);
         final var panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         final var play = new JButton(Messages.getString("MainScreen.play")); //$NON-NLS-1$
         play.addActionListener(a -> {
             MainScreen.forwarded = false;

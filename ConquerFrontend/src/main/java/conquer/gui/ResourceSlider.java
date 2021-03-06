@@ -46,7 +46,7 @@ final class ResourceSlider extends JPanel {
      * Initialises this component.
      */
     void init() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.slider = new JSlider(0, 100);
         final var textfield = new JTextField(this.getText());
         textfield.setEditable(false);

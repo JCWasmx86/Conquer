@@ -26,9 +26,9 @@ final class PluginStrategySelectPanel extends JPanel {
     }
 
     private void init() {
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
         final var pluginPanel = new JPanel();
-        pluginPanel.setLayout(new BoxLayout(pluginPanel, BoxLayout.Y_AXIS));
+        pluginPanel.setLayout(new BoxLayout(pluginPanel, BoxLayout.PAGE_AXIS));
         this.context.getPlugins().forEach(a -> {
             final var jb = new JCheckBox(a.getName(), true);
             pluginPanel.add(jb);
@@ -39,7 +39,7 @@ final class PluginStrategySelectPanel extends JPanel {
         final var pluginScrollPanel = new JScrollPane(pluginPanel);
         this.add(pluginScrollPanel);
         final var strategiesPanel = new JPanel();
-        strategiesPanel.setLayout(new BoxLayout(strategiesPanel, BoxLayout.Y_AXIS));
+        strategiesPanel.setLayout(new BoxLayout(strategiesPanel, BoxLayout.PAGE_AXIS));
         this.context.getStrategies().forEach(a -> {
             // Skip builtin strategies
             final var module = a.getClass().getModule();

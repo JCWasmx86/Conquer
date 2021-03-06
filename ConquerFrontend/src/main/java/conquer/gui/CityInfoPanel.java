@@ -109,10 +109,10 @@ class CityInfoPanel extends JPanel implements ActionListener {
         this.statsViewer = new JEditorPane("text/html", this.generateText()); //$NON-NLS-1$
         ((DefaultCaret) this.statsViewer.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
         this.statsViewer.setEditable(false);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         final var scrollingPanel = new JPanel();
         scrollingPanel.add(this.statsViewer);
-        scrollingPanel.setLayout(new BoxLayout(scrollingPanel, BoxLayout.Y_AXIS));
+        scrollingPanel.setLayout(new BoxLayout(scrollingPanel, BoxLayout.PAGE_AXIS));
         for (final var r : Resource.values()) {
             final var resourceButton = new ResourceButton(r, this.city, this);
             scrollingPanel.add(resourceButton);

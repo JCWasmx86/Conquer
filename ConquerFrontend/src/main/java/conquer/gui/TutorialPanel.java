@@ -31,7 +31,7 @@ final class TutorialPanel extends JPanel {
     private static final long serialVersionUID = 177194549342492092L;
 
     void init(final JFrame parent) {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         final var buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
         this.add(buttonPanel);
