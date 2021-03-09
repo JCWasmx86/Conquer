@@ -63,7 +63,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			if (this.goodNode(scenarioInformation)) {
 				final var info = this.constructNode(scenarioInformation);
 				if (info != null) {
-					ret.add(this.constructNode(scenarioInformation));
+					ret.add(info);
 				}
 			}
 		}
