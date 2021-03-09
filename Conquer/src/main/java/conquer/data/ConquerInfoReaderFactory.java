@@ -18,7 +18,7 @@ public interface ConquerInfoReaderFactory {
 	/**
 	 * Gives the magic number for the file it is able to read.
 	 *
-	 * @return Magic number. May not be null.
+	 * @return Magic number. May never be null.
 	 */
 	byte[] getMagicNumber();
 }
