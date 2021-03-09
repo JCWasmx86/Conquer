@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 /**
  * An utilities class to convert an graph of cities to a stream and apply
  * several operations.
- * These are quite self-explaining. No error-checking is done. (E.g. null-checks)
+ * These methods are quite self-explaining. No error-checking is done. (E.g. null-checks)
  */
 public final class StreamUtils {
 	public static void forEach(final Graph<ICity> cities, final IClan clan, final Consumer<ICity> consumer) {

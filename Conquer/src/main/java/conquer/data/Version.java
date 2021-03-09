@@ -1,7 +1,12 @@
 package conquer.data;
 
 /**
- * A record describing a version.
+ * A record describing a version. A version consists of three parts:
+ * <ul>
+ *     <li><b>major: </b>A major version number. Incremented only when breaking API.</li>
+ *     <li><b>minor: </b>The minor version number. Incremented for smaller updated, e.g. bugfixes or API additions.</li>
+ *     <li><b>patch: </b>A patch number only incremented when a patch/bugfix is made.</li>
+ * </ul>
  */
 public record Version(int major, int minor, int patch) implements Comparable<Version> {
 
