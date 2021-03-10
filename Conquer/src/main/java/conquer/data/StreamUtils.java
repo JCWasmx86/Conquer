@@ -31,6 +31,7 @@ public final class StreamUtils {
 		return cities.getConnected(middle).stream();
 	}
 
+	//TODO: Write test
 	public static Stream<ICity> getCitiesAroundCity(final StrategyObject info, final Graph<ICity> cities,
 													final ICity middle) {
 		return StreamUtils.getCitiesAsStream(cities).filter(a -> info.canMove(middle, a));

@@ -92,9 +92,30 @@ class StreamUtilsTest {
 		expected.add(this.cities.getValue(2));
 		expected.add(this.cities.getValue(3));
 		final var actual = new HashSet<ICity>();
-		StreamUtils.getCitiesAroundCity(this.cities,this.cityList.get(1)).forEach(actual::add);
-		Assertions.assertEquals(expected,actual);
+		StreamUtils.getCitiesAroundCity(this.cities, this.cityList.get(1)).forEach(actual::add);
+		Assertions.assertEquals(expected, actual);
 	}
+
+	@Test
+	void testGetCitiesAroundCityWithGivenClan() {
+		final var expected = new HashSet<ICity>();
+		expected.add(this.cities.getValue(2));
+		expected.add(this.cities.getValue(3));
+		final var actual = new HashSet<ICity>();
+		StreamUtils.getCitiesAroundCity(this.cities, this.cityList.get(4), this.clans.get(0)).forEach(actual::add);
+		Assertions.assertEquals(expected, actual);
+	}
+
+	@Test
+	void testGetCitiesAroundCityWithGivenClanWithSameClanAsSourceCity() {
+		final var expected = new HashSet<ICity>();
+		expected.add(this.cities.getValue(5));
+		expected.add(this.cities.getValue(6));
+		final var actual = new HashSet<ICity>();
+		StreamUtils.getCitiesAroundCity(this.cities, this.cityList.get(4), this.clans.get(1)).forEach(actual::add);
+		Assertions.assertEquals(expected, actual);
+	}
+
 	static class DummyCity implements ICity {
 		private final IClan clan;
 		private final String name;
