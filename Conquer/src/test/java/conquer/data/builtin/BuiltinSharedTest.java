@@ -14,7 +14,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuiltinSharedTest {
+class BuiltinSharedTest {
 	@Test
 	void testClanSum() {
 		final var clan = new IClan() {
