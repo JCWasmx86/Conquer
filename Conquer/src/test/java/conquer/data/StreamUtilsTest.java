@@ -13,6 +13,7 @@ import org.junit.jupiter.api.TestInstance;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -84,9 +85,19 @@ class StreamUtilsTest {
 		Assertions.assertEquals(counter.get(), 4, "Didn't visit all cities of a clan");
 	}
 
-	class DummyCity implements ICity {
-		private IClan clan;
-		private String name;
+	@Test
+	void testGetCitiesAroundCity() {
+		final var expected = new HashSet<ICity>();
+		expected.add(this.cities.getValue(0));
+		expected.add(this.cities.getValue(2));
+		expected.add(this.cities.getValue(3));
+		final var actual = new HashSet<ICity>();
+		StreamUtils.getCitiesAroundCity(this.cities,this.cityList.get(1)).forEach(actual::add);
+		Assertions.assertEquals(expected,actual);
+	}
+	static class DummyCity implements ICity {
+		private final IClan clan;
+		private final String name;
 
 		public DummyCity(final IClan clan, final String name) {
 			this.clan = clan;
@@ -184,42 +195,42 @@ class StreamUtilsTest {
 		}
 
 		@Override
-		public double productionPerRound(Resource resource) {
+		public double productionPerRound(final Resource resource) {
 			return 0;
 		}
 
 		@Override
-		public void setClan(IClan clan) {
+		public void setClan(final IClan clan) {
 
 		}
 
 		@Override
-		public void setDefense(double newPowerOfUpdate) {
+		public void setDefense(final double newPowerOfUpdate) {
 
 		}
 
 		@Override
-		public void setGrowth(double growth) {
+		public void setGrowth(final double growth) {
 
 		}
 
 		@Override
-		public void setNumberOfPeople(long numberOfPeople) {
+		public void setNumberOfPeople(final long numberOfPeople) {
 
 		}
 
 		@Override
-		public void setNumberOfSoldiers(long numberOfSoldiers) {
+		public void setNumberOfSoldiers(final long numberOfSoldiers) {
 
 		}
 
 		@Override
-		public int compareTo(ICity o) {
+		public int compareTo(final ICity o) {
 			return 0;
 		}
 	}
 
-	class DummyClan implements IClan {
+	static class DummyClan implements IClan {
 
 		private final String name;
 
@@ -303,7 +314,7 @@ class StreamUtilsTest {
 		}
 
 		@Override
-		public void init(StrategyProvider[] strategies, Version version) {
+		public void init(final StrategyProvider[] strategies, final Version version) {
 
 		}
 
@@ -313,37 +324,37 @@ class StreamUtilsTest {
 		}
 
 		@Override
-		public void setCoins(double coins) {
+		public void setCoins(final double coins) {
 
 		}
 
 		@Override
-		public void setColor(Color color) {
+		public void setColor(final Color color) {
 
 		}
 
 		@Override
-		public void setFlags(int flags) {
+		public void setFlags(final int flags) {
 
 		}
 
 		@Override
-		public void setId(int id) {
+		public void setId(final int id) {
 
 		}
 
 		@Override
-		public void setName(String name) {
+		public void setName(final String name) {
 
 		}
 
 		@Override
-		public void setResources(List<Double> resources) {
+		public void setResources(final List<Double> resources) {
 
 		}
 
 		@Override
-		public void setResourceStats(List<Double> resourceStats) {
+		public void setResourceStats(final List<Double> resourceStats) {
 
 		}
 
@@ -363,17 +374,17 @@ class StreamUtilsTest {
 		}
 
 		@Override
-		public void setStrategy(Strategy strategy) {
+		public void setStrategy(final Strategy strategy) {
 
 		}
 
 		@Override
-		public void setStrategyData(StrategyData strategyData) {
+		public void setStrategyData(final StrategyData strategyData) {
 
 		}
 
 		@Override
-		public void update(int currentRound) {
+		public void update(final int currentRound) {
 
 		}
 
