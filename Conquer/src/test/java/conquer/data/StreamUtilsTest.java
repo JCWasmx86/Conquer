@@ -70,8 +70,16 @@ class StreamUtilsTest {
 	@Test
 	void testForEach() {
 		final var counter = new AtomicInteger();
-		StreamUtils.forEach(this.cities, a -> counter.incrementAndGet());
-		Assertions.assertEquals(counter.get(), 16, "Didn't visit all cities");
+		StreamUtils.forEach(this.cities, this.clans.get(0), a -> {
+			Assertions.assertEquals(a.getClan(), this.clans.get(0));
+			counter.incrementAndGet();
+		});
+		Assertions.assertEquals(counter.get(), 4, "Didn't visit all cities of a clan");
+	}
+
+	@Test
+	void testForEachWithClan() {
+
 	}
 
 	class DummyCity implements ICity {
@@ -365,6 +373,13 @@ class StreamUtilsTest {
 		@Override
 		public void update(int currentRound) {
 
+		}
+
+		@Override
+		public String toString() {
+			return "DummyClan{" +
+					"name='" + this.name + '\'' +
+					'}';
 		}
 	}
 
