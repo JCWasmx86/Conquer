@@ -99,7 +99,7 @@ class BuiltinSharedTest {
 			}
 
 			@Override
-			public void init(StrategyProvider[] strategies, Version version) {
+			public void init(final StrategyProvider[] strategies, final Version version) {
 
 			}
 
@@ -109,37 +109,37 @@ class BuiltinSharedTest {
 			}
 
 			@Override
-			public void setCoins(double coins) {
+			public void setCoins(final double coins) {
 
 			}
 
 			@Override
-			public void setColor(Color color) {
+			public void setColor(final Color color) {
 
 			}
 
 			@Override
-			public void setFlags(int flags) {
+			public void setFlags(final int flags) {
 
 			}
 
 			@Override
-			public void setId(int id) {
+			public void setId(final int id) {
 
 			}
 
 			@Override
-			public void setName(String name) {
+			public void setName(final String name) {
 
 			}
 
 			@Override
-			public void setResources(List<Double> resources) {
+			public void setResources(final List<Double> resources) {
 
 			}
 
 			@Override
-			public void setResourceStats(List<Double> resourceStats) {
+			public void setResourceStats(final List<Double> resourceStats) {
 
 			}
 
@@ -159,17 +159,17 @@ class BuiltinSharedTest {
 			}
 
 			@Override
-			public void setStrategy(Strategy strategy) {
+			public void setStrategy(final Strategy strategy) {
 
 			}
 
 			@Override
-			public void setStrategyData(StrategyData strategyData) {
+			public void setStrategyData(final StrategyData strategyData) {
 
 			}
 
 			@Override
-			public void update(int currentRound) {
+			public void update(final int currentRound) {
 
 			}
 		};
@@ -178,9 +178,7 @@ class BuiltinSharedTest {
 
 	@Test
 	void testClanSumNull() {
-		Assertions.assertThrows(InternalError.class, () -> {
-			BuiltinShared.sum((IClan) null);
-		});
+		Assertions.assertThrows(InternalError.class, () -> BuiltinShared.sum((IClan) null));
 	}
 
 	@Test
@@ -190,8 +188,6 @@ class BuiltinSharedTest {
 
 	@Test
 	void testGiftSumNull() {
-		Assertions.assertThrows(InternalError.class, () -> {
-			BuiltinShared.sum((Gift) null);
-		});
+		Assertions.assertThrows(InternalError.class, () -> BuiltinShared.sum((Gift) null));
 	}
 }

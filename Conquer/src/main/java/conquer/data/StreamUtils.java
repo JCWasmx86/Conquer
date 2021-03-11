@@ -41,10 +41,12 @@ public final class StreamUtils {
 		return StreamUtils.getCitiesAroundCity(cities, middle, a -> a.getClan() == clan);
 	}
 
+	//TODO: Write test
 	public static Stream<ICity> getCitiesAroundCity(final StrategyObject info, final Graph<ICity> cities,
 													final ICity middle, final IClan clan) {
 		return StreamUtils.getCitiesAroundCity(info, cities, middle, a -> a.getClan() == clan);
 	}
+
 
 	public static Stream<ICity> getCitiesAroundCity(final Graph<ICity> cities, final ICity middle,
 													final Predicate<ICity> predicate) {
