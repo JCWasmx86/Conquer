@@ -140,7 +140,7 @@ public final class SortedStrategyImpl implements Strategy {
             var num = 0;
             for (final var c : ownCities) {
                 var flag = false;
-                flag |= obj.upgradeDefense(c);
+                flag = obj.upgradeDefense(c);
                 for (final Resource r : Resource.values()) {
                     flag |= obj.upgradeResource(r, c);
                 }
@@ -157,7 +157,7 @@ public final class SortedStrategyImpl implements Strategy {
     private void upgradeClan(final IClan clan) {
         while (true) {
             var flag = false;
-            flag |= clan.upgradeSoldiersDefense();
+            flag = clan.upgradeSoldiersDefense();
             flag |= clan.upgradeSoldiersOffense();
             flag |= clan.upgradeSoldiers();
             if (!flag) {

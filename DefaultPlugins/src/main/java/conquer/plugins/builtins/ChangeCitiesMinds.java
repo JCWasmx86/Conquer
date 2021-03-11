@@ -22,7 +22,6 @@ public final class ChangeCitiesMinds implements Plugin {
 		try {
 			soldiersToCivilians = (double) c.getNumberOfSoldiers() / (double) c.getNumberOfPeople();
 		} catch (final ArithmeticException ae) {
-			soldiersToCivilians = 1;
 			Shared.LOGGER.exception(ae);
 		}
 		if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {

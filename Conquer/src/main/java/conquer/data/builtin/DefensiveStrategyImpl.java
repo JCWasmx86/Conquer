@@ -112,7 +112,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 			final Predicate<ICity> predicate = c -> c.getClan() != clan;
 			final var cnt1 = StreamUtils.getCitiesAroundCity(this.object, this.graph, a, predicate).count();
 			final var cnt2 = StreamUtils.getCitiesAroundCity(this.object, this.graph, b, predicate).count();
-			if ((cnt1 == cnt2) || ((cnt1 == 0) && (cnt2 == 0))) {
+			if (cnt1 == cnt2) {
 				return Double.compare(a.getDefense(), b.getDefense());
 			} else {
 				return Long.compare(cnt1, cnt2);
