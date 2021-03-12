@@ -41,8 +41,7 @@ conquer_launcher
 
 #### Windows
 
-Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (
-Needs admin rights)
+Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
 
 A shortcut on your desktop will be created automatically. Start it to run Conquer.
 
@@ -61,7 +60,7 @@ See [docs/compiling.md](docs/compiling.md)
 *Conquer* first was a project for school. Because I already planned writing a separate frontend, I decoupled the
 logic/the game engine (In the subdirectory Conquer) from the GUI (Originally written with greenfoot), as greenfoot had a
 lot of limitations and a lot of ugly and spooky code (Like reflection) was required to remove these restrictions.
-Another reason were the missing capabilites for managing a huge project (E.g. no package support, the IDE was lacking a
+Another reason were the missing capabilities for managing a huge project (E.g. no package support, the IDE was lacking a
 lot of features, ...)
 
 After I gave my project to the teacher, I started to remove some little greenfoot-specific code in the game-engine and
@@ -69,6 +68,8 @@ started to write a far, far superior GUI using Java Swing. I improved the code s
 70% are unchanged and are the original code of my assignment. (The greenfoot-based code may be pushed to the Legacy
 branch)
 
+Now, after several months of work, I rewrote/restructured huge parts of this game to improve the UX and to speed up
+the development of further improvements (E.g. by migrating to Gradle and replacing the C launcher with Vala)
 ### Credits
 
 1. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
