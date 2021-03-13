@@ -17,7 +17,7 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 - A plugin API for adding new, fancy stuff
 - An API for adding new strategies for the computer enemy to the game.
 
-2. Embeddability
+2. Embeddable
 3. Exchangeable GUI
 4. Highly advanced algorithms
 5. A steadily growing set of default plugins.

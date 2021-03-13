@@ -59,9 +59,9 @@ public final class XMLReader {
 		return collection.stream().distinct().collect(Collectors.toList());
 	}
 
-	private Node findNode(final NodeList childs) {
-		for (var i = 0; i < childs.getLength(); i++) {
-			final var child = childs.item(i);
+	private Node findNode(final NodeList children) {
+		for (var i = 0; i < children.getLength(); i++) {
+			final var child = children.item(i);
 			if ("info".equals(child.getNodeName())) {
 				return child;
 			}

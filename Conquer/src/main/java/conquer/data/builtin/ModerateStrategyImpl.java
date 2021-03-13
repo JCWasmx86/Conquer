@@ -81,15 +81,13 @@ public final class ModerateStrategyImpl implements Strategy {
 				}
 			}
 			final var ownCoins = clan.getCoins();
-			final var coins = otherClan.getCoins();
-			if ((ownCoins < coins) || (ownCoins == 0)) {
+			final var otherClanCoins = otherClan.getCoins();
+			if ((ownCoins < otherClanCoins) || (ownCoins == 0) || Math.random() < 0.2) {
 				continue;
 			}
-			final var coinsToGive = Math.random() * 0.25 * ownCoins;
+			final var coinsToGive = Math.random() * 0.35 * ownCoins;
 			final var gift = new Gift(resourcesToGive, coinsToGive);
-			if (Math.random() < 0.2) {
-				object.sendGift(clan, otherClan, gift);
-			}
+			object.sendGift(clan, otherClan, gift);
 		}
 	}
 
