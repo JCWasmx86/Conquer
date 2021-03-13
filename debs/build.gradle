@@ -40,6 +40,7 @@ task buildConquerDeb() {
 		s += "Maintainer: JCWasmx86\n"
 		//TODO: Check whether some are redundant or missing
 		s += "Depends: conquer-engine, conquer-gui, libcurl4, libarchive13, libgtk-3-0, conquer-default, conquer-default-music, conquer-default-scenarios, libjson-glib-1.0-0, libgee-0.8-2, libjson-glib-1.0-0\n"
+		s += "Suggests: openjdk-15-jdk\n"
 		s += "Description: The native parts for conquer-gui\n"
 		s += "Installed-Size: " + sizeInKb + "\n\n"
 		fout.write(s.getBytes())
