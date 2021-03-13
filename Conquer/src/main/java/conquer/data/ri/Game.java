@@ -109,7 +109,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addAttackHook(final AttackHook ah) {
-		this.throwIfNull(ah,"addAttackHook - hook is null");
+		this.throwIfNull(ah, "addAttackHook - hook is null");
 		this.data.getAttackHooks().add(ah);
 	}
 
@@ -145,7 +145,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addMessageListener(final MessageListener ml) {
-		this.throwIfNull(ml,"addMessageListener - listener is null");
+		this.throwIfNull(ml, "addMessageListener - listener is null");
 		this.events.addListener(ml);
 
 	}
@@ -176,7 +176,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addResourceHook(final ResourceHook rh) {
-		this.throwIfNull(rh,"addResourceHook - hook is null");
+		this.throwIfNull(rh, "addResourceHook - hook is null");
 		this.data.getResourceHooks().add(rh);
 	}
 
@@ -714,7 +714,8 @@ final class Game implements ConquerInfo {
 			final var destinationIsCity = destination instanceof City;
 			final var sourceIsCity = src instanceof City;
 			// Workaround to allow deterministic output
-			final var bool3 = destinationIsCity && sourceIsCity && ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer();
+			final var bool3 =
+					destinationIsCity && sourceIsCity && ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer();
 			if (bool3) {
 				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
 			} else {
@@ -791,7 +792,8 @@ final class Game implements ConquerInfo {
 			clan.setCoins(clan.getCoins() + toGet);
 		});
 		this.clans.forEach(clan -> this.data.getMoneyHooks().forEach(
-				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan)));
+				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()),
+						clan)));
 
 	}
 
@@ -1050,7 +1052,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public double getRelationship(final IClan a, final IClan b) {
-		this.throwIfNull(a,"getRelationship - clan A is null");
+		this.throwIfNull(a, "getRelationship - clan A is null");
 		this.throwIfNull(b, "getRelationship - clan B is null");
 		if (a == b) {
 			throw new IllegalArgumentException("clanA==clanB");

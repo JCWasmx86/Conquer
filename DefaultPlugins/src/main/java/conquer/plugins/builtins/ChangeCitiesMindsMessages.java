@@ -4,19 +4,19 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class ChangeCitiesMindsMessages {
-    private static final String BUNDLE_NAME = "conquer.plugins.builtins.changeCitiesMinds"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "conquer.plugins.builtins.changeCitiesMinds"; //$NON-NLS-1$
 
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-            .getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
+			.getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
 
-    public static String getString(final String key) {
-        try {
-            return ChangeCitiesMindsMessages.RESOURCE_BUNDLE.getString(key);
-        } catch (final MissingResourceException e) {
-            return '!' + key + '!';
-        }
-    }
+	public static String getString(final String key) {
+		try {
+			return ChangeCitiesMindsMessages.RESOURCE_BUNDLE.getString(key);
+		} catch (final MissingResourceException e) {
+			return '!' + key + '!';
+		}
+	}
 
-    private ChangeCitiesMindsMessages() {
-    }
+	private ChangeCitiesMindsMessages() {
+	}
 }

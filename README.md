@@ -28,6 +28,7 @@ Will you fail and get defeated or will you lead your clan to endless glory and w
 #### Linux
 
 Only apt based distributions are supported. Only debian is tested.
+
 ```
 # Add repo to the package manager sources (apt)
 echo "deb https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/  main extras" | sudo tee -a /etc/apt/sources.list
@@ -41,7 +42,8 @@ conquer_launcher
 
 #### Windows
 
-Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (Needs admin rights)
+Fetch `Installer.exe` from [the latest release](https://github.com/JCWasmx86/Conquer/releases/latest) and execute it. (
+Needs admin rights)
 
 A shortcut on your desktop will be created automatically. Start it to run Conquer.
 
@@ -68,8 +70,9 @@ started to write a far, far superior GUI using Java Swing. I improved the code s
 70% are unchanged and are the original code of my assignment. (The greenfoot-based code may be pushed to the Legacy
 branch)
 
-Now, after several months of work, I rewrote/restructured huge parts of this game to improve the UX and to speed up
-the development of further improvements (E.g. by migrating to Gradle and replacing the C launcher with Vala)
+Now, after several months of work, I rewrote/restructured huge parts of this game to improve the UX and to speed up the
+development of further improvements (E.g. by migrating to Gradle and replacing the C launcher with Vala)
+
 ### Credits
 
 1. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
