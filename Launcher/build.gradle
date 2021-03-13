@@ -123,13 +123,15 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildInstaller)
 }
 clean {
-	delete fileTree(".") {
-		include "**/*.jar"
-		include "**/*.exe"
-	}
-	delete "LICENSE.txt"
-	delete "Conquer.license"
-	exec {
-		commandLine "make", "clean"
+	doLast {
+		delete fileTree(".") {
+			include "**/*.jar"
+			include "**/*.exe"
+		}
+		delete "LICENSE.txt"
+		delete "Conquer.license"
+		exec {
+			commandLine "make", "clean"
+		}
 	}
 }

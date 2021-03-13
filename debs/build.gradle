@@ -76,7 +76,7 @@ task buildConquerGuiDeb() {
 			into "conquer-gui/usr/share/conquer-gui"
 		}
 		copy {
-			from "${project.rootDir}/ConquerFrontend/build/libs/"
+			from "${project.rootDir}/auxiliary/jars/"
 			include "jlayer.jar"
 			include "jorbis.jar"
 			include "mp3spi.jar"

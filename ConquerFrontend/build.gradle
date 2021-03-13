@@ -25,11 +25,6 @@ jar {
 	}
 }
 task conquerResources(type: Jar) {
-	copy {
-		from file("${project.rootDir}/auxiliary/jars")
-		include "*.jar"
-		into "build/libs/"
-	}
 	from sourceSets.main.output
 	exclude "**/*.class"
 	baseName = "Conquer_frontend_resources"
@@ -41,9 +36,9 @@ jar.dependsOn(conquerResources)
 
 run {
 	jvmArgs = ["--enable-preview"]
-	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
-			"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
-			"build/libs/vorbisspi.jar",
+	classpath "../auxiliary/jars/tritonus.jar", "../auxiliary/jars/jlayer.jar",
+			"../auxiliary/jars/jorbis.jar", "../auxiliary/jars/mp3spi.jar",
+			"../auxiliary/jars/vorbisspi.jar",
 			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")

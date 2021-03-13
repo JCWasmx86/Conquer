@@ -50,12 +50,14 @@ ext.src = [
 ]
 
 task downloadJarFiles {
-	mkdir "jars"
-	for (s in src) {
-		if (!file(s.value).exists()) {
-			download {
-				src s.key
-				dest new File("${project.rootDir}/auxiliary", s.value)
+	doLast {
+		mkdir "jars"
+		for (s in src) {
+			if (!file(s.value).exists()) {
+				download {
+					src s.key
+					dest new File("${project.rootDir}/auxiliary", s.value)
+				}
 			}
 		}
 	}
