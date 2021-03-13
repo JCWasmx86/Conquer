@@ -109,7 +109,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addAttackHook(final AttackHook ah) {
-		this.throwIfNull(ah);
+		this.throwIfNull(ah,"addAttackHook - hook is null");
 		this.data.getAttackHooks().add(ah);
 	}
 
@@ -145,38 +145,38 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addMessageListener(final MessageListener ml) {
-		this.throwIfNull(ml);
+		this.throwIfNull(ml,"addMessageListener - listener is null");
 		this.events.addListener(ml);
 
 	}
 
 	@Override
 	public void addMoneyHook(final MoneyHook mh) {
-		this.throwIfNull(mh);
+		this.throwIfNull(mh, "addMoneyHook - hook is null");
 		this.data.getMoneyHooks().add(mh);
 	}
 
 	@Override
 	public void addMoveHook(final MoveHook mh) {
-		this.throwIfNull(mh);
+		this.throwIfNull(mh, "addMoveHook - hook is null");
 		this.data.getMoveHooks().add(mh);
 	}
 
 	@Override
 	public void addMusic(final String fileName) {
-		this.throwIfNull(fileName);
+		this.throwIfNull(fileName, "addMusic - fileName is null");
 		this.data.getExtraMusic().add(fileName);
 	}
 
 	@Override
 	public void addRecruitHook(final RecruitHook rh) {
-		this.throwIfNull(rh);
+		this.throwIfNull(rh, "addRecruitHook - hook is null");
 		this.data.getRecruitHooks().add(rh);
 	}
 
 	@Override
 	public void addResourceHook(final ResourceHook rh) {
-		this.throwIfNull(rh);
+		this.throwIfNull(rh,"addResourceHook - hook is null");
 		this.data.getResourceHooks().add(rh);
 	}
 
@@ -1050,8 +1050,8 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public double getRelationship(final IClan a, final IClan b) {
-		this.throwIfNull(a);
-		this.throwIfNull(b);
+		this.throwIfNull(a,"getRelationship - clan A is null");
+		this.throwIfNull(b, "getRelationship - clan B is null");
 		if (a == b) {
 			throw new IllegalArgumentException("clanA==clanB");
 		}
@@ -1134,7 +1134,7 @@ final class Game implements ConquerInfo {
 
 	private void throwIfNull(final Object obj) {
 		if (obj == null) {
-			throw new IllegalArgumentException("No null allowed!");
+			throw new IllegalArgumentException("null was passed where a non-null value was expected!");
 		}
 	}
 
