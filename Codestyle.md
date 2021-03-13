@@ -56,6 +56,7 @@ Encapsulate as much as possible and prefer the usage of Streams and Lambda-expre
 method only has one responsibility.
 
 The codestyle is currently quite ambiguous, but will be improved in the next weeks/months.
+
 ### Property files for translations
 
 These should be sorted alphabetically (`sort -o foo.properties foo.properties`)
