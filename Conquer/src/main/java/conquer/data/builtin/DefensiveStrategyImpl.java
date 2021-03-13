@@ -23,8 +23,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-							  final double oldValue, final DoubleConsumer newValue,
-							  final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		BuiltinShared.assertThat(sourceClan != null, "sourceClan==null");
 		BuiltinShared.assertThat(destinationClan != null, "destinationClan==null");
 		BuiltinShared.assertThat(gift != null, "gift==null");

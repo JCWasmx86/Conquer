@@ -14,8 +14,7 @@ class GiftTest {
 
 	@Test
 	void testNegativeResources() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-				1.0, 1.0, -1.0), 50));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0), 50));
 	}
 
 	@Test
@@ -30,14 +29,12 @@ class GiftTest {
 
 	@Test
 	void testNan() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-				1.0, 1.0, Double.NaN), 50));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.NaN), 50));
 	}
 
 	@Test
 	void testNegative() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-				1.0, 1.0, -1.0), 50));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0), 50));
 	}
 
 	@Test
@@ -50,7 +47,6 @@ class GiftTest {
 
 	@Test
 	void testPositiveInfinity() {
-		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-				1.0, 1.0, Double.POSITIVE_INFINITY), 50));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, Double.POSITIVE_INFINITY), 50));
 	}
 }

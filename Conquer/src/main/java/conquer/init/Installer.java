@@ -24,21 +24,17 @@ import java.util.zip.ZipInputStream;
 /// Why is this here? This is really weird.
 public class Installer implements Runnable {
 	// The default info.xml file.
-	private static final String DEFAULT_XML = "<!--Info file for conquer. Edit to add new scenarios, plugins and " +
-			"strategies -->" //$NON-NLS-1$
+	private static final String DEFAULT_XML = "<!--Info file for conquer. Edit to add new scenarios, plugins and strategies -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "<info>" + System.lineSeparator() //$NON-NLS-1$
-			+ "\t<!-- Add a new scenario. name is the name of the scenario, file points to the scenario file and " +
-			"thumbnail points to an image show while selecting a scenario -->" //$NON-NLS-1$
+			+ "\t<!-- Add a new scenario. name is the name of the scenario, file points to the scenario file and thumbnail points to an image show while selecting a scenario -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "\t<scenarios>" + System.lineSeparator() //$NON-NLS-1$
 			+ "\t\t<!-- <scenario name=\"foo.bar.Baz\" file=\"file.data\" thumbnail=\"thumb.png\" /> -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "\t</scenarios>" + System.lineSeparator() //$NON-NLS-1$
 			+ "\t<!-- Add a new plugin. className is the name of the class implementing Plugin -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "\t<plugins>" + System.lineSeparator() //$NON-NLS-1$
-			+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator()
-			//$NON-NLS-1$
+			+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator() //$NON-NLS-1$
 			+ "\t</plugins>" + System.lineSeparator() //$NON-NLS-1$
-			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->" //$NON
-			// -NLS-1$
+			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator() //$NON-NLS-1$
 			+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->" //$NON-NLS-1$
 			+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator(); //$NON-NLS-1$ //$NON-NLS-2$
@@ -120,8 +116,7 @@ public class Installer implements Runnable {
 		}
 		this.write(Messages.getString("Installer.pleaseWait")); //$NON-NLS-1$
 		final var url = new URL(
-				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip");
-		//$NON-NLS-1$
+				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip"); //$NON-NLS-1$
 		final var messageString = Messages.getMessage("Installer.downloading", url.toString()); //$NON-NLS-1$
 		this.write(messageString); // $NON-NLS-1$
 		try (final var urlStream = url.openStream()) {
@@ -133,8 +128,7 @@ public class Installer implements Runnable {
 		final String newContents;
 		try (final var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { //$NON-NLS-1$
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
-			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->",
-					//$NON-NLS-1$
+			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->", //$NON-NLS-1$
 					"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />"); //$NON-NLS-1$
 		}
 		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
