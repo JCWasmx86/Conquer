@@ -109,7 +109,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addAttackHook(final AttackHook ah) {
-		this.throwIfNull(ah,"addAttackHook - hook is null");
+		this.throwIfNull(ah, "addAttackHook - hook is null");
 		this.data.getAttackHooks().add(ah);
 	}
 
@@ -145,7 +145,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addMessageListener(final MessageListener ml) {
-		this.throwIfNull(ml,"addMessageListener - listener is null");
+		this.throwIfNull(ml, "addMessageListener - listener is null");
 		this.events.addListener(ml);
 
 	}
@@ -176,7 +176,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addResourceHook(final ResourceHook rh) {
-		this.throwIfNull(rh,"addResourceHook - hook is null");
+		this.throwIfNull(rh, "addResourceHook - hook is null");
 		this.data.getResourceHooks().add(rh);
 	}
 
@@ -1050,7 +1050,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public double getRelationship(final IClan a, final IClan b) {
-		this.throwIfNull(a,"getRelationship - clan A is null");
+		this.throwIfNull(a, "getRelationship - clan A is null");
 		this.throwIfNull(b, "getRelationship - clan B is null");
 		if (a == b) {
 			throw new IllegalArgumentException("clanA==clanB");
