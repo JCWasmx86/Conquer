@@ -109,7 +109,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addAttackHook(final AttackHook ah) {
-		this.throwIfNull(ah,"addAttackHook - hook is null");
+		this.throwIfNull(ah, "addAttackHook - hook is null");
 		this.data.getAttackHooks().add(ah);
 	}
 
@@ -145,7 +145,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addMessageListener(final MessageListener ml) {
-		this.throwIfNull(ml,"addMessageListener - listener is null");
+		this.throwIfNull(ml, "addMessageListener - listener is null");
 		this.events.addListener(ml);
 
 	}
@@ -176,26 +176,18 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public void addResourceHook(final ResourceHook rh) {
-		this.throwIfNull(rh,"addResourceHook - hook is null");
+		this.throwIfNull(rh, "addResourceHook - hook is null");
 		this.data.getResourceHooks().add(rh);
-	}
-
-	private long aiCalculateNumberOfTroopsToAttackWith(final ICity src, final ICity destination) {
-		final var powerOfAttacker = src.getNumberOfSoldiers();
-		if (powerOfAttacker == 0) {
-			return 0;
-		}
-		return this.maximumNumberToMove(src.getClan(), src, destination, powerOfAttacker);
 	}
 
 	@Override
 	public void attack(final ICity src, final ICity destination, final boolean managed, final long num) {
 		this.throwIfNull(src, "src==null");
 		this.throwIfNull(destination, "destination==null");
-		this.checkPreconditions(managed, num);
-		this.cantAttack(src, destination);
-		final var powerOfAttacker = this.calculatePowerOfAttacker(src, destination, managed, num);
-		if (((powerOfAttacker == 0) && !src.isPlayerCity()) || ((!src.isPlayerCity()) && (powerOfAttacker == 1))) {
+		final var attackingTool = new AttackingTool(src, destination, managed,num);
+		attackingTool.initVars(this.cities,(a,b,c,d)->this.maximumNumberToMove(a,b,c,d));
+		attackingTool.firstChecks();
+		if(attackingTool.isAborted()) {
 			return;
 		}
 		final var diff = this.setup(powerOfAttacker, src, destination);
@@ -263,18 +255,6 @@ final class Game implements ConquerInfo {
 		return (long) -cleanedDiff;
 	}
 
-	private long calculatePowerOfAttacker(final ICity src, final ICity destination, final boolean managed,
-										  final long numberOfSoldiers) {
-		if (managed) {
-			if (destination.isPlayerCity() && (destination instanceof City c)) {
-				c.attackByPlayer();
-			}
-			return numberOfSoldiers;
-		} else {
-			return this.aiCalculateNumberOfTroopsToAttackWith(src, destination);
-		}
-	}
-
 	private double calculatePowerOfDefender(final ICity city) {
 		final var clan = city.getClan();
 		return city.getDefense() + (city.getNumberOfSoldiers() * city.getBonus() * clan.getSoldiersDefenseStrength()
@@ -287,25 +267,11 @@ final class Game implements ConquerInfo {
 				: Result.PLAYER_WON;
 	}
 
-	private void cantAttack(final ICity src, final ICity destination) {
-		if (src.getClan() == destination.getClan()) {
-			throw new IllegalArgumentException("Same clan");
-		} else if (src == destination) {
-			throw new IllegalArgumentException("Same city");
-		} else if (!this.cities.isConnected(src, destination)) {
-			throw new IllegalArgumentException("Unreachable");
-		}
-	}
+
 
 	private void checkExtinction(final AttackResult result, final IClan destinationClan) {
 		if ((result == AttackResult.CITY_CONQUERED) && this.isDead(destinationClan)) {
 			this.events.add(new ExtinctionMessage(destinationClan));
-		}
-	}
-
-	private void checkPreconditions(final boolean managed, final long num) {
-		if (managed && (num < 0)) {
-			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
 		}
 	}
 
@@ -713,7 +679,8 @@ final class Game implements ConquerInfo {
 		} else {// Which city was attacked more often by the player?
 			final var destinationIsCity = destination instanceof City;
 			final var sourceIsCity = src instanceof City;
-			// Workaround to allow deterministic output
+			// Workaround to allow deterministic compiler output
+			// as the compiler emitted two versions of this code before adding this change.
 			final var bool3 = destinationIsCity && sourceIsCity && ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer();
 			if (bool3) {
 				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
@@ -1050,7 +1017,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public double getRelationship(final IClan a, final IClan b) {
-		this.throwIfNull(a,"getRelationship - clan A is null");
+		this.throwIfNull(a, "getRelationship - clan A is null");
 		this.throwIfNull(b, "getRelationship - clan B is null");
 		if (a == b) {
 			throw new IllegalArgumentException("clanA==clanB");
