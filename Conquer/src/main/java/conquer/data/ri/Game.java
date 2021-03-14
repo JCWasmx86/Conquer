@@ -903,7 +903,7 @@ final class Game implements ConquerInfo {
 				throw new InternalError(city.getName() + " has a negative population");
 			}
 			if (city.getNumberOfSoldiers() < 0) {
-				throw new InternalError(city.getName() + " has a negative number of soliders");
+				throw new InternalError(city.getName() + " has a negative number of soldiers");
 			}
 			if (city.getX() < 0) {
 				throw new InternalError(city.getName() + "has bad X-Position");

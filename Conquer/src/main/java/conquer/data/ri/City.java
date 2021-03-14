@@ -51,7 +51,7 @@ class City implements ICity {
 	/**
 	 * Increases the number of attacks of the player, Internal Use only!
 	 */
-	public void attackByPlayer() {
+	void attackByPlayer() {
 		if (this.numAttacksOfPlayer == -1) {
 			this.numAttacksOfPlayer++;
 		}
