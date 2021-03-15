@@ -17,7 +17,6 @@ rm -r mingw64
 cd data||exit
 #Found with trial and error
 cp ../conquer_launcher.exe .
-cp ../uninstall.exe .
 cp /mingw64/bin/libarchive-13.dll .
 cp /mingw64/bin/libatk-1.0-0.dll .
 cp /mingw64/bin/libbrotlicommon.dll .

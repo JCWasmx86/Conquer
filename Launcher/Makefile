@@ -27,23 +27,28 @@ clean:
 	rm -f *.o
 	rm -f *.exe
 	rm -rf data
-	rm -f data.zip
+	rm -f *.zip
 	rm -rf Windows-10
 	rm -f *.zst
-Installer.exe: all buildInstallRC buildIncludeFile install.o
-	$(CC) -Wl,--no-insert-timestamp $(CFLAGS) install.o installResource.o inc.o -o Installer.exe --static -larchive -lz -llzma -lbcrypt -lbz2 -liconv -lzstd -lexpat -llz4 -mwindows
-install.o: install/main.c
-	$(CC) $(CFLAGS) -c -o install.o install/main.c
-buildIncludeFile: install/inc.s
-	$(CC) -c -o inc.o install/inc.s
-buildInstallRC: install/resource.rc
-	windres -I include -I install install/resource.rc installResource.o
-uninstall.exe: buildUninstallRC uninstallObject
-	$(CC) -mwindows -Wl,--no-insert-timestamp uninstall.o uninstallResource.o -o uninstall.exe
-buildUninstallRC: uninstall/resource.rc
-	windres -I include -I uninstall uninstall/resource.rc uninstallResource.o
-uninstallObject: uninstall/main.c
-	$(CC) $(CFLAGS) -O3 -Wall -Wextra -pedantic -c uninstall/main.c -o uninstall.o
+	rm -f *.dll
+	rm -rf nsisunz
+	rm -rf AccessControl
+	rm -f *.nsi
+Installer.exe: all buildInstallerDir downloadNsisunz downloadAccessControl
+	makensis -V4 Installer.nsi
+buildIncludeFile: instdir.nsi.inc
+	cpp -E -P instdir.nsi.inc>instdir.nsi
+buildX64: x64.nsi.inc
+	cpp -E -P x64.nsi.inc>x64.nsi
+buildInstallerDir: buildIncludeFile buildX64 Installer.nsi.inc
+	cpp -E -P Installer.nsi.inc>Installer.nsi
+downloadNsisunz:
+	wget -nc https://nsis.sourceforge.io/mediawiki/images/1/1c/Nsisunz.zip
+	unzip -o Nsisunz.zip
+	cp nsisunz/Release/nsisunz.dll .
+downloadAccessControl:
+	wget -nc https://nsis.sourceforge.io/mediawiki/images/4/4a/AccessControl.zip
+	mkdir AccessControl && mv AccessControl.zip AccessControl && cd AccessControl && unzip -o AccessControl.zip||true
 format:
 	clang-format --style=file -verbose -i src/*.c include/*.h src/**/*.c uninstall/*.c install/*.c
 	uncrustify -c format.cfg src/*.vala src/windows/*.vala src/linux/*.vala --no-backup

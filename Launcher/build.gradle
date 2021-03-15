@@ -68,7 +68,6 @@ task buildInstaller() {
 		}
 		copy {
 			from "."
-			include "uninstall.exe"
 			into "data"
 		}
 		copy {
@@ -90,14 +89,6 @@ task buildInstaller() {
 			from "${project.rootDir}/music_tmp"
 			include "Battle*.ogg"
 			into "data/music"
-		}
-		exec {
-			if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-				commandLine "make", "uninstall.exe"
-			} else {
-				commandLine "echo", "Skipping Uninstaller"
-				return
-			}
 		}
 		exec {
 			if (Os.isFamily(Os.FAMILY_WINDOWS)) {
