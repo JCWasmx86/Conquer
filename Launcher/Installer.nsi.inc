@@ -39,6 +39,6 @@ Section
 	Delete "$DESKTOP\data.zip"
 SectionEnd
 Section uninstall
-	Delete "$DESKTOP\conquer.lnk"
+	Delete "$DESKTOP\Conquer.lnk"
 	RMDir /r /REBOOTOK $INSTDIR
 SectionEnd
