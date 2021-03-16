@@ -67,10 +67,6 @@ task buildInstaller() {
 			into "data"
 		}
 		copy {
-			from "."
-			into "data"
-		}
-		copy {
 			from "${project.rootDir}/DefaultPlugins/build/libs/"
 			include "SortedStrategy.jar"
 			into "data/strategies"

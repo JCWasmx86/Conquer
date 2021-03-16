@@ -1,7 +1,7 @@
 ARGS = --disable-version-header -X -O2 --vapidir=. -X -I"$(JAVA_HOME)/include" -X -D__FILE__=\"redactedForPrivacy\" -X -Wno-builtin-macro-redefined -X -flto
 ifeq ($(OS),Windows_NT)
 	OS_TYPE = windows
-	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" -X -mwindows
+	ARGS += -X -Wl,--no-insert-timestamp -X -I"$(JAVA_HOME)/include/win32" -X -mwindows -X -lgcc
 else
 	OS_TYPE = linux
 	ARGS += -X -I$(JAVA_HOME)/include/linux -X -ldl
@@ -35,7 +35,7 @@ clean:
 	rm -rf AccessControl
 	rm -f *.nsi
 Installer.exe: all buildInstallerDir downloadNsisunz downloadAccessControl
-	makensis -V4 Installer.nsi
+	/mingw32/bin/makensis -V4 Installer.nsi
 buildIncludeFile: instdir.nsi.inc
 	cpp -E -P instdir.nsi.inc>instdir.nsi
 buildX64: x64.nsi.inc
