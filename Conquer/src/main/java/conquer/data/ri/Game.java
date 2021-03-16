@@ -564,7 +564,7 @@ final class Game implements ConquerInfo {
 	private List<ICity> getWeakestCityInRatioToSurroundingEnemyCities(final List<ICity> reachableCities) {
 		this.throwIfNull(reachableCities, "reachableCities==null");
 		reachableCities.forEach(this::throwIfNull);
-		return Stream.of(reachableCities.toArray(new City[0])).sorted((a, b) -> {
+		return Stream.of(reachableCities.toArray(new ICity[0])).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
 					.collect(Collectors.toList());
