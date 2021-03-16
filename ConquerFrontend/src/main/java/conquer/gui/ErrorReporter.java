@@ -48,7 +48,7 @@ public class ErrorReporter {
 					final var clazz = Class.forName(a);
 					ServiceLoader.load(clazz).stream().map(Provider::get).map(Object::getClass).forEach(b -> {
 						try {
-							bw.write(clazz.toString() + " is provided by " + b.toString());
+							bw.write(clazz + " is provided by " + b.toString());
 						} catch (final IOException e) {
 							Shared.LOGGER.exception(e);
 						}
