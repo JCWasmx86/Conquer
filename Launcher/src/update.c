@@ -7,43 +7,6 @@
 
 #include "launcher.h"
 
-int endsWith(const char *str, const char *end) {
-	size_t lenStr = strlen(str);
-	size_t lenEnd = strlen(end);
-	if (lenEnd >  lenStr) {
-		return 0;
-	}
-	return strncmp(str + lenStr - lenEnd, end, lenEnd) == 0;
-}
-
-void removeFiles(char *path) {
-	DIR *dir;
-	struct dirent *ent;
-	struct stat s;
-	if ((dir = opendir(path)) != NULL) {
-		while ((ent = readdir(dir)) != NULL) {
-			char *current = malloc(strlen(path) + sizeof(ent->d_name) + 3);
-			sprintf(current, "%s%s%s", path, DELIM, ent->d_name);
-			stat(current, &s);
-
-			if (strcmp(ent->d_name, ".") != 0 &&
-				strcmp(ent->d_name, "..") != 0 &&
-				strcmp(ent->d_name, "saves") != 0 &&
-				strcmp(ent->d_name, "updates") != 0 &&
-				strcmp(ent->d_name, "sounds") != 0 &&
-				!endsWith(ent->d_name, ".log") &&
-				!endsWith(ent->d_name, ".properties")) {
-				if (S_ISDIR(s.st_mode)) {
-					removeFiles(current);
-				} else {
-					printf("Removing %s: %i\n", ent->d_name, remove(current));
-				}
-			}
-		}
-		closedir(dir);
-	}
-}
-
 void update() {
 	char *baseDir = getBaseDirectory();
 	assert(baseDir);
@@ -63,8 +26,6 @@ void update() {
 		return;
 	}
 	printf("Update found\n");
-
-	removeFiles(baseDir);
 
 	int flags = ARCHIVE_EXTRACT_TIME;
 	flags |= ARCHIVE_EXTRACT_PERM;
