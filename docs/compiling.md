@@ -56,7 +56,7 @@ Only arm64, arm (Although a bit untested), i386 and amd64 are supported.
 1. MSYS2
 2. Use the MINGW64 shell and install these packages:
    git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn
-   mingw-w64-x86_64-headers-git zip unzip mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libgee mingw-w64-x86_64-json-glib mingw-w64-x86_64-nsis
+   mingw-w64-x86_64-headers-git zip unzip mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libgee mingw-w64-x86_64-json-glib mingw-w64-i686-nsis
 3. Install musescore3: You have to download the installer and run it.
 4. Install Java 15: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell.
 5. Install gradle (Version 6.8)
@@ -75,7 +75,7 @@ This will need around 6-10 minutes, and will build `Launcher/Installer.exe`.
 
 ```
 pacman -S --noconfirm git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-headers-git zip unzip 
-pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee mingw-w64-x86_64-gtk3 mingw-w64-x86_64-nsis
+pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee mingw-w64-x86_64-gtk3 mingw-w64-i686-nsis
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
