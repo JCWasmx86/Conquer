@@ -3,6 +3,7 @@
 Name "Conquer"
 OutFile "Installer.exe"
 !addplugindir AccessControl/Plugins/i386-ansi
+!addplugindir Plugins/i386-ansi
 !addplugindir .
 RequestExecutionLevel highest
 #include "instdir.nsi"
