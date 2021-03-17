@@ -5,9 +5,9 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-	compile 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+	implementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
 	runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
-	compile fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
+	compileOnly fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
 }
 compileJava {
 	doFirst {
@@ -39,7 +39,7 @@ task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
 	exclude "META-INF/services/**"
-	baseName = "Conquer_resources"
+	archiveBaseName = "Conquer_resources"
 }
 conquerResources.dependsOn(":auxiliary:buildDataZip", ":DefaultPlugins:jar")
 conquerResources.mustRunAfter(":DefaultPlugins:jar", ":auxiliary:buildDataZip")
