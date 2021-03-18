@@ -50,5 +50,5 @@ downloadAccessControl:
 	wget -nc https://nsis.sourceforge.io/mediawiki/images/4/4a/AccessControl.zip
 	mkdir AccessControl && mv AccessControl.zip AccessControl && cd AccessControl && unzip -o AccessControl.zip||true
 format:
-	clang-format --style=file -verbose -i src/*.c include/*.h src/**/*.c uninstall/*.c install/*.c
+	clang-format --style=file -verbose -i src/*.c src/**/*.c
 	uncrustify -c format.cfg src/*.vala src/windows/*.vala src/linux/*.vala --no-backup
