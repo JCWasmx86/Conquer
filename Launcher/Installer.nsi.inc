@@ -36,9 +36,10 @@ Section
 	WriteUninstaller $INSTDIR\uninst.exe
 	SetShellVarContext all
 	CreateShortcut "$DESKTOP\Conquer.lnk" "$INSTDIR\conquer_launcher.exe"
-	Delete "$DESKTOP\data.zip"
+	Delete "$INSTDIR\data.zip"
 SectionEnd
 Section uninstall
-	Delete "$DESKTOP\Conquer.lnk"
 	RMDir /r /REBOOTOK $INSTDIR
+	;TODO: Doesn't work.
+	Delete "$DESKTOP\Conquer.lnk"
 SectionEnd
