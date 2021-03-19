@@ -1,4 +1,4 @@
-name: Windows 64 bit
+name: Windows 32 bit
 on:
     push:
         branches: [nsis]
@@ -22,16 +22,16 @@ jobs:
                     install: >-
                         git
                         base-devel
-                        mingw-w64-x86_64-libarchive
-                        mingw-w64-x86_64-curl
-                        mingw-w64-x86_64-gcc
-                        mingw-w64-x86_64-dlfcn
-                        mingw-w64-x86_64-headers-git
-                        mingw-w64-x86_64-gtk3
-                        mingw-w64-x86_64-vala
-                        mingw-w64-x86_64-libgee
-                        mingw-w64-x86_64-json-glib
-                        mingw-w64-x86_64-pkg-config
+                        mingw-w64-i686-libarchive
+                        mingw-w64-i686-curl
+                        mingw-w64-i686-gcc
+                        mingw-w64-i686-dlfcn
+                        mingw-w64-i686-headers-git
+                        mingw-w64-i686-gtk3
+                        mingw-w64-i686-vala
+                        mingw-w64-i686-libgee
+                        mingw-w64-i686-json-glib
+                        mingw-w64-i686-pkg-config
                         mingw-w64-i686-nsis
                         zip
                         unzip
@@ -69,3 +69,7 @@ jobs:
                 with:
                     name: SDK
                     path: Conquer-SDK_1.6.0.zip
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: Installer
+                    path: Launcher/Installer.exe

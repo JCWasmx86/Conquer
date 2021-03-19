@@ -42,6 +42,7 @@ buildX64: x64.nsi.inc
 	cpp -E -P x64.nsi.inc>x64.nsi
 buildInstallerDir: buildIncludeFile buildX64 Installer.nsi.inc
 	cpp -E -P Installer.nsi.inc>Installer.nsi
+#TODO: Look for licensing issues
 downloadNsisunz:
 	wget -nc https://nsis.sourceforge.io/mediawiki/images/1/1c/Nsisunz.zip
 	unzip -o Nsisunz.zip
