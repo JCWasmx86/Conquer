@@ -55,6 +55,10 @@ jobs:
                     export QT_QPA_PLATFORM=windows
                     gradle assemble
                     gradle Conquer:runTestsuites
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: Installer
+                    path: Launcher/Installer.exe
             -   name: Build and upload SDK
                 run: |
                     pkgfile --update
@@ -70,7 +74,3 @@ jobs:
                 with:
                     name: SDK
                     path: Conquer-SDK_1.6.0.zip
-            -   uses: actions/upload-artifact@v2
-                with:
-                    name: Installer
-                    path: Launcher\\Installer.exe
