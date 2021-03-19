@@ -2,6 +2,7 @@
 cd data||exit
 cd ..
 make -B all
+ecgi ${MSYSTEM_PREFIX:1}
 git -C Windows-10 pull || git clone https://github.com/B00merang-Project/Windows-10 Windows-10
 mkdir -p data/share/themes/Windows10/gtk-3.0
 cp -r Windows-10/gtk-3.20 data/share/themes/Windows10/gtk-3.0
@@ -18,56 +19,56 @@ cd data||exit
 #Found with trial and error
 echo Prefix is: $MSYSTEM_PREFIX
 cp ../conquer_launcher.exe .
-cp $MSYSTEM_PREFIX/libarchive-13.dll .
-cp $MSYSTEM_PREFIX/libatk-1.0-0.dll .
-cp $MSYSTEM_PREFIX/libbrotlicommon.dll .
-cp $MSYSTEM_PREFIX/libbrotlidec.dll .
-cp $MSYSTEM_PREFIX/libbz2-1.dll .
-cp $MSYSTEM_PREFIX/libcairo-2.dll .
-cp $MSYSTEM_PREFIX/libcairo-gobject-2.dll .
-cp $MSYSTEM_PREFIX/libcrypto-1_1-x64.dll .
-cp $MSYSTEM_PREFIX/libcurl-4.dll .
-cp $MSYSTEM_PREFIX/libdatrie-1.dll .
-cp $MSYSTEM_PREFIX/libepoxy-0.dll .
-cp $MSYSTEM_PREFIX/libexpat-1.dll .
-cp $MSYSTEM_PREFIX/libffi-7.dll .
-cp $MSYSTEM_PREFIX/libfontconfig-1.dll .
-cp $MSYSTEM_PREFIX/libfreetype-6.dll .
-cp $MSYSTEM_PREFIX/libfribidi-0.dll .
-cp $MSYSTEM_PREFIX/libgcc_s_seh-1.dll .
-cp $MSYSTEM_PREFIX/libgdk-3-0.dll .
-cp $MSYSTEM_PREFIX/libgdk_pixbuf-2.0-0.dll .
-cp $MSYSTEM_PREFIX/libgee-0.8-2.dll .
-cp $MSYSTEM_PREFIX/libgio-2.0-0.dll .
-cp $MSYSTEM_PREFIX/libglib-2.0-0.dll .
-cp $MSYSTEM_PREFIX/libgmodule-2.0-0.dll .
-cp $MSYSTEM_PREFIX/libgobject-2.0-0.dll .
-cp $MSYSTEM_PREFIX/libgraphite2.dll .
-cp $MSYSTEM_PREFIX/libgtk-3-0.dll .
-cp $MSYSTEM_PREFIX/libharfbuzz-0.dll .
-cp $MSYSTEM_PREFIX/libiconv-2.dll .
-cp $MSYSTEM_PREFIX/libidn2-0.dll .
-cp $MSYSTEM_PREFIX/libintl-8.dll .
-cp $MSYSTEM_PREFIX/libjson-glib-1.0-0.dll .
-cp $MSYSTEM_PREFIX/liblz4.dll .
-cp $MSYSTEM_PREFIX/liblzma-5.dll .
-cp $MSYSTEM_PREFIX/libnghttp2-14.dll .
-cp $MSYSTEM_PREFIX/libpango-1.0-0.dll .
-cp $MSYSTEM_PREFIX/libpangocairo-1.0-0.dll .
-cp $MSYSTEM_PREFIX/libpangoft2-1.0-0.dll .
-cp $MSYSTEM_PREFIX/libpangowin32-1.0-0.dll .
-cp $MSYSTEM_PREFIX/libpcre-1.dll .
-cp $MSYSTEM_PREFIX/libpixman-1-0.dll .
-cp $MSYSTEM_PREFIX/libpng16-16.dll .
-cp $MSYSTEM_PREFIX/libpsl-5.dll .
-cp $MSYSTEM_PREFIX/libssh2-1.dll .
-cp $MSYSTEM_PREFIX/libssl-1_1-x64.dll .
-cp $MSYSTEM_PREFIX/libstdc++-6.dll .
-cp $MSYSTEM_PREFIX/libthai-0.dll .
-cp $MSYSTEM_PREFIX/libunistring-2.dll .
-cp $MSYSTEM_PREFIX/libwinpthread-1.dll .
-cp $MSYSTEM_PREFIX/libzstd.dll .
-cp $MSYSTEM_PREFIX/zlib1.dll .
+cp $MSYSTEM_PREFIX/bin/libarchive-13.dll .
+cp $MSYSTEM_PREFIX/bin/libatk-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libbrotlicommon.dll .
+cp $MSYSTEM_PREFIX/bin/libbrotlidec.dll .
+cp $MSYSTEM_PREFIX/bin/libbz2-1.dll .
+cp $MSYSTEM_PREFIX/bin/libcairo-2.dll .
+cp $MSYSTEM_PREFIX/bin/libcairo-gobject-2.dll .
+cp $MSYSTEM_PREFIX/bin/libcrypto-1_1-x64.dll .
+cp $MSYSTEM_PREFIX/bin/libcurl-4.dll .
+cp $MSYSTEM_PREFIX/bin/libdatrie-1.dll .
+cp $MSYSTEM_PREFIX/bin/libepoxy-0.dll .
+cp $MSYSTEM_PREFIX/bin/libexpat-1.dll .
+cp $MSYSTEM_PREFIX/bin/libffi-7.dll .
+cp $MSYSTEM_PREFIX/bin/libfontconfig-1.dll .
+cp $MSYSTEM_PREFIX/bin/libfreetype-6.dll .
+cp $MSYSTEM_PREFIX/bin/libfribidi-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgcc_s_seh-1.dll .
+cp $MSYSTEM_PREFIX/bin/libgdk-3-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgdk_pixbuf-2.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgee-0.8-2.dll .
+cp $MSYSTEM_PREFIX/bin/libgio-2.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libglib-2.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgmodule-2.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgobject-2.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libgraphite2.dll .
+cp $MSYSTEM_PREFIX/bin/libgtk-3-0.dll .
+cp $MSYSTEM_PREFIX/bin/libharfbuzz-0.dll .
+cp $MSYSTEM_PREFIX/bin/libiconv-2.dll .
+cp $MSYSTEM_PREFIX/bin/libidn2-0.dll .
+cp $MSYSTEM_PREFIX/bin/libintl-8.dll .
+cp $MSYSTEM_PREFIX/bin/libjson-glib-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/liblz4.dll .
+cp $MSYSTEM_PREFIX/bin/liblzma-5.dll .
+cp $MSYSTEM_PREFIX/bin/libnghttp2-14.dll .
+cp $MSYSTEM_PREFIX/bin/libpango-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libpangocairo-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libpangoft2-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libpangowin32-1.0-0.dll .
+cp $MSYSTEM_PREFIX/bin/libpcre-1.dll .
+cp $MSYSTEM_PREFIX/bin/libpixman-1-0.dll .
+cp $MSYSTEM_PREFIX/bin/libpng16-16.dll .
+cp $MSYSTEM_PREFIX/bin/libpsl-5.dll .
+cp $MSYSTEM_PREFIX/bin/libssh2-1.dll .
+cp $MSYSTEM_PREFIX/bin/libssl-1_1-x64.dll .
+cp $MSYSTEM_PREFIX/bin/libstdc++-6.dll .
+cp $MSYSTEM_PREFIX/bin/libthai-0.dll .
+cp $MSYSTEM_PREFIX/bin/libunistring-2.dll .
+cp $MSYSTEM_PREFIX/bin/libwinpthread-1.dll .
+cp $MSYSTEM_PREFIX/bin/libzstd.dll .
+cp $MSYSTEM_PREFIX/bin/zlib1.dll .
 #Required to show svg,png files and so on.
 mkdir -p lib/gdk-pixbuf-2.0/2.10.0/loaders/
 gdk-pixbuf-query-loaders >lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
