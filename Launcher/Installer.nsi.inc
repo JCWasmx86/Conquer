@@ -2,7 +2,7 @@
 !include "MUI2.nsh"
 Name "Conquer"
 OutFile "Installer.exe"
-!addplugindir /x86-ansi AccessControl/Plugins/i386-ansi
+!addplugindir /x86-ansi "AccessControl/Plugins/i386-ansi"
 !addplugindir .
 RequestExecutionLevel highest
 #include "instdir.nsi"
