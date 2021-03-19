@@ -8,13 +8,13 @@ mkdir -p data/share/themes/Windows10/gtk-3.0
 cp -r Windows-10/gtk-3.20 data/share/themes/Windows10/gtk-3.0
 wget -N https://repo.msys2.org/mingw/$MSYSTEM_CARCH/$MINGW_PACKAGE_PREFIX-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst||exit
 tar -I zstd -xvf $MINGW_PACKAGE_PREFIX-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
-cp -r ${MSYSTEM_PREFIX:1}/share ${MSYSTEM_PREFIX:1}/lib data
+cp -r ${MSYSTEM,,}/share ${MSYSTEM,,}/lib data
 wget -N https://repo.msys2.org/mingw/$MSYSTEM_CARCH/$MINGW_PACKAGE_PREFIX-hicolor-icon-theme-0.17-2-any.pkg.tar.zst||exit
 tar -I zstd -xvf $MINGW_PACKAGE_PREFIX-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
-cp -r ${MSYSTEM_PREFIX:1}/share data
+cp -r ${MSYSTEM,,}/share data
 #Remove useless clutter
 rm .BUILDINFO .INSTALL .MTREE .PKGINFO
-rm -r ${MSYSTEM_PREFIX:1}
+rm -r ${MSYSTEM,,}
 cd data||exit
 #Found with trial and error
 echo Prefix is: $MSYSTEM_PREFIX
