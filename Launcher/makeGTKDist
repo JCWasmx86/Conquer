@@ -5,11 +5,11 @@ make -B all
 git -C Windows-10 pull || git clone https://github.com/B00merang-Project/Windows-10 Windows-10
 mkdir -p data/share/themes/Windows10/gtk-3.0
 cp -r Windows-10/gtk-3.20 data/share/themes/Windows10/gtk-3.0
-wget -N https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
-tar -I zstd -xvf mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
+wget -N https://repo.msys2.org/mingw/$MSYSTEM_CARCH/$MSYSTEM_CHOST-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst||exit
+tar -I zstd -xvf $MSYSTEM_CHOST-adwaita-icon-theme-3.38.0-3-any.pkg.tar.zst
 cp -r mingw64/share mingw64/lib data
-wget -N https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
-tar -I zstd -xvf mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
+wget -N https://repo.msys2.org/mingw/$MSYSTEM_CARCH/$MSYSTEM_CHOST-hicolor-icon-theme-0.17-2-any.pkg.tar.zst||exit
+tar -I zstd -xvf $MSYSTEM_CHOST-hicolor-icon-theme-0.17-2-any.pkg.tar.zst
 cp -r mingw64/share data
 #Remove useless clutter
 rm .BUILDINFO .INSTALL .MTREE .PKGINFO
@@ -71,11 +71,11 @@ cp $MSYSTEM_PREFIX/zlib1.dll .
 #Required to show svg,png files and so on.
 mkdir -p lib/gdk-pixbuf-2.0/2.10.0/loaders/
 gdk-pixbuf-query-loaders >lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-cp /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
-cp /mingw64/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
+cp $MSYSTEM_PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
+cp $MSYSTEM_PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-png.dll lib/gdk-pixbuf-2.0/2.10.0/loaders/
 #Some needed schemas
 mkdir -p share/glib-2.0/schemas
-cp -r /mingw64/share/glib-2.0/schemas/ share/glib-2.0/
+cp -r $MSYSTEM_PREFIX/share/glib-2.0/schemas/ share/glib-2.0/
 mkdir -p etc/gtk-3.0
 {
 	echo \[Settings\]
