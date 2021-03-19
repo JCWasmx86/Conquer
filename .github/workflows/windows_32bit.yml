@@ -73,4 +73,4 @@ jobs:
             -   uses: actions/upload-artifact@v2
                 with:
                     name: Installer
-                    path: Launcher/Installer.exe
+                    path: Launcher\\Installer.exe
