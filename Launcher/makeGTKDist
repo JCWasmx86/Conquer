@@ -2,7 +2,7 @@
 cd data||exit
 cd ..
 make -B all
-ecgi ${MSYSTEM_PREFIX:1}
+echo ${MSYSTEM_PREFIX:1}
 git -C Windows-10 pull || git clone https://github.com/B00merang-Project/Windows-10 Windows-10
 mkdir -p data/share/themes/Windows10/gtk-3.0
 cp -r Windows-10/gtk-3.20 data/share/themes/Windows10/gtk-3.0
