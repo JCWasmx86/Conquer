@@ -27,6 +27,13 @@ jar {
 task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
+	include "music/Credits.ogg"
+	include "music/Victory.ogg"
+	include "music/Intro.ogg"
+	include "music/Defeated.ogg"
+	include "music/MainScreen.ogg"
+	include "images/*.png"
+	include "conquer/gui/*.properties"
 	baseName = "Conquer_frontend_resources"
 }
 task deleteFiles(type: Delete) {
