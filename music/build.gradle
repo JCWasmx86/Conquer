@@ -47,10 +47,16 @@ task buildMusic() {
 		threads.each { t -> t.join() }
 		otherMusic.each { t ->
 			File dest = new File(t.getParentFile().getParentFile().toString() + "/ConquerFrontend/src/main/resources/music", t.getName())
+			File dest2 = new File(t.getParentFile().getParentFile().toString() + "/ConquerFrontend/build/resources/main/music", t.getName())
 			try {
 				Files.copy(t.toPath(), dest.toPath())
 			} catch (Exception e) {
 				//Ignore, file already exists
+			}
+			try {
+				Files.copy(t.toPath(), dest2.toPath())
+			} catch (Exception e) {
+
 			}
 		}
 	}
