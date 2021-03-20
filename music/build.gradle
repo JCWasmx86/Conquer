@@ -22,7 +22,6 @@ task buildMusic() {
 					File f1 = new File(outputFile, "music_tmp").getAbsoluteFile()
 					File f2 = new File(f1, file.getName().replace(".mscz", ".ogg"))
 					if (!f2.getAbsolutePath().toString().contains("Battle")) {
-						System.out.println(f2);
 						otherMusic.add(f2)
 					}
 					if (f2.exists() && file.lastModified() < f2.lastModified()) {
