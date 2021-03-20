@@ -83,7 +83,8 @@ gradle assemble # Or "gradle :ConquerFrontend:run" to run Conquer
 
 ### Notes
 
-Only amd64 is supported.
+Only amd64 is supported. i386 support is available, but it seems to crash. (Maybe an ABI mismatch between the MSVC-compiled jvm.dll and the GCC compiled conquer_launcher.exe)
+
 
 ## MacOS
 
