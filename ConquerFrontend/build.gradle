@@ -24,6 +24,11 @@ jar {
 		attributes "Main-Class": "conquer.gui.Intro"
 	}
 }
+task copyFiles(type: Copy) {
+    from "../music_tmp"
+    include "*.ogg"
+    into "build/resources/main/music/"
+}
 task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
@@ -45,8 +50,10 @@ task deleteFiles(type: Delete) {
 	}
 }
 mainClassName = "conquer.gui.Intro"
-conquerResources.dependsOn(":music:buildMusic", deleteFiles)
-conquerResources.mustRunAfter(":music:buildMusic", deleteFiles)
+conquerResources.dependsOn(":music:buildMusic", copyFiles, deleteFiles)
+conquerResources.mustRunAfter(":music:buildMusic", copyFiles, deleteFiles)
+deleteFiles.dependsOn(copyFiles)
+deleteFiles.mustRunAfter(copyFiles)
 jar.dependsOn(conquerResources)
 
 run {
