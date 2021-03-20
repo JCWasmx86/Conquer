@@ -42,4 +42,4 @@ run {
 			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
-run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources)
+run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
