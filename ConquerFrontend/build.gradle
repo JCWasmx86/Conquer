@@ -29,9 +29,22 @@ task conquerResources(type: Jar) {
 	exclude "**/*.class"
 	baseName = "Conquer_frontend_resources"
 }
+task deleteFiles(type: Delete) {
+	delete fileTree("${project.rootDir}/ConquerFrontend/build/resources/main/music") {
+		include 'Battle*.ogg'
+	}
+	delete fileTree("${project.rootDir}/ConquerFrontend/src/main/resources/music") {
+		include 'Battle*.ogg'
+	}
+}
+task copyMusic(type: Copy) {
+	from "${project.rootDir}/music_tmp/Credits.ogg", "${project.rootDir}/music_tmp/Defeated.ogg", "${project.rootDir}/music_tmp/Intro.ogg", "${project.rootDir}/music_tmp/MainScreen.ogg", "${project.rootDir}/music_tmp/Victory.ogg"
+	//into "${project.rootDir}/ConquerFrontend/build/resources/main/music"
+	into "/tmp"
+}
 mainClassName = "conquer.gui.Intro"
-conquerResources.dependsOn(":music:buildMusic")
-conquerResources.mustRunAfter(":music:buildMusic")
+conquerResources.dependsOn(":music:buildMusic", deleteFiles)
+conquerResources.mustRunAfter(":music:buildMusic", deleteFiles)
 jar.dependsOn(conquerResources)
 
 run {
