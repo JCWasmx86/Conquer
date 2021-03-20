@@ -105,8 +105,8 @@ task buildInstaller() {
 	}
 }
 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-	buildInstaller.dependsOn(":Conquer:jar", ":ConquerFrontend:jar", buildLauncher, ":auxiliary:downloadJarFiles", ":Conquer:conquerResources")
-	buildInstaller.mustRunAfter(buildLauncher)
+	buildInstaller.dependsOn(":music:buildMusic", ":Conquer:jar", ":ConquerFrontend:jar", buildLauncher, ":auxiliary:downloadJarFiles", ":Conquer:conquerResources")
+	buildInstaller.mustRunAfter(":music:buildMusic", buildLauncher)
 	assemble.dependsOn(buildInstaller)
 }
 clean {
