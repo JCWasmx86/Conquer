@@ -183,7 +183,8 @@ class BuiltinSharedTest {
 
 	@Test
 	void testGiftSum() {
-		Assertions.assertEquals(190.0d, BuiltinShared.sum(new Gift(List.of(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0), 100.0d)));
+		Assertions.assertEquals(190.0d, BuiltinShared.sum(new Gift(List.of(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,
+				10.0, 10.0), 100.0d)));
 	}
 
 	@Test

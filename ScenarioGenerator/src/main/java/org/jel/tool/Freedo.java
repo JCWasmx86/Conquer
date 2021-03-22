@@ -25,7 +25,8 @@ public class Freedo {
 						List.of(1.0, 1.2, 1.0, 0.8, 1.1, 0.7, 1.2, 1.1, 0.7)))//
 				.addCity(new City(1.03, "CityIcons/fortress(1).png", "Finitia", 3, 45000, 4500, 555, 380, 4500, 1.13,
 						List.of(1.1, 1.5, 1.2, 0.9, 1.1, 0.7, 1.3, 1.1, 0.5)))//
-				.addCity(new City(1.05, "CityIcons/fortress(2).png", "Alexandrjna", 3, 12500, 120, 558, 525, 4500, 1.01,
+				.addCity(new City(1.05, "CityIcons/fortress(2).png", "Alexandrjna", 3, 12500, 120, 558, 525, 4500,
+						1.01,
 						List.of(1.1, 1.2, 1.0, 0.9, 1.0, 0.8, 1.1, 1.05, 0.8)))
 				.addCity(new City(1.01, "stadt3.png", "Terre", 1, 240000, 1200, 345, 502, 120, 1.01,
 						List.of(1.0, 1.1, 1.0, 1.0, 1.0, 1.01, 0.9, 00.8, 1.9)))

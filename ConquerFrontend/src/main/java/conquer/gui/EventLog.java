@@ -56,8 +56,10 @@ final class EventLog extends JFrame implements MessageListener {
 	static void init(final ConquerInfo game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
-			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$ //$NON-NLS-2$
-					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$ //$NON-NLS-2$
+			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$
+					// $NON-NLS-2$
+					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$
+					// $NON-NLS-2$
 					: "")); //$NON-NLS-1$
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			final var color = clan.getColor();

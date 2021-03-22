@@ -46,7 +46,8 @@ final class TutorialPanel extends JPanel {
 				Messages.getString("Tutorial.introduction"), textArea, parent));
 		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.movingSoldiersTitle"),
 				Messages.getString("Tutorial.movingSoldiers"), textArea, parent));
-		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.coinsTitle"), Messages.getString("Tutorial.coins"),
+		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.coinsTitle"), Messages.getString("Tutorial" +
+				".coins"),
 				textArea, parent));
 		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.defenseTitle"),
 				Messages.getString("Tutorial.defense"), textArea, parent));
@@ -56,7 +57,8 @@ final class TutorialPanel extends JPanel {
 				Messages.getString("Tutorial.relationships"), textArea, parent));
 		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.soldierUpgradesTitle"),
 				Messages.getString("Tutorial.soldierUpgrades"), textArea, parent));
-		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.giftsTitle"), Messages.getString("Tutorial.gifts"),
+		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.giftsTitle"), Messages.getString("Tutorial" +
+				".gifts"),
 				textArea, parent));
 		buttonPanel.add(new ButtonClass(Messages.getString("Tutorial.attacksTitle"),
 				Messages.getString("Tutorial.attacks"), textArea, parent));

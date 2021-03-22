@@ -35,7 +35,8 @@ public final class SortedStrategyImpl implements Strategy {
 
 	@Override
 	public boolean acceptGift(final IClan sourceClan, final IClan destinationClan, final Gift gift,
-							  final double oldValue, final DoubleConsumer newValue, final StrategyObject strategyObject) {
+							  final double oldValue, final DoubleConsumer newValue,
+							  final StrategyObject strategyObject) {
 		if ((this.gifts.contains(sourceClan) && (Math.random() < 0.8)) || (Math.random() < 0.1)) {
 			return false;
 		}

@@ -62,15 +62,19 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 	private String generateText() {
 		if (this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
-			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead") //$NON-NLS-1$ //$NON-NLS-2$
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead") //$NON-NLS-1$
+					// $NON-NLS-2$
 					+ "</font></body></html>"; //$NON-NLS-1$
 		} else if (!this.city.isPlayerCity()) {
-			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON-NLS-1$ //$NON-NLS-2$
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON
+					// -NLS-1$ //$NON-NLS-2$
 					+ "</font></body></html>"; //$NON-NLS-1$
 		}
-		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name")) //$NON-NLS-1$ //$NON-NLS-2$
+		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name")) //$NON-NLS
+				// -1$ //$NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
-				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan")) //$NON-NLS-1$ //$NON-NLS-2$
+				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan")) //$NON-NLS-1$
+				// $NON-NLS-2$
 				.append(": ") //$NON-NLS-1$
 				.append(this.city.getClan().getName()).append("<br>") //$NON-NLS-1$
 				.append(Messages.getString("Shared.soldiers")) //$NON-NLS-1$
@@ -80,9 +84,11 @@ class CityInfoPanel extends JPanel implements ActionListener {
 				.append(Messages.getString("Shared.defense")).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(String.format("%.2f", this.city.getDefense())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$
 				.append(Messages.getString("Shared.defenseBonus")) //$NON-NLS-1$
-				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>") //$NON-NLS-1$
+				// $NON-NLS-2$ //$NON-NLS-3$
 				.append(Messages.getString("Shared.growth")) //$NON-NLS-1$
-				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>") //$NON-NLS-1$
+				// $NON-NLS-2$ //$NON-NLS-3$
 				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo() //$NON-NLS-1$ //$NON-NLS-2$
 						.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();

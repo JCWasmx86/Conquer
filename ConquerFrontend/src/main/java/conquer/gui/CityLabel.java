@@ -61,13 +61,16 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	public void actionPerformed(final ActionEvent e) {
 		this.paint(this.getGraphics());
 		final var s = new StringBuilder("<html>").append(this.city.getName()); //$NON-NLS-1$
-		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName())); //$NON-NLS-1$ //$NON-NLS-2$
+		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName()));
+		//$NON-NLS-1$ //$NON-NLS-2$
 		if (this.city.isPlayerCity()) {
-			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
+			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$
+					// $NON-NLS-2$
 					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), //$NON-NLS-1$
 					this.city.getNumberOfSoldiers()));
 		} else {
-			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$ //$NON-NLS-2$
+			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$
+					// $NON-NLS-2$
 					Messages.getString("Shared.soldiers"))); //$NON-NLS-1$
 		}
 		this.setToolTipText(s.toString());
