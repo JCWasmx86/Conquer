@@ -305,7 +305,7 @@ final class Game implements ConquerInfo {
 
 	private void checkPreconditions(final boolean managed, final long num) {
 		if (managed && (num < 0)) {
-			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
+			throw new IllegalArgumentException("number of soldiers is negative!");
 		}
 	}
 
