@@ -29,6 +29,24 @@ public class DevScenario {
 						500, 230, 140, 500, 1.03, list))
 				.addCity(new City(1.01, "dev/player.png", "Player8", 0, 5000,
 						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_0", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_1", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_2", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_3", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_4", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_5", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_6", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_7", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
+				.addCity(new City(1.01, "dev/player.png", "CPU0_8", 1, 5000,
+						500, 230, 240, 500, 1.03, list))
 				.addCityConnection(0, 1, 1)
 				.addCityConnection(1, 2, 1)
 				.addCityConnection(0, 2, 1)
