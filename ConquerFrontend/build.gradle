@@ -19,7 +19,7 @@ jar {
 	exclude "**/*.properties"
 	exclude "music"
 	exclude "images"
-	jar.baseName = "Conquer_frontend"
+	jar.archiveBaseName = "Conquer_frontend"
 	manifest {
 		attributes "Main-Class": "conquer.gui.Intro"
 	}
@@ -39,7 +39,7 @@ task conquerResources(type: Jar) {
 	include "music/MainScreen.ogg"
 	include "images/*.png"
 	include "conquer/gui/*.properties"
-	baseName = "Conquer_frontend_resources"
+	archiveBaseName = "Conquer_frontend_resources"
 }
 task deleteFiles(type: Delete) {
 	delete fileTree("${project.rootDir}/ConquerFrontend/build/resources/main/music") {

@@ -5,15 +5,15 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-	compile project(":Conquer")
-	compile project(":ConquerFrontendSPI")
+	implementation project(":Conquer")
+	implementation project(":ConquerFrontendSPI")
 }
 jar {
 	include "conquer/plugins/builtins/ChangeCitiesMinds**"
 	include "conquer/plugins/builtins/ClanChangeMessage**"
 	include "conquer/plugins/builtins/changeCitiesMinds**"
 	exclude "services/**"
-	baseName = "ChangeCitiesMinds"
+	archiveBaseName = "ChangeCitiesMinds"
 	from("src/main/resources/services/ChangeCitiesMinds") {
 		include "conquer.plugins.Plugin"
 		into("META-INF/services")
@@ -23,7 +23,7 @@ task sortedStrategyJar(type: Jar) {
 	from sourceSets.main.output
 	exclude "conquer/plugins/**"
 	exclude "services/**"
-	baseName = "SortedStrategy"
+	archiveBaseName = "SortedStrategy"
 	from("src/main/resources/services/SortedStrategy") {
 		include "conquer.data.strategy.StrategyProvider"
 		into("META-INF/services")
@@ -32,7 +32,7 @@ task sortedStrategyJar(type: Jar) {
 task defaultMusicJar(type: Jar) {
 	from sourceSets.main.output
 	include "conquer/plugins/builtins/DefaultMusic**"
-	baseName = "DefaultMusic"
+	archiveBaseName = "DefaultMusic"
 	from("src/main/resources/services/DefaultMusic") {
 		include "conquer.plugins.Plugin"
 		include "conquer.frontend.spi.MusicProvider"
@@ -42,7 +42,7 @@ task defaultMusicJar(type: Jar) {
 task increaseGrowthJar(type: Jar) {
 	from sourceSets.main.output
 	include "conquer/plugins/builtins/IncreaseGrowth**"
-	baseName = "IncreaseGrowth"
+	archiveBaseName = "IncreaseGrowth"
 	from("src/main/resources/services/IncreaseGrowth") {
 		include "conquer.plugins.Plugin"
 		into("META-INF/services")
@@ -53,7 +53,7 @@ task moneyAnalyzerJar(type: Jar) {
 	include "conquer/plugins/builtins/MoneyAnalyzer**"
 	include "conquer/plugins/builtins/moneyAnalyzer**"
 	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
-	baseName = "MoneyAnalyzer"
+	archiveBaseName = "MoneyAnalyzer"
 	from("src/main/resources/services/MoneyAnalyzer") {
 		include "conquer.plugins.Plugin"
 		into("META-INF/services")
@@ -65,7 +65,7 @@ task resourceAnalyzerJar(type: Jar) {
 	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
 	include "conquer/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
 	include "conquer/plugins/builtins/resourceAnalyze**"
-	baseName = "ResourceAnalyzer"
+	archiveBaseName = "ResourceAnalyzer"
 	from("src/main/resources/services/ResourceAnalyzer") {
 		include "conquer.plugins.Plugin"
 		into("META-INF/services")
@@ -74,7 +74,7 @@ task resourceAnalyzerJar(type: Jar) {
 task periodicGrowthChangeJar(type: Jar) {
 	from sourceSets.main.output
 	include "conquer/plugins/builtins/PeriodicGrowthChange**"
-	baseName = "PeriodicGrowthChange"
+	archiveBaseName = "PeriodicGrowthChange"
 	from("src/main/resources/services/PeriodicGrowthChange") {
 		include "conquer.plugins.Plugin"
 		into("META-INF/services")

@@ -130,7 +130,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		});
 		clearChanges.setText(Messages.getString("StrategiesAndPluginsDialog.resetChanges")); //$NON-NLS-1$
 		final var saveChanges = new JButton();
-		final var f = new File(Shared.BASE_DIRECTORY).toString() + File.separator + File.separator;
+		final var f = new File(Shared.BASE_DIRECTORY) + File.separator + File.separator;
 		saveChanges.setAction(new AbstractAction() {
 			private static final long serialVersionUID = -3344401911394156158L;
 

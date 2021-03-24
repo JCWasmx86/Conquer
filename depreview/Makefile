@@ -4,7 +4,7 @@ ifeq ($(OS),Windows_NT)
 else
 	LDCFLAGS = -larchive
 endif
-all:
+all: src/depreview.c
 	$(CC) $(CFLAGS) -fanalyzer -o depreview src/depreview.c $(LDCFLAGS)
 clean:
 	rm -f depreview

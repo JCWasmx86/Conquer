@@ -14,5 +14,5 @@ dependencies {
 	implementation project(":Conquer")
 }
 jar {
-	jar.baseName = "ConquerFrontendSPI"
+	jar.archiveBaseName = "ConquerFrontendSPI"
 }

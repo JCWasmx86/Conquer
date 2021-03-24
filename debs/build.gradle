@@ -28,7 +28,7 @@ task buildConquerDeb() {
 			include "LICENSE.txt"
 			into "conquer/usr/share/conquer"
 		}
-		def size = Files.walk(Paths.get(file("conquer/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer/DEBIAN/control"))
 		def s = "Package: conquer\n"
@@ -84,7 +84,7 @@ task buildConquerGuiDeb() {
 			include "vorbisspi.jar"
 			into "conquer-gui/usr/share/java/conquer"
 		}
-		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-gui/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-gui/DEBIAN/control"))
 		def s = "Package: conquer-gui\n"
@@ -131,7 +131,7 @@ task buildConquerEngineDeb() {
 			include "*.jar"
 			into "conquer-engine/usr/share/java"
 		}
-		def size = Files.walk(Paths.get(file("conquer-engine/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-engine/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-engine/DEBIAN/control"))
 		def s = "Package: conquer-engine\n"
@@ -177,7 +177,7 @@ task buildDefaultDeb() {
 			include "SortedStrategy.jar"
 			into "conquer-default/usr/share/java/conquer/strategies"
 		}
-		def size = Files.walk(Paths.get(file("conquer-default/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-default/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-default/DEBIAN/control"))
 		def s = "Package: conquer-default\n"
@@ -219,7 +219,7 @@ task buildDefaultMusicDeb() {
 			include "Battle*.ogg"
 			into "conquer-default-music/usr/share/conquer/music"
 		}
-		def size = Files.walk(Paths.get(file("conquer-default-music/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-default-music/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-default-music/DEBIAN/control"))
 		def s = "Package: conquer-default-music\n"
@@ -273,7 +273,7 @@ task buildDefaultScenariosDeb() {
 			include "Slaine.**"
 			into "conquer-default-scenarios/usr/share/conquer/scenarios/Slaine"
 		}
-		def size = Files.walk(Paths.get(file("conquer-default-scenarios/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-default-scenarios/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-default-scenarios/DEBIAN/control"))
 		def s = "Package: conquer-default-scenarios\n"
@@ -343,7 +343,7 @@ task buildSdkDeb() {
 		exec {
 			commandLine "chmod", "+x", "conquer-sdk/usr/bin/install-sdk.sh"
 		}
-		def size = Files.walk(Paths.get(file("conquer-sdk/usr").toURL().toURI())).mapToLong({ p -> p.toFile().length() }).sum()
+		def size = Files.walk(Paths.get(file("conquer-sdk/usr").toURI())).mapToLong({ p -> p.toFile().length() }).sum()
 		long sizeInKb = size / 1024
 		def fout = new FileOutputStream(new File(file("."), "conquer-sdk/DEBIAN/control"))
 		def s = "Package: conquer-sdk\n"

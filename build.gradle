@@ -54,7 +54,7 @@ allprojects {
 	}
 	assemble.dependsOn(configureEnvironment)
 	dependencies {
-		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
+		testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 	}
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
