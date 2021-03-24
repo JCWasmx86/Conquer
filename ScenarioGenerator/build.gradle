@@ -18,6 +18,7 @@ task buildFreedo(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
 	main = "org.jel.tool.Freedo"
 }
+
 def contentSpec = copySpec {
 	from("src/main/resources") {
 		include "*.png"

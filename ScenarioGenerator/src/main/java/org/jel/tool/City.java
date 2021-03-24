@@ -17,7 +17,7 @@ public final class City {
 				final int numberOfPeople, final int numberOfSoldiers, final int x, final int y, final int defense,
 				final double defenseBonus, final List<Double> productions) {
 		if (productions.size() != 9) {
-			throw new IllegalArgumentException("productions.size()!=9: " + productions.size());
+			throw new IllegalArgumentException("productions.size() != 9: " + productions.size());
 		}
 		this.growth = growth;
 		this.background = cityIcon;

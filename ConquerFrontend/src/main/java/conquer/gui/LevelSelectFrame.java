@@ -62,7 +62,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 
 			@Override
 			public Component getListCellRendererComponent(final JList<? extends InstalledScenario> list,
-														  final InstalledScenario value, final int index, final boolean isSelected,
+														  final InstalledScenario value, final int index,
+														  final boolean isSelected,
 														  final boolean cellHasFocus) {
 				final JLabel jl;
 				if (this.map.containsKey(value)) {
@@ -76,7 +77,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 									"file:///");
 							// A dirty hack...
 							jl.setToolTipText(
-									Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));//$NON-NLS-1$
+									Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));
+							//$NON-NLS-1$
 						} catch (final MalformedURLException e) {
 							Shared.LOGGER.exception(e);
 						}
@@ -96,7 +98,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 				if (SwingUtilities.isRightMouseButton(event)) {
 					savedScenarios.setSelectedIndex(savedScenarios.locationToIndex(event.getPoint()));
 					final var menu = new JPopupMenu();
-					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
+					//$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
 						if (savedScenarios.getSelectedValue() == null) {
 							return;
@@ -175,7 +178,8 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 */
 	@Override
 	public void mousePressed(final MouseEvent e) {
-		@SuppressWarnings("unchecked") final var scenario = ((JList<InstalledScenario>) e.getSource()).getSelectedValue();
+		@SuppressWarnings("unchecked") final var scenario =
+				((JList<InstalledScenario>) e.getSource()).getSelectedValue();
 		if (scenario == null) {
 			return;
 		}

@@ -36,18 +36,19 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(source != null, "source==null");
 		BuiltinShared.assertThat(graph != null, "graph==null");
 		BuiltinShared.assertThat(object != null, "object==null");
-		// Find all cities around the source of clans with a relationship < 75
+		// Find all cities around the source of clans with a relationship < GOOD_RELATION
 		final var citiesOfEnemies = StreamUtils
 				.getCitiesAroundCityNot(object, graph, source,
 						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 				.collect(Collectors.toList());
+		// Peace!
 		if (citiesOfEnemies.isEmpty()) {
 			return;
 		}
-		// Get weakest city
+		// Get weakest city of all cities of the enemy.
 		final var weakestCity = citiesOfEnemies.get(0);
 		final var estimatedPowerOfDefender = weakestCity.getNumberOfSoldiers();
-		// If this clan may lose the attack cancel it.
+		// If this clan may lose the attack, cancel it.
 		final var numberOfSoldiersInSource = source.getNumberOfSoldiers();
 		if ((estimatedPowerOfDefender >= numberOfSoldiersInSource) || (numberOfSoldiersInSource == 0)) {
 			return;
@@ -216,7 +217,8 @@ final class BuiltinShared {
 		// Try to upgrade all resources with negative production
 		map.entrySet().stream().filter(a -> a.getValue() < 0).forEach(a -> {
 			final var aKey = a.getKey();
-			// Sort using the production values, or the level of each resource
+			// Now sort all cities. Start with the ones that either have a low production of this resource
+			// or have low production levels.
 			final var sortedListOfCities = StreamUtils.getCitiesAsStream(graph, clan, (o1, o2) -> {
 				final var productions1 = o1.getProductions();
 				final var productions2 = o2.getProductions();
@@ -224,7 +226,7 @@ final class BuiltinShared {
 				return i == 0 ? Double.compare(o1.getLevels().get(aKey), o2.getLevels().get(aKey)) : i;
 			}).collect(Collectors.toList());
 			var cnter = 0;
-			// Upgrade resource
+			// In every city upgrade the production.
 			while (cnter != sortedListOfCities.size()) {
 				final var b = object.upgradeResource(Resource.values()[a.getKey()], sortedListOfCities.get(cnter));
 				if (!b) {

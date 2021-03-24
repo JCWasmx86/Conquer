@@ -29,6 +29,7 @@ module conquer {
 
 	provides ConquerInfoReaderFactory with ScenarioFileReaderFactory;
 	provides StrategyProvider
-			with OffensiveStrategyProvider, DefensiveStrategyProvider, ModerateStrategyProvider, RandomStrategyProvider;
+			with OffensiveStrategyProvider, DefensiveStrategyProvider, ModerateStrategyProvider,
+					RandomStrategyProvider;
 	provides InstalledScenarioProvider with DefaultScenarioProvider;
 }

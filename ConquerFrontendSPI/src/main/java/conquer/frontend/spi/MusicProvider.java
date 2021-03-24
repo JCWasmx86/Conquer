@@ -7,10 +7,10 @@ import java.util.List;
  */
 @FunctionalInterface
 public interface MusicProvider {
-    /**
-     * Returns a list of sound names/paths.
-     *
-     * @return List of sound names/paths
-     */
-    List<String> getMusic();
+	/**
+	 * Returns a list of sound names/paths.
+	 *
+	 * @return List of sound names/paths
+	 */
+	List<String> getMusic();
 }

@@ -66,7 +66,8 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.plugins.setSelectedIndex(ref.plugins.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
-					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
+					//$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
 						ref.pluginNamesListCopy.remove(ref.plugins.getSelectedValue());
 						ref.plugins.setListData(
@@ -93,7 +94,8 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					final var ref = StrategiesAndPluginsDialog.this;
 					ref.strategies.setSelectedIndex(ref.strategies.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
-					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove")); //$NON-NLS-1$
+					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
+					//$NON-NLS-1$
 					itemRemove.addActionListener(a -> {
 						ref.strategyNamesListCopy.remove(ref.strategies.getSelectedValue());
 						ref.strategies.setListData(
@@ -105,7 +107,8 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				}
 			}
 		});
-		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"), //$NON-NLS-1$
+		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"), //$NON
+				// -NLS-1$
 				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> { //$NON-NLS-1$
 			this.strategyNamesListCopy.add(a);
 			this.strategies.setListData(
@@ -137,17 +140,21 @@ final class StrategiesAndPluginsDialog extends JFrame {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				final var sb = new StringBuilder(
-						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->\n<info>\n\t<scenarios>\n"); //$NON-NLS-1$
+						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE " +
+								"DOING!-->\n<info>\n\t<scenarios>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.context.getInstalledMaps()
-						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"") //$NON-NLS-1$ //$NON-NLS-2$
+						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"") //$NON
+								// -NLS-1$ //$NON-NLS-2$
 								.append(a.file().replace(f, "")).append("\" thumbnail=\"") //$NON-NLS-1$ //$NON-NLS-2$
 								.append(a.thumbnail().replace(f, "")).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
 				sb.append("\t</scenarios>\n\t<plugins>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.pluginNamesListCopy
-						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
+						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$
+				// $NON-NLS-2$
 				sb.append("\t</plugins>\n\t<strategies>\n"); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.strategyNamesListCopy
-						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
+						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n")); //$NON-NLS
+				// -1$ //$NON-NLS-2$
 				sb.append("\t</strategies>\n\t<readers>");
 				StrategiesAndPluginsDialog.this.context.getReaderNames()
 						.forEach(a -> sb.append("\t\t<reader className=\"").append(a).append("\"/>\n"));
@@ -157,7 +164,8 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					Files.write(Paths.get(f.toURI()), sb.toString().getBytes());
 				} catch (final IOException e1) {
 					JOptionPane.showMessageDialog(null,
-							Messages.getString("StrategiesAndPluginsDialog.writingFailed") + e1.getLocalizedMessage(), //$NON-NLS-1$
+							Messages.getString("StrategiesAndPluginsDialog.writingFailed") + e1.getLocalizedMessage(),
+							//$NON-NLS-1$
 							Messages.getString("StrategiesAndPluginsDialog.error"), //$NON-NLS-1$
 							JOptionPane.ERROR_MESSAGE);
 					StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);

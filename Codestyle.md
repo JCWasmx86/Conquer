@@ -2,8 +2,8 @@
 
 ### C
 
-An .clang-format file is provided. Write with POSIX-compatibility in mind and try to avoid Windows API functions as
-much as possible in order to reduce the number of `#ifdef`s.
+An .clang-format file is provided. Write with POSIX-compatibility in mind and try to avoid Windows API functions as much
+as possible in order to reduce the number of `#ifdef`s.
 
 Use PascalCase for structure names and camelCase for variable/function names.
 

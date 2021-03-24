@@ -305,7 +305,7 @@ final class Game implements ConquerInfo {
 
 	private void checkPreconditions(final boolean managed, final long num) {
 		if (managed && (num < 0)) {
-			throw new IllegalArgumentException("number of soldiers is smaller than zero!");
+			throw new IllegalArgumentException("number of soldiers is negative!");
 		}
 	}
 
@@ -714,7 +714,8 @@ final class Game implements ConquerInfo {
 			final var destinationIsCity = destination instanceof City;
 			final var sourceIsCity = src instanceof City;
 			// Workaround to allow deterministic output
-			final var bool3 = destinationIsCity && sourceIsCity && ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer();
+			final var bool3 =
+					destinationIsCity && sourceIsCity && ((City) src).getNumberAttacksOfPlayer() > ((City) destination).getNumberAttacksOfPlayer();
 			if (bool3) {
 				moveAmount = (int) (0.7 * src.getNumberOfSoldiers());
 			} else {
@@ -791,7 +792,8 @@ final class Game implements ConquerInfo {
 			clan.setCoins(clan.getCoins() + toGet);
 		});
 		this.clans.forEach(clan -> this.data.getMoneyHooks().forEach(
-				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()), clan)));
+				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()),
+						clan)));
 
 	}
 

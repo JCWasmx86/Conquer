@@ -215,7 +215,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); //$NON-NLS-1$
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
-				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins()); //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins()); //$NON-NLS-1$
+		// $NON-NLS-2$
 		final var run = new JButton(Messages.getString("GameFrame.runForever")); //$NON-NLS-1$
 		run.addActionListener(a -> {
 			run.setEnabled(false);

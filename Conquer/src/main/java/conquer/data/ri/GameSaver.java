@@ -112,7 +112,8 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
-																   IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+																   IllegalAccessException, InvocationTargetException,
+																   NoSuchMethodException, ClassNotFoundException {
 		try (final var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.readInt());
@@ -155,8 +156,12 @@ public final class GameSaver implements ConquerSaver {
 		}
 	}
 
-	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException, InstantiationException,
-																					IllegalAccessException, InvocationTargetException, NoSuchMethodException, ClassNotFoundException {
+	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException,
+																					InstantiationException,
+																					IllegalAccessException,
+																					InvocationTargetException,
+																					NoSuchMethodException,
+																					ClassNotFoundException {
 		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
@@ -198,7 +203,8 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private void restore(final Game game, final File saveDirectory) throws IOException {
-		try (final var dis = new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
+		try (final var dis =
+					 new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
 			final var imageLen = dis.readInt();
 			final var bytes = dis.readNBytes(imageLen);
 			final var image = ImageIO.read(new ByteArrayInputStream(bytes));

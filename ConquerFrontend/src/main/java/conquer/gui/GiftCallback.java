@@ -41,7 +41,8 @@ final class GiftCallback implements PlayerGiftCallback {
 		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() <= 0.005) {
 			final var jlabel = new JLabel(
-					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON-NLS-1$
+					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins")); //$NON
+			// -NLS-1$
 			this.jframe.add(jlabel);
 		}
 		for (final var v : gift.getMap().entrySet()) {
