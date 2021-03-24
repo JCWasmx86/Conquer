@@ -1,4 +1,4 @@
-name: Windows 64 bit
+name: Windows 32 bit
 on:
     push:
         branches: [nsis]
@@ -18,20 +18,21 @@ jobs:
                     java-version: 15
             -   uses: msys2/setup-msys2@v2
                 with:
+                    msystem: MINGW32
                     update: true
                     install: >-
                         git
                         base-devel
-                        mingw-w64-x86_64-libarchive
-                        mingw-w64-x86_64-curl
-                        mingw-w64-x86_64-gcc
-                        mingw-w64-x86_64-dlfcn
-                        mingw-w64-x86_64-headers-git
-                        mingw-w64-x86_64-gtk3
-                        mingw-w64-x86_64-vala
-                        mingw-w64-x86_64-libgee
-                        mingw-w64-x86_64-json-glib
-                        mingw-w64-x86_64-pkg-config
+                        mingw-w64-i686-libarchive
+                        mingw-w64-i686-curl
+                        mingw-w64-i686-gcc
+                        mingw-w64-i686-dlfcn
+                        mingw-w64-i686-headers-git
+                        mingw-w64-i686-gtk3
+                        mingw-w64-i686-vala
+                        mingw-w64-i686-libgee
+                        mingw-w64-i686-json-glib
+                        mingw-w64-i686-pkg-config
                         mingw-w64-i686-nsis
                         zip
                         unzip

@@ -106,6 +106,7 @@ copyFiles.dependsOn(":Conquer:conquerResources")
 copyFiles.dependsOn(":depreview:buildExecutable")
 
 createZipFileForDistribution.dependsOn(copyFiles)
+assemble.mustRunAfter(":music:buildMusic")
 assemble.dependsOn(":depreview:buildExecutable")
 clean {
 	delete "dist"

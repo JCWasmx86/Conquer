@@ -24,14 +24,36 @@ jar {
 		attributes "Main-Class": "conquer.gui.Intro"
 	}
 }
+task copyFiles(type: Copy) {
+    from "../music_tmp"
+    include "*.ogg"
+    into "build/resources/main/music/"
+}
 task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
+	include "music/Credits.ogg"
+	include "music/Victory.ogg"
+	include "music/Intro.ogg"
+	include "music/Defeated.ogg"
+	include "music/MainScreen.ogg"
+	include "images/*.png"
+	include "conquer/gui/*.properties"
 	archiveBaseName = "Conquer_frontend_resources"
 }
+task deleteFiles(type: Delete) {
+	delete fileTree("${project.rootDir}/ConquerFrontend/build/resources/main/music") {
+		include "Battle*.ogg"
+	}
+	delete fileTree("${project.rootDir}/ConquerFrontend/src/main/resources/music") {
+		include "Battle*.ogg"
+	}
+}
 mainClassName = "conquer.gui.Intro"
-conquerResources.dependsOn(":music:buildMusic")
-conquerResources.mustRunAfter(":music:buildMusic")
+conquerResources.dependsOn(":music:buildMusic", copyFiles, deleteFiles)
+conquerResources.mustRunAfter(":music:buildMusic", copyFiles, deleteFiles)
+deleteFiles.dependsOn(copyFiles)
+deleteFiles.mustRunAfter(copyFiles)
 jar.dependsOn(conquerResources)
 
 run {
@@ -42,4 +64,4 @@ run {
 			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
 run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
-run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources)
+run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
