@@ -42,6 +42,7 @@ sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash 
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 #You can replace gradle with ./gradlew
+#Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
 gradle assemble
 ```
 
@@ -78,6 +79,8 @@ pacman -S --noconfirm git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_6
 pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee mingw-w64-x86_64-gtk3
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
+#You can replace gradle with ./gradlew
+#Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
 gradle assemble
 ```
 
