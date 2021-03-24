@@ -7,15 +7,24 @@ plugins {
 	id "de.undercouch.download" version "4.1.1"
 }
 
-if (project.hasProperty("conquer.dontDownload") && "true" == project.getProperties().get("conquer.dontDownload").toString().toLowerCase()) {
+if (project.hasProperty("conquer.download") && "true" == project.getProperties().get("conquer.download").toString().toLowerCase()) {
 	task downloadZipFile(type: Download) {
-		src "FIXME: Some URL"
+		src "https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/music_precompiled.zip"
 		dest new File(buildDir, "Music.zip")
 	}
 
-	task buildMusic(dependsOn: downloadZipFile, type: Copy) {
+	task unzipMusic(dependsOn: downloadZipFile, type: Copy) {
 		from zipTree(downloadZipFile.dest)
-		into "${projectDir}/music_tmp"
+		into "${project.rootDir}/music_tmp"
+		doLast {
+			mkdir "${project.rootDir}/ConquerFrontend/src/main/resources/music"
+		}
+	}
+	task buildMusic(dependsOn: unzipMusic, type: Copy) {
+		from("${project.rootDir}/music_tmp") {
+			include "Credits.ogg", "Defeated.ogg", "Intro.ogg", "MainScreen.ogg", "Victory.ogg"
+		}
+		into "${project.rootDir}/ConquerFrontend/src/main/resources/music"
 	}
 } else {
 	task buildMusic() {
