@@ -129,12 +129,30 @@ public final class GlobalContext {
 			}
 		}
 		//Second, slower attempt
+		final byte[] entireFile;
+		try {
+			entireFile = this.getAllBytes(is);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 		for (final var factory : list) {
-			if (factory.accepts(is)) {
-				return factory.getForFile(is).build();
+			if (factory.accepts(entireFile)) {
+				return factory.getForBytes(entireFile).build();
 			}
 		}
 		throw new UnsupportedOperationException("No supported file format");
+	}
+
+	private byte[] getAllBytes(InstalledScenario is) throws IOException {
+		if (is.file() != null) {
+			try (final var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
+				return stream.readAllBytes();
+			} catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			return is.in().readAllBytes();
+		}
 	}
 
 	@Override
