@@ -21,4 +21,14 @@ public interface ConquerInfoReaderFactory {
 	 * @return Magic number. May never be null.
 	 */
 	byte[] getMagicNumber();
+
+	/**
+	 * Called after matching magic numbers failed. Here the factory gets to view the entire
+	 * scenario and can decide, whether it accepts this file(format).
+	 * @param is The scenario
+	 * @return {@code true} if this factory accepts this scenario, {@code false} otherwise.
+	 */
+	default boolean accepts(InstalledScenario is) {
+		return false;
+	}
 }

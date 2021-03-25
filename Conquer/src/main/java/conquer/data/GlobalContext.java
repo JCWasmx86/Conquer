@@ -128,6 +128,12 @@ public final class GlobalContext {
 				return reader.build();
 			}
 		}
+		//Second, slower attempt
+		for (final var factory : list) {
+			if (factory.accepts(is)) {
+				return factory.getForFile(is).build();
+			}
+		}
 		throw new UnsupportedOperationException("No supported file format");
 	}
 
