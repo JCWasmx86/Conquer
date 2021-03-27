@@ -5,7 +5,7 @@ else
 	LDCFLAGS = -larchive
 endif
 all: src/depreview.c
-	$(CC) $(CFLAGS) -fanalyzer -o depreview src/depreview.c $(LDCFLAGS)
+	$(CC) $(CFLAGS) -o depreview src/depreview.c $(LDCFLAGS)
 clean:
 	rm -f depreview
 	rm -f depreview.exe
