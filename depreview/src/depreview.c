@@ -8,12 +8,14 @@
 #include <string.h>
 #include <sys/types.h>
 
-#ifndef _WIN32
+#ifdef linux
 #include <fts.h>
 #include <sys/stat.h>
-#else
+#elif defined(_WIN32)
 #include <direct.h>
 #include <shellapi.h>
+#else
+#error Unsupported OS! Only Linux and windows are supported!
 #endif
 
 #define BUFFER_SIZE 8192
