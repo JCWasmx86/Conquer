@@ -5,8 +5,10 @@
 char *launcher_getSeparator(void) {
 #ifdef _WIN32
 	return strdup(";");
-#else
+#elif defined(linux)
 	return strdup(":");
+#else
+#error Unsupported OS! Only Linux and windows are supported!
 #endif
 }
 
