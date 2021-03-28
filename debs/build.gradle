@@ -35,7 +35,7 @@ task buildConquerDeb() {
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
 		s += "Architecture: "
-		s += (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "arm" : "i386")))
+		s += (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "armhf" : "i386")))
 		s += "\n"
 		s += "Maintainer: JCWasmx86\n"
 		//TODO: Check whether some are redundant or missing
@@ -349,7 +349,7 @@ task buildSdkDeb() {
 		def s = "Package: conquer-sdk\n"
 		s += "Version: ${conquerVersion}\n"
 		s += "Section: games\n"
-		s += "Architecture: " + (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "arm" : "i386"))) + "\n"
+		s += "Architecture: " + (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "armhf" : "i386"))) + "\n"
 		s += "Maintainer: JCWasmx86\n"
 		s += "Depends: maven\n"
 		s += "Description: The SDK for the game engine conquer\n"
