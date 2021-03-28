@@ -47,6 +47,9 @@ You will need administrator rights
 
 A shortcut on your desktop will be created automatically. Start it to run Conquer.
 
+### Feedback
+
+You can give feedback in the [discussion].
 ### Contributing
 
 [General](contributing/general.md) \
