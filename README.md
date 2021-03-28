@@ -1,7 +1,8 @@
 # Conquer
 
 ![Linux](https://github.com/JCWasmx86/Conquer/workflows/Linux/badge.svg)
-![Windows](https://github.com/JCWasmx86/Conquer/workflows/Windows/badge.svg)
+[![Windows 32 bit](https://github.com/JCWasmx86/Conquer/actions/workflows/windows_32bit.yml/badge.svg)](https://github.com/JCWasmx86/Conquer/actions/workflows/windows_32bit.yml)
+[![Windows 64 bit](https://github.com/JCWasmx86/Conquer/actions/workflows/windows.yml/badge.svg)](https://github.com/JCWasmx86/Conquer/actions/workflows/windows.yml)
 ![GitHub all releases](https://img.shields.io/github/downloads/JCWasmx86/Conquer/total?style=social)
 ![GitHub issues by-label](https://img.shields.io/github/issues-raw/JCWasmx86/Conquer/good%20first%20issue)
 
