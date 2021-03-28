@@ -39,6 +39,9 @@ jobs:
                     cd ../../..
                     gradle assemble
                     gradle Conquer:runTestsuites
+                    cd debs
+                    ./checkScript
+                    cd ..
             -   name: Build and upload SDK
                 run: |
                     cd tmp/gradle/bin
