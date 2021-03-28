@@ -50,7 +50,7 @@ A shortcut on your desktop will be created automatically. Start it to run Conque
 
 ### Feedback
 
-You can give feedback in the [discussion].
+You can give feedback in the [discussion](https://github.com/JCWasmx86/Conquer/discussions/16).
 ### Contributing
 
 [General](contributing/general.md) \
