@@ -1,4 +1,4 @@
-This is the SDK for Conquer, version 1.6.0
+This is the SDK for Conquer, version 2.0.0
 
 To install the jar files to the local maven repo, use either:
 
