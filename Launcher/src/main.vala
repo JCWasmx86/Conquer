@@ -13,16 +13,16 @@ namespace Launcher {
 			var box = new Box(Orientation.VERTICAL, 0);
 			this.jvmOptions = new InputList("JVM Arguments", "Add JVM argument",
 			  new JVMOptionsCompletion());
-			box.pack_start(this.jvmOptions);
+			box.pack_start(this.jvmOptions, false, false);
 			this.classpaths = new InputList("Classpaths", "Add classpath", new ClasspathCompletion());
-			box.pack_start(this.classpaths);
+			box.pack_start(this.classpaths, false, false);
 			this.selectJava = new SelectJavaBox();
-			box.pack_start(this.selectJava);
+			box.pack_start(this.selectJava, false, false);
 			this.memorySettings = new MemorySettings();
-			box.pack_start(this.memorySettings);
+			box.pack_start(this.memorySettings, false, false);
 			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
 			  this.memorySettings, window);
-			box.pack_start(startButtonPanel);
+			box.pack_start(startButtonPanel, false, false);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
 			window.show_all();
