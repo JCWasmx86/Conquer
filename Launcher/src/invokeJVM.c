@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 extern void *loadJavaLibrary(char *directory);
-typedef jint (JNICALL *createJVM)(JavaVM **, void **, void *);
+typedef jint(JNICALL *createJVM)(JavaVM **, void **, void *);
 typedef void (*onErrorFunc)(gchar *stacktrace, gchar *reportLocation);
 
 extern createJVM findFunction(void *);
