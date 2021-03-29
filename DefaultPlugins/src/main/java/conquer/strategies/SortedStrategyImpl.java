@@ -76,7 +76,7 @@ public final class SortedStrategyImpl implements Strategy {
 		this.cities.forEach(target -> {
 			final var own = StreamUtils.getCitiesAsStream(graph, a -> graph.isConnected(a, target))
 					.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
-					.collect(Collectors.toList());
+					.toList();
 			own.forEach(ownCity -> {
 				final var pair = this.values.get(target);
 				final var second = pair.second();
@@ -122,7 +122,7 @@ public final class SortedStrategyImpl implements Strategy {
 					final var ratioA = pA.first() / (pA.second() == 0 ? 1 : pA.second());
 					final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
 					return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
-				}).collect(Collectors.toList());
+				}).toList();
 	}
 
 	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
@@ -136,7 +136,7 @@ public final class SortedStrategyImpl implements Strategy {
 
 	private void upgradeCities(final Graph<ICity> cities, final IClan clan, final StrategyObject obj) {
 		var didUpgrade = true;
-		final var ownCities = StreamUtils.getCitiesAsStream(cities, clan).collect(Collectors.toList());
+		final var ownCities = StreamUtils.getCitiesAsStream(cities, clan).toList();
 		while (didUpgrade) {
 			var num = 0;
 			for (final var c : ownCities) {

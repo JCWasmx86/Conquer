@@ -40,7 +40,7 @@ final class BuiltinShared {
 		final var citiesOfEnemies = StreamUtils
 				.getCitiesAroundCityNot(object, graph, source,
 						a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
-				.collect(Collectors.toList());
+				.toList();
 		// Peace!
 		if (citiesOfEnemies.isEmpty()) {
 			return;
@@ -61,7 +61,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(clan != null, "clan==null");
 		BuiltinShared.assertThat(graph != null, "graph==null");
 		BuiltinShared.assertThat(object != null, "object==null");
-		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).collect(Collectors.toList());
+		final var citiesOfClan = StreamUtils.getCitiesAsStream(graph, clan).toList();
 		StreamUtils.forEach(graph, clan, c -> {
 			// If there are too many soldiers in a city, try to move them, else recruit
 			// some.
@@ -166,7 +166,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(clan != null, "clan==null");
 		// Sort all cities using the basedefense as key
 		final var sortedListOfCities = StreamUtils
-				.getCitiesAsStream(graph, clan, Comparator.comparing(ICity::getDefense)).collect(Collectors.toList());
+				.getCitiesAsStream(graph, clan, Comparator.comparing(ICity::getDefense)).toList();
 		// Find the average basedefense
 		final var average = sortedListOfCities.stream().mapToDouble(ICity::getDefense).average();
 		var avg = average.getAsDouble();
@@ -188,11 +188,11 @@ final class BuiltinShared {
 		StreamUtils.getCitiesAsStream(graph, clan).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(object, graph, a, a.getClan())
-					.collect(Collectors.toList());
+					.toList();
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = b.getDefenseStrength();
 			final var neighboursB = StreamUtils.getCitiesAroundCityNot(object, graph, b, b.getClan())
-					.collect(Collectors.toList());
+					.toList();
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
 			final var diff2 = attackB - defenseB;
@@ -224,7 +224,7 @@ final class BuiltinShared {
 				final var productions2 = o2.getProductions();
 				final var i = Double.compare(productions1.get(aKey), productions2.get(aKey));
 				return i == 0 ? Double.compare(o1.getLevels().get(aKey), o2.getLevels().get(aKey)) : i;
-			}).collect(Collectors.toList());
+			}).toList();
 			var cnter = 0;
 			// In every city upgrade the production.
 			while (cnter != sortedListOfCities.size()) {
