@@ -71,7 +71,7 @@ public final class ChangeCitiesMinds implements Plugin {
 			}
 			final var oldClan = c.getClan();
 			final var list = StreamUtils.getCitiesAroundCity(cities, c).map(ICity::getClan).distinct()
-					.collect(Collectors.toList());
+					.toList();
 			final var canChangeClan = list.size() == 1;
 			final var otherClan = list.get(0);
 			if ((!canChangeClan || (otherClan == c.getClan()))

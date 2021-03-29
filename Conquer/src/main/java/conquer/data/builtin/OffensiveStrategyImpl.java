@@ -87,11 +87,11 @@ public final class OffensiveStrategyImpl implements Strategy {
 		final var citiesWithoutBordersWithSoldiers = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> a.getNumberOfSoldiers() > 0)
 				.filter(a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
-				.collect(Collectors.toList());
+				.toList();
 		// All cities that are adjacent to another clan. (Set B in the following)
 		final var citiesOnBorder = StreamUtils
 				.getCitiesAsStream(this.graph, clan, a -> !citiesWithoutBordersWithSoldiers.contains(a))
-				.collect(Collectors.toList());
+				.toList();
 		// For each city in W, now all adjacent cities from B are sorted, first by the
 		// number of soldiers, then by
 		// the distance (A city with less soldiers will be supported earlier)
@@ -163,7 +163,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 		final var citiesWithoutBorders = StreamUtils
 				.getCitiesAsStream(this.graph, clan,
 						a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
-				.collect(Collectors.toList());
+				.toList();
 		final var cityStream = (citiesWithoutBorders.isEmpty() ? StreamUtils.getCitiesAsStream(this.graph, clan)
 				: citiesWithoutBorders.stream());
 		cityStream.sorted((a, b) -> {

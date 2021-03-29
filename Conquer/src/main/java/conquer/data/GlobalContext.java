@@ -79,19 +79,19 @@ public final class GlobalContext {
 			throw new IllegalArgumentException("other==null");
 		}
 		this.installedMaps.addAll(other.installedMaps);
-		this.installedMaps = this.installedMaps.stream().distinct().collect(Collectors.toList());
+		this.installedMaps = this.installedMaps.stream().distinct().toList();
 		this.pluginNames.addAll(other.pluginNames);
-		this.pluginNames = this.pluginNames.stream().distinct().collect(Collectors.toList());
+		this.pluginNames = this.pluginNames.stream().distinct().toList();
 		this.strategyNames.addAll(other.strategyNames);
-		this.strategyNames = this.strategyNames.stream().distinct().collect(Collectors.toList());
+		this.strategyNames = this.strategyNames.stream().distinct().toList();
 		this.readerNames.addAll(other.readerNames);
-		this.readerNames = this.readerNames.stream().distinct().collect(Collectors.toList());
+		this.readerNames = this.readerNames.stream().distinct().toList();
 		this.plugins.addAll(other.plugins);
-		this.plugins = this.plugins.stream().distinct().collect(Collectors.toList());
+		this.plugins = this.plugins.stream().distinct().toList();
 		this.strategies.addAll(other.strategies);
-		this.strategies = this.strategies.stream().distinct().collect(Collectors.toList());
+		this.strategies = this.strategies.stream().distinct().toList();
 		this.readers.addAll(other.readers);
-		this.readers = this.readers.stream().distinct().collect(Collectors.toList());
+		this.readers = this.readers.stream().distinct().toList();
 	}
 
 	/**
@@ -109,7 +109,7 @@ public final class GlobalContext {
 		}
 		final var list = this.readers.stream()
 				.sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
-				.collect(Collectors.toList());
+				.toList();
 		if (list.isEmpty()) {
 			throw new UnsupportedOperationException("No reader found");
 		}

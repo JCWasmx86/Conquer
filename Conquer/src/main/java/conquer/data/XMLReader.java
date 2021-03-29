@@ -56,7 +56,7 @@ public final class XMLReader {
 	}
 
 	private <T> List<T> distinct(final Collection<T> collection) {
-		return collection.stream().distinct().collect(Collectors.toList());
+		return collection.stream().distinct().toList();
 	}
 
 	private Node findNode(final NodeList children) {

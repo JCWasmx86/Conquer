@@ -68,7 +68,7 @@ final class PluginStrategySelectPanel extends JPanel {
 				}
 			}
 		});
-		final var pluginNames = newPlugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList());
+		final var pluginNames = newPlugins.stream().map(a -> a.getClass().getName()).toList();
 		this.context.getPlugins().clear();
 		this.context.getPlugins().addAll(newPlugins);
 		this.context.getPluginNames().clear();
@@ -91,7 +91,7 @@ final class PluginStrategySelectPanel extends JPanel {
 				newStrategies.add(a);
 			}
 		});
-		final var strategyNames = newStrategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList());
+		final var strategyNames = newStrategies.stream().map(a -> a.getClass().getName()).toList();
 		this.context.getStrategies().clear();
 		this.context.getStrategies().addAll(newStrategies);
 		this.context.getStrategyNames().clear();

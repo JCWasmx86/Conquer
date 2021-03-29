@@ -73,7 +73,7 @@ public final class LoopPlayer extends Thread implements Serializable {
 		if (this.sounds.isEmpty() || Boolean.getBoolean("conquer.nosound")) {
 			return;
 		}
-		this.sounds = this.sounds.stream().distinct().collect(Collectors.toList());
+		this.sounds = this.sounds.stream().distinct().toList();
 		final var r = new Random(System.nanoTime());
 		try {
 			Thread.sleep(r.nextInt(500));
