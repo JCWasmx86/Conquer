@@ -7,30 +7,30 @@ namespace Launcher {
 			return null;
 		}
 		var baseDir = geteuid() == 0? "/opt" : getBaseDirectory();
-		var java15Dir = baseDir + "/java-15";
-		var outputFile = baseDir + "/java-15.tar.gz";
-		return (opendir(java15Dir) != null || opendir("/opt/java-15") != null) ? null : outputFile;
+		var java16Dir = baseDir + "/java-16";
+		var outputFile = baseDir + "/java-16.tar.gz";
+		return (opendir(java16Dir) != null || opendir("/opt/java-16") != null) ? null : outputFile;
 	}
 
 	string getOutputDirectory() {
 		if(geteuid() != 0) {
-			return getBaseDirectory() + "/java-15/";
+			return getBaseDirectory() + "/java-16/";
 		} else {
-			return "/opt/java-15";
+			return "/opt/java-16";
 		}
 	}
 	string? findExistingJavaInstallWithMatchingVersion() {
 		var jvmDirectory = getLinuxJavaDirectory();
 		if(jvmDirectory != null && opendir(jvmDirectory) != null) {
 			int version = readReleaseFile(jvmDirectory);
-			if(version == 15) {
+			if(version == 16) {
 				return jvmDirectory;
 			}
 		}
 		var javaHomeDirectory = Environment.get_variable("JAVA_HOME");
 		if (javaHomeDirectory != null && opendir(javaHomeDirectory) != null) {
 			int version = readReleaseFile(javaHomeDirectory);
-			if (version == 15) {
+			if (version == 16) {
 				return javaHomeDirectory;
 			}
 		}

@@ -65,7 +65,7 @@ namespace Launcher {
 			button.clicked.connect(() => {
 				var javaFolder = selectJava.getFolder();
 				var givenVersion = javaFolder == null ? -1 : readReleaseFile(javaFolder);
-				var isMatching = javaFolder == null ? false : givenVersion == 15;
+				var isMatching = javaFolder == null ? false : givenVersion == 16;
 				this.remove(button);
 				button.destroy();
 				this.progressBar = new ProgressBar();
@@ -202,17 +202,17 @@ namespace Launcher {
 		private CheckButton check;
 		public SelectJavaBox() {
 			this.set_orientation(Orientation.HORIZONTAL);
-			this.check = new CheckButton.with_label("Find Java 15 automatically");
+			this.check = new CheckButton.with_label("Find Java 16 automatically");
 			this.check.set_active(true);
 			this.pack_start(this.check);
-			this.fileChooserButton = new FileChooserButton("Select Java 15 installation",
+			this.fileChooserButton = new FileChooserButton("Select Java 16 installation",
 			  FileChooserAction.SELECT_FOLDER);
 			this.check.toggled.connect(() => {
 				if(this.check.get_active()) {
-					this.check.set_label("Find Java 15 automatically");
+					this.check.set_label("Find Java 16 automatically");
 					this.fileChooserButton.hide();
 				} else {
-					this.check.set_label("Use local Java 15 installation: ");
+					this.check.set_label("Use local Java 16 installation: ");
 					this.show_all();
 				}
 			});
@@ -235,7 +235,7 @@ namespace Launcher {
 		}
 		public void configure(string s) {
 			check.set_active(false);
-			this.check.set_label("Use local Java 15 installation: ");
+			this.check.set_label("Use local Java 16 installation: ");
 			this.fileChooserButton.set_filename(s);
 			this.show_all();
 		}

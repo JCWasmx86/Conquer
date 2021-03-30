@@ -255,8 +255,8 @@ namespace Launcher {
 				if(line.contains("JAVA_VERSION=")) {
 					line = line.replace("JAVA_VERSION=", "");
 					line = line.replace("\"", "");
-					if(line[0] == '1' && line[1] == '5') {
-						return 15;
+					if(line[0] == '1' && line[1] == '6') {
+						return 16;
 					}
 				}
 			}

@@ -24,7 +24,7 @@ void *loadJavaLibrary(char *givenDirectory) {
 			perror("SHGetSpecialFolderPathA");
 			exit(-1);
 		}
-		strcat(directory, "\\Conquer\\java-15\\");
+		strcat(directory, "\\Conquer\\java-16\\");
 	} else {
 		strcat(directory, givenDirectory);
 	}

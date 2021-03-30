@@ -51,7 +51,7 @@ namespace Launcher {
 
 	string getOutputDirectory() {
 		var s = getProgramFiles();
-		var ret = ((string) s) + "\\Conquer\\java-15\\";
+		var ret = ((string) s) + "\\Conquer\\java-16\\";
 		free(s);
 		return ret;
 	}

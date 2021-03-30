@@ -4,7 +4,7 @@ using Json;
 namespace Launcher {
 	class LibericaJDK {
 		public string? obtain() {
-			string url = "https://api.bell-sw.com/v1/liberica/releases?version-feature=15&version-modifier=latest&bundle-type=jdk";
+			string url = "https://api.bell-sw.com/v1/liberica/releases?version-feature=16&version-modifier=latest&bundle-type=jdk";
 			StringBuilder sb = new StringBuilder.sized(50000);
 			var handle = new EasyHandle();
 			if(handle != null) {

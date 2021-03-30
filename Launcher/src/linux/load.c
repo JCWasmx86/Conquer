@@ -18,8 +18,8 @@ void *loadJavaLibrary(char *givenDirectory) {
 	if (!givenDirectory) {
 		directory = launcher_findExistingJavaInstallWithMatchingVersion();
 		if (directory == NULL) {
-			if (dirExists("/opt/java-15")) {
-				char *s = "/opt/java-15/";
+			if (dirExists("/opt/java-16")) {
+				char *s = "/opt/java-16/";
 				directory = calloc(strlen(s) + 1, 1);
 				assert(directory);
 				memcpy(directory, s, strlen(s));
@@ -28,7 +28,7 @@ void *loadJavaLibrary(char *givenDirectory) {
 				assert(base);
 				directory = calloc(strlen(base) + 20, 1);
 				assert(directory);
-				sprintf(directory, "%s%s", base, "/java-15/");
+				sprintf(directory, "%s%s", base, "/java-16/");
 				free(base);
 			}
 		}

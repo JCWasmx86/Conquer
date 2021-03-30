@@ -3,7 +3,7 @@ using Json;
 namespace Launcher {
 	class AdoptOpenJDK {
 		public string? obtain() {
-			string url = "https://api.adoptopenjdk.net/v3/assets/latest/15/hotspot";
+			string url = "https://api.adoptopenjdk.net/v3/assets/latest/16/hotspot";
 			//Start with 50KB buffer
 			StringBuilder sb = new StringBuilder.sized(50000);
 			var handle = new EasyHandle();
