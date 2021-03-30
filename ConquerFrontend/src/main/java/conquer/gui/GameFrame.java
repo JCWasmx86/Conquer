@@ -384,6 +384,9 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var relationShipScrollPane = new JScrollPane(relationships);
 		relationShipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.sideBarPane.add(Messages.getString("GameFrame.relationships"), relationShipScrollPane); //$NON-NLS-1$
+		final var statsPanel = new StatsPanel(this.game);
+		statsPanel.init();
+		this.sideBarPane.add(Messages.getString("GameFrame.stats"), statsPanel);
 		this.basePanel.add(this.sideBarPane);
 	}
 
