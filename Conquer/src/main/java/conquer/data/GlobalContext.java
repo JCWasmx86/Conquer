@@ -132,7 +132,7 @@ public final class GlobalContext {
 		final byte[] entireFile;
 		try {
 			entireFile = this.getAllBytes(is);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 		for (final var factory : list) {
@@ -143,7 +143,7 @@ public final class GlobalContext {
 		throw new UnsupportedOperationException("No supported file format");
 	}
 
-	private byte[] getAllBytes(InstalledScenario is) throws IOException {
+	private byte[] getAllBytes(final InstalledScenario is) throws IOException {
 		if (is.file() != null) {
 			try (final var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				return stream.readAllBytes();

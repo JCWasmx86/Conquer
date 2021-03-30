@@ -140,8 +140,11 @@ final class StrategiesAndPluginsDialog extends JFrame {
 			@Override
 			public void actionPerformed(final ActionEvent e) {
 				final var sb = new StringBuilder(
-						"<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE " +
-								"DOING!-->\n<info>\n\t<scenarios>\n"); //$NON-NLS-1$
+						"""
+								<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->
+								<info>
+								\t<scenarios>
+								"""); //$NON-NLS-1$
 				StrategiesAndPluginsDialog.this.context.getInstalledMaps()
 						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"") //$NON
 								// -NLS-1$ //$NON-NLS-2$

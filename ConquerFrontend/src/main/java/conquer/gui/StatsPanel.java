@@ -43,13 +43,13 @@ public class StatsPanel extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		this.statistic = Statistic.build(info);
+	public void actionPerformed(final ActionEvent e) {
+		this.statistic = Statistic.build(this.info);
 		this.repaint();
 	}
 
 	record Statistic(Map<IClan, Double> map) {
-		static Statistic build(ConquerInfo info) {
+		static Statistic build(final ConquerInfo info) {
 			final var list =
 					info.getClans().stream().sorted(Comparator.comparingDouble(a -> Statistic.getStrength(info, a))).collect(Collectors.toList());
 			final var totalStrength = list.stream().mapToDouble(a -> Statistic.getStrength(info, a)).sum();
@@ -76,7 +76,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 			var currY = startY;
 			final var diffY = endY - startY;
 			for (final var entry :
-					map.entrySet().stream().sorted((a, b) -> Double.compare(b.getValue(), a.getValue())).collect(Collectors.toList())) {
+					this.map.entrySet().stream().sorted((a, b) -> Double.compare(b.getValue(), a.getValue())).collect(Collectors.toList())) {
 				g.setColor(entry.getKey().getColor());
 				final var heightOfRectangle = (int) Math.rint(diffY * entry.getValue());
 				g.fillRect(startX, currY, endX - startX, heightOfRectangle);

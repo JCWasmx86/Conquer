@@ -22,7 +22,7 @@ public interface ConquerInfoReaderFactory {
 	 * @return A reader that is able to construct a {@link ConquerInfo} from
 	 * {@code is}.
 	 */
-	default ConquerInfoReader getForBytes(byte[] bytes){
+	default ConquerInfoReader getForBytes(final byte[] bytes){
 		throw new UnsupportedOperationException("STUB - TODO: Implement");
 	}
 
@@ -40,7 +40,7 @@ public interface ConquerInfoReaderFactory {
 	 * @param bytes The bytes of the scenario file.
 	 * @return {@code true} if this factory accepts this scenario, {@code false} otherwise.
 	 */
-	default boolean accepts(byte[] bytes) {
+	default boolean accepts(final byte[] bytes) {
 		return false;
 	}
 }
