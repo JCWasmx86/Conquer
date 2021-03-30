@@ -10,7 +10,7 @@
 
 ### Prerequisites
 
-1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-15-jdk`.
+1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-16-jdk`.
 2. These packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev,
    pkg-config, valac, libgee-0.8-dev, libjson-glib-dev, make
 3. `JAVA_HOME` has to be set.
@@ -20,7 +20,7 @@
 Just type:
 
 ```
-gradle assemble
+./gradlew assemble
 ```
 
 This will need around 2-3 minutes, (Further builds are faster) and will build these .deb files in `debs`:
@@ -38,12 +38,11 @@ debs/conquer-default-music.deb
 ### TL;DR
 
 ```
-sudo apt install -y openjdk-15-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev make wget
+sudo apt install -y openjdk-16-jdk libarchive-dev git libcurl4-openssl-dev bash musescore3 pkg-config libgtk-3-dev valac libgee-0.8-dev libjson-glib-dev make wget
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
-#You can replace gradle with ./gradlew
 #Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
-gradle assemble
+./gradlew assemble
 ```
 
 ### Notes
@@ -59,15 +58,14 @@ Only arm64, arm (Although a bit untested), i386 and amd64 are supported.
    git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn mingw-w64-x86_64-vala
    mingw-w64-x86_64-headers-git zip unzip mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libgee mingw-w64-x86_64-json-glib mingw-w64-i686-nsis mingw-w64-x86_64-pkg-config
 3. Install musescore3: You have to download the installer and run it.
-4. Install Java 15: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell.
-5. Install gradle (Version 6.8)
+4. Install Java 16: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell.
 
 ### Compiling
 
 Just type:
 
 ```
-gradle assemble
+./gradlew.bat assemble
 ```
 
 This will need around 6-10 minutes, and will build `Launcher/Installer.exe`.
@@ -79,9 +77,8 @@ pacman -S --noconfirm git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_6
 pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64-x86_64-libgee mingw-w64-x86_64-gtk3 mingw-w64-i686-nsis mingw-w64-x86_64-vala mingw-w64-x86_64-pkg-config
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
-#You can replace gradle with ./gradlew
 #Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
-gradle assemble
+./gradlew.bat assemble
 ```
 
 ### Notes
@@ -104,7 +101,7 @@ Semi-supported with a bit of manual work. (Contributions are welcome)
 For generating the eclipse project files, type:
 
 ```
-gradle eclipse
+./gradlew eclipse
 ```
 
 After that, you must open eclipse and import a gradle project:
@@ -118,8 +115,8 @@ Now you just have to follow the wizard.
 Use:
 
 ```
-gradle idea
-gradle openIdea
+./gradlew idea
+./gradlew openIdea
 ```
 
 # FAQ

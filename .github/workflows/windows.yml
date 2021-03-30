@@ -15,7 +15,7 @@ jobs:
             -   uses: actions/checkout@v2
             -   uses: actions/setup-java@v1.4.3
                 with:
-                    java-version: 15
+                    java-version: 16
             -   uses: msys2/setup-msys2@v2
                 with:
                     update: true
@@ -52,8 +52,8 @@ jobs:
                     export PATH=`pwd`:$PATH:.
                     cd ../../../..
                     export QT_QPA_PLATFORM=windows
-                    gradle assemble
-                    gradle Conquer:runTestsuites
+                    ./gradlew assemble
+                    ./gradlew Conquer:runTestsuites
             -   uses: actions/upload-artifact@v2
                 with:
                     name: Installer
@@ -67,8 +67,8 @@ jobs:
                     export PATH=`pwd`:$PATH:.
                     cd ../../../..
                     export QT_QPA_PLATFORM=windows
-                    gradle clean
-                    gradle createZipFileForDistribution
+                    ./gradlew clean
+                    ./gradlew createZipFileForDistribution
             -   uses: actions/upload-artifact@v2
                 with:
                     name: SDK

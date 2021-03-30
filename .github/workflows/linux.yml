@@ -11,7 +11,7 @@ jobs:
         steps:
             -   uses: actions/setup-java@v1.4.3
                 with:
-                    java-version: 15
+                    java-version: 16
             -   uses: actions/checkout@v2
             -   name: Setup environment
                 run: |
@@ -37,8 +37,8 @@ jobs:
                     cd gradle/bin
                     export PATH=`pwd`:$PATH:.
                     cd ../../..
-                    gradle assemble
-                    gradle Conquer:runTestsuites
+                    ./gradlew assemble
+                    ./gradlew Conquer:runTestsuites
                     cd debs
                     ./checkScript
                     cd ..
@@ -48,8 +48,8 @@ jobs:
                     export PATH=`pwd`:$PATH:.
                     cd ../../..
                     export QT_QPA_PLATFORM=offscreen
-                    gradle clean
-                    gradle createZipFileForDistribution
+                    ./gradlew clean
+                    ./gradlew createZipFileForDistribution
             -   uses: actions/upload-artifact@v2
                 with:
                     name: SDK

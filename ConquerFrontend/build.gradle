@@ -55,7 +55,7 @@ conquerResources.mustRunAfter(":music:buildMusic", copyFiles, deleteFiles)
 deleteFiles.dependsOn(copyFiles)
 deleteFiles.mustRunAfter(copyFiles)
 jar.dependsOn(conquerResources)
-
+copyFiles.dependsOn(":music:buildMusic")
 run {
 	jvmArgs = ["--enable-preview"]
 	classpath "../auxiliary/jars/tritonus.jar", "../auxiliary/jars/jlayer.jar",

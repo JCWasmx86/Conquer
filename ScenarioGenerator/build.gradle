@@ -39,5 +39,11 @@ task deleteFiles(type: Delete) {
 	delete "Freedo.png"
 	delete "Freedo.data"
 }
+buildSlaine.dependsOn(jar, copyFiles)
+buildBelenos.dependsOn(jar, copyFiles)
+buildEtiona.dependsOn(jar, copyFiles)
+buildFreedo.dependsOn(jar, copyFiles)
+processResources.dependsOn(copyFiles)
+compileJava.dependsOn(copyFiles)
 clean.dependsOn(deleteFiles)
 build.dependsOn(buildSlaine, buildBelenos, buildEtiona, buildFreedo, copyFiles)

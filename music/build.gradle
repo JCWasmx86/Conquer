@@ -80,6 +80,7 @@ if (project.hasProperty("conquer.download") && "true" == project.getProperties()
 		}
 	}
 }
+buildMusic.dependsOn(jar)
 assemble.dependsOn(buildMusic)
 
 task deleteFiles(type: Delete) {
