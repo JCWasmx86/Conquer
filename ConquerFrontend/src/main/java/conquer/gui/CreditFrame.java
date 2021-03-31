@@ -81,7 +81,8 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg" +
 				".tar.zst\">Hicolor icon theme</a></li>" +
 				// TODO: Check whether a license for every distributed DLL has to be added.
-				"</ul><h3>Notable links</h3>" +
+				"</ul><h3>Contributors</h3>"+
+				"<h3>Notable links</h3>" +
 				"<i><a href=\"https://github.com/musescore/MuseScore\">Musescore</a></i> was used to generate the " +
 				"music for the <i>DefaultMusic</i> plugin and the GUI.<br>" +
 				"The names \"Belenos\", \"Etiona\" and \"Slaine\" are from <i><a href=\"https://trisquel" +
