@@ -90,7 +90,6 @@ void update() {
 	printf("Starting Installer: %d\n", ShellExecute(0, TEXT("runas"), TEXT(installer), 0, NULL, SW_HIDE));
 
 	free(installer);
-	free(cmd);
 	free(baseDir);
 	free(updateDir);
 	free(updateFile);
