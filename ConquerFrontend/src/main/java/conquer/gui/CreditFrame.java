@@ -46,7 +46,7 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"</a></li>" +
 				"<li><a href=\"https://www.gtk.org/\">GTK (GNU Lesser General Public License v2.1)</a></li>" +
 				"<li><a href=\"https://libarchive.org/\">Libarchive (New BSD License)</a></li>" +
-				"<li><a href=\"https://curl.se/libcurl/\">libcurl (MIT/X derivate)</a></li>" +
+				"<li><a href=\"https://curl.se/libcurl/\">libcurl (MIT/X derivative)</a></li>" +
 				"<li><a href=\"https://wiki.gnome.org/Projects/Libgee\">libgee (GNU Lesser General Public License v2" +
 				".1)</a></li>" +
 				"<li><a href=\"https://wiki.gnome.org/Projects/JsonGlib\">JSON-GLib (GNU Lesser General Public " +
