@@ -311,7 +311,7 @@ final class Game implements ConquerInfo {
 
 	private void cpuPlay() {
 		// Skip clan of the player
-		final var order = this.clans.stream().filter(a -> !a.isPlayerClan()).toList();
+		final var order = this.clans.stream().filter(a -> !a.isPlayerClan()).collect(Collectors.toList());
 		Collections.shuffle(order);
 		order.forEach(this::executeCPUPlay);
 		this.isPlayersTurn = true;

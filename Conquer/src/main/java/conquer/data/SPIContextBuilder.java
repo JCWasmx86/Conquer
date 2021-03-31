@@ -37,13 +37,13 @@ public class SPIContextBuilder {
 			}
 		});
 		final var strategies = ServiceLoader.load(StrategyProvider.class).stream().map(Provider::get)
-				.toList();
-		final var plugins = ServiceLoader.load(Plugin.class).stream().map(Provider::get).toList();
+				.collect(Collectors.toList());
+		final var plugins = ServiceLoader.load(Plugin.class).stream().map(Provider::get).collect(Collectors.toList());
 		final var readers = ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(Provider::get)
-				.toList();
+				.collect(Collectors.toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
-				plugins.stream().map(a -> a.getClass().getName()).toList(),
-				strategies.stream().map(a -> a.getClass().getName()).toList(),
-				readers.stream().map(a -> a.getClass().getName()).toList());
+				plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+				strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+				readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
 	}
 }
