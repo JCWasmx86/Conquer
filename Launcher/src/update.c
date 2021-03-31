@@ -4,6 +4,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <windows.h>
 
 #include "launcher.h"
 
@@ -83,12 +84,10 @@ void update() {
 	
 	remove(updateFile);
 	
-	printf("Starting Installer...\n");
 	char* installer = malloc(strlen(updateDir) + 3 + 14);
 	sprintf(installer, "%s%s%s", updateDir, DELIM, "Installer.exe");
-	char* cmd = malloc(strlen(installer) * 2 + 24);
-	sprintf(cmd, "cmd.exe /c %s && del %s", installer, installer);
-	system(cmd);
+	
+	printf("Starting Installer: %d\n", ShellExecute(0, TEXT("runas"), TEXT(installer), 0, NULL, SW_HIDE));
 
 	free(installer);
 	free(cmd);
