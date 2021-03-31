@@ -24,7 +24,7 @@ namespace Launcher {
 			options[1] = new ClasspathCollector(classpaths).collectClasspath();
 			options[2] = "--enable-preview";
 			options[3] = new ModulePathCreator().create();
-			options[4] = "--add-modules=conquer,conquer.frontend";
+			options[4] = "--add-modules=conquer,conquer.frontend,conquer.frontend.spi";
 			options[5] = "-Dsun.java2d.opengl=true";
 			options[6 + size + memSize] = "-m";
 			options[7 + size + memSize] = "conquer.frontend/conquer.gui.Intro";
