@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
 
 public final class ModerateStrategyImpl implements Strategy {
 	private static final double BIG_RELATIONSHIP_INCREASE_FACTOR = 7.3;

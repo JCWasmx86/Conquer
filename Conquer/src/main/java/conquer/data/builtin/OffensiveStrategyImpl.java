@@ -11,7 +11,6 @@ import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 
 import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
 
 public final class OffensiveStrategyImpl implements Strategy {
 	private static final double OFFENSIVE_UPGRADE_PROBABILITY = 0.15;

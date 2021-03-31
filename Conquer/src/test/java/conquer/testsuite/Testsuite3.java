@@ -10,7 +10,6 @@ import conquer.data.XMLReader;
 import conquer.utils.Graph;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This class saves and restores Game-objects and compares them.

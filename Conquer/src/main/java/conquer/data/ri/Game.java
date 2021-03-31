@@ -504,7 +504,7 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public List<String> getClanNames() {
-		return this.clans.stream().map(IClan::getName).collect(Collectors.toUnmodifiableList());
+		return this.clans.stream().map(IClan::getName).toList();
 	}
 
 	@Override
@@ -514,12 +514,12 @@ final class Game implements ConquerInfo {
 
 	@Override
 	public List<Double> getCoins() {
-		return this.clans.stream().map(IClan::getCoins).collect(Collectors.toUnmodifiableList());
+		return this.clans.stream().map(IClan::getCoins).toList();
 	}
 
 	@Override
 	public List<Color> getColors() {
-		return this.clans.stream().map(IClan::getColor).collect(Collectors.toUnmodifiableList());
+		return this.clans.stream().map(IClan::getColor).toList();
 	}
 
 	@Override

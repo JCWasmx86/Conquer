@@ -9,7 +9,6 @@ import conquer.plugins.Plugin;
 import conquer.utils.Graph;
 
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public final class ChangeCitiesMinds implements Plugin {
 	private static final double INSTANT_CLAN_CHANGE = 0.05;

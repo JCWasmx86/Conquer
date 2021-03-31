@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.function.DoubleConsumer;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public final class DefensiveStrategyImpl implements Strategy {
 	private static final int MAX_ITERATIONS = 100;

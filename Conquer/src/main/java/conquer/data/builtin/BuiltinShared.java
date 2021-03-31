@@ -15,13 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 final class BuiltinShared {
 
 	private static final int GOOD_RELATION = 75;
 	private static final int MAX_ITERATIONS = 100;
 	private static final int COINS_TO_RETAIN = 20;
+
+	private BuiltinShared() {
+
+	}
 
 	// Method for checking things that MUST be true.
 	static void assertThat(final boolean b, final String message) {
@@ -234,9 +237,5 @@ final class BuiltinShared {
 				}
 			}
 		});
-	}
-
-	private BuiltinShared() {
-
 	}
 }

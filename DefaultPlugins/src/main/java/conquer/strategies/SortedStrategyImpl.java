@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.DoubleConsumer;
-import java.util.stream.Collectors;
 
 public final class SortedStrategyImpl implements Strategy {
 	private static final double MAXIMUM_VARIANCE = 0.3;
