@@ -68,7 +68,8 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				" " +
 				"(GNU Lesser General Public License v2.1)</a>" +
 				"</ul><h3>Other legal things</h3><ul>" +
-				"<li><a href=\"https://github.com/B00merang-Project/Windows-10\">Windows-10 theme for the launcher on" +
+				"<li><a href=\"https://github.com/B00merang-Project/Windows-10\">Windows-10 theme for the launcher " +
+				"on" +
 				" " +
 				"windows (GNU General Public License v3.0)</a></li>" +
 				"<li><a href=\"https://gitlab.gnome.org/GNOME/adwaita-icon-theme\">Adwaita icon theme is distributed" +
