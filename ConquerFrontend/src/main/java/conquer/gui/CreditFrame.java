@@ -49,7 +49,8 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"<li><a href=\"https://curl.se/libcurl/\">libcurl (MIT/X derivate)</a></li>" +
 				"<li><a href=\"https://wiki.gnome.org/Projects/Libgee\">libgee (GNU Lesser General Public License v2" +
 				".1)</a></li>" +
-				"<li><a href=\"https://wiki.gnome.org/Projects/JsonGlib\">JSON-GLib (GNU Lesser General Public License" +
+				"<li><a href=\"https://wiki.gnome.org/Projects/JsonGlib\">JSON-GLib (GNU Lesser General Public " +
+				"License" +
 				" v2.1)</a></li>" +
 				"</ul><h3>Used libraries for sound</h3>" +
 				"All of these were repackaged and published on maven. (<a href=\"https://github" +
@@ -63,12 +64,15 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"(GNU Lesser General Public License v2.1)</a>" +
 				"<li> <a href=\"https://mvnrepository.com/artifact/com.googlecode.soundlibs/vorbisspi/1.0.3" +
 				".3\">VorbisSPI (GNU Lesser General Public License v2.1)</a>" +
-				"<li> <a href=\"https://mvnrepository.com/artifact/com.googlecode.soundlibs/jorbis/0.0.17.4\">JOrbis " +
+				"<li> <a href=\"https://mvnrepository.com/artifact/com.googlecode.soundlibs/jorbis/0.0.17.4\">JOrbis" +
+				" " +
 				"(GNU Lesser General Public License v2.1)</a>" +
 				"</ul><h3>Other legal things</h3><ul>" +
-				"<li><a href=\"https://github.com/B00merang-Project/Windows-10\">Windows-10 theme for the launcher on " +
+				"<li><a href=\"https://github.com/B00merang-Project/Windows-10\">Windows-10 theme for the launcher on" +
+				" " +
 				"windows (GNU General Public License v3.0)</a></li>" +
-				"<li><a href=\"https://gitlab.gnome.org/GNOME/adwaita-icon-theme\">Adwaita icon theme is distributed " +
+				"<li><a href=\"https://gitlab.gnome.org/GNOME/adwaita-icon-theme\">Adwaita icon theme is distributed" +
+				" " +
 				"on windows with the launcher (GNU Lesser General Public License v3; artwork by the </a><a " +
 				"href=\"http://www.gnome.org\">GNOME Project</a>; <a href=\"http://creativecommons" +
 				".org/licenses/by-sa/3.0\">CC BY-SA3.0</a>)</li>" +
@@ -78,16 +82,19 @@ final class CreditFrame extends JFrame implements WindowListener, ActionListener
 				"href=\"https://www.msys2.org/\">MSYS2</a> project: <br><ul>" +
 				"<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-adwaita-icon-theme-3.38.0-3-any" +
 				".pkg.tar.zst\">Adwaita icon theme</a></li>" +
-				"<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any.pkg" +
+				"<li><a href=\"https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-hicolor-icon-theme-0.17-2-any" +
+				".pkg" +
 				".tar.zst\">Hicolor icon theme</a></li>" +
 				// TODO: Check whether a license for every distributed DLL has to be added.
-				"</ul><h3>Contributors</h3>"+
-				"<h3>Notable links</h3>" +
+				"</ul><h3>Contributors</h3><ul>" +
+				"<li><a href=\"https://github.com/nagendra0446\">Nagendra Nainala</a></li>" +
+				"</ul><h3>Notable links</h3>" +
 				"<i><a href=\"https://github.com/musescore/MuseScore\">Musescore</a></i> was used to generate the " +
 				"music for the <i>DefaultMusic</i> plugin and the GUI.<br>" +
 				"The names \"Belenos\", \"Etiona\" and \"Slaine\" are from <i><a href=\"https://trisquel" +
 				".info/en\">Trisquel Linux</a></i>.<br>" +
-				"The name \"Freedo\" is from the <i><a href=\"https://directory.fsf.org/wiki/Linux-libre\">Linux-libre" +
+				"The name \"Freedo\" is from the <i><a href=\"https://directory.fsf" +
+				".org/wiki/Linux-libre\">Linux-libre" +
 				" project</a></i><br>" +
 				"</html>";
 	}
