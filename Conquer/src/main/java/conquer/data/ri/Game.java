@@ -311,7 +311,7 @@ final class Game implements ConquerInfo {
 
 	private void cpuPlay() {
 		// Skip clan of the player
-		final var order = this.clans.stream().filter(a -> !a.isPlayerClan()).collect(Collectors.toList());
+		final var order = this.clans.stream().filter(a -> !a.isPlayerClan()).toList();
 		Collections.shuffle(order);
 		order.forEach(this::executeCPUPlay);
 		this.isPlayersTurn = true;
@@ -567,16 +567,16 @@ final class Game implements ConquerInfo {
 		return Stream.of(reachableCities.toArray(new ICity[0])).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
-					.collect(Collectors.toList());
+					.toList();
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = b.getDefenseStrength();
 			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClan())
-					.collect(Collectors.toList());
+					.toList();
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
 			final var diff2 = attackB - defenseB;
 			return Double.compare(diff, diff2);
-		}).collect(Collectors.toList());
+		}).toList();
 	}
 
 	private void growCities() {
@@ -616,7 +616,7 @@ final class Game implements ConquerInfo {
 	@Override
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
-				.collect(Collectors.toList()));
+				.toList());
 		this.context.getStrategies().forEach(provider -> {
 			final var idx = provider.getId();
 			if (idx >= Game.MAX_STRATEGIES) {
@@ -702,7 +702,7 @@ final class Game implements ConquerInfo {
 				throw new IllegalArgumentException("numberOfSoldiersToMove > src.numberOfSoldiers");
 			}
 		}
-		return reachableCities == null ? new ArrayList<>() : reachableCities.collect(Collectors.toList());
+		return reachableCities == null ? new ArrayList<>() : reachableCities.toList();
 	}
 
 	private long calculateMoveAmount(final ICity src, final ICity destination) {
@@ -735,7 +735,7 @@ final class Game implements ConquerInfo {
 			destination = other;
 		} else {
 			list = this.getWeakestCityInRatioToSurroundingEnemyCities(saved).stream()
-					.filter(a -> a.getClan() == src.getClan()).collect(Collectors.toList());
+					.filter(a -> a.getClan() == src.getClan()).toList();
 			if (list.isEmpty()) {
 				return;
 			}
@@ -792,7 +792,7 @@ final class Game implements ConquerInfo {
 			clan.setCoins(clan.getCoins() + toGet);
 		});
 		this.clans.forEach(clan -> this.data.getMoneyHooks().forEach(
-				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).collect(Collectors.toList()),
+				a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).toList(),
 						clan)));
 
 	}

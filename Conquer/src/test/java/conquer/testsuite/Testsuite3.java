@@ -57,8 +57,8 @@ public final class Testsuite3 extends Testsuite {
 				}
 			}
 		}
-		final var listA = StreamUtils.getCitiesAsStream(cities).collect(Collectors.toList());
-		final var listB = StreamUtils.getCitiesAsStream(cities2).collect(Collectors.toList());
+		final var listA = StreamUtils.getCitiesAsStream(cities).toList();
+		final var listB = StreamUtils.getCitiesAsStream(cities2).toList();
 		for (var i = 0; i < max; i++) {
 			this.compareCity(listA.get(i), listB.get(i));
 		}

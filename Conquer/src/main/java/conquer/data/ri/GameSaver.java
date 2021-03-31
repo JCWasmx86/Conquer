@@ -168,7 +168,7 @@ public final class GameSaver implements ConquerSaver {
 		for (final var file : files) {
 			ret.add(this.readClan(file, game));
 		}
-		return ret.stream().sorted(Comparator.comparingInt(IClan::getId)).collect(Collectors.toList());
+		return ret.stream().sorted(Comparator.comparingInt(IClan::getId)).toList();
 	}
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)

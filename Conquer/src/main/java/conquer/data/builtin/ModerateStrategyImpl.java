@@ -64,7 +64,7 @@ public final class ModerateStrategyImpl implements Strategy {
 		final var clansSortedByDescendingSize = map.entrySet().stream().filter(a -> a.getKey() != clan)
 				.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
 				.filter(otherClan -> object.getRelationship(clan, otherClan.getKey()) < 65).map(Map.Entry::getKey)
-				.collect(Collectors.toList());
+				.toList();
 		// Try to get relationships with the strongest clans.
 		for (final var otherClan : clansSortedByDescendingSize) {
 			final var resourcesToGive = new ArrayList<Double>();

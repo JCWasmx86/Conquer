@@ -65,7 +65,7 @@ if (project.hasProperty("conquer.download") && "true" == project.getProperties()
 				threads.add(t)
 			}
 			while (!threads.isEmpty()) {
-				threads = threads.stream().filter { a -> a.isAlive() }.collect(Collectors.toList())
+				threads = threads.stream().filter { a -> a.isAlive() }.toList()
 				Thread.sleep(100)
 			}
 			threads.each { t -> t.join() }
