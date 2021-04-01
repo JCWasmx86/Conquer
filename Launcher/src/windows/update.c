@@ -6,7 +6,26 @@
 #include <sys/stat.h>
 #include <windows.h>
 
-#include "launcher.h"
+#define BUFFER_SIZE (1024 * 1024 * 16)
+#define DELIM "\\"
+
+int copyData(struct archive *in, struct archive *out) {
+	const void *buff;
+	size_t size;
+	la_int64_t offset;
+	while (1) {
+		int result = archive_read_data_block(in, &buff, &size, &offset);
+		if (result == ARCHIVE_EOF)
+			return ARCHIVE_OK;
+		else if (result < ARCHIVE_OK)
+			return result;
+		result = archive_write_data_block(out, buff, size, offset);
+		if (result < ARCHIVE_OK) {
+			return result;
+		}
+	}
+	return ARCHIVE_OK;
+}
 
 void update() {
 	char *baseDir = getBaseDirectory();
