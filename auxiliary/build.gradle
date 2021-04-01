@@ -13,7 +13,7 @@ task buildDataZip(type: Zip) {
 	from "conquer"
 }
 task setupFiles() {
-	doLast{
+	doLast {
 		mkdir "${project.rootDir}/Conquer/build/resources/main/data"
 		mkdir "conquer"
 		mkdir "conquer/libs"
@@ -37,24 +37,28 @@ task setupFiles() {
 }
 buildDataZip.dependsOn(setupFiles)
 buildDataZip.mustRunAfter(setupFiles)
-setupFiles.mustRunAfter(":DefaultPlugins:assemble",":ScenarioGenerator:build")
-setupFiles.dependsOn(":ScenarioGenerator:build",":DefaultPlugins:assemble")
+setupFiles.mustRunAfter(":DefaultPlugins:assemble", ":ScenarioGenerator:build")
+setupFiles.dependsOn(":ScenarioGenerator:build", ":DefaultPlugins:assemble")
 
 
 ext.src = [
-	"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar":"jars/jlayer.jar",
-	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar":"jars/mp3spi.jar",
-	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar":"jars/tritonus.jar",
-	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar":"jars/jorbis.jar",
-	"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar":"jars/vorbisspi.jar"
+		"https://repo1.maven.org/maven2/javazoom/jlayer/1.0.1/jlayer-1.0.1.jar"                                    : "jars/jlayer.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/mp3spi/1.9.5.4/mp3spi-1.9.5.4.jar"                : "jars/mp3spi.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/tritonus-share/0.3.7.4/tritonus-share-0.3.7.4.jar": "jars/tritonus.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/jorbis/0.0.17.4/jorbis-0.0.17.4.jar"              : "jars/jorbis.jar",
+		"https://repo1.maven.org/maven2/com/googlecode/soundlibs/vorbisspi/1.0.3.3/vorbisspi-1.0.3.3.jar"          : "jars/vorbisspi.jar"
 ]
 
 task downloadJarFiles {
-	mkdir "jars"
-	for (s in src) {
-		download {
-			src s.key
-			dest new File("${project.rootDir}/auxiliary",s.value)
+	doLast {
+		mkdir "jars"
+		for (s in src) {
+			if (!file(s.value).exists()) {
+				download {
+					src s.key
+					dest new File("${project.rootDir}/auxiliary", s.value)
+				}
+			}
 		}
 	}
 }
@@ -63,4 +67,4 @@ clean {
 	delete "conquer"
 	delete "jars"
 }
-assemble.dependsOn(downloadJarFiles,buildDataZip)
+assemble.dependsOn(downloadJarFiles, buildDataZip)

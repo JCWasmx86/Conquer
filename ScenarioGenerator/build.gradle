@@ -18,17 +18,18 @@ task buildFreedo(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
 	main = "org.jel.tool.Freedo"
 }
+
 def contentSpec = copySpec {
 	from("src/main/resources") {
 		include "*.png"
 	}
 }
-task copyFiles(type: Copy){
+task copyFiles(type: Copy) {
 	into "."
 	with contentSpec
 }
 
-task deleteFiles(type: Delete){
+task deleteFiles(type: Delete) {
 	delete "Belenos.png"
 	delete "Belenos.data"
 	delete "Etiona.png"
@@ -38,5 +39,11 @@ task deleteFiles(type: Delete){
 	delete "Freedo.png"
 	delete "Freedo.data"
 }
+buildSlaine.dependsOn(jar, copyFiles)
+buildBelenos.dependsOn(jar, copyFiles)
+buildEtiona.dependsOn(jar, copyFiles)
+buildFreedo.dependsOn(jar, copyFiles)
+processResources.dependsOn(copyFiles)
+compileJava.dependsOn(copyFiles)
 clean.dependsOn(deleteFiles)
-build.dependsOn(buildSlaine,buildBelenos,buildEtiona,buildFreedo,copyFiles)
+build.dependsOn(buildSlaine, buildBelenos, buildEtiona, buildFreedo, copyFiles)

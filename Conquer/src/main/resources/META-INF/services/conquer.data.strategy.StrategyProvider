@@ -1,0 +1,4 @@
+conquer.data.builtin.OffensiveStrategyProvider
+conquer.data.builtin.DefensiveStrategyProvider
+conquer.data.builtin.ModerateStrategyProvider
+conquer.data.builtin.RandomStrategyProvider

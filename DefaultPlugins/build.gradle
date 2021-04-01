@@ -5,77 +5,79 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-	compile project(":Conquer")
+	implementation project(":Conquer")
+	implementation project(":ConquerFrontendSPI")
 }
 jar {
-	include "org/jel/game/plugins/builtins/ChangeCitiesMinds**"
-	include "org/jel/game/plugins/builtins/ClanChangeMessage**"
-	include "org/jel/game/plugins/builtins/changeCitiesMinds**"
+	include "conquer/plugins/builtins/ChangeCitiesMinds**"
+	include "conquer/plugins/builtins/ClanChangeMessage**"
+	include "conquer/plugins/builtins/changeCitiesMinds**"
 	exclude "services/**"
-	baseName = "ChangeCitiesMinds"
+	archiveBaseName = "ChangeCitiesMinds"
 	from("src/main/resources/services/ChangeCitiesMinds") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
 		into("META-INF/services")
 	}
 }
 task sortedStrategyJar(type: Jar) {
 	from sourceSets.main.output
-	exclude "org/jel/game/plugins/**"
+	exclude "conquer/plugins/**"
 	exclude "services/**"
-	baseName = "SortedStrategy"
+	archiveBaseName = "SortedStrategy"
 	from("src/main/resources/services/SortedStrategy") {
-		include "org.jel.game.data.strategy.StrategyProvider"
+		include "conquer.data.strategy.StrategyProvider"
 		into("META-INF/services")
 	}
 }
 task defaultMusicJar(type: Jar) {
 	from sourceSets.main.output
-	include "org/jel/game/plugins/builtins/DefaultMusic**"
-	baseName = "DefaultMusic"
+	include "conquer/plugins/builtins/DefaultMusic**"
+	archiveBaseName = "DefaultMusic"
 	from("src/main/resources/services/DefaultMusic") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
+		include "conquer.frontend.spi.MusicProvider"
 		into("META-INF/services")
 	}
 }
 task increaseGrowthJar(type: Jar) {
 	from sourceSets.main.output
-	include "org/jel/game/plugins/builtins/IncreaseGrowth**"
-	baseName = "IncreaseGrowth"
+	include "conquer/plugins/builtins/IncreaseGrowth**"
+	archiveBaseName = "IncreaseGrowth"
 	from("src/main/resources/services/IncreaseGrowth") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
 		into("META-INF/services")
 	}
 }
 task moneyAnalyzerJar(type: Jar) {
 	from sourceSets.main.output
-	include "org/jel/game/plugins/builtins/MoneyAnalyzer**"
-	include "org/jel/game/plugins/builtins/moneyAnalyzer**"
-	include "org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
-	baseName = "MoneyAnalyzer"
+	include "conquer/plugins/builtins/MoneyAnalyzer**"
+	include "conquer/plugins/builtins/moneyAnalyzer**"
+	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingMoney**"
+	archiveBaseName = "MoneyAnalyzer"
 	from("src/main/resources/services/MoneyAnalyzer") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
 		into("META-INF/services")
 	}
 }
 task resourceAnalyzerJar(type: Jar) {
 	from sourceSets.main.output
-	include "org/jel/game/plugins/builtins/ResourceAnalyze**"
-	include "org/jel/game/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
-	include "org/jel/game/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
-	include "org/jel/game/plugins/builtins/resourceAnalyze**"
-	baseName = "ResourceAnalyzer"
+	include "conquer/plugins/builtins/ResourceAnalyze**"
+	include "conquer/plugins/builtins/SoldiersDesertedBecauseOfMissingResources**"
+	include "conquer/plugins/builtins/CiviliansDiedBecauseOfMissingResources**"
+	include "conquer/plugins/builtins/resourceAnalyze**"
+	archiveBaseName = "ResourceAnalyzer"
 	from("src/main/resources/services/ResourceAnalyzer") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
 		into("META-INF/services")
 	}
 }
 task periodicGrowthChangeJar(type: Jar) {
 	from sourceSets.main.output
-	include "org/jel/game/plugins/builtins/PeriodicGrowthChange**"
-	baseName = "PeriodicGrowthChange"
+	include "conquer/plugins/builtins/PeriodicGrowthChange**"
+	archiveBaseName = "PeriodicGrowthChange"
 	from("src/main/resources/services/PeriodicGrowthChange") {
-		include "org.jel.game.plugins.Plugin"
+		include "conquer.plugins.Plugin"
 		into("META-INF/services")
 	}
 }
-jar.dependsOn(sortedStrategyJar, defaultMusicJar,increaseGrowthJar,moneyAnalyzerJar,resourceAnalyzerJar,periodicGrowthChangeJar)
+jar.dependsOn(sortedStrategyJar, defaultMusicJar, increaseGrowthJar, moneyAnalyzerJar, resourceAnalyzerJar, periodicGrowthChangeJar)

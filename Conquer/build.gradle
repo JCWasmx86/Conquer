@@ -5,18 +5,19 @@ repositories {
 	mavenCentral()
 }
 dependencies {
-	compile 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+	implementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
 	runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
-	compile fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
+	implementation fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
+	implementation fileTree(dir: "${project.rootDir}/Conquer/build/libs", include: ["*.jar"])
 }
 compileJava {
 	doFirst {
 		options.compilerArgs +=
 				[
-					"--module-path",
-					classpath.asPath.replaceAll("DefaultPlugins",""),
-					"--add-modules",
-					"org.junit.jupiter.api"
+						"--module-path",
+						classpath.asPath.replaceAll("DefaultPlugins", ""),
+						"--add-modules",
+						"org.junit.jupiter.api"
 				]
 		classpath = files()
 	}
@@ -25,6 +26,7 @@ compileJava {
 test {
 	testLogging {
 		events "passed", "skipped", "failed", "standardOut", "standardError"
+		showStackTraces = true
 	}
 	useJUnitPlatform()
 }
@@ -38,33 +40,33 @@ task conquerResources(type: Jar) {
 	from sourceSets.main.output
 	exclude "**/*.class"
 	exclude "META-INF/services/**"
-	baseName = "Conquer_resources"
+	archiveBaseName = "Conquer_resources"
 }
-conquerResources.dependsOn(":auxiliary:buildDataZip",":DefaultPlugins:jar")
-conquerResources.mustRunAfter(":DefaultPlugins:jar",":auxiliary:buildDataZip")
-assemble.dependsOn(conquerResources,test)
+conquerResources.dependsOn(":auxiliary:buildDataZip", ":DefaultPlugins:jar")
+conquerResources.mustRunAfter(":DefaultPlugins:jar", ":auxiliary:buildDataZip")
+assemble.dependsOn(conquerResources, test)
 
 clean {
 	delete "src/main/resources/data"
 }
 
-task runTestsuite1(type:JavaExec) {
-	main = "org.jel.game.testsuite.Testsuite1"
+task runTestsuite1(type: JavaExec) {
+	main = "conquer.testsuite.Testsuite1"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
-task runTestsuite2(type:JavaExec) {
-	main = "org.jel.game.testsuite.Testsuite2"
+task runTestsuite2(type: JavaExec) {
+	main = "conquer.testsuite.Testsuite2"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
-task runTestsuite3(type:JavaExec) {
-	main = "org.jel.game.testsuite.Testsuite3"
+task runTestsuite3(type: JavaExec) {
+	main = "conquer.testsuite.Testsuite3"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
-task runPerformanceTest(type:JavaExec) {
-	main = "org.jel.game.testsuite.PerformanceTest"
+task runPerformanceTest(type: JavaExec) {
+	main = "conquer.testsuite.PerformanceTest"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
@@ -73,4 +75,4 @@ task runTestsuites {
 runTestsuite2.mustRunAfter(runTestsuite1)
 runTestsuite3.mustRunAfter(runTestsuite2)
 runPerformanceTest.mustRunAfter(runTestsuite3)
-runTestsuites.dependsOn(runTestsuite1,runTestsuite2,runTestsuite3,runPerformanceTest)
+runTestsuites.dependsOn(runTestsuite1, runTestsuite2, runTestsuite3, runPerformanceTest)

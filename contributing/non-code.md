@@ -2,11 +2,11 @@
 
 ### Artists
 
-Replacements for all images in `Conquer/images`, `ConquerFrontend/images` and `ScenarioGenerator/images/CityIcons`  are needed, as the icons from flaticon.com don't match to 100%.
+The images are quite ugly sometimes. Suggestions for replacements for these are appreciated.
 
 ### UI/UX Designers
 
-Currently the GUI is quite messy and sometimes a bit difficult to use. Improvements and ideas are quite appreciated.
+Currently, the GUI is quite messy and sometimes a bit difficult to use. Improvements and ideas are quite appreciated.
 
 ### Anyone else
 

@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Belenos {
 	public static void main(final String[] args) {
-		new DataFile().setBackground("Background1-res.png").addPlayer(1000, "Deinitia", new Color(255, 0, 120), 0)
+		new DataFile().setBackground("Background1-res.png").addPlayer(1000, "Deinitia", new Color(255, 200, 120), 0)
 				.addPlayer(1000, "Valosepulca", new Color(100, 100, 100), 3)
-				.addPlayer(7500, "Deforma", new Color(255, 0, 0), 2).addPlayer(1200, "Invaria", new Color(0, 255, 0), 1)
+				.addPlayer(7500, "Deforma", new Color(255, 0, 0), 2).addPlayer(1200, "Invaria", new Color(0, 255, 0)
+				, 1)
 				.addCity(new City(1.001, "CityIcons/architecture-and-city.png", "Samolacrima", 0, 3000, 100, 40, 98,
 						150, 1.001, List.of(1.001, 1.2, 1.1, 1.001, 1.2, 1.3, 1.4, 1.2, 1.01)))
 				.addCity(new City(1.02, "CityIcons/castle.png", "Onmadispera", 0, 10276, 2278, 202, 124, 340, 1.01,

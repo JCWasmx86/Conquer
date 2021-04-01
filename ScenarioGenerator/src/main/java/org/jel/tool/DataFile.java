@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +51,7 @@ public final class DataFile {
 	}
 
 	public void dump(final String out) {
-		try (var dos = new DataOutputStream((new FileOutputStream(out)))) {
+		try (final var dos = new DataOutputStream((new FileOutputStream(out)))) {
 			dos.write(0xAA);
 			dos.write(0x55);
 			final var back = this.readBackground();
@@ -143,15 +141,15 @@ public final class DataFile {
 	}
 
 	private byte[] readBackground() throws Exception {
-		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+this.background)) {
+		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + this.background)) {
 			return stream.readAllBytes();
 		}
 	}
 
 	private byte[] readFile(final String s) throws IOException {
-		try(final var stream=this.getClass().getClassLoader().getResourceAsStream("images/"+s)) {
-            return stream.readAllBytes();
-        }
+		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + s)) {
+			return stream.readAllBytes();
+		}
 	}
 
 	public DataFile setBackground(final String file) {

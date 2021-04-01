@@ -1,4 +1,0 @@
-org.jel.game.data.builtin.OffensiveStrategyProvider
-org.jel.game.data.builtin.DefensiveStrategyProvider
-org.jel.game.data.builtin.ModerateStrategyProvider
-org.jel.game.data.builtin.RandomStrategyProvider

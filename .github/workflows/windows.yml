@@ -1,4 +1,4 @@
-name: Windows
+name: Windows 64 bit
 on:
     push:
         branches: [main]
@@ -6,73 +6,70 @@ on:
         branches: [main]
     workflow_dispatch:
 jobs:
-  build:
-    runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1.4.3
-        with:
-            java-version: 15
-      - uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: >-
-            git
-            base-devel
-            mingw-w64-x86_64-libarchive
-            mingw-w64-x86_64-curl
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-dlfcn
-            mingw-w64-x86_64-headers-git
-            zip
-            unzip
-            p7zip
-      - name: Build conquer
-        run: |
-          mkdir tmp
-          wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
-          wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
-          cd tmp
-          unzip -d . gradle.zip
-          mv gradle-6.8 gradle
-          cd gradle/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../..
-          echo A|7z x MuseScore3.exe
-          cd App/MuseScore/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../../../..
-          export QT_QPA_PLATFORM=windows
-          gradle assemble
-          gradle Conquer:runTestsuites
-      - name: Test reproducible build
-        run: |
-          cd tmp/gradle/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../../App/Musescore/bin
-          export PATH=`pwd`:$PATH:.
-          cd ../../../..
-          export QT_QPA_PLATFORM=windows
-          gradle clean
-          gradle assemble
-          mkdir old
-          mv Launcher/Installer.exe old
-          gradle clean
-          gradle assemble
-          export SHA_OLD=$(sha256sum old/Installer.exe |tr ' ' '\n'|head -n 1)
-          export SHA=$(sha256sum Launcher/Installer.exe |tr ' ' '\n'|head -n 1)
-          if [ $SHA_OLD != $SHA ]; then
-             echo Installer.exe differs
-             echo Old: $SHA_OLD
-             echo New: $SHA
-          else
-             echo Installer.exe matches: $SHA
-          fi
-          gradle createZipFileForDistribution
-      - uses: actions/upload-artifact@v2
-        with:
-          name: SDK
-          path: Conquer-SDK_1.6.0.zip
+    build:
+        runs-on: windows-latest
+        defaults:
+            run:
+                shell: msys2 {0}
+        steps:
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-java@v1.4.3
+                with:
+                    java-version: 16
+            -   uses: msys2/setup-msys2@v2
+                with:
+                    update: true
+                    install: >-
+                        git
+                        base-devel
+                        mingw-w64-x86_64-libarchive
+                        mingw-w64-x86_64-curl
+                        mingw-w64-x86_64-gcc
+                        mingw-w64-x86_64-dlfcn
+                        mingw-w64-x86_64-headers-git
+                        mingw-w64-x86_64-gtk3
+                        mingw-w64-x86_64-vala
+                        mingw-w64-x86_64-libgee
+                        mingw-w64-x86_64-json-glib
+                        mingw-w64-x86_64-pkg-config
+                        mingw-w64-i686-nsis
+                        zip
+                        unzip
+                        p7zip
+            -   name: Build conquer
+                run: |
+                    mkdir tmp
+                    wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+                    wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
+                    cd tmp
+                    unzip -d . gradle.zip
+                    mv gradle-6.8 gradle
+                    cd gradle/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../..
+                    echo A|7z x MuseScore3.exe
+                    cd App/MuseScore/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../../..
+                    export QT_QPA_PLATFORM=windows
+                    ./gradlew assemble
+                    ./gradlew Conquer:runTestsuites
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: Installer
+                    path: Launcher/Installer.exe
+            -   name: Build and upload SDK
+                run: |
+                    pkgfile --update
+                    cd tmp/gradle/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../App/Musescore/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../../..
+                    export QT_QPA_PLATFORM=windows
+                    ./gradlew clean
+                    ./gradlew createZipFileForDistribution
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: SDK
+                    path: Conquer-SDK_2.0.0.zip

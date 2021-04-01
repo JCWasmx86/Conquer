@@ -1,0 +1,53 @@
+#!/usr/bin/sh
+
+checkInDeb() {
+	dpkg-deb -c "$1" |grep "$2" >/dev/null
+	if [ "$?" = "0" ]; then
+		echo Found "$2" in "$1"\!
+	else
+		echo Wasn\'t able to find "$2" in "$1"\!
+		exit 255
+	fi;
+}
+checkFileInZipInDeb() {
+	rm -rf tmp__
+	mkdir tmp__
+	dpkg-deb -x "$1" tmp__
+	unzip -l tmp__/"$2" | grep "$3" >/dev/null
+	if [ "$?" = "0" ]; then
+		echo Found "$3" in archive "$2" of .deb file "$1"\!
+	else
+		echo Wasn\'t able to find "$3" in archive "$2" of .deb file "$1"\!
+		rm -rf tmp__
+		exit 255
+	fi;
+	rm -rf tmp__
+}
+checkInDeb conquer.deb conquer_launcher
+checkInDeb conquer-default-music.deb /usr/share/java/conquer/plugins/DefaultMusic.jar
+checkInDeb conquer-default-music.deb /usr/share/conquer/music/Battle0.ogg
+checkInDeb conquer-default-music.deb /usr/share/conquer/music/Battle1.ogg
+checkInDeb conquer-default-music.deb /usr/share/conquer/music/Battle20.ogg
+checkInDeb conquer-default-music.deb /usr/share/conquer/music/Battle29.ogg
+checkInDeb conquer-default-scenarios.deb /usr/share/conquer/scenarios/Belenos/Belenos.data
+checkInDeb conquer-default-scenarios.deb /usr/share/conquer/scenarios/Belenos/Belenos.png
+checkInDeb conquer-default-scenarios.deb /usr/share/conquer/scenarios/Slaine/Slaine.data
+checkInDeb conquer-default-scenarios.deb /usr/share/conquer/scenarios/Freedo/Freedo.png
+checkInDeb conquer-default.deb /usr/share/java/conquer/plugins/ChangeCitiesMinds.jar
+checkInDeb conquer-default.deb /usr/share/java/conquer/plugins/PeriodicGrowthChange.jar
+checkInDeb conquer-default.deb /usr/share/java/conquer/plugins/ResourceAnalyzer.jar
+checkInDeb conquer-default.deb /usr/share/java/conquer/strategies/SortedStrategy.jar
+checkInDeb conquer-engine.deb /usr/share/java/Conquer.jar
+checkInDeb conquer-engine.deb /usr/share/java/ConquerFrontendSPI.jar
+checkInDeb conquer-engine.deb /usr/share/java/Conquer_resources.jar
+checkInDeb conquer-gui.deb /usr/share/java/Conquer_frontend.jar
+checkInDeb conquer-gui.deb /usr/share/java/Conquer_frontend_resources.jar
+checkInDeb conquer-gui.deb /usr/share/java/conquer/jlayer.jar
+checkInDeb conquer-gui.deb /usr/share/java/conquer/mp3spi.jar
+checkInDeb conquer-sdk.deb /usr/bin/depreview
+checkInDeb conquer-sdk.deb /usr/share/conquer/m2/Conquer_resources.jar
+checkInDeb conquer-sdk.deb /usr/share/conquer/m2/Conquer.jar
+
+checkFileInZipInDeb conquer-gui.deb /usr/share/java/Conquer_frontend_resources.jar music/Credits.ogg
+checkFileInZipInDeb conquer-gui.deb /usr/share/java/Conquer_frontend_resources.jar music/Intro.ogg
+checkFileInZipInDeb conquer-engine.deb /usr/share/java/Conquer_resources.jar data/conquer.zip

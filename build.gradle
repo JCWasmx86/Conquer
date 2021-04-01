@@ -1,25 +1,13 @@
-plugins {
-	id "nebula.lint" version "16.17.0"
-}
 apply plugin: "application"
-apply plugin: "nebula.lint"
 
 allprojects {
 	apply plugin: "java"
 	apply plugin: "eclipse"
 	apply plugin: "idea"
-	apply plugin: "nebula.lint"
-	targetCompatibility = "15"
+	targetCompatibility = "16"
 	application {
 		applicationDefaultJvmArgs = ["--enable-preview"]
 	}
-	gradleLint.rules = [
-		"all-nebula-renames",
-		"archaic-wrapper",
-		"duplicate-dependency-class",
-		"minimum-dependency-version",
-		"overridden-dependency-version"
-	]
 	tasks.withType(AbstractArchiveTask) {
 		preserveFileTimestamps = false
 		reproducibleFileOrder = true
@@ -31,10 +19,11 @@ allprojects {
 				whenMerged {
 					//Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
 					//the same package
+					//TODO: Doesn't work!
 					entries.findAll {
-						(it.kind == "src" || it.kind == "lib")&&(!it.toString().contains("DefaultPlugins"))&&(!it.toString().contains("ScenarioGenerator"))
-					}.each {it.entryAttributes["module"] = "true"}
-					entries.each{entry ->
+						(it.kind == "src" || it.kind == "lib") && (!it.toString().contains("DefaultPlugins")) && (!it.toString().contains("ScenarioGenerator"))
+					}.each { it.entryAttributes["module"] = "true" }
+					entries.each { entry ->
 						if (entry.kind == "src" && entry.hasProperty("output")) {
 							entry.output = entry.output.replace("bin/", "build/")
 						}
@@ -48,16 +37,16 @@ allprojects {
 	}
 	task configureEnvironment() {
 		def envVars = [:]
-		envVars["SOURCE_DATE_EPOCH"]="0"
+		envVars["SOURCE_DATE_EPOCH"] = "0"
 		tasks.withType(Exec) { environment << envVars }
 	}
-	assemble.dependsOn(configureEnvironment);
+	assemble.dependsOn(configureEnvironment)
 	dependencies {
-		testCompile("org.junit.jupiter:junit-jupiter:5.6.0")
+		testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
 	}
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
-			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}"
+			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}" << "-g"
 			options.fork = true
 			options.incremental = true
 		}
@@ -70,13 +59,13 @@ allprojects {
 	}
 }
 
-task createZipFileForDistribution(type:Zip){
+task createZipFileForDistribution(type: Zip) {
 	archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
 	destinationDirectory = file(".")
 	from "dist"
 }
 task copyFiles() {
-	doLast{
+	doLast {
 		mkdir "dist"
 		copy {
 			from("Conquer/build/libs",) {
@@ -85,7 +74,7 @@ task copyFiles() {
 			from("ConquerFrontendSPI/build/libs") {
 				include "*.jar"
 			}
-			from ("auxiliary") {
+			from("auxiliary") {
 				include "*.pom"
 				include "install-sdk.sh"
 				include "install.bat"
@@ -105,6 +94,7 @@ copyFiles.dependsOn(":Conquer:conquerResources")
 copyFiles.dependsOn(":depreview:buildExecutable")
 
 createZipFileForDistribution.dependsOn(copyFiles)
+assemble.mustRunAfter(":music:buildMusic")
 assemble.dependsOn(":depreview:buildExecutable")
 clean {
 	delete "dist"

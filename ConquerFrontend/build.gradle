@@ -12,39 +12,56 @@ dependencies {
 	implementation project(":Conquer")
 	implementation project(":ConquerFrontendSPI")
 	implementation project(":music")
-	runtimeOnly project(":DefaultPlugins");
-	runtimeOnly files("${project.rootDir}/music_tmp");
+	runtimeOnly project(":DefaultPlugins")
+	runtimeOnly files("${project.rootDir}/music_tmp")
 }
 jar {
 	exclude "**/*.properties"
 	exclude "music"
 	exclude "images"
-	jar.baseName = "Conquer_frontend"
+	jar.archiveBaseName = "Conquer_frontend"
 	manifest {
-		attributes "Main-Class": "org.jel.gui.Intro"
+		attributes "Main-Class": "conquer.gui.Intro"
 	}
+}
+task copyFiles(type: Copy) {
+    from "../music_tmp"
+    include "*.ogg"
+    into "build/resources/main/music/"
 }
 task conquerResources(type: Jar) {
-	copy {
-		from file("${project.rootDir}/auxiliary/jars");
-		include "*.jar"
-		into "build/libs/"
-	}
 	from sourceSets.main.output
 	exclude "**/*.class"
-	baseName = "Conquer_frontend_resources"
+	include "music/Credits.ogg"
+	include "music/Victory.ogg"
+	include "music/Intro.ogg"
+	include "music/Defeated.ogg"
+	include "music/MainScreen.ogg"
+	include "images/*.png"
+	include "conquer/gui/*.properties"
+	archiveBaseName = "Conquer_frontend_resources"
 }
-mainClassName="org.jel.gui.Intro"
-conquerResources.dependsOn(":music:buildMusic")
-conquerResources.mustRunAfter(":music:buildMusic")
-jar.dependsOn(conquerResources);
-
+task deleteFiles(type: Delete) {
+	delete fileTree("${project.rootDir}/ConquerFrontend/build/resources/main/music") {
+		include "Battle*.ogg"
+	}
+	delete fileTree("${project.rootDir}/ConquerFrontend/src/main/resources/music") {
+		include "Battle*.ogg"
+	}
+}
+mainClassName = "conquer.gui.Intro"
+conquerResources.dependsOn(":music:buildMusic", copyFiles, deleteFiles)
+conquerResources.mustRunAfter(":music:buildMusic", copyFiles, deleteFiles)
+deleteFiles.dependsOn(copyFiles)
+deleteFiles.mustRunAfter(copyFiles)
+jar.dependsOn(conquerResources)
+copyFiles.dependsOn(":music:buildMusic")
 run {
-	jvmArgs=["--enable-preview"]
-	classpath "build/libs/tritonus.jar", "build/libs/jlayer.jar",
-			"build/libs/jorbis.jar", "build/libs/mp3spi.jar",
-			"build/libs/vorbisspi.jar",
+	jvmArgs = ["--enable-preview"]
+	classpath "../auxiliary/jars/tritonus.jar", "../auxiliary/jars/jlayer.jar",
+			"../auxiliary/jars/jorbis.jar", "../auxiliary/jars/mp3spi.jar",
+			"../auxiliary/jars/vorbisspi.jar",
 			"${project.rootDir}/Conquer/build/libs/Conquer_resources.jar"
 }
-run.dependsOn(":auxiliary:downloadJarFiles",conquerResources,":Conquer:conquerResources")
-run.mustRunAfter(":auxiliary:downloadJarFiles",conquerResources)
+run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
+run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
