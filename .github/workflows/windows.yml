@@ -40,13 +40,7 @@ jobs:
                 run: |
                     mkdir tmp
                     wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
-                    wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
                     cd tmp
-                    unzip -d . gradle.zip
-                    mv gradle-6.8 gradle
-                    cd gradle/bin
-                    export PATH=`pwd`:$PATH:.
-                    cd ../..
                     echo A|7z x MuseScore3.exe
                     cd App/MuseScore/bin
                     export PATH=`pwd`:$PATH:.
@@ -61,9 +55,7 @@ jobs:
             -   name: Build and upload SDK
                 run: |
                     pkgfile --update
-                    cd tmp/gradle/bin
-                    export PATH=`pwd`:$PATH:.
-                    cd ../../App/Musescore/bin
+                    cd tmp/App/Musescore/bin
                     export PATH=`pwd`:$PATH:.
                     cd ../../../..
                     export QT_QPA_PLATFORM=windows

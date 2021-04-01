@@ -29,14 +29,6 @@ jobs:
             -   name: Build conquer
                 run: |
                     export QT_QPA_PLATFORM=offscreen
-                    mkdir tmp
-                    wget -O tmp/gradle.zip https://services.gradle.org/distributions/gradle-6.8-bin.zip
-                    cd tmp
-                    unzip -d . gradle.zip
-                    mv gradle-6.8 gradle
-                    cd gradle/bin
-                    export PATH=`pwd`:$PATH:.
-                    cd ../../..
                     ./gradlew assemble
                     ./gradlew Conquer:runTestsuites
                     cd debs
@@ -44,9 +36,6 @@ jobs:
                     cd ..
             -   name: Build and upload SDK
                 run: |
-                    cd tmp/gradle/bin
-                    export PATH=`pwd`:$PATH:.
-                    cd ../../..
                     export QT_QPA_PLATFORM=offscreen
                     ./gradlew clean
                     ./gradlew createZipFileForDistribution
