@@ -34,6 +34,7 @@ clean:
 	rm -rf nsisunz
 	rm -rf AccessControl
 	rm -f *.nsi
+	touch src/main.vala
 Installer.exe: all buildInstallerDir downloadNsisunz downloadAccessControl
 	/mingw32/bin/makensis -V4 Installer.nsi
 buildIncludeFile: instdir.nsi.inc
