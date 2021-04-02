@@ -22,9 +22,9 @@ import java.util.function.DoubleConsumer;
 public final class SortedStrategyImpl implements Strategy {
 	private static final double MAXIMUM_VARIANCE = 0.3;
 	private static final double FIFTY_FIFTY_PROBABILITY = 0.5;
-	private List<ICity> cities;
 	private final Map<ICity, Pair<Double, Double>> values = new HashMap<>();
 	private final List<IClan> gifts;
+	private List<ICity> cities;
 	private int counter;
 
 	public SortedStrategyImpl() {

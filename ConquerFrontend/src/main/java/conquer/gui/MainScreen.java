@@ -30,6 +30,13 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 	private static final long serialVersionUID = 5279928865220785850L;
 	private static boolean forwarded = false;
 	private static boolean alreadyForwardedOnceFromIntro;
+	private final LoopPlayer player;
+
+	private MainScreen() {
+		this.player = new LoopPlayer().addSong("MainScreen"); //$NON-NLS-1$
+		this.addKeyListener(this);
+		this.addWindowListener(this);
+	}
 
 	/**
 	 * A static method to show the MainScreen. It won't show a window if another one
@@ -51,14 +58,6 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		mw.setVisible(true);
 		mw.init();
 		mw.pack();
-	}
-
-	private final LoopPlayer player;
-
-	private MainScreen() {
-		this.player = new LoopPlayer().addSong("MainScreen"); //$NON-NLS-1$
-		this.addKeyListener(this);
-		this.addWindowListener(this);
 	}
 
 	private void init() {

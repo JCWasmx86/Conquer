@@ -12,6 +12,37 @@ public final class SoldierCosts {
 	private final double stonePerSoldierInitial;
 	private final double woodPerSoldierInitial;
 
+	/**
+	 * No value may be negative, NaN or infinite. Otherwise an
+	 * {@code IllegalArgumentException} will be thrown.
+	 *
+	 * @param coinsPerMovePerSoldier
+	 * @param coinsPerMoveOfSoldierBase
+	 * @param coinsPerSoldierInitial
+	 * @param coinsPerSoldierPerRound
+	 * @param ironPerSoldierInitial
+	 * @param stonePerSoldierInitial
+	 * @param woodPerSoldierInitial
+	 */
+	public SoldierCosts(final double coinsPerMovePerSoldier, final double coinsPerMoveOfSoldierBase,
+						final double coinsPerSoldierInitial, final double coinsPerSoldierPerRound,
+						final double ironPerSoldierInitial, final double stonePerSoldierInitial,
+						final double woodPerSoldierInitial) {
+		this.isBad(coinsPerMovePerSoldier);
+		this.isBad(coinsPerMoveOfSoldierBase);
+		this.isBad(coinsPerSoldierPerRound);
+		this.isBad(ironPerSoldierInitial);
+		this.isBad(stonePerSoldierInitial);
+		this.isBad(woodPerSoldierInitial);
+		this.coinsPerMovePerSoldier = coinsPerMovePerSoldier;
+		this.coinsPerMoveOfSoldierBase = coinsPerMoveOfSoldierBase;
+		this.coinsPerSoldierInitial = coinsPerSoldierInitial;
+		this.coinsPerSoldierPerRound = coinsPerSoldierPerRound;
+		this.ironPerSoldierInitial = ironPerSoldierInitial;
+		this.stonePerSoldierInitial = stonePerSoldierInitial;
+		this.woodPerSoldierInitial = woodPerSoldierInitial;
+	}
+
 	public double coinsPerMovePerSoldier() {
 		return this.coinsPerMovePerSoldier;
 	}
@@ -48,36 +79,5 @@ public final class SoldierCosts {
 		} else if (Double.isInfinite(d)) {
 			throw new IllegalArgumentException("argument is infinite");
 		}
-	}
-
-	/**
-	 * No value may be negative, NaN or infinite. Otherwise an
-	 * {@code IllegalArgumentException} will be thrown.
-	 *
-	 * @param coinsPerMovePerSoldier
-	 * @param coinsPerMoveOfSoldierBase
-	 * @param coinsPerSoldierInitial
-	 * @param coinsPerSoldierPerRound
-	 * @param ironPerSoldierInitial
-	 * @param stonePerSoldierInitial
-	 * @param woodPerSoldierInitial
-	 */
-	public SoldierCosts(final double coinsPerMovePerSoldier, final double coinsPerMoveOfSoldierBase,
-						final double coinsPerSoldierInitial, final double coinsPerSoldierPerRound,
-						final double ironPerSoldierInitial, final double stonePerSoldierInitial,
-						final double woodPerSoldierInitial) {
-		this.isBad(coinsPerMovePerSoldier);
-		this.isBad(coinsPerMoveOfSoldierBase);
-		this.isBad(coinsPerSoldierPerRound);
-		this.isBad(ironPerSoldierInitial);
-		this.isBad(stonePerSoldierInitial);
-		this.isBad(woodPerSoldierInitial);
-		this.coinsPerMovePerSoldier = coinsPerMovePerSoldier;
-		this.coinsPerMoveOfSoldierBase = coinsPerMoveOfSoldierBase;
-		this.coinsPerSoldierInitial = coinsPerSoldierInitial;
-		this.coinsPerSoldierPerRound = coinsPerSoldierPerRound;
-		this.ironPerSoldierInitial = ironPerSoldierInitial;
-		this.stonePerSoldierInitial = stonePerSoldierInitial;
-		this.woodPerSoldierInitial = woodPerSoldierInitial;
 	}
 }

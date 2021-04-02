@@ -21,8 +21,8 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 @Deprecated(forRemoval = true)
 public final class XMLReader {
-	private static final XMLReader INSTANCE = new XMLReader();
 	static final String XMLFILE = Shared.BASE_DIRECTORY + "/info.xml";
+	private static final XMLReader INSTANCE = new XMLReader();
 	private static Consumer<Throwable> throwableConsumer;
 
 	/**

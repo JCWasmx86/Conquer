@@ -10,8 +10,8 @@ import java.nio.ByteOrder;
 import java.util.Random;
 
 public final class DefensiveStrategyData implements StrategyData {
-	private int counter;
 	private final Random random;
+	private int counter;
 	private DefensiveStrategy strategy;
 
 	public DefensiveStrategyData() {

@@ -38,10 +38,6 @@ final class Clan implements IClan {
 		// Constructor for incrementally building a clan.
 	}
 
-	void setInfo(final ConquerInfo info) {
-		this.info = info;
-	}
-
 	/**
 	 * Get the number of coins this clan has
 	 *
@@ -53,6 +49,17 @@ final class Clan implements IClan {
 	}
 
 	/**
+	 * Set the coins.
+	 *
+	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
+	 *              0.
+	 */
+	@Override
+	public void setCoins(final double coins) {
+		this.coins = coins < 0 ? 0 : coins;
+	}
+
+	/**
 	 * Returns the color associated with this clan
 	 *
 	 * @return Clan color
@@ -60,6 +67,21 @@ final class Clan implements IClan {
 	@Override
 	public Color getColor() {
 		return this.color;
+	}
+
+	/**
+	 * Set the color of the clan. This method may only be called once.
+	 *
+	 * @param color May not be null
+	 */
+	@Override
+	public void setColor(final Color color) {
+		if (color == null) {
+			throw new IllegalArgumentException("color == null");
+		} else if (this.color != null) {
+			throw new UnsupportedOperationException("Can't change color of clan!");
+		}
+		this.color = color;
 	}
 
 	/**
@@ -83,6 +105,16 @@ final class Clan implements IClan {
 	}
 
 	/**
+	 * Set the flags of a clan.
+	 *
+	 * @param flags Some unspecified value.
+	 */
+	@Override
+	public void setFlags(final int flags) {
+		this.flags = flags;
+	}
+
+	/**
 	 * Return the id of the clan.
 	 *
 	 * @return Clan id.
@@ -90,6 +122,21 @@ final class Clan implements IClan {
 	@Override
 	public int getId() {
 		return this.id;
+	}
+
+	/**
+	 * Change the id of the clan. May only be called once.
+	 *
+	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
+	 */
+	@Override
+	public void setId(final int id) {
+		if (this.id != -1) {
+			throw new UnsupportedOperationException("Can't change id of clan!");
+		} else if (id < 0) {
+			throw new IllegalArgumentException("Out of bounds!");
+		}
+		this.id = id;
 	}
 
 	/**
@@ -103,6 +150,21 @@ final class Clan implements IClan {
 	}
 
 	/**
+	 * Set the name. May only be called once.
+	 *
+	 * @param name May not be null
+	 */
+	@Override
+	public void setName(final String name) {
+		if (this.name != null) {
+			throw new UnsupportedOperationException("Can't change name of clan!");
+		} else if (name == null) {
+			throw new IllegalArgumentException("name == null");
+		}
+		this.name = name;
+	}
+
+	/**
 	 * Returns a mutable list of the amount of all resources. The index for a
 	 * resource is obtained by {@link Resource#getIndex()}
 	 *
@@ -111,6 +173,18 @@ final class Clan implements IClan {
 	@Override
 	public List<Double> getResources() {
 		return this.resources;
+	}
+
+	@Override
+	public void setResources(final List<Double> resources) {
+		if (this.resources != null) {
+			throw new UnsupportedOperationException("resources can't be changed!");
+		} else if (resources == null) {
+			throw new IllegalArgumentException("resources==null");
+		} else if (resources.size() != Resource.values().length) {
+			throw new IllegalArgumentException("resources.size() != Resource.values.length: " + resources.size());
+		}
+		this.resources = new GoodDoubleList(resources);
 	}
 
 	/**
@@ -124,6 +198,19 @@ final class Clan implements IClan {
 		return this.resourceStats;
 	}
 
+	@Override
+	public void setResourceStats(final List<Double> resourceStats) {
+		if (this.resourceStats != null) {
+			throw new UnsupportedOperationException("Resource stats can't be changed!");
+		} else if (resourceStats == null) {
+			throw new IllegalArgumentException("resourceStats==null");
+		} else if (resourceStats.size() != Resource.values().length) {
+			throw new IllegalArgumentException(
+					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
+		}
+		this.resourceStats = new GoodDoubleList(resourceStats, true);
+	}
+
 	/**
 	 * Returns the defenselevel of the soldiers of the clan
 	 *
@@ -132,6 +219,10 @@ final class Clan implements IClan {
 	@Override
 	public int getSoldiersDefenseLevel() {
 		return this.soldiersDefenseLevel;
+	}
+
+	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
+		this.soldiersDefenseLevel = soldiersDefenseLevel;
 	}
 
 	/**
@@ -144,6 +235,10 @@ final class Clan implements IClan {
 		return this.soldiersDefenseStrength;
 	}
 
+	void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
+		this.soldiersDefenseStrength = soldiersDefenseStrength;
+	}
+
 	/**
 	 * Returns the level of the soldiers of the clan
 	 *
@@ -152,6 +247,10 @@ final class Clan implements IClan {
 	@Override
 	public int getSoldiersLevel() {
 		return this.soldiersLevel;
+	}
+
+	void setSoldiersLevel(final int soldiersLevel) {
+		this.soldiersLevel = soldiersLevel;
 	}
 
 	/**
@@ -164,6 +263,10 @@ final class Clan implements IClan {
 		return this.soldiersOffenseLevel;
 	}
 
+	void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
+		this.soldiersOffenseLevel = soldiersOffenseLevel;
+	}
+
 	/**
 	 * Returns the offense strength of the soldiers of the clan
 	 *
@@ -172,6 +275,10 @@ final class Clan implements IClan {
 	@Override
 	public double getSoldiersOffenseStrength() {
 		return this.soldiersOffenseStrength;
+	}
+
+	void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
+		this.soldiersOffenseStrength = soldiersOffenseStrength;
 	}
 
 	/**
@@ -184,6 +291,10 @@ final class Clan implements IClan {
 		return this.soldiersStrength;
 	}
 
+	void setSoldiersStrength(final double soldiersStrength) {
+		this.soldiersStrength = soldiersStrength;
+	}
+
 	/**
 	 * Returns the Strategy this clan uses
 	 *
@@ -192,6 +303,16 @@ final class Clan implements IClan {
 	@Override
 	public Strategy getStrategy() {
 		return this.strategy;
+	}
+
+	@Override
+	public void setStrategy(final Strategy strategy) {
+		if (this.strategy != null) {
+			throw new IllegalArgumentException("strategy can't be changed!");
+		} else if (strategy == null) {
+			throw new IllegalArgumentException("strategy==null");
+		}
+		this.strategy = strategy;
 	}
 
 	/**
@@ -239,101 +360,6 @@ final class Clan implements IClan {
 		return this.id == 0;
 	}
 
-	/**
-	 * Set the coins.
-	 *
-	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
-	 *              0.
-	 */
-	@Override
-	public void setCoins(final double coins) {
-		this.coins = coins < 0 ? 0 : coins;
-	}
-
-	/**
-	 * Set the color of the clan. This method may only be called once.
-	 *
-	 * @param color May not be null
-	 */
-	@Override
-	public void setColor(final Color color) {
-		if (color == null) {
-			throw new IllegalArgumentException("color == null");
-		} else if (this.color != null) {
-			throw new UnsupportedOperationException("Can't change color of clan!");
-		}
-		this.color = color;
-	}
-
-	/**
-	 * Set the flags of a clan.
-	 *
-	 * @param flags Some unspecified value.
-	 */
-	@Override
-	public void setFlags(final int flags) {
-		this.flags = flags;
-	}
-
-	/**
-	 * Change the id of the clan. May only be called once.
-	 *
-	 * @param id Has to be between zero and {@code Byte#MAX_VALUE}.
-	 */
-	@Override
-	public void setId(final int id) {
-		if (this.id != -1) {
-			throw new UnsupportedOperationException("Can't change id of clan!");
-		} else if (id < 0) {
-			throw new IllegalArgumentException("Out of bounds!");
-		}
-		this.id = id;
-	}
-
-	/**
-	 * Set the name. May only be called once.
-	 *
-	 * @param name May not be null
-	 */
-	@Override
-	public void setName(final String name) {
-		if (this.name != null) {
-			throw new UnsupportedOperationException("Can't change name of clan!");
-		} else if (name == null) {
-			throw new IllegalArgumentException("name == null");
-		}
-		this.name = name;
-	}
-
-	@Override
-	public void setResources(final List<Double> resources) {
-		if (this.resources != null) {
-			throw new UnsupportedOperationException("resources can't be changed!");
-		} else if (resources == null) {
-			throw new IllegalArgumentException("resources==null");
-		} else if (resources.size() != Resource.values().length) {
-			throw new IllegalArgumentException("resources.size() != Resource.values.length: " + resources.size());
-		}
-		this.resources = new GoodDoubleList(resources);
-	}
-
-	@Override
-	public void setResourceStats(final List<Double> resourceStats) {
-		if (this.resourceStats != null) {
-			throw new UnsupportedOperationException("Resource stats can't be changed!");
-		} else if (resourceStats == null) {
-			throw new IllegalArgumentException("resourceStats==null");
-		} else if (resourceStats.size() != Resource.values().length) {
-			throw new IllegalArgumentException(
-					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
-		}
-		this.resourceStats = new GoodDoubleList(resourceStats, true);
-	}
-
-	void setSoldiersDefenseLevel(final int soldiersDefenseLevel) {
-		this.soldiersDefenseLevel = soldiersDefenseLevel;
-	}
-
 	@Override
 	public boolean upgradeSoldiersDefense() {
 		final var currLevel = this.getSoldiersDefenseLevel();
@@ -348,14 +374,6 @@ final class Clan implements IClan {
 		this.setSoldiersDefenseLevel(currLevel + 1);
 		this.setSoldiersDefenseStrength(1 + this.newPower(SoldierUpgrade.DEFENSE, currLevel + 1));
 		return true;
-	}
-
-	void setSoldiersDefenseStrength(final double soldiersDefenseStrength) {
-		this.soldiersDefenseStrength = soldiersDefenseStrength;
-	}
-
-	void setSoldiersLevel(final int soldiersLevel) {
-		this.soldiersLevel = soldiersLevel;
 	}
 
 	@Override
@@ -374,10 +392,6 @@ final class Clan implements IClan {
 		return true;
 	}
 
-	void setSoldiersOffenseLevel(final int soldiersOffenseLevel) {
-		this.soldiersOffenseLevel = soldiersOffenseLevel;
-	}
-
 	@Override
 	public boolean upgradeSoldiersOffense() {
 		final var currLevel = this.getSoldiersOffenseLevel();
@@ -392,24 +406,6 @@ final class Clan implements IClan {
 		this.setSoldiersOffenseLevel(currLevel + 1);
 		this.setSoldiersOffenseStrength(1 + this.newPower(SoldierUpgrade.DEFENSE, currLevel + 1));
 		return true;
-	}
-
-	void setSoldiersOffenseStrength(final double soldiersOffenseStrength) {
-		this.soldiersOffenseStrength = soldiersOffenseStrength;
-	}
-
-	void setSoldiersStrength(final double soldiersStrength) {
-		this.soldiersStrength = soldiersStrength;
-	}
-
-	@Override
-	public void setStrategy(final Strategy strategy) {
-		if (this.strategy != null) {
-			throw new IllegalArgumentException("strategy can't be changed!");
-		} else if (strategy == null) {
-			throw new IllegalArgumentException("strategy==null");
-		}
-		this.strategy = strategy;
 	}
 
 	@Override
@@ -430,5 +426,9 @@ final class Clan implements IClan {
 	@Override
 	public ConquerInfo getInfo() {
 		return this.info;
+	}
+
+	void setInfo(final ConquerInfo info) {
+		this.info = info;
 	}
 }

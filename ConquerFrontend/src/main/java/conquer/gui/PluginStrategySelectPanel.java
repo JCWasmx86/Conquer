@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 final class PluginStrategySelectPanel extends JPanel {
+	private static final long serialVersionUID = 3909874317355075179L;
 	private final transient GlobalContext context;
 	private final List<JCheckBox> plugins = new ArrayList<>();
 	private final List<JCheckBox> strategies = new ArrayList<>();
@@ -97,7 +98,5 @@ final class PluginStrategySelectPanel extends JPanel {
 		this.context.getStrategyNames().addAll(strategyNames);
 		return this.context;
 	}
-
-	private static final long serialVersionUID = 3909874317355075179L;
 
 }

@@ -173,6 +173,9 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 */
 	boolean isPlayersTurn();
 
+	@Deprecated
+	void setPlayersTurn(boolean b);
+
 	/**
 	 * Calculates the maximum number of soldiers a clan could recruit.
 	 *
@@ -210,9 +213,6 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * @param giftCallback The callback. May not be {@code null}.
 	 */
 	void setPlayerGiftCallback(PlayerGiftCallback giftCallback);
-
-	@Deprecated
-	void setPlayersTurn(boolean b);
 
 	/**
 	 * Upgrade the defense of the given city, until the maximum level is reached or

@@ -15,10 +15,10 @@ class City implements ICity {
 	private static final int MAX_VARIANCE = 101;
 	private static final long BASE_POPULATION = 100L;
 	private static final int PEOPLE_THRESHOLD = 50;
+	private final ConquerInfo game;
 	private double bonus = -1;
 	private int clanId = -1;
 	private double defense = -1;
-	private final ConquerInfo game;
 	private double growth;
 	private Image image;
 	private List<Integer> levels = new ArrayList<>();
@@ -132,6 +132,20 @@ class City implements ICity {
 	}
 
 	/**
+	 * Set the clan of the city.
+	 *
+	 * @param clan May not be null.
+	 */
+	@Override
+	public void setClan(final IClan clan) {
+		if (clan == null) {
+			throw new IllegalArgumentException("clan == null");
+		}
+		this.clanId = clan.getId();
+		this.clan = clan;
+	}
+
+	/**
 	 * Returns the clan id.
 	 *
 	 * @return The clan id
@@ -165,6 +179,26 @@ class City implements ICity {
 	}
 
 	/**
+	 * Updates the value of the defense
+	 *
+	 * @param base New value.
+	 */
+	@Override
+	public void setDefense(final double base) {
+		if (base < 0) {
+			throw new IllegalArgumentException("argument < 0");
+		}
+		if (this.defense == 0) {
+			this.defense = base;
+		} else {
+			this.defense /= this.oldOne;
+			this.defense *= (base < 1 ? 1 / base : base);
+			this.oldOne = base;
+		}
+		this.defense = base;
+	}
+
+	/**
 	 * Returns the strength of a city based on its own values and the clan.
 	 *
 	 * @return The defense strength of the city.
@@ -189,6 +223,19 @@ class City implements ICity {
 	}
 
 	/**
+	 * Sets the growth of this city.
+	 *
+	 * @param growth The new value. May not be smaller than zero.
+	 */
+	@Override
+	public void setGrowth(final double growth) {
+		if (growth < 0) {
+			throw new IllegalArgumentException("growth < 0");
+		}
+		this.growth = growth;
+	}
+
+	/**
 	 * Returns the icon of this city.
 	 *
 	 * @return The icon of the city.
@@ -196,6 +243,21 @@ class City implements ICity {
 	@Override
 	public Image getImage() {
 		return this.image;
+	}
+
+	/**
+	 * Changes the image. Can only be called once, else an
+	 * {@link UnsupportedOperationException} will be thrown.
+	 *
+	 * @param image The image. May not be null.
+	 */
+	public void setImage(final Image image) {
+		if (this.image != null) {
+			throw new UnsupportedOperationException("Can't change image of city!");
+		} else if (image == null) {
+			throw new IllegalArgumentException("image == null");
+		}
+		this.image = image;
 	}
 
 	/**
@@ -219,6 +281,15 @@ class City implements ICity {
 	}
 
 	/**
+	 * Sets the levels of each resource.
+	 *
+	 * @param levels
+	 */
+	public void setLevels(final List<Integer> levels) {
+		this.levels = levels;
+	}
+
+	/**
 	 * Get the name of the city
 	 *
 	 * @return The name of the city.
@@ -226,6 +297,18 @@ class City implements ICity {
 	@Override
 	public String getName() {
 		return this.name;
+	}
+
+	/**
+	 * Sets the name of the city. Can only be called once.
+	 *
+	 * @param name Name of the city.
+	 */
+	public void setName(final String name) {
+		if (this.name != null) {
+			throw new UnsupportedOperationException("Can't change name of city!");
+		}
+		this.name = name;
 	}
 
 	/**
@@ -248,6 +331,19 @@ class City implements ICity {
 	}
 
 	/**
+	 * Set the number of people in the city.
+	 *
+	 * @param num May not be negative
+	 */
+	@Override
+	public void setNumberOfPeople(final long num) {
+		if (num < 0) {
+			throw new IllegalArgumentException("num < 0 : " + num);
+		}
+		this.numberOfPeople = num;
+	}
+
+	/**
 	 * Returns the amount of rounds with a population less than a certain amount of
 	 * people.
 	 *
@@ -258,6 +354,15 @@ class City implements ICity {
 	}
 
 	/**
+	 * Internal use only!
+	 *
+	 * @param num
+	 */
+	void setNumberOfRoundsWithZeroPeople(final int num) {
+		this.numberOfRoundsWithZeroPeople = num;
+	}
+
+	/**
 	 * Returns the number of soldiers in the city.
 	 *
 	 * @return Number of soldiers in this city
@@ -265,6 +370,19 @@ class City implements ICity {
 	@Override
 	public long getNumberOfSoldiers() {
 		return this.numberOfSoldiers;
+	}
+
+	/**
+	 * Set the number of soldiers in the city.
+	 *
+	 * @param num May not be negative
+	 */
+	@Override
+	public void setNumberOfSoldiers(final long num) {
+		if (num < 0) {
+			throw new IllegalArgumentException("num < 0 : " + num);
+		}
+		this.numberOfSoldiers = num;
 	}
 
 	/**
@@ -288,6 +406,20 @@ class City implements ICity {
 	}
 
 	/**
+	 * Sets the x-Position. May only be called once.
+	 *
+	 * @param x
+	 */
+	public void setX(final int x) {
+		if (this.x != -1) {
+			throw new UnsupportedOperationException("Can't change the X-Position!");
+		} else if (x < 0) {
+			throw new IllegalArgumentException("x < 0");
+		}
+		this.x = x;
+	}
+
+	/**
 	 * Returns the y-Position.
 	 *
 	 * @return y-Position
@@ -295,6 +427,20 @@ class City implements ICity {
 	@Override
 	public int getY() {
 		return this.y;
+	}
+
+	/**
+	 * Sets the x-Position. May only be called once.
+	 *
+	 * @param y
+	 */
+	public void setY(final int y) {
+		if (this.y != -1) {
+			throw new UnsupportedOperationException("Can't change the Y-Position!");
+		} else if (y < 0) {
+			throw new IllegalArgumentException("y < 0");
+		}
+		this.y = y;
 	}
 
 	/**
@@ -357,40 +503,6 @@ class City implements ICity {
 	}
 
 	/**
-	 * Set the clan of the city.
-	 *
-	 * @param clan May not be null.
-	 */
-	@Override
-	public void setClan(final IClan clan) {
-		if (clan == null) {
-			throw new IllegalArgumentException("clan == null");
-		}
-		this.clanId = clan.getId();
-		this.clan = clan;
-	}
-
-	/**
-	 * Updates the value of the defense
-	 *
-	 * @param base New value.
-	 */
-	@Override
-	public void setDefense(final double base) {
-		if (base < 0) {
-			throw new IllegalArgumentException("argument < 0");
-		}
-		if (this.defense == 0) {
-			this.defense = base;
-		} else {
-			this.defense /= this.oldOne;
-			this.defense *= (base < 1 ? 1 / base : base);
-			this.oldOne = base;
-		}
-		this.defense = base;
-	}
-
-	/**
 	 * Changes the defensebonus. Can only be called once. Otherwise it will throw an
 	 * {@link UnsupportedOperationException}
 	 *
@@ -403,92 +515,8 @@ class City implements ICity {
 		this.bonus = bonus;
 	}
 
-	/**
-	 * Sets the growth of this city.
-	 *
-	 * @param growth The new value. May not be smaller than zero.
-	 */
-	@Override
-	public void setGrowth(final double growth) {
-		if (growth < 0) {
-			throw new IllegalArgumentException("growth < 0");
-		}
-		this.growth = growth;
-	}
-
 	void setId(final int id) {
 		this.clanId = id;
-	}
-
-	/**
-	 * Changes the image. Can only be called once, else an
-	 * {@link UnsupportedOperationException} will be thrown.
-	 *
-	 * @param image The image. May not be null.
-	 */
-	public void setImage(final Image image) {
-		if (this.image != null) {
-			throw new UnsupportedOperationException("Can't change image of city!");
-		} else if (image == null) {
-			throw new IllegalArgumentException("image == null");
-		}
-		this.image = image;
-	}
-
-	/**
-	 * Sets the levels of each resource.
-	 *
-	 * @param levels
-	 */
-	public void setLevels(final List<Integer> levels) {
-		this.levels = levels;
-	}
-
-	/**
-	 * Sets the name of the city. Can only be called once.
-	 *
-	 * @param name Name of the city.
-	 */
-	public void setName(final String name) {
-		if (this.name != null) {
-			throw new UnsupportedOperationException("Can't change name of city!");
-		}
-		this.name = name;
-	}
-
-	/**
-	 * Set the number of people in the city.
-	 *
-	 * @param num May not be negative
-	 */
-	@Override
-	public void setNumberOfPeople(final long num) {
-		if (num < 0) {
-			throw new IllegalArgumentException("num < 0 : " + num);
-		}
-		this.numberOfPeople = num;
-	}
-
-	/**
-	 * Internal use only!
-	 *
-	 * @param num
-	 */
-	void setNumberOfRoundsWithZeroPeople(final int num) {
-		this.numberOfRoundsWithZeroPeople = num;
-	}
-
-	/**
-	 * Set the number of soldiers in the city.
-	 *
-	 * @param num May not be negative
-	 */
-	@Override
-	public void setNumberOfSoldiers(final long num) {
-		if (num < 0) {
-			throw new IllegalArgumentException("num < 0 : " + num);
-		}
-		this.numberOfSoldiers = num;
 	}
 
 	/**
@@ -515,34 +543,6 @@ class City implements ICity {
 					"Wrong length, expected " + Resource.values().length + ", got " + productions.size());
 		}
 		this.productions = new GoodDoubleList(productions);
-	}
-
-	/**
-	 * Sets the x-Position. May only be called once.
-	 *
-	 * @param x
-	 */
-	public void setX(final int x) {
-		if (this.x != -1) {
-			throw new UnsupportedOperationException("Can't change the X-Position!");
-		} else if (x < 0) {
-			throw new IllegalArgumentException("x < 0");
-		}
-		this.x = x;
-	}
-
-	/**
-	 * Sets the x-Position. May only be called once.
-	 *
-	 * @param y
-	 */
-	public void setY(final int y) {
-		if (this.y != -1) {
-			throw new UnsupportedOperationException("Can't change the Y-Position!");
-		} else if (y < 0) {
-			throw new IllegalArgumentException("y < 0");
-		}
-		this.y = y;
 	}
 
 	@Override

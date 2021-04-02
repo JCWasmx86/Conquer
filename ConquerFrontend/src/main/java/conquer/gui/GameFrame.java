@@ -61,15 +61,17 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient ConquerInfo game;
 	private final Map<ICity, CityLabel> labels = new HashMap<>();
+	private final transient List<DashedLine> lines = new ArrayList<>();
+	private final JPanel basePanel;
 	private LoopPlayer loopPlayer = new LoopPlayer();
 	private JLabel gameStage;
 	private JScrollPane gameStageScrollPane;
 	private JTabbedPane sideBarPane;
 	private JPanel buttonPanel;
-	private final transient List<DashedLine> lines = new ArrayList<>();
 	private transient Thread coinsLabelUpdateThread;
 	private String saveName;
-	private final JPanel basePanel;
+	private transient Thread endlessThread;
+	private transient GiftCallback callback;
 
 	/**
 	 * Create a new GameFrame with a specified game as base
@@ -194,9 +196,6 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.pack();
 		this.nonGUIInit();
 	}
-
-	private transient Thread endlessThread;
-	private transient GiftCallback callback;
 
 	private void initButtonPanel() {
 		this.buttonPanel = new JPanel();

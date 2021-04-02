@@ -9,14 +9,14 @@ public class ChangeCitiesMindsMessages {
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
 			.getBundle(ChangeCitiesMindsMessages.BUNDLE_NAME);
 
+	private ChangeCitiesMindsMessages() {
+	}
+
 	public static String getString(final String key) {
 		try {
 			return ChangeCitiesMindsMessages.RESOURCE_BUNDLE.getString(key);
 		} catch (final MissingResourceException e) {
 			return '!' + key + '!';
 		}
-	}
-
-	private ChangeCitiesMindsMessages() {
 	}
 }

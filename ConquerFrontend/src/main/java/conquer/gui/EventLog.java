@@ -30,69 +30,21 @@ import javax.swing.Timer;
  * Shows all events of the game. Only one instance is available.
  */
 final class EventLog extends JFrame implements MessageListener {
+	private static final float FONT_SIZE = 17.5f;
+	private static final long serialVersionUID = 5521609891725906272L;
 	private static EventLog log;
 
 	static {
 		EventLog.log = new EventLog();
 	}
 
-	private static final float FONT_SIZE = 17.5f;
-	private static final long serialVersionUID = 5521609891725906272L;
-
-	/**
-	 * Clear the instance.
-	 */
-	public static void clear() {
-		EventLog.log.dispose();
-		EventLog.log.timer.stop();
-		EventLog.log = new EventLog();
-	}
-
-	/**
-	 * Setup the instance with a specified game
-	 *
-	 * @param game The game as the source of events.
-	 */
-	static void init(final ConquerInfo game) {
-		final var a = game.getClans();
-		for (final var clan : a) {
-			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$
-					// $NON-NLS-2$
-					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$
-					// $NON-NLS-2$
-					: "")); //$NON-NLS-1$
-			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
-			final var color = clan.getColor();
-			jlabel.setOpaque(true);
-			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(color.getRGB())));
-			jlabel.setForeground(color);
-			jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
-			EventLog.log.base.add(jlabel);
-			EventLog.log.base.add(EventLog.log.generateEmptySpace(color));
-		}
-		final var jlabel = new JLabel(" "); //$NON-NLS-1$
-		jlabel.setForeground(new Color(21, 21, 21));
-		jlabel.setBackground(new Color(23, 23, 23));
-		jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
-		game.addMessageListener(EventLog.log);
-		EventLog.log.pack();
-	}
-
-	/**
-	 * Makes the instance visible
-	 */
-	static void showWindow() {
-		EventLog.log.setVisible(true);
-	}
-
-	private float currFontSize = EventLog.FONT_SIZE;
 	private final JPanel base;
 	private final Timer timer;
+	private float currFontSize = EventLog.FONT_SIZE;
 	private JCheckBoxMenuItem showGood;
 	private JCheckBoxMenuItem showBad;
 	private Color defaultColor;
 	private AbstractButton showNeutral;
-
 	private EventLog() {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.PAGE_AXIS));
@@ -148,6 +100,52 @@ final class EventLog extends JFrame implements MessageListener {
 		menubar.add(menu);
 		this.setJMenuBar(menubar);
 		this.setTitle(Messages.getString("EventLog.eventLog")); //$NON-NLS-1$
+	}
+
+	/**
+	 * Clear the instance.
+	 */
+	public static void clear() {
+		EventLog.log.dispose();
+		EventLog.log.timer.stop();
+		EventLog.log = new EventLog();
+	}
+
+	/**
+	 * Setup the instance with a specified game
+	 *
+	 * @param game The game as the source of events.
+	 */
+	static void init(final ConquerInfo game) {
+		final var a = game.getClans();
+		for (final var clan : a) {
+			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$
+					// $NON-NLS-2$
+					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$
+					// $NON-NLS-2$
+					: "")); //$NON-NLS-1$
+			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
+			final var color = clan.getColor();
+			jlabel.setOpaque(true);
+			jlabel.setBackground(new Color(EventLog.log.getComplementaryColor(color.getRGB())));
+			jlabel.setForeground(color);
+			jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
+			EventLog.log.base.add(jlabel);
+			EventLog.log.base.add(EventLog.log.generateEmptySpace(color));
+		}
+		final var jlabel = new JLabel(" "); //$NON-NLS-1$
+		jlabel.setForeground(new Color(21, 21, 21));
+		jlabel.setBackground(new Color(23, 23, 23));
+		jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
+		game.addMessageListener(EventLog.log);
+		EventLog.log.pack();
+	}
+
+	/**
+	 * Makes the instance visible
+	 */
+	static void showWindow() {
+		EventLog.log.setVisible(true);
 	}
 
 	/**

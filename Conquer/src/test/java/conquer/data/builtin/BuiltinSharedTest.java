@@ -25,8 +25,18 @@ class BuiltinSharedTest {
 			}
 
 			@Override
+			public void setCoins(final double coins) {
+
+			}
+
+			@Override
 			public Color getColor() {
 				return null;
+			}
+
+			@Override
+			public void setColor(final Color color) {
+
 			}
 
 			@Override
@@ -40,13 +50,28 @@ class BuiltinSharedTest {
 			}
 
 			@Override
+			public void setFlags(final int flags) {
+
+			}
+
+			@Override
 			public int getId() {
 				return 0;
 			}
 
 			@Override
+			public void setId(final int id) {
+
+			}
+
+			@Override
 			public String getName() {
 				return null;
+			}
+
+			@Override
+			public void setName(final String name) {
+
 			}
 
 			@Override
@@ -59,8 +84,18 @@ class BuiltinSharedTest {
 			}
 
 			@Override
+			public void setResources(final List<Double> resources) {
+
+			}
+
+			@Override
 			public List<Double> getResourceStats() {
 				return null;
+			}
+
+			@Override
+			public void setResourceStats(final List<Double> resourceStats) {
+
 			}
 
 			@Override
@@ -99,6 +134,11 @@ class BuiltinSharedTest {
 			}
 
 			@Override
+			public void setStrategy(final Strategy strategy) {
+
+			}
+
+			@Override
 			public void init(final StrategyProvider[] strategies, final Version version) {
 
 			}
@@ -106,41 +146,6 @@ class BuiltinSharedTest {
 			@Override
 			public boolean isPlayerClan() {
 				return false;
-			}
-
-			@Override
-			public void setCoins(final double coins) {
-
-			}
-
-			@Override
-			public void setColor(final Color color) {
-
-			}
-
-			@Override
-			public void setFlags(final int flags) {
-
-			}
-
-			@Override
-			public void setId(final int id) {
-
-			}
-
-			@Override
-			public void setName(final String name) {
-
-			}
-
-			@Override
-			public void setResources(final List<Double> resources) {
-
-			}
-
-			@Override
-			public void setResourceStats(final List<Double> resourceStats) {
-
 			}
 
 			@Override
@@ -156,11 +161,6 @@ class BuiltinSharedTest {
 			@Override
 			public boolean upgradeSoldiersOffense() {
 				return false;
-			}
-
-			@Override
-			public void setStrategy(final Strategy strategy) {
-
 			}
 
 			@Override

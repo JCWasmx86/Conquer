@@ -16,17 +16,17 @@ import java.util.function.Consumer;
 public final class Initializer {
 	// Singleton
 	private static final Initializer INSTANCE = new Initializer();
-	private static boolean initialized = false;
 	static boolean installing = false;
+	private static boolean initialized = false;
+
+	private Initializer() {
+	}
 
 	/**
 	 * Get the singleton-object of the Initializer
 	 */
 	public static Initializer INSTANCE() {
 		return Initializer.INSTANCE;
-	}
-
-	private Initializer() {
 	}
 
 	/**

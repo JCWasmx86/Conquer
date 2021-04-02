@@ -9,14 +9,14 @@ public class ResourceAnalyzerMessages {
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
 			.getBundle(ResourceAnalyzerMessages.BUNDLE_NAME);
 
+	private ResourceAnalyzerMessages() {
+	}
+
 	public static String getString(final String key) {
 		try {
 			return ResourceAnalyzerMessages.RESOURCE_BUNDLE.getString(key);
 		} catch (final MissingResourceException e) {
 			return '!' + key + '!';
 		}
-	}
-
-	private ResourceAnalyzerMessages() {
 	}
 }

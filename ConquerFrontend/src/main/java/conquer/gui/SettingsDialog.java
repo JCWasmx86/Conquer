@@ -25,30 +25,6 @@ final class SettingsDialog extends JFrame {
 	private final List<SettingMenuPlugin> plugins = new ArrayList<>();
 	private java.util.Properties properties;
 
-	public static void showWindow() {
-		SettingsDialog.INSTANCE.setVisible(true);
-		SettingsDialog.INSTANCE.update();
-	}
-
-	private void update() {
-		this.properties = this.getProperties();
-		//Reset
-		this.plugins.forEach(SettingMenuPlugin::reset);
-		this.panel.reset();
-	}
-
-	private Properties getProperties() {
-		try (final var in = Files.newInputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()),
-				StandardOpenOption.CREATE)) {
-			final var p = new Properties();
-			p.load(in);
-			return p;
-		} catch (final IOException e) {
-			Shared.LOGGER.exception(e);
-		}
-		return new Properties();
-	}
-
 	private SettingsDialog() {
 		this.setTitle("Settings");
 		this.properties = this.getProperties();
@@ -82,6 +58,30 @@ final class SettingsDialog extends JFrame {
 		this.add(buttonPanel);
 		this.setVisible(true);
 		this.pack();
+	}
+
+	public static void showWindow() {
+		SettingsDialog.INSTANCE.setVisible(true);
+		SettingsDialog.INSTANCE.update();
+	}
+
+	private void update() {
+		this.properties = this.getProperties();
+		//Reset
+		this.plugins.forEach(SettingMenuPlugin::reset);
+		this.panel.reset();
+	}
+
+	private Properties getProperties() {
+		try (final var in = Files.newInputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()),
+				StandardOpenOption.CREATE)) {
+			final var p = new Properties();
+			p.load(in);
+			return p;
+		} catch (final IOException e) {
+			Shared.LOGGER.exception(e);
+		}
+		return new Properties();
 	}
 
 	private void dump() {

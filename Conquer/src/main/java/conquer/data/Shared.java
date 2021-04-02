@@ -31,26 +31,6 @@ public final class Shared {
 	 * In this file, all properties are listed.
 	 */
 	public static final String PROPERTIES_FILE = Shared.BASE_DIRECTORY + File.separatorChar + "game.properties";
-
-	/**
-	 * Returns true if the current OS is windows.
-	 *
-	 * @return {@code true} if the current OS is windows.
-	 */
-	public static boolean isWindows() {
-		return System.getProperty("os.name").toLowerCase().contains("windo");
-	}
-
-	/**
-	 * Returns true if the current OS is linux.
-	 *
-	 * @return {@code true} if the current OS is linux.
-	 */
-	public static boolean isLinux() {
-		final var str = System.getProperty("os.name").toLowerCase();
-		return str.contains("nux") || str.contains("linux") || str.contains("nix");
-	}
-
 	/**
 	 * The maximum level of defense, resource production,... Replaced by
 	 * {@link ConquerInfo#getMaximumLevel()}
@@ -67,32 +47,6 @@ public final class Shared {
 	 * The default logger.
 	 */
 	public static final Logger LOGGER;
-	/**
-	 * Another logger that only logs, if the property {@code conquer.logging.level1}
-	 * is set.
-	 */
-	private static final Logger LOGGER_LEVEL1;
-	/**
-	 * Another logger that only logs, if the property {@code conquer.logging.level2}
-	 * is set.
-	 */
-	private static final Logger LOGGER_LEVEL2;
-
-	static {
-		new File(Shared.BASE_DIRECTORY).mkdirs();
-		LOGGER = new Logger(Shared.BASE_DIRECTORY + "/logs.log");
-		LOGGER_LEVEL1 = new Logger(Shared.BASE_DIRECTORY + "/1.log");
-		LOGGER_LEVEL2 = new Logger(Shared.BASE_DIRECTORY + "/2.log");
-		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-			try {
-				Shared.LOGGER_LEVEL1.close();
-				Shared.LOGGER_LEVEL2.close();
-			} catch (final IOException e) {
-				e.printStackTrace();
-			}
-		}));
-	}
-
 	/**
 	 * Describes the usage of coins for each soldier for each distance-unit at every
 	 * move. (Additional to {@link Shared#COINS_PER_MOVE_OF_SOLDIER_BASE}) Replaced
@@ -231,6 +185,16 @@ public final class Shared {
 	 */
 	@Deprecated
 	public static final double WHEAT_PER_PERSON_PER_ROUND = 0.94;
+	/**
+	 * Another logger that only logs, if the property {@code conquer.logging.level1}
+	 * is set.
+	 */
+	private static final Logger LOGGER_LEVEL1;
+	/**
+	 * Another logger that only logs, if the property {@code conquer.logging.level2}
+	 * is set.
+	 */
+	private static final Logger LOGGER_LEVEL2;
 	@Deprecated
 	private static final double[][] DATA_VALUES = {
 			{Shared.WHEAT_PER_PERSON_PER_ROUND, Shared.WHEAT_PER_SOLDIER_PER_ROUND},
@@ -242,8 +206,44 @@ public final class Shared {
 			{Shared.TEXTILES_PER_PERSON_PER_ROUND, Shared.TEXTILES_PER_SOLDIER_PER_ROUND},
 			{Shared.LEATHER_PER_PERSON_PER_ROUND, Shared.LEATHER_PER_SOLDIER_PER_ROUND},
 			{Shared.STONE_PER_PERSON_PER_ROUND, Shared.STONE_PER_SOLDIER_PER_ROUND}};
-
 	private static final Random RANDOM = new Random(System.nanoTime());
+
+	static {
+		new File(Shared.BASE_DIRECTORY).mkdirs();
+		LOGGER = new Logger(Shared.BASE_DIRECTORY + "/logs.log");
+		LOGGER_LEVEL1 = new Logger(Shared.BASE_DIRECTORY + "/1.log");
+		LOGGER_LEVEL2 = new Logger(Shared.BASE_DIRECTORY + "/2.log");
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			try {
+				Shared.LOGGER_LEVEL1.close();
+				Shared.LOGGER_LEVEL2.close();
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+		}));
+	}
+	private Shared() {
+
+	}
+
+	/**
+	 * Returns true if the current OS is windows.
+	 *
+	 * @return {@code true} if the current OS is windows.
+	 */
+	public static boolean isWindows() {
+		return System.getProperty("os.name").toLowerCase().contains("windo");
+	}
+
+	/**
+	 * Returns true if the current OS is linux.
+	 *
+	 * @return {@code true} if the current OS is linux.
+	 */
+	public static boolean isLinux() {
+		final var str = System.getProperty("os.name").toLowerCase();
+		return str.contains("nux") || str.contains("linux") || str.contains("nix");
+	}
 
 	/**
 	 * Utility method to delete an entire directory.
@@ -558,9 +558,5 @@ public final class Shared {
 	 */
 	public static ConquerInfo loadReferenceImplementationfile(final InputStream in) {
 		return new ScenarioFileReader().read(in);
-	}
-
-	private Shared() {
-
 	}
 }

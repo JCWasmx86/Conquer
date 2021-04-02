@@ -27,8 +27,8 @@ import javax.swing.text.DefaultCaret;
 class CityInfoPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 2409517597504961241L;
 	private final transient ICity city;
-	private JEditorPane statsViewer;
 	private final List<ResourceButton> resourceButtons;
+	private JEditorPane statsViewer;
 	private RecruitButton recruitButton;
 
 	/**

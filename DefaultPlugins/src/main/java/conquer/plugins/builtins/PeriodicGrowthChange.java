@@ -12,12 +12,11 @@ import java.util.Random;
 
 public final class PeriodicGrowthChange implements Plugin {
 	private static final Random RANDOM = new Random(System.nanoTime());
+	private List<Integer> values;
 
 	private static double newGrowth(final int currValue) {
 		return 0.1 * Math.sin((0.3 * currValue) % (2 * Math.PI));
 	}
-
-	private List<Integer> values;
 
 	@Override
 	public String getName() {

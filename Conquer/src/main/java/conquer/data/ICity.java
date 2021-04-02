@@ -28,6 +28,14 @@ public interface ICity extends Comparable<ICity> {
 	IClan getClan();
 
 	/**
+	 * Change the clan of the city.
+	 *
+	 * @param clan The new clan. May not be {@code null}, otherwise a
+	 *             {@link IllegalArgumentException} will be thrown.
+	 */
+	void setClan(IClan clan);
+
+	/**
 	 * Returns the clan id.
 	 *
 	 * @return The clan id
@@ -51,6 +59,14 @@ public interface ICity extends Comparable<ICity> {
 	double getDefense();
 
 	/**
+	 * Set the defense strength of the city.
+	 *
+	 * @param newPowerOfUpdate The new strength. May not be negative, , otherwise a
+	 *                         {@link IllegalArgumentException} will be thrown.
+	 */
+	void setDefense(double newPowerOfUpdate);
+
+	/**
 	 * Returns the strength of a city based on its own values and the clan.
 	 *
 	 * @return The defense strength of the city.
@@ -66,6 +82,14 @@ public interface ICity extends Comparable<ICity> {
 	 * @return The growth of the city.
 	 */
 	double getGrowth();
+
+	/**
+	 * Set the growth factor of the city.
+	 *
+	 * @param growth The new strength. May not be negative, , otherwise a
+	 *               {@link IllegalArgumentException} will be thrown.
+	 */
+	void setGrowth(double growth);
 
 	/**
 	 * Returns the icon of this city.
@@ -103,11 +127,29 @@ public interface ICity extends Comparable<ICity> {
 	long getNumberOfPeople();
 
 	/**
+	 * Set the number of people in the city.
+	 *
+	 * @param numberOfPeople The new number of people. May not be negative, ,
+	 *                       otherwise a {@link IllegalArgumentException} will be
+	 *                       thrown.
+	 */
+	void setNumberOfPeople(long numberOfPeople);
+
+	/**
 	 * Returns the number of soldiers in the city.
 	 *
 	 * @return Number of soldiers in this city
 	 */
 	long getNumberOfSoldiers();
+
+	/**
+	 * Set the number of soldiers in the city.
+	 *
+	 * @param numberOfSoldiers The new number of soldiers. May not be negative, ,
+	 *                         otherwise a {@link IllegalArgumentException} will be
+	 *                         thrown.
+	 */
+	void setNumberOfSoldiers(long numberOfSoldiers);
 
 	/**
 	 * Gives the how much every resource is produced every round.
@@ -144,47 +186,5 @@ public interface ICity extends Comparable<ICity> {
 	 * @return The production of a resource per round.
 	 */
 	double productionPerRound(Resource resource);
-
-	/**
-	 * Change the clan of the city.
-	 *
-	 * @param clan The new clan. May not be {@code null}, otherwise a
-	 *             {@link IllegalArgumentException} will be thrown.
-	 */
-	void setClan(IClan clan);
-
-	/**
-	 * Set the defense strength of the city.
-	 *
-	 * @param newPowerOfUpdate The new strength. May not be negative, , otherwise a
-	 *                         {@link IllegalArgumentException} will be thrown.
-	 */
-	void setDefense(double newPowerOfUpdate);
-
-	/**
-	 * Set the growth factor of the city.
-	 *
-	 * @param growth The new strength. May not be negative, , otherwise a
-	 *               {@link IllegalArgumentException} will be thrown.
-	 */
-	void setGrowth(double growth);
-
-	/**
-	 * Set the number of people in the city.
-	 *
-	 * @param numberOfPeople The new number of people. May not be negative, ,
-	 *                       otherwise a {@link IllegalArgumentException} will be
-	 *                       thrown.
-	 */
-	void setNumberOfPeople(long numberOfPeople);
-
-	/**
-	 * Set the number of soldiers in the city.
-	 *
-	 * @param numberOfSoldiers The new number of soldiers. May not be negative, ,
-	 *                         otherwise a {@link IllegalArgumentException} will be
-	 *                         thrown.
-	 */
-	void setNumberOfSoldiers(long numberOfSoldiers);
 
 }

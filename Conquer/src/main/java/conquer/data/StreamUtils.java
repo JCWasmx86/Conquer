@@ -14,6 +14,10 @@ import java.util.stream.Stream;
  * These methods are quite self-explaining. No error-checking is done. (E.g. null-checks)
  */
 public final class StreamUtils {
+	private StreamUtils() {
+
+	}
+
 	public static void forEach(final Graph<ICity> cities, final IClan clan, final Consumer<ICity> consumer) {
 		StreamUtils.forEach(cities, a -> a.getClan() == clan, consumer);
 	}
@@ -46,7 +50,6 @@ public final class StreamUtils {
 													final ICity middle, final IClan clan) {
 		return StreamUtils.getCitiesAroundCity(info, cities, middle, a -> a.getClan() == clan);
 	}
-
 
 	public static Stream<ICity> getCitiesAroundCity(final Graph<ICity> cities, final ICity middle,
 													final Predicate<ICity> predicate) {
@@ -112,9 +115,5 @@ public final class StreamUtils {
 	public static Stream<ICity> getCitiesAsStreamNot(final Graph<ICity> cities, final IClan clan,
 													 final Predicate<ICity> predicate) {
 		return StreamUtils.getCitiesAsStream(cities, a -> a.getClan() != clan, predicate);
-	}
-
-	private StreamUtils() {
-
 	}
 }

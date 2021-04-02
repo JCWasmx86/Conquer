@@ -11,9 +11,9 @@ import java.util.Random;
 
 public final class OffensiveStrategyData implements StrategyData {
 	private static final int MAX_ROUND_NUMBER = 20;
+	private final Random random;
 	private int counter;
 	private OffensiveStrategy action;
-	private final Random random;
 
 	public OffensiveStrategyData() {
 		this.random = new Random(System.nanoTime());

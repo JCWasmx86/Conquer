@@ -29,10 +29,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private final transient ICity city;
 	private final transient Timer timer;
 	private final transient Map<ICity, CityLabel> labels;
+	private final transient Consumer<ICity> consumer;
 	private boolean marked = false;
 	private int counter = 0;
 	private transient ICity origin;
-	private final transient Consumer<ICity> consumer;
 
 	/**
 	 * Constructs a new CityLabel

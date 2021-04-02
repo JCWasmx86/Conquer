@@ -141,6 +141,11 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setClan(final IClan clan) {
+
+		}
+
+		@Override
 		public int getClanId() {
 			return 0;
 		}
@@ -156,6 +161,11 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setDefense(final double newPowerOfUpdate) {
+
+		}
+
+		@Override
 		public double getDefenseStrength() {
 			return 0;
 		}
@@ -163,6 +173,11 @@ class StreamUtilsTest {
 		@Override
 		public double getGrowth() {
 			return 0;
+		}
+
+		@Override
+		public void setGrowth(final double growth) {
+
 		}
 
 		@Override
@@ -191,8 +206,18 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setNumberOfPeople(final long numberOfPeople) {
+
+		}
+
+		@Override
 		public long getNumberOfSoldiers() {
 			return 0;
+		}
+
+		@Override
+		public void setNumberOfSoldiers(final long numberOfSoldiers) {
+
 		}
 
 		@Override
@@ -221,31 +246,6 @@ class StreamUtilsTest {
 		}
 
 		@Override
-		public void setClan(final IClan clan) {
-
-		}
-
-		@Override
-		public void setDefense(final double newPowerOfUpdate) {
-
-		}
-
-		@Override
-		public void setGrowth(final double growth) {
-
-		}
-
-		@Override
-		public void setNumberOfPeople(final long numberOfPeople) {
-
-		}
-
-		@Override
-		public void setNumberOfSoldiers(final long numberOfSoldiers) {
-
-		}
-
-		@Override
 		public int compareTo(final ICity o) {
 			return 0;
 		}
@@ -265,8 +265,18 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setCoins(final double coins) {
+
+		}
+
+		@Override
 		public Color getColor() {
 			return null;
+		}
+
+		@Override
+		public void setColor(final Color color) {
+
 		}
 
 		@Override
@@ -280,8 +290,18 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setFlags(final int flags) {
+
+		}
+
+		@Override
 		public int getId() {
 			return 0;
+		}
+
+		@Override
+		public void setId(final int id) {
+
 		}
 
 		@Override
@@ -290,13 +310,28 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setName(final String name) {
+
+		}
+
+		@Override
 		public List<Double> getResources() {
 			return null;
 		}
 
 		@Override
+		public void setResources(final List<Double> resources) {
+
+		}
+
+		@Override
 		public List<Double> getResourceStats() {
 			return null;
+		}
+
+		@Override
+		public void setResourceStats(final List<Double> resourceStats) {
+
 		}
 
 		@Override
@@ -335,6 +370,11 @@ class StreamUtilsTest {
 		}
 
 		@Override
+		public void setStrategy(final Strategy strategy) {
+
+		}
+
+		@Override
 		public void init(final StrategyProvider[] strategies, final Version version) {
 
 		}
@@ -342,41 +382,6 @@ class StreamUtilsTest {
 		@Override
 		public boolean isPlayerClan() {
 			return false;
-		}
-
-		@Override
-		public void setCoins(final double coins) {
-
-		}
-
-		@Override
-		public void setColor(final Color color) {
-
-		}
-
-		@Override
-		public void setFlags(final int flags) {
-
-		}
-
-		@Override
-		public void setId(final int id) {
-
-		}
-
-		@Override
-		public void setName(final String name) {
-
-		}
-
-		@Override
-		public void setResources(final List<Double> resources) {
-
-		}
-
-		@Override
-		public void setResourceStats(final List<Double> resourceStats) {
-
 		}
 
 		@Override
@@ -392,11 +397,6 @@ class StreamUtilsTest {
 		@Override
 		public boolean upgradeSoldiersOffense() {
 			return false;
-		}
-
-		@Override
-		public void setStrategy(final Strategy strategy) {
-
 		}
 
 		@Override

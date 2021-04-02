@@ -34,68 +34,68 @@ final class GamePluginData {
 		return this.attackHooks;
 	}
 
-	Map<String, CityKeyHandler> getCityKeyHandlers() {
-		return this.cityKeyHandlers;
-	}
-
-	List<String> getExtraMusic() {
-		return this.extraMusic;
-	}
-
-	Map<String, KeyHandler> getKeybindings() {
-		return this.keybindings;
-	}
-
-	List<MoneyHook> getMoneyHooks() {
-		return this.moneyHooks;
-	}
-
-	List<MoveHook> getMoveHooks() {
-		return this.moveHooks;
-	}
-
-	List<Plugin> getPlugins() {
-		return this.plugins;
-	}
-
-	List<RecruitHook> getRecruitHooks() {
-		return this.recruitHooks;
-	}
-
-	List<ResourceHook> getResourceHooks() {
-		return this.resourceHooks;
-	}
-
 	void setAttackHooks(final List<AttackHook> attackHooks) {
 		this.attackHooks = attackHooks;
+	}
+
+	Map<String, CityKeyHandler> getCityKeyHandlers() {
+		return this.cityKeyHandlers;
 	}
 
 	void setCityKeyHandlers(final Map<String, CityKeyHandler> cityKeyHandlers) {
 		this.cityKeyHandlers = cityKeyHandlers;
 	}
 
+	List<String> getExtraMusic() {
+		return this.extraMusic;
+	}
+
 	void setExtraMusic(final List<String> extraMusic) {
 		this.extraMusic = extraMusic;
+	}
+
+	Map<String, KeyHandler> getKeybindings() {
+		return this.keybindings;
 	}
 
 	void setKeybindings(final Map<String, KeyHandler> keybindings) {
 		this.keybindings = keybindings;
 	}
 
+	List<MoneyHook> getMoneyHooks() {
+		return this.moneyHooks;
+	}
+
 	void setMoneyHooks(final List<MoneyHook> moneyHooks) {
 		this.moneyHooks = moneyHooks;
+	}
+
+	List<MoveHook> getMoveHooks() {
+		return this.moveHooks;
 	}
 
 	void setMoveHooks(final List<MoveHook> moveHooks) {
 		this.moveHooks = moveHooks;
 	}
 
+	List<Plugin> getPlugins() {
+		return this.plugins;
+	}
+
 	void setPlugins(final List<Plugin> plugins) {
 		this.plugins = plugins;
 	}
 
+	List<RecruitHook> getRecruitHooks() {
+		return this.recruitHooks;
+	}
+
 	void setRecruitHooks(final List<RecruitHook> recruitHooks) {
 		this.recruitHooks = recruitHooks;
+	}
+
+	List<ResourceHook> getResourceHooks() {
+		return this.resourceHooks;
 	}
 
 	void setResourceHooks(final List<ResourceHook> resourceHooks) {

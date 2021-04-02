@@ -75,16 +75,16 @@ final class Game implements ConquerInfo {
 	private static final int RELATIONSHIP_CHANGE_ATTACK_DEFEATED = 5;
 	private static final int MAX_STRATEGIES = 2048;
 	private final Random random = new SecureRandom();
+	private final EventList events = new EventList();
+	private final StrategyProvider[] strategies;
+	private final GamePluginData data = new GamePluginData();
 	private List<IClan> clans;
 	private Image background;
 	private Graph<ICity> cities;
-	private final EventList events = new EventList();
-	private final StrategyProvider[] strategies;
 	private boolean isPlayersTurn = true;
 	private int numPlayers = -1;
 	private Graph<Integer> relations;
 	private int currentRound = 1;
-	private final GamePluginData data = new GamePluginData();
 	private PlayerGiftCallback playerGiftCallback;
 	private boolean resumed;
 	private File directory;
@@ -481,6 +481,14 @@ final class Game implements ConquerInfo {
 		return this.background;
 	}
 
+	void setBackground(final Image gi) {
+		this.throwIfNull(gi, "gi==null");
+		if (this.background != null) {
+			throw new UnsupportedOperationException("Can't change image!");
+		}
+		this.background = gi;
+	}
+
 	@Override
 	public Graph<ICity> getCities() {
 		return this.cities;
@@ -510,6 +518,14 @@ final class Game implements ConquerInfo {
 	@Override
 	public List<IClan> getClans() {
 		return this.clans;
+	}
+
+	void setClans(final List<IClan> clans) {
+		this.throwIfNull(clans, "clans==null");
+		if (this.clans != null) {
+			throw new UnsupportedOperationException("Can't change clans!");
+		}
+		this.clans = clans;
 	}
 
 	@Override
@@ -546,9 +562,21 @@ final class Game implements ConquerInfo {
 		return this.data.getPlugins();
 	}
 
+	void setPlugins(final List<Plugin> plugins) {
+		this.data.setPlugins(plugins);
+	}
+
 	@Override
 	public Graph<Integer> getRelations() {
 		return this.relations;
+	}
+
+	void setRelations(final Graph<Integer> relations) {
+		this.throwIfNull(relations, "relations==null");
+		if (this.relations != null) {
+			throw new UnsupportedOperationException("Can't change relations");
+		}
+		this.relations = relations;
 	}
 
 	@Override
@@ -652,6 +680,11 @@ final class Game implements ConquerInfo {
 	@Override
 	public boolean isPlayersTurn() {
 		return this.isPlayersTurn;
+	}
+
+	@Override
+	public void setPlayersTurn(final boolean b) {
+		this.isPlayersTurn = b;
 	}
 
 	@Override
@@ -1060,22 +1093,6 @@ final class Game implements ConquerInfo {
 		return this.relations.getWeight(a.getId(), b.getId());
 	}
 
-	void setBackground(final Image gi) {
-		this.throwIfNull(gi, "gi==null");
-		if (this.background != null) {
-			throw new UnsupportedOperationException("Can't change image!");
-		}
-		this.background = gi;
-	}
-
-	void setClans(final List<IClan> clans) {
-		this.throwIfNull(clans, "clans==null");
-		if (this.clans != null) {
-			throw new UnsupportedOperationException("Can't change clans!");
-		}
-		this.clans = clans;
-	}
-
 	@Override
 	public void setErrorHandler(final Consumer<Throwable> handler) {
 		this.throwableConsumer = handler;
@@ -1102,23 +1119,6 @@ final class Game implements ConquerInfo {
 			throw new UnsupportedOperationException("Can't change number of players");
 		}
 		this.numPlayers = numPlayers;
-	}
-
-	@Override
-	public void setPlayersTurn(final boolean b) {
-		this.isPlayersTurn = b;
-	}
-
-	void setPlugins(final List<Plugin> plugins) {
-		this.data.setPlugins(plugins);
-	}
-
-	void setRelations(final Graph<Integer> relations) {
-		this.throwIfNull(relations, "relations==null");
-		if (this.relations != null) {
-			throw new UnsupportedOperationException("Can't change relations");
-		}
-		this.relations = relations;
 	}
 
 	void setRound(final int r) {

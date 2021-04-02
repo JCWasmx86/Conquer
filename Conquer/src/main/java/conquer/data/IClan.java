@@ -18,11 +18,26 @@ public interface IClan {
 	double getCoins();
 
 	/**
+	 * Set the coins.
+	 *
+	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
+	 *              0.
+	 */
+	void setCoins(double coins);
+
+	/**
 	 * Returns the color associated with this clan
 	 *
 	 * @return Clan color
 	 */
 	Color getColor();
+
+	/**
+	 * Set the color of the clan. This method may only be called once.
+	 *
+	 * @param color May not be null
+	 */
+	void setColor(Color color);
 
 	/**
 	 * Returns optional data for the strategy.
@@ -39,6 +54,13 @@ public interface IClan {
 	int getFlags();
 
 	/**
+	 * Set the flags of a clan.
+	 *
+	 * @param flags Some unspecified value.
+	 */
+	void setFlags(int flags);
+
+	/**
 	 * Return the id of the clan.
 	 *
 	 * @return Clan id.
@@ -46,11 +68,25 @@ public interface IClan {
 	int getId();
 
 	/**
+	 * Change the id of the clan. May only be called once.
+	 *
+	 * @param id Has to be positive or zero.
+	 */
+	void setId(int id);
+
+	/**
 	 * Returns the name of the clan
 	 *
 	 * @return Name of the clan
 	 */
 	String getName();
+
+	/**
+	 * Set the name. May only be called once.
+	 *
+	 * @param name May not be null
+	 */
+	void setName(String name);
 
 	/**
 	 * Returns a mutable list of the amount of all resources. The index for a
@@ -61,12 +97,29 @@ public interface IClan {
 	List<Double> getResources();
 
 	/**
+	 * Set all resources. May only be called while initializing the clan.
+	 *
+	 * @param resources May not be {@code null} or have the wrong length, otherwise
+	 *                  an {@code IllegalArgumentException} shall be thrown.
+	 */
+	void setResources(List<Double> resources);
+
+	/**
 	 * Returns a mutable list of the production of all resources. The index for a
 	 * resource is obtained by {@link Resource#getIndex()}
 	 *
 	 * @return Production of resources.
 	 */
 	List<Double> getResourceStats();
+
+	/**
+	 * Set all resource stats. May only be called by the corresponding
+	 * {@code ConquerInfo}-object
+	 *
+	 * @param resourceStats May not be {@code null} or have the wrong length, otherwise
+	 *                      an {@code IllegalArgumentException} shall be thrown.
+	 */
+	void setResourceStats(List<Double> resourceStats);
 
 	/**
 	 * Returns the defenselevel of the soldiers of the clan
@@ -118,6 +171,13 @@ public interface IClan {
 	Strategy getStrategy();
 
 	/**
+	 * Set the strategy. May only be called once and shouldn't be treated as public.
+	 *
+	 * @param strategy May not be null
+	 */
+	void setStrategy(Strategy strategy);
+
+	/**
 	 * Initialises the clan.
 	 *
 	 * @param strategies An array of all strategies available.
@@ -130,59 +190,6 @@ public interface IClan {
 	 * @return {@code true} if the clan is played by the human.
 	 */
 	boolean isPlayerClan();
-
-	/**
-	 * Set the coins.
-	 *
-	 * @param coins If {@code coins} is smaller than 0, the new amount of coins is
-	 *              0.
-	 */
-	void setCoins(double coins);
-
-	/**
-	 * Set the color of the clan. This method may only be called once.
-	 *
-	 * @param color May not be null
-	 */
-	void setColor(Color color);
-
-	/**
-	 * Set the flags of a clan.
-	 *
-	 * @param flags Some unspecified value.
-	 */
-	void setFlags(int flags);
-
-	/**
-	 * Change the id of the clan. May only be called once.
-	 *
-	 * @param id Has to be positive or zero.
-	 */
-	void setId(int id);
-
-	/**
-	 * Set the name. May only be called once.
-	 *
-	 * @param name May not be null
-	 */
-	void setName(String name);
-
-	/**
-	 * Set all resources. May only be called while initializing the clan.
-	 *
-	 * @param resources May not be {@code null} or have the wrong length, otherwise
-	 *                  an {@code IllegalArgumentException} shall be thrown.
-	 */
-	void setResources(List<Double> resources);
-
-	/**
-	 * Set all resource stats. May only be called by the corresponding
-	 * {@code ConquerInfo}-object
-	 *
-	 * @param resourceStats May not be {@code null} or have the wrong length, otherwise
-	 *                      an {@code IllegalArgumentException} shall be thrown.
-	 */
-	void setResourceStats(List<Double> resourceStats);
 
 	/**
 	 * Upgrade the defense strength of the soldiers.
@@ -207,13 +214,6 @@ public interface IClan {
 	 * equals to the maximum level, {@code false} otherwise.
 	 */
 	boolean upgradeSoldiersOffense();
-
-	/**
-	 * Set the strategy. May only be called once and shouldn't be treated as public.
-	 *
-	 * @param strategy May not be null
-	 */
-	void setStrategy(Strategy strategy);
 
 	/**
 	 * Set the strategy data. Shouldn't be treated as public.
