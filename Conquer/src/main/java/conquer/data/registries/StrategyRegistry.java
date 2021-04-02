@@ -5,7 +5,7 @@ import conquer.data.strategy.StrategyProvider;
 import java.util.List;
 
 /**
- * Interface to support custom StrategyProvider-registrations. (E.g. plugins implemented in scripting languages)
+ * Interface to support custom StrategyProvider-registrations. (E.g. providers/strategies implemented in scripting languages)
  */
 public interface StrategyRegistry {
 	/**
