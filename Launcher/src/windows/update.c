@@ -27,8 +27,7 @@ int copyData(struct archive *in, struct archive *out) {
 	return ARCHIVE_OK;
 }
 
-void update() {
-	char *baseDir = getBaseDirectory();
+void launcher_update(char* baseDir) {
 	assert(baseDir);
 	char *updateDir = malloc(strlen(baseDir) + 3 + 9);
 	assert(updateDir);

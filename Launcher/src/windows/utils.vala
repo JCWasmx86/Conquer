@@ -15,4 +15,10 @@ namespace Launcher {
 	string getBaseDirectory() {
 		return Environment.get_variable("APPDATA") + "\\.conquer";
 	}
+	
+	void tryUpdating() {
+		update(getBaseDirectory());
+	}
+	
+	extern void update(string baseDir);
 }

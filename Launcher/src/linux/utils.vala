@@ -43,4 +43,6 @@ namespace Launcher {
 		}
 		return homedir + "/.config/.conquer";
 	}
+	
+	void tryUpdating() { }
 }
