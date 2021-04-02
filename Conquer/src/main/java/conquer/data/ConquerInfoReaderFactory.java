@@ -22,7 +22,7 @@ public interface ConquerInfoReaderFactory {
 	 * @return A reader that is able to construct a {@link ConquerInfo} from
 	 * {@code is}.
 	 */
-	default ConquerInfoReader getForBytes(final byte[] bytes){
+	default ConquerInfoReader getForBytes(final byte[] bytes) {
 		throw new UnsupportedOperationException("STUB - TODO: Implement");
 	}
 

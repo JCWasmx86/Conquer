@@ -25,9 +25,9 @@ jar {
 	}
 }
 task copyFiles(type: Copy) {
-    from "../music_tmp"
-    include "*.ogg"
-    into "build/resources/main/music/"
+	from "../music_tmp"
+	include "*.ogg"
+	into "build/resources/main/music/"
 }
 task conquerResources(type: Jar) {
 	from sourceSets.main.output
