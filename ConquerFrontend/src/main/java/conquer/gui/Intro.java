@@ -49,7 +49,7 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 	 */
 	public static void main(final String[] args) {
 		try {
-			if (System.getProperty("conquer.crossPlatformLAF") == null) {
+			if (Boolean.getBoolean("conquer.useNativeLAF")) {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			}
 		} catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
