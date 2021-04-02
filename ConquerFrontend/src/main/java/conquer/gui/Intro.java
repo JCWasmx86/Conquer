@@ -26,6 +26,21 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
 	private static final long serialVersionUID = 4354833119880282433L;
+	private final Sound sound;
+	private final Timer timer = new Timer(Utils.getRefreshRate(), this);
+	private final Random r = new Random(System.nanoTime());
+	private boolean needed = true;
+
+	private Intro() {
+		this.setSize(600, 600);
+		this.setResizable(false);
+		this.sound = new Sound("Intro"); //$NON-NLS-1$
+		this.addWindowListener(this);
+		this.addKeyListener(this);
+		this.timer.start();
+		this.setTitle(Messages.getString("Intro.title"));
+		this.setLocationByPlatform(true);
+	}
 
 	/**
 	 * The entry point, the arguments are ignored
@@ -34,7 +49,9 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 	 */
 	public static void main(final String[] args) {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			if (System.getProperty("conquer.crossPlatformLAF") == null) {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			}
 		} catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) { // Just use the Default LaF
 			// Just print the stack trace. It is no critical thing, so you shouldn't have to
@@ -49,23 +66,6 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		final var main = new Intro();
 		main.setVisible(true);
 		main.createBufferStrategy(4);
-	}
-
-	private final Sound sound;
-	private boolean needed = true;
-	private final Timer timer = new Timer(Utils.getRefreshRate(), this);
-
-	private final Random r = new Random(System.nanoTime());
-
-	private Intro() {
-		this.setSize(600, 600);
-		this.setResizable(false);
-		this.sound = new Sound("Intro"); //$NON-NLS-1$
-		this.addWindowListener(this);
-		this.addKeyListener(this);
-		this.timer.start();
-		this.setTitle(Messages.getString("Intro.title"));
-		this.setLocationByPlatform(true);
 	}
 
 	@Override
