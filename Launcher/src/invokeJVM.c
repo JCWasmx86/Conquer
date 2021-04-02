@@ -30,7 +30,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory,
 		goto cleanup;
 	}
 	jclass introClass = (*env)->FindClass(env, "conquer/gui/Intro");
-	if((*env)->ExceptionOccurred(env)) {
+	if ((*env)->ExceptionOccurred(env)) {
 		(*env)->ExceptionDescribe(env);
 	}
 	assert(introClass);

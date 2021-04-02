@@ -188,7 +188,8 @@ namespace Launcher {
 					});
 				}
 				if(object.has_member("useNativeLAF")) {
-					ret.useNativeLAF = object.get_string_member("useNativeLAF") == "true"?true:false;
+					ret.useNativeLAF = object.get_string_member("useNativeLAF") == "true"?true:
+					 false;
 				}
 				if(object.has_member("java")) {
 					ret.javaFolder = object.get_string_member("java");

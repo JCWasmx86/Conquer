@@ -34,7 +34,7 @@ namespace Launcher {
 			for(int i = 0; i < memSize; i++) {
 				options[6 + size + i] = memorySettings.get(i);
 			}
-			options[6 + size + memSize] = "-Dconquer.useNativeLAF="+(useNativeLAF?"true":"false");
+			options[6 + size + memSize] = "-Dconquer.useNativeLAF=" + (useNativeLAF?"true":"false");
 			invokeJVM(options, memSize + size + 8, (char*) directory, this.onErrorFunc);
 		}
 	}
