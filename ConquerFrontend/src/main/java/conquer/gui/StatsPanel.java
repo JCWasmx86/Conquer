@@ -16,7 +16,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 	private final BiFunction<ConquerInfo, IClan, Double> function;
 	private Statistic statistic;
 
-	StatsPanel(final ConquerInfo info, BiFunction<ConquerInfo, IClan, Double> func) {
+	StatsPanel(final ConquerInfo info, final BiFunction<ConquerInfo, IClan, Double> func) {
 		this.function = func;
 		this.info = info;
 	}
@@ -41,7 +41,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(final ActionEvent e) {
-		this.statistic = Statistic.build(info, this.function);
+		this.statistic = Statistic.build(this.info, this.function);
 		this.repaint();
 	}
 }
