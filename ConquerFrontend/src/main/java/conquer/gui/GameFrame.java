@@ -466,11 +466,6 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 				options, options[2]);
 		switch (selected) {
-			default:
-			case JOptionPane.CLOSED_OPTION:
-			case 2:
-				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-				return true;
 			case 0:
 				this.setSaveName();
 				if (this.saveName == null) {
@@ -488,6 +483,11 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 				break;
 			case 1:// Do nothing
 				break;
+			case JOptionPane.CLOSED_OPTION:
+			case 2:
+			default:
+				this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				return true;
 		}
 		return false;
 	}
