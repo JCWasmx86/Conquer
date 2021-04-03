@@ -467,4 +467,111 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
+	@Test
+	void testNegativeX() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeY() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+	@Test
+	void testNegativeDefense() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+	@Test
+	void testNegativeBonus() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+	@Test
+	void testNegativeGrowth() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
 }
