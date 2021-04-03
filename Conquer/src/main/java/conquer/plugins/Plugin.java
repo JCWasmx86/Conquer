@@ -49,7 +49,7 @@ public interface Plugin {
 	 * @param result The result
 	 */
 	default void exit(final Result result) {
-
+		//Not every plugin has to react
 	}
 
 	/**
@@ -84,7 +84,7 @@ public interface Plugin {
 	 * @param pluginInterface
 	 */
 	default void init(final PluginInterface pluginInterface) {
-
+		//Not every plugin needs an initialization
 	}
 
 	/**
@@ -95,6 +95,7 @@ public interface Plugin {
 	 * @throws IOException In case of an IO-Error
 	 */
 	default void resume(final PluginInterface game, final InputStream bytes) throws IOException {
+		//Avoid breaking the interface contract
 	}
 
 	/**
@@ -104,6 +105,6 @@ public interface Plugin {
 	 * @throws IOException
 	 */
 	default void save(final OutputStream outputStream) throws IOException {
-
+		//Avoid breaking the interface contract
 	}
 }

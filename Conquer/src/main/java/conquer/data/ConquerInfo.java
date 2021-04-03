@@ -203,7 +203,7 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * @param onError A consumer that will be applied to every uncaught exception.
 	 */
 	default void setErrorHandler(final Consumer<Throwable> onError) {
-
+		//Empty to avoid breaking the interface
 	}
 
 	/**

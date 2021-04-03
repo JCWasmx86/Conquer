@@ -72,6 +72,6 @@ public interface Strategy {
 	 * @throws IOException If some I/O error occurred.
 	 */
 	default void save(final OutputStream out) throws IOException {
-
+		//Empty as not every strategy has to save something
 	}
 }

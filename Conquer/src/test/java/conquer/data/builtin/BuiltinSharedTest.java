@@ -26,7 +26,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setCoins(final double coins) {
-
+				//Unused
 			}
 
 			@Override
@@ -36,7 +36,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setColor(final Color color) {
-
+				//Unused
 			}
 
 			@Override
@@ -51,7 +51,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setFlags(final int flags) {
-
+				//Unused
 			}
 
 			@Override
@@ -61,7 +61,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setId(final int id) {
-
+				//Unused
 			}
 
 			@Override
@@ -71,7 +71,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setName(final String name) {
-
+				//Unused
 			}
 
 			@Override
@@ -85,7 +85,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setResources(final List<Double> resources) {
-
+				//Unused
 			}
 
 			@Override
@@ -95,7 +95,7 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setResourceStats(final List<Double> resourceStats) {
-
+				//Unused
 			}
 
 			@Override
@@ -135,12 +135,12 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setStrategy(final Strategy strategy) {
-
+				//Unused
 			}
 
 			@Override
 			public void init(final StrategyProvider[] strategies, final Version version) {
-
+				//Unused
 			}
 
 			@Override
@@ -165,12 +165,12 @@ class BuiltinSharedTest {
 
 			@Override
 			public void setStrategyData(final StrategyData strategyData) {
-
+				//Unused
 			}
 
 			@Override
 			public void update(final int currentRound) {
-
+				//Unused
 			}
 		};
 		Assertions.assertEquals(190.0d, BuiltinShared.sum(clan));

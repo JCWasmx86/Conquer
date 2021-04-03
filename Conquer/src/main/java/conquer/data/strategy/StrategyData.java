@@ -15,7 +15,7 @@ public interface StrategyData {
 	 * @throws IOException If an I/O error occurs.
 	 */
 	default void save(final OutputStream out) throws IOException {
-
+		//Empty as not every strategy has data that must be saved
 	}
 
 	/**
