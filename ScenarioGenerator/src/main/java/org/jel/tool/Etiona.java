@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.util.List;
 
 public class Etiona {
+	private Etiona() {
+		//Empty
+	}
 	public static void main(final String[] args) {
 		new DataFile().setBackground("Background2-res.png").addPlayer(2300, "Y alpha", new Color(50, 100, 50), 0)
 				.addPlayer(1200, "Valoinitia", new Color(0, 0, 255), 2)

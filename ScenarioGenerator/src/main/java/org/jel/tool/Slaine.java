@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.util.List;
 
 public class Slaine {
+	private Slaine() {
+		//Empty
+	}
 	public static void main(final String[] args) {
 		new DataFile().setBackground("Background3-res.png").addPlayer(1200, "Nidispera", new Color(123, 234, 12), 0)
 				.addPlayer(120, "Rho", new Color(255, 0, 0), 2).addPlayer(550, "Lambdia", new Color(0, 255, 100), 3)

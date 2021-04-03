@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.util.List;
 
 public class Freedo {
-
+	private Freedo() {
+		//Empty
+	}
 	public static void main(final String[] args) {
 		new DataFile().setBackground("Background4-res.png").addPlayer(4500, "Rhomortina", new Color(255, 255, 200), 0)
 				.addPlayer(3500, "Epsilamda", new Color(255, 0, 0), 3)
