@@ -10,6 +10,7 @@ import conquer.data.Shared;
 import conquer.utils.Graph;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -68,17 +69,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			if ((mag1 != 0xAA) || (mag2 != 0x55)) {
 				throw new RuntimeException("Wrong magic number!");
 			}
-			final var numBytesOfBackgroundImage = dis.readInt();
-			this.throwIfNegative(numBytesOfBackgroundImage, "Expected a non negative number of bytes in background, " +
-					"got " + numBytesOfBackgroundImage);
-			final var data = new byte[numBytesOfBackgroundImage];
-			final var bytesRead = dis.read(data);
-			if (bytesRead != numBytesOfBackgroundImage) {
-				throw new RuntimeException(
-						"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
-			}
-			final var gi = ImageIO.read(new ByteArrayInputStream(data));
-			game.setBackground(gi);
+			game.setBackground(this.readBackground(dis));
 			final var numPlayers = dis.readInt();
 			if ((numPlayers == 1) || (numPlayers == 0)) {
 				throw new RuntimeException("Expected at least 2 players, got " + numPlayers);
@@ -86,22 +77,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			this.throwIfNegative(numPlayers, "Expected a non negative number of players, got " + numPlayers);
 			game.setPlayers(numPlayers);
 			final List<IClan> tmp = new ArrayList<>();
-			for (var i = 0; i < numPlayers; i++) {
-				final var d = dis.readDouble();
-				this.throwIfNegative(d, "Expected a non negative number of coins, got " + d);
-				tmp.add(new Clan());
-				tmp.get(i).setCoins(d);
-				((Clan) tmp.get(i)).setInfo(game);
-			}
-			for (var i = 0; i < numPlayers; i++) {
-				final var s = dis.readUTF();
-				tmp.get(i).setId(i);
-				tmp.get(i).setName(s);
-			}
-			for (var i = 0; i < numPlayers; i++) {
-				final var flags = dis.readInt();
-				tmp.get(i).setFlags(flags);
-			}
+			this.initClans(dis, tmp, numPlayers, game);
 			this.readColors(dis, numPlayers, tmp);
 			final var relations = this.readRelations(dis, numPlayers);
 			game.setRelations(relations);
@@ -116,6 +92,38 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			throw new RuntimeException("Disconnected graph!");
 		}
 		return game;
+	}
+
+	private Image readBackground(DataInputStream dis) throws IOException {
+		final var numBytesOfBackgroundImage = dis.readInt();
+		this.throwIfNegative(numBytesOfBackgroundImage, "Expected a non negative number of bytes in background, " +
+				"got " + numBytesOfBackgroundImage);
+		final var data = new byte[numBytesOfBackgroundImage];
+		final var bytesRead = dis.read(data);
+		if (bytesRead != numBytesOfBackgroundImage) {
+			throw new RuntimeException(
+					"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
+		}
+		return ImageIO.read(new ByteArrayInputStream(data));
+	}
+
+	private void initClans(final DataInput dis, final List<IClan> tmp, final int numPlayers, final ConquerInfo game) throws IOException {
+		for (var i = 0; i < numPlayers; i++) {
+			final var d = dis.readDouble();
+			this.throwIfNegative(d, "Expected a non negative number of coins, got " + d);
+			tmp.add(new Clan());
+			tmp.get(i).setCoins(d);
+			((Clan) tmp.get(i)).setInfo(game);
+		}
+		for (var i = 0; i < numPlayers; i++) {
+			final var s = dis.readUTF();
+			tmp.get(i).setId(i);
+			tmp.get(i).setName(s);
+		}
+		for (var i = 0; i < numPlayers; i++) {
+			final var flags = dis.readInt();
+			tmp.get(i).setFlags(flags);
+		}
 	}
 
 	private void throwIfNegative(final double n, final String message) {
