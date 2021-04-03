@@ -367,11 +367,99 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
 	@Test
 	void testNegativeNumberOfCities() {
 		byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeSizeOfCityPicture() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeClanOfCity() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testBadClanOfCity() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(121);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeNumberOfPeople() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeNumberOfSoldiers() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);

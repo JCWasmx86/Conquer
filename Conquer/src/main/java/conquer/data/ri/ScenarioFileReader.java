@@ -153,7 +153,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			final var clanN = dis.readInt();
 			this.throwIfNegative(clanN, "clan < 0: " + clanN);
 			if (clanN >= clans.size()) {
-				throw new RuntimeException("clan >= numPlayers : " + clanN);
+				throw new IllegalArgumentException("clan >= numPlayers : " + clanN);
 			}
 			c.setClan(clans.get(clanN));
 			final var numPeople = dis.readInt();
