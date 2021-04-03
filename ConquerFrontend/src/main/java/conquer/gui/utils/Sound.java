@@ -43,25 +43,7 @@ public class Sound implements LineListener, Serializable {
 	 */
 	public void play() {
 		try {
-			var url = this.locate(this.filename);
-			if (url == null) {
-				url = this.locate(this.filename + ".wav");
-			}
-			if (url == null) {
-				url = this.locate(this.filename + ".aiff");
-			}
-			if (url == null) {
-				url = this.locate(this.filename + ".au");
-			}
-			if (url == null) {
-				url = this.locate(this.filename + ".ogg");
-			}
-			if (url == null) {
-				url = this.locate(this.filename + ".mp3");
-			}
-			if ((url == null) && !new File(this.filename).exists()) {
-				throw new RuntimeException(new FileNotFoundException(this.filename));
-			}
+			var url = this.locateURL();
 			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
 					: AudioSystem.getAudioInputStream(url);
 			final var format = audioStream.getFormat();
@@ -83,6 +65,29 @@ public class Sound implements LineListener, Serializable {
 			this.isPlaying = false;
 			throw new IllegalArgumentException(e);
 		}
+	}
+
+	private URL locateURL() {
+		var url = this.locate(this.filename);
+		if (url == null) {
+			url = this.locate(this.filename + ".wav");
+		}
+		if (url == null) {
+			url = this.locate(this.filename + ".aiff");
+		}
+		if (url == null) {
+			url = this.locate(this.filename + ".au");
+		}
+		if (url == null) {
+			url = this.locate(this.filename + ".ogg");
+		}
+		if (url == null) {
+			url = this.locate(this.filename + ".mp3");
+		}
+		if ((url == null) && !new File(this.filename).exists()) {
+			throw new RuntimeException(new FileNotFoundException(this.filename));
+		}
+		return url;
 	}
 
 	private URL locate(final String filename) {
