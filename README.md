@@ -5,7 +5,9 @@
 [![Windows 64 bit](https://github.com/JCWasmx86/Conquer/actions/workflows/windows.yml/badge.svg)](https://github.com/JCWasmx86/Conquer/actions/workflows/windows.yml)
 ![GitHub all releases](https://img.shields.io/github/downloads/JCWasmx86/Conquer/total?style=social)
 ![GitHub issues by-label](https://img.shields.io/github/issues-raw/JCWasmx86/Conquer/good%20first%20issue)
-
+[![CodeFactor](https://www.codefactor.io/repository/github/jcwasmx86/conquer/badge)](https://www.codefactor.io/repository/github/jcwasmx86/conquer)
+[![Code Inspector](https://www.code-inspector.com/project/20798/score/svg)](https://www.code-inspector.com/project/20798/score/svg)
+[![codecov](https://codecov.io/gh/JCWasmx86/Conquer/branch/main/graph/badge.svg?token=XV3HD9ZHVL)](https://codecov.io/gh/JCWasmx86/Conquer)
 You are the proud leader of a clan! Manage your resources! Move your troops! Conquer the cities of your enemies!
 Will you fail and get defeated or will you lead your clan to endless glory and wealth?
 
