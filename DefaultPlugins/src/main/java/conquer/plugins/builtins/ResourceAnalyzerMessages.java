@@ -3,7 +3,7 @@ package conquer.plugins.builtins;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class ResourceAnalyzerMessages {
+final class ResourceAnalyzerMessages {
 	private static final String BUNDLE_NAME = "conquer.plugins.builtins.resourceAnalyzer"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
