@@ -227,12 +227,14 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		for (var i = 0; i < numberOfRelations; i++) {
 			final var firstClan = dis.readInt();
 			if (firstClan >= numPlayers) {
-				throw new RuntimeException("firstClan > numPlayers: " + firstClan);
+				throw new IllegalArgumentException("firstClan > numPlayers: " + firstClan);
 			}
+			this.throwIfNegative(firstClan, "firstClan < 0: " + firstClan);
 			final var secondClan = dis.readInt();
 			if (secondClan >= numPlayers) {
-				throw new RuntimeException("secondClan > numPlayers: " + secondClan);
+				throw new IllegalArgumentException("secondClan > numPlayers: " + secondClan);
 			}
+			this.throwIfNegative(secondClan, "secondClan < 0: " + secondClan);
 			final var value = dis.readInt() % 101;
 			relations.addDirectedEdge(firstClan, secondClan, value, value);
 		}

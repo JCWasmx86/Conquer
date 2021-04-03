@@ -16,6 +16,7 @@ public class ScenarioFileReaderTest {
 
 	private static final byte[] HEADER;
 	private static final byte[] HEADER_WITH_CLANS_UNTIL_COLORS;
+	private static final byte[] HEADER_UNTIL_RELATIONS;
 
 	static {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
@@ -38,6 +39,18 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(0);
 			dos.writeInt(1);
 			HEADER_WITH_CLANS_UNTIL_COLORS = baos.toByteArray();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(0);
+			dos.writeInt(0);
+			dos.writeInt(0);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			HEADER_UNTIL_RELATIONS = baos.toByteArray();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -228,6 +241,82 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(50000);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeAmountOfRelations() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testFirstClanTooBig() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(4);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testFirstClanNegative() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(-4);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testSecondClanTooBig() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(0);
+			dos.writeInt(4);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testSecondClanNegative() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(0);
+			dos.writeInt(-4);
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);
