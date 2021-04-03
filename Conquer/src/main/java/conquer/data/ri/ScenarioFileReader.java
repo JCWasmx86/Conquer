@@ -67,7 +67,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			final var mag1 = dis.read();
 			final var mag2 = dis.read();
 			if ((mag1 != 0xAA) || (mag2 != 0x55)) {
-				throw new RuntimeException("Wrong magic number!");
+				throw new IllegalArgumentException("Wrong magic number!");
 			}
 			game.setBackground(this.readBackground(dis));
 			final var numPlayers = dis.readInt();
