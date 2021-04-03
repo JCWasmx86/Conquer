@@ -24,14 +24,14 @@ public class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(0xaa);
 			dos.write(0x55);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			HEADER = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER);
+			dos.write(ScenarioFileReaderTest.HEADER);
 			dos.writeInt(2);
 			dos.writeDouble(1.0);
 			dos.writeDouble(1.0);
@@ -41,11 +41,11 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(0);
 			dos.writeInt(1);
 			HEADER_WITH_CLANS_UNTIL_COLORS = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(0);
 			dos.writeInt(0);
 			dos.writeInt(0);
@@ -53,17 +53,17 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(1);
 			HEADER_UNTIL_RELATIONS = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(1);
 			dos.writeInt(50);
 			HEADER_UNTIL_CITIES = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,11 +73,11 @@ public class ScenarioFileReaderTest {
 	}
 
 	private void check(final byte[] bytes) {
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
+		try (final ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
 			new ScenarioFileReader().read(bais);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
-		} catch (IllegalArgumentException iae) {
+		} catch (final IllegalArgumentException iae) {
 			System.err.println(Thread.currentThread().getStackTrace()[2].getMethodName() + ": " + iae.getMessage());
 			return;
 		}
@@ -100,13 +100,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeBackgroundImageSize() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(0xAA);
 			dos.write(0x55);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -115,12 +115,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testZeroPlayers() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER);
+			dos.write(ScenarioFileReaderTest.HEADER);
 			dos.writeInt(0);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -129,12 +129,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testOnePlayer() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER);
+			dos.write(ScenarioFileReaderTest.HEADER);
 			dos.writeInt(1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -143,12 +143,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativePlayers() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER);
+			dos.write(ScenarioFileReaderTest.HEADER);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -157,13 +157,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeCoins() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER);
+			dos.write(ScenarioFileReaderTest.HEADER);
 			dos.writeInt(2);
 			dos.writeDouble(-1.0);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -172,12 +172,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testRNegative() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -186,12 +186,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testRTooBig() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(50000);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -200,13 +200,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testGNegative() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -215,13 +215,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testGTooBig() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(1);
 			dos.writeInt(50000);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -230,14 +230,14 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testBNegative() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -246,14 +246,14 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testBTooBig() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.write(ScenarioFileReaderTest.HEADER_WITH_CLANS_UNTIL_COLORS);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(50000);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -262,12 +262,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeAmountOfRelations() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -276,13 +276,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testFirstClanTooBig() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(4);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -291,13 +291,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testFirstClanNegative() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(-4);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -306,14 +306,14 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testSecondClanTooBig() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(4);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -322,14 +322,14 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testSecondClanNegative() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(-4);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -338,15 +338,15 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeRelationshipValue() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -355,14 +355,14 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testRelationshipToClanItSelf() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_RELATIONS);
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(0);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -371,12 +371,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeNumberOfCities() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -385,13 +385,13 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeSizeOfCityPicture() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -400,15 +400,15 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeClanOfCity() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -417,15 +417,15 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testBadClanOfCity() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(121);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -434,16 +434,16 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeNumberOfPeople() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -452,17 +452,17 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeNumberOfSoldiers() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -471,18 +471,18 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeX() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -491,19 +491,19 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeY() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -512,12 +512,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeDefense() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -525,7 +525,7 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -534,12 +534,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeBonus() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -548,7 +548,7 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeDouble(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -557,12 +557,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeGrowth() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -572,7 +572,7 @@ public class ScenarioFileReaderTest {
 			dos.writeDouble(1);
 			dos.writeDouble(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -581,12 +581,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeNumberOfConnections() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -598,7 +598,7 @@ public class ScenarioFileReaderTest {
 			dos.writeUTF("city");
 			dos.writeShort(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -607,12 +607,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testCityConnectionToItSelf() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -625,7 +625,7 @@ public class ScenarioFileReaderTest {
 			dos.writeShort(1);
 			dos.writeShort(0);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -634,12 +634,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testCityConnectionToBadCity() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -652,7 +652,7 @@ public class ScenarioFileReaderTest {
 			dos.writeShort(1);
 			dos.writeShort(5);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -661,12 +661,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testBadDistance() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -680,7 +680,7 @@ public class ScenarioFileReaderTest {
 			dos.writeShort(1);
 			dos.writeDouble(-5);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -689,12 +689,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNegativeProduction() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -709,7 +709,7 @@ public class ScenarioFileReaderTest {
 			dos.writeDouble(5);
 			dos.writeDouble(-1);
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
@@ -718,12 +718,12 @@ public class ScenarioFileReaderTest {
 
 	@Test
 	void testNotConnectedGraph() {
-		byte[] bytes;
+		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
-			dos.write(HEADER_UNTIL_CITIES);
+			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(2);
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -737,8 +737,8 @@ public class ScenarioFileReaderTest {
 			for (var i = 0; i < Resource.values().length; i++) {
 				dos.writeDouble(1);
 			}
-			dos.writeInt(PNG_BYTES.length);
-			dos.write(PNG_BYTES);
+			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+			dos.write(ScenarioFileReaderTest.PNG_BYTES);
 			dos.writeInt(1);
 			dos.writeInt(1);
 			dos.writeInt(1);
@@ -753,7 +753,7 @@ public class ScenarioFileReaderTest {
 				dos.writeDouble(1);
 			}
 			bytes = baos.toByteArray();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Assertions.fail(e);
 			return;
 		}
