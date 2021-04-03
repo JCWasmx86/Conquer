@@ -259,7 +259,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 						this.loopPlayer.addSong("Defeated");
 						this.loopPlayer.start();
 						flag = true;
-					} else if (this.game.onlyOneClanAlive() && !playerDead) {
+					} else if (this.game.onlyOneClanAlive()) {
 						this.loopPlayer.abort();
 						this.loopPlayer = new LoopPlayer();
 						this.loopPlayer.addSong("Victory");
@@ -447,8 +447,14 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.game.exit();
 			return;
 		}
-		if ((this.saveName == null && this.saveDialog()) || (this.saveDialog() && !this.save())) {
-			return;
+		if(this.saveName == null){
+			if(this.saveDialog()){
+				return;
+			}
+		}else if(this.saveDialog()) {
+			if(!this.save()){
+				return;
+			}
 		}
 		this.cleanup();
 
