@@ -407,13 +407,12 @@ final class Game implements ConquerInfo {
 				growthFactor = Shared.randomPercentage(90, 98);
 				re = RandomEvent.SABOTAGE;
 			}
-			if ((factorOfPeople == 1) && (factorOfSoldiers == 1) && (growthFactor == 1)) {
-				return;
-			}
 			a.setNumberOfPeople((long) (a.getNumberOfPeople() * factorOfPeople));
 			a.setNumberOfSoldiers((long) (a.getNumberOfSoldiers() * factorOfSoldiers));
 			a.setGrowth(a.getGrowth() * growthFactor);
-			this.events.add(new RandomEventMessage(re, factorOfPeople, factorOfSoldiers, growthFactor, a));
+			if (re != null) {
+				this.events.add(new RandomEventMessage(re, factorOfPeople, factorOfSoldiers, growthFactor, a));
+			}
 		});
 	}
 
