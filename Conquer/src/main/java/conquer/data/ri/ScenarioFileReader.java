@@ -235,7 +235,11 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 				throw new IllegalArgumentException("secondClan > numPlayers: " + secondClan);
 			}
 			this.throwIfNegative(secondClan, "secondClan < 0: " + secondClan);
+			if (firstClan == secondClan) {
+				throw new IllegalArgumentException("firstClan == secondClan: " + firstClan);
+			}
 			final var value = dis.readInt() % 101;
+			this.throwIfNegative(value, "value < 0: " + value);
 			relations.addDirectedEdge(firstClan, secondClan, value, value);
 		}
 		return relations;

@@ -66,8 +66,7 @@ public class ScenarioFileReaderTest {
 		} catch (IOException e) {
 			Assertions.fail(e);
 		} catch (IllegalArgumentException iae) {
-			System.err.println(iae.getMessage());
-			//Do nothing, exception is expected.
+			System.err.println(Thread.currentThread().getStackTrace()[2].getMethodName() + ": " + iae.getMessage());
 			return;
 		}
 		Assertions.fail("Didn't fail!");
@@ -317,6 +316,38 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(-4);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeRelationshipValue() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(0);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+	@Test
+	void testRelationshipToClanItSelf() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(0);
+			dos.writeInt(0);
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);
