@@ -12,6 +12,10 @@ import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
 public class ErrorReporter {
+	private ErrorReporter() {
+		//Hide public default constructor
+	}
+
 	// Returns the errorlog filename.
 	public static String writeErrorLog(final Throwable t) {
 		final var reportsDir = new File(Shared.BASE_DIRECTORY, "reports");
