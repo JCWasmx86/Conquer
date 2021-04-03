@@ -43,7 +43,7 @@ public class Sound implements LineListener, Serializable {
 	 */
 	public void play() {
 		try {
-			var url = this.locateURL();
+			final var url = this.locateURL();
 			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
 					: AudioSystem.getAudioInputStream(url);
 			final var format = audioStream.getFormat();

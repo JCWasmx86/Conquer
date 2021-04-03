@@ -82,7 +82,7 @@ public final class StreamUtils {
 	}
 
 	public static Stream<ICity> getCitiesAsStream(final Graph<ICity> cities) {
-		return Stream.of(cities.getValues(new ICity[0]));
+		return Stream.of(cities.getValues());
 	}
 
 	public static Stream<ICity> getCitiesAsStream(final Graph<ICity> cities, final IClan clan) {

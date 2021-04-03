@@ -73,9 +73,9 @@ public class Installer implements Runnable {
 	}
 
 	private int askQuestion() {
-		return this.chooser.choose(new String[]{Messages.getString("Installer.minimalInstallation"),
+		return this.chooser.choose(Messages.getString("Installer.minimalInstallation"),
 				Messages.getString("Installer.standardInstallation"),
-				Messages.getString("Installer.extendedInstallation")});
+				Messages.getString("Installer.extendedInstallation"));
 	}
 
 	private void baseInstallation() throws IOException {

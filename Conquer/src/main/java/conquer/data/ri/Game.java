@@ -345,7 +345,7 @@ final class Game implements ConquerInfo {
 	}
 
 	private void events() {
-		Stream.of(this.getCities().getValues(new ICity[0])).forEach(a -> {
+		Stream.of(this.getCities().getValues()).forEach(a -> {
 			final var number = this.random.nextInt(20_000_001);
 			var factorOfPeople = 1.0;
 			var factorOfSoldiers = 1.0;

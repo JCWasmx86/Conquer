@@ -94,7 +94,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		return game;
 	}
 
-	private Image readBackground(DataInputStream dis) throws IOException {
+	private Image readBackground(final DataInputStream dis) throws IOException {
 		final var numBytesOfBackgroundImage = dis.readInt();
 		this.throwIfNegative(numBytesOfBackgroundImage, "Expected a non negative number of bytes in background, " +
 				"got " + numBytesOfBackgroundImage);

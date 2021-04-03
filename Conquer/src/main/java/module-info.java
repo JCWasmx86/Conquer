@@ -26,6 +26,9 @@ module conquer {
 	uses conquer.plugins.Plugin;
 	uses conquer.data.ConquerInfoReaderFactory;
 	uses conquer.init.InitTask;
+	uses conquer.data.registries.ReaderRegistry;
+	uses conquer.data.registries.PluginRegistry;
+	uses conquer.data.registries.StrategyRegistry;
 
 	provides ConquerInfoReaderFactory with ScenarioFileReaderFactory;
 	provides StrategyProvider
