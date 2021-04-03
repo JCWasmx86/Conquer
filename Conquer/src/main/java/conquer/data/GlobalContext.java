@@ -143,14 +143,14 @@ public final class GlobalContext {
 	}
 
 	private byte[] getAllBytes(final InstalledScenario is) throws IOException {
-		if (is.file() != null) {
+		if (is.file() == null) {
+			return is.in().readAllBytes();
+		} else {
 			try (final var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				return stream.readAllBytes();
 			} catch (final IOException e) {
 				throw new RuntimeException(e);
 			}
-		} else {
-			return is.in().readAllBytes();
 		}
 	}
 
@@ -162,7 +162,9 @@ public final class GlobalContext {
 	}
 
 	private byte[] obtainBytes(final InstalledScenario is, final int maxLength) {
-		if (is.file() != null) {
+		if (is.file() == null) {
+			return is.in().getMagicNumber(maxLength);
+		} else {
 			try (final var stream = Files.newInputStream(Paths.get(new File(is.file()).toURI()))) {
 				final var b = new byte[maxLength];
 				stream.read(b);
@@ -170,8 +172,6 @@ public final class GlobalContext {
 			} catch (final IOException e) {
 				throw new RuntimeException(e);
 			}
-		} else {
-			return is.in().getMagicNumber(maxLength);
 		}
 	}
 }
