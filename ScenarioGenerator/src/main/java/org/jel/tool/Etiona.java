@@ -3,7 +3,7 @@ package org.jel.tool;
 import java.awt.Color;
 import java.util.List;
 
-public class Etiona {
+final class Etiona {
 	private Etiona() {
 		//Empty
 	}
