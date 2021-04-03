@@ -131,10 +131,10 @@ final class Clan implements IClan {
 	 */
 	@Override
 	public void setId(final int id) {
-		if (this.id != -1) {
-			throw new UnsupportedOperationException("Can't change id of clan!");
-		} else if (id < 0) {
+		if (id < 0) {
 			throw new IllegalArgumentException("Out of bounds!");
+		} else if (this.id != -1) {
+			throw new UnsupportedOperationException("Can't change id of clan!");
 		}
 		this.id = id;
 	}
@@ -156,10 +156,10 @@ final class Clan implements IClan {
 	 */
 	@Override
 	public void setName(final String name) {
-		if (this.name != null) {
-			throw new UnsupportedOperationException("Can't change name of clan!");
-		} else if (name == null) {
+		if (name == null) {
 			throw new IllegalArgumentException("name == null");
+		} else if (this.name != null) {
+			throw new UnsupportedOperationException("Can't change name of clan!");
 		}
 		this.name = name;
 	}
@@ -177,12 +177,12 @@ final class Clan implements IClan {
 
 	@Override
 	public void setResources(final List<Double> resources) {
-		if (this.resources != null) {
-			throw new UnsupportedOperationException("resources can't be changed!");
-		} else if (resources == null) {
+		if (resources == null) {
 			throw new IllegalArgumentException("resources==null");
 		} else if (resources.size() != Resource.values().length) {
 			throw new IllegalArgumentException("resources.size() != Resource.values.length: " + resources.size());
+		} else if (this.resources != null) {
+			throw new UnsupportedOperationException("resources can't be changed!");
 		}
 		this.resources = new GoodDoubleList(resources);
 	}
@@ -200,13 +200,13 @@ final class Clan implements IClan {
 
 	@Override
 	public void setResourceStats(final List<Double> resourceStats) {
-		if (this.resourceStats != null) {
-			throw new UnsupportedOperationException("Resource stats can't be changed!");
-		} else if (resourceStats == null) {
+		if (resourceStats == null) {
 			throw new IllegalArgumentException("resourceStats==null");
 		} else if (resourceStats.size() != Resource.values().length) {
 			throw new IllegalArgumentException(
 					"resourceStats.size() != Resource.values.length: " + resourceStats.size());
+		} else if (this.resourceStats != null) {
+			throw new UnsupportedOperationException("Resource stats can't be changed!");
 		}
 		this.resourceStats = new GoodDoubleList(resourceStats, true);
 	}
@@ -307,10 +307,10 @@ final class Clan implements IClan {
 
 	@Override
 	public void setStrategy(final Strategy strategy) {
-		if (this.strategy != null) {
-			throw new IllegalArgumentException("strategy can't be changed!");
-		} else if (strategy == null) {
+		if (strategy == null) {
 			throw new IllegalArgumentException("strategy==null");
+		} else if (this.strategy != null) {
+			throw new IllegalArgumentException("strategy can't be changed!");
 		}
 		this.strategy = strategy;
 	}
