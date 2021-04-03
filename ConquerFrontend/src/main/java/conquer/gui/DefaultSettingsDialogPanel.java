@@ -72,8 +72,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	}
 
 	private int normalize(final int value) {
-		final double refreshRate = 1000.0 / value;
-		return (int) refreshRate;
+		return (int) (1000.0/value);
 	}
 
 	void dump(final Properties properties) {
