@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public final class DataFile {
-	private String background;
 	private final List<Double> coins = new ArrayList<>();
 	private final List<String> clanNames = new ArrayList<>();
 	private final List<Color> colors = new ArrayList<>();
 	private final List<City> cities = new ArrayList<>();
-	private double[][] matrix;
 	private final HashMap<Integer, HashMap<Integer, Integer>> relations = new HashMap<>();
 	private final List<Integer> flags = new ArrayList<>();
+	private String background;
+	private double[][] matrix;
 
 	public DataFile addCity(final City c) {
 		this.cities.add(c);

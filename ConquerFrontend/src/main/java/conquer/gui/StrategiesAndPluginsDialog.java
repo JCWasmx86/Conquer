@@ -39,6 +39,12 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		StrategiesAndPluginsDialog.INSTANCE.init();
 	}
 
+	private ArrayList<String> strategyNamesListCopy;
+	private ArrayList<String> pluginNamesListCopy;
+	private transient GlobalContext context;
+	private JList<String> strategies;
+	private JList<String> plugins;
+
 	/**
 	 * Show the instance.
 	 */
@@ -46,12 +52,6 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		StrategiesAndPluginsDialog.INSTANCE.pack();
 		StrategiesAndPluginsDialog.INSTANCE.setVisible(true);
 	}
-
-	private ArrayList<String> strategyNamesListCopy;
-	private ArrayList<String> pluginNamesListCopy;
-	private transient GlobalContext context;
-	private JList<String> strategies;
-	private JList<String> plugins;
 
 	private void init() {
 		this.setTitle(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$

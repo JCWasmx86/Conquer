@@ -23,30 +23,6 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	private final JSlider maximumFPS = new JSlider(5, this.getMaxRefreshRate(), Math.min(this.getMaxRefreshRate(),
 			this.timeToFPS(Utils.getRefreshRate())));
 
-	private int timeToFPS(final double refreshRate) {
-		final var max = 1000.0;//One second
-		final var fps = (int) (max / refreshRate);
-		return Math.min(this.getMaxRefreshRate(), fps);
-	}
-
-	private int getMaxRefreshRate() {
-		final var mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode();
-		final var refreshRate = mode.getRefreshRate();
-		if (refreshRate == java.awt.DisplayMode.REFRESH_RATE_UNKNOWN) {
-			return 144;//Maximum FPS
-		} else {
-			return refreshRate;
-		}
-	}
-
-	void reset() {
-		this.useSPI.setSelected(Shared.useSPI());
-		this.level1Logging.setSelected(Shared.level1Logging());
-		this.level2Logging.setSelected(Shared.level2Logging());
-		this.jtextfield.setText(Shared.getNetworktimeout() + "");
-		this.maximumFPS.setValue(this.timeToFPS(Utils.getRefreshRate()));
-	}
-
 	DefaultSettingsDialogPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(this.useSPI);
@@ -69,6 +45,30 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		);
 		fpsSelectionPanel.add(this.maximumFPS);
 		this.add(fpsSelectionPanel);
+	}
+
+	private int timeToFPS(final double refreshRate) {
+		final var max = 1000.0;//One second
+		final var fps = (int) (max / refreshRate);
+		return Math.min(this.getMaxRefreshRate(), fps);
+	}
+
+	private int getMaxRefreshRate() {
+		final var mode = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode();
+		final var refreshRate = mode.getRefreshRate();
+		if (refreshRate == java.awt.DisplayMode.REFRESH_RATE_UNKNOWN) {
+			return 144;//Maximum FPS
+		} else {
+			return refreshRate;
+		}
+	}
+
+	void reset() {
+		this.useSPI.setSelected(Shared.useSPI());
+		this.level1Logging.setSelected(Shared.level1Logging());
+		this.level2Logging.setSelected(Shared.level2Logging());
+		this.jtextfield.setText(Shared.getNetworktimeout() + "");
+		this.maximumFPS.setValue(this.timeToFPS(Utils.getRefreshRate()));
 	}
 
 	private int normalize(final int value) {
