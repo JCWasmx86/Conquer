@@ -57,7 +57,7 @@ import javax.swing.WindowConstants;
  * </ol>
  */
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
-	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " "; 
+	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " ";
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient ConquerInfo game;
 	private final Map<ICity, CityLabel> labels = new HashMap<>();
@@ -200,8 +200,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 	private void initButtonPanel() {
 		this.buttonPanel = new JPanel();
 		this.buttonPanel.setLayout(new FlowLayout());
-		final var nextRound = new JButton(new ImageResource("hourglass.png")); 
-		nextRound.setToolTipText(Messages.getString("GameFrame.nextRound")); 
+		final var nextRound = new JButton(new ImageResource("hourglass.png"));
+		nextRound.setToolTipText(Messages.getString("GameFrame.nextRound"));
 		nextRound.addActionListener(a -> new Thread(() -> {
 			nextRound.setEnabled(false);
 			if (this.game.isPlayersTurn()) {
@@ -210,11 +210,11 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.setTitle(this.game.getVersion() + " - " + GameFrame.TITLE_PART + this.game.currentRound());
 			nextRound.setEnabled(true);
 		}).start());
-		final var openMessages = new JButton(new ImageResource("messagebox.png")); 
-		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox")); 
+		final var openMessages = new JButton(new ImageResource("messagebox.png"));
+		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox"));
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
-				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins()); 
+				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins());
 		final var run = new JButton(Messages.getString("GameFrame.runForever"));
 		run.addActionListener(a -> {
 			run.setEnabled(false);
@@ -243,8 +243,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		this.coinsLabelUpdateThread = new Thread(() -> {
 			var flag = false;
 			while (true) {
-				coinsLabel.setText(Messages.getString("Shared.coins") + ": "  
-						+ String.format("%.2f%n", this.game.getPlayerClan().getCoins())); 
+				coinsLabel.setText(Messages.getString("Shared.coins") + ": "
+						+ String.format("%.2f%n", this.game.getPlayerClan().getCoins()));
 				try {
 					Thread.sleep(20);
 				} catch (final InterruptedException e) {
@@ -373,15 +373,15 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(ICity::isPlayerCity).findFirst()
 				.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
-		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel); 
+		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel);
 		final var clanInfo = new ClanInfoPanel(this.game.getPlayerClan(), this.game);
 		clanInfo.init();
-		this.sideBarPane.addTab(Messages.getString("GameFrame.clanInfo"), clanInfo); 
+		this.sideBarPane.addTab(Messages.getString("GameFrame.clanInfo"), clanInfo);
 		final var relationships = new RelationshipPanel(this.game);
 		relationships.init();
 		final var relationShipScrollPane = new JScrollPane(relationships);
 		relationShipScrollPane.getVerticalScrollBar().setUnitIncrement(16);
-		this.sideBarPane.add(Messages.getString("GameFrame.relationships"), relationShipScrollPane); 
+		this.sideBarPane.add(Messages.getString("GameFrame.relationships"), relationShipScrollPane);
 		final var statsPanel = new StatisticTab();
 		statsPanel.init(this.game);
 		this.sideBarPane.add(Messages.getString("GameFrame.stats"), statsPanel);

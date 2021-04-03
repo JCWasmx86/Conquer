@@ -4,7 +4,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 final class ResourceAnalyzerMessages {
-	private static final String BUNDLE_NAME = "conquer.plugins.builtins.resourceAnalyzer"; 
+	private static final String BUNDLE_NAME = "conquer.plugins.builtins.resourceAnalyzer";
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
 			.getBundle(ResourceAnalyzerMessages.BUNDLE_NAME);

@@ -9,7 +9,7 @@ import java.text.MessageFormat;
 public record ClanChangeMessage(ICity city, IClan oldClan, IClan newClan) implements Message {
 	@Override
 	public String getMessageText() {
-		return MessageFormat.format(ChangeCitiesMindsMessages.getString("ClanChangeMessage.message"), 
+		return MessageFormat.format(ChangeCitiesMindsMessages.getString("ClanChangeMessage.message"),
 				this.city.getName(), this.newClan.getName());
 	}
 

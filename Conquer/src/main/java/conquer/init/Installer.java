@@ -25,23 +25,23 @@ import java.util.zip.ZipInputStream;
 public class Installer implements Runnable {
 	// The default info.xml file.
 	private static final String DEFAULT_XML = "<!--Info file for conquer. Edit to add new scenarios, plugins and " +
-			"strategies -->" 
-			+ System.lineSeparator() + "<info>" + System.lineSeparator() 
+			"strategies -->"
+			+ System.lineSeparator() + "<info>" + System.lineSeparator()
 			+ "\t<!-- Add a new scenario. name is the name of the scenario, file points to the scenario file and " +
-			"thumbnail points to an image show while selecting a scenario -->" 
-			+ System.lineSeparator() + "\t<scenarios>" + System.lineSeparator() 
-			+ "\t\t<!-- <scenario name=\"foo.bar.Baz\" file=\"file.data\" thumbnail=\"thumb.png\" /> -->" 
-			+ System.lineSeparator() + "\t</scenarios>" + System.lineSeparator() 
-			+ "\t<!-- Add a new plugin. className is the name of the class implementing Plugin -->" 
-			+ System.lineSeparator() + "\t<plugins>" + System.lineSeparator() 
+			"thumbnail points to an image show while selecting a scenario -->"
+			+ System.lineSeparator() + "\t<scenarios>" + System.lineSeparator()
+			+ "\t\t<!-- <scenario name=\"foo.bar.Baz\" file=\"file.data\" thumbnail=\"thumb.png\" /> -->"
+			+ System.lineSeparator() + "\t</scenarios>" + System.lineSeparator()
+			+ "\t<!-- Add a new plugin. className is the name of the class implementing Plugin -->"
+			+ System.lineSeparator() + "\t<plugins>" + System.lineSeparator()
 			+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator()
-			
-			+ "\t</plugins>" + System.lineSeparator() 
+
+			+ "\t</plugins>" + System.lineSeparator()
 			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->" //$NON
 			// -NLS-1$
-			+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator() 
-			+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->" 
-			+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator();  
+			+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator()
+			+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->"
+			+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator();
 	// The default properties
 	private static final String DEFAULT_PROPERTIES = "# Settings for conquer" + System.lineSeparator();
 	private static final File BASE_FILE = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
@@ -60,7 +60,7 @@ public class Installer implements Runnable {
 	public Installer(final OptionChooser chooser, final ExtendedOutputStream writeTo,
 					 final Consumer<Exception> onError) {
 		if (chooser == null) {
-			throw new IllegalArgumentException("chooser==null"); 
+			throw new IllegalArgumentException("chooser==null");
 		}
 		this.chooser = chooser;
 		this.stream = writeTo;
@@ -70,29 +70,29 @@ public class Installer implements Runnable {
 	// Checks, whether the game is already installed.
 	private boolean alreadyInstalled() {
 		final var baseFile = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
-		return baseFile.exists() && new File(baseFile, "info.xml").exists(); 
+		return baseFile.exists() && new File(baseFile, "info.xml").exists();
 	}
 
 	private int askQuestion() {
-		return this.chooser.choose(new String[]{Messages.getString("Installer.minimalInstallation"), 
-				Messages.getString("Installer.standardInstallation"), 
-				Messages.getString("Installer.extendedInstallation")}); 
+		return this.chooser.choose(new String[]{Messages.getString("Installer.minimalInstallation"),
+				Messages.getString("Installer.standardInstallation"),
+				Messages.getString("Installer.extendedInstallation")});
 	}
 
 	private void baseInstallation() throws IOException {
 		Installer.BASE_FILE.mkdirs();
-		final var xml = new File(Installer.BASE_FILE, "info.xml"); 
+		final var xml = new File(Installer.BASE_FILE, "info.xml");
 		if (!xml.exists()) {
 			Files.write(Paths.get(xml.toURI()), Installer.DEFAULT_XML.getBytes(), StandardOpenOption.CREATE);
 		}
-		final var props = new File(Installer.BASE_FILE, "game.properties"); 
+		final var props = new File(Installer.BASE_FILE, "game.properties");
 		if (!props.exists()) {
 			Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(), StandardOpenOption.CREATE);
 		}
 	}
 
 	private boolean connected() {
-		try (final var testStream = new URL("https://www.example.com").openStream()) { 
+		try (final var testStream = new URL("https://www.example.com").openStream()) {
 			return true;
 		} catch (final IOException e) {
 			return false;
@@ -101,11 +101,11 @@ public class Installer implements Runnable {
 
 	private void extendedBaseInstallation() throws IOException {
 		this.baseInstallation();
-		try (final var zipStream = ClassLoader.getSystemResource("data/conquer.zip").openStream()) { 
+		try (final var zipStream = ClassLoader.getSystemResource("data/conquer.zip").openStream()) {
 			Installer.BASE_FILE.mkdirs();
 			this.unzipFile(zipStream);
 		} catch (final IOException e) {
-			this.writeError("Wasn't able to find music/conquer.zip"); 
+			this.writeError("Wasn't able to find music/conquer.zip");
 			if (this.stream != null) {
 				e.printStackTrace(new PrintStream(this.stream));
 			}
@@ -115,27 +115,28 @@ public class Installer implements Runnable {
 
 	private void installMusic() throws IOException {
 		if (!this.connected()) {
-			this.writeError(Messages.getString("Installer.noInternetConnection")); 
+			this.writeError(Messages.getString("Installer.noInternetConnection"));
 			return;
 		}
-		this.write(Messages.getString("Installer.pleaseWait")); 
+		this.write(Messages.getString("Installer.pleaseWait"));
 		final var url = new URL(
 				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip");
-		
-		final var messageString = Messages.getMessage("Installer.downloading", url.toString()); 
+
+		final var messageString = Messages.getMessage("Installer.downloading", url.toString());
 		this.write(messageString);
 		try (final var urlStream = url.openStream()) {
 			this.unzipFile(urlStream);
 		} catch (final IOException ioe) {
-			this.writeError(Messages.getString("Installer.downloadFailed") + url); 
+			this.writeError(Messages.getString("Installer.downloadFailed") + url);
 		}
-		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile(); 
+		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile();
 		final String newContents;
-		try (final var stream2 = Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) { 
+		try (final var stream2 =
+					 Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) {
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
 			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->",
-					
-					"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />"); 
+
+					"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />");
 		}
 		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
 	}
@@ -143,13 +144,13 @@ public class Installer implements Runnable {
 	@Override
 	public void run() {
 		if (!this.alreadyInstalled()) {
-			this.write(Messages.getString("Installer.installingConquer")); 
+			this.write(Messages.getString("Installer.installingConquer"));
 			try {
 				Initializer.installing = true;
 				this.startInstalling();
 				Initializer.installing = false;
 			} catch (final IOException e) {
-				this.writeError(Messages.getString("Installer.installationFailed")); 
+				this.writeError(Messages.getString("Installer.installationFailed"));
 				if (this.stream != null) {
 					e.printStackTrace(new PrintStream(this.stream));
 				}
@@ -159,8 +160,8 @@ public class Installer implements Runnable {
 				}
 				return;
 			}
-			this.write(Messages.getString("Installer.installedSuccessfully")); 
-			this.write(Messages.getString("Installer.pleaseRestart")); 
+			this.write(Messages.getString("Installer.installedSuccessfully"));
+			this.write(Messages.getString("Installer.pleaseRestart"));
 		}
 	}
 
@@ -174,7 +175,7 @@ public class Installer implements Runnable {
 			if (n == 2) {
 				this.installMusic();
 			}
-			final var props = new File(Installer.BASE_FILE, "game.properties"); 
+			final var props = new File(Installer.BASE_FILE, "game.properties");
 			if (!props.exists()) {
 				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
 						StandardOpenOption.CREATE);
@@ -186,7 +187,7 @@ public class Installer implements Runnable {
 		try (final var zin = new ZipInputStream(zipStream)) {
 			ZipEntry ze;
 			while ((ze = zin.getNextEntry()) != null) {
-				this.write(Messages.getString("Installer.unzipping") + ze.getName()); 
+				this.write(Messages.getString("Installer.unzipping") + ze.getName());
 				if (ze.isDirectory()) {
 					new File(Installer.BASE_FILE, ze.getName()).mkdirs();
 				} else {

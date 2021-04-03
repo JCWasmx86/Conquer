@@ -5,7 +5,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public final class Messages {
-	private static final String BUNDLE_NAME = "conquer.messages"; 
+	private static final String BUNDLE_NAME = "conquer.messages";
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(Messages.BUNDLE_NAME);
 

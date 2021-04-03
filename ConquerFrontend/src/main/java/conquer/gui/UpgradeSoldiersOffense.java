@@ -34,10 +34,10 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 		this.infoLabel = new JLabel();
 		this.infoLabel.setText(this.getInfoText());
 		this.add(this.infoLabel);
-		this.upgradeOnce = new JButton(""); 
+		this.upgradeOnce = new JButton("");
 		this.initUpgradeOnce();
 		this.add(this.upgradeOnce);
-		this.upgradeMax = new JButton(new ImageResource("max.png")); 
+		this.upgradeMax = new JButton(new ImageResource("max.png"));
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
 		this.repaint();
@@ -56,7 +56,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	}
 
 	private String getInfoText() {
-		return Messages.getMessage("UpgradeSoldiersOffense.soldiersPower", 
+		return Messages.getMessage("UpgradeSoldiersOffense.soldiersPower",
 				Utils.format(this.clan.getSoldiersOffenseStrength()), this.clan.getSoldiersOffenseLevel());
 	}
 
@@ -68,7 +68,7 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 	private void initUpgradeMax() {
 		if (this.clan.getSoldiersOffenseLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeMax.setEnabled(false);
-			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); 
+			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached"));
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.OFFENSE, this.clan.getSoldiersOffenseLevel() + 1,
@@ -83,17 +83,17 @@ final class UpgradeSoldiersOffense extends JPanel implements ActionListener {
 		});
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
-			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel", 
+			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel",
 					this.clan.getSoldiersOffenseLevel() + count));
 		} else {
-			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); 
+			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins"));
 		}
 	}
 
 	private void initUpgradeOnce() {
 		if (this.clan.getSoldiersOffenseLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeOnce.setEnabled(false);
-			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); 
+			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached"));
 			return;
 		}
 		final var coins = this.clan.getCoins();

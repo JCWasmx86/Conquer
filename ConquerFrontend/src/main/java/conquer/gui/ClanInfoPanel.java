@@ -46,7 +46,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		if (this.game.isDead(this.game.getPlayerClan())) {
 			this.jep.setText("<html><body><font color='red'>" + Messages.getString("ClanInfoPanel.youAreDead") //$NON
 					// -NLS-1$ 
-					+ "</font></body></html>"); 
+					+ "</font></body></html>");
 		} else {
 			this.jep.setText(this.generateText());
 		}
@@ -58,23 +58,23 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound()))
 				.sum();
 		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green",
-				Messages.getString("ClanInfoPanel.coinsPerRound"), production); 
+				Messages.getString("ClanInfoPanel.coinsPerRound"), production);
 	}
 
 	private String generateText() {
-		final var sb = new StringBuilder("<html><body>"); 
+		final var sb = new StringBuilder("<html><body>");
 		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>")
-				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers")) 
+				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers"))
 				.append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>")
-				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ")  
-				.append(this.getNumber(ICity::getNumberOfPeople)).append("<br>") 
-				.append(Messages.getString("Shared.coins")).append(": ")  
-				.append(String.format("%.2f", this.clan.getCoins())) 
+				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ")
+				.append(this.getNumber(ICity::getNumberOfPeople)).append("<br>")
+				.append(Messages.getString("Shared.coins")).append(": ")
+				.append(String.format("%.2f", this.clan.getCoins()))
 				.append(this.coinsPerRound());
 		for (final var r : Resource.values()) {
 			sb.append(this.resource(r));
 		}
-		return sb.append("</body></html>").toString(); 
+		return sb.append("</body></html>").toString();
 	}
 
 	private long getNumber(final ToLongFunction<ICity> cc) {
@@ -86,7 +86,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	 */
 	void init() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.jep = new JEditorPane("text/html", this.generateText()); 
+		this.jep = new JEditorPane("text/html", this.generateText());
 		this.jep.setEditable(false);
 		this.jep.setIgnoreRepaint(true);
 		((DefaultCaret) this.jep.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
@@ -115,14 +115,14 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		}).sum();
 		final var balance = productions - usage;
 		if (balance <= 0) {
-			sb.append("<font color='red'>"); 
+			sb.append("<font color='red'>");
 		} else {
-			sb.append("<font color='green'>"); 
+			sb.append("<font color='green'>");
 		}
 		return sb.append(r.getName()).append(" ").append(Messages.getString("ClanInfoPanel.perRound")).append(": ")
-				 
-				.append(String.format("%.2f", balance)) 
-				.append("</font>").toString(); 
+
+				.append(String.format("%.2f", balance))
+				.append("</font>").toString();
 	}
 
 }

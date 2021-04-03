@@ -1,13 +1,13 @@
 #!/usr/bin/sh
 
 checkInDeb() {
-	dpkg-deb -c "$1" |grep "$2" >/dev/null
+	dpkg-deb -c "$1" | grep "$2" >/dev/null
 	if [ "$?" = "0" ]; then
 		echo Found "$2" in "$1"\!
 	else
 		echo Wasn\'t able to find "$2" in "$1"\!
 		exit 255
-	fi;
+	fi
 }
 checkFileInZipInDeb() {
 	rm -rf tmp__
@@ -20,7 +20,7 @@ checkFileInZipInDeb() {
 		echo Wasn\'t able to find "$3" in archive "$2" of .deb file "$1"\!
 		rm -rf tmp__
 		exit 255
-	fi;
+	fi
 	rm -rf tmp__
 }
 checkInDeb conquer.deb conquer_launcher

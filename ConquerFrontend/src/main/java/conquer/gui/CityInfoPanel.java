@@ -62,45 +62,45 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 	private String generateText() {
 		if (this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
-			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead") 
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead")
 
-					+ "</font></body></html>"; 
+					+ "</font></body></html>";
 		} else if (!this.city.isPlayerCity()) {
 			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON
 					// -NLS-1$ 
-					+ "</font></body></html>"; 
+					+ "</font></body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name"))
-				.append(": ") 
+				.append(": ")
 				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan"))
-				.append(": ") 
-				.append(this.city.getClan().getName()).append("<br>") 
-				.append(Messages.getString("Shared.soldiers")) 
-				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")  
-				.append(Messages.getString("Shared.people")).append(": ")  
-				.append(this.city.getNumberOfPeople()).append("<br>") 
-				.append(Messages.getString("Shared.defense")).append(": ")  
-				.append(String.format("%.2f", this.city.getDefense())).append("<br>")  
-				.append(Messages.getString("Shared.defenseBonus")) 
+				.append(": ")
+				.append(this.city.getClan().getName()).append("<br>")
+				.append(Messages.getString("Shared.soldiers"))
+				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")
+				.append(Messages.getString("Shared.people")).append(": ")
+				.append(this.city.getNumberOfPeople()).append("<br>")
+				.append(Messages.getString("Shared.defense")).append(": ")
+				.append(String.format("%.2f", this.city.getDefense())).append("<br>")
+				.append(Messages.getString("Shared.defenseBonus"))
 				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>")
-				.append(Messages.getString("Shared.growth")) 
+				.append(Messages.getString("Shared.growth"))
 				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>")
-				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()  
+				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
 						.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
-			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");  
+			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
 			// 
 			final var value = this.city.productionPerRound(Resource.values()[i]);
 			// Not enough is produced.
 			if ((value / this.city.getNumberOfPeople()) < 1) {
-				sb.append("<font color='red'>"); 
+				sb.append("<font color='red'>");
 			} else {
-				sb.append("<font color='green'>"); 
+				sb.append("<font color='green'>");
 			}
-			sb.append(String.format("%.2f", value)).append("</font>");  
+			sb.append(String.format("%.2f", value)).append("</font>");
 		}
-		return sb.append("</body></html>").toString(); 
+		return sb.append("</body></html>").toString();
 	}
 
 	/**
@@ -108,7 +108,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 	 */
 	void init() {
 		this.setLayout(new FlowLayout());
-		this.statsViewer = new JEditorPane("text/html", this.generateText()); 
+		this.statsViewer = new JEditorPane("text/html", this.generateText());
 		((DefaultCaret) this.statsViewer.getCaret()).setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
 		this.statsViewer.setEditable(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));

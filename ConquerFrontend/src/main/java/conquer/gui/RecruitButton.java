@@ -29,7 +29,7 @@ final class RecruitButton extends JPanel {
 		final var max = city.getInfo().maximumNumberOfSoldiersToRecruit(city.getClan(), city.getNumberOfPeople());
 		this.js = new JSlider(0, (int) max);
 		this.js.setValue((int) (max / 2));
-		this.jbutton = new JButton(Messages.getMessage("RecruitButton.recruitNSoldiers", max / 2)); 
+		this.jbutton = new JButton(Messages.getMessage("RecruitButton.recruitNSoldiers", max / 2));
 		this.jbutton.addActionListener(e -> {
 			if (RecruitButton.this.sharp) {
 				return;
@@ -40,7 +40,7 @@ final class RecruitButton extends JPanel {
 		});
 		this.js.addChangeListener(e -> RecruitButton.this.jbutton
 				.setText(Messages.getMessage("RecruitButton.recruitNSoldiers", RecruitButton.this.js.getValue())));
-		
+
 		this.add(this.js);
 		this.add(this.jbutton);
 	}

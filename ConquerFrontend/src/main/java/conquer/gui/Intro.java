@@ -34,7 +34,7 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 	private Intro() {
 		this.setSize(600, 600);
 		this.setResizable(false);
-		this.sound = new Sound("Intro"); 
+		this.sound = new Sound("Intro");
 		this.addWindowListener(this);
 		this.addKeyListener(this);
 		this.timer.start();
@@ -59,8 +59,8 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 			e.printStackTrace();// The logger is not setup currently.
 		}
 		new Thread(() -> Initializer.INSTANCE().initialize(a -> {
-			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"), 
-					Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE); 
+			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"),
+					Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE);
 			System.exit(-127);
 		})).start();
 		final var main = new Intro();

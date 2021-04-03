@@ -34,9 +34,9 @@ final class MoneySlider extends JPanel {
 	}
 
 	private String getText() {
-		return Messages.getString("Shared.coins") + ": "  
+		return Messages.getString("Shared.coins") + ": "
 				+ String.format("%.2f", (0.01 * this.slider.getValue()) * this.game.getPlayerClan().getCoins());
-		
+
 	}
 
 	/**
