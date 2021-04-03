@@ -17,6 +17,7 @@ public class ScenarioFileReaderTest {
 	private static final byte[] HEADER;
 	private static final byte[] HEADER_WITH_CLANS_UNTIL_COLORS;
 	private static final byte[] HEADER_UNTIL_RELATIONS;
+	private static final byte[] HEADER_UNTIL_CITIES;
 
 	static {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
@@ -51,6 +52,16 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(1);
 			HEADER_UNTIL_RELATIONS = baos.toByteArray();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_RELATIONS);
+			dos.writeInt(1);
+			dos.writeInt(0);
+			dos.writeInt(1);
+			dos.writeInt(50);
+			HEADER_UNTIL_CITIES = baos.toByteArray();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -340,6 +351,7 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
 	@Test
 	void testRelationshipToClanItSelf() {
 		byte[] bytes;
@@ -348,6 +360,18 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeInt(0);
 			dos.writeInt(0);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+	@Test
+	void testNegativeNumberOfCities() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);

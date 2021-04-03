@@ -134,6 +134,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 
 	private Graph<ICity> readCities(final DataInputStream dis, final List<IClan> clans, final ConquerInfo game) throws IOException {
 		final int numCities = dis.readShort();
+		this.throwIfNegative(numCities, "numCities < 0: " + numCities);
 		final var g = new Graph<ICity>(numCities);
 		for (var i = 0; i < numCities; i++) {
 			g.add(new City(game));
