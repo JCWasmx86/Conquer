@@ -28,7 +28,7 @@ void enumerateDirectory(char *);
 void buildJar(char *);
 void addToArchive(struct archive *, char *);
 int removeDirectory(void);
-char* getDir(void);
+char *getDir(void);
 int main(int argc, char **argv) {
 	for (int i = 1; i < argc; i++) {
 		size_t len = strlen(argv[i]);
@@ -230,7 +230,7 @@ static int copyData(struct archive *in, struct archive *out) {
 }
 
 void enumerateClassfiles(void) {
-	char* start = getDir();
+	char *start = getDir();
 	enumerateDirectory(start);
 	free(start);
 }
@@ -308,7 +308,7 @@ void addToArchive(struct archive *a, char *start) {
 	closedir(dir);
 }
 
-char* getDir(void) {
+char *getDir(void) {
 #ifdef _WIN32
 	return "depreview_tmp_archive";
 #else
