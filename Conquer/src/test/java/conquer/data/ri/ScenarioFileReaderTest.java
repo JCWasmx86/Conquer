@@ -15,6 +15,7 @@ public class ScenarioFileReaderTest {
 			, 6, 0, 5, 87, -65, -85, -44, 0, 0, 0, 0, 73, 69, 78, 68, -82, 66, 96, -126};
 
 	private static final byte[] HEADER;
+	private static final byte[] HEADER_WITH_CLANS_UNTIL_COLORS;
 
 	static {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
@@ -26,10 +27,37 @@ public class ScenarioFileReaderTest {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER);
+			dos.writeInt(2);
+			dos.writeDouble(1.0);
+			dos.writeDouble(1.0);
+			dos.writeUTF("clan1");
+			dos.writeUTF("clan2");
+			//Flags
+			dos.writeInt(0);
+			dos.writeInt(1);
+			HEADER_WITH_CLANS_UNTIL_COLORS = baos.toByteArray();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private ScenarioFileReaderTest() {
 		//Private
+	}
+
+	private void check(final byte[] bytes) {
+		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
+			new ScenarioFileReader().read(bais);
+		} catch (IOException e) {
+			Assertions.fail(e);
+		} catch (IllegalArgumentException iae) {
+			System.err.println(iae.getMessage());
+			//Do nothing, exception is expected.
+			return;
+		}
+		Assertions.fail("Didn't fail!");
 	}
 
 	@Test
@@ -43,13 +71,7 @@ public class ScenarioFileReaderTest {
 			Assertions.fail(e);
 			return;
 		}
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-			new ScenarioFileReader().read(bais);
-		} catch (IOException e) {
-			Assertions.fail(e);
-		} catch (IllegalArgumentException iae) {
-			//Do nothing, exception is expected.
-		}
+		this.check(bytes);
 	}
 
 	@Test
@@ -64,13 +86,7 @@ public class ScenarioFileReaderTest {
 			Assertions.fail(e);
 			return;
 		}
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-			new ScenarioFileReader().read(bais);
-		} catch (IOException e) {
-			Assertions.fail(e);
-		} catch (IllegalArgumentException iae) {
-			//Do nothing, exception is expected.
-		}
+		this.check(bytes);
 	}
 
 	@Test
@@ -84,14 +100,9 @@ public class ScenarioFileReaderTest {
 			Assertions.fail(e);
 			return;
 		}
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-			new ScenarioFileReader().read(bais);
-		} catch (IOException e) {
-			Assertions.fail(e);
-		} catch (IllegalArgumentException iae) {
-			//Do nothing, exception is expected.
-		}
+		this.check(bytes);
 	}
+
 	@Test
 	void testOnePlayer() {
 		byte[] bytes;
@@ -103,12 +114,125 @@ public class ScenarioFileReaderTest {
 			Assertions.fail(e);
 			return;
 		}
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-			new ScenarioFileReader().read(bais);
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativePlayers() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);
-		} catch (IllegalArgumentException iae) {
-			//Do nothing, exception is expected.
+			return;
 		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeCoins() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER);
+			dos.writeInt(2);
+			dos.writeDouble(-1.0);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testRNegative() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testRTooBig() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(50000);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testGNegative() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testGTooBig() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(1);
+			dos.writeInt(50000);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testBNegative() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testBTooBig() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_WITH_CLANS_UNTIL_COLORS);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(50000);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
 	}
 }

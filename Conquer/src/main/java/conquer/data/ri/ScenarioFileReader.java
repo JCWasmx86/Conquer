@@ -244,17 +244,17 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			final var r = dis.readInt();
 			this.throwIfNegative(r, "r < 0: " + r);
 			if (r > 255) {
-				throw new RuntimeException("r to big: " + r);
+				throw new IllegalArgumentException("r to big: " + r);
 			}
 			final var g = dis.readInt();
 			this.throwIfNegative(g, "g < 0: " + g);
 			if (g > 255) {
-				throw new RuntimeException("g to big: " + g);
+				throw new IllegalArgumentException("g to big: " + g);
 			}
 			final var b = dis.readInt();
 			this.throwIfNegative(b, "b < 0: " + b);
 			if (b > 255) {
-				throw new RuntimeException("b to big: " + b);
+				throw new IllegalArgumentException("b to big: " + b);
 			}
 			clans.get(i).setColor(new Color(r, g, b));
 		}
