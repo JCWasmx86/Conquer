@@ -108,9 +108,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 
 	private String resource(final Resource r) {
 		final var index = r.getIndex();
-		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
-				.append(String.format("%.2f", this.clan.getResources().get(index))).append("<br>"); //$NON-NLS-1$
-		// $NON-NLS-2$
+		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ")
+				.append(String.format("%.2f", this.clan.getResources().get(index))).append("<br>");
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
 				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
 		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(c -> {
