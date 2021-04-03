@@ -447,14 +447,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.game.exit();
 			return;
 		}
-		if (this.saveName == null) {
-			if (this.saveDialog()) {
-				return;
-			}
-		} else if (this.saveDialog()) {
-			if (!this.save()) {
-				return;
-			}
+		if ((this.saveName == null && this.saveDialog()) || (this.saveDialog() && !this.save())) {
+			return;
 		}
 		this.cleanup();
 
