@@ -66,8 +66,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 
 					+ "</font></body></html>";
 		} else if (!this.city.isPlayerCity()) {
-			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity") //$NON
-					// -NLS-1$ 
+			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity")
 					+ "</font></body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name"))

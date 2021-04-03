@@ -92,8 +92,7 @@ final class ResourceButton extends JPanel {
 
 	private String getInfoLabelText() {
 		final var level = this.city.getLevels().get(this.getIndex());
-		return (this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) + " " //$NON
-				// -NLS-1$
+		return (this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) + " "
 				+ Messages.getString("ResourceButton.level") + " " + level;
 	}
 

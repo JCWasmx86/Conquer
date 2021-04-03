@@ -37,8 +37,7 @@ public class Installer implements Runnable {
 			+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator()
 
 			+ "\t</plugins>" + System.lineSeparator()
-			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->" //$NON
-			// -NLS-1$
+			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->"
 			+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator()
 			+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->"
 			+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator();

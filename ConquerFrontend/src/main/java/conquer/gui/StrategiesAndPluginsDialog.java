@@ -107,8 +107,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				}
 			}
 		});
-		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"), //$NON
-				// -NLS-1$
+		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"),
 				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> {
 			this.strategyNamesListCopy.add(a);
 			this.strategies.setListData(
