@@ -49,27 +49,27 @@ final class RecruitButton extends JPanel {
 	 * Updates all components on this panel.
 	 */
 	void doUpdate() {
-		if (!this.city.isPlayerCity()) {
+		if (this.city.isPlayerCity()) {
+			if (this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
+				this.jbutton.setEnabled(false);
+				this.js.setEnabled(false);
+				this.sharp = true;
+				this.js.setMaximum(0);
+			} else {
+				this.jbutton.setEnabled(true);
+				this.js.setEnabled(true);
+				this.sharp = true;
+				this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit(this.city.getClan(),
+						this.city.getNumberOfPeople()));
+			}
+		} else {
 			this.jbutton.setEnabled(false);
 			this.js.setEnabled(false);
 			this.sharp = true;
 			this.js.setMinimum(0);
 			this.js.setMaximum(0);
-			this.sharp = false;
-		} else if (!this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
-			this.jbutton.setEnabled(true);
-			this.js.setEnabled(true);
-			this.sharp = true;
-			this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit(this.city.getClan(),
-					this.city.getNumberOfPeople()));
-			this.sharp = false;
-		} else {
-			this.jbutton.setEnabled(false);
-			this.js.setEnabled(false);
-			this.sharp = true;
-			this.js.setMaximum(0);
-			this.sharp = false;
 		}
+		this.sharp = false;
 	}
 
 }
