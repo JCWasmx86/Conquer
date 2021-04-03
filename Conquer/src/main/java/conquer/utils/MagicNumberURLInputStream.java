@@ -93,15 +93,15 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 
 	@Override
 	public int read() throws IOException {
-		if (this.bytes != null) {
+		if (this.bytes == null) {
+			this.tryOpen();
+			return this.in.read();
+		} else {
 			if (this.cnter < this.bytes.length) {
 				return this.bytes[this.cnter++];
 			} else {
 				return this.in.read();
 			}
-		} else {
-			this.tryOpen();
-			return this.in.read();
 		}
 	}
 
