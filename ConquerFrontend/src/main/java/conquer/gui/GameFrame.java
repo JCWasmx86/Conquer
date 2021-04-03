@@ -215,8 +215,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
 				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins()); 
-		/
-		final var run = new JButton(Messages.getString("GameFrame.runForever")); 
+		final var run = new JButton(Messages.getString("GameFrame.runForever"));
 		run.addActionListener(a -> {
 			run.setEnabled(false);
 			nextRound.setEnabled(false);

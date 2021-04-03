@@ -123,7 +123,7 @@ public class Installer implements Runnable {
 				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip");
 		
 		final var messageString = Messages.getMessage("Installer.downloading", url.toString()); 
-		this.write(messageString); /
+		this.write(messageString);
 		try (final var urlStream = url.openStream()) {
 			this.unzipFile(urlStream);
 		} catch (final IOException ioe) {

@@ -57,18 +57,15 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 				c -> (c.getNumberOfPeople() * this.game.getResourceUsage(this.clan).getCoinsPerRoundPerPerson())
 						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound()))
 				.sum();
-		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green", 
-				/ 
+		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green",
 				Messages.getString("ClanInfoPanel.coinsPerRound"), production); 
 	}
 
 	private String generateText() {
 		final var sb = new StringBuilder("<html><body>"); 
-		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>") //$NON
-				// -NLS-1$  
+		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>")
 				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers")) 
-				.append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>") 
-				/
+				.append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>")
 				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ")  
 				.append(this.getNumber(ICity::getNumberOfPeople)).append("<br>") 
 				.append(Messages.getString("Shared.coins")).append(": ")  
