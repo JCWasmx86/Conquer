@@ -175,6 +175,10 @@ public final class XMLReader {
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
 					new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
+		return this.fill(infoNode, instantiate);
+	}
+
+	private GlobalContext fill(final Node infoNode, final boolean instantiate) {
 		final List<InstalledScenario> installedMaps = new ArrayList<>();
 		final List<String> pluginNames = new ArrayList<>();
 		final List<String> strategyNames = new ArrayList<>();
