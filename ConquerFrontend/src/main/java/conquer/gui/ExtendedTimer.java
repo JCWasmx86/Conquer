@@ -21,7 +21,7 @@ final class ExtendedTimer extends Timer {
 	/**
 	 * Stop all registered timers and clear the list of timers.
 	 */
-	static synchronized void stopAll() {
+	static void stopAll() {
 		ExtendedTimer.registeredTimers.forEach(Timer::stop);
 		ExtendedTimer.registeredTimers.clear();
 	}
