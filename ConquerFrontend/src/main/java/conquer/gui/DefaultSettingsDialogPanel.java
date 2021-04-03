@@ -72,7 +72,7 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	}
 
 	private int normalize(final int value) {
-		return (int) (1000.0/value);
+		return (int) (1000.0 / value);
 	}
 
 	void dump(final Properties properties) {

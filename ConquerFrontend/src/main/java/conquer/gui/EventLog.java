@@ -45,6 +45,7 @@ final class EventLog extends JFrame implements MessageListener {
 	private JCheckBoxMenuItem showBad;
 	private Color defaultColor;
 	private AbstractButton showNeutral;
+
 	private EventLog() {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.PAGE_AXIS));

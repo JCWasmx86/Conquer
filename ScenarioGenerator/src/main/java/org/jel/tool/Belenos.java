@@ -7,6 +7,7 @@ final class Belenos {
 	private Belenos() {
 		//Empty
 	}
+
 	public static void main(final String[] args) {
 		new DataFile().setBackground("Background1-res.png").addPlayer(1000, "Deinitia", new Color(255, 200, 120), 0)
 				.addPlayer(1000, "Valosepulca", new Color(100, 100, 100), 3)

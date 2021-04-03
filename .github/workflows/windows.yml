@@ -12,56 +12,56 @@ jobs:
             run:
                 shell: msys2 {0}
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-java@v1.4.3
-              with:
-                  java-version: 16
-            - uses: msys2/setup-msys2@v2
-              with:
-                  update: true
-                  install: >-
-                      git
-                      base-devel
-                      mingw-w64-x86_64-libarchive
-                      mingw-w64-x86_64-curl
-                      mingw-w64-x86_64-gcc
-                      mingw-w64-x86_64-dlfcn
-                      mingw-w64-x86_64-headers-git
-                      mingw-w64-x86_64-gtk3
-                      mingw-w64-x86_64-vala
-                      mingw-w64-x86_64-libgee
-                      mingw-w64-x86_64-json-glib
-                      mingw-w64-x86_64-pkg-config
-                      mingw-w64-i686-nsis
-                      zip
-                      unzip
-                      p7zip
-            - name: Build conquer
-              run: |
-                  mkdir tmp
-                  wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
-                  cd tmp
-                  echo A|7z x MuseScore3.exe
-                  cd App/MuseScore/bin
-                  export PATH=`pwd`:$PATH:.
-                  cd ../../../..
-                  export QT_QPA_PLATFORM=windows
-                  ./gradlew assemble
-                  ./gradlew Conquer:runTestsuites
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: Installer
-                  path: Launcher/Installer.exe
-            - name: Build and upload SDK
-              run: |
-                  pkgfile --update
-                  cd tmp/App/Musescore/bin
-                  export PATH=`pwd`:$PATH:.
-                  cd ../../../..
-                  export QT_QPA_PLATFORM=windows
-                  ./gradlew clean
-                  ./gradlew createZipFileForDistribution
-            - uses: actions/upload-artifact@v2
-              with:
-                  name: SDK
-                  path: Conquer-SDK_2.0.0.zip
+            -   uses: actions/checkout@v2
+            -   uses: actions/setup-java@v1.4.3
+                with:
+                    java-version: 16
+            -   uses: msys2/setup-msys2@v2
+                with:
+                    update: true
+                    install: >-
+                        git
+                        base-devel
+                        mingw-w64-x86_64-libarchive
+                        mingw-w64-x86_64-curl
+                        mingw-w64-x86_64-gcc
+                        mingw-w64-x86_64-dlfcn
+                        mingw-w64-x86_64-headers-git
+                        mingw-w64-x86_64-gtk3
+                        mingw-w64-x86_64-vala
+                        mingw-w64-x86_64-libgee
+                        mingw-w64-x86_64-json-glib
+                        mingw-w64-x86_64-pkg-config
+                        mingw-w64-i686-nsis
+                        zip
+                        unzip
+                        p7zip
+            -   name: Build conquer
+                run: |
+                    mkdir tmp
+                    wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+                    cd tmp
+                    echo A|7z x MuseScore3.exe
+                    cd App/MuseScore/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../../..
+                    export QT_QPA_PLATFORM=windows
+                    ./gradlew assemble
+                    ./gradlew Conquer:runTestsuites
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: Installer
+                    path: Launcher/Installer.exe
+            -   name: Build and upload SDK
+                run: |
+                    pkgfile --update
+                    cd tmp/App/Musescore/bin
+                    export PATH=`pwd`:$PATH:.
+                    cd ../../../..
+                    export QT_QPA_PLATFORM=windows
+                    ./gradlew clean
+                    ./gradlew createZipFileForDistribution
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: SDK
+                    path: Conquer-SDK_2.0.0.zip

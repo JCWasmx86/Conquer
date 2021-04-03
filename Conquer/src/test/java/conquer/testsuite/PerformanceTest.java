@@ -13,6 +13,7 @@ public final class PerformanceTest {
 	private PerformanceTest() {
 		//Empty
 	}
+
 	public static void main(final String[] args) {
 		new File(Shared.BASE_DIRECTORY, "logs.log").delete();
 		Shared.LOGGER.reopen();

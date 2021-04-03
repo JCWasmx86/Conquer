@@ -222,6 +222,7 @@ public final class Shared {
 			}
 		}));
 	}
+
 	private Shared() {
 
 	}
