@@ -29,6 +29,9 @@ void buildJar(char *);
 void addToArchive(struct archive *, char *);
 int removeDirectory(void);
 char *getDir(void);
+int isNotSpecial(struct dirent *dp);
+char *concatDirAndFile(char *start, struct dirent *dp);
+
 int main(int argc, char **argv) {
 	for (int i = 1; i < argc; i++) {
 		size_t len = strlen(argv[i]);
@@ -233,6 +236,14 @@ void enumerateClassfiles(void) {
 	char *start = getDir();
 	enumerateDirectory(start);
 }
+char *concatDirAndFile(char *start, struct dirent *dp) {
+	char *path = calloc(3000, 1);
+	assert(path);
+	strcpy(path, start);
+	strcat(path, "/");
+	strcat(path, dp->d_name);
+	return path;
+}
 void enumerateDirectory(char *start) {
 	DIR *dir = opendir(start);
 	if (!dir) { // File
@@ -244,12 +255,8 @@ void enumerateDirectory(char *start) {
 	}
 	struct dirent *dp;
 	while ((dp = readdir(dir)) != NULL) {
-		if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0) {
-			char *path = calloc(3000, 1);
-			assert(path);
-			strcpy(path, start);
-			strcat(path, "/");
-			strcat(path, dp->d_name);
+		if (isNotSpecial(dp)) {
+			char *path = concatDirAndFile(start, dp);
 			enumerateDirectory(path);
 			free(path);
 		}
@@ -265,6 +272,9 @@ void buildJar(char *jar) {
 	addToArchive(a, getDir());
 	archive_write_close(a);
 	archive_write_free(a);
+}
+int isNotSpecial(struct dirent *dp) {
+	return strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0;
 }
 void addToArchive(struct archive *a, char *start) {
 	DIR *dir = opendir(start);
@@ -294,12 +304,8 @@ void addToArchive(struct archive *a, char *start) {
 	}
 	struct dirent *dp;
 	while ((dp = readdir(dir)) != NULL) {
-		if (strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0) {
-			char *path = calloc(3000, 1);
-			assert(path);
-			strcpy(path, start);
-			strcat(path, "/");
-			strcat(path, dp->d_name);
+		if (isNotSpecial(dp)) {
+			char *path = concatDirAndFile(start, dp);
 			addToArchive(a, path);
 			free(path);
 		}
