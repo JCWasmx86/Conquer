@@ -72,7 +72,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			game.setBackground(this.readBackground(dis));
 			final var numPlayers = dis.readInt();
 			if ((numPlayers == 1) || (numPlayers == 0)) {
-				throw new RuntimeException("Expected at least 2 players, got " + numPlayers);
+				throw new IllegalArgumentException("Expected at least 2 players, got " + numPlayers);
 			}
 			this.throwIfNegative(numPlayers, "Expected a non negative number of players, got " + numPlayers);
 			game.setPlayers(numPlayers);
@@ -128,7 +128,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 
 	private void throwIfNegative(final double n, final String message) {
 		if (n < 0) {
-			throw new RuntimeException(message);
+			throw new IllegalArgumentException(message);
 		}
 	}
 
