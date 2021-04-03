@@ -11,5 +11,5 @@ public interface OptionChooser {
 	 * @param options All options. Will never be {@code null}.
 	 * @return Selected index.
 	 */
-	int choose(String[] options);
+	int choose(String... options);
 }
