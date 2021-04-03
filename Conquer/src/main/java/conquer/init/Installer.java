@@ -167,18 +167,17 @@ public class Installer implements Runnable {
 	// Installs everything
 	private void startInstalling() throws IOException {
 		final var n = this.askQuestion();
-		switch (n) {
-			case 0 -> this.baseInstallation();
-			case 1, 2 -> {
-				this.extendedBaseInstallation();
-				if (n == 2) {
-					this.installMusic();
-				}
-				final var props = new File(Installer.BASE_FILE, "game.properties"); //$NON-NLS-1$
-				if (!props.exists()) {
-					Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
-							StandardOpenOption.CREATE);
-				}
+		if (n == 0) {
+			this.baseInstallation();
+		} else {
+			this.extendedBaseInstallation();
+			if (n == 2) {
+				this.installMusic();
+			}
+			final var props = new File(Installer.BASE_FILE, "game.properties"); //$NON-NLS-1$
+			if (!props.exists()) {
+				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
+						StandardOpenOption.CREATE);
 			}
 		}
 	}
