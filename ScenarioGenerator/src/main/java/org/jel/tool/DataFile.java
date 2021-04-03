@@ -117,7 +117,7 @@ public final class DataFile {
 				dos.writeUTF(c.getName());
 				var num = 0;
 				for (var i = 0; i < this.cities.size(); i++) {
-					num += this.matrix[a][i] != 0 ? 1 : 0;
+					num += this.matrix[a][i] == 0 ? 0 : 1;
 				}
 				dos.writeShort(num);
 				for (var i = 0; i < this.cities.size(); i++) {

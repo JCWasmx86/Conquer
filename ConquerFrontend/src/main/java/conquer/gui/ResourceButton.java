@@ -43,10 +43,10 @@ final class ResourceButton extends JPanel {
 		this.upgradeThisResource = new JButton();
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 		this.upgradeThisResource.addActionListener(e -> {
-			if (resource != null) {
-				city.getInfo().upgradeResource(resource, city);
-			} else {
+			if (resource == null) {
 				city.getInfo().upgradeDefense(city);
+			} else {
+				city.getInfo().upgradeResource(resource, city);
 			}
 			ResourceButton.this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
 			cip.doUpdate();
@@ -57,10 +57,10 @@ final class ResourceButton extends JPanel {
 		this.maximumUpgrade.setText(this.getMaxUpgradeText());
 		this.add(this.maximumUpgrade);
 		this.maximumUpgrade.addActionListener(e -> {
-			if (resource != null) {
-				city.getInfo().upgradeResourceFully(resource, city);
-			} else {
+			if (resource == null) {
 				city.getInfo().upgradeDefenseFully(city);
+			} else {
+				city.getInfo().upgradeResourceFully(resource, city);
 			}
 			ResourceButton.this.maximumUpgrade.setText(this.getMaxUpgradeText());
 			cip.doUpdate();
