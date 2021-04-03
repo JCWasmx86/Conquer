@@ -34,10 +34,10 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		this.infoLabel = new JLabel();
 		this.infoLabel.setText(this.getInfoText());
 		this.add(this.infoLabel);
-		this.upgradeOnce = new JButton(""); //$NON-NLS-1$
+		this.upgradeOnce = new JButton(""); 
 		this.initUpgradeOnce();
 		this.add(this.upgradeOnce);
-		this.upgradeMax = new JButton(new ImageResource("max.png")); //$NON-NLS-1$
+		this.upgradeMax = new JButton(new ImageResource("max.png")); 
 		this.initUpgradeMax();
 		this.add(this.upgradeMax);
 		final Timer timer = new ExtendedTimer(Utils.getRefreshRate(), this);
@@ -56,19 +56,19 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 
 	private String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersPanel.soldiersPower", Utils.format(this.clan.getSoldiersStrength())
-				, //$NON-NLS-1$
+				, 
 				this.clan.getSoldiersLevel());
 	}
 
 	private String getOneLevelString() {
-		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1), //$NON-NLS-1$
+		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1), 
 				Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1)));
 	}
 
 	private void initUpgradeMax() {
 		if (this.clan.getSoldiersLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeMax.setEnabled(false);
-			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
+			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached")); 
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1,
@@ -85,16 +85,16 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		if (count > 0) {
 			this.upgradeMax.setText(
 					Messages.getMessage("Shared.upgradeToSpecifiedLevel", (this.clan.getSoldiersLevel() + count)));
-			//$NON-NLS-1$
+			
 		} else {
-			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); //$NON-NLS-1$
+			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins")); 
 		}
 	}
 
 	private void initUpgradeOnce() {
 		if (this.clan.getSoldiersLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeOnce.setEnabled(false);
-			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); //$NON-NLS-1$
+			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached")); 
 			return;
 		}
 		final var coins = this.clan.getCoins();

@@ -57,7 +57,7 @@ final class EventLog extends JFrame implements MessageListener {
 		this.timer.start();
 		this.add(contentPane);
 		final var menubar = new JMenuBar();
-		final var menu = new JMenu(Messages.getString("EventLog.settings")); //$NON-NLS-1$
+		final var menu = new JMenu(Messages.getString("EventLog.settings")); 
 		final var increaseFontSize = new JMenuItem();
 		this.initIncreaseFontSize(increaseFontSize);
 		menu.add(increaseFontSize);
@@ -84,7 +84,7 @@ final class EventLog extends JFrame implements MessageListener {
 		});
 		clearButton.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_K, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		clearButton.setText(Messages.getString("EventLog.clearButton")); //$NON-NLS-1$
+		clearButton.setText(Messages.getString("EventLog.clearButton")); 
 		menu.add(clearButton);
 		final var exitButton = new JMenuItem();
 		exitButton.setAction(new AbstractAction() {
@@ -96,11 +96,11 @@ final class EventLog extends JFrame implements MessageListener {
 			}
 		});
 		exitButton.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, ActionEvent.ALT_MASK));
-		exitButton.setText(Messages.getString("EventLog.closeDialog")); //$NON-NLS-1$
+		exitButton.setText(Messages.getString("EventLog.closeDialog")); 
 		menu.add(exitButton);
 		menubar.add(menu);
 		this.setJMenuBar(menubar);
-		this.setTitle(Messages.getString("EventLog.eventLog")); //$NON-NLS-1$
+		this.setTitle(Messages.getString("EventLog.eventLog")); 
 	}
 
 	/**
@@ -120,11 +120,11 @@ final class EventLog extends JFrame implements MessageListener {
 	static void init(final ConquerInfo game) {
 		final var a = game.getClans();
 		for (final var clan : a) {
-			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() //$NON-NLS-1$
-					// $NON-NLS-2$
-					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") //$NON-NLS-1$
-					// $NON-NLS-2$
-					: "")); //$NON-NLS-1$
+			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName() 
+					/
+					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player") 
+					/
+					: "")); 
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			final var color = clan.getColor();
 			jlabel.setOpaque(true);
@@ -134,7 +134,7 @@ final class EventLog extends JFrame implements MessageListener {
 			EventLog.log.base.add(jlabel);
 			EventLog.log.base.add(EventLog.log.generateEmptySpace(color));
 		}
-		final var jlabel = new JLabel(" "); //$NON-NLS-1$
+		final var jlabel = new JLabel(" "); 
 		jlabel.setForeground(new Color(21, 21, 21));
 		jlabel.setBackground(new Color(23, 23, 23));
 		jlabel.setFont(jlabel.getFont().deriveFont(EventLog.log.currFontSize));
@@ -189,7 +189,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private Component generateEmptySpace(final Color color) {
-		final var jl = new JLabel(" "); //$NON-NLS-1$
+		final var jl = new JLabel(" "); 
 		jl.setForeground(color);
 		jl.setFont(jl.getFont().deriveFont(4f));
 		return jl;
@@ -228,7 +228,7 @@ final class EventLog extends JFrame implements MessageListener {
 		});
 		decreaseFontSize.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		decreaseFontSize.setText(Messages.getString("EventLog.decreaseFontsize")); //$NON-NLS-1$
+		decreaseFontSize.setText(Messages.getString("EventLog.decreaseFontsize")); 
 	}
 
 	private void initIncreaseFontSize(final JMenuItem increaseFontSize) {
@@ -252,11 +252,11 @@ final class EventLog extends JFrame implements MessageListener {
 		});
 		increaseFontSize.setAccelerator(
 				KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
-		increaseFontSize.setText(Messages.getString("EventLog.increaseFontsize")); //$NON-NLS-1$
+		increaseFontSize.setText(Messages.getString("EventLog.increaseFontsize")); 
 	}
 
 	private void initShowGood() {
-		this.showGood = new JCheckBoxMenuItem(Messages.getString("EventLog.showPositiveEvents")); //$NON-NLS-1$
+		this.showGood = new JCheckBoxMenuItem(Messages.getString("EventLog.showPositiveEvents")); 
 		this.showGood.setSelected(true);
 		this.showGood.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();
@@ -276,7 +276,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private void initShowNegative() {
-		this.showBad = new JCheckBoxMenuItem(Messages.getString("EventLog.showNegativeEvents")); //$NON-NLS-1$
+		this.showBad = new JCheckBoxMenuItem(Messages.getString("EventLog.showNegativeEvents")); 
 		this.showBad.setSelected(true);
 		this.showBad.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();
@@ -296,7 +296,7 @@ final class EventLog extends JFrame implements MessageListener {
 	}
 
 	private void initShowNeutral() {
-		this.showNeutral = new JCheckBoxMenuItem(Messages.getString("EventLog.showNeutralEvents")); //$NON-NLS-1$
+		this.showNeutral = new JCheckBoxMenuItem(Messages.getString("EventLog.showNeutralEvents")); 
 		this.showNeutral.setSelected(true);
 		this.showNeutral.addItemListener(e -> {
 			final var components = EventLog.this.base.getComponents();

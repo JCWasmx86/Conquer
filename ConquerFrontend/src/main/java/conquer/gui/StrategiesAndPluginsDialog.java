@@ -54,7 +54,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 	}
 
 	private void init() {
-		this.setTitle(Messages.getString("Shared.strategiesAndPlugins")); //$NON-NLS-1$
+		this.setTitle(Messages.getString("Shared.strategiesAndPlugins")); 
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 		this.context = XMLReader.getInstance().readInfo(false);
 		this.pluginNamesListCopy = new ArrayList<>(this.context.getPluginNames());
@@ -67,7 +67,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					ref.plugins.setSelectedIndex(ref.plugins.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
 					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
-					//$NON-NLS-1$
+					
 					itemRemove.addActionListener(a -> {
 						ref.pluginNamesListCopy.remove(ref.plugins.getSelectedValue());
 						ref.plugins.setListData(
@@ -79,8 +79,8 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				}
 			}
 		});
-		final var addPlugin = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addPlugin"), //$NON-NLS-1$
-				Messages.getString("StrategiesAndPluginsDialog.pluginClassname"), a -> { //$NON-NLS-1$
+		final var addPlugin = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addPlugin"), 
+				Messages.getString("StrategiesAndPluginsDialog.pluginClassname"), a -> { 
 			this.pluginNamesListCopy.add(a);
 			this.plugins
 					.setListData(this.pluginNamesListCopy.toArray(new String[0]));
@@ -95,7 +95,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 					ref.strategies.setSelectedIndex(ref.strategies.locationToIndex(e.getPoint()));
 					final var menu = new JPopupMenu();
 					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
-					//$NON-NLS-1$
+					
 					itemRemove.addActionListener(a -> {
 						ref.strategyNamesListCopy.remove(ref.strategies.getSelectedValue());
 						ref.strategies.setListData(
@@ -109,7 +109,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 		});
 		final var addStrategy = new SelectPanel(Messages.getString("StrategiesAndPluginsDialog.addStrategy"), //$NON
 				// -NLS-1$
-				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> { //$NON-NLS-1$
+				Messages.getString("StrategiesAndPluginsDialog.strategyClassname"), a -> { 
 			this.strategyNamesListCopy.add(a);
 			this.strategies.setListData(
 					this.strategyNamesListCopy.toArray(new String[0]));
@@ -131,7 +131,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				StrategiesAndPluginsDialog.this.reset();
 			}
 		});
-		clearChanges.setText(Messages.getString("StrategiesAndPluginsDialog.resetChanges")); //$NON-NLS-1$
+		clearChanges.setText(Messages.getString("StrategiesAndPluginsDialog.resetChanges")); 
 		final var saveChanges = new JButton();
 		final var f = new File(Shared.BASE_DIRECTORY) + File.separator + File.separator;
 		saveChanges.setAction(new AbstractAction() {
@@ -144,32 +144,32 @@ final class StrategiesAndPluginsDialog extends JFrame {
 								<!--Auto generated - DO NOT EDIT, EXCEPT YOU KNOW WHAT YOU ARE DOING!-->
 								<info>
 								\t<scenarios>
-								"""); //$NON-NLS-1$
+								"""); 
 				StrategiesAndPluginsDialog.this.context.getInstalledMaps()
 						.forEach(a -> sb.append("\t\t<scenario name=\"").append(a.name()).append("\" file=\"") //$NON
-								// -NLS-1$ //$NON-NLS-2$
-								.append(a.file().replace(f, "")).append("\" thumbnail=\"") //$NON-NLS-1$ //$NON-NLS-2$
-								.append(a.thumbnail().replace(f, "")).append("\"/>\n")); //$NON-NLS-1$ //$NON-NLS-2$
-				sb.append("\t</scenarios>\n\t<plugins>\n"); //$NON-NLS-1$
+								// -NLS-1$ 
+								.append(a.file().replace(f, "")).append("\" thumbnail=\"")  
+								.append(a.thumbnail().replace(f, "")).append("\"/>\n"));  
+				sb.append("\t</scenarios>\n\t<plugins>\n"); 
 				StrategiesAndPluginsDialog.this.pluginNamesListCopy
-						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n")); //$NON-NLS-1$
-				// $NON-NLS-2$
-				sb.append("\t</plugins>\n\t<strategies>\n"); //$NON-NLS-1$
+						.forEach(a -> sb.append("\t\t<plugin className=\"").append(a).append("\"/>\n")); 
+				/
+				sb.append("\t</plugins>\n\t<strategies>\n"); 
 				StrategiesAndPluginsDialog.this.strategyNamesListCopy
 						.forEach(a -> sb.append("\t\t<strategy className=\"").append(a).append("\"/>\n")); //$NON-NLS
-				// -1$ //$NON-NLS-2$
+				// -1$ 
 				sb.append("\t</strategies>\n\t<readers>");
 				StrategiesAndPluginsDialog.this.context.getReaderNames()
 						.forEach(a -> sb.append("\t\t<reader className=\"").append(a).append("\"/>\n"));
-				sb.append("\t</readers>\n</info>\n"); //$NON-NLS-1$
-				final var f = new File(Shared.BASE_DIRECTORY, "info.xml"); //$NON-NLS-1$
+				sb.append("\t</readers>\n</info>\n"); 
+				final var f = new File(Shared.BASE_DIRECTORY, "info.xml"); 
 				try {
 					Files.write(Paths.get(f.toURI()), sb.toString().getBytes());
 				} catch (final IOException e1) {
 					JOptionPane.showMessageDialog(null,
 							Messages.getString("StrategiesAndPluginsDialog.writingFailed") + e1.getLocalizedMessage(),
-							//$NON-NLS-1$
-							Messages.getString("StrategiesAndPluginsDialog.error"), //$NON-NLS-1$
+							
+							Messages.getString("StrategiesAndPluginsDialog.error"), 
 							JOptionPane.ERROR_MESSAGE);
 					StrategiesAndPluginsDialog.this.context = XMLReader.getInstance().readInfo(false);
 					StrategiesAndPluginsDialog.this.reset();
@@ -180,7 +180,7 @@ final class StrategiesAndPluginsDialog extends JFrame {
 				JOptionPane.showMessageDialog(null, Messages.getString("StrategiesAndPluginsDialog.pleaseRestart"));
 			}
 		});
-		saveChanges.setText(Messages.getString("StrategiesAndPluginsDialog.saveChanges")); //$NON-NLS-1$
+		saveChanges.setText(Messages.getString("StrategiesAndPluginsDialog.saveChanges")); 
 		buttonPanel.add(clearChanges);
 		buttonPanel.add(saveChanges);
 		contentPanel.add(buttonPanel);

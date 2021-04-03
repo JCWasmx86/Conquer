@@ -50,7 +50,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		this.context = Shared.useSPI() ? new SPIContextBuilder().buildContext() : XMLReader.getInstance().readInfo();
 		final var newScenarios = new DefaultListModel<InstalledScenario>();
 		newScenarios.addAll(this.context.getInstalledMaps());
-		final JButton jb = new RoundButton(new ImageResource("back.png")); //$NON-NLS-1$
+		final JButton jb = new RoundButton(new ImageResource("back.png")); 
 		jb.addActionListener(a -> {
 			this.shouldExit = false;
 			this.dispose();
@@ -78,7 +78,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 							// A dirty hack...
 							jl.setToolTipText(
 									Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));
-							//$NON-NLS-1$
+							
 						} catch (final MalformedURLException e) {
 							Shared.LOGGER.exception(e);
 						}
@@ -99,7 +99,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 					savedScenarios.setSelectedIndex(savedScenarios.locationToIndex(event.getPoint()));
 					final var menu = new JPopupMenu();
 					final var itemRemove = new JMenuItem(Messages.getString("StrategiesAndPluginsDialog.remove"));
-					//$NON-NLS-1$
+					
 					itemRemove.addActionListener(a -> {
 						if (savedScenarios.getSelectedValue() == null) {
 							return;

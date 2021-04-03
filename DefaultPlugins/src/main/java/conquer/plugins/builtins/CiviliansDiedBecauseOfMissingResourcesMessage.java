@@ -20,7 +20,7 @@ public record CiviliansDiedBecauseOfMissingResourcesMessage(long numberOfCivilia
 
 	@Override
 	public String getMessageText() {
-		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.civilians"), //$NON-NLS-1$
+		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.civilians"), 
 				this.numberOfCiviliansDied, this.city.getName());
 	}
 }

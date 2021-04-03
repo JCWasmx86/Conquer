@@ -60,18 +60,18 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		this.paint(this.getGraphics());
-		final var s = new StringBuilder("<html>").append(this.city.getName()); //$NON-NLS-1$
+		final var s = new StringBuilder("<html>").append(this.city.getName()); 
 		s.append(String.format("<br>%s: %s<br>", Messages.getString("Shared.clan"), this.city.getClan().getName()));
-		//$NON-NLS-1$ //$NON-NLS-2$
+		 
 		if (this.city.isPlayerCity()) {
-			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), //$NON-NLS-1$
-					// $NON-NLS-2$
-					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), //$NON-NLS-1$
+			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"), 
+					/
+					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"), 
 					this.city.getNumberOfSoldiers()));
 		} else {
-			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), //$NON-NLS-1$
-					// $NON-NLS-2$
-					Messages.getString("Shared.soldiers"))); //$NON-NLS-1$
+			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"), 
+					/
+					Messages.getString("Shared.soldiers"))); 
 		}
 		this.setToolTipText(s.toString());
 	}
@@ -206,10 +206,10 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 				this.origin.getNumberOfSoldiers());
 		final String prompt;
 		if (this.city.isPlayerCity()) {
-			prompt = Messages.getMessage("CityLabel.moveLabel", //$NON-NLS-1$
+			prompt = Messages.getMessage("CityLabel.moveLabel", 
 					this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
 		} else {
-			prompt = Messages.getMessage("CityLabel.attackLabel", //$NON-NLS-1$
+			prompt = Messages.getMessage("CityLabel.attackLabel", 
 					this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
 		}
 		long numberOfSelectedSoldiers = -1;

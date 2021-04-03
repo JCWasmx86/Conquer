@@ -20,7 +20,7 @@ public record SoldiersDesertedBecauseOfMissingResourcesMessage(long numberOfSold
 
 	@Override
 	public String getMessageText() {
-		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.soldiers"), //$NON-NLS-1$
+		return MessageFormat.format(ResourceAnalyzerMessages.getString("Message.soldiers"), 
 				this.numberOfSoldiersDeserted, this.city.getName());
 	}
 }

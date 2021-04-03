@@ -37,7 +37,7 @@ final class GiftCallback implements PlayerGiftCallback {
 							  final DoubleConsumer newValue, final StrategyObject strategyObject) {
 		this.jframe = new JFrame();
 		this.jframe.setLayout(new BoxLayout(this.jframe.getContentPane(), BoxLayout.PAGE_AXIS));
-		this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); //$NON-NLS-1$
+		this.jframe.setTitle(Messages.getMessage("GiftCallback.offersAGift", source.getName())); 
 		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() <= 0.005) {
 			final var jlabel = new JLabel(
@@ -69,7 +69,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				GiftCallback.this.accept();
 			}
 		});
-		accept.setText(Messages.getString("GiftCallback.accept")); //$NON-NLS-1$
+		accept.setText(Messages.getString("GiftCallback.accept")); 
 		final var decline = new JButton(new AbstractAction() {
 			private static final long serialVersionUID = 5614286737761253933L;
 
@@ -79,7 +79,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				GiftCallback.this.jframe.dispose();
 			}
 		});
-		decline.setText(Messages.getString("GiftCallback.decline")); //$NON-NLS-1$
+		decline.setText(Messages.getString("GiftCallback.decline")); 
 		buttonPanel.add(accept);
 		buttonPanel.add(decline);
 		this.jframe.add(buttonPanel);
