@@ -1,5 +1,6 @@
 package conquer.data.ri;
 
+import conquer.data.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -508,6 +509,7 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
 	@Test
 	void testNegativeDefense() {
 		byte[] bytes;
@@ -529,6 +531,7 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
 	@Test
 	void testNegativeBonus() {
 		byte[] bytes;
@@ -551,6 +554,7 @@ public class ScenarioFileReaderTest {
 		}
 		this.check(bytes);
 	}
+
 	@Test
 	void testNegativeGrowth() {
 		byte[] bytes;
@@ -567,6 +571,187 @@ public class ScenarioFileReaderTest {
 			dos.writeInt(1);
 			dos.writeDouble(1);
 			dos.writeDouble(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeNumberOfConnections() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testCityConnectionToItSelf() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(1);
+			dos.writeShort(0);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testCityConnectionToBadCity() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(1);
+			dos.writeShort(5);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testBadDistance() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(1);
+			dos.writeShort(1);
+			dos.writeDouble(-5);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNegativeProduction() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(1);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(1);
+			dos.writeShort(1);
+			dos.writeDouble(5);
+			dos.writeDouble(-1);
+			bytes = baos.toByteArray();
+		} catch (IOException e) {
+			Assertions.fail(e);
+			return;
+		}
+		this.check(bytes);
+	}
+
+	@Test
+	void testNotConnectedGraph() {
+		byte[] bytes;
+		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
+			dos.write(HEADER_UNTIL_CITIES);
+			dos.writeShort(2);
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city");
+			dos.writeShort(0);
+			for (var i = 0; i < Resource.values().length; i++) {
+				dos.writeDouble(1);
+			}
+			dos.writeInt(PNG_BYTES.length);
+			dos.write(PNG_BYTES);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeInt(1);
+			dos.writeDouble(1);
+			dos.writeDouble(1);
+			dos.writeUTF("city1");
+			dos.writeShort(0);
+			for (var i = 0; i < Resource.values().length; i++) {
+				dos.writeDouble(1);
+			}
 			bytes = baos.toByteArray();
 		} catch (IOException e) {
 			Assertions.fail(e);

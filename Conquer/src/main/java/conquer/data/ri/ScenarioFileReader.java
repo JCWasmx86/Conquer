@@ -89,7 +89,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 			throw new RuntimeException(ioe);
 		}
 		if (!game.getCities().isConnected()) {
-			throw new RuntimeException("Disconnected graph!");
+			throw new IllegalArgumentException("Disconnected graph!");
 		}
 		return game;
 	}
@@ -194,13 +194,14 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 
 	private void readConnections(final DataInput dis, final int i, final int numCities, final Graph<ICity> g) throws IOException {
 		final int numConnections = dis.readShort();
+		this.throwIfNegative(numConnections, "numConnections < 0: " + numConnections);
 		for (var s = 0; s < numConnections; s++) {
 			final int otherCityIndex = dis.readShort();
 			this.throwIfNegative(otherCityIndex, "otherCityIndex < 0: " + otherCityIndex);
 			if (otherCityIndex == i) {
-				throw new RuntimeException("Can't have a connection to itself!");
+				throw new IllegalArgumentException("Can't have a connection to itself!");
 			} else if (otherCityIndex > numCities) {
-				throw new RuntimeException("Index out of range: " + otherCityIndex);
+				throw new IllegalArgumentException("Index out of range: " + otherCityIndex);
 			}
 			final var distanceToCity = dis.readDouble();
 			this.throwIfNegative(distanceToCity, "distanceToCity < 0: " + distanceToCity);
