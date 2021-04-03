@@ -12,11 +12,11 @@ jobs:
             run:
                 shell: msys2 {0}
         steps:
-            -   uses: actions/checkout@v2
-            -   uses: actions/setup-java@v1.4.3
+            - uses: actions/checkout@v2
+            - uses: actions/setup-java@v1.4.3
                 with:
                     java-version: 16
-            -   uses: msys2/setup-msys2@v2
+            - uses: msys2/setup-msys2@v2
                 with:
                     update: true
                     install: >-
@@ -36,7 +36,7 @@ jobs:
                         zip
                         unzip
                         p7zip
-            -   name: Build conquer
+            - name: Build conquer
                 run: |
                     mkdir tmp
                     wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
@@ -48,11 +48,11 @@ jobs:
                     export QT_QPA_PLATFORM=windows
                     ./gradlew assemble
                     ./gradlew Conquer:runTestsuites
-            -   uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v2
                 with:
                     name: Installer
                     path: Launcher/Installer.exe
-            -   name: Build and upload SDK
+            - name: Build and upload SDK
                 run: |
                     pkgfile --update
                     cd tmp/App/Musescore/bin
@@ -61,7 +61,7 @@ jobs:
                     export QT_QPA_PLATFORM=windows
                     ./gradlew clean
                     ./gradlew createZipFileForDistribution
-            -   uses: actions/upload-artifact@v2
+            - uses: actions/upload-artifact@v2
                 with:
                     name: SDK
                     path: Conquer-SDK_2.0.0.zip
