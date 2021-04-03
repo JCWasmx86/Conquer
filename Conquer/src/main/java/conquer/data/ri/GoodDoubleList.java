@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 //A list, that only allows non-negative, non-NaN, non-infinity values
-class GoodDoubleList extends ArrayList<Double> {
+final class GoodDoubleList extends ArrayList<Double> {
 	private static final long serialVersionUID = 1502828784649438269L;
 	private boolean allowNegative = false;
 
