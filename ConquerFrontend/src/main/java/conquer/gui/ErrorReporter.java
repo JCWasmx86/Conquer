@@ -11,7 +11,7 @@ import java.io.StringWriter;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
-public class ErrorReporter {
+public final class ErrorReporter {
 	private ErrorReporter() {
 		//Hide public default constructor
 	}
