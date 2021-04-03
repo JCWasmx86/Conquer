@@ -341,7 +341,7 @@ public class Graph<T> implements Consumer<T> {
 	 * @param t
 	 * @return Array representing the values in the graph.
 	 */
-	public T[] getValues(final T[] t) {
+	public T[] getValues(final T... t) {
 		return this.values.toArray(t);
 	}
 
