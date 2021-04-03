@@ -10,38 +10,38 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/setup-java@v1.4.3
-                with:
-                    java-version: 16
+              with:
+                  java-version: 16
             - uses: actions/checkout@v2
             - name: Setup environment
-                run: |
-                    sudo apt update
-                    sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
-                    sudo apt-get update
-                    sudo rm /usr/bin/gcc
-                    sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev libgee-0.8-dev libjson-glib-dev software-properties-common
-                    sudo add-apt-repository ppa:vala-team
-                    sudo add-apt-repository ppa:vala-team/next
-                    sudo apt update
-                    sudo apt install valac
-                    sudo ln /usr/bin/gcc-10 /usr/bin/gcc
-                    valac --version
+              run: |
+                  sudo apt update
+                  sudo add-apt-repository ppa:mscore-ubuntu/mscore3-stable
+                  sudo apt-get update
+                  sudo rm /usr/bin/gcc
+                  sudo apt install -y gcc-10 libarchive-dev libcurl4-openssl-dev bash musescore3 libgtk-3-dev libgee-0.8-dev libjson-glib-dev software-properties-common
+                  sudo add-apt-repository ppa:vala-team
+                  sudo add-apt-repository ppa:vala-team/next
+                  sudo apt update
+                  sudo apt install valac
+                  sudo ln /usr/bin/gcc-10 /usr/bin/gcc
+                  valac --version
             - name: Build conquer
-                run: |
-                    export QT_QPA_PLATFORM=offscreen
-                    ./gradlew assemble
-                    ./gradlew Conquer:runTestsuites
-                    ./gradlew jacocoTestReport
-                    bash <(curl -s https://codecov.io/bash)
-                    cd debs
-                    ./checkScript
-                    cd ..
+              run: |
+                  export QT_QPA_PLATFORM=offscreen
+                  ./gradlew assemble
+                  ./gradlew Conquer:runTestsuites
+                  ./gradlew jacocoTestReport
+                  bash <(curl -s https://codecov.io/bash)
+                  cd debs
+                  ./checkScript
+                  cd ..
             - name: Build and upload SDK
-                run: |
-                    export QT_QPA_PLATFORM=offscreen
-                    ./gradlew clean
-                    ./gradlew createZipFileForDistribution
+              run: |
+                  export QT_QPA_PLATFORM=offscreen
+                  ./gradlew clean
+                  ./gradlew createZipFileForDistribution
             - uses: actions/upload-artifact@v2
-                with:
-                    name: SDK
-                    path: Conquer-SDK_2.0.0.zip
+              with:
+                  name: SDK
+                  path: Conquer-SDK_2.0.0.zip
