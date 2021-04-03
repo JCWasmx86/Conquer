@@ -232,7 +232,6 @@ static int copyData(struct archive *in, struct archive *out) {
 void enumerateClassfiles(void) {
 	char *start = getDir();
 	enumerateDirectory(start);
-	free(start);
 }
 void enumerateDirectory(char *start) {
 	DIR *dir = opendir(start);
