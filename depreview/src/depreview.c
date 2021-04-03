@@ -28,7 +28,7 @@ void enumerateDirectory(char *);
 void buildJar(char *);
 void addToArchive(struct archive *, char *);
 int removeDirectory(void);
-
+char* getDir(void);
 int main(int argc, char **argv) {
 	for (int i = 1; i < argc; i++) {
 		size_t len = strlen(argv[i]);
@@ -165,11 +165,10 @@ void extractJar(char *jar) {
 		exit(1);
 	}
 	char *c = "/";
+	char *o = getDir();
 #ifdef _WIN32
-	char *o = "depreview_tmp_archive";
 	_mkdir(o);
 #else
-	char *o = "/tmp/depreview_tmp_archive";
 	mkdir(o, S_IRWXU);
 #endif
 	struct archive_entry *entry;
@@ -231,11 +230,7 @@ static int copyData(struct archive *in, struct archive *out) {
 }
 
 void enumerateClassfiles(void) {
-#ifdef _WIN32
-	char *start = strdup("depreview_tmp_archive");
-#else
-	char *start = strdup("/tmp/depreview_tmp_archive");
-#endif
+	char* start = getDir();
 	enumerateDirectory(start);
 	free(start);
 }
@@ -263,28 +258,19 @@ void enumerateDirectory(char *start) {
 	closedir(dir);
 }
 void buildJar(char *jar) {
-#ifdef _WIN32
-	char *input = "depreview_tmp_archive";
-#else
-	char *input = "/tmp/depreview_tmp_archive";
-#endif
 	struct archive *a = archive_write_new();
 	archive_write_set_format_zip(a);
 	archive_write_set_filter_option(a, "zip", "compression", "deflate");
 	archive_write_set_filter_option(a, "zip", "compression-level", "9");
 	archive_write_open_filename(a, jar);
-	addToArchive(a, input);
+	addToArchive(a, getDir());
 	archive_write_close(a);
 	archive_write_free(a);
 }
 void addToArchive(struct archive *a, char *start) {
-#ifdef _WIN32
-	char *input = "depreview_tmp_archive";
-#else
-	char *input = "/tmp/depreview_tmp_archive";
-#endif
 	DIR *dir = opendir(start);
 	if (!dir) { // File
+		char *input = getDir();
 		FILE *fp = fopen(start, "rb");
 		if (fp == NULL) {
 			return;
@@ -320,4 +306,12 @@ void addToArchive(struct archive *a, char *start) {
 		}
 	}
 	closedir(dir);
+}
+
+char* getDir(void) {
+#ifdef _WIN32
+	return "depreview_tmp_archive";
+#else
+	return "/tmp/depreview_tmp_archive";
+#endif
 }
