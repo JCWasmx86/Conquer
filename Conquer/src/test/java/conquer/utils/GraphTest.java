@@ -29,7 +29,7 @@ class GraphTest {
 		this.assertThat("It isn't connected, although it shouldn't!", graph.isConnected(1, 2));
 		this.assertThat("It is connected, although it shouldn't!", !graph.isConnected(2, 1));
 		graph.addDirectedEdge(1, 0, 2.0);
-		this.assertThat("It isn't connected, although it shouldn!", graph.isConnected(2, 1));
+		this.assertThat("It isn't connected, although it should!", graph.isConnected(2, 1));
 	}
 
 	@Test

@@ -15,3 +15,4 @@ Currently, the GUI is quite messy and sometimes a bit difficult to use. Improvem
 3. Feedback is appreciated.
 4. Write/enhance a tutorial. (This is especially important)
 5. Ideas for new scenarios are always welcome.
+6. Ideas for UI-Changes
