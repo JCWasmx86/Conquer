@@ -65,3 +65,6 @@ run {
 }
 run.dependsOn(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
 run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conquerResources")
+distZip.dependsOn(":Conquer:conquerResources")
+distTar.dependsOn(":Conquer:conquerResources")
+startScripts.dependsOn(":Conquer:conquerResources")
