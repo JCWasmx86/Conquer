@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 
 public class DefaultSettingsDialogPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private final JCheckBox useSPI = new JCheckBox(Messages.getString("Settings.useSPI"), Shared.useSPI());
 	private final JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
 	private final JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"),
 			Shared.level1Logging());
@@ -25,7 +24,6 @@ public class DefaultSettingsDialogPanel extends JPanel {
 
 	DefaultSettingsDialogPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.add(this.useSPI);
 		this.add(this.level1Logging);
 		this.add(this.level2Logging);
 		final var networkTimeOutPanel = new JPanel();
@@ -64,7 +62,6 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	}
 
 	void reset() {
-		this.useSPI.setSelected(Shared.useSPI());
 		this.level1Logging.setSelected(Shared.level1Logging());
 		this.level2Logging.setSelected(Shared.level2Logging());
 		this.jtextfield.setText(Shared.getNetworktimeout() + "");
@@ -86,8 +83,6 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		} catch (final NumberFormatException nfe) {
 			JOptionPane.showMessageDialog(null, Messages.getString("Settings.badInteger"));
 		}
-
-		properties.put("conquer.usespi", this.useSPI.isSelected() + "");
 		properties.put("conquer.logging.level1", this.level1Logging.isSelected() + "");
 		properties.put("conquer.logging.level2", this.level2Logging.isSelected() + "");
 		properties.put("conquer.frontend.rate", this.normalize(this.maximumFPS.getValue()) + "");

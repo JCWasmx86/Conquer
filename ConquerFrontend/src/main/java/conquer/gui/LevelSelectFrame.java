@@ -4,7 +4,6 @@ import conquer.data.GlobalContext;
 import conquer.data.InstalledScenario;
 import conquer.data.SPIContextBuilder;
 import conquer.data.Shared;
-import conquer.data.XMLReader;
 import conquer.gui.utils.ImageResource;
 
 import java.awt.Component;
@@ -47,7 +46,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 	 */
 	void init(final Point location) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
-		this.context = Shared.useSPI() ? new SPIContextBuilder().buildContext() : XMLReader.getInstance().readInfo();
+		this.context = new SPIContextBuilder().buildContext();
 		final var newScenarios = new DefaultListModel<InstalledScenario>();
 		newScenarios.addAll(this.context.getInstalledMaps());
 		final JButton jb = new RoundButton(new ImageResource("back.png"));
