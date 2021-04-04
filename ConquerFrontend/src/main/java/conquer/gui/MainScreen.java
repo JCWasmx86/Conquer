@@ -66,9 +66,6 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		menu.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		menu.setMaximumSize(new Dimension(100, 25));
 		final var settings = new JMenu(Messages.getString("MainScreen.settings"));
-		final var strategiesAndPlugins = new JMenuItem(Messages.getString("Shared.strategiesAndPlugins"));
-		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
-		settings.add(strategiesAndPlugins);
 		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
 		updates.addActionListener(a -> System.out
 				.println("TBD: Updates, current version: " + Shared.getReferenceImplementationVersion()));

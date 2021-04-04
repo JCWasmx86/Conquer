@@ -1,7 +1,7 @@
 package conquer.testsuite;
 
+import conquer.data.SPIContextBuilder;
 import conquer.data.Shared;
-import conquer.data.XMLReader;
 import conquer.init.Initializer;
 
 import java.io.BufferedReader;
@@ -21,11 +21,7 @@ public final class PerformanceTest {
 			a.printStackTrace();
 			throw new RuntimeException(a);
 		});
-		XMLReader.setThrowableConsumer(a -> {
-			a.printStackTrace();
-			throw new RuntimeException(a);
-		});
-		final var info = XMLReader.getInstance().readInfo();
+		final var info = new SPIContextBuilder().buildContext();
 		var currentRound = 0;
 		final var MAX_ROUNDS = 1000000;
 		final var start = System.nanoTime();

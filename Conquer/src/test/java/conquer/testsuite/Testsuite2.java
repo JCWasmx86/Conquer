@@ -6,7 +6,7 @@ import conquer.data.GlobalContext;
 import conquer.data.IClan;
 import conquer.data.InstalledScenario;
 import conquer.data.PlayerGiftCallback;
-import conquer.data.XMLReader;
+import conquer.data.SPIContextBuilder;
 
 import java.io.File;
 
@@ -135,8 +135,7 @@ public final class Testsuite2 extends Testsuite {
 	}
 
 	private int start() {
-		XMLReader.setThrowableConsumer(this::throwable);
-		final var context = XMLReader.getInstance().readInfo(true);
+		final var context = new SPIContextBuilder().buildContext();
 		this.checkContext(context);
 		this.buildGames(context);
 		return this.numberOfErrors;

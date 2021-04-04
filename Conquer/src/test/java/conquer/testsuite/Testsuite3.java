@@ -4,9 +4,9 @@ import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.PlayerGiftCallback;
+import conquer.data.SPIContextBuilder;
 import conquer.data.Shared;
 import conquer.data.StreamUtils;
-import conquer.data.XMLReader;
 import conquer.utils.Graph;
 
 import java.util.List;
@@ -269,7 +269,7 @@ public final class Testsuite3 extends Testsuite {
 	}
 
 	private int start() {
-		final var ctx = XMLReader.getInstance().readInfo();
+		final var ctx = new SPIContextBuilder().buildContext();
 		for (final var scenario : ctx.getInstalledMaps()) {
 			final var game = ctx.loadInfo(scenario);
 			game.addContext(ctx);
