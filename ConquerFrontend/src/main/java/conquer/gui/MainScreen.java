@@ -3,6 +3,7 @@ package conquer.gui;
 import conquer.data.Shared;
 import conquer.frontend.spi.GUIMenuPlugin;
 import conquer.gui.utils.LoopPlayer;
+import conquer.utils.Updater;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -69,10 +71,23 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		final var strategiesAndPlugins = new JMenuItem(Messages.getString("Shared.strategiesAndPlugins"));
 		strategiesAndPlugins.addActionListener(a -> StrategiesAndPluginsDialog.showWindow());
 		settings.add(strategiesAndPlugins);
-		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
-		updates.addActionListener(a -> System.out
-				.println("TBD: Updates, current version: " + Shared.getReferenceImplementationVersion()));
-		settings.add(updates);
+		if (Shared.isWindows()) {
+			final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
+			updates.addActionListener(a -> Updater.update(hasToUpdate -> {
+				if (hasToUpdate) {
+					return JOptionPane.showConfirmDialog(this, Messages.getString("MainScreen.updateFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+				}
+				JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateNotFound"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
+				return false;
+			}, success -> {
+				if (success) {
+					JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateSuccess"), Messages.getString("MainScreen.updateTitle"), JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(this, Messages.getString("MainScreen.updateFailed"), Messages.getString("MainScreen.updateTitle"), JOptionPane.ERROR_MESSAGE);
+				}
+			}));
+			settings.add(updates);
+		}
 		final var furtherSettings = new JMenuItem(Messages.getString("MainScreen.furtherSettings"));
 		furtherSettings.addActionListener(a -> SettingsDialog.showWindow());
 		settings.add(furtherSettings);

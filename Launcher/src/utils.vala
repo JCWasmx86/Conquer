@@ -74,9 +74,6 @@ namespace Launcher {
 		}
 	}
 
-	void tryUpdating() {
-		//TODO
-	}
 	delegate void progressFunc(void* data, double dltotal, double dlnow, double ultotal, double ulnow);
 
 	interface IDownloadProgress : GLib.Object {
