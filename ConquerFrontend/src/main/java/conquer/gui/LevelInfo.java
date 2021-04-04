@@ -5,6 +5,7 @@ import conquer.data.GlobalContext;
 import conquer.data.InstalledScenario;
 import conquer.frontend.spi.ConfigurationPanelProvider;
 import conquer.gui.utils.ImageResource;
+import conquer.utils.Pair;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -47,28 +48,28 @@ final class LevelInfo extends JFrame implements WindowListener {
 	LevelInfo(final ConquerInfo game, final InstalledScenario is, final Point location, final GlobalContext context) {
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 		this.addWindowListener(this);
-		final var assocs = new DefaultListModel<ClanColorAssociation>();
-		assocs.addAll(game.getClans().stream().map(a -> new ClanColorAssociation(a.getName(), a.getColor()))
+		final var assocs = new DefaultListModel<Pair<String, Color>>();
+		assocs.addAll(game.getClans().stream().map(a -> new Pair<>(a.getName(), a.getColor()))
 				.toList());
 		final var jlist = new JList<>(assocs);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
-			private final Map<ClanColorAssociation, JLabel> map = new HashMap<>();
+			private final Map<Pair<String, Color>, JLabel> map = new HashMap<>();
 
 			@Override
-			public Component getListCellRendererComponent(final JList<? extends ClanColorAssociation> list,
-														  final ClanColorAssociation value, final int index,
+			public Component getListCellRendererComponent(final JList<? extends Pair<String, Color>> list,
+														  final Pair<String, Color> value, final int index,
 														  final boolean isSelected,
 														  final boolean cellHasFocus) {
 				final JLabel jl;
 				if (this.map.containsKey(value)) {
 					jl = this.map.get(value);
 				} else {
-					jl = new JLabel(value.clanName()
+					jl = new JLabel(value.first()
 							+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared.player") : ""));
 
-					jl.setForeground(value.color());
+					jl.setForeground(value.second());
 					jl.setFont(jl.getFont().deriveFont(35F));
-					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.color().getRGB())));
+					jl.setBackground(new Color(LevelInfo.this.getComplementaryColor(value.second().getRGB())));
 					jl.setOpaque(true);
 					this.map.put(value, jl);
 				}
@@ -189,10 +190,4 @@ final class LevelInfo extends JFrame implements WindowListener {
 
 	}
 
-}
-
-/**
- * This record just associates a clan with its corresponding color.
- */
-final record ClanColorAssociation(String clanName, Color color) {
 }
