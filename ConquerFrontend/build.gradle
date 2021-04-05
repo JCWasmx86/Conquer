@@ -68,3 +68,4 @@ run.mustRunAfter(":auxiliary:downloadJarFiles", conquerResources, ":Conquer:conq
 distZip.dependsOn(":Conquer:conquerResources")
 distTar.dependsOn(":Conquer:conquerResources")
 startScripts.dependsOn(":Conquer:conquerResources")
+processResources.dependsOn(":music:buildMusic")

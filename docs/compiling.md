@@ -6,7 +6,7 @@
 2. 250 MB disk space + space for all dependencies.
 3. An internet connection for every build.
 
-## Debian and its descendants
+## Debian and similar
 
 ### Prerequisites
 
