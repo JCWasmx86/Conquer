@@ -85,7 +85,7 @@ namespace Launcher {
 							tryUpdating();
 							window.hide();
 							new Thread<void>("runJVM", () => {
-								JVM jvm = new JVM(null);
+								JVM jvm = new JVM();
 								jvm.addJVMArguments(jvmOptions.toList());
 								jvm.addClasspaths(classpaths.toList());
 								Configuration.dump(jvmOptions.toList(),
@@ -106,7 +106,7 @@ namespace Launcher {
 					tryUpdating();
 					window.hide();
 					new Thread<void>("runJVM", () => {
-						JVM jvm = new JVM(null);
+						JVM jvm = new JVM();
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder,

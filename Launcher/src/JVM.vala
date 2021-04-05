@@ -1,14 +1,11 @@
 using Gee;
 
 namespace Launcher {
-	delegate void onErrorFunc(string stacktrace, string reportLocation);
 	class JVM {
-		onErrorFunc onErrorFunc;
 		Gee.List<string> arguments;
 		Gee.List<string> classpaths;
 
-		public JVM(onErrorFunc? func) {
-			this.onErrorFunc = func;
+		public JVM() {
 		}
 		public void addJVMArguments(Gee.List<string> arguments) {
 			this.arguments = arguments;
@@ -35,8 +32,8 @@ namespace Launcher {
 				options[6 + size + i] = memorySettings.get(i);
 			}
 			options[6 + size + memSize] = "-Dconquer.useNativeLAF=" + (useNativeLAF?"true":"false");
-			invokeJVM(options, memSize + size + 8, (char*) directory, this.onErrorFunc);
+			invokeJVM(options, memSize + size + 8, (char*) directory);
 		}
 	}
-	extern void invokeJVM(char** options, int numOptions, char* directory, onErrorFunc onErrorFunc);
+	extern void invokeJVM(char** options, int numOptions, char* directory);
 }

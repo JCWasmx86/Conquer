@@ -5,15 +5,13 @@
 
 extern void *loadJavaLibrary(char *directory);
 typedef jint(JNICALL *createJVM)(JavaVM **, void **, void *);
-typedef void (*onErrorFunc)(gchar *stacktrace, gchar *reportLocation);
 
 extern createJVM findFunction(void *);
 extern void closeLibrary(void *);
 
 static char *getStacktrace(JNIEnv *env, jthrowable throwable);
 
-void launcher_invokeJVM(char **options, int numOptions, char *directory,
-						onErrorFunc func) {
+void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 	void *handle = loadJavaLibrary(directory);
 	assert(handle && "Couldn't load Java library! Is the path correct?");
 	createJVM create = findFunction(handle);
@@ -49,14 +47,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory,
 		jmethodID report = (*env)->GetStaticMethodID(
 			env, reporter, "writeErrorLog",
 			"(Ljava/lang/Throwable;)Ljava/lang/String;");
-		jobject string =
-			(*env)->CallStaticObjectMethod(env, reporter, report, thrown);
-		char *reportLocation =
-			(char *)(*env)->GetStringUTFChars(env, string, NULL);
-		printf("%s\n%s\n", reportLocation, stacktrace);
-		if (func) {
-			func(stacktrace, reportLocation);
-		}
+		(*env)->CallStaticObjectMethod(env, reporter, report, thrown);
 	}
 	(*jvm)->DestroyJavaVM(jvm);
 cleanup:
