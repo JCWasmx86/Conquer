@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 #ifndef _WIN32
+#include <pwd.h>
 #include <sys/types.h>
-       #include <pwd.h>
-       #include <unistd.h>
+#include <unistd.h>
 #endif
 extern void *loadJavaLibrary(char *directory);
 typedef jint(JNICALL *createJVM)(JavaVM **, void **, void *);
@@ -16,9 +16,9 @@ extern void closeLibrary(void *);
 extern void launcher_makeDirectory(char *);
 
 static char *getStacktrace(JNIEnv *, jthrowable);
-static void formatTime(char*);
-static char* getBaseDir(void);
-static void writeFile(JNIEnv *env, char* file);
+static void formatTime(char *);
+static char *getBaseDir(void);
+static void writeFile(JNIEnv *env, char *file);
 
 void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 	void *handle = loadJavaLibrary(directory);
@@ -51,16 +51,17 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 	if (thrown) {
 		(*env)->ExceptionClear(env);
 		char *stacktrace = getStacktrace(env, thrown);
-		//249 chars should be enough for time
-		char* dateAndTime = calloc(250, 1);
+		// 249 chars should be enough for time
+		char *dateAndTime = calloc(250, 1);
 		assert(dateAndTime);
 		formatTime(dateAndTime);
-		char* baseDir = getBaseDir();
-		char* reportsDir = calloc(strlen(baseDir) + strlen("/reports/") + 2, 1);
+		char *baseDir = getBaseDir();
+		char *reportsDir = calloc(strlen(baseDir) + strlen("/reports/") + 2, 1);
 		assert(reportsDir);
 		sprintf(reportsDir, "%s/reports/", baseDir);
 		launcher_makeDirectory(reportsDir);
-		char* fileName = calloc(strlen(dateAndTime) + strlen(reportsDir) + 50, 1);
+		char *fileName =
+			calloc(strlen(dateAndTime) + strlen(reportsDir) + 50, 1);
 		assert(fileName);
 		sprintf(fileName, "%s%s__report.txt", reportsDir, dateAndTime);
 		writeFile(env, fileName);
@@ -100,36 +101,41 @@ static char *getStacktrace(JNIEnv *env, jthrowable throwable) {
 	jstring string = (*env)->CallObjectMethod(env, sw, mid);
 	return (char *)(*env)->GetStringUTFChars(env, string, NULL);
 }
-static void formatTime(char *output){
+static void formatTime(char *output) {
 	assert(output);
-    time_t rawtime;
-    time (&rawtime);
-    struct tm * timeinfo = localtime (&rawtime);
-    sprintf(output, "%d_%d_%d;;%d__%d__%d___",timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+	time_t rawtime;
+	time(&rawtime);
+	struct tm *timeinfo = localtime(&rawtime);
+	sprintf(output, "%d_%d_%d;;%d__%d__%d___", timeinfo->tm_mday,
+			timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour,
+			timeinfo->tm_min, timeinfo->tm_sec);
 }
-static char* getBaseDir(void) {
+static char *getBaseDir(void) {
 #ifdef _WIN32
-	char* env = getenv("APPDATA");
-	char* ret = calloc(strlen(env) + strlen("\\.conquer") + 2, 1);
+	char *env = getenv("APPDATA");
+	char *ret = calloc(strlen(env) + strlen("\\.conquer") + 2, 1);
 	assert(ret);
-	sprintf(ret, "%s\\.conquer",env);
+	sprintf(ret, "%s\\.conquer", env);
 	return ret;
 #else
-	char* env = getenv("APPDATA");
-	if(env == NULL) {
+	char *env = getenv("APPDATA");
+	if (env == NULL) {
 		env = getpwuid(getuid())->pw_dir;
 	}
-	char* ret = calloc(strlen(env) + strlen("/.config/.conquer") + 2,1);
+	char *ret = calloc(strlen(env) + strlen("/.config/.conquer") + 2, 1);
 	assert(ret);
-    	sprintf(ret, "%s/.config/.conquer",env);
+	sprintf(ret, "%s/.config/.conquer", env);
 #endif
 }
-static void writeFile(JNIEnv *env, char* file) {
+static void writeFile(JNIEnv *env, char *file) {
 	jclass reporter = (*env)->FindClass(env, "conquer/gui/ErrorReporterUtils");
 	assert(reporter);
-	jmethodID mid = (*env)->GetStaticMethodID(env, reporter, "getString", "()Ljava/lang/String;");
-	FILE *fp =fopen(file, "w");
+	jmethodID mid = (*env)->GetStaticMethodID(env, reporter, "getString",
+											  "()Ljava/lang/String;");
+	FILE *fp = fopen(file, "w");
 	assert(fp);
-	fputs((*env)->GetStringUTFChars(env, (*env)->CallStaticObjectMethod(env, reporter, mid),NULL), fp);
+	fputs((*env)->GetStringUTFChars(
+			  env, (*env)->CallStaticObjectMethod(env, reporter, mid), NULL),
+		  fp);
 	fclose(fp);
 }
