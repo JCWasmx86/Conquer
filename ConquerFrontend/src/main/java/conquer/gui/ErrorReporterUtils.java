@@ -11,9 +11,50 @@ import java.io.StringWriter;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
-public final class ErrorReporter {
-	private ErrorReporter() {
+public final class ErrorReporterUtils {
+	private ErrorReporterUtils() {
 		//Hide public default constructor
+	}
+
+	private static String getSystemProperties(final Throwable t) {
+		try (final var sw = new StringWriter(); final var pw = new PrintWriter(sw)) {
+			t.printStackTrace(pw);
+			System.getProperties().forEach((key, value) -> {
+				sw.write(key + ": " + value + "\n");
+			});
+			return sw.toString();
+		} catch (final IOException e) {
+			Shared.LOGGER.exception(e);
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	private static String getEnvironmentVariables() {
+		try (final var sw = new StringWriter()) {
+			System.getProperties().forEach((key, value) -> {
+				sw.write(key + "=" + value + "\n");
+			});
+			return sw.toString();
+		} catch (final IOException e) {
+			Shared.LOGGER.exception(e);
+			e.printStackTrace();
+		}
+		return "";
+	}
+
+	static String getString(final Throwable t) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("--Crashreport--\n");
+		sb.append(ErrorReporterUtils.getSystemProperties(t));
+		sb.append(ErrorReporterUtils.getEnvironmentVariables());
+		Thread.getAllStackTraces().forEach((thread, stackTraceElements) -> {
+			sb.append(thread.getName() + ": \n");
+			for (var ste : stackTraceElements) {
+				sb.append("\t" + ste.toString() + "\n");
+			}
+		});
+		return sb.toString();
 	}
 
 	// Returns the errorlog filename.
@@ -47,7 +88,7 @@ public final class ErrorReporter {
 				}
 			});
 			bw.write("Services\n\n");
-			ErrorReporter.class.getModule().getDescriptor().uses().forEach(a -> {
+			ErrorReporterUtils.class.getModule().getDescriptor().uses().forEach(a -> {
 				try {
 					final var clazz = Class.forName(a);
 					ServiceLoader.load(clazz).stream().map(Provider::get).map(Object::getClass).forEach(b -> {
