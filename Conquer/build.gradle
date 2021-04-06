@@ -29,6 +29,8 @@ test {
 		events "passed", "skipped", "failed", "standardOut", "standardError"
 		showStackTraces = true
 	}
+	mkdir "tmp"
+	environment "APPDATA", "tmp"
 	useJUnitPlatform()
 }
 jar {
@@ -49,24 +51,33 @@ assemble.dependsOn(conquerResources, test)
 
 clean {
 	delete "src/main/resources/data"
+	delete "tmp"
 }
 
 task runTestsuite1(type: JavaExec) {
+	mkdir "tmp"
+	environment "APPDATA", "tmp"
 	main = "conquer.testsuite.Testsuite1"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
 task runTestsuite2(type: JavaExec) {
+	mkdir "tmp"
+	environment "APPDATA", "tmp"
 	main = "conquer.testsuite.Testsuite2"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
 task runTestsuite3(type: JavaExec) {
+	mkdir "tmp"
+	environment "APPDATA", "tmp"
 	main = "conquer.testsuite.Testsuite3"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath
 }
 task runPerformanceTest(type: JavaExec) {
+	mkdir "tmp"
+	environment "APPDATA", "tmp"
 	main = "conquer.testsuite.PerformanceTest"
 	classpath = sourceSets.main.runtimeClasspath
 	classpath += sourceSets.test.runtimeClasspath

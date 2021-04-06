@@ -19,14 +19,11 @@ public final class Shared {
 	 * Describes the directory with all data of the game. (E.g. configuration files,
 	 * plugins, strategies,...)
 	 */
-	public static final String BASE_DIRECTORY = Shared.isWindows() ? System.getenv("APPDATA") + "\\.conquer\\"
-			: System.getProperty("user.home") + "/.config/.conquer/";
-
+	public static final String BASE_DIRECTORY = getBaseDirectory();
 	/**
 	 * In this directory everything should be saved.
 	 */
 	public static final String SAVE_DIRECTORY = Shared.BASE_DIRECTORY + System.getProperty("file.separator") + "saves";
-
 	/**
 	 * In this file, all properties are listed.
 	 */
@@ -225,6 +222,13 @@ public final class Shared {
 
 	private Shared() {
 
+	}
+
+	private static String getBaseDirectory() {
+		if (Shared.isWindows()) {
+			return System.getProperty("conquer.appdata.default", System.getenv("APPDATA")) + "\\.conquer\\";
+		}
+		return System.getProperty("user.home") + "/.config/.conquer/";
 	}
 
 	/**

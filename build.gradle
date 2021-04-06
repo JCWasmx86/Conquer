@@ -53,10 +53,10 @@ allprojects {
 			options.incremental = true
 		}
 		tasks.withType(JavaExec) {
-			jvmArgs += ["--enable-preview"]
+			jvmArgs += ["--enable-preview", "-Duser.home=tmp"]
 		}
 		tasks.withType(Test) {
-			jvmArgs += ["--enable-preview"]
+			jvmArgs += ["--enable-preview", "-Duser.home=tmp"]
 		}
 	}
 	jacocoTestReport {
