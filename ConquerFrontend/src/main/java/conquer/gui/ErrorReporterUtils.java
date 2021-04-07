@@ -14,9 +14,7 @@ public final class ErrorReporterUtils {
 	private static String getSystemProperties(final Throwable t) {
 		try (final var sw = new StringWriter(); final var pw = new PrintWriter(sw)) {
 			t.printStackTrace(pw);
-			System.getProperties().forEach((key, value) -> {
-				sw.write(key + ": " + value + "\n");
-			});
+			System.getProperties().forEach((key, value) -> sw.write(key + ": " + value + "\n"));
 			return sw.toString();
 		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
@@ -27,9 +25,7 @@ public final class ErrorReporterUtils {
 
 	private static String getEnvironmentVariables() {
 		try (final var sw = new StringWriter()) {
-			System.getProperties().forEach((key, value) -> {
-				sw.write(key + "=" + value + "\n");
-			});
+			System.getProperties().forEach((key, value) -> sw.write(key + "=" + value + "\n"));
 			return sw.toString();
 		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
@@ -39,14 +35,14 @@ public final class ErrorReporterUtils {
 	}
 
 	static String getString(final Throwable t) {
-		StringBuilder sb = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		sb.append("--Crashreport--\n");
 		sb.append(ErrorReporterUtils.getSystemProperties(t));
 		sb.append(ErrorReporterUtils.getEnvironmentVariables());
 		Thread.getAllStackTraces().forEach((thread, stackTraceElements) -> {
-			sb.append(thread.getName() + ": \n");
-			for (var ste : stackTraceElements) {
-				sb.append("\t" + ste.toString() + "\n");
+			sb.append(thread.getName()).append(": \n");
+			for (final var ste : stackTraceElements) {
+				sb.append("\t").append(ste.toString()).append("\n");
 			}
 		});
 		return sb.toString();

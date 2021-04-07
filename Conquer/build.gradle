@@ -9,7 +9,7 @@ dependencies {
 	runtimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
 	implementation fileTree(dir: "${project.rootDir}/DefaultPlugins/build/libs", include: ["*.jar"])
 	implementation fileTree(dir: "${project.rootDir}/Conquer/build/libs", include: ["*.jar"])
-	implementation fileTree(dir: "${project.rootDir}/ConquerFrontendSPI/build/libs", include: ["*.jar"]);
+	implementation fileTree(dir: "${project.rootDir}/ConquerFrontendSPI/build/libs", include: ["*.jar"])
 }
 compileJava {
 	doFirst {

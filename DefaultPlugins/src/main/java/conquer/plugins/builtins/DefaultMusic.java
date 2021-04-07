@@ -7,7 +7,6 @@ import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
 import conquer.utils.Graph;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public final class DefaultMusic implements Plugin, MusicProvider {
 	}
 
 	@Override
-	public void resume(final PluginInterface pi, final InputStream bytes) throws IOException {
+	public void resume(final PluginInterface pi, final InputStream bytes) {
 		for (var i = 0; i < 27; i++) {
 			pi.addMusic("Battle" + i);
 		}

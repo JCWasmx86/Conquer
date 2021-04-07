@@ -19,7 +19,7 @@ public final class Shared {
 	 * Describes the directory with all data of the game. (E.g. configuration files,
 	 * plugins, strategies,...)
 	 */
-	public static final String BASE_DIRECTORY = getBaseDirectory();
+	public static final String BASE_DIRECTORY = Shared.getBaseDirectory();
 	/**
 	 * In this directory everything should be saved.
 	 */
