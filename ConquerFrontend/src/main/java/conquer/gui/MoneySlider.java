@@ -2,6 +2,7 @@ package conquer.gui;
 
 import conquer.data.ConquerInfo;
 
+import java.io.Serial;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
  * Shows a slider that determines the amount of coins to be send as a gift
  */
 final class MoneySlider extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 794966448509855336L;
 	private final transient ConquerInfo game;
 	private JSlider slider;

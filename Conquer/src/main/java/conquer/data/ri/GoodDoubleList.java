@@ -1,10 +1,12 @@
 package conquer.data.ri;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 
 //A list, that only allows non-negative, non-NaN, non-infinity values
 final class GoodDoubleList extends ArrayList<Double> {
+	@Serial
 	private static final long serialVersionUID = 1502828784649438269L;
 	private boolean allowNegative = false;
 

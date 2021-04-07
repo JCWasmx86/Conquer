@@ -2,6 +2,7 @@ package conquer.gui;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 final class TutorialPanel extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 177194549342492092L;
 
 	void init(final JFrame parent) {
@@ -47,11 +49,13 @@ final class TutorialPanel extends JPanel {
 	}
 
 	private static final class ButtonClass extends JButton {
+		@Serial
 		private static final long serialVersionUID = -623497546758855024L;
 
 		private ButtonClass(final String title, final String body, final JTextArea area, final JFrame parent) {
 			super(title);
 			this.setAction(new AbstractAction() {
+				@Serial
 				private static final long serialVersionUID = 7008742488084938249L;
 
 				@Override

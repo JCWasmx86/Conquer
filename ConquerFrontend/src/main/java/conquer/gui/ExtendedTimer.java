@@ -1,6 +1,7 @@
 package conquer.gui;
 
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Timer;
@@ -10,6 +11,7 @@ import javax.swing.Timer;
  * cleared with {@code stopAll}
  */
 final class ExtendedTimer extends Timer {
+	@Serial
 	private static final long serialVersionUID = -6167424556364793575L;
 	private static final List<Timer> registeredTimers = new ArrayList<>();
 

@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serial;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import javax.swing.BoxLayout;
@@ -27,6 +28,7 @@ import javax.swing.JPanel;
  * trivial installation/removal of plugins and strategies
  */
 final class MainScreen extends JFrame implements KeyListener, WindowListener {
+	@Serial
 	private static final long serialVersionUID = 5279928865220785850L;
 	private static boolean forwarded = false;
 	private static boolean alreadyForwardedOnceFromIntro;

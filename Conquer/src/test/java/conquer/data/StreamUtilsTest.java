@@ -116,6 +116,9 @@ class StreamUtilsTest {
 		Assertions.assertEquals(expected, actual);
 	}
 
+	/**
+	 * Note: this class has a natural ordering that is inconsistent with equals.
+	 */
 	static class DummyCity implements ICity {
 		private final IClan clan;
 		private final String name;

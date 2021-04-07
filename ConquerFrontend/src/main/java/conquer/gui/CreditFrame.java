@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
+import java.io.Serial;
 import java.net.URISyntaxException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -23,6 +24,7 @@ import javax.swing.event.HyperlinkEvent.EventType;
  * Shows credits and licensing information.
  */
 final class CreditFrame extends JFrame implements WindowListener, ActionListener {
+	@Serial
 	private static final long serialVersionUID = -4549305902050012246L;
 	private final LoopPlayer player;
 	private volatile boolean switchToMainScreen = false;

@@ -3,6 +3,7 @@ package conquer.gui;
 import conquer.data.Shared;
 
 import java.awt.GraphicsEnvironment;
+import java.io.Serial;
 import java.util.Properties;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -13,6 +14,7 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 public class DefaultSettingsDialogPanel extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 1L;
 	private final JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
 	private final JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"),

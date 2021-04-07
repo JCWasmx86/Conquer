@@ -6,6 +6,7 @@ import conquer.gui.utils.ImageResource;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.Timer;
  * Allows the player to upgrade the strength of the soldiers
  */
 final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
+	@Serial
 	private static final long serialVersionUID = -7456324799677381608L;
 	private final transient IClan clan;
 	private final JLabel infoLabel;
@@ -74,6 +76,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		final var count = this.clan.maxLevels(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1,
 				this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 8078867867027862129L;
 
 			@Override
@@ -100,6 +103,7 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		final var coins = this.clan.getCoins();
 		final var costs = this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1);
 		this.upgradeOnce.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 8078867867027862129L;
 
 			@Override

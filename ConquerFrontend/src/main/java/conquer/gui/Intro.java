@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serial;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * This class provides the introduction for the game.
  */
 final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
+	@Serial
 	private static final long serialVersionUID = 4354833119880282433L;
 	private final Sound sound;
 	private final Timer timer = new Timer(Utils.getRefreshRate(), this);

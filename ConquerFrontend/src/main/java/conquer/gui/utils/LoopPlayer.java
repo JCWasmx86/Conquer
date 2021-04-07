@@ -1,5 +1,6 @@
 package conquer.gui.utils;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.Random;
  * A class that plays a list of sounds in a loop
  */
 public final class LoopPlayer extends Thread implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 2553365886138549665L;
 	private boolean aborted;
 	private List<Sound> sounds;

@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ import javax.swing.SwingUtilities;
  * This frame shows all installed scenarios in a JList.
  */
 final class LevelSelectFrame extends JFrame implements MouseListener, WindowListener {
+	@Serial
 	private static final long serialVersionUID = -6919213661998844224L;
 	private boolean shouldExit = true;
 	private transient GlobalContext context;

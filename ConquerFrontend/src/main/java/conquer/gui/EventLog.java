@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
@@ -31,6 +32,7 @@ import javax.swing.Timer;
  */
 final class EventLog extends JFrame implements MessageListener {
 	private static final float FONT_SIZE = 17.5f;
+	@Serial
 	private static final long serialVersionUID = 5521609891725906272L;
 	private static EventLog log;
 
@@ -72,6 +74,7 @@ final class EventLog extends JFrame implements MessageListener {
 		menu.add(this.showBad);
 		final var clearButton = new JMenuItem();
 		clearButton.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 8790065267838524992L;
 
 			@Override
@@ -88,6 +91,7 @@ final class EventLog extends JFrame implements MessageListener {
 		menu.add(clearButton);
 		final var exitButton = new JMenuItem();
 		exitButton.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 5612700000874979582L;
 
 			@Override
@@ -206,6 +210,7 @@ final class EventLog extends JFrame implements MessageListener {
 
 	private void initDecreaseFontSize(final JMenuItem decreaseFontSize) {
 		decreaseFontSize.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 4199619851951311213L;
 
 			@Override
@@ -231,6 +236,7 @@ final class EventLog extends JFrame implements MessageListener {
 
 	private void initIncreaseFontSize(final JMenuItem increaseFontSize) {
 		increaseFontSize.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 8790065267838524992L;
 
 			@Override

@@ -5,6 +5,7 @@ import conquer.data.IClan;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
  * the relationship to other clans and to improve it by sending gifts.
  */
 final class RelationshipPanel extends JPanel implements ActionListener {
+	@Serial
 	private static final long serialVersionUID = -7720369284705527955L;
 	private final transient ConquerInfo game;
 	private final List<JLabel> labels;

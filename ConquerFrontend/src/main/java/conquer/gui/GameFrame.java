@@ -23,6 +23,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,6 +59,7 @@ import javax.swing.WindowConstants;
  */
 final class GameFrame extends JFrame implements WindowListener, ComponentListener {
 	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " ";
+	@Serial
 	private static final long serialVersionUID = 4456629322882679917L;
 	private final transient ConquerInfo game;
 	private final Map<ICity, CityLabel> labels = new HashMap<>();
@@ -273,6 +275,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 
 	private void initGameStage() {
 		this.gameStage = new JLabel(new ImageIcon(this.game.getBackground())) {
+			@Serial
 			private static final long serialVersionUID = -2190001953669516117L;
 
 			@Override
@@ -306,6 +309,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		jmenubar.add(jmenu);
 		final var saveGame = new JMenuItem();
 		saveGame.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 2560703690131079830L;
 
 			@Override
@@ -332,6 +336,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		jmenu.add(saveGame);
 		final var tutorial = new JMenuItem();
 		tutorial.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 7044880562698255228L;
 
 			@Override
@@ -343,6 +348,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		jmenu.add(tutorial);
 		final var close = new JMenuItem();
 		close.setAction(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 2560703690131079830L;
 
 			@Override

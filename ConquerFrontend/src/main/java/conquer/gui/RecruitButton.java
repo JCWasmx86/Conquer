@@ -2,6 +2,7 @@ package conquer.gui;
 
 import conquer.data.ICity;
 
+import java.io.Serial;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,6 +12,7 @@ import javax.swing.JSlider;
  * Allows the player to recruit soldiers
  */
 final class RecruitButton extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 4846741301367606008L;
 	private final JSlider js;
 	private final JButton jbutton;

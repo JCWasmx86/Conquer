@@ -2,6 +2,7 @@ package conquer.gui;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.Serial;
 import javax.swing.JTextField;
 
 /**
@@ -9,6 +10,7 @@ import javax.swing.JTextField;
  * "https://stackoverflow.com/a/24571681">https://stackoverflow.com/a/24571681</a>.
  */
 final class HintTextField extends JTextField implements FocusListener {
+	@Serial
 	private static final long serialVersionUID = 7292642801367703358L;
 	private final String hint;
 	private boolean showingHint;

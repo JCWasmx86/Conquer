@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+import java.io.Serial;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
@@ -19,6 +20,7 @@ import javax.swing.JButton;
  * with minor changes.
  */
 final class RoundButton extends JButton {
+	@Serial
 	private static final long serialVersionUID = 3881854141204649327L;
 
 	private transient Shape shape;

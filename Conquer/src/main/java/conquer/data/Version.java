@@ -42,4 +42,10 @@ public record Version(int major, int minor, int patch) implements Comparable<Ver
 		}
 		return 0;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Version)) return false;
+		return compareTo((Version) o) == 0;
+	}
 }

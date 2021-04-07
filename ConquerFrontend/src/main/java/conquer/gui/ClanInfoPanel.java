@@ -8,6 +8,7 @@ import conquer.data.StreamUtils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.function.ToLongFunction;
 import javax.swing.BoxLayout;
 import javax.swing.JEditorPane;
@@ -22,6 +23,7 @@ import javax.swing.text.DefaultCaret;
  * {@code UpgradeSoldiersPanel, UpgradeSoldiersDefense and UpgradeSoldiersOffense}.
  */
 final class ClanInfoPanel extends JPanel implements ActionListener {
+	@Serial
 	private static final long serialVersionUID = 3553281021198844773L;
 	private final transient IClan clan;
 	private final transient ConquerInfo game;

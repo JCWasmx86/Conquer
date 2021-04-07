@@ -6,6 +6,7 @@ import conquer.data.Resource;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -25,6 +26,7 @@ import javax.swing.text.DefaultCaret;
  * responsible for recruiting soldiers in this city.
  */
 class CityInfoPanel extends JPanel implements ActionListener {
+	@Serial
 	private static final long serialVersionUID = 2409517597504961241L;
 	private final transient ICity city;
 	private final List<ResourceButton> resourceButtons;

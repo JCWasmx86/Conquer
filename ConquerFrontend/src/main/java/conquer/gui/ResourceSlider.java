@@ -3,6 +3,7 @@ package conquer.gui;
 import conquer.data.ConquerInfo;
 import conquer.data.Resource;
 
+import java.io.Serial;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -12,6 +13,7 @@ import javax.swing.JTextField;
  * Shows a slider that determines the amount of a resource to be send as a gift
  */
 final class ResourceSlider extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 595825972773535456L;
 	private final Resource resource;
 	private final transient ConquerInfo game;

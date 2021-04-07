@@ -7,6 +7,7 @@ import conquer.data.strategy.StrategyObject;
 import conquer.gui.utils.ImageResource;
 
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.function.DoubleConsumer;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
@@ -58,6 +59,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
 		// Accept, decline
 		final var accept = new JButton(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = -1684485024318434611L;
 
 			@Override
@@ -70,6 +72,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		});
 		accept.setText(Messages.getString("GiftCallback.accept"));
 		final var decline = new JButton(new AbstractAction() {
+			@Serial
 			private static final long serialVersionUID = 5614286737761253933L;
 
 			@Override

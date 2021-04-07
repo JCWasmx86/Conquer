@@ -5,6 +5,7 @@ import conquer.frontend.spi.SettingMenuPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 final class SettingsDialog extends JFrame {
+	@Serial
 	private static final long serialVersionUID = -2372114950563857591L;
 	private static final SettingsDialog INSTANCE = new SettingsDialog();
 	private final DefaultSettingsDialogPanel panel = new DefaultSettingsDialogPanel();

@@ -2,6 +2,7 @@ package conquer.gui.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serial;
 import java.io.Serializable;
 import java.net.URL;
 import javax.sound.sampled.AudioFormat;
@@ -15,6 +16,7 @@ import javax.sound.sampled.LineListener;
  * A class wrapping the Sound API.
  */
 public class Sound implements LineListener, Serializable {
+	@Serial
 	private static final long serialVersionUID = -2159162046590240266L;
 	private final String filename;
 	private boolean isPlaying;

@@ -3,6 +3,7 @@ package conquer.data;
 import conquer.messages.Message;
 import conquer.plugins.MessageListener;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * is added or removed.
  */
 public final class EventList extends ArrayList<Message> {
+	@Serial
 	private static final long serialVersionUID = -3059648150677032552L;
 
 	private final List<MessageListener> listeners = new ArrayList<>(50);

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serial;
 import java.util.Map;
 import java.util.function.Consumer;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * a clan
 	 */
 	static final int CLAN_COLOR_HEIGHT = 12;
+	@Serial
 	private static final long serialVersionUID = -5091974547825438103L;
 	private final transient ICity city;
 	private final transient Timer timer;

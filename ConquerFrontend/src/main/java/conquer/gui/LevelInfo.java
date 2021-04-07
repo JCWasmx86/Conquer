@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import javax.swing.ListCellRenderer;
  * back- and forward-button.
  */
 final class LevelInfo extends JFrame implements WindowListener {
+	@Serial
 	private static final long serialVersionUID = 5849067897050863981L;
 	private boolean shouldExit = false;
 

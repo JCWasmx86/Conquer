@@ -6,6 +6,7 @@ import conquer.data.Resource;
 import conquer.gui.utils.ImageResource;
 
 import java.awt.Component;
+import java.io.Serial;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ import javax.swing.SwingConstants;
  * Allows the player to see some information about a resource and upgrade it.
  */
 final class ResourceButton extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 8574350366288971896L;
 	private final JButton upgradeThisResource;
 	private final JButton maximumUpgrade;

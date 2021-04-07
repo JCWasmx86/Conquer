@@ -5,6 +5,7 @@ import conquer.data.GlobalContext;
 import conquer.data.strategy.StrategyProvider;
 import conquer.plugins.Plugin;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 final class PluginStrategySelectPanel extends JPanel {
+	@Serial
 	private static final long serialVersionUID = 3909874317355075179L;
 	private final transient GlobalContext context;
 	private final List<JCheckBox> plugins = new ArrayList<>();

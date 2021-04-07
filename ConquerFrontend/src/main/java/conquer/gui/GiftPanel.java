@@ -6,6 +6,7 @@ import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.data.Shared;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BoxLayout;
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
  */
 final class GiftPanel extends JPanel {
 
+	@Serial
 	private static final long serialVersionUID = -2927785362578307419L;
 	private final transient ConquerInfo game;
 	private final List<ResourceSlider> sliders;
