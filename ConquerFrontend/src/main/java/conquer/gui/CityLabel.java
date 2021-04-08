@@ -120,7 +120,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			if (!this.marked && (this.city.isPlayerCity())) {
 				this.labels.values().forEach(CityLabel::unmark);
 				this.city.getInfo().getCities().getConnected(this.city)
-						 .forEach(a -> this.labels.get(a).mark(this.city));
+						.forEach(a -> this.labels.get(a).mark(this.city));
 			} else if (this.marked) {
 				this.proceed();
 				this.labels.values().forEach(CityLabel::unmark);

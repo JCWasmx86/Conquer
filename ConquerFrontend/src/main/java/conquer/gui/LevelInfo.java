@@ -52,7 +52,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<Pair<String, Color>>();
 		assocs.addAll(game.getClans().stream().map(a -> new Pair<>(a.getName(), a.getColor()))
-						  .toList());
+				.toList());
 		final var jlist = new JList<>(assocs);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
 			private final Map<Pair<String, Color>, JLabel> map = new HashMap<>();
@@ -109,7 +109,7 @@ final class LevelInfo extends JFrame implements WindowListener {
 		this.add(scrollPane);
 		this.add(selectPanel);
 		final var allConfigurationPanels = ServiceLoader.load(ConfigurationPanelProvider.class).stream()
-														.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).toList();
+				.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).toList();
 		if (!allConfigurationPanels.isEmpty()) {
 			this.add(this.buildConfigurationPanel(allConfigurationPanels, game.getClass()));
 		}

@@ -377,7 +377,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 			this.labels.put(city, cityLabel);
 		});
 		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(ICity::isPlayerCity).findFirst()
-												  .orElse(cities.getValue(0)).getName());
+				.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel);
 		final var clanInfo = new ClanInfoPanel(this.game.getPlayerClan(), this.game);
@@ -411,7 +411,7 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		final var cities = this.game.getCities();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
 		ServiceLoader.load(MusicProvider.class).stream().map(Supplier::get).map(MusicProvider::getMusic)
-					 .flatMap(List::stream).forEach(this.loopPlayer::addSong);
+				.flatMap(List::stream).forEach(this.loopPlayer::addSong);
 		try {
 			this.loopPlayer.start();
 		} catch (final IllegalThreadStateException itse) {

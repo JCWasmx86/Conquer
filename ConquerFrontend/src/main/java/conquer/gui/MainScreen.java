@@ -80,7 +80,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		settings.add(exit);
 		menu.add(settings);
 		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem)
-					 .forEach(menu::add);
+				.forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -96,7 +96,7 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 		play.setFont(play.getFont().deriveFont(50.0f));
 		panel.add(play);
 		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getButton)
-					 .forEach(panel::add);
+				.forEach(panel::add);
 		final var credits = new JButton(Messages.getString("MainScreen.credits"));
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;

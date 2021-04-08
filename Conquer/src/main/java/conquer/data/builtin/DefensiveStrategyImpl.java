@@ -92,8 +92,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 		final var totalCoins = clan.getCoins() * Math.random() * 0.33;
 		final var gift = new Gift(giftedResources, totalCoins);
 		final var clans = StreamUtils.getCitiesAsStream(this.graph).map(ICity::getClan).distinct()
-									 .filter(a -> a != clan).sorted(Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
-									 .toList();
+				.filter(a -> a != clan).sorted(Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
+				.toList();
 		// Improve relationship, start from the one with the worst relationship.
 		for (final var otherClan : clans) {
 			if (Math.random() < 0.75) {
@@ -167,7 +167,7 @@ public final class DefensiveStrategyImpl implements Strategy {
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan,
 				ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
-									  .sorted().forEach(enemy -> {
+						.sorted().forEach(enemy -> {
 							// Strength of the own soldiers
 							final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
 									* clan.getSoldiersStrength();
