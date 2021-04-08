@@ -163,7 +163,7 @@ public final class GameSaver implements ConquerSaver {
 																					ClassNotFoundException {
 		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
+																	  .replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
 		for (final var file : files) {
 			ret.add(this.readClan(file, game));
 		}
@@ -175,7 +175,7 @@ public final class GameSaver implements ConquerSaver {
 		   ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
+																	  .replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
 		for (final var file : files) {
 			final var pluginName = file.getName().replaceAll("\\.plugin\\.save$", "");
 			final var plugin = (Plugin) Class.forName(pluginName).getConstructor().newInstance();

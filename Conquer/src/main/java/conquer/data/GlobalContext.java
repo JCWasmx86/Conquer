@@ -107,8 +107,8 @@ public final class GlobalContext {
 			throw new IllegalArgumentException("is==null");
 		}
 		final var list = this.readers.stream()
-				.sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
-				.toList();
+									 .sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
+									 .toList();
 		if (list.isEmpty()) {
 			throw new UnsupportedOperationException("No reader found");
 		}

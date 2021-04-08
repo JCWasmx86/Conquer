@@ -57,7 +57,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		final var production = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(
 				c -> (c.getNumberOfPeople() * this.game.getResourceUsage(this.clan).getCoinsPerRoundPerPerson())
 						- (c.getNumberOfSoldiers() * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound()))
-				.sum();
+										  .sum();
 		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green",
 				Messages.getString("ClanInfoPanel.coinsPerRound"), production);
 	}
@@ -65,13 +65,13 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	private String generateText() {
 		final var sb = new StringBuilder("<html><body>");
 		sb.append(Messages.getString("Shared.name")).append(": ").append(this.clan.getName()).append("<br>")
-				.append(Messages.getString("ClanInfoPanel.numberOfSoldiers"))
-				.append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>")
-				.append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ")
-				.append(this.getNumber(ICity::getNumberOfPeople)).append("<br>")
-				.append(Messages.getString("Shared.coins")).append(": ")
-				.append(String.format("%.2f", this.clan.getCoins()))
-				.append(this.coinsPerRound());
+		  .append(Messages.getString("ClanInfoPanel.numberOfSoldiers"))
+		  .append(": ").append(this.getNumber(ICity::getNumberOfSoldiers)).append("<br>")
+		  .append(Messages.getString("ClanInfoPanel.numberOfPeople")).append(": ")
+		  .append(this.getNumber(ICity::getNumberOfPeople)).append("<br>")
+		  .append(Messages.getString("Shared.coins")).append(": ")
+		  .append(String.format("%.2f", this.clan.getCoins()))
+		  .append(this.coinsPerRound());
 		for (final var r : Resource.values()) {
 			sb.append(this.resource(r));
 		}
@@ -107,9 +107,9 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	private String resource(final Resource r) {
 		final var index = r.getIndex();
 		final var sb = new StringBuilder("<br> ").append(r.getName()).append(": ")
-				.append(String.format("%.2f", this.clan.getResources().get(index))).append("<br>");
+												 .append(String.format("%.2f", this.clan.getResources().get(index))).append("<br>");
 		final var productions = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan)
-				.mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
+										   .mapToDouble(c -> (c.getNumberOfPeople() * c.getProductions().get(index))).sum();
 		final var usage = StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToDouble(c -> {
 			final var va = this.game.getResourceUsage(this.clan).get(index);
 			return ((c.getNumberOfSoldiers() * va[1]) + (c.getNumberOfPeople() * va[0]));
@@ -122,8 +122,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		}
 		return sb.append(r.getName()).append(" ").append(Messages.getString("ClanInfoPanel.perRound")).append(": ")
 
-				.append(String.format("%.2f", balance))
-				.append("</font>").toString();
+				 .append(String.format("%.2f", balance))
+				 .append("</font>").toString();
 	}
 
 }

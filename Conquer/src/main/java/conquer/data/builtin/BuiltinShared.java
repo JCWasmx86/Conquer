@@ -108,7 +108,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(cityGraph != null, "cityGraph==null");
 		BuiltinShared.assertThat(object != null, "object==null");
 		final Predicate<ICity> inSafeCountry = city -> StreamUtils.getCitiesAroundCity(object, cityGraph, city, clan)
-				.count() > 0;
+																  .count() > 0;
 		final Predicate<ICity> isReachableCityOfTheEnemy = city -> (StreamUtils
 				.getCitiesAroundCity(object, cityGraph, city, clan).count() > 0) && (city.getClan() != clan);
 		StreamUtils.getCitiesAsStream(cityGraph, isReachableCityOfTheEnemy).distinct().forEach(
@@ -191,11 +191,11 @@ final class BuiltinShared {
 		StreamUtils.getCitiesAsStream(graph, clan).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(object, graph, a, a.getClan())
-					.toList();
+											  .toList();
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = b.getDefenseStrength();
 			final var neighboursB = StreamUtils.getCitiesAroundCityNot(object, graph, b, b.getClan())
-					.toList();
+											   .toList();
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
 			final var diff2 = attackB - defenseB;

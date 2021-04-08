@@ -431,7 +431,7 @@ final class Game implements ConquerInfo {
 		this.cpuPlay();
 		try {
 			this.data.getPlugins()
-					.forEach(a -> a.handle(this.cities, new Context(this.events, this.getClanNames(), this.clans)));
+					 .forEach(a -> a.handle(this.cities, new Context(this.events, this.getClanNames(), this.clans)));
 		} catch (final Throwable throwable) {// The plugin could throw everything, never trust unknown code.
 			Shared.LOGGER.exception(throwable);
 			if (this.throwableConsumer != null) {
@@ -594,11 +594,11 @@ final class Game implements ConquerInfo {
 		return Stream.of(reachableCities.toArray(new ICity[0])).sorted((a, b) -> {
 			final var defense = a.getDefenseStrength();
 			final var neighbours = StreamUtils.getCitiesAroundCityNot(this.cities, a, a.getClan())
-					.toList();
+											  .toList();
 			final var attack = neighbours.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var defenseB = b.getDefenseStrength();
 			final var neighboursB = StreamUtils.getCitiesAroundCityNot(this.cities, b, b.getClan())
-					.toList();
+											   .toList();
 			final var attackB = neighboursB.stream().mapToDouble(ICity::getNumberOfSoldiers).sum();
 			final var diff = attack - defense;
 			final var diff2 = attackB - defenseB;
@@ -643,7 +643,7 @@ final class Game implements ConquerInfo {
 	@Override
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
-				.toList());
+									  .toList());
 		this.context.getStrategies().forEach(provider -> {
 			final var idx = provider.getId();
 			if (idx >= Game.MAX_STRATEGIES) {
@@ -767,7 +767,7 @@ final class Game implements ConquerInfo {
 			destination = other;
 		} else {
 			list = this.getWeakestCityInRatioToSurroundingEnemyCities(saved).stream()
-					.filter(a -> a.getClan() == src.getClan()).toList();
+					   .filter(a -> a.getClan() == src.getClan()).toList();
 			if (list.isEmpty()) {
 				return;
 			}

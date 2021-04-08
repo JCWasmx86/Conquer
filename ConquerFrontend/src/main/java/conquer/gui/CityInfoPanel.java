@@ -72,22 +72,25 @@ class CityInfoPanel extends JPanel implements ActionListener {
 					+ "</font></body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name"))
-				.append(": ")
-				.append(this.city.getName()).append("<br>").append(Messages.getString("Shared.clan"))
-				.append(": ")
-				.append(this.city.getClan().getName()).append("<br>")
-				.append(Messages.getString("Shared.soldiers"))
-				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")
-				.append(Messages.getString("Shared.people")).append(": ")
-				.append(this.city.getNumberOfPeople()).append("<br>")
-				.append(Messages.getString("Shared.defense")).append(": ")
-				.append(String.format("%.2f", this.city.getDefense())).append("<br>")
-				.append(Messages.getString("Shared.defenseBonus"))
-				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>")
-				.append(Messages.getString("Shared.growth"))
-				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>")
-				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
-						.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
+										  .append(": ")
+										  .append(this.city.getName()).append("<br>").append(Messages.getString(
+										  		"Shared.clan"))
+										  .append(": ")
+										  .append(this.city.getClan().getName()).append("<br>")
+										  .append(Messages.getString("Shared.soldiers"))
+										  .append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")
+										  .append(Messages.getString("Shared.people")).append(": ")
+										  .append(this.city.getNumberOfPeople()).append("<br>")
+										  .append(Messages.getString("Shared.defense")).append(": ")
+										  .append(String.format("%.2f", this.city.getDefense())).append("<br>")
+										  .append(Messages.getString("Shared.defenseBonus"))
+										  .append(": ").append(String.format("%.2f", this.city.getBonus())).append(
+										  		"<br>")
+										  .append(Messages.getString("Shared.growth"))
+										  .append(": ").append(String.format("%.2f", this.city.getGrowth())).append(
+										  		"<br>")
+										  .append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
+																																	  .maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");
