@@ -288,7 +288,7 @@ void addToArchive(struct archive *a, char *start) {
 		long sz = ftell(fp);
 		rewind(fp);
 		struct archive_entry *entry = archive_entry_new();
-		archive_entry_set_pathname(entry, &start[strlen(input)+1]);
+		archive_entry_set_pathname(entry, &start[strlen(input) + 1]);
 		archive_entry_set_size(entry, sz);
 		archive_entry_set_filetype(entry, AE_IFREG);
 		archive_entry_set_perm(entry, 0644);
