@@ -103,6 +103,7 @@ static char *getBaseDir(void) {
 	char *ret = calloc(strlen(env) + strlen("/.config/.conquer") + 2, 1);
 	assert(ret);
 	sprintf(ret, "%s/.config/.conquer", env);
+	return ret;
 #endif
 }
 static void writeFile(JNIEnv *env, char *file) {
