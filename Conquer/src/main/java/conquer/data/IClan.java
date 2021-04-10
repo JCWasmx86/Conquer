@@ -290,7 +290,10 @@ public interface IClan {
 	 */
 	@Deprecated
 	default double upgradeCostsForOffense(final int x) {
-		// Duplicated, as it would otherwise depend on another method.
+		return this.upgradeCosts0(x);
+	}
+
+	private double upgradeCosts0(final int x) {
 		if (x == 0) {
 			return 40;
 		}
@@ -306,10 +309,7 @@ public interface IClan {
 	 */
 	@Deprecated
 	default double upgradeCostsForDefense(final int x) {
-		if (x == 0) {
-			return 40;
-		}
-		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
+		return this.upgradeCosts0(x);
 	}
 
 	/**
@@ -323,16 +323,19 @@ public interface IClan {
 	 */
 	@Deprecated
 	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
-		// Copy pasted
+		return this.maxLevels0(currLevel, coins, SoldierUpgrade.BOTH);
+	}
+
+	private int maxLevels0(final int currLevel, double coins, final SoldierUpgrade upgrade) {
 		var cnt = 0;
 		do {
-			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
+			final var costs = this.upgradeCosts(upgrade, currLevel + cnt);
 			if (costs > coins) {
 				break;
 			}
 			coins -= costs;
 			cnt++;
-		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
+		} while ((cnt + currLevel) != this.getInfo().getMaximumLevel());
 		return cnt;
 	}
 
@@ -346,10 +349,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double upgradeCostsForOffenseAndDefense(final int x) {
-		if (x == 0) {
-			return 40;
-		}
-		return Math.sqrt(Math.pow(Math.log(x), 3)) * x * x * Math.sqrt(x) * Math.log(x);
+		return this.upgradeCosts0(x);
 	}
 
 	/**
@@ -377,16 +377,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		do {
-			final var costs = this.upgradeCosts(SoldierUpgrade.DEFENSE, currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
-		return cnt;
+		return this.maxLevels0(currLevel, coins, SoldierUpgrade.DEFENSE);
 	}
 
 	/**
@@ -402,16 +393,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		do {
-			final var costs = this.upgradeCosts(SoldierUpgrade.OFFENSE, currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
-		return cnt;
+		return this.maxLevels0(currLevel, coins, SoldierUpgrade.OFFENSE);
 	}
 
 	default int maxLevelsAddResourcesUpgrade(final int currLevel, double coins) {
@@ -439,16 +421,7 @@ public interface IClan {
 	@Deprecated
 	@InternalUseOnly
 	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
-		var cnt = 0;
-		do {
-			final var costs = this.upgradeCosts(SoldierUpgrade.BOTH, currLevel + cnt);
-			if (costs > coins) {
-				break;
-			}
-			coins -= costs;
-			cnt++;
-		} while ((cnt + currLevel) != Shared.MAX_LEVEL);
-		return cnt;
+		return this.maxLevels0(currLevel, coins, SoldierUpgrade.BOTH);
 	}
 
 	/**
@@ -472,6 +445,10 @@ public interface IClan {
 	// All of those are repeated, so you can override only one without effecting
 	// (probably) others.
 
+	private double newPower(final int level) {
+		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+	}
+
 	/**
 	 * Shouldn't be used directly, but can still be overwritten. Replacement for
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
@@ -482,7 +459,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForDefense(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+		return this.newPower(level);
 	}
 
 	/**
@@ -495,7 +472,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForOffense(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+		return this.newPower(level);
 	}
 
 	/**
@@ -508,7 +485,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerForSoldiers(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 100;
+		return this.newPower(level) / 2;
 	}
 
 	/**
@@ -521,7 +498,7 @@ public interface IClan {
 	@InternalUseOnly
 	@Deprecated
 	default double newPowerOfSoldiersForOffenseAndDefense(final int level) {
-		return Math.sqrt(Math.log(level) + (4 * level)) / 50;
+		return this.newPower(level);
 	}
 
 	/**
