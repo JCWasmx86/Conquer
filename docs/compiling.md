@@ -5,7 +5,7 @@
 1. 8 GB RAM (4 GB could work, but at least 8 GB are recommended)
 2. 250 MB disk space + space for all dependencies.
 3. An internet connection for every build.
-
+4. Optional: A gradle 7.0 installation ([Download](https://services.gradle.org/distributions/gradle-7.0-bin.zip)), then you can replace all `./gradlew` commands by `gradle`.
 ## Debian and similar
 
 ### Prerequisites
