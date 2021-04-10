@@ -2,72 +2,37 @@ package conquer.gui;
 
 import conquer.data.IClan;
 import conquer.data.SoldierUpgrade;
-import conquer.gui.utils.ImageResource;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.Serial;
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Allows the player to upgrade the strength of the soldiers
  */
-final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
+final class UpgradeSoldiersPanel extends UpgradePanel {
 	@Serial
 	private static final long serialVersionUID = -7456324799677381608L;
-	private final transient IClan clan;
-	private final JLabel infoLabel;
-	private final JButton upgradeOnce;
-	private final JButton upgradeMax;
 
-	/**
-	 * Create a new UpgradeSoldiersPanel
-	 *
-	 * @param clan For which clan to upgrade the soldiers
-	 */
-	UpgradeSoldiersPanel(final IClan clan) {
-		this.clan = clan;
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.infoLabel = new JLabel();
-		this.infoLabel.setText(this.getInfoText());
-		this.add(this.infoLabel);
-		this.upgradeOnce = new JButton("");
-		this.initUpgradeOnce();
-		this.add(this.upgradeOnce);
-		this.upgradeMax = new JButton(new ImageResource("max.png"));
-		this.initUpgradeMax();
-		this.add(this.upgradeMax);
-		final Timer timer = new ExtendedTimer(Utils.getRefreshRate(), this);
-		timer.start();
+	UpgradeSoldiersPanel(IClan clan) {
+		super(clan);
 	}
 
-	/**
-	 * Update labels/buttons/...
-	 */
 	@Override
-	public void actionPerformed(final ActionEvent e) {
-		this.infoLabel.setText(this.getInfoText());
-		this.initUpgradeOnce();
-		this.initUpgradeMax();
-	}
-
-	private String getInfoText() {
+	String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersPanel.soldiersPower", Utils.format(this.clan.getSoldiersStrength())
 				,
 				this.clan.getSoldiersLevel());
 	}
 
-	private String getOneLevelString() {
+	@Override
+	String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1),
 				Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1)));
 	}
 
-	private void initUpgradeMax() {
+	@Override
+	void initUpgradeMax() {
 		if (this.clan.getSoldiersLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeMax.setEnabled(false);
 			this.upgradeMax.setText(Messages.getString("Shared.maxValueReached"));
@@ -94,7 +59,8 @@ final class UpgradeSoldiersPanel extends JPanel implements ActionListener {
 		}
 	}
 
-	private void initUpgradeOnce() {
+	@Override
+	void initUpgradeOnce() {
 		if (this.clan.getSoldiersLevel() == this.clan.getInfo().getMaximumLevel()) {
 			this.upgradeOnce.setEnabled(false);
 			this.upgradeOnce.setText(Messages.getString("Shared.maxValueReached"));
