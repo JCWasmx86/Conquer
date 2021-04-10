@@ -12,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
@@ -35,7 +34,7 @@ import javax.swing.SwingUtilities;
 /**
  * This frame shows all installed scenarios in a JList.
  */
-final class LevelSelectFrame extends JFrame implements MouseListener, WindowListener {
+final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindowListenerImpl {
 	@Serial
 	private static final long serialVersionUID = -6919213661998844224L;
 	private boolean shouldExit = true;
@@ -196,69 +195,15 @@ final class LevelSelectFrame extends JFrame implements MouseListener, WindowList
 		}
 	}
 
-	/**
-	 * Shouldn't be used
-	 */
 	@Override
-	public void mouseReleased(final MouseEvent e) {
+	public void mouseReleased(MouseEvent mouseEvent) {
 
 	}
 
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowClosed(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used. Closes the window and kills the JVM.
-	 */
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		if (this.shouldExit) {
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowOpened(final WindowEvent e) {
-
 	}
 }

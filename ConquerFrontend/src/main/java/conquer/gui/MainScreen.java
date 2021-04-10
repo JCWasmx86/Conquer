@@ -10,7 +10,6 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.Serial;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
@@ -27,7 +26,7 @@ import javax.swing.JPanel;
  * Furthermore it has a JMenu with the option to show a dialogue, that allows a
  * trivial installation/removal of plugins and strategies
  */
-final class MainScreen extends JFrame implements KeyListener, WindowListener {
+final class MainScreen extends JFrame implements KeyListener, EmptyWindowListenerImpl {
 	@Serial
 	private static final long serialVersionUID = 5279928865220785850L;
 	private static boolean forwarded = false;
@@ -163,60 +162,8 @@ final class MainScreen extends JFrame implements KeyListener, WindowListener {
 			this.player.abort();
 		}
 	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowClosed(final WindowEvent e) {
-	}
-
-	/**
-	 * Kills the JVM.
-	 */
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		System.exit(0);
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowOpened(final WindowEvent e) {
-
 	}
 }

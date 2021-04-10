@@ -12,7 +12,6 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +33,7 @@ import javax.swing.ListCellRenderer;
  * This class shows all clans in a scenario in a JList. Furthermore there is a
  * back- and forward-button.
  */
-final class LevelInfo extends JFrame implements WindowListener {
+final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 	@Serial
 	private static final long serialVersionUID = 5849067897050863981L;
 	private boolean shouldExit = false;
@@ -139,57 +138,10 @@ final class LevelInfo extends JFrame implements WindowListener {
 	 * Shouldn't be used
 	 */
 	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowClosed(final WindowEvent e) {
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
 	public void windowClosing(final WindowEvent e) {
 		if (!this.shouldExit) {
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowOpened(final WindowEvent e) {
-
 	}
 
 }

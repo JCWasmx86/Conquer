@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.Serial;
 import java.util.Random;
 import javax.swing.JFrame;
@@ -25,7 +24,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * This class provides the introduction for the game.
  */
-final class Intro extends JFrame implements WindowListener, KeyListener, ActionListener {
+final class Intro extends JFrame implements EmptyWindowListenerImpl, KeyListener, ActionListener {
 	@Serial
 	private static final long serialVersionUID = 4354833119880282433L;
 	private final Sound sound;
@@ -131,11 +130,6 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 	}
 
 	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	@Override
 	public void windowClosed(final WindowEvent e) {
 		if (this.sound.isPlaying()) {
 			this.sound.stop();
@@ -152,21 +146,6 @@ final class Intro extends JFrame implements WindowListener, KeyListener, ActionL
 		if (this.needed) {
 			System.exit(0);
 		}
-	}
-
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-
-	}
-
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
 	}
 
 	@Override

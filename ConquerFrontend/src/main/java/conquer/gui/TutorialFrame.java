@@ -6,7 +6,6 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.Serial;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,7 +15,7 @@ import javax.swing.JScrollPane;
 /**
  * Shows credits and licensing information.
  */
-final class TutorialFrame extends JFrame implements WindowListener, ActionListener {
+final class TutorialFrame extends JFrame implements EmptyWindowListenerImpl, ActionListener {
 	@Serial
 	private static final long serialVersionUID = -4549305902050012246L;
 	private volatile boolean switchToMainScreen = false;
@@ -48,25 +47,6 @@ final class TutorialFrame extends JFrame implements WindowListener, ActionListen
 		this.setVisible(true);
 	}
 
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowClosed(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		if (this.switchToMainScreen) {
@@ -74,36 +54,5 @@ final class TutorialFrame extends JFrame implements WindowListener, ActionListen
 		} else {
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowOpened(final WindowEvent e) {
-
 	}
 }

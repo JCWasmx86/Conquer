@@ -22,7 +22,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +56,7 @@ import javax.swing.WindowConstants;
  * <li>A JTabbedPane with the CityInfo, ClanInfo and Relationships tabs</li>
  * </ol>
  */
-final class GameFrame extends JFrame implements WindowListener, ComponentListener {
+final class GameFrame extends JFrame implements EmptyWindowListenerImpl, ComponentListener {
 	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " ";
 	@Serial
 	private static final long serialVersionUID = 4456629322882679917L;
@@ -507,59 +506,8 @@ final class GameFrame extends JFrame implements WindowListener, ComponentListene
 		} while (this.saveName.isEmpty());
 	}
 
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowActivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowClosed(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		this.saveAndMaybeExit();
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeactivated(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowDeiconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowIconified(final WindowEvent e) {
-
-	}
-
-	/**
-	 * Shouldn't be used
-	 */
-	@Override
-	public void windowOpened(final WindowEvent e) {
-
 	}
 }
