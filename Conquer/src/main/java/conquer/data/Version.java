@@ -1,5 +1,7 @@
 package conquer.data;
 
+import java.util.Objects;
+
 /**
  * A record describing a version. A version consists of three parts:
  * <ul>
@@ -47,5 +49,10 @@ public record Version(int major, int minor, int patch) implements Comparable<Ver
 	public boolean equals(Object o) {
 		if (!(o instanceof Version)) return false;
 		return compareTo((Version) o) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.major, this.minor, this.patch);
 	}
 }
