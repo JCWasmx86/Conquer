@@ -134,6 +134,7 @@ final class CreditFrame extends JFrame implements EmptyWindowListenerImpl, Actio
 		this.pack();
 		this.setVisible(true);
 	}
+
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		if (this.switchToMainScreen) {

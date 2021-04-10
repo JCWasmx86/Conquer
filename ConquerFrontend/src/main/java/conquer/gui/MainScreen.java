@@ -162,6 +162,7 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 			this.player.abort();
 		}
 	}
+
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		System.exit(0);
