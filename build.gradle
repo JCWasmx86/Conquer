@@ -6,13 +6,13 @@ allprojects {
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "jacoco"
-	if (project.hasProperty("conquer.localJVM") && "true" == project.getProperties().get("conquer.localJVM").toString().toLowerCase()){
-		java{
+	if (project.hasProperty("conquer.localJVM") && "true" == project.getProperties().get("conquer.localJVM").toString().toLowerCase()) {
+		java {
 			toolchain {
 				languageVersion = JavaLanguageVersion.of("${javaversion}")
 			}
 		}
-	}else {
+	} else {
 		gradle.projectsEvaluated {
 			tasks.withType(JavaCompile) {
 				options.compilerArgs << "--source" << "${javaversion}"
@@ -24,7 +24,7 @@ allprojects {
 				jvmArgs += ["--enable-preview", "-Duser.home=tmp"]
 			}
 		}
-		
+
 	}
 	application {
 		applicationDefaultJvmArgs = ["--enable-preview"]

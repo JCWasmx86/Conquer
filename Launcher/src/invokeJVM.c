@@ -15,7 +15,6 @@ extern createJVM findFunction(void *);
 extern void closeLibrary(void *);
 extern void launcher_makeDirectory(char *);
 
-static char *getStacktrace(JNIEnv *, jthrowable);
 static void formatTime(char *);
 static char *getBaseDir(void);
 static void writeFile(JNIEnv *env, char *file);
@@ -79,26 +78,6 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 cleanup:
 	free(jvmoptions);
 	closeLibrary(handle);
-}
-static char *getStacktrace(JNIEnv *env, jthrowable throwable) {
-	jclass stringWriter = (*env)->FindClass(env, "java/io/StringWriter");
-	jclass printWriter = (*env)->FindClass(env, "java/io/PrintWriter");
-	jmethodID noArgsConstructor =
-		(*env)->GetMethodID(env, stringWriter, "<init>", "()V");
-	jmethodID printWriterConstructor =
-		(*env)->GetMethodID(env, printWriter, "<init>", "(Ljava/io/Writer;)V");
-	jobject sw = (*env)->NewObject(env, stringWriter, noArgsConstructor);
-	jobject pw =
-		(*env)->NewObject(env, printWriter, printWriterConstructor, sw);
-	jmethodID printStackTrace =
-		(*env)->GetMethodID(env, (*env)->GetObjectClass(env, throwable),
-							"printStackTrace", "(Ljava/io/PrintWriter;)V");
-	(*env)->CallVoidMethod(env, throwable, printStackTrace, pw);
-	jmethodID mid = (*env)->GetMethodID(env, stringWriter, "toString",
-										"()Ljava/lang/String;");
-	assert(mid);
-	jstring string = (*env)->CallObjectMethod(env, sw, mid);
-	return (char *)(*env)->GetStringUTFChars(env, string, NULL);
 }
 static void formatTime(char *output) {
 	assert(output);
