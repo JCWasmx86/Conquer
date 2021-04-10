@@ -6,7 +6,26 @@ allprojects {
 	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "jacoco"
-	targetCompatibility = "16"
+	if (project.hasProperty("conquer.localJVM") && "true" == project.getProperties().get("conquer.localJVM").toString().toLowerCase()){
+		java{
+			toolchain {
+				languageVersion = JavaLanguageVersion.of("${javaversion}")
+			}
+		}
+	}else {
+		gradle.projectsEvaluated {
+			tasks.withType(JavaCompile) {
+				options.compilerArgs << "--source" << "${javaversion}"
+			}
+			tasks.withType(JavaExec) {
+				jvmArgs += ["--enable-preview", "-Duser.home=tmp"]
+			}
+			tasks.withType(Test) {
+				jvmArgs += ["--enable-preview", "-Duser.home=tmp"]
+			}
+		}
+		
+	}
 	application {
 		applicationDefaultJvmArgs = ["--enable-preview"]
 	}
@@ -48,7 +67,7 @@ allprojects {
 	}
 	gradle.projectsEvaluated {
 		tasks.withType(JavaCompile) {
-			options.compilerArgs << "--enable-preview" << "--source" << "${javaversion}" << "-g"
+			options.compilerArgs << "--enable-preview" << "-g"
 			options.fork = true
 			options.incremental = true
 		}

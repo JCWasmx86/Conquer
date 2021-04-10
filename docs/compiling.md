@@ -6,6 +6,7 @@
 2. 250 MB disk space + space for all dependencies.
 3. An internet connection for every build.
 4. Optional: A gradle 7.0 installation ([Download](https://services.gradle.org/distributions/gradle-7.0-bin.zip)), then you can replace all `./gradlew` commands by `gradle`.
+
 ## Debian and similar
 
 ### Prerequisites
@@ -42,6 +43,7 @@ sudo apt install -y openjdk-16-jdk libarchive-dev git libcurl4-openssl-dev bash 
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 #Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
+#Add -Pconquer.localJVM=true to download Java 16, in case you don't want to install it.
 ./gradlew assemble
 ```
 
@@ -79,6 +81,7 @@ pacman -S --noconfirm mingw-w64-x86_64-wget mingw-w64-x86_64-json-glib mingw-w64
 git clone https://github.com/JCWasmx86/Conquer
 cd Conquer
 #Add -Pconquer.download=true to improve the build time (or if you don't have enough RAM)
+#Add -Pconquer.localJVM=true to download Java 16, in case you don't want to install it.
 ./gradlew.bat assemble
 ```
 
