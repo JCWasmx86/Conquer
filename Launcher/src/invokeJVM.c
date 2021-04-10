@@ -50,7 +50,6 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 	jthrowable thrown = (*env)->ExceptionOccurred(env);
 	if (thrown) {
 		(*env)->ExceptionClear(env);
-		char *stacktrace = getStacktrace(env, thrown);
 		// 249 chars should be enough for time
 		char *dateAndTime = calloc(250, 1);
 		assert(dateAndTime);
