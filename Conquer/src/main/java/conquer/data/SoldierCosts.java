@@ -19,22 +19,11 @@ public record SoldierCosts(double coinsPerMovePerSoldier, double coinsPerMoveOfS
 	 * @param woodPerSoldierInitial
 	 */
 	public SoldierCosts {
-		this.isBad(coinsPerMovePerSoldier);
-		this.isBad(coinsPerMoveOfSoldierBase);
-		this.isBad(coinsPerSoldierPerRound);
-		this.isBad(ironPerSoldierInitial);
-		this.isBad(stonePerSoldierInitial);
-		this.isBad(woodPerSoldierInitial);
-	}
-
-
-	private void isBad(final double d) {
-		if (d < 0) {
-			throw new IllegalArgumentException("argument < 0");
-		} else if (Double.isNaN(d)) {
-			throw new IllegalArgumentException("argument is nan");
-		} else if (Double.isInfinite(d)) {
-			throw new IllegalArgumentException("argument is infinite");
-		}
+		Shared.isBad(coinsPerMovePerSoldier);
+		Shared.isBad(coinsPerMoveOfSoldierBase);
+		Shared.isBad(coinsPerSoldierPerRound);
+		Shared.isBad(ironPerSoldierInitial);
+		Shared.isBad(stonePerSoldierInitial);
+		Shared.isBad(woodPerSoldierInitial);
 	}
 }

@@ -564,4 +564,14 @@ public final class Shared {
 	public static ConquerInfo loadReferenceImplementationfile(final InputStream in) {
 		return new ScenarioFileReader().read(in);
 	}
+
+	static void isBad(final double d) {
+		if (d < 0) {
+			throw new IllegalArgumentException("argument < 0");
+		} else if (Double.isNaN(d)) {
+			throw new IllegalArgumentException("argument is nan");
+		} else if (Double.isInfinite(d)) {
+			throw new IllegalArgumentException("argument is infinite");
+		}
+	}
 }
