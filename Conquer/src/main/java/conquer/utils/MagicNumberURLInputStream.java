@@ -18,7 +18,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	private URL url;
 	private InputStream in;
 	private byte[] bytes;
-	private int cnter = 0;
+	private int cnter;
 
 	/**
 	 * Construct a new {@code MagicNumberURLInputStream}.

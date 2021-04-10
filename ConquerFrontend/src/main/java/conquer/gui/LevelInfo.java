@@ -36,7 +36,7 @@ import javax.swing.ListCellRenderer;
 final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 	@Serial
 	private static final long serialVersionUID = 5849067897050863981L;
-	private boolean shouldExit = false;
+	private boolean shouldExit;
 
 	/**
 	 * Construct a new LevelInfo

@@ -16,8 +16,8 @@ import java.util.function.Consumer;
 public final class Initializer {
 	// Singleton
 	private static final Initializer INSTANCE = new Initializer();
-	static boolean installing = false;
-	private static boolean initialized = false;
+	static boolean installing;
+	private static boolean initialized;
 
 	private Initializer() {
 	}

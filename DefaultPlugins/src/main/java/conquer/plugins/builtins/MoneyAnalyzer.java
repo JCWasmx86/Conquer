@@ -21,7 +21,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	private static final int MAX_ITERATIONS = 12000;
 	private final Random random = new Random();
 	private EventList events;
-	private int currentRound = 0;
+	private int currentRound;
 
 	@Override
 	public String getName() {

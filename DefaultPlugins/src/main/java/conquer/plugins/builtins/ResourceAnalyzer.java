@@ -21,7 +21,7 @@ import java.util.List;
 public final class ResourceAnalyzer implements Plugin, ResourceHook {
 
 	private EventList events;
-	private int currentRound = 0;
+	private int currentRound;
 
 	@Override
 	public void analyzeStats(final ICity city, final List<Double> statistics, final IClan clan) {

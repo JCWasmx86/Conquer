@@ -26,17 +26,13 @@ final class Clan implements IClan {
 	private Strategy strategy;
 	private StrategyData strategyData;
 	private double soldiersStrength = 1;
-	private int soldiersLevel = 0;
+	private int soldiersLevel;
 	private double soldiersDefenseStrength = 1;
-	private int soldiersDefenseLevel = 0;
+	private int soldiersDefenseLevel;
 	private double soldiersOffenseStrength = 1;
-	private int soldiersOffenseLevel = 0;
+	private int soldiersOffenseLevel;
 	private int flags;
 	private ConquerInfo info;
-
-	Clan() {
-		// Constructor for incrementally building a clan.
-	}
 
 	/**
 	 * Get the number of coins this clan has

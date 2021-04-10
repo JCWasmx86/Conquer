@@ -17,7 +17,7 @@ final class RecruitButton extends JPanel {
 	private final JSlider js;
 	private final JButton jbutton;
 	private final transient ICity city;
-	private boolean sharp = false;
+	private boolean sharp;
 
 	/**
 	 * Constructs a new button

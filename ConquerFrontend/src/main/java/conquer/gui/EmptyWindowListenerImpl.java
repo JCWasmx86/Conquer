@@ -5,37 +5,37 @@ import java.awt.event.WindowListener;
 
 interface EmptyWindowListenerImpl extends WindowListener {
 	@Override
-	default void windowOpened(WindowEvent windowEvent) {
+	default void windowOpened(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowClosing(WindowEvent windowEvent) {
+	default void windowClosing(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowClosed(WindowEvent windowEvent) {
+	default void windowClosed(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowIconified(WindowEvent windowEvent) {
+	default void windowIconified(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowDeiconified(WindowEvent windowEvent) {
+	default void windowDeiconified(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowActivated(WindowEvent windowEvent) {
+	default void windowActivated(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 
 	@Override
-	default void windowDeactivated(WindowEvent windowEvent) {
+	default void windowDeactivated(final WindowEvent windowEvent) {
 		//Empty as default
 	}
 }

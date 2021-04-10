@@ -14,7 +14,7 @@ final class UpgradeSoldiersOffense extends UpgradePanel {
 	@Serial
 	private static final long serialVersionUID = -681006129127926269L;
 
-	UpgradeSoldiersOffense(IClan clan) {
+	UpgradeSoldiersOffense(final IClan clan) {
 		super(clan);
 	}
 

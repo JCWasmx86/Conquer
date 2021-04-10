@@ -46,9 +46,9 @@ public record Version(int major, int minor, int patch) implements Comparable<Ver
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (!(o instanceof Version)) return false;
-		return compareTo((Version) o) == 0;
+		return this.compareTo((Version) o) == 0;
 	}
 
 	@Override

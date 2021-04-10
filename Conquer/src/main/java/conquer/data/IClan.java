@@ -322,7 +322,7 @@ public interface IClan {
 	 * enough anymore.
 	 */
 	@Deprecated
-	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, double coins) {
+	default int maxLevelsAddOffenseDefenseUpgrade(final int currLevel, final double coins) {
 		return this.maxLevels0(currLevel, coins, SoldierUpgrade.BOTH);
 	}
 
@@ -376,7 +376,7 @@ public interface IClan {
 	 */
 	@InternalUseOnly
 	@Deprecated
-	default int maxLevelsAddDefenseUpgrade(final int currLevel, double coins) {
+	default int maxLevelsAddDefenseUpgrade(final int currLevel, final double coins) {
 		return this.maxLevels0(currLevel, coins, SoldierUpgrade.DEFENSE);
 	}
 
@@ -392,7 +392,7 @@ public interface IClan {
 
 	@InternalUseOnly
 	@Deprecated
-	default int maxLevelsAddOffenseUpgrade(final int currLevel, double coins) {
+	default int maxLevelsAddOffenseUpgrade(final int currLevel, final double coins) {
 		return this.maxLevels0(currLevel, coins, SoldierUpgrade.OFFENSE);
 	}
 
@@ -420,7 +420,7 @@ public interface IClan {
 	 */
 	@Deprecated
 	@InternalUseOnly
-	default int maxLevelsAddSoldiersUpgrade(final int currLevel, double coins) {
+	default int maxLevelsAddSoldiersUpgrade(final int currLevel, final double coins) {
 		return this.maxLevels0(currLevel, coins, SoldierUpgrade.BOTH);
 	}
 

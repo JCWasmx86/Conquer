@@ -27,7 +27,7 @@ class City implements ICity {
 	private long numberOfPeople;
 	private long numberOfSoldiers;
 	private List<Double> productions;
-	private int numberOfRoundsWithZeroPeople = 0;
+	private int numberOfRoundsWithZeroPeople;
 	private int x = -1;
 	private int y = -1;
 	private double oldOne = 1;

@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 final class TutorialFrame extends JFrame implements EmptyWindowListenerImpl, ActionListener {
 	@Serial
 	private static final long serialVersionUID = -4549305902050012246L;
-	private volatile boolean switchToMainScreen = false;
+	private volatile boolean switchToMainScreen;
 
 	@Override
 	public void actionPerformed(final ActionEvent e) {

@@ -196,7 +196,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent mouseEvent) {
+	public void mouseReleased(final MouseEvent mouseEvent) {
 
 	}
 

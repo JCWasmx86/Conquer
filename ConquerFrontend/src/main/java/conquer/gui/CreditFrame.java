@@ -26,7 +26,7 @@ final class CreditFrame extends JFrame implements EmptyWindowListenerImpl, Actio
 	@Serial
 	private static final long serialVersionUID = -4549305902050012246L;
 	private final LoopPlayer player;
-	private volatile boolean switchToMainScreen = false;
+	private volatile boolean switchToMainScreen;
 
 	// Construct a new CreditFrame
 	CreditFrame() {

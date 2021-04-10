@@ -8,7 +8,7 @@ import java.util.Collection;
 final class GoodDoubleList extends ArrayList<Double> {
 	@Serial
 	private static final long serialVersionUID = 1502828784649438269L;
-	private boolean allowNegative = false;
+	private boolean allowNegative;
 
 	GoodDoubleList(final Collection<Double> initial) {
 		this.addAll(initial);

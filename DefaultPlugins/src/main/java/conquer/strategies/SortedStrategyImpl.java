@@ -72,26 +72,24 @@ public final class SortedStrategyImpl implements Strategy {
 	}
 
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
-		this.cities.forEach(target -> {
-			StreamUtils.getCitiesAsStream(graph, clan, a -> graph.isConnected(a, target))
-					.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
-					.forEach(ownCity -> {
-						final var pair = this.values.get(target);
-						final var second = pair.second();
-						final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
-						final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
-						if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
-							return;// We are too weak to attack.
-						}
-						final long numberOfSoldiersUsed;
-						if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
-							numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
-						} else {
-							return;
-						}
-						obj.attack(ownCity, target, true, numberOfSoldiersUsed);
-					});
-		});
+		this.cities.forEach(target -> StreamUtils.getCitiesAsStream(graph, clan, a -> graph.isConnected(a, target))
+				.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
+				.forEach(ownCity -> {
+					final var pair = this.values.get(target);
+					final var second = pair.second();
+					final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
+					final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
+					if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
+						return;// We are too weak to attack.
+					}
+					final long numberOfSoldiersUsed;
+					if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
+						numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
+					} else {
+						return;
+					}
+					obj.attack(ownCity, target, true, numberOfSoldiersUsed);
+				}));
 	}
 
 	@Override

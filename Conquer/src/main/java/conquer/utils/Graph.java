@@ -15,8 +15,8 @@ public class Graph<T> implements Consumer<T> {
 	private final ArrayList<T> values;
 	private final ArrayList<Boolean> visited = new ArrayList<>();
 	private final Map<T, Map<T, Boolean>> map = new HashMap<>();
-	private int cnt = 0;
-	private boolean cached = false;
+	private int cnt;
+	private boolean cached;
 
 	/**
 	 * Create a new graph with the specified size.

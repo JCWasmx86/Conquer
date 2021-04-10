@@ -26,10 +26,6 @@ final class GamePluginData {
 	private Map<String, CityKeyHandler> cityKeyHandlers;
 	private List<MoneyHook> moneyHooks;
 
-	GamePluginData() {
-		// Empty
-	}
-
 	List<AttackHook> getAttackHooks() {
 		return this.attackHooks;
 	}

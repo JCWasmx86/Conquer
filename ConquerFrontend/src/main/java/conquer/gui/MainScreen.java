@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 final class MainScreen extends JFrame implements KeyListener, EmptyWindowListenerImpl {
 	@Serial
 	private static final long serialVersionUID = 5279928865220785850L;
-	private static boolean forwarded = false;
+	private static boolean forwarded;
 	private static boolean alreadyForwardedOnceFromIntro;
 	private final LoopPlayer player;
 
