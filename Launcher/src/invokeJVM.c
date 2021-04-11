@@ -42,8 +42,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 	assert(introClass);
 	jclass stringClass = (*env)->FindClass(env, "java/lang/String");
 	assert(stringClass);
-	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main",
-													 "([Ljava/lang/String;)V");
+	jmethodID mainMethod = (*env)->GetStaticMethodID(env, introClass, "main", "([Ljava/lang/String;)V");
 	jobjectArray arr = (*env)->NewObjectArray(env, 0, stringClass, NULL);
 	(*env)->CallStaticVoidMethod(env, introClass, mainMethod, arr);
 	jthrowable thrown = (*env)->ExceptionOccurred(env);
@@ -58,8 +57,7 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 		assert(reportsDir);
 		sprintf(reportsDir, "%s/reports/", baseDir);
 		launcher_makeDirectory(reportsDir);
-		char *fileName =
-			calloc(strlen(dateAndTime) + strlen(reportsDir) + 50, 1);
+		char *fileName = calloc(strlen(dateAndTime) + strlen(reportsDir) + 50, 1);
 		assert(fileName);
 		sprintf(fileName, "%s%s__report.txt", reportsDir, dateAndTime);
 		writeFile(env, fileName);
@@ -69,9 +67,8 @@ void launcher_invokeJVM(char **options, int numOptions, char *directory) {
 		free(dateAndTime);
 		jclass reporter = (*env)->FindClass(env, "conquer/gui/ErrorReporter");
 		assert(reporter);
-		jmethodID report = (*env)->GetStaticMethodID(
-			env, reporter, "writeErrorLog",
-			"(Ljava/lang/Throwable;)Ljava/lang/String;");
+		jmethodID report =
+			(*env)->GetStaticMethodID(env, reporter, "writeErrorLog", "(Ljava/lang/Throwable;)Ljava/lang/String;");
 		(*env)->CallStaticObjectMethod(env, reporter, report, thrown);
 	}
 	(*jvm)->DestroyJavaVM(jvm);
@@ -84,9 +81,8 @@ static void formatTime(char *output) {
 	time_t rawtime;
 	time(&rawtime);
 	struct tm *timeinfo = localtime(&rawtime);
-	sprintf(output, "%d_%d_%d;;%d__%d__%d___", timeinfo->tm_mday,
-			timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour,
-			timeinfo->tm_min, timeinfo->tm_sec);
+	sprintf(output, "%d_%d_%d;;%d__%d__%d___", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900,
+			timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 }
 static char *getBaseDir(void) {
 #ifdef _WIN32
@@ -109,12 +105,9 @@ static char *getBaseDir(void) {
 static void writeFile(JNIEnv *env, char *file) {
 	jclass reporter = (*env)->FindClass(env, "conquer/gui/ErrorReporterUtils");
 	assert(reporter);
-	jmethodID mid = (*env)->GetStaticMethodID(env, reporter, "getString",
-											  "()Ljava/lang/String;");
+	jmethodID mid = (*env)->GetStaticMethodID(env, reporter, "getString", "()Ljava/lang/String;");
 	FILE *fp = fopen(file, "w");
 	assert(fp);
-	fputs((*env)->GetStringUTFChars(
-			  env, (*env)->CallStaticObjectMethod(env, reporter, mid), NULL),
-		  fp);
+	fputs((*env)->GetStringUTFChars(env, (*env)->CallStaticObjectMethod(env, reporter, mid), NULL), fp);
 	fclose(fp);
 }

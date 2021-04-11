@@ -92,14 +92,8 @@ int removeDirectory(void) {
 	assert(tempdir);
 	memset(tempdir, 0, len);
 	strcpy(tempdir, dir);
-	SHFILEOPSTRUCT file_op = {NULL,
-							  FO_DELETE,
-							  tempdir,
-							  NULL,
-							  FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT,
-							  0,
-							  0,
-							  ""};
+	SHFILEOPSTRUCT file_op = {NULL, FO_DELETE, tempdir, NULL, FOF_NOCONFIRMATION | FOF_NOERRORUI | FOF_SILENT,
+							  0,	0,		   ""};
 	int ret = SHFileOperation(&file_op);
 	free(tempdir);
 	return ret;
@@ -122,8 +116,7 @@ int removeDirectory(void) {
 			case FTS_NS:
 			case FTS_DNR:
 			case FTS_ERR:
-				fprintf(stderr, "%s: fts_read error: %s\n", curr->fts_accpath,
-						strerror(curr->fts_errno));
+				fprintf(stderr, "%s: fts_read error: %s\n", curr->fts_accpath, strerror(curr->fts_errno));
 				break;
 			case FTS_DC:
 			case FTS_DOT:
@@ -136,8 +129,7 @@ int removeDirectory(void) {
 			case FTS_SLNONE:
 			case FTS_DEFAULT:
 				if (remove(curr->fts_accpath) < 0) {
-					fprintf(stderr, "%s: Failed to remove: %s\n",
-							curr->fts_path, strerror(curr->fts_errno));
+					fprintf(stderr, "%s: Failed to remove: %s\n", curr->fts_path, strerror(curr->fts_errno));
 					ret = -1;
 				}
 				break;
@@ -182,16 +174,14 @@ void extractJar(char *jar) {
 		if (result == ARCHIVE_EOF) {
 			break;
 		}
-		char *cc =
-			calloc(strlen(o) + strlen(archive_entry_pathname(entry)) + 20, 1);
+		char *cc = calloc(strlen(o) + strlen(archive_entry_pathname(entry)) + 20, 1);
 		assert(cc);
 		sprintf(cc, "%s%s%s", o, c, archive_entry_pathname(entry));
 		printf("Extracting %s to %s!\n", archive_entry_pathname(entry), cc);
 		archive_entry_set_pathname(entry, cc);
 		result = archive_write_header(out, entry);
 		if (result != ARCHIVE_OK) {
-			fprintf(stderr, "Error writing header: %s %d",
-					archive_entry_pathname(entry), result);
+			fprintf(stderr, "Error writing header: %s %d", archive_entry_pathname(entry), result);
 			exit(-1);
 		}
 		if (archive_entry_size(entry) > 0) {
@@ -273,9 +263,7 @@ void buildJar(char *jar) {
 	archive_write_close(a);
 	archive_write_free(a);
 }
-int isNotSpecial(struct dirent *dp) {
-	return strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0;
-}
+int isNotSpecial(struct dirent *dp) { return strcmp(dp->d_name, ".") != 0 && strcmp(dp->d_name, "..") != 0; }
 void addToArchive(struct archive *a, char *start) {
 	DIR *dir = opendir(start);
 	if (!dir) { // File

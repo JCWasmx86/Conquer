@@ -18,8 +18,7 @@ void *loadJavaLibrary(char *givenDirectory) {
 	char *directory = calloc(MAX_PATH * 2, 1);
 	assert(directory);
 	if (!givenDirectory) {
-		if (SHGetSpecialFolderPathA(NULL, directory, CSIDL_PROGRAM_FILES,
-									FALSE) == FALSE) {
+		if (SHGetSpecialFolderPathA(NULL, directory, CSIDL_PROGRAM_FILES, FALSE) == FALSE) {
 			fprintf(stderr, "SHGetSpecialFolderPathA failed!\n");
 			perror("SHGetSpecialFolderPathA");
 			exit(-1);

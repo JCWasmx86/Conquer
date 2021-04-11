@@ -12,6 +12,6 @@ IndentWrappedFunctionNames: 'true'
 SortIncludes: 'true'
 TabWidth: '4'
 UseTab: Always
-
+ColumnLimit: 120
 ...
 
