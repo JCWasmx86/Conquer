@@ -1,5 +1,7 @@
 package conquer.testsuite;
 
+import java.util.List;
+
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,8 +10,6 @@ import conquer.data.SPIContextBuilder;
 import conquer.data.Shared;
 import conquer.data.StreamUtils;
 import conquer.utils.Graph;
-
-import java.util.List;
 
 /**
  * This class saves and restores Game-objects and compares them.
@@ -118,7 +118,7 @@ public final class Testsuite3 extends Testsuite {
 		for (var i = 0; i < Math.min(resourceStats.size(), resourceStats2.size()); i++) {
 			if (!this.nearlyEquals(resourceStats.get(i), resourceStats2.get(i))) {
 				this.error("resourceStats.get(i)!=resourceStats.get(i)" + "//" + resourceStats.get(i) + "//"
-						+ resourceStats2.get(i));
+					+ resourceStats2.get(i));
 			}
 		}
 	}

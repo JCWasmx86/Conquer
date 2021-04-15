@@ -1,11 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.GlobalContext;
-import conquer.data.strategy.StrategyProvider;
-import conquer.gui.debug.DebugPlugin;
-import conquer.plugins.Plugin;
-
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +7,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import conquer.data.ConquerInfo;
+import conquer.data.GlobalContext;
+import conquer.data.strategy.StrategyProvider;
+import conquer.gui.debug.DebugPlugin;
+import conquer.plugins.Plugin;
 
 final class PluginStrategySelectPanel extends JPanel {
 	@Serial
@@ -71,7 +71,7 @@ final class PluginStrategySelectPanel extends JPanel {
 				}
 			}
 		});
-		if(Utils.isDebug()) {
+		if (Utils.isDebug()) {
 			newPlugins.add(new DebugPlugin());
 		}
 		final var pluginNames = newPlugins.stream().map(a -> a.getClass().getName()).toList();

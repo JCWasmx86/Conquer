@@ -1,8 +1,8 @@
 package conquer.data.registries;
 
-import conquer.data.ConquerInfoReaderFactory;
-
 import java.util.List;
+
+import conquer.data.ConquerInfoReaderFactory;
 
 /**
  * Interface to support custom reader factory-registrations. (E.g. factories implemented in scripting languages)

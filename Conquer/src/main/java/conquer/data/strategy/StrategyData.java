@@ -12,6 +12,7 @@ public interface StrategyData {
 	 * Save the internal state of the data to {@code out}.
 	 *
 	 * @param out Destination of the serialized data.
+	 *
 	 * @throws IOException If an I/O error occurs.
 	 */
 	default void save(final OutputStream out) throws IOException {

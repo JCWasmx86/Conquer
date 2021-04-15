@@ -1,13 +1,13 @@
 package conquer.data.builtin;
 
-import conquer.data.Shared;
-import conquer.data.strategy.StrategyData;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Random;
+
+import conquer.data.Shared;
+import conquer.data.strategy.StrategyData;
 
 public final class DefensiveStrategyData implements StrategyData {
 	private final Random random;
@@ -45,19 +45,19 @@ public final class DefensiveStrategyData implements StrategyData {
 					this.strategy = DefensiveStrategy.FORTIFYANDUPGRADE;
 					this.counter = Math.abs(this.random.nextInt(40)) + 1;
 					Shared.logLevel1("Defensive-Strategy: " + DefensiveStrategy.FORTIFYANDUPGRADE + " for " + this.counter
-							+ " rounds");
+						+ " rounds");
 					break;
 				case FORTIFYANDUPGRADE:
 					this.strategy = DefensiveStrategy.RECRUIT;
 					this.counter = Math.abs(this.random.nextInt(30)) + 1;
 					Shared.logLevel1(
-							"Defensive-Strategy: " + DefensiveStrategy.RECRUIT + " for " + this.counter + " rounds");
+						"Defensive-Strategy: " + DefensiveStrategy.RECRUIT + " for " + this.counter + " rounds");
 					break;
 				case RECRUIT:
 					this.strategy = DefensiveStrategy.EXPAND;
 					this.counter = Math.abs(this.random.nextInt(5)) + 1;
 					Shared.logLevel1(
-							"Defensive-Strategy: " + DefensiveStrategy.EXPAND + " for " + this.counter + " rounds");
+						"Defensive-Strategy: " + DefensiveStrategy.EXPAND + " for " + this.counter + " rounds");
 					break;
 				default:
 					break;

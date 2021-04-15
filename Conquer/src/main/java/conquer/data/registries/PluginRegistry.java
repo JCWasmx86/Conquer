@@ -1,8 +1,8 @@
 package conquer.data.registries;
 
-import conquer.plugins.Plugin;
-
 import java.util.List;
+
+import conquer.plugins.Plugin;
 
 /**
  * Interface to support custom plugin-registrations. (E.g. plugins implemented in scripting languages)

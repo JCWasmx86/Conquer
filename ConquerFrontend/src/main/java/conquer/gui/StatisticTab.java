@@ -1,11 +1,11 @@
 package conquer.gui;
 
+import javax.swing.JTabbedPane;
+
 import conquer.data.ConquerInfo;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.StreamUtils;
-
-import javax.swing.JTabbedPane;
 
 public class StatisticTab extends JTabbedPane {
 	StatisticTab() {

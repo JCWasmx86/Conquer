@@ -20,6 +20,6 @@ public record WorseRelationshipMessage(IClan first, IClan second, double oldValu
 	@Override
 	public String getMessageText() {
 		return Messages.getMessage("Message.worseRelationship", this.first.getName(), this.second.getName(),
-				String.format("%.2f", this.oldValue - this.newValue), String.format("%.2f", this.newValue));
+			String.format("%.2f", this.oldValue - this.newValue), String.format("%.2f", this.newValue));
 	}
 }

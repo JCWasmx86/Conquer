@@ -1,16 +1,5 @@
 package conquer.data.ri;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerSaver;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.Shared;
-import conquer.data.StreamUtils;
-import conquer.data.strategy.Strategy;
-import conquer.plugins.Plugin;
-import conquer.utils.Graph;
-import conquer.utils.Triple;
-
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -33,6 +22,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javax.imageio.ImageIO;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerSaver;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.Shared;
+import conquer.data.StreamUtils;
+import conquer.data.strategy.Strategy;
+import conquer.plugins.Plugin;
+import conquer.utils.Graph;
+import conquer.utils.Triple;
 
 public final class GameSaver implements ConquerSaver {
 	private final String name;
@@ -111,8 +111,8 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
-																   IllegalAccessException, InvocationTargetException,
-																   NoSuchMethodException, ClassNotFoundException {
+		IllegalAccessException, InvocationTargetException,
+		NoSuchMethodException, ClassNotFoundException {
 		try (final var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.readInt());
@@ -156,14 +156,14 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException,
-																					InstantiationException,
-																					IllegalAccessException,
-																					InvocationTargetException,
-																					NoSuchMethodException,
-																					ClassNotFoundException {
+		InstantiationException,
+		IllegalAccessException,
+		InvocationTargetException,
+		NoSuchMethodException,
+		ClassNotFoundException {
 		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
+			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
 		for (final var file : files) {
 			ret.add(this.readClan(file, game));
 		}
@@ -171,11 +171,11 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
-	throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-		   ClassNotFoundException, IOException {
+		throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+		ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
-				.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
+			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
 		for (final var file : files) {
 			final var pluginName = file.getName().replaceAll("\\.plugin\\.save$", "");
 			final var plugin = (Plugin) Class.forName(pluginName).getConstructor().newInstance();
@@ -203,7 +203,7 @@ public final class GameSaver implements ConquerSaver {
 
 	private void restore(final Game game, final File saveDirectory) throws IOException {
 		try (final var dis =
-					 new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
+				 new DataInputStream(new FileInputStream(new File(saveDirectory, this.name + ".game.save")))) {
 			final var imageLen = dis.readInt();
 			final var bytes = dis.readNBytes(imageLen);
 			final var image = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -316,7 +316,7 @@ public final class GameSaver implements ConquerSaver {
 			throw new RuntimeException(e);
 		}
 		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
-				this.getClass().getCanonicalName().getBytes());
+			this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
 		try (final var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);

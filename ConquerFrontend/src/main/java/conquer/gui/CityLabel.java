@@ -1,7 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ICity;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -14,6 +12,8 @@ import java.util.function.Consumer;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
+
+import conquer.data.ICity;
 
 /**
  * Represents a city on the map. It is divided into two parts. The first (upper)
@@ -48,7 +48,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.city = city;
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),
-				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
+			image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 		this.timer = new ExtendedTimer(Utils.getRefreshRate(), this);
 		this.timer.start();
 		this.labels = labels;
@@ -67,11 +67,11 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 
 		if (this.city.isPlayerCity()) {
 			s.append(String.format("%s: %d<br>%s: %d</html>", Messages.getString("Shared.people"),
-					this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"),
-					this.city.getNumberOfSoldiers()));
+				this.city.getNumberOfPeople(), Messages.getString("Shared.soldiers"),
+				this.city.getNumberOfSoldiers()));
 		} else {
 			s.append(String.format("%s: ???<br>%s: ???</html>", Messages.getString("Shared.people"),
-					Messages.getString("Shared.soldiers")));
+				Messages.getString("Shared.soldiers")));
 		}
 		this.setToolTipText(s.toString());
 	}
@@ -120,7 +120,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 			if (!this.marked && (this.city.isPlayerCity())) {
 				this.labels.values().forEach(CityLabel::unmark);
 				this.city.getInfo().getCities().getConnected(this.city)
-						.forEach(a -> this.labels.get(a).mark(this.city));
+					.forEach(a -> this.labels.get(a).mark(this.city));
 			} else if (this.marked) {
 				this.proceed();
 				this.labels.values().forEach(CityLabel::unmark);
@@ -203,14 +203,14 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		final var game = this.city.getInfo();
 		final var weight = game.getCities().getWeight(this.city, this.origin);
 		final var maximumNumberOfSoldiersToMove = game.maximumNumberToMove(game.getPlayerClan(), weight,
-				this.origin.getNumberOfSoldiers());
+			this.origin.getNumberOfSoldiers());
 		final String prompt;
 		if (this.city.isPlayerCity()) {
 			prompt = Messages.getMessage("CityLabel.moveLabel",
-					this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
+				this.origin.getName(), this.city.getName(), maximumNumberOfSoldiersToMove);
 		} else {
 			prompt = Messages.getMessage("CityLabel.attackLabel",
-					this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
+				this.city.getName(), this.origin.getName(), maximumNumberOfSoldiersToMove);
 		}
 		long numberOfSelectedSoldiers = -1;
 		while (numberOfSelectedSoldiers == -1) {

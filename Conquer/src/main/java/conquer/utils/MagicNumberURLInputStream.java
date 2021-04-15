@@ -1,13 +1,13 @@
 package conquer.utils;
 
-import conquer.data.MagicNumberInputStream;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+
+import conquer.data.MagicNumberInputStream;
 
 /**
  * An utility class allowing for lazily loading a magic number from a (remote)
@@ -38,6 +38,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	 *
 	 * @param file The {@link File} to read from. May not be {@code null}, otherwise
 	 *             an {@link IllegalArgumentException} will be thrown.
+	 *
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
 	 */
 	public MagicNumberURLInputStream(final File file) throws MalformedURLException {
@@ -52,6 +53,7 @@ public class MagicNumberURLInputStream extends MagicNumberInputStream {
 	 *
 	 * @param uri The {@link URI} to read from. May not be {@code null}, otherwise
 	 *            an {@link IllegalArgumentException} will be thrown.
+	 *
 	 * @throws MalformedURLException If {@link URI#toURL()} fails.
 	 */
 	public MagicNumberURLInputStream(final URI uri) throws MalformedURLException {

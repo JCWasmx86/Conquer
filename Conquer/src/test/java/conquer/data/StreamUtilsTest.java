@@ -1,6 +1,13 @@
 package conquer.data;
 
 
+import java.awt.Color;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
@@ -9,13 +16,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import java.awt.Color;
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StreamUtilsTest {
@@ -415,8 +415,8 @@ class StreamUtilsTest {
 		@Override
 		public String toString() {
 			return "DummyClan{" +
-					"name='" + this.name + '\'' +
-					'}';
+				"name='" + this.name + '\'' +
+				'}';
 		}
 	}
 

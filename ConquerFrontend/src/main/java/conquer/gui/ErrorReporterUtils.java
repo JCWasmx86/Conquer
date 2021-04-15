@@ -1,10 +1,10 @@
 package conquer.gui;
 
-import conquer.data.Shared;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import conquer.data.Shared;
 
 public final class ErrorReporterUtils {
 	private ErrorReporterUtils() {

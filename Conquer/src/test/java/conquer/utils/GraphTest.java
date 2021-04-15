@@ -1,10 +1,10 @@
 package conquer.utils;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 class GraphTest {
 
@@ -146,7 +146,7 @@ class GraphTest {
 		final var i = new AtomicInteger();
 		g.dfs(0, a -> i.incrementAndGet());
 		this.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
-				i.get() == GraphTest.N_VALUES);
+			i.get() == GraphTest.N_VALUES);
 	}
 
 	@Test

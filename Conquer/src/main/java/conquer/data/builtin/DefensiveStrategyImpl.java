@@ -1,5 +1,11 @@
 package conquer.data.builtin;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.function.DoubleConsumer;
+import java.util.function.Predicate;
+
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,12 +14,6 @@ import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.function.DoubleConsumer;
-import java.util.function.Predicate;
 
 public final class DefensiveStrategyImpl implements Strategy {
 	private static final int MAX_ITERATIONS = 100;
@@ -92,8 +92,8 @@ public final class DefensiveStrategyImpl implements Strategy {
 		final var totalCoins = clan.getCoins() * Math.random() * 0.33;
 		final var gift = new Gift(giftedResources, totalCoins);
 		final var clans = StreamUtils.getCitiesAsStream(this.graph).map(ICity::getClan).distinct()
-				.filter(a -> a != clan).sorted(Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
-				.toList();
+			.filter(a -> a != clan).sorted(Comparator.comparingDouble(a -> this.object.getRelationship(a, clan)))
+			.toList();
 		// Improve relationship, start from the one with the worst relationship.
 		for (final var otherClan : clans) {
 			if (Math.random() < 0.75) {
@@ -166,17 +166,17 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan,
-				ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
-						.sorted().forEach(enemy -> {
-							// Strength of the own soldiers
-							final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
-									* clan.getSoldiersStrength();
-							// Estimated strength of the enemy
-							final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
-							// Only attack, if a victory is very probable.
-							if (dOwn > (dTwo * 1.1)) {
-								this.object.attack(ownCity, enemy, false, 0);
-							}
-						}));
+			ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
+				.sorted().forEach(enemy -> {
+					// Strength of the own soldiers
+					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
+						* clan.getSoldiersStrength();
+					// Estimated strength of the enemy
+					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
+					// Only attack, if a victory is very probable.
+					if (dOwn > (dTwo * 1.1)) {
+						this.object.attack(ownCity, enemy, false, 0);
+					}
+				}));
 	}
 }

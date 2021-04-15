@@ -1,8 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.IClan;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -10,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.function.BiFunction;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
 
 public class StatsPanel extends JPanel implements ActionListener {
 	private final ConquerInfo info;

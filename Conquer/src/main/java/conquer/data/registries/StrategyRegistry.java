@@ -1,8 +1,8 @@
 package conquer.data.registries;
 
-import conquer.data.strategy.StrategyProvider;
-
 import java.util.List;
+
+import conquer.data.strategy.StrategyProvider;
 
 /**
  * Interface to support custom StrategyProvider-registrations. (E.g. providers/strategies implemented in scripting

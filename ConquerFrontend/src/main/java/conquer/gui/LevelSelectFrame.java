@@ -1,11 +1,5 @@
 package conquer.gui;
 
-import conquer.data.GlobalContext;
-import conquer.data.InstalledScenario;
-import conquer.data.SPIContextBuilder;
-import conquer.data.Shared;
-import conquer.gui.utils.ImageResource;
-
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -30,6 +24,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+
+import conquer.data.GlobalContext;
+import conquer.data.InstalledScenario;
+import conquer.data.SPIContextBuilder;
+import conquer.data.Shared;
+import conquer.gui.utils.ImageResource;
 
 /**
  * This frame shows all installed scenarios in a JList.
@@ -74,10 +74,10 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 					if (value.thumbnail() != null) {
 						try {
 							final var url = new File(value.thumbnail()).toURI().toURL().toString().replace("file:/",
-									"file:///");
+								"file:///");
 							// A dirty hack...
 							jl.setToolTipText(
-									Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));
+								Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));
 
 						} catch (final MalformedURLException e) {
 							Shared.LOGGER.exception(e);
@@ -179,7 +179,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 	@Override
 	public void mousePressed(final MouseEvent e) {
 		@SuppressWarnings("unchecked") final var scenario =
-				((JList<InstalledScenario>) e.getSource()).getSelectedValue();
+			((JList<InstalledScenario>) e.getSource()).getSelectedValue();
 		if (scenario == null) {
 			return;
 		}
@@ -191,7 +191,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 			li.setVisible(true);
 		} catch (final UnsupportedOperationException uoe) {
 			JOptionPane.showMessageDialog(null, Messages.getString("LevelSelectFrame.noReaderFound"),
-					Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
+				Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

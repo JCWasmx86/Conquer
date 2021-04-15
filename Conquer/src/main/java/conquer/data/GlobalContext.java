@@ -1,8 +1,5 @@
 package conquer.data;
 
-import conquer.data.strategy.StrategyProvider;
-import conquer.plugins.Plugin;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,6 +8,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import conquer.data.strategy.StrategyProvider;
+import conquer.plugins.Plugin;
 
 /**
  * Describes a whole context. A context is defined by the available scenarios,
@@ -98,7 +98,9 @@ public final class GlobalContext {
 	 *
 	 * @param is The scenario to instantiate.May not be {@code null}, otherwise an
 	 *           {@code IllegalArgumentException} will be thrown.
+	 *
 	 * @return A game state.
+	 *
 	 * @throws {@code UnsupportedOperationException} if no reader for the file
 	 *                format was found.
 	 */
@@ -107,8 +109,8 @@ public final class GlobalContext {
 			throw new IllegalArgumentException("is==null");
 		}
 		final var list = this.readers.stream()
-				.sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
-				.toList();
+			.sorted(Comparator.comparingInt(a -> a.getMagicNumber().length))
+			.toList();
 		if (list.isEmpty()) {
 			throw new UnsupportedOperationException("No reader found");
 		}
@@ -157,8 +159,8 @@ public final class GlobalContext {
 	@Override
 	public String toString() {
 		return "GlobalContext [installedMaps=" + this.installedMaps + ", plugins=" + this.plugins + ", strategies="
-				+ this.strategies + ", pluginNames=" + this.pluginNames + ", strategyNames=" + this.strategyNames
-				+ ", readers=" + this.readers + ", readerNames=" + this.readerNames + "]";
+			+ this.strategies + ", pluginNames=" + this.pluginNames + ", strategyNames=" + this.strategyNames
+			+ ", readers=" + this.readers + ", readerNames=" + this.readerNames + "]";
 	}
 
 	private byte[] obtainBytes(final InstalledScenario is, final int maxLength) {

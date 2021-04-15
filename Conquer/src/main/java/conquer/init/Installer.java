@@ -1,8 +1,5 @@
 package conquer.init;
 
-import conquer.Messages;
-import conquer.data.Shared;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +14,9 @@ import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import conquer.Messages;
+import conquer.data.Shared;
+
 /**
  * Automatically restores missing files, but ignores all other files. It may be
  * run in a separate thread.
@@ -25,22 +25,22 @@ import java.util.zip.ZipInputStream;
 public class Installer implements Runnable {
 	// The default info.xml file.
 	private static final String DEFAULT_XML = "<!--Info file for conquer. Edit to add new scenarios, plugins and " +
-			"strategies -->"
-			+ System.lineSeparator() + "<info>" + System.lineSeparator()
-			+ "\t<!-- Add a new scenario. name is the name of the scenario, file points to the scenario file and " +
-			"thumbnail points to an image show while selecting a scenario -->"
-			+ System.lineSeparator() + "\t<scenarios>" + System.lineSeparator()
-			+ "\t\t<!-- <scenario name=\"foo.bar.Baz\" file=\"file.data\" thumbnail=\"thumb.png\" /> -->"
-			+ System.lineSeparator() + "\t</scenarios>" + System.lineSeparator()
-			+ "\t<!-- Add a new plugin. className is the name of the class implementing Plugin -->"
-			+ System.lineSeparator() + "\t<plugins>" + System.lineSeparator()
-			+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator()
+		"strategies -->"
+		+ System.lineSeparator() + "<info>" + System.lineSeparator()
+		+ "\t<!-- Add a new scenario. name is the name of the scenario, file points to the scenario file and " +
+		"thumbnail points to an image show while selecting a scenario -->"
+		+ System.lineSeparator() + "\t<scenarios>" + System.lineSeparator()
+		+ "\t\t<!-- <scenario name=\"foo.bar.Baz\" file=\"file.data\" thumbnail=\"thumb.png\" /> -->"
+		+ System.lineSeparator() + "\t</scenarios>" + System.lineSeparator()
+		+ "\t<!-- Add a new plugin. className is the name of the class implementing Plugin -->"
+		+ System.lineSeparator() + "\t<plugins>" + System.lineSeparator()
+		+ "\t\t<!-- <plugin className=\"foo.bar.some.class.implementing.Plugin\" /> -->" + System.lineSeparator()
 
-			+ "\t</plugins>" + System.lineSeparator()
-			+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->"
-			+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator()
-			+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->"
-			+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator();
+		+ "\t</plugins>" + System.lineSeparator()
+		+ "\t<!-- Add a new strategy. className is the name of the class implementing StrategyProvider -->"
+		+ System.lineSeparator() + "\t<strategies>" + System.lineSeparator()
+		+ "\t\t<!-- <strategy className=\"foo.bar.some.class.implementing.StrategyProvider\" /> -->"
+		+ System.lineSeparator() + "\t</strategies>" + System.lineSeparator() + "</info>" + System.lineSeparator();
 	// The default properties
 	private static final String DEFAULT_PROPERTIES = "# Settings for conquer" + System.lineSeparator();
 	private static final File BASE_FILE = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
@@ -74,8 +74,8 @@ public class Installer implements Runnable {
 
 	private int askQuestion() {
 		return this.chooser.choose(Messages.getString("Installer.minimalInstallation"),
-				Messages.getString("Installer.standardInstallation"),
-				Messages.getString("Installer.extendedInstallation"));
+			Messages.getString("Installer.standardInstallation"),
+			Messages.getString("Installer.extendedInstallation"));
 	}
 
 	private void baseInstallation() throws IOException {
@@ -119,7 +119,7 @@ public class Installer implements Runnable {
 		}
 		this.write(Messages.getString("Installer.pleaseWait"));
 		final var url = new URL(
-				"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip");
+			"https://raw.githubusercontent.com/JCWasmx86/JCWasmx86.github.io/master/conquer-data/Music.zip");
 
 		final var messageString = Messages.getMessage("Installer.downloading", url.toString());
 		this.write(messageString);
@@ -131,11 +131,11 @@ public class Installer implements Runnable {
 		final var info = new File(Installer.BASE_FILE, "info.xml").getAbsoluteFile();
 		final String newContents;
 		try (final var stream2 =
-					 Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) {
+				 Files.newInputStream(Paths.get(new File(Installer.BASE_FILE, "info.xml").toString()))) {
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
 			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->",
 
-					"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />");
+				"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />");
 		}
 		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
 	}
@@ -177,7 +177,7 @@ public class Installer implements Runnable {
 			final var props = new File(Installer.BASE_FILE, "game.properties");
 			if (!props.exists()) {
 				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
-						StandardOpenOption.CREATE);
+					StandardOpenOption.CREATE);
 			}
 		}
 	}

@@ -1,8 +1,5 @@
 package conquer.data;
 
-import conquer.data.ri.ScenarioFileReader;
-import conquer.utils.Logger;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Random;
+
+import conquer.data.ri.ScenarioFileReader;
+import conquer.utils.Logger;
 
 /**
  * A class with some shared utility methods.
@@ -194,15 +194,15 @@ public final class Shared {
 	private static final Logger LOGGER_LEVEL2;
 	@Deprecated
 	private static final double[][] DATA_VALUES = {
-			{Shared.WHEAT_PER_PERSON_PER_ROUND, Shared.WHEAT_PER_SOLDIER_PER_ROUND},
-			{Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND},
-			{Shared.WOOD_PER_PERSON_PER_ROUND, Shared.WOOD_PER_SOLDIER_PER_ROUND},
-			{Shared.COAL_PER_PERSON_PER_ROUND, Shared.COAL_PER_SOLDIER_PER_ROUND},
-			{Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND},
-			{0, Shared.IRON_PER_SOLDIER_PER_ROUND},
-			{Shared.TEXTILES_PER_PERSON_PER_ROUND, Shared.TEXTILES_PER_SOLDIER_PER_ROUND},
-			{Shared.LEATHER_PER_PERSON_PER_ROUND, Shared.LEATHER_PER_SOLDIER_PER_ROUND},
-			{Shared.STONE_PER_PERSON_PER_ROUND, Shared.STONE_PER_SOLDIER_PER_ROUND}};
+		{Shared.WHEAT_PER_PERSON_PER_ROUND, Shared.WHEAT_PER_SOLDIER_PER_ROUND},
+		{Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND},
+		{Shared.WOOD_PER_PERSON_PER_ROUND, Shared.WOOD_PER_SOLDIER_PER_ROUND},
+		{Shared.COAL_PER_PERSON_PER_ROUND, Shared.COAL_PER_SOLDIER_PER_ROUND},
+		{Shared.FOOD_PER_PERSON_PER_ROUND, Shared.FOOD_PER_SOLDIER_PER_ROUND},
+		{0, Shared.IRON_PER_SOLDIER_PER_ROUND},
+		{Shared.TEXTILES_PER_PERSON_PER_ROUND, Shared.TEXTILES_PER_SOLDIER_PER_ROUND},
+		{Shared.LEATHER_PER_PERSON_PER_ROUND, Shared.LEATHER_PER_SOLDIER_PER_ROUND},
+		{Shared.STONE_PER_PERSON_PER_ROUND, Shared.STONE_PER_SOLDIER_PER_ROUND}};
 	private static final Random RANDOM = new Random(System.nanoTime());
 
 	static {
@@ -254,6 +254,7 @@ public final class Shared {
 	 * Utility method to delete an entire directory.
 	 *
 	 * @param file What directory to delete.
+	 *
 	 * @throws IOException In case of an exception.
 	 */
 	public static void deleteDirectory(final File file) throws IOException {
@@ -304,6 +305,7 @@ public final class Shared {
 	 * Returns a random number between 0 (inclusive) and {@code i} (exclusive).
 	 *
 	 * @param i Upper bound, should be positive
+	 *
 	 * @return A random number in [0;i[
 	 */
 	public static int getRandomNumber(final int i) {
@@ -317,6 +319,7 @@ public final class Shared {
 	 * @param x
 	 * @param lower
 	 * @param upper
+	 *
 	 * @return The result
 	 */
 	@Deprecated
@@ -351,6 +354,7 @@ public final class Shared {
 	 *
 	 * @param down  Lower limit
 	 * @param upper Upper limit
+	 *
 	 * @return Random percentage
 	 */
 	public static double randomPercentage(final double down, final double upper) {
@@ -361,7 +365,9 @@ public final class Shared {
 	 * Restore a ConquerInfo that was saved before
 	 *
 	 * @param name The name of the saved Info
+	 *
 	 * @return The restored info
+	 *
 	 * @throws Exception
 	 */
 	public static ConquerInfo restore(final String name) throws Exception {
@@ -379,6 +385,7 @@ public final class Shared {
 	 *
 	 * @param name The name of the save
 	 * @param info The ConquerInfo to save.
+	 *
 	 * @throws Exception
 	 */
 	public static void save(final String name, final ConquerInfo info) throws Exception {
@@ -409,6 +416,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#costs(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -420,6 +428,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#maxLevels(SoldierUpgrade, int, double)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -432,6 +441,7 @@ public final class Shared {
 	 *
 	 * @param currLevel
 	 * @param coins
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -444,6 +454,7 @@ public final class Shared {
 	 *
 	 * @param currLevel
 	 * @param coins
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -455,6 +466,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#newPowerForSoldiers(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -466,6 +478,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -477,6 +490,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#newPowerOfUpdate(int, double)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -488,6 +502,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#upgradeCostsForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -499,6 +514,7 @@ public final class Shared {
 	 * Replaced by {@link IClan#upgradeCostsForSoldiers(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@Deprecated
@@ -559,6 +575,7 @@ public final class Shared {
 	 * Load a file of the file format from the RI from the input stream.
 	 *
 	 * @param in Inputstream to read from. May not be {@code null}.
+	 *
 	 * @return The new built {@link ConquerInfo} object.
 	 */
 	public static ConquerInfo loadReferenceImplementationfile(final InputStream in) {

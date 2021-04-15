@@ -1,8 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ICity;
-import conquer.data.Resource;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
+
+import conquer.data.ICity;
+import conquer.data.Resource;
 
 /**
  * This panel shows information about a selected city. At the top it is showing
@@ -66,29 +66,29 @@ class CityInfoPanel extends JPanel implements ActionListener {
 		if (this.city.getInfo().isDead(this.city.getInfo().getPlayerClan())) {
 			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youAreDead")
 
-					+ "</font></body></html>";
+				+ "</font></body></html>";
 		} else if (!this.city.isPlayerCity()) {
 			return "<html><body><font color='red'>" + Messages.getString("CityInfoPanel.youDontOwnThisCity")
-					+ "</font></body></html>";
+				+ "</font></body></html>";
 		}
 		final var sb = new StringBuilder().append("<html><body>").append(Messages.getString("Shared.name"))
-				.append(": ")
-				.append(this.city.getName()).append("<br>").append(Messages.getString(
-						"Shared.clan"))
-				.append(": ")
-				.append(this.city.getClan().getName()).append("<br>")
-				.append(Messages.getString("Shared.soldiers"))
-				.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")
-				.append(Messages.getString("Shared.people")).append(": ")
-				.append(this.city.getNumberOfPeople()).append("<br>")
-				.append(Messages.getString("Shared.defense")).append(": ")
-				.append(String.format("%.2f", this.city.getDefense())).append("<br>")
-				.append(Messages.getString("Shared.defenseBonus"))
-				.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>")
-				.append(Messages.getString("Shared.growth"))
-				.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>")
-				.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
-						.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
+			.append(": ")
+			.append(this.city.getName()).append("<br>").append(Messages.getString(
+				"Shared.clan"))
+			.append(": ")
+			.append(this.city.getClan().getName()).append("<br>")
+			.append(Messages.getString("Shared.soldiers"))
+			.append(": ").append(this.city.getNumberOfSoldiers()).append("<br>")
+			.append(Messages.getString("Shared.people")).append(": ")
+			.append(this.city.getNumberOfPeople()).append("<br>")
+			.append(Messages.getString("Shared.defense")).append(": ")
+			.append(String.format("%.2f", this.city.getDefense())).append("<br>")
+			.append(Messages.getString("Shared.defenseBonus"))
+			.append(": ").append(String.format("%.2f", this.city.getBonus())).append("<br>")
+			.append(Messages.getString("Shared.growth"))
+			.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>")
+			.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
+				.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");

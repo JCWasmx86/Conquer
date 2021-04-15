@@ -1,5 +1,10 @@
 package conquer.data.builtin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.DoubleConsumer;
+
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -8,11 +13,6 @@ import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.DoubleConsumer;
 
 public final class ModerateStrategyImpl implements Strategy {
 	private static final double BIG_RELATIONSHIP_INCREASE_FACTOR = 7.3;
@@ -61,10 +61,10 @@ public final class ModerateStrategyImpl implements Strategy {
 			}
 		});
 		final var clansSortedByDescendingSize = map.entrySet().stream().filter(a -> a.getKey() != clan)
-				.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
-				.filter(otherClan -> object.getRelationship(clan,
-						otherClan.getKey()) < 65).map(Map.Entry::getKey)
-				.toList();
+			.sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+			.filter(otherClan -> object.getRelationship(clan,
+				otherClan.getKey()) < 65).map(Map.Entry::getKey)
+			.toList();
 		// Try to get relationships with the strongest clans.
 		for (final var otherClan : clansSortedByDescendingSize) {
 			final var resourcesToGive = new ArrayList<Double>();
@@ -78,7 +78,7 @@ public final class ModerateStrategyImpl implements Strategy {
 					final var numRoundsOfResourceStored = clan.getResources().get(i) / ownValue;
 					final var roundsToGive = Math.random() * 0.5 * numRoundsOfResourceStored;
 					resourcesToGive.add(Double.isNaN(roundsToGive) || Double.isInfinite(roundsToGive) ? 0
-							: roundsToGive * ownValue);
+						: roundsToGive * ownValue);
 				}
 			}
 			final var ownCoins = clan.getCoins();

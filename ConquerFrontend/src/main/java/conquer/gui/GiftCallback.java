@@ -1,11 +1,5 @@
 package conquer.gui;
 
-import conquer.data.Gift;
-import conquer.data.IClan;
-import conquer.data.PlayerGiftCallback;
-import conquer.data.strategy.StrategyObject;
-import conquer.gui.utils.ImageResource;
-
 import java.awt.event.ActionEvent;
 import java.io.Serial;
 import java.util.function.DoubleConsumer;
@@ -17,6 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+
+import conquer.data.Gift;
+import conquer.data.IClan;
+import conquer.data.PlayerGiftCallback;
+import conquer.data.strategy.StrategyObject;
+import conquer.gui.utils.ImageResource;
 
 /**
  * A hook to allow the player to receive gifts.
@@ -42,7 +42,7 @@ final class GiftCallback implements PlayerGiftCallback {
 		this.jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		if (gift.getNumberOfCoins() <= 0.005) {
 			final var jlabel = new JLabel(
-					String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins"));
+				String.format("%.2f", gift.getNumberOfCoins()) + " " + Messages.getString("Shared.coins"));
 			this.jframe.add(jlabel);
 		}
 		for (final var v : gift.getMap().entrySet()) {
@@ -52,7 +52,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				continue;
 			}
 			final var jlabel = new JLabel(String.format("%.2f", value) + " " + resource.getName(),
-					new ImageResource(resource.getImage()), SwingConstants.LEFT);
+				new ImageResource(resource.getImage()), SwingConstants.LEFT);
 			this.jframe.add(jlabel);
 		}
 		final var buttonPanel = new JPanel();

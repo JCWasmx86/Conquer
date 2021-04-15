@@ -1,13 +1,13 @@
 package conquer.data.ri;
 
+import java.io.IOException;
+
 import conquer.data.SPIContextBuilder;
 import conquer.init.ExtendedOutputStream;
 import conquer.init.Initializer;
 import conquer.init.Installer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 class GameTest {
 	@Test

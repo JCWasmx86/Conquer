@@ -1,10 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ICity;
-import conquer.data.Resource;
-import conquer.gui.utils.ImageResource;
-
 import java.awt.Component;
 import java.io.Serial;
 import javax.swing.BoxLayout;
@@ -12,6 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ICity;
+import conquer.data.Resource;
+import conquer.gui.utils.ImageResource;
 
 /**
  * Allows the player to see some information about a resource and upgrade it.
@@ -40,7 +40,7 @@ final class ResourceButton extends JPanel {
 		this.info = city.getInfo();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.infoLabel = new JLabel(this.getInfoLabelText(),
-				new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT);
+			new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT);
 		this.add(this.infoLabel);
 		this.upgradeThisResource = new JButton();
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
@@ -95,7 +95,7 @@ final class ResourceButton extends JPanel {
 	private String getInfoLabelText() {
 		final var level = this.city.getLevels().get(this.getIndex());
 		return (this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName()) + " "
-				+ Messages.getString("ResourceButton.level") + " " + level;
+			+ Messages.getString("ResourceButton.level") + " " + level;
 	}
 
 	private String getMaxUpgradeText() {
@@ -112,13 +112,13 @@ final class ResourceButton extends JPanel {
 			currentLevel++;
 		}
 		return Messages.getMessage("ResourceButton.maxUpgrade", currentLevel,
-				Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
+			Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
 	}
 
 	private String getUpgradeThisResourceText() {
 		final var level = this.city.getLevels().get(this.getIndex());
 		final var costsForUpgrade = Utils
-				.format(this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
+			.format(this.city.getClan().costs(this.city.getLevels().get(this.getIndex()) + 1));
 		return Messages.getMessage("Shared.upgradeToLevel", level + 1, costsForUpgrade);
 	}
 
@@ -131,9 +131,9 @@ final class ResourceButton extends JPanel {
 			}
 		} else {
 			this.infoLabel
-					.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName())
+				.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName())
 
-							+ " " + Messages.getString("ResourceButton.level") + " ???");
+					+ " " + Messages.getString("ResourceButton.level") + " ???");
 		}
 	}
 

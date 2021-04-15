@@ -1,8 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.IClan;
-
 import java.awt.Graphics;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,10 +7,13 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
+
 record Statistic(Map<IClan, Double> map) {
 	static Statistic build(final ConquerInfo info, final BiFunction<ConquerInfo, IClan, Double> valueFunction) {
 		final var list =
-				info.getClans().stream().sorted(Comparator.comparingDouble(a -> valueFunction.apply(info, a))).collect(Collectors.toList());
+			info.getClans().stream().sorted(Comparator.comparingDouble(a -> valueFunction.apply(info, a))).collect(Collectors.toList());
 		final var totalStrength = list.stream().mapToDouble(a -> valueFunction.apply(info, a)).sum();
 		final var map = new HashMap<IClan, Double>();
 		list.forEach(a -> map.put(a, valueFunction.apply(info, a) / totalStrength));
@@ -28,7 +28,7 @@ record Statistic(Map<IClan, Double> map) {
 		var currY = startY;
 		final var diffY = endY - startY;
 		for (final var entry :
-				this.map.entrySet().stream().sorted((a, b) -> Double.compare(b.getValue(), a.getValue())).collect(Collectors.toList())) {
+			this.map.entrySet().stream().sorted((a, b) -> Double.compare(b.getValue(), a.getValue())).collect(Collectors.toList())) {
 			g.setColor(entry.getKey().getColor());
 			final var heightOfRectangle = (int) Math.rint(diffY * entry.getValue());
 			g.fillRect(startX, currY, endX - startX, heightOfRectangle);

@@ -1,10 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.gui.utils.ImageResource;
-import conquer.messages.Message;
-import conquer.plugins.MessageListener;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
@@ -26,6 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.Timer;
+
+import conquer.data.ConquerInfo;
+import conquer.gui.utils.ImageResource;
+import conquer.messages.Message;
+import conquer.plugins.MessageListener;
 
 /**
  * Shows all events of the game. Only one instance is available.
@@ -52,7 +52,7 @@ final class EventLog extends JFrame implements MessageListener {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.PAGE_AXIS));
 		final JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.timer = new Timer(Utils.getRefreshRate(), a -> this.repaint());
@@ -86,7 +86,7 @@ final class EventLog extends JFrame implements MessageListener {
 			}
 		});
 		clearButton.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_K, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+			KeyStroke.getKeyStroke(KeyEvent.VK_K, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		clearButton.setText(Messages.getString("EventLog.clearButton"));
 		menu.add(clearButton);
 		final var exitButton = new JMenuItem();
@@ -125,8 +125,8 @@ final class EventLog extends JFrame implements MessageListener {
 		final var a = game.getClans();
 		for (final var clan : a) {
 			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName()
-					+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player")
-					: ""));
+				+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared.player")
+				: ""));
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			final var color = clan.getColor();
 			jlabel.setOpaque(true);
@@ -230,7 +230,7 @@ final class EventLog extends JFrame implements MessageListener {
 			}
 		});
 		decreaseFontSize.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+			KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		decreaseFontSize.setText(Messages.getString("EventLog.decreaseFontsize"));
 	}
 
@@ -255,7 +255,7 @@ final class EventLog extends JFrame implements MessageListener {
 			}
 		});
 		increaseFontSize.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+			KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		increaseFontSize.setText(Messages.getString("EventLog.increaseFontsize"));
 	}
 

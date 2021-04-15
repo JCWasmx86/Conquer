@@ -1,12 +1,12 @@
 package conquer.data;
 
+import java.awt.Color;
+import java.util.List;
+
 import conquer.InternalUseOnly;
 import conquer.data.strategy.Strategy;
 import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
-
-import java.awt.Color;
-import java.util.List;
 
 public interface IClan {
 
@@ -271,6 +271,7 @@ public interface IClan {
 	 * @param upgrade The upgrade. May not be {@code null}, otherwise an
 	 *                {@code IllegalArgumentException} will be thrown.
 	 * @param x       Current level.
+	 *
 	 * @return The costs for upgrading {@code upgrade}.
 	 */
 	default double upgradeCosts(final SoldierUpgrade upgrade, final int x) {
@@ -286,6 +287,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the offense strength of the clan.
 	 */
 	@Deprecated
@@ -305,6 +307,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the defense strength of the clan.
 	 */
 	@Deprecated
@@ -318,6 +321,7 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
 	 * enough anymore.
 	 */
@@ -344,6 +348,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the offense/defense strength of the clan.
 	 */
 	@InternalUseOnly
@@ -357,6 +362,7 @@ public interface IClan {
 	 * provide another calculation.
 	 *
 	 * @param x Current level
+	 *
 	 * @return Costs for upgrading the soldiers strength of the clan.
 	 */
 	@InternalUseOnly
@@ -371,6 +377,7 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
 	 * enough anymore.
 	 */
@@ -386,6 +393,7 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
 	 * enough anymore.
 	 */
@@ -415,6 +423,7 @@ public interface IClan {
 	 *
 	 * @param currLevel Current level
 	 * @param coins     Maximum coins to give.
+	 *
 	 * @return Returns the maximum number of upgrades, until {@code coins} is not
 	 * enough anymore.
 	 */
@@ -432,6 +441,7 @@ public interface IClan {
 	 *
 	 * @param upgrade Which upgrade to make
 	 * @param x       Current level
+	 *
 	 * @return New power.
 	 */
 	default double newPower(final SoldierUpgrade upgrade, final int x) {
@@ -454,6 +464,7 @@ public interface IClan {
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -467,6 +478,7 @@ public interface IClan {
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -480,6 +492,7 @@ public interface IClan {
 	 * {@link Shared#newPowerForSoldiers(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -493,6 +506,7 @@ public interface IClan {
 	 * {@link Shared#newPowerOfSoldiersForOffenseAndDefense(int)}
 	 *
 	 * @param level
+	 *
 	 * @return
 	 */
 	@InternalUseOnly
@@ -506,6 +520,7 @@ public interface IClan {
 	 *
 	 * @param level    Current level
 	 * @param oldValue Old value of production.
+	 *
 	 * @return New production rate.
 	 */
 	default double newPowerOfUpdate(final int level, final double oldValue) {
@@ -516,6 +531,7 @@ public interface IClan {
 	 * Replacement for {@link Shared#costs(int)}.
 	 *
 	 * @param level Current level.
+	 *
 	 * @return Costs in coins for upgrading to next level.
 	 */
 	default double costs(final int level) {
@@ -538,6 +554,7 @@ public interface IClan {
 	 * @param upgrade The upgrade. May not be {@code null}.
 	 * @param level   Current level
 	 * @param coins   Maximum coins to give.
+	 *
 	 * @return Number of levels.
 	 */
 	default int maxLevels(final SoldierUpgrade upgrade, final int level, final double coins) {

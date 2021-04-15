@@ -13,6 +13,7 @@ final class Utils {
 		//17 means 60 FPS
 		return Integer.getInteger("conquer.frontend.rate", 17);
 	}
+
 	static boolean isDebug() {
 		return Boolean.getBoolean("conquer.frontend.debug");
 	}

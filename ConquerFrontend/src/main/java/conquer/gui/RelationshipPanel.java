@@ -1,8 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.IClan;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
@@ -11,6 +8,9 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import conquer.data.ConquerInfo;
+import conquer.data.IClan;
 
 /**
  * One of the panels in the JTabbedPane of {@link GameFrame}. It allows to see
@@ -42,7 +42,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 			final var clan = clans.get(i);
 			final var label = this.labels.get(i - 1);
 			label.setText(clan.getName() + ": "
-					+ String.format("%.2f", this.game.getRelationship(this.game.getPlayerClan(), clan)));
+				+ String.format("%.2f", this.game.getRelationship(this.game.getPlayerClan(), clan)));
 			this.repaint();
 		}
 	}

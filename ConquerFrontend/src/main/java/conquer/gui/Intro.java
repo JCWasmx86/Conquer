@@ -1,9 +1,5 @@
 package conquer.gui;
 
-import conquer.data.Shared;
-import conquer.gui.utils.Sound;
-import conquer.init.Initializer;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -20,6 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import conquer.data.Shared;
+import conquer.gui.utils.Sound;
+import conquer.init.Initializer;
 
 /**
  * This class provides the introduction for the game.
@@ -54,14 +54,14 @@ final class Intro extends JFrame implements EmptyWindowListenerImpl, KeyListener
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			}
 		} catch (final ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) { // Just use the Default LaF
+			| UnsupportedLookAndFeelException e) { // Just use the Default LaF
 			// Just print the stack trace. It is no critical thing, so you shouldn't have to
 			// fear anything, if an exception is thrown.
 			e.printStackTrace();// The logger is not setup currently.
 		}
 		new Thread(() -> Initializer.INSTANCE().initialize(a -> {
 			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"),
-					Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE);
+				Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE);
 			System.exit(-127);
 		})).start();
 		final var main = new Intro();

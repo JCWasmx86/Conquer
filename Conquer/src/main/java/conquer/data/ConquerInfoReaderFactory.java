@@ -10,6 +10,7 @@ public interface ConquerInfoReaderFactory {
 	 * Build a {@link ConquerInfoReader} for a given file.
 	 *
 	 * @param is The scenario. May not be {@code null}.
+	 *
 	 * @return A reader that is able to construct a {@link ConquerInfo} from
 	 * {@code is}.
 	 */
@@ -19,6 +20,7 @@ public interface ConquerInfoReaderFactory {
 	 * Build a {@link ConquerInfoReader} for a given file.
 	 *
 	 * @param bytes The bytes of the scenario. May not be {@code null}.
+	 *
 	 * @return A reader that is able to construct a {@link ConquerInfo} from
 	 * {@code is}.
 	 */
@@ -38,6 +40,7 @@ public interface ConquerInfoReaderFactory {
 	 * scenario and can decide, whether it accepts this file(format).
 	 *
 	 * @param bytes The bytes of the scenario file.
+	 *
 	 * @return {@code true} if this factory accepts this scenario, {@code false} otherwise.
 	 */
 	default boolean accepts(final byte[] bytes) {

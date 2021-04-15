@@ -1,8 +1,5 @@
 package conquer.gui;
 
-import conquer.data.IClan;
-import conquer.gui.utils.ImageResource;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -10,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import conquer.data.IClan;
+import conquer.gui.utils.ImageResource;
 
 public abstract class UpgradePanel extends JPanel implements ActionListener {
 	protected final transient IClan clan;

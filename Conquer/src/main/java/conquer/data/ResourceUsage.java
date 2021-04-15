@@ -48,7 +48,7 @@ public class ResourceUsage {
 				throw new IllegalArgumentException("stats[i] is null");
 			} else if (stats[i].length != 2) {
 				throw new IllegalArgumentException(
-						"Expected stats[i] to be of length 2: {resourceUsageOfPerson;resourceUsageOfSoldier}");
+					"Expected stats[i] to be of length 2: {resourceUsageOfPerson;resourceUsageOfSoldier}");
 			}
 			Shared.isBad(stats[i][0]);
 			Shared.isBad(stats[i][1]);
@@ -83,10 +83,11 @@ public class ResourceUsage {
 	 * {@link ResourceUsage#ResourceUsage(double[][], double)}.
 	 *
 	 * @param idx The index.
+	 *
 	 * @return Subarray, but just a copy.
 	 */
 	public double[] get(final int idx) {
-		return new double[]{this.personUsed[idx], this.soldierUsed[idx]};
+		return new double[] {this.personUsed[idx], this.soldierUsed[idx]};
 	}
 
 	/**

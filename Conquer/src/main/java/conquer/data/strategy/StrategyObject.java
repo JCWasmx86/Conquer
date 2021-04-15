@@ -1,13 +1,13 @@
 package conquer.data.strategy;
 
+import java.util.stream.Stream;
+
 import conquer.data.ConquerInfo;
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Resource;
 import conquer.utils.Graph;
-
-import java.util.stream.Stream;
 
 /**
  * An interface providing everything that is needed for strategies.
@@ -50,6 +50,7 @@ public interface StrategyObject {
 	 *
 	 * @param source Source city. May not be {@code null}.
 	 * @param target Destination city. May not be {@code null}.
+	 *
 	 * @return {@code true} if troops can be moved from {@code source} to
 	 * {@code target}.
 	 */
@@ -87,6 +88,7 @@ public interface StrategyObject {
 	 *          {@code IllegalArgumentException} is thrown.
 	 * @param b Second clan. May not be {@code null}, otherwise an
 	 *          {@code IllegalArgumentException} is thrown.
+	 *
 	 * @return Relationship value.
 	 */
 	double getRelationship(final IClan a, final IClan b);
@@ -102,6 +104,7 @@ public interface StrategyObject {
 	 *             {@code IllegalArgumentException} is thrown.
 	 * @param city City. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
+	 *
 	 * @return
 	 */
 	default double getRelationship(final IClan clan, final ICity city) {
@@ -138,6 +141,7 @@ public interface StrategyObject {
 	 *                                is thrown.
 	 * @param maximumNumberOfSoldiers An upper value limiting the amount of soldiers
 	 *                                to move.
+	 *
 	 * @return Maximum number of soldiers that can be moved.
 	 */
 	default long maximumNumberToMove(final IClan clan, final ICity first, final ICity second,
@@ -171,6 +175,7 @@ public interface StrategyObject {
 	 *                                an {@code IllegalArgumentException} is thrown.
 	 * @param maximumNumberOfSoldiers An upper value limiting the amount of soldiers
 	 *                                to move.
+	 *
 	 * @return Maximum number of soldiers that can be moved.
 	 */
 	long maximumNumberToMove(IClan clan, double weight, long maximumNumberOfSoldiers);
@@ -247,6 +252,7 @@ public interface StrategyObject {
 	 *                    {@code IllegalArgumentException} is thrown.
 	 * @param gift        The gift to give. May not be {@code null}, otherwise an
 	 *                    {@code IllegalArgumentException} is thrown.
+	 *
 	 * @return {@code true} if accepted, {@code false} otherwise.
 	 */
 	boolean sendGift(IClan source, IClan destination, Gift gift);
@@ -256,6 +262,7 @@ public interface StrategyObject {
 	 *
 	 * @param city The city. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
+	 *
 	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
 	boolean upgradeDefense(ICity city);
@@ -267,6 +274,7 @@ public interface StrategyObject {
 	 *             {@code IllegalArgumentException} is thrown.
 	 * @param city The city. May not be {@code null}, otherwise an
 	 *             {@code IllegalArgumentException} is thrown.
+	 *
 	 * @return {@code true} if successful, {@code false} otherwise.
 	 */
 	boolean upgradeResource(Resource resc, ICity city);

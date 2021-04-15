@@ -1,14 +1,5 @@
 package conquer.gui;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ICity;
-import conquer.data.Shared;
-import conquer.data.StreamUtils;
-import conquer.frontend.spi.InGameButton;
-import conquer.frontend.spi.MusicProvider;
-import conquer.gui.utils.ImageResource;
-import conquer.gui.utils.LoopPlayer;
-
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -46,6 +37,15 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ICity;
+import conquer.data.Shared;
+import conquer.data.StreamUtils;
+import conquer.frontend.spi.InGameButton;
+import conquer.frontend.spi.MusicProvider;
+import conquer.gui.utils.ImageResource;
+import conquer.gui.utils.LoopPlayer;
 
 /**
  * This class is the class that shows the entire map with all other components.
@@ -98,14 +98,14 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			return;
 		}
 		final var diff = (this.buttonPanel.getLocationOnScreen().y
-				- (this.gameStageScrollPane.getLocationOnScreen().y + this.game.getBackground().getHeight(null))) / 2;
+			- (this.gameStageScrollPane.getLocationOnScreen().y + this.game.getBackground().getHeight(null))) / 2;
 		if (diff <= 0) {
 			return;
 		}
 		this.labels.values().forEach(b -> {
 			final var image = b.getCity().getImage();
 			b.setBounds(b.getLocation().x, b.getCity().getY() + diff, image.getWidth(null),
-					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
+				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 			b.repaint();
 		});
 	}
@@ -115,7 +115,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			return;
 		}
 		final var diff = (this.sideBarPane.getLocationOnScreen().x
-				- (this.gameStageScrollPane.getLocationOnScreen().x + this.game.getBackground().getWidth(null)));
+			- (this.gameStageScrollPane.getLocationOnScreen().x + this.game.getBackground().getWidth(null)));
 		final var diff2 = this.gameStage.getLocationOnScreen().x - this.gameStageScrollPane.getLocationOnScreen().x;
 		if ((diff <= 0) || (diff2 <= 0)) {
 			return;
@@ -124,7 +124,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			final var city = b.getCity();
 			final var image = city.getImage();
 			b.setBounds(city.getX() + ((diff + diff2) / 2), city.getY(), image.getWidth(null),
-					image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
+				image.getHeight(null) + CityLabel.CLAN_COLOR_HEIGHT);
 			b.repaint();
 		});
 	}
@@ -215,7 +215,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		openMessages.setToolTipText(Messages.getString("GameFrame.openMessageBox"));
 		openMessages.addActionListener(a -> EventLog.showWindow());
 		final var coinsLabel = new JLabel(
-				Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins());
+			Messages.getString("Shared.coins") + ": " + this.game.getPlayerClan().getCoins());
 		final var run = new JButton(Messages.getString("GameFrame.runForever"));
 		run.addActionListener(a -> {
 			run.setEnabled(false);
@@ -245,7 +245,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			var flag = false;
 			while (true) {
 				coinsLabel.setText(Messages.getString("Shared.coins") + ": "
-						+ String.format("%.2f%n", this.game.getPlayerClan().getCoins()));
+					+ String.format("%.2f%n", this.game.getPlayerClan().getCoins()));
 				try {
 					Thread.sleep(20);
 				} catch (final InterruptedException e) {
@@ -282,7 +282,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 				super.paint(g);
 				final var g2d = (Graphics2D) g.create();
 				final var dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0,
-						new float[]{9}, 0);
+					new float[] {9}, 0);
 				g2d.setColor(Color.WHITE);
 				g2d.setStroke(dashed);
 				GameFrame.this.lines.forEach(a -> a.draw(g2d));
@@ -320,7 +320,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 					}
 					if (Arrays.binarySearch(Shared.savedGames(), GameFrame.this.saveName) >= 0) {
 						final var selected = JOptionPane.showConfirmDialog(null,
-								Messages.getMessage("GameFrame.comfirmOverwriting", GameFrame.this.saveName));
+							Messages.getMessage("GameFrame.comfirmOverwriting", GameFrame.this.saveName));
 						if (selected != JOptionPane.YES_OPTION) {
 							return;// Abort saving
 						}
@@ -331,7 +331,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		});
 		saveGame.setText(Messages.getString("GameFrame.save"));
 		saveGame.setAccelerator(
-				KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+			KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
 		jmenu.add(saveGame);
 		final var tutorial = new JMenuItem();
 		tutorial.setAction(new AbstractAction() {
@@ -376,7 +376,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			this.labels.put(city, cityLabel);
 		});
 		cardLayout.show(cityInfoPanel, StreamUtils.getCitiesAsStream(cities).filter(ICity::isPlayerCity).findFirst()
-				.orElse(cities.getValue(0)).getName());
+			.orElse(cities.getValue(0)).getName());
 		this.sideBarPane = new JTabbedPane();
 		this.sideBarPane.addTab(Messages.getString("GameFrame.cityInfo"), cityInfoPanel);
 		final var clanInfo = new ClanInfoPanel(this.game.getPlayerClan(), this.game);
@@ -410,7 +410,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		final var cities = this.game.getCities();
 		this.game.getExtraMusic().forEach(this.loopPlayer::addSong);
 		ServiceLoader.load(MusicProvider.class).stream().map(Supplier::get).map(MusicProvider::getMusic)
-				.flatMap(List::stream).forEach(this.loopPlayer::addSong);
+			.flatMap(List::stream).forEach(this.loopPlayer::addSong);
 		try {
 			this.loopPlayer.start();
 		} catch (final IllegalThreadStateException itse) {
@@ -424,11 +424,11 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 			final var first = triple.first();
 			final var second = triple.second();
 			if ((drawnLines.containsKey(first) && (drawnLines.get(first).contains(second)))
-					|| (drawnLines.containsKey(second) && (drawnLines.get(second).contains(first)))) {
+				|| (drawnLines.containsKey(second) && (drawnLines.get(second).contains(first)))) {
 				return;
 			}
 			this.lines.add(
-					new DashedLine(this.labels.get(cities.getValue(first)), this.labels.get(cities.getValue(second))));
+				new DashedLine(this.labels.get(cities.getValue(first)), this.labels.get(cities.getValue(second))));
 		});
 	}
 
@@ -438,7 +438,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		} catch (final Exception e) {
 			Shared.LOGGER.exception(e);
 			JOptionPane.showMessageDialog(null, Messages.getMessage("GameFrame.savingFailed", this.saveName),
-					Messages.getString("GameFrame.error"), JOptionPane.ERROR_MESSAGE);
+				Messages.getString("GameFrame.error"), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		return true;
@@ -465,11 +465,11 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 	}
 
 	private boolean saveDialog() {
-		final var options = new String[]{Messages.getString("GameFrame.save"),
-				Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel")};
+		final var options = new String[] {Messages.getString("GameFrame.save"),
+			Messages.getString("GameFrame.dontSave"), Messages.getString("GameFrame.cancel")};
 		final var selected = JOptionPane.showOptionDialog(null, Messages.getString("GameFrame.doYouWantToSave"),
-				Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-				options, options[2]);
+			Messages.getString("GameFrame.close"), JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+			options, options[2]);
 		switch (selected) {
 			case 0:
 				this.setSaveName();
@@ -479,7 +479,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 				}
 				if (Arrays.binarySearch(Shared.savedGames(), this.saveName) >= 0) {
 					final var selectedValue = JOptionPane.showConfirmDialog(null,
-							Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
+						Messages.getMessage("GameFrame.comfirmOverwriting", this.saveName));
 					if (selectedValue != JOptionPane.YES_OPTION) {
 						return true;
 					}

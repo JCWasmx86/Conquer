@@ -1,11 +1,11 @@
 package conquer.gui;
 
-import conquer.data.IClan;
-import conquer.data.SoldierUpgrade;
-
 import java.awt.event.ActionEvent;
 import java.io.Serial;
 import javax.swing.AbstractAction;
+
+import conquer.data.IClan;
+import conquer.data.SoldierUpgrade;
 
 /**
  * Allows the player to upgrade the strength of the soldiers
@@ -21,14 +21,14 @@ final class UpgradeSoldiersPanel extends UpgradePanel {
 	@Override
 	String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersPanel.soldiersPower", Utils.format(this.clan.getSoldiersStrength())
-				,
-				this.clan.getSoldiersLevel());
+			,
+			this.clan.getSoldiersLevel());
 	}
 
 	@Override
 	String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1),
-				Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1)));
+			Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1)));
 	}
 
 	@Override
@@ -39,7 +39,7 @@ final class UpgradeSoldiersPanel extends UpgradePanel {
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1,
-				this.clan.getCoins());
+			this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			@Serial
 			private static final long serialVersionUID = 8078867867027862129L;
@@ -52,7 +52,7 @@ final class UpgradeSoldiersPanel extends UpgradePanel {
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
 			this.upgradeMax.setText(
-					Messages.getMessage("Shared.upgradeToSpecifiedLevel", (this.clan.getSoldiersLevel() + count)));
+				Messages.getMessage("Shared.upgradeToSpecifiedLevel", (this.clan.getSoldiersLevel() + count)));
 
 		} else {
 			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins"));

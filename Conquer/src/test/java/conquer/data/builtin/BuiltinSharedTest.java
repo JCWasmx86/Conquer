@@ -1,5 +1,9 @@
 package conquer.data.builtin;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+
 import conquer.data.Gift;
 import conquer.data.IClan;
 import conquer.data.Resource;
@@ -9,10 +13,6 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 class BuiltinSharedTest {
 	@Test
@@ -184,7 +184,7 @@ class BuiltinSharedTest {
 	@Test
 	void testGiftSum() {
 		Assertions.assertEquals(190.0d, BuiltinShared.sum(new Gift(List.of(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0,
-				10.0, 10.0), 100.0d)));
+			10.0, 10.0), 100.0d)));
 	}
 
 	@Test

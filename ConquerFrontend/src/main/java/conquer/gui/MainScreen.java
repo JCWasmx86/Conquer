@@ -1,9 +1,5 @@
 package conquer.gui;
 
-import conquer.data.Shared;
-import conquer.frontend.spi.GUIMenuPlugin;
-import conquer.gui.utils.LoopPlayer;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -20,6 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
+import conquer.data.Shared;
+import conquer.frontend.spi.GUIMenuPlugin;
+import conquer.gui.utils.LoopPlayer;
 
 /**
  * The mainscreen that allows you to play, see the credits and the tutorial.
@@ -69,7 +69,7 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 		final var settings = new JMenu(Messages.getString("MainScreen.settings"));
 		final var updates = new JMenuItem(Messages.getString("MainScreen.updates"));
 		updates.addActionListener(a -> System.out
-				.println("TBD: Updates, current version: " + Shared.getReferenceImplementationVersion()));
+			.println("TBD: Updates, current version: " + Shared.getReferenceImplementationVersion()));
 		settings.add(updates);
 		final var furtherSettings = new JMenuItem(Messages.getString("MainScreen.furtherSettings"));
 		furtherSettings.addActionListener(a -> SettingsDialog.showWindow());
@@ -79,7 +79,7 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 		settings.add(exit);
 		menu.add(settings);
 		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem)
-				.forEach(menu::add);
+			.forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -95,7 +95,7 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 		play.setFont(play.getFont().deriveFont(50.0f));
 		panel.add(play);
 		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getButton)
-				.forEach(panel::add);
+			.forEach(panel::add);
 		final var credits = new JButton(Messages.getString("MainScreen.credits"));
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;

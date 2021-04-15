@@ -1,5 +1,7 @@
 package conquer.plugins.builtins;
 
+import java.util.Random;
+
 import conquer.data.ICity;
 import conquer.data.IClan;
 import conquer.data.Shared;
@@ -7,8 +9,6 @@ import conquer.data.StreamUtils;
 import conquer.plugins.Context;
 import conquer.plugins.Plugin;
 import conquer.utils.Graph;
-
-import java.util.Random;
 
 public final class ChangeCitiesMinds implements Plugin {
 	private static final double INSTANT_CLAN_CHANGE = 0.05;
@@ -70,11 +70,11 @@ public final class ChangeCitiesMinds implements Plugin {
 			}
 			final var oldClan = c.getClan();
 			final var list = StreamUtils.getCitiesAroundCity(cities, c).map(ICity::getClan).distinct()
-					.toList();
+				.toList();
 			final var canChangeClan = list.size() == 1;
 			final var otherClan = list.get(0);
 			if ((!canChangeClan || (otherClan == c.getClan()))
-					|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
+				|| (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
 				return;
 			}
 			this.change(c, ctx, oldClan, otherClan);

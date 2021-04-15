@@ -1,12 +1,12 @@
 package conquer.data;
 
-import conquer.data.strategy.StrategyObject;
-import conquer.utils.Graph;
-
 import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import conquer.data.strategy.StrategyObject;
+import conquer.utils.Graph;
 
 /**
  * An utilities class to convert an graph of cities to a stream and apply

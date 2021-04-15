@@ -1,14 +1,5 @@
 package conquer.data.ri;
 
-import conquer.data.ConquerInfo;
-import conquer.data.ConquerInfoReader;
-import conquer.data.ICity;
-import conquer.data.IClan;
-import conquer.data.InstalledScenario;
-import conquer.data.Resource;
-import conquer.data.Shared;
-import conquer.utils.Graph;
-
 import java.awt.Color;
 import java.awt.Image;
 import java.io.ByteArrayInputStream;
@@ -22,6 +13,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+
+import conquer.data.ConquerInfo;
+import conquer.data.ConquerInfoReader;
+import conquer.data.ICity;
+import conquer.data.IClan;
+import conquer.data.InstalledScenario;
+import conquer.data.Resource;
+import conquer.data.Shared;
+import conquer.utils.Graph;
 
 /**
  * The class that builds a Game from a scenariofile.
@@ -53,7 +53,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		final InputStream stream;
 		try {
 			stream = this.scenario.file() == null ? this.scenario.in()
-					: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
+				: Files.newInputStream(Paths.get(new File(this.scenario.file()).toURI()));
 		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);
 			throw new RuntimeException(e);
@@ -97,12 +97,12 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 	private Image readBackground(final DataInputStream dis) throws IOException {
 		final var numBytesOfBackgroundImage = dis.readInt();
 		this.throwIfNegative(numBytesOfBackgroundImage, "Expected a non negative number of bytes in background, " +
-				"got " + numBytesOfBackgroundImage);
+			"got " + numBytesOfBackgroundImage);
 		final var data = new byte[numBytesOfBackgroundImage];
 		final var bytesRead = dis.read(data);
 		if (bytesRead != numBytesOfBackgroundImage) {
 			throw new RuntimeException(
-					"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
+				"bytesRead: " + bytesRead + " != numBytesOfBackgroundImage: " + numBytesOfBackgroundImage);
 		}
 		return ImageIO.read(new ByteArrayInputStream(data));
 	}
@@ -142,7 +142,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		for (var i = 0; i < numCities; i++) {
 			final var bytesOfPicture = dis.readInt();
 			this.throwIfNegative(bytesOfPicture,
-					"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
+				"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
 			final var pic = new byte[bytesOfPicture];
 			final var bytesRead = dis.read(pic);
 			if (bytesRead != bytesOfPicture) {
@@ -212,7 +212,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 	private Graph<Integer> readRelations(final DataInput dis, final int numPlayers) throws IOException {
 		final var numberOfRelations = dis.readInt();
 		this.throwIfNegative(numberOfRelations,
-				"Expected a non negative number of relations, got " + numberOfRelations);
+			"Expected a non negative number of relations, got " + numberOfRelations);
 		final var relations = new Graph<Integer>(numPlayers);
 		for (var i = 0; i < numPlayers; i++) {
 			relations.add(i);

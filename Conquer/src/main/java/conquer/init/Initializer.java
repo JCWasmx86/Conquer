@@ -1,7 +1,5 @@
 package conquer.init;
 
-import conquer.data.Shared;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +7,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ServiceLoader;
 import java.util.function.Consumer;
+
+import conquer.data.Shared;
 
 /**
  * Loads the properties from .conquer/game.properties
@@ -47,7 +47,7 @@ public final class Initializer {
 		if (!new File(Shared.PROPERTIES_FILE).exists()) {
 			try {
 				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
-						StandardOpenOption.CREATE);
+					StandardOpenOption.CREATE);
 			} catch (final IOException e) {
 				Shared.LOGGER.exception(e);
 				if (onError != null) {

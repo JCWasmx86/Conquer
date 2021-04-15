@@ -1,15 +1,15 @@
 package conquer.data;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class DefaultScenarioProvider implements InstalledScenarioProvider {
 
@@ -33,7 +33,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 
 	private void initializeFromDefaultLocation(final List<InstalledScenario> ret) {
 		final var directoryName = Shared.isWindows() ? (System.getenv("ProgramFiles") + "\\Conquer\\scenarios")
-				: "/usr/share/conquer/scenarios";
+			: "/usr/share/conquer/scenarios";
 		final var directory = new File(directoryName);
 		if (!directory.exists()) {
 			return;
@@ -79,7 +79,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			return null;
 		}
 		return new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-				Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null);
+			Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null);
 	}
 
 	// A bit copied from XMLReader.java
@@ -99,6 +99,6 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 
 	private boolean goodNode(final Node n) {
 		return (n != null) && !"#text".equals(n.getNodeName()) && !"#comment".equals(n.getNodeName())
-				&& n.hasAttributes();
+			&& n.hasAttributes();
 	}
 }

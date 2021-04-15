@@ -22,6 +22,7 @@ public class Graph<T> implements Consumer<T> {
 	 * Create a new graph with the specified size.
 	 *
 	 * @param number The fixed number, no further element can be added
+	 *
 	 * @throws IllegalArgumentException If number &lt; 0
 	 */
 	public Graph(final int number) {
@@ -42,6 +43,7 @@ public class Graph<T> implements Consumer<T> {
 	 *
 	 * @param i index
 	 * @param t value
+	 *
 	 * @throws IllegalArgumentException if the index is smaller than 0 or bigger
 	 *                                  than the size of the graph.
 	 */
@@ -62,6 +64,7 @@ public class Graph<T> implements Consumer<T> {
 	 * Add a value.
 	 *
 	 * @param t The element to add to the graph.
+	 *
 	 * @return The index of the added element
 	 */
 	public int add(final T t) {
@@ -79,6 +82,7 @@ public class Graph<T> implements Consumer<T> {
 	 * @param a     The first edge
 	 * @param b     The second edge
 	 * @param value Weight
+	 *
 	 * @throws IllegalArgumentException if {@code value} is equals to -1 or -2.
 	 */
 	public void addDirectedEdge(final int a, final int b, final double value) {
@@ -97,6 +101,7 @@ public class Graph<T> implements Consumer<T> {
 	 * @param b  The second edge
 	 * @param ab Weight of the edge from a to b.
 	 * @param ba Weight of the edge from b to a.
+	 *
 	 * @throws IllegalArgumentException if {@code ab} or {@code ba} is equals to -1
 	 *                                  or -2.
 	 */
@@ -116,6 +121,7 @@ public class Graph<T> implements Consumer<T> {
 	 * @param idxA  Index of the first node
 	 * @param idxB  Index of the second node.
 	 * @param value The weight.
+	 *
 	 * @throws IllegalArgumentException if {@code value} is equals to -1 or -2.
 	 */
 	public void addUndirectedEdge(final int idxA, final int idxB, final double value) {
@@ -126,6 +132,7 @@ public class Graph<T> implements Consumer<T> {
 	 * Returns a list of indices, that are adjacent to the given.
 	 *
 	 * @param idx The index.
+	 *
 	 * @return List of indices of adjacent nodes.
 	 */
 	public List<Integer> allConnections(final int idx) {
@@ -231,8 +238,10 @@ public class Graph<T> implements Consumer<T> {
 	 *
 	 * @param comp The comparator to compare every value with the given.
 	 * @param a    The value to search for
+	 *
 	 * @return Values of nodes that are connected to the node with the specified
 	 * value.
+	 *
 	 * @throws NoSuchElementException If the specified value couldn't be found.
 	 */
 	public List<T> getConnected(final Comparator<T> comp, final T a) {
@@ -262,7 +271,9 @@ public class Graph<T> implements Consumer<T> {
 	 * Returns a list of connected values to the value
 	 *
 	 * @param a
+	 *
 	 * @return All connected values.
+	 *
 	 * @throws NoSuchElementException If {@code a} wasn't be found
 	 */
 	public List<T> getConnected(final T a) {
@@ -304,6 +315,7 @@ public class Graph<T> implements Consumer<T> {
 	 * removed.
 	 *
 	 * @param bridge The bridge to remove.
+	 *
 	 * @return Two areas.
 	 */
 	public Pair<Set<Integer>, Set<Integer>> getTwoAreas(final Pair<Integer, Integer> bridge) {
@@ -328,6 +340,7 @@ public class Graph<T> implements Consumer<T> {
 	 * Get value at specified index
 	 *
 	 * @param idx The index
+	 *
 	 * @return Value at the index.
 	 */
 	public T getValue(final int idx) {
@@ -339,6 +352,7 @@ public class Graph<T> implements Consumer<T> {
 	 * Convert the graph to an array.
 	 *
 	 * @param t
+	 *
 	 * @return Array representing the values in the graph.
 	 */
 	@SafeVarargs
@@ -351,6 +365,7 @@ public class Graph<T> implements Consumer<T> {
 	 *
 	 * @param c First value
 	 * @param a Second value
+	 *
 	 * @return The weight between this two values. -1 and -2 means, these are not
 	 * connected.
 	 */
@@ -418,6 +433,7 @@ public class Graph<T> implements Consumer<T> {
 	 *
 	 * @param c First value
 	 * @param a Second value
+	 *
 	 * @return True if these are connected.
 	 */
 	public boolean isConnected(final T c, final T a) {
