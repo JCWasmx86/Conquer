@@ -193,8 +193,7 @@ namespace Launcher {
 					 false;
 				}
 				if(object.has_member("debugMode")) {
-					ret.debugMode = object.get_string_member("debugMode") == "true"?true:
-					 false;
+					ret.debugMode = object.get_string_member("debugMode") == "true"?true:false;
 				}
 				if(object.has_member("java")) {
 					ret.javaFolder = object.get_string_member("java");

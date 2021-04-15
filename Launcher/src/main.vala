@@ -95,7 +95,8 @@ namespace Launcher {
 								jvm.addClasspaths(classpaths.toList());
 								Configuration.dump(jvmOptions.toList(),
 								classpaths.toList(), javaFolder,
-								memorySettings.toMap(), useNativeLAF.get_active(), debugMode.get_active());
+								memorySettings.toMap(), useNativeLAF.get_active(),
+								debugMode.get_active());
 								jvm.run(memorySettings.getOptions(), null,
 								useNativeLAF.get_active(), debugMode.get_active());
 								Process.exit(0);
@@ -115,7 +116,8 @@ namespace Launcher {
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder,
-						memorySettings.toMap(), useNativeLAF.get_active(), debugMode.get_active());
+						memorySettings.toMap(), useNativeLAF.get_active(),
+						debugMode.get_active());
 						jvm.run(memorySettings.getOptions(), isMatching ? javaFolder : null,
 						useNativeLAF.get_active(), debugMode.get_active());
 						Process.exit(0);
