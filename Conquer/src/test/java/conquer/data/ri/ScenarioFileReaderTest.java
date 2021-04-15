@@ -1,19 +1,19 @@
 package conquer.data.ri;
 
-import conquer.data.Resource;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import conquer.data.Resource;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 class ScenarioFileReaderTest {
 	private static final byte[] PNG_BYTES = {-119, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82,
-			0, 0, 0, 1, 0, 0, 0, 1, 1
-			, 0, 0, 0, 0, 55, 110, -7, 36, 0, 0, 0, 16, 73, 68, 65, 84, 120, -100, 98, 96, 1, 0, 0, 0, -1, -1, 3, 0, 0
-			, 6, 0, 5, 87, -65, -85, -44, 0, 0, 0, 0, 73, 69, 78, 68, -82, 66, 96, -126};
+		0, 0, 0, 1, 0, 0, 0, 1, 1
+		, 0, 0, 0, 0, 55, 110, -7, 36, 0, 0, 0, 16, 73, 68, 65, 84, 120, -100, 98, 96, 1, 0, 0, 0, -1, -1, 3, 0, 0
+		, 6, 0, 5, 87, -65, -85, -44, 0, 0, 0, 0, 73, 69, 78, 68, -82, 66, 96, -126};
 
 	private static final byte[] HEADER;
 	private static final byte[] HEADER_WITH_CLANS_UNTIL_COLORS;
@@ -438,9 +438,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 1);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -456,10 +454,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 2);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -475,11 +470,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 3);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -495,12 +486,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 4);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -510,19 +496,21 @@ class ScenarioFileReaderTest {
 		this.check(bytes);
 	}
 
+	private void addBaseOfCity(final DataOutputStream dos, final int n) throws IOException {
+		dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
+		dos.write(ScenarioFileReaderTest.PNG_BYTES);
+		for (var i = 0; i < n; i++) {
+			dos.writeInt(1);
+		}
+	}
+
 	@Test
 	void testNegativeDefense() {
 		final byte[] bytes;
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 5);
 			dos.writeInt(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -538,14 +526,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(-1);
 			bytes = baos.toByteArray();
 		} catch (final IOException e) {
@@ -561,14 +542,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(-1);
 			bytes = baos.toByteArray();
@@ -585,14 +559,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -611,14 +578,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -638,14 +598,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -665,14 +618,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -693,14 +639,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(1);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -722,14 +661,7 @@ class ScenarioFileReaderTest {
 		try (final var baos = new ByteArrayOutputStream(); final var dos = new DataOutputStream(baos)) {
 			dos.write(ScenarioFileReaderTest.HEADER_UNTIL_CITIES);
 			dos.writeShort(2);
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city");
@@ -737,14 +669,7 @@ class ScenarioFileReaderTest {
 			for (var i = 0; i < Resource.values().length; i++) {
 				dos.writeDouble(1);
 			}
-			dos.writeInt(ScenarioFileReaderTest.PNG_BYTES.length);
-			dos.write(ScenarioFileReaderTest.PNG_BYTES);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
-			dos.writeInt(1);
+			this.addBaseOfCity(dos, 6);
 			dos.writeDouble(1);
 			dos.writeDouble(1);
 			dos.writeUTF("city1");
