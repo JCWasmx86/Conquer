@@ -9,6 +9,7 @@ namespace Launcher {
 		private SelectJavaBox selectJava;
 		private MemorySettings memorySettings;
 		private CheckButton useNativeLAF;
+		private CheckButton debugMode;
 		protected override void activate() {
 			var window = new ApplicationWindow(this);
 			var box = new Box(Orientation.VERTICAL, 0);
@@ -20,12 +21,15 @@ namespace Launcher {
 			this.useNativeLAF = new CheckButton.with_label("Use native LookAndFeel");
 			this.useNativeLAF.set_active(true);
 			box.pack_start(this.useNativeLAF, false, false);
+			this.debugMode = new CheckButton.with_label("Debug mode");
+			this.debugMode.set_active(false);
+			box.pack_start(this.debugMode, false, false);
 			this.selectJava = new SelectJavaBox();
 			box.pack_start(this.selectJava, false, false);
 			this.memorySettings = new MemorySettings();
 			box.pack_start(this.memorySettings, false, false);
 			var startButtonPanel = new StartButton(this.classpaths, this.jvmOptions, this.selectJava,
-			  this.memorySettings, this.useNativeLAF, window);
+			  this.memorySettings, this.useNativeLAF, this.debugMode, window);
 			box.pack_start(startButtonPanel, false, false);
 			window.add(box);
 			window.set_title("Conquer launcher 2.0.0");
@@ -45,6 +49,7 @@ namespace Launcher {
 				this.jvmOptions.addElement(i);
 			}
 			this.useNativeLAF.set_active(config.useNativeLAF);
+			this.debugMode.set_active(config.debugMode);
 			if(config.javaFolder != null) {
 				this.selectJava.configure(config.javaFolder);
 			}
@@ -62,7 +67,7 @@ namespace Launcher {
 		private AsyncQueue<DownloadProgress> asyncQueue;
 
 		public StartButton(InputList classpaths, InputList jvmOptions, SelectJavaBox selectJava, MemorySettings
-		 memorySettings, CheckButton useNativeLAF, ApplicationWindow window) {
+		 memorySettings, CheckButton useNativeLAF, CheckButton debugMode, ApplicationWindow window) {
 			this.asyncQueue = new AsyncQueue<DownloadProgress>();
 			this.set_orientation(Orientation.VERTICAL);
 			var button = new Button.with_label("Start");
@@ -90,9 +95,9 @@ namespace Launcher {
 								jvm.addClasspaths(classpaths.toList());
 								Configuration.dump(jvmOptions.toList(),
 								classpaths.toList(), javaFolder,
-								memorySettings.toMap(), useNativeLAF.get_active());
+								memorySettings.toMap(), useNativeLAF.get_active(), debugMode.get_active());
 								jvm.run(memorySettings.getOptions(), null,
-								useNativeLAF.get_active());
+								useNativeLAF.get_active(), debugMode.get_active());
 								Process.exit(0);
 							});
 						} else {
@@ -110,9 +115,9 @@ namespace Launcher {
 						jvm.addJVMArguments(jvmOptions.toList());
 						jvm.addClasspaths(classpaths.toList());
 						Configuration.dump(jvmOptions.toList(), classpaths.toList(), javaFolder,
-						memorySettings.toMap(), useNativeLAF.get_active());
+						memorySettings.toMap(), useNativeLAF.get_active(), debugMode.get_active());
 						jvm.run(memorySettings.getOptions(), isMatching ? javaFolder : null,
-						useNativeLAF.get_active());
+						useNativeLAF.get_active(), debugMode.get_active());
 						Process.exit(0);
 					});
 				}

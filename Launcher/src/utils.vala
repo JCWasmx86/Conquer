@@ -157,6 +157,7 @@ namespace Launcher {
 		public string? xms;
 		public string? xmx;
 		public bool useNativeLAF;
+		public bool debugMode;
 		public static Configuration? readConfig() {
 			makeDirectory(getBaseDirectory());
 			var file = getBaseDirectory() + "/config.json";
@@ -191,6 +192,10 @@ namespace Launcher {
 					ret.useNativeLAF = object.get_string_member("useNativeLAF") == "true"?true:
 					 false;
 				}
+				if(object.has_member("debugMode")) {
+					ret.debugMode = object.get_string_member("debugMode") == "true"?true:
+					 false;
+				}
 				if(object.has_member("java")) {
 					ret.javaFolder = object.get_string_member("java");
 				}
@@ -207,7 +212,7 @@ namespace Launcher {
 			return ret;
 		}
 		public static void dump(Gee.List<string> arguments, Gee.List<string> classpaths, string? javaFolder,
-		 Gee.Map<string, string> memorySettings, bool useNativeLAF) {
+		 Gee.Map<string, string> memorySettings, bool useNativeLAF, bool debugMode) {
 			try{
 				GLib.File.new_for_path(getBaseDirectory() + "/config.json").@delete();
 			}catch(Error e) {
@@ -225,6 +230,7 @@ namespace Launcher {
 			object.set_array_member("classpaths", jsonClasspaths);
 			object.set_array_member("options", jsonArguments);
 			object.set_string_member("useNativeLAF", useNativeLAF?"true":"false");
+			object.set_string_member("debugMode", debugMode?"true":"false");
 			if(javaFolder == null) {
 				object.set_null_member("java");
 			} else {

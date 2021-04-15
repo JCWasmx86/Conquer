@@ -13,10 +13,10 @@ namespace Launcher {
 		public void addClasspaths(Gee.List<string> classpaths) {
 			this.classpaths = classpaths;
 		}
-		public void run(Gee.List<string> memorySettings, string? directory, bool useNativeLAF) {
+		public void run(Gee.List<string> memorySettings, string? directory, bool useNativeLAF, bool debugMode) {
 			var size = arguments.size;
 			var memSize = memorySettings.size;
-			string[] options = new string[memSize + size + 7];
+			string[] options = new string[memSize + size + 8];
 			options[0] = "-XX:+ShowCodeDetailsInExceptionMessages";
 			options[1] = new ClasspathCollector(classpaths).collectClasspath();
 			options[2] = "--enable-preview";
@@ -32,6 +32,7 @@ namespace Launcher {
 				options[6 + size + i] = memorySettings.get(i);
 			}
 			options[6 + size + memSize] = "-Dconquer.useNativeLAF=" + (useNativeLAF?"true":"false");
+			options[7 + size + memSize] = "-Dconquer.frontend.debug=" + (debugMode?"true":"false");
 			invokeJVM(options, memSize + size + 8, (char*) directory);
 		}
 	}
