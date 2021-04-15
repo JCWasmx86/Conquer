@@ -1,3 +1,7 @@
+Launcher/AccessControl/
+Launcher/Windows-10/
+Launcher/nsisunz/
+*.nsi
 *.class
 *.data
 *.deb
@@ -12,6 +16,8 @@
 *.vapi
 *.wav
 *.zip
+*.zst
+*.dll
 .classpath
 .gradle
 .idea/
