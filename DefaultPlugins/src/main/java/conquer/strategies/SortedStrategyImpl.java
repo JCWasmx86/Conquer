@@ -1,5 +1,12 @@
 package conquer.strategies;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.DoubleConsumer;
+
 import conquer.data.Gift;
 import conquer.data.ICity;
 import conquer.data.IClan;
@@ -11,13 +18,6 @@ import conquer.data.strategy.StrategyData;
 import conquer.data.strategy.StrategyObject;
 import conquer.utils.Graph;
 import conquer.utils.Pair;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.DoubleConsumer;
 
 public final class SortedStrategyImpl implements Strategy {
 	private static final double MAXIMUM_VARIANCE = 0.3;
@@ -73,23 +73,23 @@ public final class SortedStrategyImpl implements Strategy {
 
 	private void attack(final Graph<ICity> graph, final StrategyObject obj, final IClan clan) {
 		this.cities.forEach(target -> StreamUtils.getCitiesAsStream(graph, clan, a -> graph.isConnected(a, target))
-				.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
-				.forEach(ownCity -> {
-					final var pair = this.values.get(target);
-					final var second = pair.second();
-					final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
-					final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
-					if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
-						return;// We are too weak to attack.
-					}
-					final long numberOfSoldiersUsed;
-					if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
-						numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
-					} else {
-						return;
-					}
-					obj.attack(ownCity, target, true, numberOfSoldiersUsed);
-				}));
+			.sorted(Comparator.comparingLong(ICity::getNumberOfSoldiers))
+			.forEach(ownCity -> {
+				final var pair = this.values.get(target);
+				final var second = pair.second();
+				final var ownCitySoldiers = ownCity.getNumberOfSoldiers();
+				final var factor = clan.getSoldiersOffenseStrength() * clan.getSoldiersStrength();
+				if (this.tryRecruiting(clan, factor, second, ownCity, ownCitySoldiers, obj)) {
+					return;// We are too weak to attack.
+				}
+				final long numberOfSoldiersUsed;
+				if ((ownCitySoldiers > second) || ((ownCitySoldiers * factor) > second)) {
+					numberOfSoldiersUsed = second > ownCitySoldiers ? ownCitySoldiers : second.longValue();
+				} else {
+					return;
+				}
+				obj.attack(ownCity, target, true, numberOfSoldiersUsed);
+			}));
 	}
 
 	@Override
@@ -102,28 +102,28 @@ public final class SortedStrategyImpl implements Strategy {
 		StreamUtils.getCitiesAsStreamNot(cities2, clan).forEach(a -> {
 			// Make the strategy a bit wrong to make it possible for the player to win.
 			final var soldiersA = a.getNumberOfSoldiers() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
-					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
-					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
+				? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+				: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
 			final var peopleA = a.getNumberOfPeople() * (Math.random() > SortedStrategyImpl.FIFTY_FIFTY_PROBABILITY
-					? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
-					: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
+				? (1 + (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE))
+				: (1 - (Math.random() % SortedStrategyImpl.MAXIMUM_VARIANCE)));
 			this.values.put(a, new Pair<>(peopleA, soldiersA));
 		});
 		this.cities = StreamUtils
-				.getCitiesAsStreamNot(cities2, clan,
-						a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
-				.sorted((a, b) -> {
-					final var pA = this.values.get(a);
-					final var pB = this.values.get(b);
-					final var ratioA = pA.first() / (pA.second() == 0 ? 1 : pA.second());
-					final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
-					return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
-				}).toList();
+			.getCitiesAsStreamNot(cities2, clan,
+				a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
+			.sorted((a, b) -> {
+				final var pA = this.values.get(a);
+				final var pB = this.values.get(b);
+				final var ratioA = pA.first() / (pA.second() == 0 ? 1 : pA.second());
+				final var ratioB = pB.first() / (pB.second() == 0 ? 1 : pB.second());
+				return Double.compare(ratioB, ratioA);// The cities with a high people/soldiers ratio come first.
+			}).toList();
 	}
 
 	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
 								  final long ownCitySoldiers, final StrategyObject obj) {
-		if (second > (ownCitySoldiers * factor)) {
+		if (second > (ownCitySoldiers * factor) && ownCity.getNumberOfPeople() > 75) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, ownCity, true, ownCity.getNumberOfPeople());
 			return second > (ownCitySoldiers * factor);
 		}
