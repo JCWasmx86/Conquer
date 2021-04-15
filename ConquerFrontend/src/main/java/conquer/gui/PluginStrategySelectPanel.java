@@ -3,6 +3,7 @@ package conquer.gui;
 import conquer.data.ConquerInfo;
 import conquer.data.GlobalContext;
 import conquer.data.strategy.StrategyProvider;
+import conquer.gui.debug.DebugPlugin;
 import conquer.plugins.Plugin;
 
 import java.io.Serial;
@@ -70,6 +71,9 @@ final class PluginStrategySelectPanel extends JPanel {
 				}
 			}
 		});
+		if(Utils.isDebug()) {
+			newPlugins.add(new DebugPlugin());
+		}
 		final var pluginNames = newPlugins.stream().map(a -> a.getClass().getName()).toList();
 		this.context.getPlugins().clear();
 		this.context.getPlugins().addAll(newPlugins);
