@@ -171,8 +171,8 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
-		throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-			   ClassNotFoundException, IOException {
+	throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
+		   ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));

@@ -51,6 +51,7 @@ class GiftTest {
 	@Test
 	void testPositiveInfinity() {
 		Assertions.assertThrows(IllegalArgumentException.class, () -> new Gift(List.of(1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
-																					   1.0, 1.0, Double.POSITIVE_INFINITY), 50));
+																					   1.0, 1.0,
+																					   Double.POSITIVE_INFINITY), 50));
 	}
 }
