@@ -88,7 +88,7 @@ class CityInfoPanel extends JPanel implements ActionListener {
 			.append(Messages.getString("Shared.growth"))
 			.append(": ").append(String.format("%.2f", this.city.getGrowth())).append("<br>")
 			.append(Messages.getString("CityInfoPanel.recruitablePeople")).append(": ").append(this.city.getInfo()
-				.maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
+																								   .maximumNumberOfSoldiersToRecruit(this.city.getClan(), this.city.getNumberOfPeople()));
 		final var list = this.city.getProductions();
 		for (var i = 0; i < list.size(); i++) {
 			sb.append("<br>").append(Resource.values()[i].getName()).append(": ");

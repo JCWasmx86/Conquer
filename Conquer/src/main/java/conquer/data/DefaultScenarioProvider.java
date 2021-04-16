@@ -79,7 +79,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 			return null;
 		}
 		return new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-			Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null);
+									 Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null);
 	}
 
 	// A bit copied from XMLReader.java

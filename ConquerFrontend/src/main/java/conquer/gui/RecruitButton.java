@@ -62,7 +62,7 @@ final class RecruitButton extends JPanel {
 				this.js.setEnabled(true);
 				this.sharp = true;
 				this.js.setMaximum((int) this.city.getInfo().maximumNumberOfSoldiersToRecruit(this.city.getClan(),
-					this.city.getNumberOfPeople()));
+																							  this.city.getNumberOfPeople()));
 			}
 		} else {
 			this.jbutton.setEnabled(false);

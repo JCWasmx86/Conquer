@@ -52,7 +52,7 @@ final class GiftCallback implements PlayerGiftCallback {
 				continue;
 			}
 			final var jlabel = new JLabel(String.format("%.2f", value) + " " + resource.getName(),
-				new ImageResource(resource.getImage()), SwingConstants.LEFT);
+										  new ImageResource(resource.getImage()), SwingConstants.LEFT);
 			this.jframe.add(jlabel);
 		}
 		final var buttonPanel = new JPanel();

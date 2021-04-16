@@ -74,8 +74,8 @@ public class Installer implements Runnable {
 
 	private int askQuestion() {
 		return this.chooser.choose(Messages.getString("Installer.minimalInstallation"),
-			Messages.getString("Installer.standardInstallation"),
-			Messages.getString("Installer.extendedInstallation"));
+								   Messages.getString("Installer.standardInstallation"),
+								   Messages.getString("Installer.extendedInstallation"));
 	}
 
 	private void baseInstallation() throws IOException {
@@ -135,7 +135,7 @@ public class Installer implements Runnable {
 			final var contents = new String(stream2.readAllBytes(), StandardCharsets.UTF_8);
 			newContents = contents.replace("<!--<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />-->",
 
-				"<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />");
+										   "<plugin className=\"conquer.plugins.builtins.DefaultMusic\" />");
 		}
 		Files.writeString(Paths.get(info.toURI()), newContents, StandardCharsets.UTF_8);
 	}
@@ -177,7 +177,7 @@ public class Installer implements Runnable {
 			final var props = new File(Installer.BASE_FILE, "game.properties");
 			if (!props.exists()) {
 				Files.write(Paths.get(props.toURI()), Installer.DEFAULT_PROPERTIES.getBytes(),
-					StandardOpenOption.CREATE);
+							StandardOpenOption.CREATE);
 			}
 		}
 	}

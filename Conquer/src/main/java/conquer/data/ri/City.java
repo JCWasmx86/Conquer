@@ -68,7 +68,7 @@ class City implements ICity {
 			throw new IllegalArgumentException("other==null");
 		}
 		return Double.compare((this.getNumberOfSoldiers() * this.getBonus()) + this.getDefense(),
-			(other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
+							  (other.getNumberOfSoldiers() * other.getBonus()) + other.getDefense());
 	}
 
 	@Override

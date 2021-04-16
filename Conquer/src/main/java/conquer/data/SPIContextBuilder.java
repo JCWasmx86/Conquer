@@ -48,8 +48,8 @@ public class SPIContextBuilder {
 			.collect(Collectors.toList());
 		readers.addAll(ServiceLoader.load(ReaderRegistry.class).stream().map(Provider::get).flatMap(a -> a.findFactories().stream()).toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
-			plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
-			strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
-			readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
+								 plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+								 strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
+								 readers.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()));
 	}
 }

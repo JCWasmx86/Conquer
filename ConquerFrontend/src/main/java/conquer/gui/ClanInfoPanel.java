@@ -47,7 +47,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 	public void actionPerformed(final ActionEvent e) {
 		if (this.game.isDead(this.game.getPlayerClan())) {
 			this.jep.setText("<html><body><font color='red'>" + Messages.getString("ClanInfoPanel.youAreDead")
-				+ "</font></body></html>");
+								 + "</font></body></html>");
 		} else {
 			this.jep.setText(this.generateText());
 		}
@@ -59,7 +59,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 				- (c.getNumberOfSoldiers() * this.game.getSoldierCosts(this.clan).coinsPerSoldierPerRound()))
 			.sum();
 		return String.format("<br><font color='%s'>%s: %.2f</font>", production <= 0 ? "red" : "green",
-			Messages.getString("ClanInfoPanel.coinsPerRound"), production);
+							 Messages.getString("ClanInfoPanel.coinsPerRound"), production);
 	}
 
 	private String generateText() {

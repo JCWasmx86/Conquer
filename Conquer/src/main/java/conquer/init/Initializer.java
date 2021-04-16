@@ -47,7 +47,7 @@ public final class Initializer {
 		if (!new File(Shared.PROPERTIES_FILE).exists()) {
 			try {
 				Files.write(Paths.get(Shared.PROPERTIES_FILE), "#Properties for Conquer\n".getBytes(),
-					StandardOpenOption.CREATE);
+							StandardOpenOption.CREATE);
 			} catch (final IOException e) {
 				Shared.LOGGER.exception(e);
 				if (onError != null) {

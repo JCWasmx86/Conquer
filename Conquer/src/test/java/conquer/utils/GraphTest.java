@@ -146,7 +146,7 @@ class GraphTest {
 		final var i = new AtomicInteger();
 		g.dfs(0, a -> i.incrementAndGet());
 		this.assertThat("Wrong size: " + i.get() + " vs expected " + GraphTest.N_VALUES,
-			i.get() == GraphTest.N_VALUES);
+						i.get() == GraphTest.N_VALUES);
 	}
 
 	@Test

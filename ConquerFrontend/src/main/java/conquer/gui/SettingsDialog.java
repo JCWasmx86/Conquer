@@ -76,7 +76,7 @@ final class SettingsDialog extends JFrame {
 
 	private Properties getProperties() {
 		try (final var in = Files.newInputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()),
-			StandardOpenOption.CREATE)) {
+												 StandardOpenOption.CREATE)) {
 			final var p = new Properties();
 			p.load(in);
 			return p;
@@ -91,7 +91,7 @@ final class SettingsDialog extends JFrame {
 		this.plugins.forEach(a -> a.save(this.properties));
 		System.getProperties().putAll(this.properties);
 		try (final var out = Files.newOutputStream(Paths.get(new File(Shared.PROPERTIES_FILE).toURI()),
-			StandardOpenOption.WRITE)) {
+												   StandardOpenOption.WRITE)) {
 			this.properties.store(out, "Properties for conquer");
 		} catch (final IOException e) {
 			Shared.LOGGER.exception(e);

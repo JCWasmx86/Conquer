@@ -20,6 +20,6 @@ public record SoldiersDesertedBecauseOfMissingMoneyMessage(IClan clan, long numb
 	@Override
 	public String getMessageText() {
 		return MessageFormat.format(MoneyAnalyzerMessages.getString("MoneyAnalyzer.message"),
-			this.numberOfDesertedSoldiers);
+									this.numberOfDesertedSoldiers);
 	}
 }

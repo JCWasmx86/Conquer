@@ -45,7 +45,7 @@ public final class DefensiveStrategyData implements StrategyData {
 					this.strategy = DefensiveStrategy.FORTIFYANDUPGRADE;
 					this.counter = Math.abs(this.random.nextInt(40)) + 1;
 					Shared.logLevel1("Defensive-Strategy: " + DefensiveStrategy.FORTIFYANDUPGRADE + " for " + this.counter
-						+ " rounds");
+										 + " rounds");
 					break;
 				case FORTIFYANDUPGRADE:
 					this.strategy = DefensiveStrategy.RECRUIT;

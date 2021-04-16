@@ -118,7 +118,7 @@ public final class Testsuite3 extends Testsuite {
 		for (var i = 0; i < Math.min(resourceStats.size(), resourceStats2.size()); i++) {
 			if (!this.nearlyEquals(resourceStats.get(i), resourceStats2.get(i))) {
 				this.error("resourceStats.get(i)!=resourceStats.get(i)" + "//" + resourceStats.get(i) + "//"
-					+ resourceStats2.get(i));
+							   + resourceStats2.get(i));
 			}
 		}
 	}

@@ -22,13 +22,14 @@ final class UpgradeSoldiersPanel extends UpgradePanel {
 	String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersPanel.soldiersPower", Utils.format(this.clan.getSoldiersStrength())
 			,
-			this.clan.getSoldiersLevel());
+								   this.clan.getSoldiersLevel());
 	}
 
 	@Override
 	String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersLevel() + 1),
-			Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1)));
+								   Utils.format(this.clan.upgradeCosts(SoldierUpgrade.BOTH,
+																	   this.clan.getSoldiersLevel() + 1)));
 	}
 
 	@Override
@@ -39,7 +40,7 @@ final class UpgradeSoldiersPanel extends UpgradePanel {
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.BOTH, this.clan.getSoldiersLevel() + 1,
-			this.clan.getCoins());
+											  this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			@Serial
 			private static final long serialVersionUID = 8078867867027862129L;

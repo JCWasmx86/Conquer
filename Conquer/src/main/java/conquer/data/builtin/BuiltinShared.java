@@ -42,7 +42,7 @@ final class BuiltinShared {
 		// Find all cities around the source of clans with a relationship < GOOD_RELATION
 		final var citiesOfEnemies = StreamUtils
 			.getCitiesAroundCityNot(object, graph, source,
-				a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
+									a -> object.getRelationship(clan, a) < BuiltinShared.GOOD_RELATION)
 			.toList();
 		// Peace!
 		if (citiesOfEnemies.isEmpty()) {
@@ -144,7 +144,7 @@ final class BuiltinShared {
 		BuiltinShared.assertThat(object != null, "object==null");
 		BuiltinShared.assertThat(clan != null, "clan==null");
 		StreamUtils.getCitiesAsStream(graph, clan,
-			a -> StreamUtils.getCitiesAroundCityNot(object, graph, a, clan).count() > 0).sorted((a, b) -> {
+									  a -> StreamUtils.getCitiesAroundCityNot(object, graph, a, clan).count() > 0).sorted((a, b) -> {
 			// Sort them using the defense strength
 			final var defenseStrengthA = a.getDefenseStrength();
 			final var defenseStrengthB = b.getDefenseStrength();

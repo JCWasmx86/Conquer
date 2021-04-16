@@ -111,8 +111,8 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private Clan readClan(final File file, final Game game) throws IOException, InstantiationException,
-		IllegalAccessException, InvocationTargetException,
-		NoSuchMethodException, ClassNotFoundException {
+																   IllegalAccessException, InvocationTargetException,
+																   NoSuchMethodException, ClassNotFoundException {
 		try (final var dis = new DataInputStream(new FileInputStream(file))) {
 			final var clan = new Clan();
 			clan.setId(dis.readInt());
@@ -156,11 +156,11 @@ public final class GameSaver implements ConquerSaver {
 	}
 
 	private List<IClan> readClans(final File saveDirectory, final Game game) throws IOException,
-		InstantiationException,
-		IllegalAccessException,
-		InvocationTargetException,
-		NoSuchMethodException,
-		ClassNotFoundException {
+																					InstantiationException,
+																					IllegalAccessException,
+																					InvocationTargetException,
+																					NoSuchMethodException,
+																					ClassNotFoundException {
 		final List<IClan> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.clan\\.save$"));
@@ -172,7 +172,7 @@ public final class GameSaver implements ConquerSaver {
 
 	private List<Plugin> readPlugins(final File saveDirectory, final Game game)
 		throws InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException,
-		ClassNotFoundException, IOException {
+			   ClassNotFoundException, IOException {
 		final List<Plugin> ret = new ArrayList<>();
 		final var files = saveDirectory.listFiles(pathname -> pathname.getAbsolutePath()
 			.replace(pathname.getParentFile().getAbsolutePath(), "").matches(".*\\.plugin\\.save$"));
@@ -316,7 +316,7 @@ public final class GameSaver implements ConquerSaver {
 			throw new RuntimeException(e);
 		}
 		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
-			this.getClass().getCanonicalName().getBytes());
+					this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
 		try (final var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);

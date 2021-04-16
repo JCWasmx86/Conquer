@@ -40,7 +40,8 @@ final class ResourceButton extends JPanel {
 		this.info = city.getInfo();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.infoLabel = new JLabel(this.getInfoLabelText(),
-			new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()), SwingConstants.LEFT);
+									new ImageResource(resource == null ? "defenseUpgrade.png" : resource.getImage()),
+									SwingConstants.LEFT);
 		this.add(this.infoLabel);
 		this.upgradeThisResource = new JButton();
 		this.upgradeThisResource.setText(this.getUpgradeThisResourceText());
@@ -112,7 +113,7 @@ final class ResourceButton extends JPanel {
 			currentLevel++;
 		}
 		return Messages.getMessage("ResourceButton.maxUpgrade", currentLevel,
-			Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
+								   Utils.format(this.city.getInfo().getPlayerClan().getCoins() - currentCoins));
 	}
 
 	private String getUpgradeThisResourceText() {
@@ -133,7 +134,7 @@ final class ResourceButton extends JPanel {
 			this.infoLabel
 				.setText((this.resource == null ? Messages.getString("Shared.defense") : this.resource.getName())
 
-					+ " " + Messages.getString("ResourceButton.level") + " ???");
+							 + " " + Messages.getString("ResourceButton.level") + " ???");
 		}
 	}
 

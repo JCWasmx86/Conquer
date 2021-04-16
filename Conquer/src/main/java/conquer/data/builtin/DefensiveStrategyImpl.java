@@ -166,17 +166,19 @@ public final class DefensiveStrategyImpl implements Strategy {
 
 	private void tryAttacking(final IClan clan) {
 		StreamUtils.forEach(this.graph, clan,
-			ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity, ownCity.getClan())
-				.sorted().forEach(enemy -> {
-					// Strength of the own soldiers
-					final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
-						* clan.getSoldiersStrength();
-					// Estimated strength of the enemy
-					final var dTwo = enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
-					// Only attack, if a victory is very probable.
-					if (dOwn > (dTwo * 1.1)) {
-						this.object.attack(ownCity, enemy, false, 0);
-					}
-				}));
+							ownCity -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, ownCity,
+																		  ownCity.getClan())
+								.sorted().forEach(enemy -> {
+									// Strength of the own soldiers
+									final var dOwn = ownCity.getNumberOfSoldiers() * clan.getSoldiersOffenseStrength()
+										* clan.getSoldiersStrength();
+									// Estimated strength of the enemy
+									final var dTwo =
+										enemy.getDefense() + (enemy.getNumberOfSoldiers() * enemy.getBonus());
+									// Only attack, if a victory is very probable.
+									if (dOwn > (dTwo * 1.1)) {
+										this.object.attack(ownCity, enemy, false, 0);
+									}
+								}));
 	}
 }

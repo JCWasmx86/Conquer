@@ -169,12 +169,12 @@ public final class XMLReader {
 				XMLReader.throwableConsumer.accept(e);
 			}
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-				new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+									 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
 		final var infoNode = this.findNode(d.getChildNodes());
 		if (infoNode == null) {
 			return new GlobalContext(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
-				new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+									 new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 		}
 		return this.fill(infoNode, instantiate);
 	}
@@ -203,8 +203,8 @@ public final class XMLReader {
 		final List<ConquerInfoReaderFactory> readerFactories = instantiate ? this.loadReaders(readerFactoryNames)
 			: new ArrayList<>();
 		return new GlobalContext(this.distinct(installedMaps), this.distinct(plugins), this.distinct(strategies),
-			readerFactories, this.distinct(pluginNames), this.distinct(strategyNames),
-			this.distinct(readerFactoryNames));
+								 readerFactories, this.distinct(pluginNames), this.distinct(strategyNames),
+								 this.distinct(readerFactoryNames));
 	}
 
 	private void readList(final Node node, final List<String> list) {
@@ -239,7 +239,7 @@ public final class XMLReader {
 				}
 				installedMaps.add(
 					new InstalledScenario(name.getNodeValue(), Shared.BASE_DIRECTORY + "/" + file.getNodeValue(),
-						Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null));
+										  Shared.BASE_DIRECTORY + "/" + thumbnail.getNodeValue(), null));
 			}
 		}
 	}

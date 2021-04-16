@@ -209,7 +209,7 @@ final class Game implements ConquerInfo {
 		if (diff > 0) {// Attack was defeated
 			final var destinationClanObj = this.getClan(destination);
 			var surviving = this.numberOfSurvivingDefenders(diff, destination,
-				destinationClanObj);
+															destinationClanObj);
 			final var numSoldiers = destination.getNumberOfSoldiers();
 			if (numSoldiers == 0) {
 				surviving = 0;
@@ -221,14 +221,14 @@ final class Game implements ConquerInfo {
 			this.events.add(new AttackLostMessage(src, destination, powerOfAttacker));
 			relationshipValue -= Game.RELATIONSHIP_CHANGE_ATTACK_DEFEATED;
 			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED,
-				Game.MAXIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED);
+															  Game.MAXIMUM_SURVIVING_PEOPLE_ATTACK_DEFEATED);
 			result = AttackResult.ATTACK_DEFEATED;
 		} else if (diff == 0) {// All soldiers are dead
 			destination.setNumberOfSoldiers(0);
 			this.events.add(new AnnihilationMessage(src, destination, powerOfAttacker));
 			relationshipValue -= Game.RELATIONSHIP_CHANGE_ALL_DEAD;
 			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_ALL_DEAD,
-				Game.MAXIMUM_SURVIVING_PEOPLE_ALL_DEAD);
+															  Game.MAXIMUM_SURVIVING_PEOPLE_ALL_DEAD);
 			survivingSoldiers = 0;
 			result = AttackResult.ALL_SOLDIERS_DEAD;
 		} else {// Conquered
@@ -236,7 +236,7 @@ final class Game implements ConquerInfo {
 			destination.setNumberOfSoldiers(survivingSoldiers);
 			relationshipValue -= Game.RELATIONSHIP_CHANGE_CITY_CONQUERED;
 			numberOfSurvivingPeople = Shared.randomPercentage(Game.MINIMUM_SURVIVING_PEOPLE_CITY_CONQUERED,
-				Game.MAXIMUM_SURVIVING_PEOPLE_CONQUERED);
+															  Game.MAXIMUM_SURVIVING_PEOPLE_CONQUERED);
 			result = AttackResult.CITY_CONQUERED;
 			this.events.add(new ConquerMessage(src, destination, powerOfAttacker));
 			destination.setClan(src.getClan());
@@ -246,7 +246,7 @@ final class Game implements ConquerInfo {
 		}
 		destination.setNumberOfPeople((long) (destination.getNumberOfPeople() * numberOfSurvivingPeople));
 		this.getRelations().addDirectedEdge(src.getClanId(), destinationClan.getId(), relationshipValue,
-			relationshipValue);
+											relationshipValue);
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 		this.checkExtinction(result, destinationClan);
 	}
@@ -643,7 +643,7 @@ final class Game implements ConquerInfo {
 	@Override
 	public void init() {
 		this.data.setPlugins(this.data.getPlugins().stream().filter(a -> a.compatibleTo(this.getVersion()))
-			.toList());
+								 .toList());
 		this.context.getStrategies().forEach(provider -> {
 			final var idx = provider.getId();
 			if (idx >= Game.MAX_STRATEGIES) {
@@ -814,7 +814,7 @@ final class Game implements ConquerInfo {
 	private void payForMove(final IClan srcClan, final long numSoldiers, final double weight) {
 		final var costs = this.getSoldierCosts();
 		this.pay(srcClan,
-			numSoldiers * (costs.coinsPerMoveOfSoldierBase() + (costs.coinsPerMovePerSoldier() * weight)));
+				 numSoldiers * (costs.coinsPerMoveOfSoldierBase() + (costs.coinsPerMovePerSoldier() * weight)));
 	}
 
 	private void payMoney() {
@@ -825,7 +825,7 @@ final class Game implements ConquerInfo {
 		});
 		this.clans.forEach(clan -> this.data.getMoneyHooks().forEach(
 			a -> a.moneyPaid(StreamUtils.getCitiesAsStream(this.cities, clan).toList(),
-				clan)));
+							 clan)));
 
 	}
 
@@ -970,7 +970,7 @@ final class Game implements ConquerInfo {
 			this.sanityCheckResources(clan);
 			if (clan.getResourceStats().size() != Resource.values().length) {
 				throw new InternalError(clan.getName() + "has a bad size of the resource stats list: "
-					+ clan.getResourceStats().size());
+											+ clan.getResourceStats().size());
 			}
 			this.sanityCheckResourceStats(clan);
 		});
@@ -978,7 +978,7 @@ final class Game implements ConquerInfo {
 
 	private void sanityCheckForGrowth() {
 		StreamUtils.forEach(this.cities, a -> a.getGrowth() > Game.GROWTH_LIMIT,
-			a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
+							a -> a.setGrowth(a.getGrowth() * Game.GROWTH_REDUCE_FACTOR));
 		StreamUtils.forEach(this.cities, a -> {
 			while (a.getGrowth() > Game.ALTERNATIVE_GROWTH_LIMIT) {
 				a.setGrowth(a.getGrowth() * Game.WEAK_GROWTH_REDUCE_FACTOR);
@@ -1075,7 +1075,7 @@ final class Game implements ConquerInfo {
 			final var index = key.getIndex();
 			if (a.get(index) < value) {
 				throw new IllegalArgumentException("More " + key.getName() + " was gifted than available: ("
-					+ a.get(index) + "/" + value + ")");
+													   + a.get(index) + "/" + value + ")");
 			}
 			a.set(index, a.get(index) - value);
 			b.set(index, b.get(index) + value);
@@ -1184,7 +1184,8 @@ final class Game implements ConquerInfo {
 		}
 		clan.setCoins(clan.getCoins() - costs);
 		city.getProductions().set(resc.getIndex(),
-			this.getPlayerClan().newPowerOfUpdate(levels.get(index + 1), city.getProductions().get(index)));
+								  this.getPlayerClan().newPowerOfUpdate(levels.get(index + 1),
+																		city.getProductions().get(index)));
 		levels.set(resc.getIndex(), levels.get(index) + 1);
 		return true;
 	}

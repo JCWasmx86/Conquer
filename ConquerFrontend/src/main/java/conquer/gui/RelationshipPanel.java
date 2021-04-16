@@ -42,7 +42,7 @@ final class RelationshipPanel extends JPanel implements ActionListener {
 			final var clan = clans.get(i);
 			final var label = this.labels.get(i - 1);
 			label.setText(clan.getName() + ": "
-				+ String.format("%.2f", this.game.getRelationship(this.game.getPlayerClan(), clan)));
+							  + String.format("%.2f", this.game.getRelationship(this.game.getPlayerClan(), clan)));
 			this.repaint();
 		}
 	}
