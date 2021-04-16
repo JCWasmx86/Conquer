@@ -123,7 +123,7 @@ public final class SortedStrategyImpl implements Strategy {
 
 	private boolean tryRecruiting(final IClan clan, final double factor, final Double second, final ICity ownCity,
 								  final long ownCitySoldiers, final StrategyObject obj) {
-		if (second > (ownCitySoldiers * factor) && ownCity.getNumberOfPeople() > 75) {
+		if (second > (ownCitySoldiers * factor) && ownCity.getNumberOfPeople() > 75 && clan.getCoins() > 25) {
 			obj.recruitSoldiers(clan.getCoins() * 0.25, ownCity, true, ownCity.getNumberOfPeople());
 			return second > (ownCitySoldiers * factor);
 		}
