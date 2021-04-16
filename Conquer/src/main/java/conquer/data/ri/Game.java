@@ -862,9 +862,9 @@ final class Game implements ConquerInfo {
 			numberToRecruit = (int) (maxToPay / costs.coinsPerSoldierInitial());
 			numberToRecruit = Math.min(c.getNumberOfPeople() - Game.RETAINED_PEOPLE, numberToRecruit);
 			numberToRecruit = this.maximumNumberOfSoldiersToRecruit(clan, numberToRecruit);
-			if (numberToRecruit == 0) {
-				return;
-			}
+		}
+		if (numberToRecruit == 0) {
+			return;
 		}
 		c.setNumberOfPeople(c.getNumberOfPeople() - numberToRecruit);
 		c.setNumberOfSoldiers(c.getNumberOfSoldiers() + numberToRecruit);
