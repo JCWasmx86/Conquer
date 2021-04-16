@@ -36,8 +36,10 @@ public class DebugPlugin implements Plugin {
 				//Empty
 			}
 		});
-		pluginInterface.addMoveHook(((src, dest, numberOfSoldiers) -> System.out.println("Moving: " + src.getName() + " -> " + dest.getName() + "; " + numberOfSoldiers + " soldiers // Strategy: " + src.getClan().getStrategy().getClass().getCanonicalName())));
-		pluginInterface.addRecruitHook(((city, numberOfSoldiers) -> System.out.println("Recruit: " + city.getName() + "; " + numberOfSoldiers + " soldiers // Strategy: " + city.getClan().getStrategy().getClass().getCanonicalName())));
+		pluginInterface.addMoveHook(((src, dest, numberOfSoldiers) -> System.out.println("Moving: " + src.getName() +
+			" -> " + dest.getName() + "; " + numberOfSoldiers + " soldiers // Strategy: " + src.getClan().getStrategy().getClass().getCanonicalName())));
+		pluginInterface.addRecruitHook(((city, numberOfSoldiers) -> System.out.println("Recruit: " + city.getName() +
+			"; " + numberOfSoldiers + " soldiers // Strategy: " + city.getClan().getStrategy().getClass().getCanonicalName())));
 	}
 
 	@Override
