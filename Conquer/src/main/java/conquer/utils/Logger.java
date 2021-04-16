@@ -51,7 +51,7 @@ public final class Logger {
 			this.bw.write(throwable.getClass().getName() + ": " + throwable.getMessage() + "\n");
 			for (final StackTraceElement ste : throwable.getStackTrace()) {
 				this.bw.write("\t" + ste.getClassName() + "@" + ste.getModuleName() + "::" + ste.getMethodName()
-								  + "(Line: " + ste.getLineNumber() + ")\n");
+					+ "(Line: " + ste.getLineNumber() + ")\n");
 			}
 			this.bw.flush();
 		} catch (final IOException e) {

@@ -74,7 +74,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 					if (value.thumbnail() != null) {
 						try {
 							final var url = new File(value.thumbnail()).toURI().toURL().toString().replace("file:/",
-																										   "file:///");
+								"file:///");
 							// A dirty hack...
 							jl.setToolTipText(
 								Messages.getMessage("LevelSelectFrame.imageNotFound", url).replace("{0}", url));
@@ -191,7 +191,7 @@ final class LevelSelectFrame extends JFrame implements MouseListener, EmptyWindo
 			li.setVisible(true);
 		} catch (final UnsupportedOperationException uoe) {
 			JOptionPane.showMessageDialog(null, Messages.getString("LevelSelectFrame.noReaderFound"),
-										  Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
+				Messages.getString("LevelSelectFrame.error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

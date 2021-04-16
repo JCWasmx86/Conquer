@@ -48,32 +48,32 @@ class ResourceUsageTest {
 	@Test
 	void testStatsSubarrayContainsBadValue3() {
 		Assertions.assertThrows(IllegalArgumentException.class,
-								() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
-									{1, 0}, {1, 0},
-									{1, 0}, {1, 0}, {1, 0}, {1, 0}}, 0.0));
+			() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
+				{1, 0}, {1, 0},
+				{1, 0}, {1, 0}, {1, 0}, {1, 0}}, 0.0));
 	}
 
 	@Test
 	void testCoinsNegative() {
 		Assertions.assertThrows(IllegalArgumentException.class,
-								() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
-									{1, 0}, {1, 0},
-									{1, 0}, {1, 0}, {1, 0}, {1, 0}}, -1));
+			() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
+				{1, 0}, {1, 0},
+				{1, 0}, {1, 0}, {1, 0}, {1, 0}}, -1));
 	}
 
 	@Test
 	void testCoinsNan() {
 		Assertions.assertThrows(IllegalArgumentException.class,
-								() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
-									{1, 0}, {1, 0},
-									{1, 0}, {1, 0}, {1, 0}, {1, 0}}, Double.NaN));
+			() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
+				{1, 0}, {1, 0},
+				{1, 0}, {1, 0}, {1, 0}, {1, 0}}, Double.NaN));
 	}
 
 	@Test
 	void testCoinsInfinity() {
 		Assertions.assertThrows(IllegalArgumentException.class,
-								() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
-									{1, 0}, {1, 0},
-									{1, 0}, {1, 0}, {1, 0}, {1, 0}}, Double.POSITIVE_INFINITY));
+			() -> new ResourceUsage(new double[][] {{Double.POSITIVE_INFINITY, 0}, {1, 0}, {1, 0},
+				{1, 0}, {1, 0},
+				{1, 0}, {1, 0}, {1, 0}, {1, 0}}, Double.POSITIVE_INFINITY));
 	}
 }

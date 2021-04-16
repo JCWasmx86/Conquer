@@ -14,10 +14,10 @@ public sealed class Testsuite permits Testsuite1, Testsuite2, Testsuite3 {
 		} catch (final Throwable throwable) {
 			if (expectedClass.isAssignableFrom(throwable.getClass())) {
 				this.success("Got expected throwable: " + throwable.getClass().getCanonicalName() + ": "
-								 + throwable.getMessage());
+					+ throwable.getMessage());
 			} else {
 				this.error("Expected an instanceof " + expectedClass.getCanonicalName() + " but got an instanceof "
-							   + throwable.getClass().getCanonicalName() + "!");
+					+ throwable.getClass().getCanonicalName() + "!");
 				throwable.printStackTrace();
 			}
 			return;

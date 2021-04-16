@@ -111,7 +111,7 @@ public final class SortedStrategyImpl implements Strategy {
 		});
 		this.cities = StreamUtils
 			.getCitiesAsStreamNot(cities2, clan,
-								  a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
+				a -> cities2.getConnected(a).stream().anyMatch(b -> b.getClan() == clan))
 			.sorted((a, b) -> {
 				final var pA = this.values.get(a);
 				final var pB = this.values.get(b);

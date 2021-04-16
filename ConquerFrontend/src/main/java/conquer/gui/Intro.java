@@ -61,7 +61,7 @@ final class Intro extends JFrame implements EmptyWindowListenerImpl, KeyListener
 		}
 		new Thread(() -> Initializer.INSTANCE().initialize(a -> {
 			JOptionPane.showMessageDialog(null, Messages.getString("Intro.initFailed"),
-										  Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE);
+				Messages.getString("Intro.error"), JOptionPane.ERROR_MESSAGE);
 			System.exit(-127);
 		})).start();
 		final var main = new Intro();

@@ -316,7 +316,7 @@ public final class GameSaver implements ConquerSaver {
 			throw new RuntimeException(e);
 		}
 		Files.write(Paths.get(saveDirectory.getAbsolutePath(), "classname"),
-					this.getClass().getCanonicalName().getBytes());
+			this.getClass().getCanonicalName().getBytes());
 		final var files = saveDirectory.listFiles();
 		try (final var dos = new DataOutputStream(new FileOutputStream(new File(saveDirectory, "hashes")))) {
 			dos.writeInt(files.length);

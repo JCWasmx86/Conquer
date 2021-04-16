@@ -142,7 +142,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		for (var i = 0; i < numCities; i++) {
 			final var bytesOfPicture = dis.readInt();
 			this.throwIfNegative(bytesOfPicture,
-								 "Expected a non negative number of bytes in image ,got " + bytesOfPicture);
+				"Expected a non negative number of bytes in image ,got " + bytesOfPicture);
 			final var pic = new byte[bytesOfPicture];
 			final var bytesRead = dis.read(pic);
 			if (bytesRead != bytesOfPicture) {
@@ -212,7 +212,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 	private Graph<Integer> readRelations(final DataInput dis, final int numPlayers) throws IOException {
 		final var numberOfRelations = dis.readInt();
 		this.throwIfNegative(numberOfRelations,
-							 "Expected a non negative number of relations, got " + numberOfRelations);
+			"Expected a non negative number of relations, got " + numberOfRelations);
 		final var relations = new Graph<Integer>(numPlayers);
 		for (var i = 0; i < numPlayers; i++) {
 			relations.add(i);

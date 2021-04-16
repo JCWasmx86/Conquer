@@ -52,7 +52,7 @@ final class EventLog extends JFrame implements MessageListener {
 		this.base = new JPanel();
 		this.base.setLayout(new BoxLayout(this.base, BoxLayout.PAGE_AXIS));
 		final JScrollPane contentPane = new JScrollPane(this.base, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-														ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		contentPane.setIgnoreRepaint(true);
 		contentPane.getVerticalScrollBar().setUnitIncrement(16);
 		this.timer = new Timer(Utils.getRefreshRate(), a -> this.repaint());
@@ -125,8 +125,8 @@ final class EventLog extends JFrame implements MessageListener {
 		final var a = game.getClans();
 		for (final var clan : a) {
 			final var jlabel = new JLabel(Messages.getString("Shared.clan") + ": " + clan.getName()
-											  + (clan == game.getPlayerClan() ? " " + Messages.getString("Shared" +
-																											 ".player")
+				+ (clan == game.getPlayerClan() ? " " + Messages.getString("Shared" +
+				".player")
 				: ""));
 			EventLog.log.defaultColor = new Color(jlabel.getForeground().getRGB());
 			final var color = clan.getColor();

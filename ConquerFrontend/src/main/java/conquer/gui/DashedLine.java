@@ -26,6 +26,6 @@ final class DashedLine {
 	 */
 	void draw(final Graphics2D g) {
 		g.drawLine(this.cityA.getPreferredX(), this.cityA.getPreferredY(), this.cityB.getPreferredX(),
-				   this.cityB.getPreferredY());
+			this.cityB.getPreferredY());
 	}
 }

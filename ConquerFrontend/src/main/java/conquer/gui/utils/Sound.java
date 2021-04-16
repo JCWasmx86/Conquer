@@ -52,7 +52,7 @@ public class Sound implements LineListener, Serializable {
 			final var frameRate = 44100F;
 			final var channels = format.getChannels();
 			final var targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, channels,
-													 channels * 2, frameRate, false);
+				channels * 2, frameRate, false);
 			if (AudioSystem.isConversionSupported(targetFormat, format)) {
 				final var din = AudioSystem.getAudioInputStream(targetFormat, audioStream);
 				this.isPlaying = true;

@@ -277,9 +277,9 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	@SuppressWarnings("deprecation")
 	default SoldierCosts getSoldierCosts() {
 		return new SoldierCosts(Shared.COINS_PER_MOVE_OF_SOLDIER, Shared.COINS_PER_MOVE_OF_SOLDIER_BASE,
-								Shared.COINS_PER_SOLDIER_INITIAL, Shared.COINS_PER_SOLDIER_PER_ROUND,
-								Shared.IRON_PER_SOLDIER_INITIAL,
-								Shared.STONE_PER_SOLDIER_INITIAL, Shared.WOOD_PER_SOLDIER_INITIAL);
+			Shared.COINS_PER_SOLDIER_INITIAL, Shared.COINS_PER_SOLDIER_PER_ROUND,
+			Shared.IRON_PER_SOLDIER_INITIAL,
+			Shared.STONE_PER_SOLDIER_INITIAL, Shared.WOOD_PER_SOLDIER_INITIAL);
 	}
 
 	/**

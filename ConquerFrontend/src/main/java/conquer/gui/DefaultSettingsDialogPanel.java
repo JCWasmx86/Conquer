@@ -18,11 +18,11 @@ public class DefaultSettingsDialogPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private final JTextField jtextfield = new JTextField(null, Shared.getNetworktimeout() + "", 10);
 	private final JCheckBox level1Logging = new JCheckBox(Messages.getString("Settings.level1"),
-														  Shared.level1Logging());
+		Shared.level1Logging());
 	private final JCheckBox level2Logging = new JCheckBox(Messages.getString("Settings.level2"),
-														  Shared.level2Logging());
+		Shared.level2Logging());
 	private final JSlider maximumFPS = new JSlider(5, this.getMaxRefreshRate(), Math.min(this.getMaxRefreshRate(),
-																						 this.timeToFPS(Utils.getRefreshRate())));
+		this.timeToFPS(Utils.getRefreshRate())));
 
 	DefaultSettingsDialogPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -37,11 +37,11 @@ public class DefaultSettingsDialogPanel extends JPanel {
 		final var fpsSelectionPanel = new JPanel();
 		fpsSelectionPanel.setLayout(new javax.swing.BoxLayout(fpsSelectionPanel, BoxLayout.LINE_AXIS));
 		final var fpsTextLabel = new JLabel(Messages.getMessage("Settings.fps",
-																this.timeToFPS(Utils.getRefreshRate())));
+			this.timeToFPS(Utils.getRefreshRate())));
 		fpsSelectionPanel.add(fpsTextLabel);
 		this.maximumFPS.addChangeListener(a ->
-											  fpsTextLabel.setText(Messages.getMessage("Settings.fps",
-																					   this.timeToFPS(this.normalize(this.maximumFPS.getValue()))))
+			fpsTextLabel.setText(Messages.getMessage("Settings.fps",
+				this.timeToFPS(this.normalize(this.maximumFPS.getValue()))))
 		);
 		fpsSelectionPanel.add(this.maximumFPS);
 		this.add(fpsSelectionPanel);

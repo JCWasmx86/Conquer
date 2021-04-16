@@ -51,7 +51,7 @@ final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 		this.addWindowListener(this);
 		final var assocs = new DefaultListModel<Pair<String, Color>>();
 		assocs.addAll(game.getClans().stream().map(a -> new Pair<>(a.getName(), a.getColor()))
-						  .toList());
+			.toList());
 		final var jlist = new JList<>(assocs);
 		jlist.setCellRenderer(new ListCellRenderer<>() {
 			private final Map<Pair<String, Color>, JLabel> map = new HashMap<>();
@@ -66,8 +66,8 @@ final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 					jl = this.map.get(value);
 				} else {
 					jl = new JLabel(value.first()
-										+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared" +
-																											 ".player") : ""));
+						+ (game.getClan(index).isPlayerClan() ? " " + Messages.getString("Shared" +
+						".player") : ""));
 
 					jl.setForeground(value.second());
 					jl.setFont(jl.getFont().deriveFont(35F));

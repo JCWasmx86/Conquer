@@ -21,15 +21,15 @@ final class UpgradeSoldiersOffense extends UpgradePanel {
 	@Override
 	String getInfoText() {
 		return Messages.getMessage("UpgradeSoldiersOffense.soldiersPower",
-								   Utils.format(this.clan.getSoldiersOffenseStrength()),
-								   this.clan.getSoldiersOffenseLevel());
+			Utils.format(this.clan.getSoldiersOffenseStrength()),
+			this.clan.getSoldiersOffenseLevel());
 	}
 
 	@Override
 	String getOneLevelString() {
 		return Messages.getMessage("Shared.upgradeToLevel", (this.clan.getSoldiersOffenseLevel() + 1),
-								   Utils.format(this.clan.upgradeCosts(SoldierUpgrade.OFFENSE,
-																	   this.clan.getSoldiersOffenseLevel() + 1)));
+			Utils.format(this.clan.upgradeCosts(SoldierUpgrade.OFFENSE,
+				this.clan.getSoldiersOffenseLevel() + 1)));
 	}
 
 	@Override
@@ -40,7 +40,7 @@ final class UpgradeSoldiersOffense extends UpgradePanel {
 			return;
 		}
 		final var count = this.clan.maxLevels(SoldierUpgrade.OFFENSE, this.clan.getSoldiersOffenseLevel() + 1,
-											  this.clan.getCoins());
+			this.clan.getCoins());
 		this.upgradeMax.setAction(new AbstractAction() {
 			@Serial
 			private static final long serialVersionUID = -8569686717119904143L;
@@ -53,7 +53,7 @@ final class UpgradeSoldiersOffense extends UpgradePanel {
 		this.upgradeMax.setEnabled(count > 0);
 		if (count > 0) {
 			this.upgradeMax.setText(Messages.getMessage("Shared.upgradeToSpecifiedLevel",
-														this.clan.getSoldiersOffenseLevel() + count));
+				this.clan.getSoldiersOffenseLevel() + count));
 		} else {
 			this.upgradeMax.setText(Messages.getString("Shared.notEnoughCoins"));
 		}

@@ -105,7 +105,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 			}).forEach(a -> {
 				// And then move the maximum amount of soldiers to every city.
 				final var numberOfSoldiersToMove = this.object.maximumNumberToMove(clan, city, a,
-																				   city.getNumberOfSoldiers());
+					city.getNumberOfSoldiers());
 				if (numberOfSoldiersToMove > 0) {
 					this.object.moveSoldiers(city, null, true, a, numberOfSoldiersToMove);
 				}
@@ -163,7 +163,7 @@ public final class OffensiveStrategyImpl implements Strategy {
 	private void upgradeResourcesForClan(final IClan clan, final Resource resc) {
 		final var citiesWithoutBorders = StreamUtils
 			.getCitiesAsStream(this.graph, clan,
-							   a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
+				a -> StreamUtils.getCitiesAroundCityNot(this.object, this.graph, a, clan).count() == 0)
 			.toList();
 		final var cityStream = (citiesWithoutBorders.isEmpty() ? StreamUtils.getCitiesAsStream(this.graph, clan)
 			: citiesWithoutBorders.stream());
