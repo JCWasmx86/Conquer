@@ -1,73 +1,94 @@
-<code_scheme name="Project" version="173">
-	<option name="OTHER_INDENT_OPTIONS">
-		<value>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</value>
-	</option>
-	<JavaCodeStyleSettings>
-		<option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="500"/>
-		<option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="500"/>
-		<option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
-			<value/>
-		</option>
-		<option name="IMPORT_LAYOUT_TABLE">
-			<value>
-				<package name="" withSubpackages="true" static="false"/>
-				<emptyLine/>
-				<package name="java" withSubpackages="true" static="false"/>
-				<package name="javax" withSubpackages="true" static="false"/>
-				<emptyLine/>
-				<package name="" withSubpackages="true" static="true"/>
-			</value>
-		</option>
-	</JavaCodeStyleSettings>
-	<Shell_Script>
-		<option name="SWITCH_CASES_INDENTED" value="true"/>
-	</Shell_Script>
-	<codeStyleSettings language="Groovy">
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="HTML">
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="JAVA">
-		<option name="ALIGN_MULTILINE_THROWS_LIST" value="true"/>
-		<option name="ALIGN_THROWS_KEYWORD" value="true"/>
-		<option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true"/>
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="JSON">
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="Shell Script">
-		<indentOptions>
-			<option name="INDENT_SIZE" value="4"/>
-			<option name="TAB_SIZE" value="4"/>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="XML">
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="kotlin">
-		<indentOptions>
-			<option name="USE_TAB_CHARACTER" value="true"/>
-		</indentOptions>
-	</codeStyleSettings>
-	<codeStyleSettings language="yaml">
-		<option name="SPACE_WITHIN_BRACKETS" value="false"/>
-		<indentOptions>
-			<option name="INDENT_SIZE" value="4"/>
-		</indentOptions>
-	</codeStyleSettings>
+<code_scheme name="Default" version="173">
+  <option name="OTHER_INDENT_OPTIONS">
+    <value>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </value>
+  </option>
+  <JavaCodeStyleSettings>
+    <option name="INSERT_INNER_CLASS_IMPORTS" value="true" />
+    <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="500" />
+    <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="300" />
+    <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
+      <value />
+    </option>
+    <option name="IMPORT_LAYOUT_TABLE">
+      <value>
+        <package name="java" withSubpackages="true" static="false" />
+        <package name="javax" withSubpackages="true" static="false" />
+        <emptyLine />
+        <package name="" withSubpackages="true" static="false" />
+        <emptyLine />
+        <package name="" withSubpackages="true" static="true" />
+      </value>
+    </option>
+    <option name="JD_ADD_BLANK_AFTER_PARM_COMMENTS" value="true" />
+    <option name="JD_ADD_BLANK_AFTER_RETURN" value="true" />
+  </JavaCodeStyleSettings>
+  <JetCodeStyleSettings>
+    <option name="CODE_STYLE_DEFAULTS" value="KOTLIN_OFFICIAL" />
+  </JetCodeStyleSettings>
+  <Shell_Script>
+    <option name="SWITCH_CASES_INDENTED" value="true" />
+  </Shell_Script>
+  <codeStyleSettings language="Groovy">
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="HTML">
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="JAVA">
+    <option name="ALIGN_MULTILINE_THROWS_LIST" value="true" />
+    <option name="ALIGN_THROWS_KEYWORD" value="true" />
+    <option name="SPACE_BEFORE_ARRAY_INITIALIZER_LBRACE" value="true" />
+    <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+    <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true" />
+    <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
+    <option name="WRAP_LONG_LINES" value="true" />
+    <option name="WRAP_ON_TYPING" value="0" />
+    <indentOptions>
+      <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="JSON">
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="Shell Script">
+    <indentOptions>
+      <option name="INDENT_SIZE" value="4" />
+      <option name="TAB_SIZE" value="4" />
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="XML">
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="kotlin">
+    <option name="CALL_PARAMETERS_WRAP" value="5" />
+    <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_WRAP" value="5" />
+    <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+    <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+    <option name="EXTENDS_LIST_WRAP" value="1" />
+    <option name="METHOD_CALL_CHAIN_WRAP" value="1" />
+    <option name="ASSIGNMENT_WRAP" value="1" />
+    <indentOptions>
+      <option name="USE_TAB_CHARACTER" value="true" />
+    </indentOptions>
+  </codeStyleSettings>
+  <codeStyleSettings language="yaml">
+    <option name="SPACE_WITHIN_BRACKETS" value="false" />
+    <indentOptions>
+      <option name="INDENT_SIZE" value="4" />
+    </indentOptions>
+  </codeStyleSettings>
 </code_scheme>
