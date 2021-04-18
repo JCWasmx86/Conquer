@@ -35,6 +35,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private boolean marked;
 	private int counter;
 	private transient ICity origin;
+	private boolean hasMouse;
 
 	/**
 	 * Constructs a new CityLabel
@@ -133,7 +134,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 */
 	@Override
 	public void mouseEntered(final MouseEvent e) {
-
+		this.hasMouse = true;
 	}
 
 	/**
@@ -141,7 +142,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 */
 	@Override
 	public void mouseExited(final MouseEvent e) {
-
+		this.hasMouse = false;
 	}
 
 	/**
@@ -243,5 +244,9 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.marked = false;
 		this.counter = 0;
 		this.origin = null;
+	}
+
+	boolean hasMouse(){
+		return this.hasMouse;
 	}
 }

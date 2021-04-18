@@ -108,6 +108,11 @@ final class Game implements ConquerInfo {
 	}
 
 	@Override
+	public Map<String, List<KeyHandler>> getKeyHandlers() {
+		return this.data.getKeybindings();
+	}
+
+	@Override
 	public void addAttackHook(final AttackHook ah) {
 		this.throwIfNull(ah, "addAttackHook - hook is null");
 		this.data.getAttackHooks().add(ah);
@@ -117,10 +122,14 @@ final class Game implements ConquerInfo {
 	public void addCityKeyHandler(final String key, final CityKeyHandler ckh) {
 		this.throwIfNull(key, "key==null");
 		this.throwIfNull(ckh, "ckh==null");
-		if (this.data.getCityKeyHandlers().containsKey(key)) {
-			Shared.LOGGER.warning("Overwriting city key binding for key: \"" + key + "\"!");
+		final var kb = this.data.getCityKeyHandlers();
+		if (kb.containsKey(key.toLowerCase())) {
+			kb.get(key.toLowerCase()).add(ckh);
+		} else {
+			final var list = new ArrayList<CityKeyHandler>();
+			list.add(ckh);
+			kb.put(key.toLowerCase(), list);
 		}
-		this.data.getCityKeyHandlers().put(key, ckh);
 	}
 
 	@Override
@@ -137,10 +146,14 @@ final class Game implements ConquerInfo {
 	public void addKeyHandler(final String key, final KeyHandler handler) {
 		this.throwIfNull(key, "key==null");
 		this.throwIfNull(handler, "handler==null");
-		if (this.data.getKeybindings().containsKey(key)) {
-			Shared.LOGGER.warning("Overwriting key binding for key: \"" + key + "\"!");
+		final var kb = this.data.getKeybindings();
+		if (kb.containsKey(key.toLowerCase())) {
+			kb.get(key.toLowerCase()).add(handler);
+		} else {
+			final var list = new ArrayList<KeyHandler>();
+			list.add(handler);
+			kb.put(key.toLowerCase(), list);
 		}
-		this.data.getKeybindings().put(key, handler);
 	}
 
 	@Override
@@ -493,7 +506,8 @@ final class Game implements ConquerInfo {
 		return this.cities;
 	}
 
-	public Map<String, CityKeyHandler> getCityKeyHandlers() {
+	@Override
+	public Map<String, List<CityKeyHandler>> getCityKeyHandlers() {
 		return this.data.getCityKeyHandlers();
 	}
 
@@ -547,7 +561,7 @@ final class Game implements ConquerInfo {
 		return this.data.getExtraMusic();
 	}
 
-	public Map<String, KeyHandler> getKeybindings() {
+	public Map<String, List<KeyHandler>> getKeybindings() {
 		return this.data.getKeybindings();
 	}
 

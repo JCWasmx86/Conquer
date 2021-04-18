@@ -21,9 +21,9 @@ final class GamePluginData {
 	private List<AttackHook> attackHooks;
 	private List<MoveHook> moveHooks;
 	private List<String> extraMusic;
-	private Map<String, KeyHandler> keybindings;
+	private Map<String, List<KeyHandler>> keybindings;
 	private List<ResourceHook> resourceHooks;
-	private Map<String, CityKeyHandler> cityKeyHandlers;
+	private Map<String, List<CityKeyHandler>> cityKeyHandlers;
 	private List<MoneyHook> moneyHooks;
 
 	List<AttackHook> getAttackHooks() {
@@ -34,11 +34,11 @@ final class GamePluginData {
 		this.attackHooks = attackHooks;
 	}
 
-	Map<String, CityKeyHandler> getCityKeyHandlers() {
+	Map<String, List<CityKeyHandler>> getCityKeyHandlers() {
 		return this.cityKeyHandlers;
 	}
 
-	void setCityKeyHandlers(final Map<String, CityKeyHandler> cityKeyHandlers) {
+	void setCityKeyHandlers(final Map<String, List<CityKeyHandler>> cityKeyHandlers) {
 		this.cityKeyHandlers = cityKeyHandlers;
 	}
 
@@ -50,11 +50,11 @@ final class GamePluginData {
 		this.extraMusic = extraMusic;
 	}
 
-	Map<String, KeyHandler> getKeybindings() {
+	Map<String, List<KeyHandler>> getKeybindings() {
 		return this.keybindings;
 	}
 
-	void setKeybindings(final Map<String, KeyHandler> keybindings) {
+	void setKeybindings(final Map<String, List<KeyHandler>> keybindings) {
 		this.keybindings = keybindings;
 	}
 
@@ -97,4 +97,5 @@ final class GamePluginData {
 	void setResourceHooks(final List<ResourceHook> resourceHooks) {
 		this.resourceHooks = resourceHooks;
 	}
+
 }

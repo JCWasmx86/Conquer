@@ -3,6 +3,8 @@ package conquer.gui;
 import java.awt.BasicStroke;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +14,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -56,7 +59,7 @@ import conquer.gui.utils.LoopPlayer;
  * <li>A JTabbedPane with the CityInfo, ClanInfo and Relationships tabs</li>
  * </ol>
  */
-final class GameFrame extends JFrame implements EmptyWindowListenerImpl, ComponentListener {
+final class GameFrame extends JFrame implements EmptyWindowListenerImpl, ComponentListener, KeyListener {
 	private static final String TITLE_PART = Messages.getString("GameFrame.conquerTitle") + " ";
 	@Serial
 	private static final long serialVersionUID = 4456629322882679917L;
@@ -83,6 +86,7 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		this.game = game;
 		this.addComponentListener(this);
 		this.addWindowListener(this);
+		this.addKeyListener(this);
 		this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 		this.basePanel = new JPanel();
 		this.basePanel.setLayout(new BoxLayout(this.basePanel, BoxLayout.LINE_AXIS));
@@ -196,6 +200,18 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 		this.add(this.basePanel);
 		this.pack();
 		this.nonGUIInit();
+		this.gameStage.addKeyListener(this);
+	}
+
+	private List<Component> getAllComponents(final Container c) {
+		final var comps = c.getComponents();
+		final var compList = new ArrayList<Component>();
+		for (final var comp : comps) {
+			compList.add(comp);
+			if (comp instanceof Container cont)
+				compList.addAll(this.getAllComponents(cont));
+		}
+		return compList;
 	}
 
 	private void initButtonPanel() {
@@ -513,5 +529,33 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 	@Override
 	public void windowClosing(final WindowEvent e) {
 		this.saveAndMaybeExit();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent keyEvent) {
+		final var ch = Character.toLowerCase(keyEvent.getKeyChar());
+		for (var entry : this.labels.entrySet()) {
+			if (entry.getValue().hasMouse()) {
+				final var list =
+					this.game.getCityKeyHandlers().getOrDefault(ch,
+						List.of());
+				list.forEach(a -> a.handle(ch + "", entry.getKey()));
+				return;
+			}
+		}
+		final var list =
+			this.game.getKeyHandlers().getOrDefault(ch,
+				List.of());
+		list.forEach(a -> a.handleKey(ch + ""));
+	}
+
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+
 	}
 }

@@ -3,10 +3,13 @@ package conquer.data;
 import java.awt.Color;
 import java.awt.Image;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import conquer.data.strategy.StrategyObject;
 import conquer.data.strategy.StrategyProvider;
+import conquer.plugins.CityKeyHandler;
+import conquer.plugins.KeyHandler;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;
 
@@ -122,7 +125,9 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 * @return A list of all music pieces that were registered by e.g. plugins.
 	 */
 	@Deprecated(forRemoval = true)
-	List<String> getExtraMusic();
+	default List<String> getExtraMusic() {
+		return List.of();
+	}
 
 	/**
 	 * Returns the number of players (Human player+CPU players) in this scenario.
@@ -321,5 +326,13 @@ public interface ConquerInfo extends StrategyObject, PluginInterface {
 	 */
 	default List<Class<StrategyProvider>> requiredStrategyProviders() {
 		return List.of();
+	}
+
+	default Map<String, List<KeyHandler>> getKeyHandlers() {
+		return Map.of();
+	}
+
+	default Map<String, List<CityKeyHandler>> getCityKeyHandlers() {
+		return Map.of();
 	}
 }
