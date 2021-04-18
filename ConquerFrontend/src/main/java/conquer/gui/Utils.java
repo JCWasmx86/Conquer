@@ -15,6 +15,6 @@ final class Utils {
 	}
 
 	static boolean isDebug() {
-		return true;//Boolean.getBoolean("conquer.frontend.debug");
+		return Boolean.getBoolean("conquer.frontend.debug");
 	}
 }
