@@ -534,19 +534,22 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 	@Override
 	public void keyTyped(KeyEvent keyEvent) {
 		final var ch = Character.toLowerCase(keyEvent.getKeyChar());
+		var hadMatch = false;
 		for (var entry : this.labels.entrySet()) {
 			if (entry.getValue().hasMouse()) {
 				final var list =
-					this.game.getCityKeyHandlers().getOrDefault(ch,
+					this.game.getCityKeyHandlers().getOrDefault(ch + "",
 						List.of());
 				list.forEach(a -> a.handle(ch + "", entry.getKey()));
-				return;
+				hadMatch = true;
 			}
 		}
-		final var list =
-			this.game.getKeyHandlers().getOrDefault(ch,
-				List.of());
-		list.forEach(a -> a.handleKey(ch + ""));
+		if (!hadMatch) {
+			final var list =
+				this.game.getKeyHandlers().getOrDefault(ch + "",
+					List.of());
+			list.forEach(a -> a.handleKey(ch + ""));
+		}
 	}
 
 	@Override
