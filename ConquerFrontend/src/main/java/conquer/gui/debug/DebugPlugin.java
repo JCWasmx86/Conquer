@@ -41,6 +41,8 @@ public class DebugPlugin implements Plugin {
 		pluginInterface.addRecruitHook(((city, numberOfSoldiers) -> System.out.println("Recruit: " + city.getName() +
 			"; " + numberOfSoldiers +
 			" soldiers // Strategy: " + city.getClan().getStrategy().getClass().getCanonicalName())));
+		pluginInterface.addKeyHandler("A", System.out::println);
+		pluginInterface.addCityKeyHandler("B", (a, b) -> System.out.println(a + "//" + b.getName()));
 	}
 
 	@Override
