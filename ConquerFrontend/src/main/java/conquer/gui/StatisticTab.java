@@ -22,7 +22,6 @@ public class StatisticTab extends JTabbedPane {
 		for (var i = 0; i < this.getTabCount(); i++) {
 			final var tabComponent = this.getTabComponentAt(i);
 			if (tabComponent instanceof StatsPanel sp) {
-				System.out.println(sp.getX());
 				sp.init();
 			}
 		}
