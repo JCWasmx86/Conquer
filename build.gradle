@@ -4,7 +4,6 @@ apply plugin: "java"
 
 allprojects {
 	apply plugin: "java"
-	apply plugin: "eclipse"
 	apply plugin: "idea"
 	apply plugin: "jacoco"
 	if (project.hasProperty("conquer.localJVM") && "true" == project.getProperties().get("conquer.localJVM").toString().toLowerCase()) {
@@ -33,26 +32,6 @@ allprojects {
 	tasks.withType(AbstractArchiveTask) {
 		preserveFileTimestamps = false
 		reproducibleFileOrder = true
-	}
-	eclipse {
-		classpath {
-			defaultOutputDir = file("build")
-			file {
-				whenMerged {
-					//Don't add DefaultPlugins to the modulepath, as these would be different automatic modules and each of them would have
-					//the same package
-					//TODO: Doesn't work!
-					entries.findAll {
-						(it.kind == "src" || it.kind == "lib") && (!it.toString().contains("DefaultPlugins")) && (!it.toString().contains("ScenarioGenerator"))
-					}.each { it.entryAttributes["module"] = "true" }
-					entries.each { entry ->
-						if (entry.kind == "src" && entry.hasProperty("output")) {
-							entry.output = entry.output.replace("bin/", "build/")
-						}
-					}
-				}
-			}
-		}
 	}
 	repositories {
 		mavenCentral()

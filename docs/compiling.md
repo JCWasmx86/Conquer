@@ -98,23 +98,7 @@ Not supported (Contributions are welcome)
 
 Semi-supported with a bit of manual work. (Contributions are welcome)
 
-# Using in eclipse or IntelliJ Idea
-
-## eclipse
-
-For generating the eclipse project files, type:
-
-```
-./gradlew eclipse
-```
-
-After that, you must open eclipse and import a gradle project:
-
-File->Import...->Gradle->Existing Gradle Project
-
-Now you just have to follow the wizard.
-
-## IntelliJ Idea
+# Using in IntelliJ Idea
 
 Use:
 
@@ -124,6 +108,7 @@ Use:
 idea conquer-parent.ipr
 ```
 
+*If you prefer using eclipse, then you have to import Conquer as a gradle project!*
 # FAQ
 
 ## The gradle daemon is crashing!
