@@ -120,7 +120,8 @@ Use:
 
 ```
 ./gradlew idea
-./gradlew openIdea
+#Then either import the gradle project via the GUI or run, if you have idea on your path
+idea conquer-parent.ipr
 ```
 
 # FAQ
