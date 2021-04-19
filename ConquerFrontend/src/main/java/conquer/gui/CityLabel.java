@@ -134,7 +134,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 */
 	@Override
 	public void mouseEntered(final MouseEvent e) {
-		System.out.println(this.city.getName()+"//entered!");
+		System.out.println(this.city.getName() + "//entered!");
 		this.hasMouse = true;
 	}
 
@@ -143,7 +143,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 */
 	@Override
 	public void mouseExited(final MouseEvent e) {
-		System.out.println(this.city.getName()+"//exited!");
+		System.out.println(this.city.getName() + "//exited!");
 		this.hasMouse = false;
 	}
 
@@ -248,7 +248,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 		this.origin = null;
 	}
 
-	boolean hasMouse(){
+	boolean hasMouse() {
 		return this.hasMouse;
 	}
 }

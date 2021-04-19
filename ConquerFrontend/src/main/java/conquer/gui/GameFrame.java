@@ -533,6 +533,10 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 
 	@Override
 	public void keyTyped(KeyEvent keyEvent) {
+		if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			this.labels.values().forEach(CityLabel::unmark);
+			return;
+		}
 		final var ch = Character.toLowerCase(keyEvent.getKeyChar());
 		var hadMatch = false;
 		for (var entry : this.labels.entrySet()) {
