@@ -85,12 +85,21 @@ allprojects {
 			html.enabled true
 		}
 	}
+	idea {
+		module {
+			languageLevel = new org.gradle.plugins.ide.idea.model.IdeaLanguageLevel("JDK_16_PREVIEW")
+		}
+	}
 }
-
 task createZipFileForDistribution(type: Zip) {
 	archiveFileName = "Conquer-SDK_${conquerVersion}.zip"
 	destinationDirectory = file(".")
 	from "dist"
+}
+idea {
+	project {
+		languageLevel = "JDK_16_PREVIEW"
+	}
 }
 task copyFiles() {
 	doLast {
