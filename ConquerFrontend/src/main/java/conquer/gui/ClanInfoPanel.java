@@ -95,8 +95,8 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		jps.setLayout(new BoxLayout(jps, BoxLayout.PAGE_AXIS));
 		jps.add(this.jep);
 		jps.add(new UpgradeSoldiersPanel(this.clan));
-		jps.add(new UpgradeSoldiersDefense(this.clan));
-		jps.add(new UpgradeSoldiersOffense(this.clan));
+		jps.add(new UpgradeSoldiersDefensePanel(this.clan));
+		jps.add(new UpgradeSoldiersOffensePanel(this.clan));
 		final var jsp = new JScrollPane(jps);
 		jsp.setIgnoreRepaint(true);
 		this.add(jsp);
