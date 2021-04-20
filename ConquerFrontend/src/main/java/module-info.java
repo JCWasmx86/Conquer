@@ -1,4 +1,6 @@
 module conquer.frontend {
+	exports conquer.gui.debug;
+
 	requires java.desktop;
 	requires conquer;
 	requires conquer.frontend.spi;
