@@ -45,6 +45,7 @@ task deleteFiles(type: Delete) {
 	delete fileTree("${project.rootDir}/ConquerFrontend/build/resources/main/music") {
 		include "Battle*.ogg"
 	}
+
 	delete fileTree("${project.rootDir}/ConquerFrontend/src/main/resources/music") {
 		include "Battle*.ogg"
 	}
@@ -69,3 +70,12 @@ distZip.dependsOn(":Conquer:conquerResources")
 distTar.dependsOn(":Conquer:conquerResources")
 startScripts.dependsOn(":Conquer:conquerResources")
 processResources.dependsOn(":music:buildMusic")
+
+clean {
+	delete {
+		file("src/main/resources/music").listFiles()
+	}
+	delete {
+		file("tmp")
+	}
+}
