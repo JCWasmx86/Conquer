@@ -12,7 +12,7 @@
 
 ### Prerequisites
 
-1. You need Debian sid as this is the only version with the package `openjdk-16-jdk`. (Alternatively, you can add `-Pconquer.localJVM=true` to the gradle commandline arguments.
+1. You need Debian sid as this is the only version with the package `openjdk-16-jdk`. (Alternatively, you can add `-Pconquer.localJVM=true` to the gradle commandline arguments.)
 2. These packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3 (Alternatively you can add `-Pconquer.download=true` to the commandline arguments), libgtk-3-dev,
    pkg-config, valac, libgee-0.8-dev, libjson-glib-dev, make
 3. `JAVA_HOME` has to be set.
@@ -61,8 +61,8 @@ Only arm64, arm (Although a bit untested), i386 and amd64 are supported.
    git base-devel mingw-w64-x86_64-libarchive mingw-w64-x86_64-curl mingw-w64-x86_64-gcc mingw-w64-x86_64-dlfcn
    mingw-w64-x86_64-vala mingw-w64-x86_64-headers-git zip unzip mingw-w64-x86_64-gtk3 mingw-w64-x86_64-libgee
    mingw-w64-x86_64-json-glib mingw-w64-i686-nsis mingw-w64-x86_64-pkg-config
-3. Install musescore3: You have to download the installer and run it.
-4. Install Java 16: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell.
+3. Install musescore3: You have to download the installer and run it. (Alternatively, you can add `-Pconquer.download=true` to the gradle commandline arguments.)
+4. Install Java 16: For example AdoptOpenJDK. You must have JAVA_HOME defined and accessible from the MSYS Shell. (Alternatively you can add `-Pconquer.download=true` to the commandline arguments)
 
 ### Compiling
 
