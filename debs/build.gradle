@@ -383,6 +383,7 @@ if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildDefaultMusicDeb.dependsOn(":music:buildMusic")
 	buildDefaultMusicDeb.mustRunAfter(":music:buildMusic")
 	buildDefaultScenariosDeb.dependsOn(":ScenarioGenerator:assemble")
+	buildDefaultScenariosDeb.mustRunAfter(":ScenarioGenerator:assemble")
 }
 
 clean {
