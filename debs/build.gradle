@@ -351,7 +351,7 @@ task buildSdkDeb() {
 		s += "Section: games\n"
 		s += "Architecture: " + (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "armhf" : "i386"))) + "\n"
 		s += "Maintainer: JCWasmx86\n"
-		s += "Depends: maven\n"
+		s += "Suggests: maven\n"
 		s += "Description: The SDK for the game engine conquer\n"
 		s += "Installed-Size: " + sizeInKb + "\n\n"
 		fout.write(s.getBytes())
