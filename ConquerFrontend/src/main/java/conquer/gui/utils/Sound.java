@@ -1,5 +1,7 @@
 package conquer.gui.utils;
 
+import conquer.data.Shared;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serial;
@@ -61,7 +63,8 @@ public class Sound implements LineListener, Serializable {
 				this.audioClip.open(din);
 				this.audioClip.start();
 			} else {
-				throw new IllegalArgumentException("Conversion not supported!");
+				Shared.LOGGER.error("Can't convert: " + this.filename);
+				return;
 			}
 		} catch (final Exception e) {
 			this.isPlaying = false;
