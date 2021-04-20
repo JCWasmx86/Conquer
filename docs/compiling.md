@@ -12,8 +12,8 @@
 
 ### Prerequisites
 
-1. You need Debian sid or bullseye, as these are the only versions with the package `openjdk-16-jdk`.
-2. These packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3, libgtk-3-dev,
+1. You need Debian sid as this is the only version with the package `openjdk-16-jdk`. (Alternatively, you can add `-Pconquer.localJVM=true` to the gradle commandline arguments.
+2. These packages are required, too: git, libarchive-dev, libcurl4-openssl-dev, bash, musescore3 (Alternatively you can add `-Pconquer.download=true` to the commandline arguments), libgtk-3-dev,
    pkg-config, valac, libgee-0.8-dev, libjson-glib-dev, make
 3. `JAVA_HOME` has to be set.
 
