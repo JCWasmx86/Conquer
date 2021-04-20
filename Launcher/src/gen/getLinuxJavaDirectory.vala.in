@@ -10,7 +10,7 @@ namespace Launcher {
 	#elif defined(__arm__)
 		return "/usr/lib/jvm/java-16-openjdk-armhf/";
 	#else
-	#error Unsupported OS
+	#error Unsupported OS or architecture
 	#endif
 	}
 	#endif
