@@ -109,6 +109,7 @@ idea conquer-parent.ipr
 ```
 
 *If you prefer using eclipse, then you have to import Conquer as a gradle project!*
+
 # FAQ
 
 ## The gradle daemon is crashing!

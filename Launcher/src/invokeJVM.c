@@ -92,7 +92,7 @@ static char *getBaseDir(void) {
 	sprintf(ret, "%s\\.conquer", env);
 	return ret;
 #else
-	char *env = getenv("APPDATA");
+	char *env = getenv("HOME");
 	if (env == NULL) {
 		env = getpwuid(getuid())->pw_dir;
 	}
