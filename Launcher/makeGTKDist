@@ -19,6 +19,7 @@ cd data||exit
 #Found with trial and error
 echo Prefix is: $MSYSTEM_PREFIX
 cp ../conquer_launcher.exe .
+cp $MSYSTEM_PREFIX/bin/gdbus.exe .
 cp $MSYSTEM_PREFIX/bin/libarchive-13.dll .
 cp $MSYSTEM_PREFIX/bin/libatk-1.0-0.dll .
 cp $MSYSTEM_PREFIX/bin/libbrotlicommon.dll .
