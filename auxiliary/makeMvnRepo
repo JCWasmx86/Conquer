@@ -1,4 +1,13 @@
 #!/bin/sh
-mvn install:install-file -Dfile=Conquer.jar -DgroupId=conquer -DartifactId=conquer -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
-mvn install:install-file -Dfile=Conquer_resources.jar -DgroupId=conquer -DartifactId=conquer_resources -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
-mvn install:install-file -Dfile=ConquerFrontendSPI.jar -DgroupId=conquer -DartifactId=conquer_spi -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
+mvn install:install-file -Dfile=Conquer.jar -DgroupId=conquer -DartifactId=conquer -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1 -DcreateChecksum=true
+mvn install:install-file -Dfile=Conquer_resources.jar -DgroupId=conquer -DartifactId=conquer_resources -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1 -DcreateChecksum=true
+mvn install:install-file -Dfile=ConquerFrontendSPI.jar -DgroupId=conquer -DartifactId=conquer_spi -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1 -DcreateChecksum=true
+mv $1/conquer/conquer/maven-metadata-local.xml $1/conquer/conquer/maven-metadata.xml
+mv $1/conquer/conquer/maven-metadata-local.xml.md5 $1/conquer/conquer/maven-metadata.xml.md5
+mv $1/conquer/conquer/maven-metadata-local.xml.sha1 $1/conquer/conquer/maven-metadata.xml.sha1
+mv $1/conquer/conquer_resources/maven-metadata-local.xml $1/conquer/conquer_resources/maven-metadata.xml
+mv $1/conquer/conquer_resources/maven-metadata-local.xml.md5 $1/conquer/conquer_resources/maven-metadata.xml.md5
+mv $1/conquer/conquer_resources/maven-metadata-local.xml.sha1 $1/conquer/conquer_resources/maven-metadata.xml.sha1
+mv $1/conquer/conquer_spi/maven-metadata-local.xml $1/conquer/conquer_spi/maven-metadata.xml
+mv $1/conquer/conquer_spi/maven-metadata-local.xml.md5 $1/conquer/conquer_spi/maven-metadata.xml.md5
+mv $1/conquer/conquer_spi/maven-metadata-local.xml.sha1 $1/conquer/conquer_spi/maven-metadata.xml.sha1
