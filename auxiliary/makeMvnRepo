@@ -1,0 +1,4 @@
+#!/bin/sh
+mvn install:install-file -Dfile=Conquer.jar -DgroupId=conquer -DartifactId=conquer -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
+mvn install:install-file -Dfile=Conquer_resources.jar -DgroupId=conquer -DartifactId=conquer_resources -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
+mvn install:install-file -Dfile=ConquerFrontendSPI.jar -DgroupId=conquer -DartifactId=conquer_spi -Dversion=2.0.0 -Dpackaging=jar -DlocalRepositoryPath=$1
