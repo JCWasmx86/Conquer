@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
+import java.util.Objects;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 import javax.swing.BoxLayout;
@@ -78,7 +79,7 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 		exit.addActionListener(a -> System.exit(0));
 		settings.add(exit);
 		menu.add(settings);
-		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem)
+		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getMenuItem).filter(Objects::nonNull)
 			.forEach(menu::add);
 		this.add(menu);
 		final var panel = new JPanel();
@@ -94,8 +95,12 @@ final class MainScreen extends JFrame implements KeyListener, EmptyWindowListene
 		play.setAlignmentX(Component.CENTER_ALIGNMENT);
 		play.setFont(play.getFont().deriveFont(50.0f));
 		panel.add(play);
-		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getButton)
-			.forEach(panel::add);
+		ServiceLoader.load(GUIMenuPlugin.class).stream().map(Provider::get).map(GUIMenuPlugin::getButton).filter(Objects::nonNull)
+			.forEach(btn -> {
+				btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+				btn.setFont(play.getFont().deriveFont(50.0f));
+				panel.add(btn);
+			});
 		final var credits = new JButton(Messages.getString("MainScreen.credits"));
 		credits.addActionListener(a -> {
 			MainScreen.forwarded = false;
