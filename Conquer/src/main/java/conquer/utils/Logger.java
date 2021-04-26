@@ -3,6 +3,8 @@ package conquer.utils;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Date;
 
 //This is there because of legacy reasons.
@@ -46,13 +48,10 @@ public final class Logger {
 	}
 
 	public void exception(final Throwable throwable) {
-		try {
+		try (final var sw = new StringWriter(); final var pw = new PrintWriter(sw)) {
 			this.bw.write("[EXCEPTION date= " + new Date() + "]\n");
-			this.bw.write(throwable.getClass().getName() + ": " + throwable.getMessage() + "\n");
-			for (final StackTraceElement ste : throwable.getStackTrace()) {
-				this.bw.write("\t" + ste.getClassName() + "@" + ste.getModuleName() + "::" + ste.getMethodName()
-					+ "(Line: " + ste.getLineNumber() + ")\n");
-			}
+			throwable.printStackTrace(pw);
+			this.bw.write(sw.toString());
 			this.bw.flush();
 		} catch (final IOException e) {
 			throw new IllegalStateException(e);
