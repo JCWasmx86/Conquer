@@ -1,24 +1,34 @@
 plugins {
 	id "java"
+	id "com.github.johnrengelman.shadow" version "7.0.0"
 	id "application"
 }
+mainClassName = "conquer.ri.datatool.tool.Main"
 task buildSlaine(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Slaine"
+	main = "conquer.ri.datatool.tool.Slaine"
 }
 task buildBelenos(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Belenos"
+	main = "conquer.ri.datatool.tool.Belenos"
 }
 task buildEtiona(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Etiona"
+	main = "conquer.ri.datatool.tool.Etiona"
 }
 task buildFreedo(type: JavaExec) {
 	classpath = files("build/libs/ScenarioGenerator.jar")
-	main = "org.jel.tool.Freedo"
+	main = "conquer.ri.datatool.tool.Freedo"
 }
-
+shadowJar {
+	archiveBaseName.set("shaded-tool.jar")
+	exclude "*.png"
+	exclude "images"
+	relocate "com.google.gson", "conquer.ri.datatool.tool.gson"
+}
+dependencies {
+	implementation "com.google.code.gson:gson:2.8.6"
+}
 def contentSpec = copySpec {
 	from("src/main/resources") {
 		include "*.png"
