@@ -29,7 +29,6 @@ public record Scenario(String name, String background, Player[] players, City[] 
 		}
 		final var set = Arrays.stream(cities).map(City::name).collect(Collectors.toSet());
 		if (set.size() == cities.length) {
-			return;
 		} else {
 			final var len = cities.length;
 			for (var i = 0; i < len; i++) {
@@ -49,7 +48,6 @@ public record Scenario(String name, String background, Player[] players, City[] 
 		}
 		final var set = Arrays.stream(players).map(Player::name).collect(Collectors.toSet());
 		if (set.size() == players.length) {
-			return;
 		} else {
 			final var len = players.length;
 			for (var i = 0; i < len; i++) {

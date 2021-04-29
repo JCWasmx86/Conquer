@@ -64,7 +64,6 @@ public class Sound implements LineListener, Serializable {
 				this.audioClip.start();
 			} else {
 				Shared.LOGGER.error("Can't convert: " + this.filename);
-				return;
 			}
 		} catch (final Exception e) {
 			this.isPlaying = false;

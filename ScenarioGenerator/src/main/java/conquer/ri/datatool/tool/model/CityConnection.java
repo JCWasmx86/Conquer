@@ -12,7 +12,8 @@ public record CityConnection(String from, String to, double distance) {
 		if (to.isEmpty()) {
 			throw new IllegalArgumentException(this.to + " doesn't exist!");
 		}
-		ValidatorUtils.throwIfBad(this.distance, "Connection between " + to + " and " + from + " is negative, infinite" +
+		ValidatorUtils.throwIfBad(this.distance, "Connection between " + to + " and " + from + " is negative, " +
+			"infinite" +
 			" or NaN!");
 	}
 }
