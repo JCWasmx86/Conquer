@@ -324,12 +324,19 @@ task buildSdkDeb() {
 		copy {
 			from "${project.rootDir}/auxiliary"
 			include "install-sdk.sh"
+			include "scenario-builder"
 			into "conquer-sdk/usr/bin"
 		}
 		copy {
 			from "${project.rootDir}/depreview"
 			include "depreview"
 			into "conquer-sdk/usr/bin"
+		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator/build/libs"
+			include "shaded-tool.jar-all.jar"
+			into "conquer-sdk/usr/share/java"
+			rename {a -> a.replace("shaded-tool.jar-all.jar", "scenario-builder.jar") }
 		}
 		copy {
 			from "${project.rootDir}/auxiliary"
@@ -351,11 +358,14 @@ task buildSdkDeb() {
 		s += "Section: games\n"
 		s += "Architecture: " + (System.getProperty("os.arch") == "amd64" ? "amd64" : (System.getProperty("os.arch") == "aarch64" ? "arm64" : (System.getProperty("os.arch") == "arm" ? "armhf" : "i386"))) + "\n"
 		s += "Maintainer: JCWasmx86\n"
-		s += "Suggests: maven\n"
+		s += "Suggests: maven, openjdk-16-jdk\n"
 		s += "Description: The SDK for the game engine conquer\n"
 		s += "Installed-Size: " + sizeInKb + "\n\n"
 		fout.write(s.getBytes())
 		fout.close()
+		exec {
+			commandLine file(".").getAbsolutePath()+  "/conquer-sdk/usr/bin/depreview" , file(".").getAbsolutePath() + "/conquer-sdk/usr/share/java/scenario-builder.jar"
+		}
 		exec {
 			commandLine "find", file(".").getAbsolutePath() + "/conquer-sdk", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
 		}
@@ -371,8 +381,8 @@ if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	assemble.dependsOn(buildDebs)
 	buildDebs.dependsOn(buildConquerDeb, buildConquerEngineDeb, buildConquerGuiDeb, buildDefaultDeb, buildDefaultMusicDeb, buildDefaultScenariosDeb, buildSdkDeb)
 	buildDebs.mustRunAfter(":Launcher:assemble", ":auxiliary:buildDataZip", ":Conquer:jar", ":ConquerFrontend:jar")
-	buildSdkDeb.dependsOn(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable")
-	buildSdkDeb.mustRunAfter(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable")
+	buildSdkDeb.dependsOn(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable", ":ScenarioGenerator:shadowJar")
+	buildSdkDeb.mustRunAfter(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable",":ScenarioGenerator:shadowJar")
 	buildConquerDeb.dependsOn(":Launcher:assemble")
 	buildConquerDeb.mustRunAfter(":Launcher:assemble")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources")
