@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 public record Scenario(String name, String background, Player[] players, City[] cities, CityConnection[] connections) {
 	public void validate() {
-		ValidatorUtils.throwIfNull(name, "Scenario name is missing!");
-		ValidatorUtils.throwIfNull(background, "Background image is missing!");
-		ValidatorUtils.throwIfNull(players, "Players are missing!");
-		ValidatorUtils.throwIfNull(cities, "Cities are missing!");
-		ValidatorUtils.throwIfNull(connections, "CityConnections are missing!");
+		ValidatorUtils.throwIfNull(this.name, "Scenario name is missing!");
+		ValidatorUtils.throwIfNull(this.background, "Background image is missing!");
+		ValidatorUtils.throwIfNull(this.players, "Players are missing!");
+		ValidatorUtils.throwIfNull(this.cities, "Cities are missing!");
+		ValidatorUtils.throwIfNull(this.connections, "CityConnections are missing!");
 		this.validate(this.players);
 		this.validate(this.cities);
 		this.validate(this.connections);

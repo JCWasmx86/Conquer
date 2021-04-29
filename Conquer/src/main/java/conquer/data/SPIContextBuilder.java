@@ -2,7 +2,6 @@ package conquer.data;
 
 import java.util.ArrayList;
 import java.util.ServiceLoader;
-import java.util.ServiceLoader.Provider;
 import java.util.stream.Collectors;
 
 import conquer.data.registries.PluginRegistry;
@@ -39,14 +38,14 @@ public class SPIContextBuilder {
 				Shared.LOGGER.exception(e);
 			}
 		});
-		final var strategies = ServiceLoader.load(StrategyProvider.class).stream().map(Provider::get)
+		final var strategies = ServiceLoader.load(StrategyProvider.class).stream().map(ServiceLoader.Provider::get)
 			.collect(Collectors.toList());
-		strategies.addAll(ServiceLoader.load(StrategyRegistry.class).stream().map(Provider::get).flatMap(a -> a.findProviders().stream()).toList());
-		final var plugins = ServiceLoader.load(Plugin.class).stream().map(Provider::get).collect(Collectors.toList());
-		plugins.addAll(ServiceLoader.load(PluginRegistry.class).stream().map(Provider::get).flatMap(a -> a.findPlugins().stream()).toList());
-		final var readers = ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(Provider::get)
+		strategies.addAll(ServiceLoader.load(StrategyRegistry.class).stream().map(ServiceLoader.Provider::get).flatMap(a -> a.findProviders().stream()).toList());
+		final var plugins = ServiceLoader.load(Plugin.class).stream().map(ServiceLoader.Provider::get).collect(Collectors.toList());
+		plugins.addAll(ServiceLoader.load(PluginRegistry.class).stream().map(ServiceLoader.Provider::get).flatMap(a -> a.findPlugins().stream()).toList());
+		final var readers = ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(ServiceLoader.Provider::get)
 			.collect(Collectors.toList());
-		readers.addAll(ServiceLoader.load(ReaderRegistry.class).stream().map(Provider::get).flatMap(a -> a.findFactories().stream()).toList());
+		readers.addAll(ServiceLoader.load(ReaderRegistry.class).stream().map(ServiceLoader.Provider::get).flatMap(a -> a.findFactories().stream()).toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
 			plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),
 			strategies.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),

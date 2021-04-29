@@ -11,7 +11,6 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
 
 /**
@@ -125,7 +124,7 @@ public class Sound implements LineListener, Serializable {
 
 	@Override
 	public void update(final LineEvent event) {
-		if ((event.getType() == Type.STOP) || (event.getType() == Type.CLOSE)) {
+		if ((event.getType() == LineEvent.Type.STOP) || (event.getType() == LineEvent.Type.CLOSE)) {
 			this.audioClip.close();
 			this.stop();
 			this.isPlaying = false;

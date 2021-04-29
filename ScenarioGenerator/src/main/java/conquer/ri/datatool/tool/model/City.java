@@ -5,9 +5,9 @@ import java.util.Arrays;
 public record City(String name, String icon, String clan, double growth, int numberOfPeople, int numberOfSoldiers,
 				   int x, int y, int defense, double defenseBonus, Productions productions) {
 	void validate(final Player[] players) {
-		ValidatorUtils.throwIfNull(name, "Cityname is missing!");
-		ValidatorUtils.throwIfNull(icon, "Icon of " + this.name + " is missing!");
-		ValidatorUtils.throwIfNull(clan, "Clan of city " + this.name + " is missing!");
+		ValidatorUtils.throwIfNull(this.name, "Cityname is missing!");
+		ValidatorUtils.throwIfNull(this.icon, "Icon of " + this.name + " is missing!");
+		ValidatorUtils.throwIfNull(this.clan, "Clan of city " + this.name + " is missing!");
 		final var clan = Arrays.stream(players).filter(a -> a.name().equals(this.clan)).findFirst();
 		if (clan.isEmpty()) {
 			throw new IllegalArgumentException("Clan " + this.clan + " of city " + this.name + " doesn't exist!");

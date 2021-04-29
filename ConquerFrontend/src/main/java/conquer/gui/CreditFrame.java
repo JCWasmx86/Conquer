@@ -14,7 +14,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
-import javax.swing.event.HyperlinkEvent.EventType;
+import javax.swing.event.HyperlinkEvent;
 
 import conquer.gui.utils.ImageResource;
 import conquer.gui.utils.LoopPlayer;
@@ -116,15 +116,15 @@ final class CreditFrame extends JFrame implements EmptyWindowListenerImpl, Actio
 		this.player.start();
 		final var jep = new JEditorPane("text/html", this.generateHtml());
 		jep.addHyperlinkListener(a -> {
-			if (a.getEventType() == EventType.ACTIVATED) {
+			if (a.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
 				try {
 					Desktop.getDesktop().browse(a.getURL().toURI());
 				} catch (final IOException | URISyntaxException e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-			} else if (a.getEventType() == EventType.ENTERED) {
+			} else if (a.getEventType() == HyperlinkEvent.EventType.ENTERED) {
 				this.setTitle(a.getURL().toString());
-			} else if (a.getEventType() == EventType.EXITED) {
+			} else if (a.getEventType() == HyperlinkEvent.EventType.EXITED) {
 				this.setTitle("");
 			}
 		});

@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.ServiceLoader.Provider;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -109,7 +108,7 @@ final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 		this.add(scrollPane);
 		this.add(selectPanel);
 		final var allConfigurationPanels = ServiceLoader.load(ConfigurationPanelProvider.class).stream()
-			.map(Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).toList();
+			.map(ServiceLoader.Provider::get).filter(a -> a.forClass(game.getClass()).isPresent()).toList();
 		if (!allConfigurationPanels.isEmpty()) {
 			this.add(this.buildConfigurationPanel(allConfigurationPanels, game.getClass()));
 		}
