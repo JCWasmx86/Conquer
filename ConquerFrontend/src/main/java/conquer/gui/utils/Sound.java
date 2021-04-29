@@ -1,7 +1,5 @@
 package conquer.gui.utils;
 
-import conquer.data.Shared;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serial;
@@ -12,6 +10,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
+
+import conquer.data.Shared;
 
 /**
  * A class wrapping the Sound API.

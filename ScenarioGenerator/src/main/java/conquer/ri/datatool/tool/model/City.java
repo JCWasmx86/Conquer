@@ -19,7 +19,8 @@ public record City(String name, String icon, String clan, double growth, int num
 			"negative!");
 		ValidatorUtils.throwIfNegative(this.x, "x-Position of " + this.name + " mustn't be negative!");
 		ValidatorUtils.throwIfNegative(this.y, "y-Position of " + this.name + " mustn't be negative!");
-		ValidatorUtils.throwIfBad(this.defenseBonus, "Defense bonus of " + this.name + " mustn't be negative, infinite" +
+		ValidatorUtils.throwIfBad(this.defenseBonus, "Defense bonus of " + this.name + " mustn't be negative, " +
+			"infinite" +
 			" or NaN!");
 		ValidatorUtils.throwIfNull(this.productions, "Productions of " + this.name + " are missing!");
 		this.productions.validate();
