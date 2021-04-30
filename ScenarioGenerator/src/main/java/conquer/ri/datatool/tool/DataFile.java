@@ -149,14 +149,14 @@ public final class DataFile {
 		}
 	}
 
-	private InputStream load(String s) {
+	private InputStream load(final String s) {
 		final var i = this.getClass().getClassLoader().getResourceAsStream(s);
 		if (i != null) {
 			return i;
 		}
 		try {
 			return Files.newInputStream(Paths.get(".", s));
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IllegalArgumentException("File not found: " + s);
 		}
 	}

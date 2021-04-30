@@ -14,8 +14,8 @@ public final class Productions {
 	private final double leather;
 	private final double stone;
 
-	public Productions(double wheat, double fish, double wood, double coal, double meat, double iron, double textile,
-					   double leather, double stone) {
+	public Productions(final double wheat, final double fish, final double wood, final double coal, final double meat, final double iron, final double textile,
+					   final double leather, final double stone) {
 		this.wheat = wheat;
 		this.fish = fish;
 		this.wood = wood;
@@ -58,10 +58,10 @@ public final class Productions {
 	public double stone() { return this.stone; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Productions) obj;
+		final var that = (Productions) obj;
 		return Double.doubleToLongBits(this.wheat) == Double.doubleToLongBits(that.wheat) &&
 			Double.doubleToLongBits(this.fish) == Double.doubleToLongBits(that.fish) &&
 			Double.doubleToLongBits(this.wood) == Double.doubleToLongBits(that.wood) &&

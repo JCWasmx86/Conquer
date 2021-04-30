@@ -8,13 +8,13 @@ public final class CityConnection {
 	private final String to;
 	private final double distance;
 
-	public CityConnection(String from, String to, double distance) {
+	public CityConnection(final String from, final String to, final double distance) {
 		this.from = from;
 		this.to = to;
 		this.distance = distance;
 	}
 
-	void validate(City[] cities) {
+	void validate(final City[] cities) {
 		final var from = Arrays.stream(cities).filter(a -> a.name().equals(this.from)).toList();
 		if (from.isEmpty()) {
 			throw new IllegalArgumentException(this.from + " doesn't exist!");
@@ -35,10 +35,10 @@ public final class CityConnection {
 	public double distance() { return this.distance; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (CityConnection) obj;
+		final var that = (CityConnection) obj;
 		return Objects.equals(this.from, that.from) &&
 			Objects.equals(this.to, that.to) &&
 			Double.doubleToLongBits(this.distance) == Double.doubleToLongBits(that.distance);

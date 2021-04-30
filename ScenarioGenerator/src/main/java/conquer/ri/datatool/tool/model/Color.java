@@ -7,7 +7,7 @@ public final class Color {
 	private final int green;
 	private final int blue;
 
-	public Color(int red, int green, int blue) {
+	public Color(final int red, final int green, final int blue) {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
@@ -24,10 +24,10 @@ public final class Color {
 	public int blue() { return this.blue; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Color) obj;
+		final var that = (Color) obj;
 		return this.red == that.red &&
 			this.green == that.green &&
 			this.blue == that.blue;

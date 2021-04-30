@@ -13,26 +13,26 @@ import conquer.utils.Graph;
 public class DebugPlugin implements Plugin {
 
 	@Override
-	public void init(PluginInterface pluginInterface) {
+	public void init(final PluginInterface pluginInterface) {
 		pluginInterface.addAttackHook(new AttackHook() {
 			@Override
-			public void after(ICity src, ICity destination, long survivingSoldiers, AttackResult result) {
+			public void after(final ICity src, final ICity destination, final long survivingSoldiers, final AttackResult result) {
 				System.out.println("Attack: " + src.getName() + " -> " + destination.getName() + "; " + survivingSoldiers + " soldiers survived; result: " + result);
 			}
 
 			@Override
-			public void before(ICity src, ICity destination, long numberOfSoldiersMoved) {
+			public void before(final ICity src, final ICity destination, final long numberOfSoldiersMoved) {
 				System.out.println("Attack: " + src.getName() + " -> " + destination.getName() + "; " + numberOfSoldiersMoved + " soldiers //Strategy: " + src.getClan().getStrategy().getClass().getCanonicalName());
 			}
 		});
 		pluginInterface.addMessageListener(new MessageListener() {
 			@Override
-			public void added(Message message) {
+			public void added(final Message message) {
 				System.out.println("Received message: " + message.getMessageText());
 			}
 
 			@Override
-			public void removed(Message message) {
+			public void removed(final Message message) {
 				//Empty
 			}
 		});
@@ -52,6 +52,6 @@ public class DebugPlugin implements Plugin {
 	}
 
 	@Override
-	public void handle(Graph<ICity> cities, Context ctx) {
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 	}
 }

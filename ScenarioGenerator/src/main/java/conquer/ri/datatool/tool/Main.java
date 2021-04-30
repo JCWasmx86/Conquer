@@ -8,7 +8,7 @@ import com.google.gson.JsonSyntaxException;
 import conquer.ri.datatool.tool.model.Scenario;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		final var main = new Main();
 		System.exit(main.run(args));
 	}
@@ -19,21 +19,21 @@ public class Main {
 			return 1;
 		}
 		final var gson = new Gson();
-		Scenario scenario;
+		final Scenario scenario;
 		try (final var reader = new FileReader(args[0])) {
 			scenario = gson.fromJson(reader, Scenario.class);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			System.out.println(e.getLocalizedMessage());
 			return 127;
-		} catch (JsonSyntaxException jse) {
+		} catch (final JsonSyntaxException jse) {
 			System.out.println("Invalid json: " + jse.getLocalizedMessage());
 			return 128;
 		}
-		DataFile dataFile;
+		final DataFile dataFile;
 		try {
 			scenario.validate();
 			dataFile = scenario.toDataFile();
-		} catch (IllegalArgumentException iae) {
+		} catch (final IllegalArgumentException iae) {
 			System.out.println(iae.getLocalizedMessage());
 			return 123;
 		}

@@ -532,14 +532,14 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 	}
 
 	@Override
-	public void keyTyped(KeyEvent keyEvent) {
+	public void keyTyped(final KeyEvent keyEvent) {
 		if (keyEvent.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			this.labels.values().forEach(CityLabel::unmark);
 			return;
 		}
 		final var ch = Character.toLowerCase(keyEvent.getKeyChar());
 		var hadMatch = false;
-		for (var entry : this.labels.entrySet()) {
+		for (final var entry : this.labels.entrySet()) {
 			if (entry.getValue().hasMouse()) {
 				final var list =
 					this.game.getCityKeyHandlers().getOrDefault(ch + "",
@@ -557,12 +557,12 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 	}
 
 	@Override
-	public void keyPressed(KeyEvent keyEvent) {
+	public void keyPressed(final KeyEvent keyEvent) {
 
 	}
 
 	@Override
-	public void keyReleased(KeyEvent keyEvent) {
+	public void keyReleased(final KeyEvent keyEvent) {
 
 	}
 }

@@ -9,7 +9,7 @@ public final class Relation {
 	private final String second;
 	private final int relation;
 
-	public Relation(String first, String second, int relation) {
+	public Relation(final String first, final String second, final int relation) {
 		this.first = first;
 		this.second = second;
 		this.relation = relation;
@@ -17,28 +17,28 @@ public final class Relation {
 
 	public void validate(final Player[] players) {
 		final var set = Arrays.stream(players).map(Player::name).collect(Collectors.toSet());
-		if (!set.contains(first)) {
-			throw new IllegalArgumentException(first + " is no available clan!");
+		if (!set.contains(this.first)) {
+			throw new IllegalArgumentException(this.first + " is no available clan!");
 		}
-		if (!set.contains(second)) {
-			throw new IllegalArgumentException(second + " is no available clan!");
+		if (!set.contains(this.second)) {
+			throw new IllegalArgumentException(this.second + " is no available clan!");
 		}
 		ValidatorUtils.throwIfNegative(this.relation, "Relation between " + this.first + " and " + this.second + " " +
 			"may" +
 			" not be negative!");
 	}
 
-	public String first() { return first; }
+	public String first() { return this.first; }
 
-	public String second() { return second; }
+	public String second() { return this.second; }
 
-	public int relation() { return relation; }
+	public int relation() { return this.relation; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Relation) obj;
+		final var that = (Relation) obj;
 		return Objects.equals(this.first, that.first) &&
 			Objects.equals(this.second, that.second) &&
 			this.relation == that.relation;
@@ -46,15 +46,15 @@ public final class Relation {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(first, second, relation);
+		return Objects.hash(this.first, this.second, this.relation);
 	}
 
 	@Override
 	public String toString() {
 		return "Relation[" +
-			"first=" + first + ", " +
-			"second=" + second + ", " +
-			"relation=" + relation + ']';
+			"first=" + this.first + ", " +
+			"second=" + this.second + ", " +
+			"relation=" + this.relation + ']';
 	}
 
 }

@@ -16,8 +16,8 @@ public final class City {
 	private final double defenseBonus;
 	private final Productions productions;
 
-	public City(String name, String icon, String clan, double growth, int numberOfPeople, int numberOfSoldiers,
-				int x, int y, int defense, double defenseBonus, Productions productions) {
+	public City(final String name, final String icon, final String clan, final double growth, final int numberOfPeople, final int numberOfSoldiers,
+				final int x, final int y, final int defense, final double defenseBonus, final Productions productions) {
 		this.name = name;
 		this.icon = icon;
 		this.clan = clan;
@@ -76,10 +76,10 @@ public final class City {
 	public Productions productions() { return this.productions; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (City) obj;
+		final var that = (City) obj;
 		return Objects.equals(this.name, that.name) &&
 			Objects.equals(this.icon, that.icon) &&
 			Objects.equals(this.clan, that.clan) &&

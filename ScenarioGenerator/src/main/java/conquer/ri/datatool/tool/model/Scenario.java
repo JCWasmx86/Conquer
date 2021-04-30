@@ -14,9 +14,9 @@ public final class Scenario {
 	private final CityConnection[] connections;
 	private final Relation[] relations;
 
-	public Scenario(String name, String background,
-					Player[] players, City[] cities,
-					CityConnection[] connections, Relation[] relations) {
+	public Scenario(final String name, final String background,
+					final Player[] players, final City[] cities,
+					final CityConnection[] connections, final Relation[] relations) {
 		this.name = name;
 		this.background = background;
 		this.players = players;
@@ -35,7 +35,7 @@ public final class Scenario {
 		this.validate(this.cities);
 		this.validate(this.connections);
 		if (this.relations != null) {
-			for (final var relation : relations) {
+			for (final var relation : this.relations) {
 				relation.validate(this.players);
 			}
 		}
@@ -107,7 +107,7 @@ public final class Scenario {
 		return df;
 	}
 
-	private int getCityId(String city) {
+	private int getCityId(final String city) {
 		for (var i = 0; i < this.cities.length; i++) {
 			if (this.cities[i].name().equals(city)) {
 				return i;
@@ -116,7 +116,7 @@ public final class Scenario {
 		throw new InternalError("Unreachable!");
 	}
 
-	private int getClanId(String clan) {
+	private int getClanId(final String clan) {
 		for (var i = 0; i < this.players.length; i++) {
 			if (this.players[i].name().equals(clan)) {
 				return i;
@@ -125,23 +125,23 @@ public final class Scenario {
 		throw new InternalError("Unreachable!");
 	}
 
-	public String name() { return name; }
+	public String name() { return this.name; }
 
-	public String background() { return background; }
+	public String background() { return this.background; }
 
-	public Player[] players() { return players; }
+	public Player[] players() { return this.players; }
 
-	public City[] cities() { return cities; }
+	public City[] cities() { return this.cities; }
 
-	public CityConnection[] connections() { return connections; }
+	public CityConnection[] connections() { return this.connections; }
 
-	public Relation[] relations() { return relations; }
+	public Relation[] relations() { return this.relations; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Scenario) obj;
+		final var that = (Scenario) obj;
 		return Objects.equals(this.name, that.name) &&
 			Objects.equals(this.background, that.background) &&
 			Objects.equals(this.players, that.players) &&
@@ -152,18 +152,18 @@ public final class Scenario {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, background, players, cities, connections, relations);
+		return Objects.hash(this.name, this.background, Arrays.hashCode(this.players), Arrays.hashCode(this.cities), Arrays.hashCode(this.connections), Arrays.hashCode(this.relations));
 	}
 
 	@Override
 	public String toString() {
 		return "Scenario[" +
-			"name=" + name + ", " +
-			"background=" + background + ", " +
-			"players=" + players + ", " +
-			"cities=" + cities + ", " +
-			"connections=" + connections + ", " +
-			"relations=" + relations + ']';
+			"name=" + this.name + ", " +
+			"background=" + this.background + ", " +
+			"players=" + Arrays.toString(this.players) + ", " +
+			"cities=" + Arrays.toString(this.cities) + ", " +
+			"connections=" + Arrays.toString(this.connections) + ", " +
+			"relations=" + Arrays.toString(this.relations) + ']';
 	}
 
 }

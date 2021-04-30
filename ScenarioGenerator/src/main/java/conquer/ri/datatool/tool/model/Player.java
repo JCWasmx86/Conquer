@@ -9,7 +9,7 @@ public final class Player {
 	private final double initialCoins;
 	private final int flags;
 
-	public Player(String name, Color clanColor, double initialCoins, int flags) {
+	public Player(final String name, final Color clanColor, final double initialCoins, final int flags) {
 		this.name = name;
 		this.clanColor = clanColor;
 		this.initialCoins = initialCoins;
@@ -34,10 +34,10 @@ public final class Player {
 	public int flags() { return this.flags; }
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj == this) return true;
 		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Player) obj;
+		final var that = (Player) obj;
 		return Objects.equals(this.name, that.name) &&
 			Objects.equals(this.clanColor, that.clanColor) &&
 			Double.doubleToLongBits(this.initialCoins) == Double.doubleToLongBits(that.initialCoins) &&
