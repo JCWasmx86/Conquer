@@ -473,11 +473,9 @@ final class GameFrame extends JFrame implements EmptyWindowListenerImpl, Compone
 				return;
 			}
 		} else {
-			//if (this.saveDialog()) {
-				if (!this.save()) {
-					return;
-				}
-			//}
+			if (!this.save()) {
+				return;
+			}
 		}
 		this.cleanup();
 
