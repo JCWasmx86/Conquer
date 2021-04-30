@@ -95,7 +95,8 @@ public final class City {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.name, this.icon, this.clan, this.growth, this.numberOfPeople, this.numberOfSoldiers, this.x, this.y, this.defense, this.defenseBonus,
+		return Objects.hash(this.name, this.icon, this.clan, this.growth, this.numberOfPeople, this.numberOfSoldiers,
+			this.x, this.y, this.defense, this.defenseBonus,
 			this.productions);
 	}
 

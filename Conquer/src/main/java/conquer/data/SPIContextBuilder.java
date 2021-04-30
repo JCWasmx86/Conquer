@@ -46,7 +46,7 @@ public class SPIContextBuilder {
 		plugins.addAll(ServiceLoader.load(PluginRegistry.class).stream().map(ServiceLoader.Provider::get).flatMap(a -> a.findPlugins().stream()).toList());
 		final var readers =
 			ServiceLoader.load(ConquerInfoReaderFactory.class).stream().map(ServiceLoader.Provider::get)
-			.collect(Collectors.toList());
+				.collect(Collectors.toList());
 		readers.addAll(ServiceLoader.load(ReaderRegistry.class).stream().map(ServiceLoader.Provider::get).flatMap(a -> a.findFactories().stream()).toList());
 		return new GlobalContext(installedScenarios, plugins, strategies, readers,
 			plugins.stream().map(a -> a.getClass().getName()).collect(Collectors.toList()),

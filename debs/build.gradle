@@ -336,7 +336,7 @@ task buildSdkDeb() {
 			from "${project.rootDir}/ScenarioGenerator/build/libs"
 			include "shaded-tool.jar-all.jar"
 			into "conquer-sdk/usr/share/java"
-			rename {a -> a.replace("shaded-tool.jar-all.jar", "scenario-builder.jar") }
+			rename { a -> a.replace("shaded-tool.jar-all.jar", "scenario-builder.jar") }
 		}
 		copy {
 			from "${project.rootDir}/auxiliary"
@@ -364,7 +364,7 @@ task buildSdkDeb() {
 		fout.write(s.getBytes())
 		fout.close()
 		exec {
-			commandLine file(".").getAbsolutePath()+  "/conquer-sdk/usr/bin/depreview" , file(".").getAbsolutePath() + "/conquer-sdk/usr/share/java/scenario-builder.jar"
+			commandLine file(".").getAbsolutePath() + "/conquer-sdk/usr/bin/depreview", file(".").getAbsolutePath() + "/conquer-sdk/usr/share/java/scenario-builder.jar"
 		}
 		exec {
 			commandLine "find", file(".").getAbsolutePath() + "/conquer-sdk", "-exec", "touch", "-t", "201108231405.14", "{}", ";"
@@ -382,7 +382,7 @@ if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
 	buildDebs.dependsOn(buildConquerDeb, buildConquerEngineDeb, buildConquerGuiDeb, buildDefaultDeb, buildDefaultMusicDeb, buildDefaultScenariosDeb, buildSdkDeb)
 	buildDebs.mustRunAfter(":Launcher:assemble", ":auxiliary:buildDataZip", ":Conquer:jar", ":ConquerFrontend:jar")
 	buildSdkDeb.dependsOn(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable", ":ScenarioGenerator:shadowJar")
-	buildSdkDeb.mustRunAfter(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable",":ScenarioGenerator:shadowJar")
+	buildSdkDeb.mustRunAfter(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources", ":depreview:buildExecutable", ":ScenarioGenerator:shadowJar")
 	buildConquerDeb.dependsOn(":Launcher:assemble")
 	buildConquerDeb.mustRunAfter(":Launcher:assemble")
 	buildConquerEngineDeb.dependsOn(":Conquer:jar", ":ConquerFrontendSPI:jar", ":Conquer:conquerResources")

@@ -1,13 +1,29 @@
 package conquer.ri.datatool.tool.model;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import conquer.ri.datatool.tool.DataFile;
 
-public record Scenario(String name, String background,
-					   Player[] players, City[] cities,
-					   CityConnection[] connections, Relation[] relations) {
+public final class Scenario {
+	private final String name;
+	private final String background;
+	private final Player[] players;
+	private final City[] cities;
+	private final CityConnection[] connections;
+	private final Relation[] relations;
+
+	public Scenario(String name, String background,
+					Player[] players, City[] cities,
+					CityConnection[] connections, Relation[] relations) {
+		this.name = name;
+		this.background = background;
+		this.players = players;
+		this.cities = cities;
+		this.connections = connections;
+		this.relations = relations;
+	}
 
 	public void validate() {
 		ValidatorUtils.throwIfNull(this.name, "Scenario name is missing!");
@@ -18,7 +34,7 @@ public record Scenario(String name, String background,
 		this.validate(this.players);
 		this.validate(this.cities);
 		this.validate(this.connections);
-		if(this.relations != null) {
+		if (this.relations != null) {
 			for (final var relation : relations) {
 				relation.validate(this.players);
 			}
@@ -108,4 +124,46 @@ public record Scenario(String name, String background,
 		}
 		throw new InternalError("Unreachable!");
 	}
+
+	public String name() { return name; }
+
+	public String background() { return background; }
+
+	public Player[] players() { return players; }
+
+	public City[] cities() { return cities; }
+
+	public CityConnection[] connections() { return connections; }
+
+	public Relation[] relations() { return relations; }
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null || obj.getClass() != this.getClass()) return false;
+		var that = (Scenario) obj;
+		return Objects.equals(this.name, that.name) &&
+			Objects.equals(this.background, that.background) &&
+			Objects.equals(this.players, that.players) &&
+			Objects.equals(this.cities, that.cities) &&
+			Objects.equals(this.connections, that.connections) &&
+			Objects.equals(this.relations, that.relations);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, background, players, cities, connections, relations);
+	}
+
+	@Override
+	public String toString() {
+		return "Scenario[" +
+			"name=" + name + ", " +
+			"background=" + background + ", " +
+			"players=" + players + ", " +
+			"cities=" + cities + ", " +
+			"connections=" + connections + ", " +
+			"relations=" + relations + ']';
+	}
+
 }
