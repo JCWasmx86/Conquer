@@ -46,4 +46,7 @@ public final class Color {
 			"blue=" + this.blue + ']';
 	}
 
+	public java.awt.Color toColor() {
+		return new java.awt.Color(this.red, this.green, this.blue);
+	}
 }

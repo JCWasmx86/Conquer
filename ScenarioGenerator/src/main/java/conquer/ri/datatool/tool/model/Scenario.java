@@ -1,23 +1,13 @@
 package conquer.ri.datatool.tool.model;
 
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class Scenario {
-	private final String name;
-	private final String background;
-	private final Player[] players;
-	private final City[] cities;
-	private final CityConnection[] connections;
+import conquer.ri.datatool.tool.DataFile;
 
-	public Scenario(String name, String background, Player[] players, City[] cities, CityConnection[] connections) {
-		this.name = name;
-		this.background = background;
-		this.players = players;
-		this.cities = cities;
-		this.connections = connections;
-	}
+public record Scenario(String name, String background,
+					   Player[] players, City[] cities,
+					   CityConnection[] connections, Relation[] relations) {
 
 	public void validate() {
 		ValidatorUtils.throwIfNull(this.name, "Scenario name is missing!");
@@ -28,6 +18,11 @@ public final class Scenario {
 		this.validate(this.players);
 		this.validate(this.cities);
 		this.validate(this.connections);
+		if(this.relations != null) {
+			for (final var relation : relations) {
+				relation.validate(this.players);
+			}
+		}
 	}
 
 	private void validate(final CityConnection[] connections) {
@@ -73,41 +68,44 @@ public final class Scenario {
 		}
 	}
 
-	public String name() { return this.name; }
-
-	public String background() { return this.background; }
-
-	public Player[] players() { return this.players; }
-
-	public City[] cities() { return this.cities; }
-
-	public CityConnection[] connections() { return this.connections; }
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null || obj.getClass() != this.getClass()) return false;
-		var that = (Scenario) obj;
-		return Objects.equals(this.name, that.name) &&
-			Objects.equals(this.background, that.background) &&
-			Objects.equals(this.players, that.players) &&
-			Objects.equals(this.cities, that.cities) &&
-			Objects.equals(this.connections, that.connections);
+	public DataFile toDataFile() {
+		final var df = new DataFile().setBackground(this.background);
+		for (final var player : this.players) {
+			df.addPlayer(player.initialCoins(), player.name(), player.clanColor().toColor(), player.flags());
+		}
+		for (final var city : this.cities) {
+			df.addCity(new conquer.ri.datatool.tool.City(city.growth(), city.icon(), city.name(),
+				this.getClanId(city.clan()), city.numberOfPeople(), city.numberOfSoldiers(), city.x(), city.y(),
+				city.defense(), city.defenseBonus(), city.productions().toList()));
+		}
+		for (final var connection : this.connections) {
+			df.addCityConnection(this.getCityId(connection.from()), this.getCityId(connection.to()),
+				connection.distance());
+		}
+		if (this.relations != null) {
+			for (final var relation : this.relations) {
+				df.addRelation(this.getClanId(relation.first()), this.getClanId(relation.second()),
+					relation.relation());
+			}
+		}
+		return df;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.name, this.background, this.players, this.cities, this.connections);
+	private int getCityId(String city) {
+		for (var i = 0; i < this.cities.length; i++) {
+			if (this.cities[i].name().equals(city)) {
+				return i;
+			}
+		}
+		throw new InternalError("Unreachable!");
 	}
 
-	@Override
-	public String toString() {
-		return "Scenario[" +
-			"name=" + this.name + ", " +
-			"background=" + this.background + ", " +
-			"players=" + this.players + ", " +
-			"cities=" + this.cities + ", " +
-			"connections=" + this.connections + ']';
+	private int getClanId(String clan) {
+		for (var i = 0; i < this.players.length; i++) {
+			if (this.players[i].name().equals(clan)) {
+				return i;
+			}
+		}
+		throw new InternalError("Unreachable!");
 	}
-
 }

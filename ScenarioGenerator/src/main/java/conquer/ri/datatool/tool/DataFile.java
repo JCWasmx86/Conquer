@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -141,13 +144,25 @@ public final class DataFile {
 	}
 
 	private byte[] readBackground() throws Exception {
-		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + this.background)) {
+		try (final var stream = this.load("images/" + this.background)) {
 			return stream.readAllBytes();
 		}
 	}
 
+	private InputStream load(String s) {
+		final var i = this.getClass().getClassLoader().getResourceAsStream(s);
+		if (i != null) {
+			return i;
+		}
+		try {
+			return Files.newInputStream(Paths.get(".", s));
+		} catch (IOException e) {
+			throw new IllegalArgumentException("File not found: " + s);
+		}
+	}
+
 	private byte[] readFile(final String s) throws IOException {
-		try (final var stream = this.getClass().getClassLoader().getResourceAsStream("images/" + s)) {
+		try (final var stream = this.load("images/" + s)) {
 			return stream.readAllBytes();
 		}
 	}

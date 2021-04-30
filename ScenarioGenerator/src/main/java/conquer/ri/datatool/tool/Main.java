@@ -29,12 +29,15 @@ public class Main {
 			System.out.println("Invalid json: " + jse.getLocalizedMessage());
 			return 128;
 		}
+		DataFile dataFile;
 		try {
 			scenario.validate();
+			dataFile = scenario.toDataFile();
 		} catch (IllegalArgumentException iae) {
 			System.out.println(iae.getLocalizedMessage());
 			return 123;
 		}
+		dataFile.dump(args[0].replace(".json", ".data"));
 		return 0;
 	}
 }

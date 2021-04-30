@@ -1,5 +1,6 @@
 package conquer.ri.datatool.tool.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public final class Productions {
@@ -74,7 +75,8 @@ public final class Productions {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.wheat, this.fish, this.wood, this.coal, this.meat, this.iron, this.textile, this.leather, this.stone);
+		return Objects.hash(this.wheat, this.fish, this.wood, this.coal, this.meat, this.iron, this.textile,
+			this.leather, this.stone);
 	}
 
 	@Override
@@ -91,4 +93,8 @@ public final class Productions {
 			"stone=" + this.stone + ']';
 	}
 
+	public List<Double> toList() {
+		return List.of(this.wheat, this.fish, this.wood, this.coal, this.meat, this.iron, this.textile, this.leather,
+			this.stone);
+	}
 }
