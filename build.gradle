@@ -94,6 +94,8 @@ task copyFiles() {
 				include "*.pom"
 				include "install-sdk.sh"
 				include "install.bat"
+				include "scenario-builder"
+				include "scenario-builder.bat"
 				include "README.txt"
 			}
 			from("depreview") {
@@ -102,13 +104,23 @@ task copyFiles() {
 			}
 			into "dist"
 		}
+		copy {
+			from "${project.rootDir}/ScenarioGenerator/build/libs"
+			include "shaded-tool.jar-all.jar"
+			into "dist"
+			rename { a -> a.replace("shaded-tool.jar-all.jar", "scenario-builder.jar") }
+		}
+		exec {
+			commandLine file(".").getAbsolutePath() + "/dist/depreview", file(".").getAbsolutePath() + "/dist/scenario-builder.jar"
+		}
 	}
 }
 copyFiles.dependsOn(":Conquer:jar")
 copyFiles.dependsOn(":ConquerFrontendSPI:jar")
 copyFiles.dependsOn(":Conquer:conquerResources")
 copyFiles.dependsOn(":depreview:buildExecutable")
-
+copyFiles.dependsOn(":ScenarioGenerator:shadowJar")
+copyFiles.mustRunAfter(":ScenarioGenerator:shadowJar");
 createZipFileForDistribution.dependsOn(copyFiles)
 assemble.mustRunAfter(":music:buildMusic")
 assemble.dependsOn(":depreview:buildExecutable")
