@@ -53,6 +53,7 @@ Launcher/conquer_launcher
 Launcher/data
 Launcher/data.zip
 Launcher/nsisunz/
+Launcher/out/
 Launcher/src/gen/*.vala
 Launcher/uninstall.exe
 ScenarioGenerator/*.png
