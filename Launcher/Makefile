@@ -19,7 +19,7 @@ generateFiles: src/gen/getLinuxJavaDirectory.vala.in src/gen/adoptopenJDKURL.val
 	cpp -E -P src/gen/libericaJDKURL.vala.in >src/gen/libericaJDKURL.vala
 build: src/*.vala src/$(OS_TYPE)/*.vala src/*.c src/$(OS_TYPE)/*.c
 	valac $(ARGS) src/*.vala src/$(OS_TYPE)/*.vala src/gen/*.vala $(FLAGS) -C -d out
-	$(CC) out/src/*.c out/src/gen/*.c src/*.c out/src/$(OS_TYPE)/*.c src/$(OS_TYPE)/*.c `pkg-config --cflags --libs gtk+-3.0 gio-2.0 gee-0.8 json-glib-1.0 libarchive libcurl` -o conquer_launcher -I $(JAVA_HOME)/include -I $(JAVA_HOME)/include/$(JNI_OS) $(C_ARGS)
+	$(CC) out/src/*.c out/src/gen/*.c src/*.c out/src/$(OS_TYPE)/*.c src/$(OS_TYPE)/*.c `pkg-config --cflags --libs gtk+-3.0 gio-2.0 gee-0.8 json-glib-1.0 libarchive libcurl` -o conquer_launcher -I "$(JAVA_HOME)"/include -I "$(JAVA_HOME)"/include/$(JNI_OS) $(C_ARGS)
 downloadVAPIFiles:
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
