@@ -39,16 +39,13 @@ jobs:
             -   name: Build conquer
                 run: |
                     mkdir tmp
-                    wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.5.2/MuseScorePortable-3.5.2.311459983-x86.paf.exe
+                    wget -O tmp/MuseScore3.exe https://github.com/musescore/MuseScore/releases/download/v3.6.2/MuseScorePortable-3.6.2.548021803-x86.paf.exe
                     cd tmp
                     echo A|7z x MuseScore3.exe
                     cd App/MuseScore/bin
                     export PATH=`pwd`:$PATH:.
                     cd ../../../..
                     export QT_QPA_PLATFORM=windows
-                    echo $JAVA_HOME
-                    ls -l $JAVA_HOME
-                    ls -l $JAVA_HOME/include||true
                     ./gradlew assemble
                     ./gradlew Conquer:runTestsuites
             -   uses: actions/upload-artifact@v2
