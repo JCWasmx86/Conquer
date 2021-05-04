@@ -6,12 +6,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.net.URL;
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
 import conquer.data.Shared;
+
 
 /**
  * A class wrapping the Sound API.
@@ -50,10 +52,7 @@ public class Sound implements LineListener, Serializable {
 			final var audioStream = url == null ? AudioSystem.getAudioInputStream(new File(this.filename))
 				: AudioSystem.getAudioInputStream(url);
 			final var format = audioStream.getFormat();
-			final var frameRate = 44100F;
-			final var channels = format.getChannels();
-			final var targetFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, frameRate, 16, channels,
-				channels * 2, frameRate, false);
+			final var targetFormat = this.createTargetFormat(format);
 			if (AudioSystem.isConversionSupported(targetFormat, format)) {
 				final var din = AudioSystem.getAudioInputStream(targetFormat, audioStream);
 				this.isPlaying = true;
@@ -68,6 +67,14 @@ public class Sound implements LineListener, Serializable {
 			this.isPlaying = false;
 			throw new IllegalArgumentException(e);
 		}
+	}
+
+	private AudioFormat createTargetFormat(final AudioFormat inFormat) {
+		final var channels = inFormat.getChannels();
+		final var sampleRate = inFormat.getSampleRate();
+		return new AudioFormat(Encoding.PCM_SIGNED, sampleRate,
+			inFormat.getSampleSizeInBits() == AudioSystem.NOT_SPECIFIED ? 16 : inFormat.getSampleSizeInBits(),
+			channels, channels * 2, sampleRate, inFormat.isBigEndian());
 	}
 
 	private URL locateURL() {
