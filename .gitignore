@@ -1,7 +1,6 @@
 *.class
 *.data
 *.deb
-*.deps
 *.dll
 *.exe
 *.iml
@@ -11,7 +10,6 @@
 *.nsi
 *.o
 *.ogg
-*.vapi
 *.wav
 *.zip
 *.zst

@@ -24,7 +24,6 @@ downloadVAPIFiles:
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.deps
 	wget -nc https://gitlab.gnome.org/GNOME/vala-extra-vapis/-/raw/master/libcurl.vapi
 clean:
-	rm -f libcurl.deps libcurl.vapi
 	rm -f conquer_launcher conquer_launcher.exe
 	rm -f src/gen/*.vala
 	rm -f *.o
