@@ -1,6 +1,9 @@
 package conquer.plugins;
 
+import java.util.List;
+
 import conquer.data.EventList;
+import conquer.data.IClan;
 
 /**
  * An interface providing several possibilities to hook into internal events of
@@ -85,4 +88,11 @@ public interface PluginInterface {
 	 * @return Current eventlist.
 	 */
 	EventList getEventList();
+
+	/**
+	 * Get all available clans.
+	 */
+	default List<IClan> getClans() {
+		throw new UnsupportedOperationException("--Not implemented--");
+	}
 }

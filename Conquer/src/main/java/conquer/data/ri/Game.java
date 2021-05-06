@@ -263,7 +263,6 @@ final class Game implements ConquerInfo {
 		this.data.getAttackHooks().forEach(a -> a.after(src, destination, survivingSoldiers, result));
 		this.checkExtinction(result, destinationClan);
 	}
-
 	private boolean isBad(final double d) {
 		return (d < 0) || Double.isNaN(d) || Double.isInfinite(d);
 	}
