@@ -1,12 +1,14 @@
 package conquer.data;
 
 import java.awt.Image;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Models a city on the map.
  */
-public interface ICity extends Comparable<ICity> {
+public interface ICity extends Comparable<ICity>, Serializable {
 	/**
 	 * Called at the end of the round.
 	 */
