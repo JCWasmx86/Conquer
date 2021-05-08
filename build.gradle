@@ -120,7 +120,7 @@ copyFiles.dependsOn(":ConquerFrontendSPI:jar")
 copyFiles.dependsOn(":Conquer:conquerResources")
 copyFiles.dependsOn(":depreview:buildExecutable")
 copyFiles.dependsOn(":ScenarioGenerator:shadowJar")
-copyFiles.mustRunAfter(":ScenarioGenerator:shadowJar");
+copyFiles.mustRunAfter(":ScenarioGenerator:shadowJar")
 createZipFileForDistribution.dependsOn(copyFiles)
 assemble.mustRunAfter(":music:buildMusic")
 assemble.dependsOn(":depreview:buildExecutable")

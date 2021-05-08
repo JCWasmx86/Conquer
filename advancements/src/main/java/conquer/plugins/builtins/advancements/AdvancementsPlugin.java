@@ -3,10 +3,8 @@ package conquer.plugins.builtins.advancements;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import conquer.data.ICity;
-import conquer.data.IClan;
 import conquer.plugins.Context;
 import conquer.plugins.Plugin;
 import conquer.plugins.PluginInterface;

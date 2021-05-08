@@ -1,7 +1,6 @@
 package conquer.data;
 
 import java.awt.Image;
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 

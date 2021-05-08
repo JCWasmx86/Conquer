@@ -88,7 +88,6 @@ public class Advancements {
 		public void before(ICity src, ICity destination, long numberOfSoldiersMoved) {
 			//If a player city is attacked, save it.
 			if (gained(this)) {
-				return;
 			} else if (destination.isPlayerCity()) {
 				playerCityWasAttacked = true;
 				cityThatWasAttacked = destination;
