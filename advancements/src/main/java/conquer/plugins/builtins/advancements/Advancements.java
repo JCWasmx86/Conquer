@@ -24,7 +24,7 @@ public class Advancements {
 
 	static class FirstBlood implements Advancement {
 
-		private transient  AdvancementCallBack callback;
+		private transient AdvancementCallback callback;
 
 		@Override
 		public String title() {
@@ -37,7 +37,7 @@ public class Advancements {
 		}
 
 		@Override
-		public void init(AdvancementCallBack ifGained) {
+		public void init(AdvancementCallback ifGained) {
 			if (gained(this)) {
 				return;
 			}
@@ -55,7 +55,7 @@ public class Advancements {
 	}
 
 	static class Reconquista implements Advancement {
-		private transient AdvancementCallBack callback;
+		private transient AdvancementCallback callback;
 		private List<ICity> citiesConqueredByEnemyLastRound = new ArrayList<>();
 		private List<ICity> citiesConqueredByEnemy = new ArrayList<>();
 		private boolean playerCityWasAttacked = false;
@@ -72,7 +72,7 @@ public class Advancements {
 		}
 
 		@Override
-		public void init(AdvancementCallBack ifGained) {
+		public void init(AdvancementCallback ifGained) {
 			if (gained(this)) {
 				return;
 			}
@@ -123,7 +123,7 @@ public class Advancements {
 	}
 
 	static class DwarfUprising implements Advancement {
-		private AdvancementCallBack callback;
+		private AdvancementCallback callback;
 
 		@Override
 		public String title() {
@@ -136,7 +136,7 @@ public class Advancements {
 		}
 
 		@Override
-		public void init(AdvancementCallBack ifGained) {
+		public void init(AdvancementCallback ifGained) {
 			if (gained(this)) {
 				return;
 			}

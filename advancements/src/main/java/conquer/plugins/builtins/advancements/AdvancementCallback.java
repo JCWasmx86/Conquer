@@ -1,6 +1,6 @@
 package conquer.plugins.builtins.advancements;
 
 @FunctionalInterface
-public interface AdvancementCallBack {
+public interface AdvancementCallback {
 	void onAdvancementGained(Advancement advancement);
 }

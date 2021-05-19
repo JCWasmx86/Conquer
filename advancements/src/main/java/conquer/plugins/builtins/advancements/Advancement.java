@@ -17,7 +17,7 @@ interface Advancement extends MessageListener, AttackHook, MoveHook, RecruitHook
 
 	String extendedTitle();
 
-	void init(AdvancementCallBack ifGained);
+	void init(AdvancementCallback ifGained);
 
 	default Optional<Class<? extends Advancement>> getDependency() {
 		return Optional.empty();
