@@ -1,4 +1,0 @@
-dependencies {
-	implementation project(":Conquer")
-	implementation project(":ConquerFrontendSPI")
-}

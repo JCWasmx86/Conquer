@@ -74,11 +74,10 @@ public interface Plugin {
 
 	/**
 	 * Called at the end of every round.
-	 *
-	 * @param cities All cities
+	 *  @param cities All cities
 	 * @param ctx    The context with some data.
 	 */
-	void handle(final Graph<ICity> cities, final Context ctx);
+	void handle(final Graph<? extends ICity> cities, final Context ctx);
 
 	/**
 	 * Called at the start of the game. Can be used for adding handlers.

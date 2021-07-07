@@ -14,5 +14,5 @@ public interface MoneyHook {
 	 * @param cities All cities of the clan
 	 * @param clan   The clan
 	 */
-	void moneyPaid(List<ICity> cities, IClan clan);
+	void moneyPaid(List<? extends ICity> cities, IClan clan);
 }

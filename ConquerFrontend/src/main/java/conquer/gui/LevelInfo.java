@@ -116,7 +116,7 @@ final class LevelInfo extends JFrame implements EmptyWindowListenerImpl {
 		this.setLocation(location);
 	}
 
-	private Component buildConfigurationPanel(final List<ConfigurationPanelProvider> allConfigurationPanels,
+	private Component buildConfigurationPanel(final List<? extends ConfigurationPanelProvider> allConfigurationPanels,
 											  final Class<? extends ConquerInfo> clazz) {
 		final var jtp = new JTabbedPane();
 		allConfigurationPanels.forEach(a -> jtp.addTab(a.getName(), a.forClass(clazz).get()));

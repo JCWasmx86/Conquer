@@ -46,7 +46,7 @@ public class Installer implements Runnable {
 	private static final File BASE_FILE = new File(Shared.BASE_DIRECTORY).getAbsoluteFile();
 	private final OptionChooser chooser;
 	private final ExtendedOutputStream stream;
-	private final Consumer<Exception> onError;
+	private final Consumer<? super Exception> onError;
 
 	/**
 	 * Constructs a new Installer
@@ -57,7 +57,7 @@ public class Installer implements Runnable {
 	 * @param onError Consumer for occurring exceptions. May be {@code null}.
 	 */
 	public Installer(final OptionChooser chooser, final ExtendedOutputStream writeTo,
-					 final Consumer<Exception> onError) {
+					 final Consumer<? super Exception> onError) {
 		if (chooser == null) {
 			throw new IllegalArgumentException("chooser==null");
 		}

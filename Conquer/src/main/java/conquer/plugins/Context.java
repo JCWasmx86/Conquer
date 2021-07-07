@@ -13,12 +13,12 @@ import conquer.messages.Message;
 public final class Context {
 	private final EventList events;
 	private final List<String> clanNames;
-	private final List<IClan> clans;
+	private final List<? extends IClan> clans;
 
 	/**
 	 * Shouldn't be used from the outside.
 	 */
-	public Context(final EventList events, final List<String> clanNames, final List<IClan> clans) {
+	public Context(final EventList events, final List<String> clanNames, final List<? extends IClan> clans) {
 		this.events = events;
 		this.clanNames = clanNames;
 		this.clans = clans;

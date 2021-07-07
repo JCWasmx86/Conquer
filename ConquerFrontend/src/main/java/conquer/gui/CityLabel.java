@@ -31,7 +31,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	private final transient ICity city;
 	private final transient Timer timer;
 	private final transient Map<ICity, CityLabel> labels;
-	private final transient Consumer<ICity> consumer;
+	private final transient Consumer<? super ICity> consumer;
 	private boolean marked;
 	private int counter;
 	private transient ICity origin;
@@ -45,7 +45,7 @@ final class CityLabel extends JLabel implements ActionListener, MouseListener {
 	 * @param consumer A consumer, that is executed as soon as the mouse was clicked
 	 *                 on it.
 	 */
-	CityLabel(final ICity city, final Map<ICity, CityLabel> labels, final Consumer<ICity> consumer) {
+	CityLabel(final ICity city, final Map<ICity, CityLabel> labels, final Consumer<? super ICity> consumer) {
 		this.city = city;
 		final var image = city.getImage();
 		this.setBounds(city.getX(), city.getY(), image.getWidth(null),

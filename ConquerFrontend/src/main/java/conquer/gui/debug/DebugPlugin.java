@@ -52,6 +52,6 @@ public class DebugPlugin implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 	}
 }

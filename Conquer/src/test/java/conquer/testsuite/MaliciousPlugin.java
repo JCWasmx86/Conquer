@@ -32,7 +32,7 @@ public class MaliciousPlugin implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 		var hasThrown = true;
 		try {
 			ctx.appendToEventList(null);

@@ -31,7 +31,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 		return ret;
 	}
 
-	private void initializeFromDefaultLocation(final List<InstalledScenario> ret) {
+	private void initializeFromDefaultLocation(final List<? super InstalledScenario> ret) {
 		final var directoryName = Shared.isWindows() ? (System.getenv("ProgramFiles") + "\\Conquer\\scenarios")
 			: "/usr/share/conquer/scenarios";
 		final var directory = new File(directoryName);
@@ -53,7 +53,7 @@ public class DefaultScenarioProvider implements InstalledScenarioProvider {
 		}
 	}
 
-	private void parseNode(final Node node, final List<InstalledScenario> ret) {
+	private void parseNode(final Node node, final List<? super InstalledScenario> ret) {
 		if ((node == null) || (node.getNodeType() != Node.ELEMENT_NODE) || (!"scenarios".equals(node.getNodeName()))) {
 			return;
 		}

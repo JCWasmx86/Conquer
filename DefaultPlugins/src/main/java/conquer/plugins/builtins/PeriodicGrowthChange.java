@@ -24,7 +24,7 @@ public final class PeriodicGrowthChange implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 		this.initList(cities);
 		final var cityArr = cities.getValues();
 		for (var i = 0; i < cityArr.length; i++) {
@@ -41,7 +41,7 @@ public final class PeriodicGrowthChange implements Plugin {
 		this.values = null;
 	}
 
-	private void initList(final Graph<ICity> cities) {
+	private void initList(final Graph<? extends ICity> cities) {
 		if (this.values == null) {
 			this.values = new ArrayList<>();
 			final var cityArr = cities.getValues();

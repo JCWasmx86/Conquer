@@ -24,7 +24,7 @@ final class SelectPanel extends JPanel {
 	 * @param consumer       The consumer which will be called, if the button was
 	 *                       pressed.
 	 */
-	SelectPanel(final String buttonText, final String jtextfieldHint, final Consumer<String> consumer) {
+	SelectPanel(final String buttonText, final String jtextfieldHint, final Consumer<? super String> consumer) {
 		final var hintTextField = new HintTextField(jtextfieldHint);
 		final var jbutton = new JButton();
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));

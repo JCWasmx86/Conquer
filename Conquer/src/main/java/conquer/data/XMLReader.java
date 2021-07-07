@@ -55,7 +55,7 @@ public final class XMLReader {
 		}
 	}
 
-	private <T> List<T> distinct(final Collection<T> collection) {
+	private <T> List<T> distinct(final Collection<? extends T> collection) {
 		return collection.stream().distinct().collect(Collectors.toList());
 	}
 
@@ -207,7 +207,7 @@ public final class XMLReader {
 			this.distinct(readerFactoryNames));
 	}
 
-	private void readList(final Node node, final List<String> list) {
+	private void readList(final Node node, final List<? super String> list) {
 		final var nodeList = node.getChildNodes();
 		for (var j = 0; j < nodeList.getLength(); j++) {
 			final var dataNode = nodeList.item(j);
@@ -224,7 +224,7 @@ public final class XMLReader {
 		}
 	}
 
-	private void readScenarios(final Node node, final List<InstalledScenario> installedMaps) {
+	private void readScenarios(final Node node, final List<? super InstalledScenario> installedMaps) {
 		final var scenarioList = node.getChildNodes();
 		for (var j = 0; j < scenarioList.getLength(); j++) {
 			final var scenarioInformation = scenarioList.item(j);

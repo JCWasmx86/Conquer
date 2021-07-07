@@ -132,7 +132,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		}
 	}
 
-	private Graph<ICity> readCities(final DataInputStream dis, final List<IClan> clans, final ConquerInfo game) throws IOException {
+	private Graph<ICity> readCities(final DataInputStream dis, final List<? extends IClan> clans, final ConquerInfo game) throws IOException {
 		final int numCities = dis.readShort();
 		this.throwIfNegative(numCities, "numCities < 0: " + numCities);
 		final var g = new Graph<ICity>(numCities);
@@ -247,7 +247,7 @@ public final class ScenarioFileReader implements ConquerInfoReader {
 		return relations;
 	}
 
-	private void readColors(final DataInput dis, final int numPlayers, final List<IClan> clans) throws IOException {
+	private void readColors(final DataInput dis, final int numPlayers, final List<? extends IClan> clans) throws IOException {
 		for (var i = 0; i < numPlayers; i++) {
 			final var r = dis.readInt();
 			this.throwIfNegative(r, "r < 0: " + r);

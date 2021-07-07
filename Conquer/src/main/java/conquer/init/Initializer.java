@@ -36,7 +36,7 @@ public final class Initializer {
 	 *
 	 * @param onError An optional consumer for thrown exceptions.
 	 */
-	public void initialize(final Consumer<Exception> onError) {
+	public void initialize(final Consumer<? super Exception> onError) {
 		if (Initializer.initialized) {
 			throw new IllegalStateException("Can't initialize more than once!");
 		}

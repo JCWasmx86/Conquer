@@ -11,7 +11,7 @@ import conquer.data.ConquerInfo;
 import conquer.data.IClan;
 
 record Statistic(Map<IClan, Double> map) {
-	static Statistic build(final ConquerInfo info, final BiFunction<ConquerInfo, IClan, Double> valueFunction) {
+	static Statistic build(final ConquerInfo info, final BiFunction<ConquerInfo, ? super IClan, Double> valueFunction) {
 		final var list =
 			info.getClans().stream().sorted(Comparator.comparingDouble(a -> valueFunction.apply(info, a))).collect(Collectors.toList());
 		final var totalStrength = list.stream().mapToDouble(a -> valueFunction.apply(info, a)).sum();

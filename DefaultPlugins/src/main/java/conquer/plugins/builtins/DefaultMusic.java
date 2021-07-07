@@ -19,7 +19,7 @@ public final class DefaultMusic implements Plugin, MusicProvider {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 		// Do nothing
 	}
 

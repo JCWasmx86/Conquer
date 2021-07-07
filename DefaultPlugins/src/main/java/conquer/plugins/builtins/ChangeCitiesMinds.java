@@ -62,7 +62,7 @@ public final class ChangeCitiesMinds implements Plugin {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 		StreamUtils.forEach(cities, c -> {
 			// Only continue, if the loss of one city may not extinct one entire clan.
 			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {

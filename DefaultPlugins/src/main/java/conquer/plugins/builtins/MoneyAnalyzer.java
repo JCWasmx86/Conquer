@@ -29,7 +29,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void handle(final Graph<ICity> cities, final Context ctx) {
+	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
 		this.currentRound++;
 	}
 
@@ -40,7 +40,7 @@ public final class MoneyAnalyzer implements Plugin, MoneyHook {
 	}
 
 	@Override
-	public void moneyPaid(final List<ICity> cities, final IClan clan) {
+	public void moneyPaid(final List<? extends ICity> cities, final IClan clan) {
 		if (this.currentRound < Integer.getInteger("money.analyzer.delay", 10)) {
 			return;
 		}

@@ -78,7 +78,7 @@ final class ClanInfoPanel extends JPanel implements ActionListener {
 		return sb.append("</body></html>").toString();
 	}
 
-	private long getNumber(final ToLongFunction<ICity> cc) {
+	private long getNumber(final ToLongFunction<? super ICity> cc) {
 		return StreamUtils.getCitiesAsStream(this.game.getCities(), this.clan).mapToLong(cc).sum();
 	}
 

@@ -63,7 +63,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void checkClans(final List<IClan> clans, final List<IClan> clans2) {
+	private void checkClans(final List<? extends IClan> clans, final List<? extends IClan> clans2) {
 		for (var i = 0; i < clans.size(); i++) {
 			final var oldClan = clans.get(i);
 			final var newClan = clans2.get(i);
@@ -71,7 +71,7 @@ public final class Testsuite3 extends Testsuite {
 		}
 	}
 
-	private void checkRelations(final int numPlayers, final Graph<Integer> old, final Graph<Integer> restored) {
+	private void checkRelations(final int numPlayers, final Graph<? super Integer> old, final Graph<? super Integer> restored) {
 		for (var i = 0; i < numPlayers; i++) {
 			for (var j = 0; j < numPlayers; j++) {
 				try {
