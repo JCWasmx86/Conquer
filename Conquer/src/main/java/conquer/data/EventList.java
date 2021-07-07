@@ -12,74 +12,78 @@ import conquer.plugins.MessageListener;
  * is added or removed.
  */
 public final class EventList extends ArrayList<Message> {
+<<<<<<< HEAD
 	@Serial
 	private static final long serialVersionUID = -3059648150677032552L;
+=======
+    private static final long serialVersionUID = -3059648150677032552L;
+>>>>>>> parent of f8bbb68 (Formatting)
 
-	private final List<MessageListener> listeners = new ArrayList<>(50);
+    private final List<MessageListener> listeners = new ArrayList<>(50);
 
-	/**
-	 * If {@code element} is {@code null}, an {@link IllegalArgumentException} will
-	 * be thrown.
-	 */
-	@Override
-	public void add(final int index, final Message element) {
-		if (element == null) {
-			throw new IllegalArgumentException("message==null");
-		}
-		this.listeners.forEach(a -> a.added(element));
-		super.add(index, element);
-	}
+    /**
+     * If {@code element} is {@code null}, an {@link IllegalArgumentException} will
+     * be thrown.
+     */
+    @Override
+    public void add(final int index, final Message element) {
+        if (element == null) {
+            throw new IllegalArgumentException("message==null");
+        }
+        this.listeners.forEach(a -> a.added(element));
+        super.add(index, element);
+    }
 
-	/**
-	 * If {@code element} is {@code null}, an {@link IllegalArgumentException} will
-	 * be thrown.
-	 */
-	@Override
-	public boolean add(final Message message) {
-		if (message == null) {
-			throw new IllegalArgumentException("message==null");
-		}
-		this.listeners.forEach(a -> a.added(message));
-		return super.add(message);
-	}
+    /**
+     * If {@code element} is {@code null}, an {@link IllegalArgumentException} will
+     * be thrown.
+     */
+    @Override
+    public boolean add(final Message message) {
+        if (message == null) {
+            throw new IllegalArgumentException("message==null");
+        }
+        this.listeners.forEach(a -> a.added(message));
+        return super.add(message);
+    }
 
-	/**
-	 * If {@code listener} is {@code null}, an {@link IllegalArgumentException} will
-	 * be thrown.
-	 */
-	public void addListener(final MessageListener listener) {
-		if (listener == null) {
-			throw new IllegalArgumentException("listener==null");
-		}
-		this.listeners.add(listener);
-	}
+    /**
+     * If {@code listener} is {@code null}, an {@link IllegalArgumentException} will
+     * be thrown.
+     */
+    public void addListener(final MessageListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("listener==null");
+        }
+        this.listeners.add(listener);
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		} else {
-			return super.equals(o);
-		}
-	}
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        } else {
+            return super.equals(o);
+        }
+    }
 
-	@Override
-	public int hashCode() {
-		return super.hashCode() ^ this.listeners.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return super.hashCode() ^ this.listeners.hashCode();
+    }
 
-	/**
-	 * If {@code o} is {@code null} or is not an instance of {@link Message} an
-	 * {@link IllegalArgumentException} will be thrown.
-	 */
-	@Override
-	public boolean remove(final Object o) {
-		if (o == null) {
-			throw new IllegalArgumentException("o==null");
-		} else if (!(o instanceof Message)) {
-			throw new IllegalArgumentException("o has to be an instanceof Message");
-		}
-		this.listeners.forEach(a -> a.removed((Message) o));
-		return super.remove(o);
-	}
+    /**
+     * If {@code o} is {@code null} or is not an instance of {@link Message} an
+     * {@link IllegalArgumentException} will be thrown.
+     */
+    @Override
+    public boolean remove(final Object o) {
+        if (o == null) {
+            throw new IllegalArgumentException("o==null");
+        } else if (!(o instanceof Message)) {
+            throw new IllegalArgumentException("o has to be an instanceof Message");
+        }
+        this.listeners.forEach(a -> a.removed((Message) o));
+        return super.remove(o);
+    }
 }

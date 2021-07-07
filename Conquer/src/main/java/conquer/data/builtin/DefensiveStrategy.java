@@ -1,5 +1,5 @@
 package conquer.data.builtin;
 
 public enum DefensiveStrategy {
-	FORTIFYANDUPGRADE, RECRUIT, EXPAND
+    FORTIFYANDUPGRADE, RECRUIT, EXPAND
 }

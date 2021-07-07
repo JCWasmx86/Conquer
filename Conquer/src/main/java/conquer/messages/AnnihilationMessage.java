@@ -8,14 +8,22 @@ import conquer.data.ICity;
  * soldiers on both sides are dead.
  */
 public record AnnihilationMessage(ICity src, ICity destination, long numberOfAttackers) implements Message {
-	@Override
-	public boolean isPlayerInvolved() {
-		return this.src.isPlayerCity() || this.destination.isPlayerCity();
-	}
+    @Override
+    public boolean isPlayerInvolved() {
+        return this.src.isPlayerCity() || this.destination.isPlayerCity();
+    }
 
+<<<<<<< HEAD
 	@Override
 	public String getMessageText() {
 		return Messages.getMessage("Message.annihilation", this.src.getName(), this.destination.getName(),
 			this.numberOfAttackers);
 	}
+=======
+    @Override
+    public String getMessageText() {
+        return Messages.getMessage("Message.annihilation", this.src.getName(), this.destination.getName(),
+                this.numberOfAttackers);
+    }
+>>>>>>> parent of f8bbb68 (Formatting)
 }

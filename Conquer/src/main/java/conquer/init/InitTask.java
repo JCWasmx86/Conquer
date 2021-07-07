@@ -5,8 +5,8 @@ package conquer.init;
  */
 @FunctionalInterface
 public interface InitTask {
-	/**
-	 * Run some init actions.
-	 */
-	void initialize();
+    /**
+     * Run some init actions.
+     */
+    void initialize();
 }

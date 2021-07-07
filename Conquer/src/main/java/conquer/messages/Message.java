@@ -8,48 +8,48 @@ import java.util.Optional;
  */
 @FunctionalInterface
 public interface Message {
-	/**
-	 * Return a human-readable text representation of the message.
-	 *
-	 * @return Message text.
-	 */
-	String getMessageText();
+    /**
+     * Return a human-readable text representation of the message.
+     *
+     * @return Message text.
+     */
+    String getMessageText();
 
-	/**
-	 * Returns an optional icon path.
-	 *
-	 * @return Optional icon path.
-	 */
-	default Optional<String> getOptionalIconPath() {
-		return Optional.empty();
-	}
+    /**
+     * Returns an optional icon path.
+     *
+     * @return Optional icon path.
+     */
+    default Optional<String> getOptionalIconPath() {
+        return Optional.empty();
+    }
 
-	/**
-	 * Returns if the message is bad for the player or good.
-	 *
-	 * @return {@code true}, if it is bad for the player, e.g. a city was conquered.
-	 */
-	default boolean isBadForPlayer() {
-		return false;
-	}
+    /**
+     * Returns if the message is bad for the player or good.
+     *
+     * @return {@code true}, if it is bad for the player, e.g. a city was conquered.
+     */
+    default boolean isBadForPlayer() {
+        return false;
+    }
 
-	/**
-	 * Return whether the player was involved in this message. (E.g. as attacker or
-	 * defender).
-	 *
-	 * @return {@code true} if the player was involved.
-	 */
-	default boolean isPlayerInvolved() {
-		return false;
-	}
+    /**
+     * Return whether the player was involved in this message. (E.g. as attacker or
+     * defender).
+     *
+     * @return {@code true} if the player was involved.
+     */
+    default boolean isPlayerInvolved() {
+        return false;
+    }
 
-	/**
-	 * Useful for GUIs, that show messages. Messages that return {@code true}, can
-	 * be hidden, as they would for example give too much information.
-	 *
-	 * @return {@code true} if the message shouldn't be shown to the player.
-	 */
-	default boolean shouldBeShownToThePlayer() {
-		return this.isPlayerInvolved();
-	}
+    /**
+     * Useful for GUIs, that show messages. Messages that return {@code true}, can
+     * be hidden, as they would for example give too much information.
+     *
+     * @return {@code true} if the message shouldn't be shown to the player.
+     */
+    default boolean shouldBeShownToThePlayer() {
+        return this.isPlayerInvolved();
+    }
 }

@@ -8,6 +8,7 @@ import java.io.OutputStream;
  */
 @FunctionalInterface
 public interface StrategyData {
+<<<<<<< HEAD
 	/**
 	 * Save the internal state of the data to {@code out}.
 	 *
@@ -18,11 +19,22 @@ public interface StrategyData {
 	default void save(final OutputStream out) throws IOException {
 		//Empty as not every strategy has data that must be saved
 	}
+=======
+    /**
+     * Save the internal state of the data to {@code out}.
+     *
+     * @param out Destination of the serialized data.
+     * @throws IOException If an I/O error occurs.
+     */
+    default void save(final OutputStream out) throws IOException {
 
-	/**
-	 * Update the internal state of the data.
-	 *
-	 * @param currentRound The current round of the game.
-	 */
-	void update(int currentRound);
+    }
+>>>>>>> parent of f8bbb68 (Formatting)
+
+    /**
+     * Update the internal state of the data.
+     *
+     * @param currentRound The current round of the game.
+     */
+    void update(int currentRound);
 }

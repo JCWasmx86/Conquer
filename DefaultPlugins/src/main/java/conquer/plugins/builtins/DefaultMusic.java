@@ -13,6 +13,7 @@ import conquer.utils.Graph;
 
 public final class DefaultMusic implements Plugin, MusicProvider {
 
+<<<<<<< HEAD
 	@Override
 	public String getName() {
 		return "DefaultMusic";
@@ -45,5 +46,39 @@ public final class DefaultMusic implements Plugin, MusicProvider {
 		}
 		return ret;
 	}
+=======
+    @Override
+    public String getName() {
+        return "DefaultMusic";
+    }
+
+    @Override
+    public void handle(final Graph<ICity> cities, final Context ctx) {
+        // Do nothing
+    }
+
+    @Override
+    public void init(final PluginInterface pi) {
+        for (var i = 0; i < 27; i++) {
+            pi.addMusic("Battle" + i);
+        }
+    }
+
+    @Override
+    public void resume(final PluginInterface pi, final InputStream bytes) throws IOException {
+        for (var i = 0; i < 27; i++) {
+            pi.addMusic("Battle" + i);
+        }
+    }
+
+    @Override
+    public List<String> getMusic() {
+        final List<String> ret = new ArrayList<>();
+        for (var i = 0; i < 27; i++) {
+            ret.add("Battle" + i);
+        }
+        return ret;
+    }
+>>>>>>> parent of f8bbb68 (Formatting)
 
 }

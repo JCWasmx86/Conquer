@@ -7,5 +7,5 @@ package conquer.data;
  * can be {@code null}. But only one of these should be {@code null}.
  */
 public final record InstalledScenario(String name, String file, String thumbnail,
-									  MagicNumberInputStream in) {
+                                      MagicNumberInputStream in) {
 }
