@@ -2,7 +2,6 @@ package conquer.data;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -18,7 +17,7 @@ import conquer.plugins.PluginInterface;
  * This interface is the interface to the entire engine. It provides everything
  * to allow writing a good GUI/CLI to it.
  */
-public interface ConquerInfo extends StrategyObject, PluginInterface, Serializable {
+public interface ConquerInfo extends StrategyObject, PluginInterface {
 
 	/**
 	 * Bind a context to this instance. This method may be called as often as you
