@@ -11,11 +11,10 @@ import conquer.plugins.Plugin;
 import conquer.utils.Graph;
 
 public final class ChangeCitiesMinds implements Plugin {
-    private static final double INSTANT_CLAN_CHANGE = 0.05;
-    private static final int PROBABILITY_NO_CHANGE_OF_CLAN = 75;
-    private final Random random = new Random();
+	private static final double INSTANT_CLAN_CHANGE = 0.05;
+	private static final int PROBABILITY_NO_CHANGE_OF_CLAN = 75;
+	private final Random random = new Random();
 
-<<<<<<< HEAD
 	private void change(final ICity c, final Context ctx, final IClan oldClan, final IClan otherClan) {
 		var changedClan = false;
 		var soldiersToCivilians = 1D;
@@ -34,58 +33,36 @@ public final class ChangeCitiesMinds implements Plugin {
 			ctx.appendToEventList(new ClanChangeMessage(c, oldClan, c.getClan()));
 		}
 	}
-=======
-    private void change(final ICity c, final Context ctx, final IClan oldClan, final IClan otherClan) {
-        var changedClan = false;
-        var soldiersToCivilians = 1D;
-        try {
-            soldiersToCivilians = (double) c.getNumberOfSoldiers() / (double) c.getNumberOfPeople();
-        } catch (final ArithmeticException ae) {
-            soldiersToCivilians = 1;
-            Shared.LOGGER.exception(ae);
-        }
-        if (soldiersToCivilians < ChangeCitiesMinds.INSTANT_CLAN_CHANGE) {
-            c.setClan(otherClan);
-            changedClan = true;
-        } else {
-            changedClan = this.evalClanChange(soldiersToCivilians, c, otherClan);
-        }
-        if (changedClan) {
-            ctx.appendToEventList(new ClanChangeMessage(c, oldClan, c.getClan()));
-        }
-    }
->>>>>>> parent of f8bbb68 (Formatting)
 
-    private boolean evalClanChange(final double soldiersToCivilians, final ICity c, final IClan otherClan) {
-        if (this.random.nextInt(100) > 90) {
-            if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
-                c.setClan(otherClan);
-                c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(90, 98)));
-                c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(45, 90)));
-                return true;
-            } else if ((soldiersToCivilians < 0.25) && (Math.random() > 0.9)) {
-                c.setClan(otherClan);
-                c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(60, 88)));
-                c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(55, 90)));
-                return true;
-            } else if ((soldiersToCivilians < 0.35) && (Math.random() > 0.98)) {
-                c.setClan(otherClan);
-                c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(20, 60)));
-                c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(80, 98)));
-                return true;
-            }
-        }
-        return false;
-    }
+	private boolean evalClanChange(final double soldiersToCivilians, final ICity c, final IClan otherClan) {
+		if (this.random.nextInt(100) > 90) {
+			if ((soldiersToCivilians < 0.15) && (Math.random() > 0.85)) {
+				c.setClan(otherClan);
+				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(90, 98)));
+				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(45, 90)));
+				return true;
+			} else if ((soldiersToCivilians < 0.25) && (Math.random() > 0.9)) {
+				c.setClan(otherClan);
+				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(60, 88)));
+				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(55, 90)));
+				return true;
+			} else if ((soldiersToCivilians < 0.35) && (Math.random() > 0.98)) {
+				c.setClan(otherClan);
+				c.setNumberOfPeople((long) (c.getNumberOfPeople() * Shared.randomPercentage(20, 60)));
+				c.setNumberOfSoldiers((long) (c.getNumberOfSoldiers() * Shared.randomPercentage(80, 98)));
+				return true;
+			}
+		}
+		return false;
+	}
 
-    @Override
-    public String getName() {
-        return "ChangeCitiesMinds";
-    }
-
-<<<<<<< HEAD
 	@Override
-	public void handle(final Graph<? extends ICity> cities, final Context ctx) {
+	public String getName() {
+		return "ChangeCitiesMinds";
+	}
+
+	@Override
+	public void handle(final Graph<ICity> cities, final Context ctx) {
 		StreamUtils.forEach(cities, c -> {
 			// Only continue, if the loss of one city may not extinct one entire clan.
 			if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
@@ -103,25 +80,4 @@ public final class ChangeCitiesMinds implements Plugin {
 			this.change(c, ctx, oldClan, otherClan);
 		});
 	}
-=======
-    @Override
-    public void handle(final Graph<ICity> cities, final Context ctx) {
-        StreamUtils.forEach(cities, c -> {
-            // Only continue, if the loss of one city may not extinct one entire clan.
-            if (StreamUtils.getCitiesAsStream(cities, c.getClan()).count() == 1) {
-                return;
-            }
-            final var oldClan = c.getClan();
-            final var list = StreamUtils.getCitiesAroundCity(cities, c).map(ICity::getClan).distinct()
-                    .collect(Collectors.toList());
-            final var canChangeClan = list.size() == 1;
-            final var otherClan = list.get(0);
-            if ((!canChangeClan || (otherClan == c.getClan()))
-                    || (this.random.nextInt(100) < ChangeCitiesMinds.PROBABILITY_NO_CHANGE_OF_CLAN)) {
-                return;
-            }
-            this.change(c, ctx, oldClan, otherClan);
-        });
-    }
->>>>>>> parent of f8bbb68 (Formatting)
 }

@@ -7,12 +7,12 @@ import conquer.data.ICity;
  */
 @FunctionalInterface
 public interface MoveHook {
-    /**
-     * Called when troops are moved
-     *
-     * @param src              Source city
-     * @param dest             Destination city
-     * @param numberOfSoldiers Number of soldiers
-     */
-    void handleMove(ICity src, ICity dest, long numberOfSoldiers);
+	/**
+	 * Called when troops are moved
+	 *
+	 * @param src              Source city
+	 * @param dest             Destination city
+	 * @param numberOfSoldiers Number of soldiers
+	 */
+	void handleMove(ICity src, ICity dest, long numberOfSoldiers);
 }

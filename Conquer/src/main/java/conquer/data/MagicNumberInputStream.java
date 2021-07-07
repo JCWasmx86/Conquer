@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 public abstract class MagicNumberInputStream extends InputStream {
 
-<<<<<<< HEAD
 	/**
 	 * Returns the start of the input stream and goes back to position 0.
 	 *
@@ -13,13 +12,4 @@ public abstract class MagicNumberInputStream extends InputStream {
 	 * @return A byte array of size {@code maxLength}.
 	 */
 	public abstract byte[] getMagicNumber(int maxLength);
-=======
-    /**
-     * Returns the start of the input stream and goes back to position 0.
-     *
-     * @param maxLength Number of bytes to read
-     * @return A byte array of size {@code maxLength}.
-     */
-    public abstract byte[] getMagicNumber(int maxLength);
->>>>>>> parent of f8bbb68 (Formatting)
 }

@@ -7,10 +7,10 @@ import java.util.List;
  */
 @FunctionalInterface
 public interface InstalledScenarioProvider {
-    /**
-     * Find installed scenarios.
-     *
-     * @return All found scenarios. May not be {@code null}.
-     */
-    List<InstalledScenario> getScenarios();
+	/**
+	 * Find installed scenarios.
+	 *
+	 * @return All found scenarios. May not be {@code null}.
+	 */
+	List<InstalledScenario> getScenarios();
 }

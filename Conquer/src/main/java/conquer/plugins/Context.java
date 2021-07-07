@@ -11,44 +11,28 @@ import conquer.messages.Message;
  * A collection of data passed to plugins.
  */
 public final class Context {
-<<<<<<< HEAD
 	private final EventList events;
 	private final List<String> clanNames;
-	private final List<? extends IClan> clans;
+	private final List<IClan> clans;
 
 	/**
 	 * Shouldn't be used from the outside.
 	 */
-	public Context(final EventList events, final List<String> clanNames, final List<? extends IClan> clans) {
+	public Context(final EventList events, final List<String> clanNames, final List<IClan> clans) {
 		this.events = events;
 		this.clanNames = clanNames;
 		this.clans = clans;
 	}
-=======
-    private final EventList events;
-    private final List<String> clanNames;
-    private final List<IClan> clans;
 
-    /**
-     * Shouldn't be used from the outside.
-     */
-    public Context(final EventList events, final List<String> clanNames, final List<IClan> clans) {
-        this.events = events;
-        this.clanNames = clanNames;
-        this.clans = clans;
-    }
->>>>>>> parent of f8bbb68 (Formatting)
+	/**
+	 * Add an event to the eventlist notifying all handlers
+	 *
+	 * @param message The message to add. May not be null.
+	 */
+	public void appendToEventList(final Message message) {
+		this.events.add(message);
+	}
 
-    /**
-     * Add an event to the eventlist notifying all handlers
-     *
-     * @param message The message to add. May not be null.
-     */
-    public void appendToEventList(final Message message) {
-        this.events.add(message);
-    }
-
-<<<<<<< HEAD
 	/**
 	 * Get a reference to a clan
 	 *
@@ -59,24 +43,13 @@ public final class Context {
 	public IClan getClan(final int index) {
 		return this.clans.get(index);
 	}
-=======
-    /**
-     * Get a reference to a clan
-     *
-     * @param index The index
-     * @return The clan at the specified index.
-     */
-    public IClan getClan(final int index) {
-        return this.clans.get(index);
-    }
->>>>>>> parent of f8bbb68 (Formatting)
 
-    /**
-     * Return a unmodifiable copy of the list of clannames.
-     *
-     * @return List of clan names.
-     */
-    public List<String> getClanNames() {
-        return Collections.unmodifiableList(this.clanNames);
-    }
+	/**
+	 * Return a unmodifiable copy of the list of clannames.
+	 *
+	 * @return List of clan names.
+	 */
+	public List<String> getClanNames() {
+		return Collections.unmodifiableList(this.clanNames);
+	}
 }

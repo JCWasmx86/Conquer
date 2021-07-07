@@ -6,10 +6,10 @@ package conquer.data;
  */
 public interface ConquerInfoReader {
 
-    /**
-     * Read the inputfile and build an uninitialized ConquerInfo.
-     *
-     * @return An uninitialized {@link ConquerInfo} object.
-     */
-    ConquerInfo build();
+	/**
+	 * Read the inputfile and build an uninitialized ConquerInfo.
+	 *
+	 * @return An uninitialized {@link ConquerInfo} object.
+	 */
+	ConquerInfo build();
 }

@@ -6,7 +6,6 @@ package conquer.data;
  */
 public interface ConquerInfoReaderFactory {
 
-<<<<<<< HEAD
 	/**
 	 * Build a {@link ConquerInfoReader} for a given file.
 	 *
@@ -47,21 +46,4 @@ public interface ConquerInfoReaderFactory {
 	default boolean accepts(final byte[] bytes) {
 		return false;
 	}
-=======
-    /**
-     * Build a {@link ConquerInfoReader} for a given file.
-     *
-     * @param is The scenario. May not be {@code null}.
-     * @return A reader that is able to construct a {@link ConquerInfo} from
-     * {@code is}.
-     */
-    ConquerInfoReader getForFile(InstalledScenario is);
-
-    /**
-     * Gives the magic number for the file it is able to read.
-     *
-     * @return Magic number. May not be null.
-     */
-    byte[] getMagicNumber();
->>>>>>> parent of f8bbb68 (Formatting)
 }

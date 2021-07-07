@@ -13,6 +13,7 @@ dependencies {
 	implementation project(":ConquerFrontendSPI")
 	implementation project(":music")
 	runtimeOnly project(":DefaultPlugins")
+	runtimeOnly project(":advancements")
 	runtimeOnly files("${project.rootDir}/music_tmp")
 }
 jar {

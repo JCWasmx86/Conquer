@@ -5,19 +5,19 @@ import conquer.data.strategy.StrategyProvider;
 
 public final class ModerateStrategyProvider implements StrategyProvider {
 
-    @Override
-    public Strategy buildStrategy() {
-        return new ModerateStrategyImpl();
-    }
+	@Override
+	public Strategy buildStrategy() {
+		return new ModerateStrategyImpl();
+	}
 
-    @Override
-    public int getId() {
-        return 1;
-    }
+	@Override
+	public int getId() {
+		return 1;
+	}
 
-    @Override
-    public String getName() {
-        return "moderate";
-    }
+	@Override
+	public String getName() {
+		return "moderate";
+	}
 
 }
