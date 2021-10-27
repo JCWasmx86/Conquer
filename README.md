@@ -85,3 +85,9 @@ development of further improvements (E.g. by migrating to Gradle and replacing t
 1. [libarchive](https://libarchive.org/) for the library to extract the downloaded zip files
 2. [libcurl](https://curl.se/libcurl/) to download java.
 3. [Musescore](https://musescore.org/en) that made it possible to provide music.
+
+### Screenshots
+
+![Screenshot1](screenshots/S1.png)
+![Screenshot2](screenshots/S2.png)
+![Screenshot3](screenshots/S3.png)
