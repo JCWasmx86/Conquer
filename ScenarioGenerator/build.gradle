@@ -27,7 +27,7 @@ shadowJar {
 	relocate "com.google.gson", "conquer.ri.datatool.tool.gson"
 }
 dependencies {
-	implementation "com.google.code.gson:gson:2.8.6"
+	implementation "com.google.code.gson:gson:2.8.9"
 }
 def contentSpec = copySpec {
 	from("src/main/resources") {
