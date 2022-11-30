@@ -1,7 +1,7 @@
 # Conquer
 
 
-** See [here](https://github.com/JCWasmx86/Conquer-GTK) for the rewrite in GTK**
+*See [here](https://github.com/JCWasmx86/Conquer-GTK) for the rewrite in GTK*
 
 ![Linux](https://github.com/JCWasmx86/Conquer/workflows/Linux/badge.svg)
 [![Windows 32 bit](https://github.com/JCWasmx86/Conquer/actions/workflows/windows_32bit.yml/badge.svg)](https://github.com/JCWasmx86/Conquer/actions/workflows/windows_32bit.yml)
